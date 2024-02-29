@@ -13,11 +13,15 @@
   <ItemGroup>
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\WindowAPI\WindowAPI.cpp" />
+    <ClCompile Include="DirectXGame\Engine\FrameWork\FrameWork.cpp" />
+    <ClCompile Include="DirectXGame\Engine\FrameWork\MyGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h" />
+    <ClInclude Include="DirectXGame\Engine\FrameWork\FrameWork.h" />
+    <ClInclude Include="DirectXGame\Engine\FrameWork\MyGame.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -71,6 +75,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImGui;$(ProjectDir)externals\nlohmann;$(ProjectDir)externals\imgui;$(ProjectDir)externals\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -91,6 +96,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)ImGui;$(ProjectDir)externals\nlohmann;$(ProjectDir)externals\imgui;$(ProjectDir)externals\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

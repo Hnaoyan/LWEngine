@@ -1,5 +1,7 @@
 #include "WindowAPI.h"
 
+#include "imgui.h"
+
 const wchar_t WindowAPI::kWindowClassName[] = L"DirectXTitle";
 
 //void Log(const std::string& message) {
