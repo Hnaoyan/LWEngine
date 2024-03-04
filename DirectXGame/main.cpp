@@ -1,7 +1,14 @@
 #include <Windows.h>
+#include "Engine/FrameWork/Framework.h"
+#include "Engine/FrameWork/MyGame.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
-	OutputDebugStringA("Hello\n");
+
+	Framework* gameloop = new MyGame();
+
+	gameloop->Execute();
+
+	delete gameloop;
 
 	return 0;
 }

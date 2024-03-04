@@ -13,15 +13,28 @@
   <ItemGroup>
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\WindowAPI\WindowAPI.cpp" />
-    <ClCompile Include="DirectXGame\Engine\FrameWork\FrameWork.cpp" />
+    <ClCompile Include="DirectXGame\Engine\FrameWork\Framework.cpp" />
     <ClCompile Include="DirectXGame\Engine\FrameWork\MyGame.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\IScene.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\Scene\SceneList.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector2.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
+    <ClInclude Include="DirectXGame\Engine\Utility\StructLists.h" />
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h" />
-    <ClInclude Include="DirectXGame\Engine\FrameWork\FrameWork.h" />
+    <ClInclude Include="DirectXGame\Engine\FrameWork\Framework.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\MyGame.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\IScene.h" />
+    <ClInclude Include="DirectXGame\Engine\Input\Input.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
