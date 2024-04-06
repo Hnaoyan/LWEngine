@@ -11,6 +11,9 @@ void Framework::Execute()
 		Update();
 
 		// 終了分岐
+		if (endRequest_) {
+			break;
+		}
 		
 		// 描画
 		Draw();
@@ -23,10 +26,16 @@ void Framework::Execute()
 
 void Framework::Initialize()
 {
+	winApp_ = WindowAPI::GetInstance();
+	winApp_->CreateGameWindow();
+
 }
 
 void Framework::Finalize()
 {
+
+
+	CoUninitialize();
 }
 
 void Framework::Update()

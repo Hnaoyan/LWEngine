@@ -19,6 +19,6 @@ protected:
 
 	// コピー禁止
 	Singleton(const Singleton&) = delete;
-	Singleton& operator=(const Singleton&) = delete;
+	const Singleton& operator=(const Singleton&) = delete;
 
 };

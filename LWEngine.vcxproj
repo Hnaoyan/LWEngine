@@ -11,14 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\WindowAPI\WindowAPI.cpp" />
     <ClCompile Include="DirectXGame\Engine\FrameWork\Framework.cpp" />
     <ClCompile Include="DirectXGame\Engine\FrameWork\MyGame.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\IScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\DirectXCommon.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneList.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />
@@ -35,6 +39,8 @@
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\IScene.h" />
     <ClInclude Include="DirectXGame\Engine\Input\Input.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\DirectXCommon.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
