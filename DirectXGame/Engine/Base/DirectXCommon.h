@@ -21,7 +21,7 @@ private:
 
 	UINT fenceVal_ = 0;
 
-	Microsoft::WRL::ComPtr<DirectXDevice> dxDevice_;
+	std::unique_ptr<DirectXDevice> dxDevice_;
 
 };
 

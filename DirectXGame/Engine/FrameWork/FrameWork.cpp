@@ -1,4 +1,5 @@
 #include "FrameWork.h"
+#include "../3D/Graphics/Shader.h"
 
 void Framework::Execute()
 {
@@ -26,8 +27,17 @@ void Framework::Execute()
 
 void Framework::Initialize()
 {
+	// WindowAPI
 	winApp_ = WindowAPI::GetInstance();
 	winApp_->CreateGameWindow();
+
+	// DirectX
+	dxCommon_ = DirectXCommon::GetInstance();
+	dxCommon_->Initialize(winApp_);
+
+	// シェーダー読み込みクラス初期化
+	//Shader::GetInstance()->Initialize();
+
 
 }
 

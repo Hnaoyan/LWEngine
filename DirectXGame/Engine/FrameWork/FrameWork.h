@@ -1,5 +1,6 @@
 #pragma once
 #include "../WindowAPI/WindowAPI.h"
+#include "../Base/DirectXCommon.h"
 
 
 /// <summary>
@@ -51,6 +52,7 @@ protected:
 protected:	// ポインタ
 	// ウィンドウAPI
 	WindowAPI* winApp_ = nullptr;
+	DirectXCommon* dxCommon_ = nullptr;
 
 };
 

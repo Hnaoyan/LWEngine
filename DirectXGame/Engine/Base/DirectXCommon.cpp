@@ -10,6 +10,9 @@ void DirectXCommon::Initialize(WindowAPI* winApp, int32_t bufferWidth, int32_t b
 	backBufferWidth_ = bufferWidth;
 	backBufferHeight_ = bufferHeight;
 
+	// 
+	dxDevice_ = std::make_unique<DirectXDevice>();
+	dxDevice_->Initialize();
 
 
 }
