@@ -1,4 +1,7 @@
 #pragma once
+#include "../Base/DirectXCommon.h"
+#include "../Input/Input.h"
+
 class IScene
 {
 public: // 仮想関数
@@ -9,11 +12,17 @@ public: // 仮想関数
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	virtual void Update() {};
+	virtual void Update() = 0;
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	virtual void Draw() {};
+	virtual void Draw() = 0;
+
+	/// <summary>
+	/// ImGuiの処理
+	/// </summary>
+	virtual void ImGuiDraw() = 0;
+
 	/// <summary>
 	/// デストラクタ
 	/// </summary>
@@ -31,6 +40,9 @@ protected:
 	/// シーン番号
 	/// </summary>
 	static int sceneNum;
+
+	DirectXCommon* dxCommon_ = nullptr;
+	Input* input_ = nullptr;
 
 };
 
