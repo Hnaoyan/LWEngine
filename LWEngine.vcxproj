@@ -11,30 +11,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRV.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp" />
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\WindowAPI\WindowAPI.cpp" />
     <ClCompile Include="DirectXGame\Engine\FrameWork\Framework.cpp" />
     <ClCompile Include="DirectXGame\Engine\FrameWork\MyGame.cpp" />
-    <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\IScene.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Scene\IScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectXCommon.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
+    <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTV.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRV.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Shader.h" />
+    <ClInclude Include="DirectXGame\Engine\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.h" />
-    <ClInclude Include="DirectXGame\Application\Scene\SceneList.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector2.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h" />
@@ -42,11 +54,12 @@
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\Framework.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\MyGame.h" />
-    <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\IScene.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\IScene.h" />
     <ClInclude Include="DirectXGame\Engine\Input\Input.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
+    <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

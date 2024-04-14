@@ -3,6 +3,10 @@
 #include "../WindowAPI/WindowAPI.h"
 #include "../3D/Graphics/GraphicsPSO.h"
 #include "DirectX/DirectXDevice.h"
+#include "DirectX/DirectXCommand.h"
+
+#include <wrl.h>
+#include <chrono>
 
 class DirectXCommon : public Singleton<DirectXCommon>
 {
@@ -13,6 +17,12 @@ public:
 	void PostDraw();
 
 private:
+
+	void InitializeFixFPS();
+
+	void UpdateFixFPS();
+
+private:
 	// ウィンドウズポインタ
 	WindowAPI* winApp_ = nullptr;
 	// 画面のサイズ
@@ -21,7 +31,14 @@ private:
 
 	UINT fenceVal_ = 0;
 
+	// デバイス関係
 	std::unique_ptr<DirectXDevice> dxDevice_;
+	// コマンド関係
+	std::unique_ptr<DirectXCommand> dxCommand_;
+
+private:
+	// 記録時間(FPS固定用)
+	std::chrono::steady_clock::time_point reference_;
 
 };
 
