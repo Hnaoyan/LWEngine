@@ -29,3 +29,8 @@ void MyGame::Draw()
 {
 
 }
+
+void MyGame::ImGuiDraw()
+{
+
+}

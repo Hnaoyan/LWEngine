@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework.h"
+#include "../Scene/SceneManager.h"
 
 class MyGame : public Framework
 {
@@ -23,6 +24,13 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw() override;
+
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw() override;
+
+private:
 
 
 };

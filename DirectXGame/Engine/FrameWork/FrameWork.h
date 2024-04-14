@@ -2,6 +2,7 @@
 #include "../WindowAPI/WindowAPI.h"
 #include "../Base/DirectXCommon.h"
 
+#include "../Scene/SceneManager.h"
 
 /// <summary>
 /// 
@@ -35,6 +36,11 @@ public:
 	virtual void Draw() = 0;
 
 	/// <summary>
+	/// ImGui
+	/// </summary>
+	virtual void ImGuiDraw() = 0;
+
+	/// <summary>
 	/// 終了チェック
 	/// </summary>
 	/// <returns></returns>
@@ -53,6 +59,9 @@ protected:	// ポインタ
 	// ウィンドウAPI
 	WindowAPI* winApp_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
+
+protected:
+	std::unique_ptr<SceneManager> sceneManager_;
 
 };
 
