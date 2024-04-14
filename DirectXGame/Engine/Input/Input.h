@@ -10,8 +10,9 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include "../Utility/StructLists.h"
+#include "../Utility/Singleton.h"
 
-class Input
+class Input : public Singleton<Input>
 {
 private:
 	// ComPtrのテンプレート
@@ -47,11 +48,6 @@ public:
 
 
 public:	// メンバ関数
-	/// <summary>
-	/// シングルトンインスタンス
-	/// </summary>
-	/// <returns></returns>
-	static Input* GetInstance();
 
 	/// <summary>
 	/// 初期化

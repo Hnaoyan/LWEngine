@@ -198,12 +198,6 @@ namespace {
 
 } // namespace
 
-Input* Input::GetInstance()
-{
-	static Input instance;
-	return &instance;
-}
-
 Input::~Input() {
 	if (dKeyBoard_) {
 		dKeyBoard_->Unacquire();
