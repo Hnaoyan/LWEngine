@@ -20,6 +20,18 @@ void DirectXCommon::Initialize(WindowAPI* winApp, int32_t bufferWidth, int32_t b
 	dxCommand_ = std::make_unique<DirectXCommand>();
 	dxCommand_->Initialize(dxDevice_->GetDevice());
 
+	swapChainManager_ = std::make_unique<SwapChainManager>();
+	swapChainManager_->Initialize(dxDevice_.get(), 1280, 720);
+
+#pragma region Heap
+
+	srvHandler_ = std::make_unique<SRVHandler>();
+	srvHandler_->StaticInitialize(dxDevice_.get());
+
+
+#pragma endregion
+
+
 }
 
 void DirectXCommon::InitializeFixFPS()

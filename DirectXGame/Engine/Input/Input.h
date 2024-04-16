@@ -10,9 +10,8 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include "../Utility/StructLists.h"
-#include "../Utility/Singleton.h"
 
-class Input : public Singleton<Input>
+class Input
 {
 private:
 	// ComPtrのテンプレート
@@ -24,6 +23,12 @@ public: // インナークラス
 		LONG lY;
 		LONG lZ;
 	};
+
+	// インスタンス取得
+	static Input* GetInstance() {
+		static Input instance;
+		return &instance;
+	}
 
 public:
 

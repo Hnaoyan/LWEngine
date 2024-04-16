@@ -63,7 +63,13 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRV.cpp">
+    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,10 +158,10 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRV.h">
+    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTV.h">
+    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,9 @@
 #include "../3D/Graphics/GraphicsPSO.h"
 #include "DirectX/DirectXDevice.h"
 #include "DirectX/DirectXCommand.h"
+#include "DirectX/SwapChainManager.h"
+
+#include "../3D/Descriptor/SRVHandler.h"
 
 #include <wrl.h>
 #include <chrono>
@@ -35,6 +38,11 @@ private:
 	std::unique_ptr<DirectXDevice> dxDevice_;
 	// コマンド関係
 	std::unique_ptr<DirectXCommand> dxCommand_;
+	// スワップチェーン・フェンス管理クラス
+	std::unique_ptr<SwapChainManager> swapChainManager_;
+
+private: // Heap
+	std::unique_ptr<SRVHandler> srvHandler_;
 
 private:
 	// 記録時間(FPS固定用)

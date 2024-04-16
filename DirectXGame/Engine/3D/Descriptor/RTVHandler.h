@@ -5,15 +5,15 @@
 #include <d3d12.h>
 #include <vector>
 
-class DirectXCommon;
+class DirectXDevice;
 
-class RTV : public Singleton<RTV>
+class RTVHandler : public Singleton<RTVHandler>
 {
 public:
-	void StaticInitialize(DirectXCommon* dxCommon, int32_t bufferWidth, int32_t bufferHeight);
+	void StaticInitialize(DirectXDevice* dxDevice);
 
 private:
-	DirectXCommon* dxCommon_ = nullptr;
+	DirectXDevice* dxDevice_ = nullptr;
 	// デバイス
 	ID3D12Device* device_ = nullptr;
 	// ヒープ自体
@@ -21,9 +21,6 @@ private:
 
 	uint32_t kDescriptorSize_;
 	uint32_t size_;
-
-	uint32_t bufferWidth_;
-	uint32_t bufferHeight_;
 
 	// RTVのデスク
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_;

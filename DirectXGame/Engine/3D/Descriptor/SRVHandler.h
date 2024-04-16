@@ -6,7 +6,7 @@
 
 class DirectXDevice;
 
-class SRV : public Singleton<SRV>
+class SRVHandler : public Singleton<SRVHandler>
 {
 public:
 	// 最大カウント
