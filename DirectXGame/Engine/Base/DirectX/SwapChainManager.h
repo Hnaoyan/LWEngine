@@ -9,10 +9,27 @@ class DirectXDevice;
 
 class SwapChainManager : public Singleton<SwapChainManager>
 {
-public:
+public: // メンバ関数
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="dxDevice"></param>
+	/// <param name="bufferWidth"></param>
+	/// <param name="bufferHeight"></param>
 	void Initialize(DirectXDevice* dxDevice, int32_t bufferWidth, int32_t bufferHeight);
-	void CreateSwapChain();
 
+public: // アクセッサ
+	IDXGISwapChain4* GetSwapChain() { return swapChain_.Get(); }
+	ID3D12Fence* GetFence() { return fence_.Get() };
+
+private: // 生成関数
+	/// <summary>
+	/// SwapChain生成
+	/// </summary>
+	void CreateSwapChain();
+	/// <summary>
+	/// Fence生成
+	/// </summary>
 	void CreateFence();
 
 private:
