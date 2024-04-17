@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
@@ -33,6 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\Utility\DxCreateLib.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Shader.h" />
