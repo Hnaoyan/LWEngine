@@ -17,7 +17,7 @@ private:
 	// デバイス
 	ID3D12Device* device_ = nullptr;
 	// ヒープ自体
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> heap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
 
 	uint32_t kDescriptorSize_;
 	uint32_t size_;

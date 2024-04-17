@@ -18,8 +18,8 @@ public:
 	void StaticInitialize(DirectXDevice* dxDevice);
 
 public: // アクセッサ
-	uint32_t GetIndex() { return index_; }
-	uint32_t GetSizeSRV() { return descriptorSizeSRV_; }
+	uint32_t const GetIndex() { return index_; }
+	uint32_t const GetSizeSRV() { return descriptorSizeSRV_; }
 	const D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t textureHandle) {
 		return handleGPU[textureHandle];
 	}
@@ -40,7 +40,7 @@ private:
 	// デバイスクラス
 	DirectXDevice* dxDevice_;
 	// DescriptorHeap
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> heap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
 
 	uint32_t index_ = 0;
 	uint32_t descriptorSizeSRV_ = 0;

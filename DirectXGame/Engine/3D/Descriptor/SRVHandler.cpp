@@ -13,7 +13,7 @@ void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 	srvDescriptorHeapDesc.NumDescriptors = max;
 	srvDescriptorHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 
-	result = dxDevice_->GetDevice()->CreateDescriptorHeap(&srvDescriptorHeapDesc, IID_PPV_ARGS(&heap_));
+	result = dxDevice_->GetDevice()->CreateDescriptorHeap(&srvDescriptorHeapDesc, IID_PPV_ARGS(&srvHeap_));
 
 	assert(SUCCEEDED(result));
 
