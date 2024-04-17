@@ -19,18 +19,29 @@ void DirectXCommon::Initialize(WindowAPI* winApp, int32_t bufferWidth, int32_t b
 
 	dxCommand_ = std::make_unique<DirectXCommand>();
 	dxCommand_->Initialize(dxDevice_->GetDevice());
-
+	// SwapChain:Fence
 	swapChainManager_ = std::make_unique<SwapChainManager>();
-	swapChainManager_->Initialize(dxDevice_.get(), 1280, 720);
+	swapChainManager_->Initialize(dxDevice_.get(), backBufferWidth_, backBufferHeight_);
 
-#pragma region Heap
-
+#pragma region SRV:RTV:DSV生成
 	srvHandler_ = std::make_unique<SRVHandler>();
+	rtvHandler_ = std::make_unique<RTVHandler>();
+	dsvHandler_ = std::make_unique<DSVHandler>();
+
 	srvHandler_->StaticInitialize(dxDevice_.get());
-
-
+	rtvHandler_->StaticInitialize(dxDevice_.get(), swapChainManager_.get());
+	dsvHandler_->StaticInitialize(dxDevice_.get());
 #pragma endregion
 
+}
+
+void DirectXCommon::PreDraw()
+{
+
+}
+
+void DirectXCommon::PostDraw()
+{
 
 }
 

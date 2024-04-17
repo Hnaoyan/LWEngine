@@ -7,6 +7,9 @@
 #include "DirectX/SwapChainManager.h"
 
 #include "../3D/Descriptor/SRVHandler.h"
+#include "../3D/Descriptor/RTVHandler.h"
+#include "../3D/Descriptor/DSVHandler.h"
+
 
 #include <wrl.h>
 #include <chrono>
@@ -42,7 +45,12 @@ private:
 	std::unique_ptr<SwapChainManager> swapChainManager_;
 
 private: // Heap
+	// srv
 	std::unique_ptr<SRVHandler> srvHandler_;
+	// rtv
+	std::unique_ptr<RTVHandler> rtvHandler_;
+	// dsv
+	std::unique_ptr<DSVHandler> dsvHandler_;
 
 private:
 	// 記録時間(FPS固定用)

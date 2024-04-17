@@ -20,7 +20,7 @@ public: // メンバ関数
 
 public: // アクセッサ
 	IDXGISwapChain4* GetSwapChain() { return swapChain_.Get(); }
-	ID3D12Fence* GetFence() { return fence_.Get() };
+	ID3D12Fence* GetFence() { return fence_.Get(); }
 
 private: // 生成関数
 	/// <summary>
@@ -34,10 +34,10 @@ private: // 生成関数
 
 private:
 	// デバイスポインタ
-	DirectXDevice* dxDevice_;
+	DirectXDevice* dxDevice_ = nullptr;
 
-	uint32_t bufferWidth_;
-	uint32_t bufferHeight_;
+	uint32_t bufferWidth_ = 0;
+	uint32_t bufferHeight_ = 0;
 	UINT fenceVal_ = 0;
 
 	// スワップチェイン

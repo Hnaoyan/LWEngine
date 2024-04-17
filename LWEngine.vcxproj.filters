@@ -174,4 +174,11 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_VS.hlsl" />
+    <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_PS.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DirectXGame\Engine\3D\Shader\Object3D.hlsli" />
+  </ItemGroup>
 </Project>

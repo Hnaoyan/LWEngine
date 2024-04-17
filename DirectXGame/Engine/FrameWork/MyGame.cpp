@@ -27,7 +27,14 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
+	// 描画前処理
+	dxCommon_->PreDraw();
 
+
+	//ImGuiDraw();
+
+	// 描画後処理
+	dxCommon_->PostDraw();
 }
 
 void MyGame::ImGuiDraw()
