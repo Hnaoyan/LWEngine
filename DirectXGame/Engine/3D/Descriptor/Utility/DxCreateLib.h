@@ -4,6 +4,9 @@
 
 namespace DxCreateLib
 {
+	/// <summary>
+	/// Heap関係の関数
+	/// </summary>
 	class HeapLib {
 	public:
 		/// <summary>
@@ -42,6 +45,9 @@ namespace DxCreateLib
 
 	};
 
+	/// <summary>
+	/// Resource関係の関数
+	/// </summary>
 	class ResourceLib {
 	public:
 		inline static D3D12_RESOURCE_DESC CreateResourceDesc(DXGI_FORMAT format, D3D12_RESOURCE_DIMENSION dimension,
@@ -63,6 +69,9 @@ namespace DxCreateLib
 
 	};
 
+	/// <summary>
+	/// DSV関係の関数
+	/// </summary>
 	class DSVLib {
 	public:
 		/// <summary>
@@ -81,4 +90,24 @@ namespace DxCreateLib
 		}
 	};
 
+	/// <summary>
+	/// Descriptor関係の関数
+	/// </summary>
+	class DescriptorLib {
+	public:
+		inline static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index) 
+		{
+			D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
+			handleCPU.ptr += (descriptorSize * index);
+			return handleCPU;
+		}
+
+		inline static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index)
+		{
+			D3D12_GPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
+			handleCPU.ptr += (descriptorSize * index);
+			return handleCPU;
+		}
+
+	};
 }

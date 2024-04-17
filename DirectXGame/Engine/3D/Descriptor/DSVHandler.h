@@ -12,6 +12,7 @@ public:
 
 	void StaticInitialize(DirectXDevice* dxDevice);
 
+private:
 	void CreateDepthBuffer();
 
 private:

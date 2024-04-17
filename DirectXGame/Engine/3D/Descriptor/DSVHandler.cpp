@@ -1,6 +1,7 @@
 #include "DSVHandler.h"
 #include "Utility/DxCreateLib.h"
 #include "../../Base/DirectX/DirectXDevice.h"
+#include "../../WindowAPI/WindowAPI.h"
 
 #include <cassert>
 
@@ -10,7 +11,9 @@ void DSVHandler::StaticInitialize(DirectXDevice* dxDevice)
 {
 	assert(dxDevice);
 	dxDevice_ = dxDevice;
-
+	bufferWidth_ = WindowAPI::kWindowWidth;
+	bufferHeight_ = WindowAPI::kWindowHeight;
+	CreateDepthBuffer();
 }
 
 void DSVHandler::CreateDepthBuffer()
