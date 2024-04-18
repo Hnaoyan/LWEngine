@@ -55,6 +55,14 @@ private: // Heap
 	// dsv
 	std::unique_ptr<DSVHandler> dsvHandler_;
 
+public: // アクセッサ
+	ID3D12Device* GetDevice() { return dxDevice_->GetDevice(); }
+	ID3D12GraphicsCommandList* GetCommandList() { return dxCommand_->commandList_.Get(); }
+
+	SRVHandler* GetSrvHandler() { return srvHandler_.get(); }
+	RTVHandler* GetRtvHandler() { return rtvHandler_.get(); }
+	DSVHandler* GetDsvHandler() { return dsvHandler_.get(); }
+
 private:
 	// 記録時間(FPS固定用)
 	std::chrono::steady_clock::time_point reference_;

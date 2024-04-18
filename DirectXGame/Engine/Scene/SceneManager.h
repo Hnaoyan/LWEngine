@@ -32,7 +32,7 @@ public:
 
 	void Draw();
 
-	//void ImGuiController();
+	void ImGuiDraw();
 
 	void ChangeScene(const std::string& sceneName);
 

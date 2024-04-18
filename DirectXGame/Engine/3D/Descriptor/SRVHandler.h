@@ -36,6 +36,7 @@ public: // アクセッサ
 	D3D12_CPU_DESCRIPTOR_HANDLE GetSrvHandleCPU(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU(ID3D12DescriptorHeap* descriptorheap, uint32_t descriptorSize, uint32_t index);
 
+	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap_.Get(); }
 private:
 	// デバイスクラス
 	DirectXDevice* dxDevice_;

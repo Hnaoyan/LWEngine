@@ -15,7 +15,7 @@ void Framework::Execute()
 		if (endRequest_) {
 			break;
 		}
-		
+
 		// 描画
 		Draw();
 
@@ -38,13 +38,19 @@ void Framework::Initialize()
 	// シェーダー読み込みクラス初期化
 	//Shader::GetInstance()->Initialize();
 
+	// ImGuiの生成
+	imGuiManager_ = std::make_unique<ImGuiManager>();
+	imGuiManager_->Initialize(dxCommon_, winApp_);
 
+	// シーンマネージャーの生成
+	sceneManager_ = std::make_unique<SceneManager>();
+	
 }
 
 void Framework::Finalize()
 {
 
-
+	imGuiManager_->Finalize();
 	CoUninitialize();
 }
 

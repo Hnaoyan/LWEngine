@@ -23,6 +23,11 @@ void SceneManager::Draw()
 	nowScene_->Draw();
 }
 
+void SceneManager::ImGuiDraw()
+{
+	nowScene_->ImGuiDraw();
+}
+
 void SceneManager::ChangeScene(const std::string& sceneName)
 {
 	assert(sceneFactory_);

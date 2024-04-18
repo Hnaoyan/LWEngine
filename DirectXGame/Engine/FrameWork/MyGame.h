@@ -1,6 +1,7 @@
 #pragma once
 #include "Framework.h"
 #include "../Scene/SceneManager.h"
+#include "../Scene/SceneFactory/AbstractSceneFactory.h"
 
 class MyGame : public Framework
 {
@@ -31,7 +32,6 @@ public:
 	void ImGuiDraw() override;
 
 private:
-
-
+	std::unique_ptr<AbstractSceneFactory> sceneFactory_;
 };
 

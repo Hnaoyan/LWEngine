@@ -1,6 +1,7 @@
 #pragma once
 #include "../WindowAPI/WindowAPI.h"
 #include "../Base/DirectXCommon.h"
+#include "../Base/ImGui/ImGuiManager.h"
 
 #include "../Scene/SceneManager.h"
 
@@ -62,6 +63,7 @@ protected:	// ポインタ
 
 protected:
 	std::unique_ptr<SceneManager> sceneManager_;
+	std::unique_ptr<ImGuiManager> imGuiManager_;
 
 };
 

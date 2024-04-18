@@ -1,16 +1,22 @@
 #include "MyGame.h"
+#include "../Scene/SceneFactory/SceneFactory.h"
+#include "imgui.h"
 
 void MyGame::Initialize()
 {
 	// 基底クラス
 	Framework::Initialize();
 
-
+	// シーンの初期化
+	sceneFactory_ = std::make_unique<SceneFactory>();
+	sceneManager_->SetSceneFactory(sceneFactory_.get());
+	sceneManager_->ChangeScene("SAMPLE");
 
 }
 
 void MyGame::Finalize()
 {
+	sceneFactory_.release();
 	// 基底フラグ
 	Framework::Finalize();
 }
@@ -19,6 +25,9 @@ void MyGame::Update()
 {
 	// 基底クラス
 	Framework::Update();
+
+	// シーンの更新
+	sceneManager_->Update();
 
 	// 終了フラグ
 	endRequest_ = winApp_->ProcessMessage();
@@ -30,8 +39,10 @@ void MyGame::Draw()
 	// 描画前処理
 	dxCommon_->PreDraw();
 
+	// ImGuiの描画
+	ImGuiDraw();
 
-	//ImGuiDraw();
+	sceneManager_->Draw();
 
 	// 描画後処理
 	dxCommon_->PostDraw();
@@ -39,5 +50,12 @@ void MyGame::Draw()
 
 void MyGame::ImGuiDraw()
 {
-
+	// 受付開始
+	imGuiManager_->Begin();
+	// シーンのImGuiまとめた関数呼び出し
+	sceneManager_->ImGuiDraw();
+	// 受付終了
+	imGuiManager_->End();
+	// 描画
+	imGuiManager_->Draw();
 }

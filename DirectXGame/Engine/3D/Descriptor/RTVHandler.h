@@ -16,10 +16,11 @@ public: // 初期化時のみ
 public:
 	void ClearRenderTarget(ID3D12GraphicsCommandList* cmdList);
 
-	ID3D12DescriptorHeap* GetHeap() { return rtvHeap_.Get(); }
+	//ID3D12DescriptorHeap* GetHeap() { return rtvHeap_.Get(); }
 	D3D12_RENDER_TARGET_VIEW_DESC GetDesc() { return rtvDesc_; }
 	ID3D12Resource* GetBackBuffer(UINT index) { return backBuffer_[index].Get(); }
 	size_t GetBackBufferCount() const { return backBuffer_.size(); }
+	ID3D12DescriptorHeap* GetRtvHeap() { return rtvHeap_.Get(); }
 
 private:
 	void CreateRenderTargetView();
