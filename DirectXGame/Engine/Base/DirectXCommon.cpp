@@ -58,8 +58,8 @@ void DirectXCommon::PreDraw()
 	// レンダーターゲットを設定
 	dxCommand_->commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	rtvHandler_->ClearRenderTarget(dxCommand_.get()->commandList_.Get());
-	dsvHandler_->ClearDepthBuffer(dxCommand_.get()->commandList_.Get());
+	rtvHandler_->ClearRenderTarget(dxCommand_->commandList_.Get());
+	dsvHandler_->ClearDepthBuffer(dxCommand_->commandList_.Get());
 	//ClearDepthBuffer();
 
 	// ビューポートの設定

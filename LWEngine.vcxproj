@@ -35,6 +35,7 @@
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h" />
