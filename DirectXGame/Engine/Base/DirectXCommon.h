@@ -31,6 +31,9 @@ private:
 private:
 	// ウィンドウズポインタ
 	WindowAPI* winApp_ = nullptr;
+
+	ID3D12Device* device_ = nullptr;
+	ID3D12GraphicsCommandList* commandList_ = nullptr;
 	// 画面のサイズ
 	int32_t backBufferWidth_ = 0;
 	int32_t backBufferHeight_ = 0;

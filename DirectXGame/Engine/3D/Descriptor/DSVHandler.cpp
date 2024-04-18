@@ -1,5 +1,5 @@
 #include "DSVHandler.h"
-#include "Utility/DxCreateLib.h"
+#include "../../Base/Utility/DxCreateLib.h"
 #include "../../Base/DirectX/DirectXDevice.h"
 #include "../../WindowAPI/WindowAPI.h"
 
@@ -14,6 +14,14 @@ void DSVHandler::StaticInitialize(DirectXDevice* dxDevice)
 	bufferWidth_ = WindowAPI::kWindowWidth;
 	bufferHeight_ = WindowAPI::kWindowHeight;
 	CreateDepthBuffer();
+}
+
+void DSVHandler::ClearDepthBuffer(ID3D12GraphicsCommandList* cmdList)
+{
+	// ハンドル
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvHeap_->GetCPUDescriptorHandleForHeapStart();
+	// 指定した深度で画面全体をクリアする
+	cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void DSVHandler::CreateDepthBuffer()

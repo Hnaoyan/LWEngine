@@ -16,6 +16,11 @@ public: // 初期化時のみ
 public:
 	void ClearRenderTarget(ID3D12GraphicsCommandList* cmdList);
 
+	ID3D12DescriptorHeap* GetHeap() { return rtvHeap_.Get(); }
+	D3D12_RENDER_TARGET_VIEW_DESC GetDesc() { return rtvDesc_; }
+	ID3D12Resource* GetBackBuffer(UINT index) { return backBuffer_[index].Get(); }
+	size_t GetBackBufferCount() const { return backBuffer_.size(); }
+
 private:
 	void CreateRenderTargetView();
 
@@ -27,11 +32,11 @@ private:
 	// ヒープ自体
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
 
-	uint32_t kDescriptorSize_;
-	uint32_t size_;
+	uint32_t kDescriptorSize_ = 0;
+	uint32_t size_ = 0;
 
 	// RTVのデスク
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_;
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_ = {};
 	std::vector<Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffer_;
 
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvHandles_;

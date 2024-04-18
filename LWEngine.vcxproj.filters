@@ -170,7 +170,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\Utility\DxCreateLib.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

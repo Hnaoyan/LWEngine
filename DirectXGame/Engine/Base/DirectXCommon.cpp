@@ -1,4 +1,5 @@
 #include "DirectXCommon.h"
+#include "Utility/DxCreateLib.h"
 
 #include <cassert>
 #include <thread>
@@ -13,12 +14,17 @@ void DirectXCommon::Initialize(WindowAPI* winApp, int32_t bufferWidth, int32_t b
 
 	// フレームレートの設定
 	InitializeFixFPS();
-	// DirectX関係の初期化
+	// デバイス関係
 	dxDevice_ = std::make_unique<DirectXDevice>();
 	dxDevice_->Initialize();
-
+	// コマンド関係
 	dxCommand_ = std::make_unique<DirectXCommand>();
 	dxCommand_->Initialize(dxDevice_->GetDevice());
+
+	// 多用するもののポインタ
+	device_ = dxDevice_->GetDevice();
+	//commandList_ = dxCommand_->commandList_.Get();
+
 	// SwapChain:Fence
 	swapChainManager_ = std::make_unique<SwapChainManager>();
 	swapChainManager_->Initialize(dxDevice_.get(), backBufferWidth_, backBufferHeight_);
@@ -37,11 +43,77 @@ void DirectXCommon::Initialize(WindowAPI* winApp, int32_t bufferWidth, int32_t b
 
 void DirectXCommon::PreDraw()
 {
+	
+	UINT backBufferIndex = swapChainManager_->GetSwapChain()->GetCurrentBackBufferIndex();
+
+	// Barrier
+	D3D12_RESOURCE_BARRIER barrier = DxCreateLib::ResourceLib::GetResourceBarrier(rtvHandler_->GetBackBuffer(backBufferIndex),
+		D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+	// TransionBarrier
+	dxCommand_->commandList_->ResourceBarrier(1, &barrier);
+
+	// ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHandler_->GetHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), backBufferIndex);
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvHandler_->GetHeap()->GetCPUDescriptorHandleForHeapStart();
+	// レンダーターゲットを設定
+	dxCommand_->commandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+
+	rtvHandler_->ClearRenderTarget(dxCommand_.get()->commandList_.Get());
+	dsvHandler_->ClearDepthBuffer(dxCommand_.get()->commandList_.Get());
+	//ClearDepthBuffer();
+
+	// ビューポートの設定
+	D3D12_VIEWPORT viewport = DxCreateLib::ViewLib::CreateViewport(FLOAT(backBufferWidth_), FLOAT(backBufferHeight_), 0, 0, 0.0f, 1.0f);
+	D3D12_RECT scissorRect = DxCreateLib::ViewLib::CreateScissorRect(0, FLOAT(backBufferWidth_), 0, FLOAT(backBufferHeight_));
+	dxCommand_->commandList_->RSSetViewports(1, &viewport);
+	dxCommand_->commandList_->RSSetScissorRects(1, &scissorRect);
+
 
 }
 
 void DirectXCommon::PostDraw()
 {
+	HRESULT result = S_FALSE;
+
+	UINT backBufferIndex = swapChainManager_->GetSwapChain()->GetCurrentBackBufferIndex();
+	// Barrier
+	D3D12_RESOURCE_BARRIER barrier = DxCreateLib::ResourceLib::GetResourceBarrier(rtvHandler_->GetBackBuffer(backBufferIndex),
+		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+	// TransionBarrier
+	dxCommand_->commandList_->ResourceBarrier(1, &barrier);
+
+	// コマンドリストの内容を確定させる。
+	result = dxCommand_->commandList_->Close();
+	assert(SUCCEEDED(result));
+
+	ID3D12CommandList* commandLists[] = { dxCommand_->commandList_.Get() };
+	dxCommand_->commandQueue_->ExecuteCommandLists(1, commandLists);
+
+	// GPUとOSに画面の交換を行うように
+	swapChainManager_->GetSwapChain()->Present(1, 0);
+
+	// FenceのSignal待ち
+	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent != nullptr);
+
+	// GPUがここまでたどり着いたときに
+	dxCommand_->commandQueue_->Signal(swapChainManager_->GetFence(), ++fenceVal_);
+
+	if (swapChainManager_->GetFence()->GetCompletedValue() != fenceVal_) 
+	{
+		// 指定した
+		swapChainManager_->GetFence()->SetEventOnCompletion(fenceVal_, fenceEvent);
+		// イベント待ち
+		WaitForSingleObject(fenceEvent, INFINITE);
+		CloseHandle(fenceEvent);
+	}
+
+	// FPS固定処理
+	UpdateFixFPS();
+	// 次フレーム用のコマンドリストを準備
+	result = dxCommand_->commandAllocator_->Reset();
+	assert(SUCCEEDED(result));
+	result = dxCommand_->commandList_->Reset(dxCommand_->commandAllocator_.Get(), nullptr);
 
 }
 

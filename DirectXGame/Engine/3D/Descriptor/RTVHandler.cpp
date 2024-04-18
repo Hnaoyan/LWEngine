@@ -1,5 +1,5 @@
 #include "RTVHandler.h"
-#include "Utility/DxCreateLib.h"
+#include "../../Base/Utility/DxCreateLib.h"
 #include "../../Base/DirectX/DirectXDevice.h"
 #include "../../Base/DirectX/SwapChainManager.h"
 
@@ -22,6 +22,19 @@ void RTVHandler::StaticInitialize(DirectXDevice* dxDevice, SwapChainManager* swa
 
 	// RTV生成
 	CreateRenderTargetView();
+}
+
+void RTVHandler::ClearRenderTarget(ID3D12GraphicsCommandList* cmdList)
+{
+	// これから書き込むバックバッファのインデックスを取得
+	UINT backBufferIndex = swapChainManager_->GetSwapChain()->GetCurrentBackBufferIndex();
+
+	// 描画先のRTVを設定する
+	// ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHeap_.Get(), dxDevice_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), backBufferIndex);
+
+	// 指定した色で画面全体をクリアする
+	cmdList->ClearRenderTargetView(rtvHandle, clearColor_, 0, nullptr);
 }
 
 void RTVHandler::CreateRenderTargetView()

@@ -128,7 +128,7 @@ public: // マウス系
 private:
 	static BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext) noexcept;
 
-	Input() = default;
+	Input() {};
 	~Input();
 	Input(const Input&) = delete;
 	const Input& operator=(const Input&) = delete;
@@ -142,14 +142,14 @@ private:
 	ComPtr<IDirectInputDevice8> dMouse_;
 
 	std::vector<JoyStick> devJoysticks_;
-	std::array<BYTE, 256> key_;
-	std::array<BYTE, 256> preKey_;
+	std::array<BYTE, 256> key_ = {};
+	std::array<BYTE, 256> preKey_ = {};
 
-	DIMOUSESTATE2 mouse_;
-	DIMOUSESTATE2 preMouse_;
+	DIMOUSESTATE2 mouse_ = {};
+	DIMOUSESTATE2 preMouse_ = {};
 
-	HWND hwnd_;
+	HWND hwnd_ = {};
 
-	Vector2 mousePosition_;
+	Vector2 mousePosition_ = {};
 };
 

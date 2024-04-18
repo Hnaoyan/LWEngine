@@ -67,6 +67,22 @@ namespace DxCreateLib
 			return resourceDesc;
 		}
 
+		inline static D3D12_RESOURCE_BARRIER GetResourceBarrier(ID3D12Resource* backBuffer, D3D12_RESOURCE_STATES stateBefore, D3D12_RESOURCE_STATES stateAfter) {
+			// TransitionBarrierの設定
+			D3D12_RESOURCE_BARRIER barrier{};
+			// 今回のバリアはTransition
+			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+			// Noneにしておく
+			barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+			// バリアを張る対象のリソース。
+			barrier.Transition.pResource = backBuffer;
+			// 遷移前（現在）のResourceState
+			barrier.Transition.StateBefore = stateBefore;
+			// 遷移後のState
+			barrier.Transition.StateAfter = stateAfter;
+			return barrier;
+		}
+
 	};
 
 	/// <summary>
@@ -110,4 +126,33 @@ namespace DxCreateLib
 		}
 
 	};
+
+	class ViewLib {
+	public:
+		inline static D3D12_VIEWPORT CreateViewport(FLOAT width, FLOAT height, FLOAT topLeftX, FLOAT topLeftY, FLOAT minDepth, FLOAT maxDepth) {
+			D3D12_VIEWPORT viewport{};
+			viewport.Width = width;
+			viewport.Height = height;
+			viewport.TopLeftX = topLeftX;
+			viewport.TopLeftY = topLeftY;
+			viewport.MinDepth = minDepth;
+			viewport.MaxDepth = maxDepth;
+			return viewport;
+		}
+
+		inline static D3D12_RECT CreateScissorRect(FLOAT left, FLOAT right, FLOAT top, FLOAT bottom) {
+			D3D12_RECT scissorRect{};
+			scissorRect.left = LONG(left);
+			scissorRect.right = LONG(right);
+			scissorRect.top = LONG(top);
+			scissorRect.bottom = LONG(bottom);
+			return scissorRect;
+		}
+
+	};
+	//class Common {
+	//public:
+	//	inline static D3D12_RESOURCE_BARRIER GetBarrier
+	//};
+
 }
