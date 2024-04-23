@@ -9,10 +9,10 @@
 namespace Pipeline
 {
 	enum class RootParameter : int {
-		kWorldTransform,
-		kViewProjection,
 		kMaterial,
 		kTexture,
+		kWorldTransform,
+		kViewProjection,
 		kLight,
 
 		// サイズを取得する為の値
@@ -21,10 +21,10 @@ namespace Pipeline
 
 	// パーティクルのレジスタ用
 	enum class ParticleRegister : int {
-		kWorldTransform,
-		kViewProjection,
 		kMaterial,
 		kTexture,
+		kWorldTransform,
+		kViewProjection,
 
 		kCountOfParameter,
 	};

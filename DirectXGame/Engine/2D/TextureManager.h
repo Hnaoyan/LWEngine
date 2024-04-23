@@ -25,18 +25,20 @@ public:
 		D3D12_GPU_DESCRIPTOR_HANDLE gpuDescriptorHandle;
 		// 名前
 		std::string name;
-
+		// ハンドルインデックス
+		uint32_t descriptorIndex;
 	};
 
 	void Initialize(DirectXCommon* dxCommon, std::string directoryPath = "Resources/Texture/");
 
 private:
+	// 全般
 	DirectXCommon* dxCommon_ = nullptr;
+	// デバイス
 	ID3D12Device* device_ = nullptr;
 
-
+	// ディレクトリのパス
 	std::string directoryPath_;
-
 public:
 
 	/// <summary>

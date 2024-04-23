@@ -36,10 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
+    <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\CBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\WorldTransform.h" />
+    <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />
@@ -49,6 +51,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\ICamera.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />
