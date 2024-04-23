@@ -53,8 +53,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
     //heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;	// プロセッサ
 
     // Resourceの生成
-    Microsoft::WRL::ComPtr<ID3D12Resource> resource;
-    //ID3D12Resource* resource = nullptr;
+    Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
     HRESULT hr = device_->CreateCommittedResource(
         &heapProperties,	// Heapの設定
         D3D12_HEAP_FLAG_NONE,	// Heapの特殊な設定。特になし
@@ -74,8 +73,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microso
     uint64_t intermediateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresources.size()));
     //ID3D12Resource* intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
     
-    Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource;
-    intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
+    Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
     UpdateSubresources(commandList, texture.Get(), intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
     // Textureへの転送後は利用できるよう、D3D12_RESOURCE_STATE_COPY_DESTからD3D12_RESOURCE_STATE_GENERIC_READへResourceStateを変更する
     D3D12_RESOURCE_BARRIER barrier{};
