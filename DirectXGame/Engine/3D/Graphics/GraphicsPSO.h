@@ -1,10 +1,13 @@
 #pragma once
 #include "../../Utility/Singleton.h"
+#include "../../Base/Utility/DxCreateLib.h"
 
 #include <memory>
 #include <array>
 #include <wrl.h>
+
 #include <d3d12.h>
+#include <dxcapi.h>
 
 namespace Pipeline
 {
@@ -52,15 +55,24 @@ namespace Pipeline
 
 class GraphicsPSO : public Singleton<GraphicsPSO>
 {
+private:
+	// パイプライン用の関数をまとめたライブラリのパス
+	using PSOLib = DxCreateLib::PSOLib;
+
 public:
 
-	static void CreatePipeline();
+	static void Initialize(ID3D12Device* device);
 
 public:
+	// Sprite用
+	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sSpritePipelineStates_;
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSpriteRootSignature_;
+
 	// Model用
 	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sPipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sRootSignature_;
+		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sModelPipelineStates_;
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sModelRootSignature_;
 
 	// Particle用（インスタンシング
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;
@@ -68,8 +80,32 @@ public:
 
 private:
 
+	void CreateSpritePSO();
 	void CreateModelPSO();
 	void CreateParticlePSO();
+
+
+	/// <summary>
+	/// RootSignature作成関数（まだ
+	/// </summary>
+	/// <param name="rootParameters"></param>
+	/// <param name="rootParamSize"></param>
+	/// <param name="staticSamplers"></param>
+	/// <param name="samplerSize"></param>
+	void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize);
+
+	/// <summary>
+	/// PSO作成
+	/// </summary>
+	/// <param name="gPipeline"></param>
+	/// <param name="pipelineState"></param>
+	void CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState);
+
+private:
+	ID3D12Device* device_ = nullptr;
+
+private:
+
 
 };
 

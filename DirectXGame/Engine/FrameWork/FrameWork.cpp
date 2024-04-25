@@ -1,5 +1,6 @@
 #include "FrameWork.h"
 #include "../3D/Graphics/Shader.h"
+#include "../3D/Graphics/GraphicsPSO.h"
 
 void Framework::Execute()
 {
@@ -36,7 +37,9 @@ void Framework::Initialize()
 	dxCommon_->Initialize(winApp_);
 
 	// シェーダー読み込みクラス初期化
-	//Shader::GetInstance()->Initialize();
+	Shader::GetInstance()->Initialize();
+	// パイプラインの初期化
+	GraphicsPSO::GetInstance()->Initialize(dxCommon_->GetDevice());
 
 	// ImGuiの生成
 	imGuiManager_ = std::make_unique<ImGuiManager>();

@@ -81,6 +81,9 @@
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -210,8 +213,11 @@
   <ItemGroup>
     <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_VS.hlsl" />
     <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_PS.hlsl" />
+    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
+    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXGame\Engine\3D\Shader\Object3D.hlsli" />
+    <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
 </Project>

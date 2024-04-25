@@ -10,8 +10,8 @@ class SceneManager : public Singleton<SceneManager>
 private:
 	std::unique_ptr<IScene> sceneArray_[3];
 
-	int sceneNum_;
-	int prevSceneNum_;
+	int sceneNum_ = 0;
+	int prevSceneNum_ = 0;
 
 	/// <summary>
 	/// シーンファクトリー
@@ -23,7 +23,7 @@ private:
 	// 次のシーン
 	IScene* nextScene_ = nullptr;
 	// 名前
-	std::string nextSceneName_;
+	std::string nextSceneName_{};
 
 public:
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }

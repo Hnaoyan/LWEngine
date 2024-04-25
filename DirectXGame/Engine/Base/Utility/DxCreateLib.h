@@ -186,4 +186,104 @@ namespace DxCreateLib
 	//	inline static D3D12_RESOURCE_BARRIER GetBarrier
 	//};
 
+	class PSOLib {
+	public:
+		inline static D3D12_INPUT_ELEMENT_DESC SetInputLayout(const char* semanticName, DXGI_FORMAT format)
+		{
+			D3D12_INPUT_ELEMENT_DESC inputLayout = {
+				semanticName,0,format,0,D3D12_APPEND_ALIGNED_ELEMENT,
+				D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+			};
+
+			return inputLayout;
+		}
+
+		inline static D3D12_BLEND_DESC SetBlendDesc(D3D12_BLEND srcBlend, D3D12_BLEND_OP blendOp, D3D12_BLEND destBlend)
+		{
+			D3D12_BLEND_DESC blendDesc{};
+			// 初期設定
+			blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+			blendDesc.RenderTarget[0].BlendEnable = TRUE;
+
+			// 基本設定
+			blendDesc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
+			blendDesc.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+			blendDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+			// 種類別設定
+			blendDesc.RenderTarget[0].SrcBlend = srcBlend;
+			blendDesc.RenderTarget[0].BlendOp = blendOp;
+			blendDesc.RenderTarget[0].DestBlend = destBlend;
+			return blendDesc;
+		}
+
+		inline static D3D12_RASTERIZER_DESC SetRasterizerState(D3D12_FILL_MODE fillMode, D3D12_CULL_MODE cullMode)
+		{
+			D3D12_RASTERIZER_DESC rasterizer{};
+			rasterizer.FillMode = fillMode;
+			rasterizer.CullMode = cullMode;
+			rasterizer.FrontCounterClockwise = FALSE;
+			rasterizer.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
+			rasterizer.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
+			rasterizer.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+			rasterizer.DepthClipEnable = TRUE;
+			rasterizer.MultisampleEnable = FALSE;
+			rasterizer.AntialiasedLineEnable = FALSE;
+			rasterizer.ForcedSampleCount = 0;
+			rasterizer.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
+			return rasterizer;
+		}
+
+
+		inline static D3D12_STATIC_SAMPLER_DESC SetSamplerDesc(UINT shaderRegister, D3D12_FILTER filter)
+		{
+			D3D12_STATIC_SAMPLER_DESC staticSampler{};
+			staticSampler.ShaderRegister = shaderRegister;
+			staticSampler.Filter = filter;
+			staticSampler.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			staticSampler.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			staticSampler.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+			staticSampler.MipLODBias = 0;
+			staticSampler.MaxAnisotropy = 16;
+			staticSampler.ComparisonFunc = D3D12_COMPARISON_FUNC_EQUAL;
+			staticSampler.BorderColor = D3D12_STATIC_BORDER_COLOR_OPAQUE_WHITE;
+			staticSampler.MinLOD = 0.f;
+			staticSampler.MaxLOD = D3D12_FLOAT32_MAX;
+			staticSampler.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+			staticSampler.RegisterSpace = 0;
+			return staticSampler;
+		}
+
+		inline static D3D12_DESCRIPTOR_RANGE InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE rangeType, UINT numDescriptors, UINT baseShaderRegister)
+		{
+			D3D12_DESCRIPTOR_RANGE ranges{};
+			ranges.RangeType = rangeType;
+			ranges.NumDescriptors = numDescriptors;
+			ranges.BaseShaderRegister = baseShaderRegister;
+			ranges.RegisterSpace = 0;
+			ranges.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+			return ranges;
+		}
+
+		inline static D3D12_ROOT_PARAMETER InitAsConstantBufferView(UINT shaderRegister, UINT registerSpace, D3D12_SHADER_VISIBILITY visibility)
+		{
+			D3D12_ROOT_PARAMETER rootParam{};
+			rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+			rootParam.ShaderVisibility = visibility;
+			rootParam.Descriptor.RegisterSpace = registerSpace;
+			rootParam.Descriptor.ShaderRegister = shaderRegister;
+			return rootParam;
+		}
+
+		inline static D3D12_ROOT_PARAMETER InitAsDescriptorTable(UINT numDescriptorRanges, const D3D12_DESCRIPTOR_RANGE* pDescritorRange, D3D12_SHADER_VISIBILITY visibility)
+		{
+			D3D12_ROOT_PARAMETER rootParam{};
+			rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+			rootParam.ShaderVisibility = visibility;
+			rootParam.DescriptorTable.NumDescriptorRanges = numDescriptorRanges;
+			rootParam.DescriptorTable.pDescriptorRanges = pDescritorRange;
+			return rootParam;
+		}
+
+	};
+
 }
