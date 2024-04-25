@@ -8,6 +8,8 @@ void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 	HRESULT result = S_FALSE;
 	dxDevice_ = dxDevice;
 
+	kDescriptorSizeSRV_ = dxDevice_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescriptorHeapDesc{};
 	srvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescriptorHeapDesc.NumDescriptors = max;
@@ -17,7 +19,6 @@ void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 
 	assert(SUCCEEDED(result));
 
-	descriptorSizeSRV_ = dxDevice_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	index_ = 2;
 
 }

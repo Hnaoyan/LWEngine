@@ -57,7 +57,7 @@ private: // Heap
 
 public: // アクセッサ
 	ID3D12Device* GetDevice() { return dxDevice_->GetDevice(); }
-	ID3D12GraphicsCommandList* GetCommandList() { return dxCommand_->commandList_.Get(); }
+	ID3D12GraphicsCommandList* GetCommandList() { return DirectXCommand::commandList_.Get(); }
 
 	SRVHandler* GetSrvHandler() { return srvHandler_.get(); }
 	RTVHandler* GetRtvHandler() { return rtvHandler_.get(); }

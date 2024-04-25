@@ -11,6 +11,7 @@ void DSVHandler::StaticInitialize(DirectXDevice* dxDevice)
 {
 	assert(dxDevice);
 	dxDevice_ = dxDevice;
+	kDescriptorSizeDSV_ = dxDevice_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 	bufferWidth_ = WindowAPI::kWindowWidth;
 	bufferHeight_ = WindowAPI::kWindowHeight;
 	CreateDepthBuffer();

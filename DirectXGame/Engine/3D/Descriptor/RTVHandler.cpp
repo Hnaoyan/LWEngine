@@ -10,6 +10,10 @@ void RTVHandler::StaticInitialize(DirectXDevice* dxDevice, SwapChainManager* swa
 	assert(dxDevice);
 	dxDevice_ = dxDevice;
 	swapChainManager_ = swapChainManager;
+
+	// RTVのサイズ
+	kDescriptorSizeRTV_ = dxDevice_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
 	HRESULT result = S_FALSE;
 
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};

@@ -14,12 +14,12 @@ void GraphicsPSO::CreatePipeline()
 
 void GraphicsPSO::CreateModelPSO()
 {
-	HRESULT result = S_FALSE;
+	//HRESULT result = S_FALSE;
 
-	ComPtr<IDxcBlob> vsBlob;
-	ComPtr<IDxcBlob> psBlob;
-	ComPtr<ID3DBlob> errorBlob;
-	ComPtr<ID3DBlob> rootSigBlob;
+	//ComPtr<IDxcBlob> vsBlob;
+	//ComPtr<IDxcBlob> psBlob;
+	//ComPtr<ID3DBlob> errorBlob;
+	//ComPtr<ID3DBlob> rootSigBlob;
 
 
 }

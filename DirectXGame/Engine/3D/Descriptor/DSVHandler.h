@@ -26,7 +26,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_;
 
 	// インフォ
-	uint32_t kDescriptorSize_ = 0;
+	uint32_t kDescriptorSizeDSV_ = 0;
 	uint32_t size_ = 0;
 	uint32_t bufferWidth_ = 0;
 	uint32_t bufferHeight_ = 0;
