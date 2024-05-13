@@ -6,6 +6,18 @@
 #include <cassert>
 #include <d3dx12.h>
 
+uint32_t TextureManager::sNextHandleIndex = 0u;
+
+uint32_t TextureManager::Load(const std::string& fileName)
+{
+    // テクスチャ自体の読み込み
+    uint32_t textureNum = TextureManager::GetInstance()->LoadInternal(fileName);
+    // ハンドルに設定
+    TextureManager::GetInstance()->SetTextureHandle(textureNum);
+
+    return textureNum;
+}
+
 void TextureManager::Initialize(DirectXCommon* dxCommon, std::string directoryPath)
 {
     assert(dxCommon);
@@ -15,6 +27,58 @@ void TextureManager::Initialize(DirectXCommon* dxCommon, std::string directoryPa
 
     device_ = dxCommon_->GetDevice();
 
+}
+
+void TextureManager::SetTextureHandle(uint32_t textureHandle)
+{
+    textureHandles_[textureHandle] = textureHandle;
+    sNextHandleIndex++;
+}
+
+uint32_t TextureManager::LoadInternal(const std::string fileName)
+{
+    for (uint32_t i = 0; i < textures_.size(); ++i) {
+        if (textures_[i].name == fileName) {
+            return i;
+        }
+        else if(textures_[i].name == "") {
+            break;  
+        }
+    }
+
+    assert(descriptorIndex_ < SRVHandler::kDescpritorSize);
+    
+    uint32_t handleNum = descriptorIndex_;
+
+    Texture& texture = textures_.at(handleNum);
+    texture.name = fileName;
+
+    ScratchImage mipImages = LoadTexture(fileName);
+    DirectX::TexMetadata metadata = mipImages.GetMetadata();
+    texture.resource = CreateTextureResource(metadata);
+
+    Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = UploadTextureData(texture.resource, mipImages, dxCommon_->GetCommandList());
+    // metaDataを基にSRVの設定
+    D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+    D3D12_RESOURCE_DESC resDesc = texture.resource->GetDesc();
+
+    srvDesc.Format = resDesc.Format;
+    srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+    srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+
+    texture.cpuDescriptorHandle = SRVHandler::GetSrvHandleCPU();
+    texture.gpuDescriptorHandle = SRVHandler::GetSrvHandleGPU();
+    texture.descriptorNumIndex = SRVHandler::GetNextDescriptorNum();
+    // SRVのインデックスのインクリメント
+    SRVHandler::sNextDescriptorNum_++;
+    // テクスチャ管理インデックスのインクリメント
+    descriptorIndex_++;
+
+    // SRVの生成
+    device_->CreateShaderResourceView(texture.resource.Get(), &srvDesc, texture.cpuDescriptorHandle);
+
+    return handleNum;
 }
 
 ScratchImage TextureManager::LoadTexture(const std::string& filePath)

@@ -1,6 +1,7 @@
 #include "FrameWork.h"
 #include "../3D/Graphics/Shader.h"
 #include "../3D/Graphics/GraphicsPSO.h"
+#include "../2D/TextureManager.h"
 
 void Framework::Execute()
 {
@@ -45,6 +46,13 @@ void Framework::Initialize()
 	imGuiManager_ = std::make_unique<ImGuiManager>();
 	imGuiManager_->Initialize(dxCommon_, winApp_);
 
+	// テクスチャマネージャの初期化
+	TextureManager::GetInstance()->Initialize(dxCommon_);
+	TextureManager::Load("Resources/default/white2x2.png");
+	TextureManager::Load("Resources/default/uvChecker.png");
+
+	uint32_t test = TextureManager::Load("Resources/default/white2x2.png");
+	test;
 	// シーンマネージャーの生成
 	sceneManager_ = std::make_unique<SceneManager>();
 	

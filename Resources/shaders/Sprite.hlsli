@@ -6,11 +6,11 @@ struct spriteData
 
 ConstantBuffer<spriteData> cBuffer : register(b0);
 
-//cbuffer cbuff : register(b0)
-//{
-//    float32_t4 color;
-//    float32_t4x4 mat;
-//}
+cbuffer cbuff : register(b0)
+{
+    float32_t4 color;
+    float32_t4x4 mat;
+}
 
 struct VSOutput
 {
