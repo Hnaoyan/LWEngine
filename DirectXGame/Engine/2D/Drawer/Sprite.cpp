@@ -109,3 +109,47 @@ bool Sprite::Initialize()
 
 	return true;
 }
+
+void Sprite::TransferVertices()
+{
+	// 4頂点
+	enum { LB, LT, RB, RT };
+
+	// 左右上下
+	float left = (0.0f - anchorPoint_.x) * size_.x;
+	float right = (1.0f - anchorPoint_.x) * size_.x;
+	float top = (0.0f - anchorPoint_.y) * size_.y;
+	float bottom = (1.0f - anchorPoint_.y) * size_.y;
+
+	if (isFlipX_) {	// 左右反転
+		left = -left;
+		right = -right;
+	}
+	if (isFlipY_) {	// 上下反転
+		top = -top;
+		bottom = -bottom;
+	}
+
+	// 頂点情報
+	VertexData vertices[kVertNum] = {};
+
+	vertices[LB].position = { left,bottom,0.0f,0.0f };	// 左下
+	vertices[LT].position = { left,top,0.0f,0.0f };		// 左上
+	vertices[RB].position = { right,bottom,0.0f,0.0f };	// 右下
+	vertices[RT].position = { right,top,0.0f,0.0f };		// 右上
+
+	// テクスチャ情報取得
+	{
+		float tex_left = texBase_.x / resourceDesc_.Width;
+		float tex_right = (texBase_.x + texSize_.x) / resourceDesc_.Width;
+		float tex_top = texBase_.y / resourceDesc_.Height;
+		float tex_bottom = (texBase_.y + texSize_.y) / resourceDesc_.Height;
+
+		vertices[LB].texcoord = { tex_left, tex_bottom };  // 左下
+		vertices[LT].texcoord = { tex_left, tex_top };     // 左上
+		vertices[RB].texcoord = { tex_right, tex_bottom }; // 右下
+		vertices[RT].texcoord = { tex_right, tex_top };    // 右上
+	}
+
+	memcpy(vertData_, vertices, sizeof(vertices));
+}

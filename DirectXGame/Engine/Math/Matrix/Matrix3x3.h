@@ -1,6 +1,7 @@
 #pragma once
 
-struct Matrix3x3
+class Matrix3x3
 {
+public:
 	float m[3][3];
 };

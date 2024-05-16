@@ -1,5 +1,6 @@
 #pragma once
 
-struct Quaternion {
+class Quaternion {
+public:
 	float x, y, z, w;
 };

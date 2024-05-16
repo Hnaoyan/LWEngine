@@ -1,9 +1,11 @@
 #pragma once
 
-struct Vector2 final {
+class Vector2 {
+public:
 
 	float x;
 	float y;
+	//Vector2(float x_, float y_) : x(x_), y(y_) {}
 
 #pragma region 四則演算
 	// 加算減算

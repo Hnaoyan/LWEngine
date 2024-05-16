@@ -1,8 +1,10 @@
 #pragma once
 
-struct Vector4 final {
+class Vector4 {
+public:
 	float x, y, z, w;
 
+	//Vector4(float x_, float y_, float z_, float w_) : x(x_), y(y_), z(z_), w(w_) {}
 
 #pragma region 四則演算
 
