@@ -60,6 +60,9 @@ void GraphicsPSO::CreateSpritePSO()
 		{	// uv
 			PSOLib::SetInputLayout("TEXCOORD",DXGI_FORMAT_R32G32_FLOAT)
 		},
+		//{	// uv
+		//	PSOLib::SetInputLayout("TEXCOORD",DXGI_FORMAT_R32G32_FLOAT)
+		//},
 	};
 
 	// パイプライン
@@ -106,7 +109,7 @@ void GraphicsPSO::CreateSpritePSO()
 	gPipeline.SampleDesc.Count = 1;
 
 	// デスクリプタレンジの作成
-	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1] = {};
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);	// t0レジスタ
 
 	// ルートパラメータの作成。複数設定できるので配列。

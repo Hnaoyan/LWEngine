@@ -14,6 +14,14 @@ struct VertexData
 	Vector3 normal;
 };
 
+struct SpriteDataForGPU {
+	Vector4 color;
+	//Matrix4x4 mat;
+	Matrix4x4 WVP;
+	Matrix4x4 world;
+	//Matrix4x4 uv;
+};
+
 struct ModelData {
 	VertexData vertices;
 };

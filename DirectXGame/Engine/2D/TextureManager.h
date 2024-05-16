@@ -24,18 +24,30 @@ public: // 静的メンバ変数
 		// テクスチャリソース
 		Microsoft::WRL::ComPtr<ID3D12Resource> resource;
 		// シェーダーのハンドル（CPU)
-		D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle;
+		D3D12_CPU_DESCRIPTOR_HANDLE cpuDescriptorHandle = {};
 		// シェーダーのハンドル（GPU)
-		D3D12_GPU_DESCRIPTOR_HANDLE gpuDescriptorHandle;
+		D3D12_GPU_DESCRIPTOR_HANDLE gpuDescriptorHandle = {};
 		// 名前
 		std::string name;
 		// SRVインデックス
-		uint32_t descriptorNumIndex;
+		uint32_t descriptorNumIndex = 0;
 	};
 
 	static uint32_t Load(const std::string& fileName);
 
+public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="dxCommon"></param>
+	/// <param name="directoryPath"></param>
 	void Initialize(DirectXCommon* dxCommon, std::string directoryPath = "Resources/");
+	/// <summary>
+	/// リソース情報取得
+	/// </summary>
+	/// <param name="textureHandle"></param>
+	/// <returns></returns>
+	const D3D12_RESOURCE_DESC GetResourceDesc(uint32_t textureHandle);
 
 private:
 	// 全般
@@ -48,7 +60,7 @@ private:
 
 private: // テクスチャハンドル関係
 	// テクスチャハンドルのコンテナ
-	std::array<uint32_t, kNumTextureHandle> textureHandles_;
+	std::array<uint32_t, kNumTextureHandle> textureHandles_ = {};
 	// 次の番号
 	static uint32_t sNextHandleIndex;
 	/// <summary>
@@ -59,7 +71,7 @@ private: // テクスチャハンドル関係
 
 private:
 	// テクスチャのコンテナ
-	std::array<Texture, SRVHandler::kDescpritorSize> textures_;
+	std::array<Texture, SRVHandler::kDescpritorSize> textures_ = {};
 
 	uint32_t descriptorIndex_ = 0u;
 

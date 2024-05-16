@@ -1,9 +1,16 @@
 #include "Sprite.hlsli"
 
-VSOutput main(float32_t4 pos : POSITION, float32_t2 uv : TEXCOORD)
+struct VSInput
+{
+    float32_t4 position : POSITION0;
+    float32_t2 texcoord : TEXCOORD0;
+    //float32_t3 normal : NORMAL0;
+};
+
+VSOutput main(VSInput input)
 {
     VSOutput output;
-    output.svPosition = mul(pos, mat);
-    output.uv = uv;
+    output.svPosition = mul(input.position, cBuffer.WVP);
+    output.uv = input.texcoord;
     return output;
 }

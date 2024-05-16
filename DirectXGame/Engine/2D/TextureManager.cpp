@@ -29,6 +29,13 @@ void TextureManager::Initialize(DirectXCommon* dxCommon, std::string directoryPa
 
 }
 
+const D3D12_RESOURCE_DESC TextureManager::GetResourceDesc(uint32_t textureHandle)
+{
+    assert(textureHandle < textures_.size());
+    Texture& texture = textures_.at(textureHandle);
+    return texture.resource->GetDesc();
+}
+
 void TextureManager::SetTextureHandle(uint32_t textureHandle)
 {
     textureHandles_[textureHandle] = textureHandle;

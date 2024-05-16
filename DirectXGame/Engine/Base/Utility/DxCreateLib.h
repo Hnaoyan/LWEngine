@@ -233,7 +233,6 @@ namespace DxCreateLib
 			return rasterizer;
 		}
 
-
 		inline static D3D12_STATIC_SAMPLER_DESC SetSamplerDesc(UINT shaderRegister, D3D12_FILTER filter)
 		{
 			D3D12_STATIC_SAMPLER_DESC staticSampler{};
