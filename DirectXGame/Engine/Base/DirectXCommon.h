@@ -22,6 +22,10 @@ public:
 	void PreDraw();
 	void PostDraw();
 
+	void ClearDepthBuffer() {
+		dsvHandler_->ClearDepthBuffer(dxCommand_.get()->commandList_.Get());
+	}
+
 private:
 
 	void InitializeFixFPS();

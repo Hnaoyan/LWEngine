@@ -22,6 +22,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp" />

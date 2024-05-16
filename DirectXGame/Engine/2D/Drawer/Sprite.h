@@ -40,7 +40,9 @@ public:
 
 	bool Initialize();
 
-	void Draw() {};
+	void Draw();
+
+	void Update();
 
 	void TransferVertices();
 
@@ -68,14 +70,14 @@ private: // メンバ変数
 	Microsoft::WRL::ComPtr<ID3D12Resource> spriteGPUBuff_;
 
 	uint32_t textureHandle_ = 0u;
-	Vector2 position_;
-	Vector2 size_;
-	Vector2 anchorPoint_;
-	Vector4 color_;
+	Vector2 position_ = {};
+	Vector2 size_ = {};
+	Vector2 anchorPoint_ = {};
+	Vector4 color_ = {};
 	// テクスチャの始点
 	Vector2 texBase_{ 0,0 };
 	// テクスチャのサイズ
-	Vector2 texSize_;
+	Vector2 texSize_ = {};
 
 	Matrix4x4 matWorld_ = {};
 
@@ -85,5 +87,8 @@ private: // メンバ変数
 	bool isFlipX_ = false;
 	bool isFlipY_ = false;
 	bool isInvisible_ = false;
+
+private:
+	float rotation_ = 0.0f;
 
 };

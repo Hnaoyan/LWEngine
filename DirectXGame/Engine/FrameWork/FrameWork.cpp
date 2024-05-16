@@ -2,6 +2,7 @@
 #include "../3D/Graphics/Shader.h"
 #include "../3D/Graphics/GraphicsPSO.h"
 #include "../2D/TextureManager.h"
+#include "../2D/Drawer/Sprite.h"
 
 void Framework::Execute()
 {
@@ -50,6 +51,8 @@ void Framework::Initialize()
 	TextureManager::GetInstance()->Initialize(dxCommon_);
 	TextureManager::Load("Resources/default/white2x2.png");
 	TextureManager::Load("Resources/default/uvChecker.png");
+
+	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
 
 	uint32_t test = TextureManager::Load("Resources/default/white2x2.png");
 	test;

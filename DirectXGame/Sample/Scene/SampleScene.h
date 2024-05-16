@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Engine/Scene/IScene.h"
+#include "../../Engine/2D/Drawer/Sprite.h"
 
 class SampleScene : public IScene
 {
@@ -23,4 +24,8 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw() override;
+private:
+	// 試し
+	std::unique_ptr<Sprite> uvSprite_;
+	uint32_t uvTexture_ = 0u;
 };

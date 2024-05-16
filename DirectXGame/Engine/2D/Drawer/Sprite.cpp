@@ -37,7 +37,8 @@ void Sprite::StaticInitialize(ID3D12Device* device, uint32_t width, uint32_t hei
 {
 
 	sDevice_ = device;
-	width, height;
+	// 射影行列
+	sMatProjection_ = Matrix4x4::MakeOrthographicMatrix(0.0f, 0.0f, (float)width, (float)height, 0.0f, 1.0f);
 }
 
 void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList)
@@ -105,9 +106,43 @@ bool Sprite::Initialize()
 		// マッピング
 		result = spriteGPUBuff_->Map(0, nullptr, reinterpret_cast<void**>(&spriteGPUData_));
 		assert(SUCCEEDED(result));
+
+		spriteGPUData_->world = Matrix4x4::MakeIdentity4x4();
+		spriteGPUData_->WVP = Matrix4x4::MakeIdentity4x4();
+
 	}
 
 	return true;
+}
+
+void Sprite::Draw()
+{
+	Update();
+	// 非表示処理
+	if (isInvisible_) {
+		return;
+	}
+	// パイプラインの設定
+	sCommandList_->SetPipelineState(GraphicsPSO::sSpritePipelineStates_[size_t(blendMode_)].Get());
+	// 頂点バッファ
+	sCommandList_->IASetVertexBuffers(0, 1, &vbView_);
+
+	// マテリアルCbufferの設定
+	sCommandList_->SetGraphicsRootConstantBufferView(0, spriteGPUBuff_->GetGPUVirtualAddress());
+	// シェーダリソースビューの設定
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(sCommandList_, 1, textureHandle_);
+	// 描画
+	sCommandList_->DrawInstanced(kVertNum, 1, 0, 0);
+
+}
+
+void Sprite::Update()
+{
+	TransferVertices();
+
+	// 行列の更新
+	matWorld_ = Matrix4x4::MakeIdentity4x4();
+
 }
 
 void Sprite::TransferVertices()

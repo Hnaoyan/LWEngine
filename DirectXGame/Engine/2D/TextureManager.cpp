@@ -18,6 +18,19 @@ uint32_t TextureManager::Load(const std::string& fileName)
     return textureNum;
 }
 
+void TextureManager::SetGraphicsRootDescriptorTable(ID3D12GraphicsCommandList* commandList, UINT rootParamIndex, uint32_t textureHandle)
+{
+    // デスクリプタヒープの配列
+    assert(textureHandle < textures_.size());
+    ID3D12DescriptorHeap* ppHeaps[] = { dxCommon_->GetSrvHandler()->GetSrvHeap()};
+    commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+
+    // シェーダリソースビューをセット
+    commandList->SetGraphicsRootDescriptorTable(
+        rootParamIndex, textures_[textureHandle].gpuDescriptorHandle);
+
+}
+
 void TextureManager::Initialize(DirectXCommon* dxCommon, std::string directoryPath)
 {
     assert(dxCommon);

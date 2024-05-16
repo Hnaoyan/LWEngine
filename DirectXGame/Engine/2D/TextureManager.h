@@ -34,7 +34,6 @@ public: // 静的メンバ変数
 	};
 
 	static uint32_t Load(const std::string& fileName);
-
 public:
 	/// <summary>
 	/// 初期化
@@ -48,6 +47,10 @@ public:
 	/// <param name="textureHandle"></param>
 	/// <returns></returns>
 	const D3D12_RESOURCE_DESC GetResourceDesc(uint32_t textureHandle);
+	/// <summary>
+	/// DescriptorTableに設定する関数
+	/// </summary>
+	void SetGraphicsRootDescriptorTable(ID3D12GraphicsCommandList* commandList, UINT rootParamIndex, uint32_t textureHandle);
 
 private:
 	// 全般
