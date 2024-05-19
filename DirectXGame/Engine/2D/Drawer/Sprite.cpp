@@ -46,6 +46,11 @@ void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	assert(sCommandList_ == nullptr);
 	// コマンドリストをセット
 	sCommandList_ = cmdList;
+	// ルートシグネチャの設定
+	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sSpriteRootSignature_.Get());
+
+	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 }
 
@@ -81,14 +86,16 @@ bool Sprite::Initialize()
 	{
 		// リソース設定
 		vertBuff_ = ResourceLib::CreateBufferResource(sDevice_, ((sizeof(VertexData) + 0xff) & ~0xff) * kVertNum);
+
+		// 頂点バッファのマッピング
+		result = vertBuff_->Map(0, nullptr, reinterpret_cast<void**>(&vertData_));
+		assert(SUCCEEDED(result));
+
 		// 頂点バッファビューの設定
 		vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 		vbView_.SizeInBytes = ((sizeof(VertexData) + 0xff) & ~0xff) * kVertNum;
 		vbView_.StrideInBytes = (sizeof(VertexData) + 0xff) & ~0xff;
 
-		// 頂点バッファのマッピング
-		result = vertBuff_->Map(0, nullptr, reinterpret_cast<void**>(&vertData_));
-		assert(SUCCEEDED(result));
 	}
 
 	// 頂点バッファへの転送
@@ -124,6 +131,7 @@ void Sprite::Draw()
 	}
 	// パイプラインの設定
 	sCommandList_->SetPipelineState(GraphicsPSO::sSpritePipelineStates_[size_t(blendMode_)].Get());
+
 	// 頂点バッファ
 	sCommandList_->IASetVertexBuffers(0, 1, &vbView_);
 
@@ -140,8 +148,14 @@ void Sprite::Update()
 {
 	TransferVertices();
 
-	// 行列の更新
+	// ワールド行列の更新
 	matWorld_ = Matrix4x4::MakeIdentity4x4();
+	matWorld_ = Matrix4x4::Multiply(matWorld_, Matrix4x4::MakeRotateZMatrix(rotation_));
+	matWorld_ = Matrix4x4::Multiply(matWorld_, Matrix4x4::MakeTranslateMatrix(Vector3(position_.x, position_.y, 0)));
+
+	spriteGPUData_->color = color_;
+	spriteGPUData_->WVP = sMatProjection_;
+	spriteGPUData_->world = matWorld_;
 
 }
 

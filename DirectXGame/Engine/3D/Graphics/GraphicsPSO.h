@@ -80,9 +80,9 @@ public:
 
 private:
 
-	void CreateSpritePSO();
-	void CreateModelPSO();
-	void CreateParticlePSO();
+	static void CreateSpritePSO();
+	static void CreateModelPSO();
+	static void CreateParticlePSO();
 
 
 	/// <summary>
@@ -92,17 +92,17 @@ private:
 	/// <param name="rootParamSize"></param>
 	/// <param name="staticSamplers"></param>
 	/// <param name="samplerSize"></param>
-	void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize);
+	static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize);
 
 	/// <summary>
 	/// PSO作成
 	/// </summary>
 	/// <param name="gPipeline"></param>
 	/// <param name="pipelineState"></param>
-	void CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState);
+	static void CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState);
 
 private:
-	ID3D12Device* device_ = nullptr;
+	static ID3D12Device* sDevice_;
 
 private:
 

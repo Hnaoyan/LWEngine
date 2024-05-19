@@ -94,14 +94,18 @@ namespace DxCreateLib
 			D3D12_RESOURCE_DESC resourceDesc{};
 			// バッファリソース。テクスチャの場合はまた別の設定をする
 			resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resourceDesc.Alignment = 0;
 			resourceDesc.Width = sizeInBytes;	// リソースのサイズ
 			// バッファの場合はこれらは1にする決まり
 			resourceDesc.Height = 1;
 			resourceDesc.DepthOrArraySize = 1;
 			resourceDesc.MipLevels = 1;
+			resourceDesc.Format = DXGI_FORMAT_UNKNOWN;
 			resourceDesc.SampleDesc.Count = 1;
+			resourceDesc.SampleDesc.Quality = 0;
 			// バッファの場合はこれにする決まり
 			resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+			resourceDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
 
 			// 実際に頂点リソースを作る
 			HRESULT hr = S_FALSE;

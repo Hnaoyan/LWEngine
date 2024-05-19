@@ -7,19 +7,46 @@
 #include <wrl.h>
 #include <d3d12.h>
 
+/// <summary>
+/// 2Dスプライトクラス
+/// </summary>
 class Sprite
 {
 private:
+	// リソース関数ライブラリ
 	using ResourceLib = DxCreateLib::ResourceLib;
+	// ブレンドモード
 	using BlendMode = Pipeline::BlendMode;
 
 public:
+	/// <summary>
+	/// 生成関数
+	/// </summary>
+	/// <param name="textureHandle"></param>
+	/// <param name="position"></param>
+	/// <param name="color"></param>
+	/// <param name="anchorpoint"></param>
+	/// <param name="isFlipX"></param>
+	/// <param name="isFlipY"></param>
+	/// <returns></returns>
 	static Sprite* Create(uint32_t textureHandle, Vector2 position, Vector4 color = { 1.0f,1.0f,1.0f,1.0f }, Vector2 anchorpoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="device"></param>
+	/// <param name="width"></param>
+	/// <param name="height"></param>
 	static void StaticInitialize(ID3D12Device* device, uint32_t width, uint32_t height);
 	
+	/// <summary>
+	/// 描画前
+	/// </summary>
+	/// <param name="cmdList"></param>
 	static void PreDraw(ID3D12GraphicsCommandList* cmdList);
-
+	/// <summary>
+	/// 描画後
+	/// </summary>
 	static void PostDraw();
 
 private:
@@ -90,5 +117,75 @@ private: // メンバ変数
 
 private:
 	float rotation_ = 0.0f;
+
+public: // アクセッサ
+	/// <summary>
+	/// テクスチャの設定
+	/// </summary>
+	void SetTextureHandle(uint32_t textureHandle) { textureHandle_ = textureHandle; }
+
+	const uint32_t GetTextureHandle() { return textureHandle_; }
+
+	/// <summary>
+	/// 座標の設定
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPosition(const Vector2& position) { position_ = position; }
+
+	const Vector2& GetPosition() { return position_; }
+
+	/// <summary>
+	/// サイズの設定
+	/// </summary>
+	/// <param name="size"></param>
+	void SetSize(const Vector2& size) { size_ = size; }
+
+	const Vector2& GetSize() { return size_; }
+
+	/// <summary>
+	/// 角度の設定
+	/// </summary>
+	/// <param name="rotation"></param>
+	void SetRotation(float rotation) { rotation_ = rotation; }
+
+	const float GetRotation() { return rotation_; }
+
+	/// <summary>
+	/// アンカーポイントの設定
+	/// </summary>
+	/// <param name="anchorPoint"></param>
+	void SetAnchorPoint(const Vector2& anchorPoint) { anchorPoint_ = anchorPoint; }
+
+	const Vector2 GetAnchorPoint() { return anchorPoint_; }
+
+	/// <summary>
+	/// 色の設定
+	/// </summary>
+	/// <param name="color"></param>
+	void SetColor(const Vector4& color) { color_ = color;	}
+
+	const Vector4 GetColor() { return color_; }
+
+	/// <summary>
+	/// ブレンドの設定
+	/// </summary>
+	/// <param name="mode"></param>
+	void SetBlendMode(Pipeline::BlendMode mode) { blendMode_ = mode; }
+
+	/// <summary>
+	/// 表示か非表示かの設定
+	/// </summary>
+	/// <param name="isInv"></param>
+	void SetInvisible(bool isInv) { isInvisible_ = isInv; }
+
+	/// <summary>
+	/// 描画サイズ設定
+	/// </summary>
+	/// <param name="texBase"></param>
+	/// <param name="texSize"></param>
+	void SetSpriteRect(const Vector2& texBase, const Vector2& texSize) {
+		texBase_ = texBase;
+		texSize_ = texSize;
+	}
 
 };

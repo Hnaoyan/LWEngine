@@ -19,23 +19,21 @@ ComPtr<ID3D12RootSignature> GraphicsPSO::sModelRootSignature_;
 // Particle用（インスタンシング
 ComPtr<ID3D12PipelineState> GraphicsPSO::sParticlePipelineStates_;
 ComPtr<ID3D12RootSignature> GraphicsPSO::sParticleRootSignature_;
-
+ID3D12Device* GraphicsPSO::sDevice_;
 
 void GraphicsPSO::Initialize(ID3D12Device* device)
 {
 	// nullチェック
 	assert(device);
 
-	GraphicsPSO* graphics = GraphicsPSO::GetInstance();
-
-	GraphicsPSO::GetInstance()->device_ = device;
+	sDevice_ = device;
 
 	// Sprite
-	graphics->CreateSpritePSO();
+	CreateSpritePSO();
 	// Model
-	graphics->CreateModelPSO();
+	CreateModelPSO();
 	// Particle
-	graphics->CreateParticlePSO();
+	CreateParticlePSO();
 
 }
 
@@ -147,7 +145,7 @@ void GraphicsPSO::CreateSpritePSO()
 		assert(false);
 	}
 	// ルートシグネチャの生成
-	result = device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
 		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sSpriteRootSignature_));
 	assert(SUCCEEDED(result));
 
@@ -161,32 +159,57 @@ void GraphicsPSO::CreateSpritePSO()
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 	blenddesc.RenderTarget[0].BlendEnable = false;
 	gPipeline.BlendState = blenddesc;
-	CreatePSO(gPipeline, sSpritePipelineStates_[size_t(BlendMode::kNone)]);
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kNone)]));
+	assert(SUCCEEDED(result));
 
 	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
-	CreatePSO(gPipeline, sSpritePipelineStates_[size_t(BlendMode::kNormal)]);
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kNormal)]));
+	assert(SUCCEEDED(result));
 
 	// 加算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
-	CreatePSO(gPipeline, sSpritePipelineStates_[size_t(BlendMode::kAdd)]);
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kAdd)]));
+	assert(SUCCEEDED(result));
 
 	// 減算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
-	CreatePSO(gPipeline, sSpritePipelineStates_[size_t(BlendMode::kSubtract)]);
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kSubtract)]));
+	assert(SUCCEEDED(result));
 
 	// 乗算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
 	gPipeline.BlendState = blenddesc;
-	CreatePSO(gPipeline, sSpritePipelineStates_[size_t(BlendMode::kMultiply)]);
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kMultiply)]));
+	assert(SUCCEEDED(result));
 
 	// スクリーン合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
-	CreatePSO(gPipeline, sSpritePipelineStates_[size_t(BlendMode::kScreen)]);
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kScreen)]));
+	assert(SUCCEEDED(result));
+
 #pragma endregion
 
 }
@@ -241,6 +264,6 @@ void GraphicsPSO::CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Micros
 {
 	HRESULT result = S_FALSE;
 	// PSO作成
-	result = device_->CreateGraphicsPipelineState(&gPipeline, IID_PPV_ARGS(&pipelineState));
+	result = sDevice_->CreateGraphicsPipelineState(&gPipeline, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 }
