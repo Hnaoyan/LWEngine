@@ -174,6 +174,97 @@ Vector3 Matrix4x4::Transform(const Vector3& vector, const Matrix4x4& matrix)
 	return result;
 }
 
+Matrix4x4 Matrix4x4::MakeTranslateMatrix(const Vector3& translate)
+{
+	Matrix4x4 result = {};
+	result.m[0][0] = 1;
+	result.m[1][1] = 1;
+	result.m[2][2] = 1;
+	result.m[3][3] = 1;
+
+	result.m[3][0] = translate.x;
+	result.m[3][1] = translate.y;
+	result.m[3][2] = translate.z;
+
+	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeScaleMatrix(const Vector3& scale)
+{
+	Matrix4x4 result = {};
+
+	result.m[0][0] = scale.x;
+	result.m[1][1] = scale.y;
+	result.m[2][2] = scale.z;
+	result.m[3][3] = 1;
+
+	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeRotateXMatrix(float radian)
+{
+	Matrix4x4 result = {};
+	result.m[0][0] = 1.0f;
+	result.m[1][1] = std::cosf(radian);
+	result.m[1][2] = std::sinf(radian);
+	result.m[2][1] = std::sinf(-radian);
+	result.m[2][2] = std::cosf(radian);
+	result.m[3][3] = 1.0f;
+	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeRotateYMatrix(float radian)
+{
+	Matrix4x4 result = {};
+	result.m[0][0] = std::cosf(radian);
+	result.m[0][2] = std::sinf(-radian);
+	result.m[1][1] = 1.0f;
+	result.m[2][0] = std::sinf(radian);
+	result.m[2][2] = std::cosf(radian);
+	result.m[3][3] = 1.0f;
+	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeRotateZMatrix(float radian)
+{
+	Matrix4x4 result = {};
+	result.m[0][0] = std::cosf(radian);
+	result.m[0][1] = std::sinf(radian);
+	result.m[1][0] = std::sinf(-radian);
+	result.m[1][1] = std::cosf(radian);
+	result.m[2][2] = 1.0f;
+	result.m[3][3] = 1.0f;
+	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeRotateXYZMatrix(const Vector3& rotate)
+{
+	// X
+	Matrix4x4 matrixX = MakeRotateXMatrix(rotate.x);
+	// Y
+	Matrix4x4 matrixY = MakeRotateYMatrix(rotate.y);
+	// Z
+	Matrix4x4 matrixZ = MakeRotateZMatrix(rotate.z);
+	// 回転行列
+	Matrix4x4 matrixRotate = Multiply(matrixX, Multiply(matrixY, matrixZ));
+
+	return matrixRotate;
+}
+
+Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate)
+{
+	// スケール
+	Matrix4x4 scaleMat = MakeScaleMatrix(scale);
+	// 回転
+	Matrix4x4 rotateMat = MakeRotateXYZMatrix(rotate);
+	// 平行移動
+	Matrix4x4 translateMat = MakeTranslateMatrix(translate);
+
+	Matrix4x4 affineMatrix = Multiply(scaleMat, Multiply(rotateMat, translateMat));
+
+	return Matrix4x4();
+}
+
 Matrix4x4 Matrix4x4::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
 {
 	Matrix4x4 result = {};

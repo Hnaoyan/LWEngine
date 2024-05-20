@@ -29,7 +29,7 @@ public:
 	/// <param name="isFlipX"></param>
 	/// <param name="isFlipY"></param>
 	/// <returns></returns>
-	static Sprite* Create(uint32_t textureHandle, Vector2 position, Vector4 color = { 1.0f,1.0f,1.0f,1.0f }, Vector2 anchorpoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
+	static Sprite* Create(uint32_t textureHandle, Vector2 position, Vector2 anchorpoint = { 0,0 }, Vector4 color = { 1.0f,1.0f,1.0f,1.0f }, bool isFlipX = false, bool isFlipY = false);
 
 	/// <summary>
 	/// 初期化
@@ -65,12 +65,25 @@ public:
 	Sprite(uint32_t textureHandle, const Vector2& position,
 		const Vector2& size, const Vector4& color, const Vector2& anchorPoint, bool isFlipX, bool isFlipY);
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <returns></returns>
 	bool Initialize();
 
+	/// <summary>
+	/// 描画
+	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// 頂点情報更新
+	/// </summary>
 	void TransferVertices();
 
 private: // 固有の変数

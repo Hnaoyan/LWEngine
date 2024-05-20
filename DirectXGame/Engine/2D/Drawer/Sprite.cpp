@@ -5,7 +5,7 @@ ID3D12Device* Sprite::sDevice_ = nullptr;
 ID3D12GraphicsCommandList* Sprite::sCommandList_;
 Matrix4x4 Sprite::sMatProjection_;
 
-Sprite* Sprite::Create(uint32_t textureHandle, Vector2 position, Vector4 color, Vector2 anchorpoint, bool isFlipX, bool isFlipY)
+Sprite* Sprite::Create(uint32_t textureHandle, Vector2 position, Vector2 anchorpoint, Vector4 color, bool isFlipX, bool isFlipY)
 {
 	// 仮のサイズ設定
 	Vector2 size = {100.0f,100.0f};
@@ -35,7 +35,7 @@ Sprite* Sprite::Create(uint32_t textureHandle, Vector2 position, Vector4 color, 
 
 void Sprite::StaticInitialize(ID3D12Device* device, uint32_t width, uint32_t height)
 {
-
+	assert(device);
 	sDevice_ = device;
 	// 射影行列
 	sMatProjection_ = Matrix4x4::MakeOrthographicMatrix(0.0f, 0.0f, (float)width, (float)height, 0.0f, 1.0f);
@@ -43,7 +43,7 @@ void Sprite::StaticInitialize(ID3D12Device* device, uint32_t width, uint32_t hei
 
 void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
-	assert(sCommandList_ == nullptr);
+	assert(Sprite::sCommandList_ == nullptr);
 	// コマンドリストをセット
 	sCommandList_ = cmdList;
 	// ルートシグネチャの設定
@@ -57,7 +57,7 @@ void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList)
 void Sprite::PostDraw()
 {
 	// コマンドリストを解除
-	sCommandList_ = nullptr;
+	Sprite::sCommandList_ = nullptr;
 }
 
 Sprite::Sprite(uint32_t textureHandle, const Vector2& position, const Vector2& size, const Vector4& color, const Vector2& anchorPoint, bool isFlipX, bool isFlipY)
@@ -65,7 +65,7 @@ Sprite::Sprite(uint32_t textureHandle, const Vector2& position, const Vector2& s
 	position_ = position;
 	size_ = size;
 	anchorPoint_ = anchorPoint;
-	//matWorld_ = 
+	matWorld_ = Matrix4x4::MakeIdentity4x4();
 	color_ = color;
 	textureHandle_ = textureHandle;
 
@@ -85,7 +85,7 @@ bool Sprite::Initialize()
 	// 頂点系
 	{
 		// リソース設定
-		vertBuff_ = ResourceLib::CreateBufferResource(sDevice_, ((sizeof(VertexData) + 0xff) & ~0xff) * kVertNum);
+		vertBuff_ = ResourceLib::CreateBufferResource(sDevice_, sizeof(VertexData) * kVertNum);
 
 		// 頂点バッファのマッピング
 		result = vertBuff_->Map(0, nullptr, reinterpret_cast<void**>(&vertData_));
@@ -93,9 +93,8 @@ bool Sprite::Initialize()
 
 		// 頂点バッファビューの設定
 		vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-		vbView_.SizeInBytes = ((sizeof(VertexData) + 0xff) & ~0xff) * kVertNum;
-		vbView_.StrideInBytes = (sizeof(VertexData) + 0xff) & ~0xff;
-
+		vbView_.SizeInBytes = sizeof(VertexData) * kVertNum;
+		vbView_.StrideInBytes = sizeof(VertexData);
 	}
 
 	// 頂点バッファへの転送
@@ -110,14 +109,14 @@ bool Sprite::Initialize()
 	{
 		// バッファー作成
 		spriteGPUBuff_ = ResourceLib::CreateBufferResource(sDevice_, (sizeof(SpriteDataForGPU) + 0xff) & ~0xff);
+
 		// マッピング
 		result = spriteGPUBuff_->Map(0, nullptr, reinterpret_cast<void**>(&spriteGPUData_));
 		assert(SUCCEEDED(result));
 
-		spriteGPUData_->world = Matrix4x4::MakeIdentity4x4();
-		spriteGPUData_->WVP = Matrix4x4::MakeIdentity4x4();
-
 	}
+	// ブレンドモードの初期化
+	blendMode_ = BlendMode::kNormal;
 
 	return true;
 }
@@ -182,10 +181,10 @@ void Sprite::TransferVertices()
 	// 頂点情報
 	VertexData vertices[kVertNum] = {};
 
-	vertices[LB].position = { left,bottom,0.0f,0.0f };	// 左下
-	vertices[LT].position = { left,top,0.0f,0.0f };		// 左上
-	vertices[RB].position = { right,bottom,0.0f,0.0f };	// 右下
-	vertices[RT].position = { right,top,0.0f,0.0f };		// 右上
+	vertices[LB].position = { left,bottom,0.0f };	// 左下
+	vertices[LT].position = { left,top,0.0f };		// 左上
+	vertices[RB].position = { right,bottom,0.0f };	// 右下
+	vertices[RT].position = { right,top,0.0f };		// 右上
 
 	// テクスチャ情報取得
 	{

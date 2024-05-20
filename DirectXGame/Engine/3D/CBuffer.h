@@ -9,17 +9,15 @@ struct CBufferTransformMatrix
 
 struct VertexData
 {
-	Vector4 position;
+	Vector3 position;
 	Vector2 texcoord;
-	Vector3 normal;
+	//Vector3 normal;
 };
 
 struct SpriteDataForGPU {
 	Vector4 color;
-	//Matrix4x4 mat;
-	Matrix4x4 WVP;
 	Matrix4x4 world;
-	//Matrix4x4 uv;
+	Matrix4x4 WVP;
 };
 
 struct ModelData {

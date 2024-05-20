@@ -26,6 +26,7 @@ public:
 	void ImGuiDraw() override;
 private:
 	// 試し
-	std::unique_ptr<Sprite> uvSprite_;
+	std::unique_ptr<Sprite> newSprite_;
 	uint32_t uvTexture_ = 0u;
+	Vector2 position_ = {};
 };

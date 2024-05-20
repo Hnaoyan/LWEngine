@@ -3,8 +3,11 @@
 
 #include <cassert>
 
+uint32_t SRVHandler::kDescriptorSizeSRV_ = 0u;
 uint32_t SRVHandler::sNextDescriptorNum_ = 2;
+DirectXDevice* SRVHandler::dxDevice_ = nullptr;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SRVHandler::srvHeap_;
+
 
 void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 {
@@ -29,13 +32,15 @@ void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 D3D12_CPU_DESCRIPTOR_HANDLE SRVHandler::GetSrvHandleCPU()
 {
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = srvHeap_->GetCPUDescriptorHandleForHeapStart();
-	handle.ptr += (SRVHandler::GetInstance()->kDescriptorSizeSRV_ * sNextDescriptorNum_);
+	//handle.ptr += (SRVHandler::GetInstance()->kDescriptorSizeSRV_ * sNextDescriptorNum_);
+	handle.ptr += (kDescriptorSizeSRV_ * sNextDescriptorNum_);
 	return handle;
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE SRVHandler::GetSrvHandleGPU()
 {
 	D3D12_GPU_DESCRIPTOR_HANDLE handle = srvHeap_->GetGPUDescriptorHandleForHeapStart();
-	handle.ptr += (SRVHandler::GetInstance()->kDescriptorSizeSRV_ * sNextDescriptorNum_);
+	//handle.ptr += (SRVHandler::GetInstance()->kDescriptorSizeSRV_ * sNextDescriptorNum_);
+	handle.ptr += (kDescriptorSizeSRV_ * sNextDescriptorNum_);
 	return handle;
 }

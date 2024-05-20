@@ -39,7 +39,7 @@ void TextureManager::Initialize(DirectXCommon* dxCommon, std::string directoryPa
     directoryPath_ = directoryPath;
 
     device_ = dxCommon_->GetDevice();
-
+    //descriptorIndex_ = 2;
 }
 
 const D3D12_RESOURCE_DESC TextureManager::GetResourceDesc(uint32_t textureHandle)

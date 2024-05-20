@@ -1,9 +1,8 @@
 struct spriteData
 {
     float32_t4 color;
-    //float32_t4x4 mat;
-    float32_t4x4 WVP;
     float32_t4x4 World;
+    float32_t4x4 WVP;
 };
 
 ConstantBuffer<spriteData> cBuffer : register(b0);

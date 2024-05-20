@@ -40,13 +40,13 @@ public:
 	/// </summary>
 	/// <param name="position"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakeTranslateMatrix(const Vector3& position);
+	static Matrix4x4 MakeTranslateMatrix(const Vector3& translate);
 	/// <summary>
 	/// スケール
 	/// </summary>
-	/// <param name="translate"></param>
+	/// <param name="scale"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakeScaleMatrix(const Vector3& translate);
+	static Matrix4x4 MakeScaleMatrix(const Vector3& scale);
 	/// <summary>
 	/// X軸行列計算
 	/// </summary>
@@ -72,7 +72,7 @@ public:
 	/// <param name="matY"></param>
 	/// <param name="matZ"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakeRotateMatrix(const Vector3& rotate);
+	static Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate);
 
 	/// <summary>
 	/// アフィン変換

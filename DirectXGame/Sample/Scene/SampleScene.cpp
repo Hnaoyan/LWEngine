@@ -7,13 +7,12 @@ void SampleScene::Initialize()
 	IScene::Initialize();
 
 	uvTexture_ = TextureManager::Load("Resources/default/uvChecker.png");
-	uvSprite_.reset(Sprite::Create(uvTexture_, { 100,100 }));
-
+	newSprite_.reset(Sprite::Create(uvTexture_, { 300.0f,0.0f }, { 0,0 }));
 }
 
 void SampleScene::Update()
 {
-
+	newSprite_->SetPosition(position_);
 }
 
 void SampleScene::Draw()
@@ -21,10 +20,10 @@ void SampleScene::Draw()
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 #pragma region スプライト
-
+		
 	Sprite::PreDraw(commandList);
 
-	uvSprite_->Draw();
+	newSprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -46,7 +45,7 @@ void SampleScene::Draw()
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("TEst");
-
+	ImGui::DragFloat2("pos", &position_.x, 0.01f);
 	ImGui::End();
 	ImGui::ShowDemoWindow();
 }

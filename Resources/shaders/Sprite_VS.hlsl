@@ -10,7 +10,7 @@ struct VSInput
 VSOutput main(VSInput input)
 {
     VSOutput output;
-    output.svPosition = mul(input.position, mul(cBuffer.WVP, cBuffer.World));
+    output.svPosition = mul(input.position, mul(cBuffer.World,cBuffer.WVP));
     output.uv = input.texcoord;
     return output;
 }

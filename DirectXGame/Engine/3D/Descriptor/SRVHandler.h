@@ -23,7 +23,7 @@ public:
 	/// 静的初期化
 	/// </summary>
 	/// <param name="dxDevice"></param>
-	void StaticInitialize(DirectXDevice* dxDevice);
+	static void StaticInitialize(DirectXDevice* dxDevice);
 
 public: // アクセッサ
 	/// <summary>
@@ -39,14 +39,14 @@ public: // アクセッサ
 	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap_.Get(); }
 private:
 	// デバイスクラス
-	DirectXDevice* dxDevice_;
+	static DirectXDevice* dxDevice_;
 	// DescriptorHeap
 	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
 
 	//uint32_t index_ = 0;
-	uint32_t kDescriptorSizeSRV_ = 0u;
+	static uint32_t kDescriptorSizeSRV_;
 
-	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU[kDescpritorSize] = {};
-	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU[kDescpritorSize] = {};
+	//D3D12_CPU_DESCRIPTOR_HANDLE handleCPU[kDescpritorSize] = {};
+	//D3D12_GPU_DESCRIPTOR_HANDLE handleGPU[kDescpritorSize] = {};
 };
 
