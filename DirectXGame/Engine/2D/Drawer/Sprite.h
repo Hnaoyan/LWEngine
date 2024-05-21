@@ -93,7 +93,7 @@ private: // 固有の変数
 	// 頂点リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_;
 	// 頂点バッファ
-	VertexData* vertData_ = nullptr;
+	SpriteVertexData* vertData_ = nullptr;
 	// 頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 

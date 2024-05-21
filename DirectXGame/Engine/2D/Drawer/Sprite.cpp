@@ -85,7 +85,7 @@ bool Sprite::Initialize()
 	// 頂点系
 	{
 		// リソース設定
-		vertBuff_ = ResourceLib::CreateBufferResource(sDevice_, sizeof(VertexData) * kVertNum);
+		vertBuff_ = ResourceLib::CreateBufferResource(sDevice_, sizeof(SpriteVertexData) * kVertNum);
 
 		// 頂点バッファのマッピング
 		result = vertBuff_->Map(0, nullptr, reinterpret_cast<void**>(&vertData_));
@@ -93,8 +93,8 @@ bool Sprite::Initialize()
 
 		// 頂点バッファビューの設定
 		vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-		vbView_.SizeInBytes = sizeof(VertexData) * kVertNum;
-		vbView_.StrideInBytes = sizeof(VertexData);
+		vbView_.SizeInBytes = sizeof(SpriteVertexData) * kVertNum;
+		vbView_.StrideInBytes = sizeof(SpriteVertexData);
 	}
 
 	// 頂点バッファへの転送
@@ -179,7 +179,7 @@ void Sprite::TransferVertices()
 	}
 
 	// 頂点情報
-	VertexData vertices[kVertNum] = {};
+	SpriteVertexData vertices[kVertNum] = {};
 
 	vertices[LB].position = { left,bottom,0.0f };	// 左下
 	vertices[LT].position = { left,top,0.0f };		// 左上

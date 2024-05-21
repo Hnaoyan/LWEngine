@@ -220,6 +220,40 @@ void GraphicsPSO::CreateModelPSO()
 
 	//ComPtr<IDxcBlob> vsBlob;
 	//ComPtr<IDxcBlob> psBlob;
+
+	//// 頂点シェーダの読み込みとコンパイル
+	//vsBlob = Shader::GetInstance()->Compile(L"ObjVS.hlsl", L"vs_6_0");
+	//assert(vsBlob != nullptr);
+
+	//// ピクセルシェーダの読み込みとコンパイル
+	//psBlob = Shader::GetInstance()->Compile(L"ObjPS.hlsl", L"ps_6_0");
+	//assert(psBlob != nullptr);
+
+	//D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	//{
+	//	PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT)
+	//},
+	//{
+	//	PSOLib::SetInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT)
+	//},
+	//{
+	//	PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
+	//},
+	//};
+	//// グラフィックスパイプライン
+	//D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline{};
+	//gpipeline.VS = Shader::ShaderByteCode(vsBlob.Get());
+	//gpipeline.PS = Shader::ShaderByteCode(psBlob.Get());
+
+	//// サンプルマスク
+	//gpipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	//// ラスタライザステート
+	//D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
+	//gpipeline.RasterizerState = rasterizer;
+	//// デプスステンシルステート
+	//gpipeline.DepthStencilState.DepthEnable = true;
+	//gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	//gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	//ComPtr<ID3DBlob> errorBlob;
 	//ComPtr<ID3DBlob> rootSigBlob;
 
