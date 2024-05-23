@@ -17,19 +17,38 @@
 class DirectXCommon : public Singleton<DirectXCommon>
 {
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="winApp"></param>
+	/// <param name="bufferWidth"></param>
+	/// <param name="bufferHeight"></param>
 	void Initialize(WindowAPI* winApp, int32_t bufferWidth = WindowAPI::kWindowWidth, int32_t bufferHeight = WindowAPI::kWindowHeight);
 
+	/// <summary>
+	/// 描画前
+	/// </summary>
 	void PreDraw();
+	/// <summary>
+	/// 描画後
+	/// </summary>
 	void PostDraw();
 
+	/// <summary>
+	/// 深度クリア
+	/// </summary>
 	void ClearDepthBuffer() {
-		dsvHandler_->ClearDepthBuffer(dxCommand_.get()->commandList_.Get());
+		dsvHandler_->ClearDepthBuffer(DirectXCommand::commandList_.Get());
 	}
 
 private:
-
+	/// <summary>
+	/// フレームレート用処理の初期化
+	/// </summary>
 	void InitializeFixFPS();
-
+	/// <summary>
+	/// フレームレート用処理
+	/// </summary>
 	void UpdateFixFPS();
 
 private:
