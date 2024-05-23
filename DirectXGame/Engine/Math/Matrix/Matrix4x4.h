@@ -88,4 +88,14 @@ public: // その他計算関数
 	static Matrix4x4 MakeOrthographicMatrix(
 		float left, float top, float right, float bottom, float nearClip, float farClip);
 
+	/// <summary>
+	/// プロジェクション行列作成
+	/// </summary>
+	/// <param name="fovY"></param>
+	/// <param name="aspectRatio"></param>
+	/// <param name="nearClip"></param>
+	/// <param name="farClip"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
+
 };
