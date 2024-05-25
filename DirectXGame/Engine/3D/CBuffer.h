@@ -29,6 +29,18 @@ struct SpriteDataForGPU {
 };
 #pragma endregion
 
+#pragma region Model
+
+struct VertexData
+{
+	Vector4 position;	// 座標
+	Vector2 texcoord;	// テクすコード
+	Vector3 normal;		// 法線ベクトル
+};
+
+#pragma endregion
+
+
 //struct ModelData {
 //	VertexData vertices;	// 頂点データ
 //};

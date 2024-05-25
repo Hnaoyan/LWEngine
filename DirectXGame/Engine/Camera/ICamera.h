@@ -7,7 +7,7 @@
 
 class ICamera
 {
-protected:
+public:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
 	// マッピング用

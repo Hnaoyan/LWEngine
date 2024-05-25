@@ -11,7 +11,7 @@
 
 namespace Pipeline
 {
-	enum class RootParameter : int {
+	enum class ModelRegister : int {
 		kMaterial,
 		kTexture,
 		kWorldTransform,

@@ -26,7 +26,7 @@ void ICamera::CreateConstBuffer()
 	// デバイス取得
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 	// リソース作成
-	DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataCamera) + 0xff) & ~0xff);
+	constBuff_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataCamera) + 0xff) & ~0xff);
 }
 
 void ICamera::UpdateMatrix()
