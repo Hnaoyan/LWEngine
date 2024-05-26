@@ -262,7 +262,7 @@ Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotat
 
 	Matrix4x4 affineMatrix = Multiply(scaleMat, Multiply(rotateMat, translateMat));
 
-	return Matrix4x4();
+	return affineMatrix;
 }
 
 Matrix4x4 Matrix4x4::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
