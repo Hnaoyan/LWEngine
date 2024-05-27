@@ -1,5 +1,6 @@
 #include "Model.h"
 #include "../Loader.h"
+#include "../../2D/TextureManager.h"
 #include <cassert>
 
 ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
@@ -7,11 +8,21 @@ ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 void Model::Initialize(const std::string& modelName)
 {
 	// モデル読み込み
-	ModelData data = Loader::LoadObj("Resoureces", modelName);
+	modelData_ = Loader::LoadObj("Resources", modelName);
 
+	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
-	mesh_->CreateMesh(data.vertices);
+	mesh_->CreateMesh(modelData_.vertices);
 
+	// マテリアル生成
+	material_ = std::make_unique<Material>();
+	material_->CreateMaterial();
+
+	// テクスチャの設定
+	texture_ = modelData_.material.textureHandle;
+	//textures_.push_back(TextureManager::Load(modelData_.material.textureFilename));
+
+	// ブレンドモード設定
 	blendMode_ = Pipeline::BlendMode::kNormal;
 }
 
@@ -38,7 +49,20 @@ void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
 		static_cast<UINT>(ModelRegister::kViewProjection),
 		camera->constBuff_->GetGPUVirtualAddress());
 
-	
+
+	//---メッシュの設定---//
+	// 頂点バッファの設定
+	sCommandList_->IASetVertexBuffers(0, 1,&mesh_->vbView_);
+
+	//---マテリアルの設定---//
+	// SRVのセット
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
+
+	// ここでマテリアル設定しろ
+
+	// ドローコール
+	sCommandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
 }
 

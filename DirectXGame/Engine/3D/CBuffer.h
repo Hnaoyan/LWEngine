@@ -14,21 +14,6 @@ struct CBufferWorldTransform {
 	Matrix4x4 world;
 };
 
-#pragma region Sprite
-struct SpriteVertexData
-{
-	Vector3 position;	// 座標
-	Vector2 texcoord;	// 
-	//Vector3 normal;
-};
-
-struct SpriteDataForGPU {
-	Vector4 color;	// 色
-	Matrix4x4 world;// ワールド行列
-	Matrix4x4 WVP;	// ワールドビュープロジェクション行列
-};
-#pragma endregion
-
 #pragma region Model
 
 struct VertexData
@@ -52,7 +37,8 @@ struct CBufferDataCamera {
 	Vector3 worldPosition;		// ワールド座標
 };
 
-
-//struct MaterialData {
-//	
-//};
+// マテリアル用
+struct CBufferDataMaterial {
+	Vector4 color;			// カラー
+	int32_t enableLighting;	// ライティングのswitch
+};

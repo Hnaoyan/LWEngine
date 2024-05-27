@@ -1,6 +1,6 @@
 #pragma once
 #include "../../Math/MathLib.h"
-#include "../../3D/CBuffer.h"
+#include "../SpriteCBuffer.h"
 #include "../../3D/Graphics/GraphicsPSO.h"
 #include "../../Base/Utility/DxCreateLib.h"
 

@@ -5,6 +5,7 @@
 void Mesh::CreateMesh(std::vector<VertexData> vertices)
 {
 	//HRESULT result = S_FALSE;
+	// デバイス
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	// 頂点バッファの生成
@@ -16,8 +17,8 @@ void Mesh::CreateMesh(std::vector<VertexData> vertices)
 	vbView_.StrideInBytes = sizeof(VertexData);
 
 	// データを書き込む
-	VertexData* vertexData = nullptr;
-	vertBuff_->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	std::memcpy(vertexData, vertices.data(), sizeof(VertexData) * vertices.size());
+	//VertexData* vertexData = nullptr;
+	vertBuff_->Map(0, nullptr, reinterpret_cast<void**>(&vertData_));
+	std::memcpy(vertData_, vertices.data(), sizeof(VertexData) * vertices.size());
 
 }

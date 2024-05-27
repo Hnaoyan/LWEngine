@@ -1,4 +1,5 @@
 #include "Loader.h"
+#include "../2D/TextureManager.h"
 #include <fstream>
 #include <sstream>
 #include <cassert>
@@ -13,7 +14,11 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 	std::string line;
 
 	// ファイル開く
-	std::ifstream file(directory + "/" + fileName);
+	// ファイルまでのパス
+	std::string fileDirectory = directory + "/" + fileName;
+	// フルパス
+	std::string fullPath = fileDirectory + "/" + fileName + ".obj";
+	std::ifstream file(fullPath);
 	assert(file.is_open());
 
 	// 読み込み
@@ -82,12 +87,13 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 			std::string materialFilename;
 
 			s >> materialFilename;
-			modelData.material = LoadMaterial(directory, materialFilename);
+			modelData.material = LoadMaterial(fileDirectory, materialFilename);
 		}
 
 	}
+	Model::ModelData result = modelData;
 
-	return modelData;
+	return result;
 
 }
 
@@ -95,7 +101,10 @@ Model::MaterialData Loader::LoadMaterial(const std::string& directory, const std
 {
 	Model::MaterialData materialData;
 	std::string line;
-	std::ifstream file(directory + "/" + fileName);
+	// フルパス
+	std::string fullPath = directory + "/" + fileName;
+	
+	std::ifstream file(fullPath);
 	assert(file.is_open());
 
 	while (std::getline(file, line))
@@ -113,5 +122,9 @@ Model::MaterialData Loader::LoadMaterial(const std::string& directory, const std
 
 	}
 
-	return materialData;
+	materialData.textureHandle = TextureManager::Load(materialData.textureFilename);
+	// 返す値
+	Model::MaterialData result = materialData;
+
+	return result;
 }

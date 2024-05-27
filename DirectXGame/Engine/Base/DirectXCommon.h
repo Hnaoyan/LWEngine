@@ -54,9 +54,9 @@ private:
 private:
 	// ウィンドウズポインタ
 	WindowAPI* winApp_ = nullptr;
-
+	// デバイス
 	ID3D12Device* device_ = nullptr;
-	ID3D12GraphicsCommandList* commandList_ = nullptr;
+	//ID3D12GraphicsCommandList* commandList_ = nullptr;
 	// 画面のサイズ
 	int32_t backBufferWidth_ = 0;
 	int32_t backBufferHeight_ = 0;
@@ -71,17 +71,18 @@ private:
 	std::unique_ptr<SwapChainManager> swapChainManager_;
 
 private: // Heap
-	// srv
+	// SRV
 	std::unique_ptr<SRVHandler> srvHandler_;
-	// rtv
+	// RTV
 	std::unique_ptr<RTVHandler> rtvHandler_;
-	// dsv
+	// DSV
 	std::unique_ptr<DSVHandler> dsvHandler_;
 
 public: // アクセッサ
 	ID3D12Device* GetDevice() { return dxDevice_->GetDevice(); }
 	ID3D12GraphicsCommandList* GetCommandList() { return DirectXCommand::commandList_.Get(); }
 
+	// HeapHandlerのゲッター
 	SRVHandler* GetSrvHandler() { return srvHandler_.get(); }
 	RTVHandler* GetRtvHandler() { return rtvHandler_.get(); }
 	DSVHandler* GetDsvHandler() { return dsvHandler_.get(); }

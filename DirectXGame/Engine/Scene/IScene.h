@@ -1,6 +1,7 @@
 #pragma once
 #include "../Base/DirectXCommon.h"
 #include "../Input/Input.h"
+#include "../Camera/ICamera.h"
 
 class IScene
 {
@@ -24,6 +25,26 @@ public: // 仮想関数
 	virtual void ImGuiDraw() = 0;
 
 	/// <summary>
+	/// モデル読み込み
+	/// </summary>
+	virtual void LoadModel() {};
+
+	/// <summary>
+	/// テクスチャ読み込み
+	/// </summary>
+	virtual void LoadTexture() {};
+
+	/// <summary>
+	/// カメラ更新
+	/// </summary>
+	virtual void CameraUpdate();
+
+	/// <summary>
+	/// コライダー関係の更新
+	/// </summary>
+	virtual void ColliderUpdate() {};
+
+	/// <summary>
 	/// デストラクタ
 	/// </summary>
 	virtual ~IScene() = default;
@@ -41,8 +62,11 @@ protected:
 	/// </summary>
 	static int sceneNum;
 
+	// DxCommon
 	DirectXCommon* dxCommon_ = nullptr;
+	// インプット
 	Input* input_ = nullptr;
-
+	// カメラクラス（ViewProjection
+	ICamera camera_;
 };
 
