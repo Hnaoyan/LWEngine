@@ -1,11 +1,14 @@
 #include "ICamera.h"
 #include "../Base/DirectXCommon.h"
 #include "../Base/Utility/DxCreateLib.h"
+#include "imgui.h"
 
 #include <cassert>
 
 void ICamera::Initialize()
 {
+	// スケールの設定
+	transform_.scale = { 1.0f,1.0f,1.0f };
 	// バッファーの作成
 	this->CreateConstBuffer();
 	// マッピング
@@ -55,4 +58,16 @@ void ICamera::TransferMatrix()
 	Matrix4x4 translateMatrix = Matrix4x4::MakeTranslateMatrix(transform_.translate);
 	// ワールド座標
 	constMap_->worldPosition = { translateMatrix.m[3][0],translateMatrix.m[3][1] ,translateMatrix.m[3][2] };
+}
+
+void ICamera::ImGuiDraw()
+{
+	
+	ImGui::Begin("Camera");
+
+	ImGui::DragFloat3("Position", &transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
+
+	ImGui::End();
+
 }

@@ -21,7 +21,12 @@ public:	// 継承できるように
 	/// <summary>
 	/// 更新
 	/// </summary>
-	virtual void Update() {};
+	virtual void Update() { UpdateMatrix(); };
+
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 
 protected: // 共通で使う関数
 	/// <summary>

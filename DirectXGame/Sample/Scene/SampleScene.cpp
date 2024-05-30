@@ -12,7 +12,7 @@ void SampleScene::Initialize()
 	LoadTexture();
 
 	//---ここから書く---//
-
+	testWTF_.Initialize();
 
 }
 
@@ -20,7 +20,7 @@ void SampleScene::Update()
 {
 	newSprite_->SetPosition(position_);
 
-	
+	testWTF_.UpdateMatrix();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -33,7 +33,7 @@ void SampleScene::Draw()
 		
 	Sprite::PreDraw(commandList);
 
-	newSprite_->Draw();
+	//newSprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -62,8 +62,17 @@ void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("Test");
 	ImGui::DragFloat2("pos", &position_.x, 0.01f);
+
+	ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
+
 	ImGui::End();
 	ImGui::ShowDemoWindow();
+
+	// カメラの
+	camera_.ImGuiDraw();
+
 }
 
 void SampleScene::LoadModel()

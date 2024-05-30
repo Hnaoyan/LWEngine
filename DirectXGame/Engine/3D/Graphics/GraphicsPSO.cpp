@@ -3,6 +3,7 @@
 #include "../../Utility/StringConverter.h"
 
 #include <cassert>
+#pragma comment(lib, "d3dcompiler.lib")
 
 using namespace Microsoft::WRL;
 using namespace Pipeline;
@@ -216,47 +217,165 @@ void GraphicsPSO::CreateSpritePSO()
 
 void GraphicsPSO::CreateModelPSO()
 {
-	//HRESULT result = S_FALSE;
+	HRESULT result = S_FALSE;
 
-	//ComPtr<IDxcBlob> vsBlob;
-	//ComPtr<IDxcBlob> psBlob;
+	ComPtr<IDxcBlob> vsBlob;
+	ComPtr<IDxcBlob> psBlob;
 
-	//// 頂点シェーダの読み込みとコンパイル
-	//vsBlob = Shader::GetInstance()->Compile(L"ObjVS.hlsl", L"vs_6_0");
-	//assert(vsBlob != nullptr);
+	// 頂点シェーダの読み込みとコンパイル
+	vsBlob = Shader::GetInstance()->Compile(L"3DModelVS.hlsl", L"vs_6_0");
+	assert(vsBlob != nullptr);
 
-	//// ピクセルシェーダの読み込みとコンパイル
-	//psBlob = Shader::GetInstance()->Compile(L"ObjPS.hlsl", L"ps_6_0");
-	//assert(psBlob != nullptr);
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"3DModelPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
 
-	//D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
-	//{
-	//	PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT)
-	//},
-	//{
-	//	PSOLib::SetInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT)
-	//},
-	//{
-	//	PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
-	//},
-	//};
-	//// グラフィックスパイプライン
-	//D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipeline{};
-	//gpipeline.VS = Shader::ShaderByteCode(vsBlob.Get());
-	//gpipeline.PS = Shader::ShaderByteCode(psBlob.Get());
+	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	{
+		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
+	},
+	};
+	// グラフィックスパイプライン
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};
+	gPipeline.VS = Shader::ShaderByteCode(vsBlob.Get());
+	gPipeline.PS = Shader::ShaderByteCode(psBlob.Get());
 
-	//// サンプルマスク
-	//gpipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	//// ラスタライザステート
-	//D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
-	//gpipeline.RasterizerState = rasterizer;
-	//// デプスステンシルステート
-	//gpipeline.DepthStencilState.DepthEnable = true;
-	//gpipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	//gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
-	//ComPtr<ID3DBlob> errorBlob;
-	//ComPtr<ID3DBlob> rootSigBlob;
+	// サンプルマスク
+	gPipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	// ラスタライザステート
+	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
+	gPipeline.RasterizerState = rasterizer;
+	// デプスステンシルステート
+	gPipeline.DepthStencilState.DepthEnable = true;
+	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	gPipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	// 深度バッファのフォーマット
+	gPipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	// 頂点レイアウト
+	gPipeline.InputLayout.pInputElementDescs = inputLayout;
+	gPipeline.InputLayout.NumElements = _countof(inputLayout);
+	// 図形の形状設定
+	gPipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	gPipeline.NumRenderTargets = 1;
+	gPipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	gPipeline.SampleDesc.Count = 1;
 
+
+	// デスクリプタレンジ
+	D3D12_DESCRIPTOR_RANGE descRangeSRV;
+	descRangeSRV = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+
+	// ルートパラメータ
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ModelRegister::kCountOfParameter)];
+	// テクスチャ
+	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// WorldTransform
+	rootparams[static_cast<int>(ModelRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	// View
+	rootparams[static_cast<int>(ModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_ALL);
+	// マテリアル
+	//rootparams[static_cast<int>(ModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	// ライト
+	//rootparams[static_cast<int>(ModelRegister::kLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+
+
+	// スタティックサンプラー
+	D3D12_STATIC_SAMPLER_DESC samplerDesc[1];
+	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+	samplerDesc[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	samplerDesc[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	samplerDesc[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+
+	// ルートシグネチャの設定
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	rootSignatureDesc.pParameters = rootparams;
+	rootSignatureDesc.NumParameters = _countof(rootparams);
+
+	rootSignatureDesc.pStaticSamplers = samplerDesc;
+	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
+
+	ComPtr<ID3DBlob> errorBlob;
+	ComPtr<ID3DBlob> rootSigBlob;
+
+	// シリアライズしてバイナリにする
+	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
+	if (FAILED(result)) {
+		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	// ルートシグネチャの生成
+	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sModelRootSignature_));
+	assert(SUCCEEDED(result));
+
+	gPipeline.pRootSignature = sModelRootSignature_.Get();	// ルートシグネチャ
+
+	#pragma region ブレンド
+	// ブレンドなし
+	D3D12_BLEND_DESC blenddesc{};
+	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	blenddesc.RenderTarget[0].BlendEnable = false;
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kNone)]));
+	assert(SUCCEEDED(result));
+
+	// αブレンド
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kNormal)]));
+	assert(SUCCEEDED(result));
+
+	// 加算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kAdd)]));
+	assert(SUCCEEDED(result));
+
+	// 減算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kSubtract)]));
+	assert(SUCCEEDED(result));
+
+	// 乗算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kMultiply)]));
+	assert(SUCCEEDED(result));
+
+	// スクリーン合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kScreen)]));
+	assert(SUCCEEDED(result));
+
+#pragma endregion
 
 }
 
@@ -264,9 +383,9 @@ void GraphicsPSO::CreateParticlePSO()
 {
 }
 
-void GraphicsPSO::CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize,D3D12_STATIC_SAMPLER_DESC* staticSamplers,size_t samplerSize)
+void GraphicsPSO::CreateRootSignature(D3D12_ROOT_PARAMETER rootParameters[], size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature)
 {
-	rootParameters, rootParamSize, staticSamplers, samplerSize;
+	rootParameters, rootParamSize, staticSamplers, samplerSize, rootSignature;
 	//HRESULT result = S_FALSE;
 	//ComPtr<ID3DBlob> errorBlob;
 	//ComPtr<ID3DBlob> rootSigBlob;
@@ -287,10 +406,9 @@ void GraphicsPSO::CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size
 	//	assert(false);
 	//}
 	//// ルートシグネチャの生成
-	//result = device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
-	//	rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sSpriteRootSignature_));
+	//result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+	//	rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 	//assert(SUCCEEDED(result));
-
 
 }
 

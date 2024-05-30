@@ -12,11 +12,11 @@
 namespace Pipeline
 {
 	enum class ModelRegister : int {
-		kMaterial,
+		//kMaterial,
 		kTexture,
 		kWorldTransform,
 		kViewProjection,
-		kLight,
+		//kLight,
 
 		// サイズを取得する為の値
 		kCountOfParameter,
@@ -92,7 +92,7 @@ private:
 	/// <param name="rootParamSize"></param>
 	/// <param name="staticSamplers"></param>
 	/// <param name="samplerSize"></param>
-	static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize);
+	static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature);
 
 	/// <summary>
 	/// PSO作成
