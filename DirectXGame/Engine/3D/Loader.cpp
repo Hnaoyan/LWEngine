@@ -33,6 +33,7 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 		if (identifier == "v") {
 			Vector4 pos = {};
 			s >> pos.x >> pos.y >> pos.z;
+			pos.x *= -1.0f;
 			pos.w = 1.0f;
 			positions.push_back(pos);
 		}
@@ -40,6 +41,7 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 		else if (identifier == "vn") {
 			Vector3 normal = {};
 			s >> normal.x >> normal.y >> normal.z;
+			//normal.x *= -1.0f;
 			normals.push_back(normal);
 		}
 		// 
@@ -73,7 +75,7 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 				Vector2 texcoord = texcoords[elementIndices[1] - 1];
 				Vector3 normal = normals[elementIndices[2] - 1];
 
-				normal.x *= -1.0f;
+				//normal.x *= -1.0f;
 				triangle[faceVertex] = { position,texcoord,normal };
 
 			}
