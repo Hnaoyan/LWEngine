@@ -103,6 +103,24 @@ bool Sprite::Initialize()
 	// インデックス系
 	{
 
+		// リソース設定
+		ibBuff_ = ResourceLib::CreateBufferResource(sDevice_, sizeof(uint32_t) * kVertNum);
+
+		// マッピング
+		result = ibBuff_->Map(0, nullptr, reinterpret_cast<void**>(&ibData_));
+		assert(SUCCEEDED(result));
+
+		ibData_[0] = 0;
+		ibData_[1] = 1;
+		ibData_[2] = 2;
+		ibData_[3] = 1;
+		ibData_[4] = 3;
+		ibData_[5] = 2;
+
+		ibView_.BufferLocation = ibBuff_->GetGPUVirtualAddress();
+		ibView_.SizeInBytes = sizeof(uint32_t) * kVertNum;
+		ibView_.Format = DXGI_FORMAT_R32_UINT;
+
 	}
 
 	// 定数系
@@ -133,13 +151,15 @@ void Sprite::Draw()
 
 	// 頂点バッファ
 	sCommandList_->IASetVertexBuffers(0, 1, &vbView_);
+	// インデックスバッファ
+	sCommandList_->IASetIndexBuffer(&ibView_);
 
 	// マテリアルCbufferの設定
 	sCommandList_->SetGraphicsRootConstantBufferView(0, spriteGPUBuff_->GetGPUVirtualAddress());
 	// シェーダリソースビューの設定
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(sCommandList_, 1, textureHandle_);
 	// 描画
-	sCommandList_->DrawInstanced(kVertNum, 1, 0, 0);
+	sCommandList_->DrawIndexedInstanced(kVertNum, 1, 0, 0, 0);
 
 }
 

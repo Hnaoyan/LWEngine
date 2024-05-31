@@ -78,7 +78,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("cube"));
+	testModel_.reset(Model::CreateObj("axis"));
 }
 
 void SampleScene::LoadTexture()

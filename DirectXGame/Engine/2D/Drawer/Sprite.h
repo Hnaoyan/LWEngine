@@ -57,7 +57,7 @@ private:
 	// プロジェクションMat
 	static Matrix4x4 sMatProjection_;
 	// 頂点数
-	static const uint32_t kVertNum = 4;
+	static const uint32_t kVertNum = 6;
 
 public:
 	~Sprite() = default;
@@ -97,11 +97,12 @@ private: // 固有の変数
 	// 頂点バッファビュー
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
-
-	//---ここは後で実装---//
-	//// インデックスバッファビュー
-	//D3D12_INDEX_BUFFER_VIEW ibView_ = {};
-	//Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
+	// インデックスリソース
+	Microsoft::WRL::ComPtr<ID3D12Resource> ibBuff_;
+	// インデックスバッファ
+	uint32_t* ibData_ = nullptr;
+	// インデックスバッファビュー
+	D3D12_INDEX_BUFFER_VIEW ibView_ = {};
 
 private: // メンバ変数
 	// 定数バッファ

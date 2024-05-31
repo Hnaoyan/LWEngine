@@ -53,6 +53,8 @@ void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
 	//---メッシュの設定---//
 	// 頂点バッファの設定
 	sCommandList_->IASetVertexBuffers(0, 1,&mesh_->vbView_);
+	// インデックスバッファの設定
+	sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
 
 	//---マテリアルの設定---//
 	// SRVのセット

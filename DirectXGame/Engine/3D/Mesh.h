@@ -23,8 +23,10 @@ public:
 	VertexData* vertData_ = nullptr;
 
 	// インデックスバッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> ibBuff_;
 	// インデックスバッファビュー
 	D3D12_INDEX_BUFFER_VIEW ibView_{};
+	// インデックスバッファマップ
+	uint32_t* ibData_ = nullptr;
 
 };
