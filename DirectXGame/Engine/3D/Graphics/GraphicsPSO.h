@@ -12,7 +12,7 @@
 namespace Pipeline
 {
 	enum class ModelRegister : int {
-		//kMaterial,
+		kMaterial,
 		kTexture,
 		kWorldTransform,
 		kViewProjection,

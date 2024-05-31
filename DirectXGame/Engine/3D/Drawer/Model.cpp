@@ -37,6 +37,9 @@ Model* Model::CreateObj(const std::string& modelName)
 }
 
 void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
+
+	material_->Update();
+
 	// パイプラインステートの設定
 	sCommandList_->SetPipelineState(GraphicsPSO::sModelPipelineStates_[size_t(blendMode_)].Get());
 
@@ -62,6 +65,9 @@ void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
 		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
 
 	// ここでマテリアル設定しろ
+
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
 	// ドローコール
 	sCommandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);

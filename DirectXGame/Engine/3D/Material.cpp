@@ -23,7 +23,7 @@ void Material::CreateMaterial()
 	// データの転送
 	materialData_->color = color_;
 	materialData_->enableLighting = enableLighting_;
-
+	
 }
 
 void Material::Update()
