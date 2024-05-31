@@ -13,7 +13,8 @@ void SampleScene::Initialize()
 
 	//---ここから書く---//
 	testWTF_.Initialize();
-
+	testWTF_.transform_.translate.y = -1.6f;
+	testWTF_.transform_.translate.z = 6.0f;
 }
 
 void SampleScene::Update()
@@ -33,7 +34,7 @@ void SampleScene::Draw()
 		
 	Sprite::PreDraw(commandList);
 
-	//newSprite_->Draw();
+	newSprite_->Draw();
 
 	Sprite::PostDraw();
 

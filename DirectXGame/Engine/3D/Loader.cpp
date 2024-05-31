@@ -33,7 +33,7 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 		if (identifier == "v") {
 			Vector4 pos = {};
 			s >> pos.x >> pos.y >> pos.z;
-			pos.x *= -1.0f;
+			//pos.x *= -1.0f;
 			pos.w = 1.0f;
 			positions.push_back(pos);
 		}
@@ -49,7 +49,7 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 			Vector2 texcoord = {};
 			s >> texcoord.x >> texcoord.y;
 			// Y方向反転
-			texcoord.y = 1.0f - texcoord.y;
+			//texcoord.y = 1.0f - texcoord.y;
 			texcoords.push_back(texcoord);
 		}
 		// 三角形限定
@@ -72,11 +72,15 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 
 				//
 				Vector4 position = positions[elementIndices[0] - 1];
-				Vector2 texcoord = texcoords[elementIndices[1] - 1];
 				Vector3 normal = normals[elementIndices[2] - 1];
+				Vector2 texcoord = texcoords[elementIndices[1] - 1];
 
-				//normal.x *= -1.0f;
-				triangle[faceVertex] = { position,texcoord,normal };
+				// 反転処理
+				position.x *= -1.0f;
+				normal.x *= -1.0f;
+				texcoord.y = 1.0f - texcoord.y;
+
+				triangle[faceVertex] = { position,normal,texcoord };
 
 			}
 

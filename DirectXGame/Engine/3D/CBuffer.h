@@ -19,8 +19,8 @@ struct CBufferWorldTransform {
 struct VertexData
 {
 	Vector4 position;	// 座標
-	Vector2 texcoord;	// テクすコード
 	Vector3 normal;		// 法線ベクトル
+	Vector2 texcoord;	// テクすコード
 };
 
 #pragma endregion

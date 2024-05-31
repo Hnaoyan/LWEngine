@@ -247,7 +247,7 @@ namespace DxCreateLib
 			staticSampler.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 			staticSampler.MipLODBias = 0;
 			staticSampler.MaxAnisotropy = 16;
-			staticSampler.ComparisonFunc = D3D12_COMPARISON_FUNC_EQUAL;
+			staticSampler.ComparisonFunc = D3D12_COMPARISON_FUNC_ALWAYS;
 			staticSampler.BorderColor = D3D12_STATIC_BORDER_COLOR_OPAQUE_WHITE;
 			staticSampler.MinLOD = 0.f;
 			staticSampler.MaxLOD = D3D12_FLOAT32_MAX;
