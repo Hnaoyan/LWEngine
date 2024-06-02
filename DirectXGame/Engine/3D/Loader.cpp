@@ -4,11 +4,7 @@
 #include <sstream>
 #include <cassert>
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-ModelData Loader::LoadObj(const std::string& directory, const std::string& fileName)
+ModelData Loader::LoadObj(const std::string& directory, const std::string& fileName, LoadExtension ex)
 {
 	ModelData modelData;
 	std::vector<Vector4> positions;
@@ -21,7 +17,20 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 	// ファイルまでのパス
 	std::string fileDirectory = directory + "/" + fileName;
 	// フルパス
-	std::string fullPath = fileDirectory + "/" + fileName + ".obj";
+	std::string fullPath = fileDirectory + "/" + fileName;
+
+	// 識別子を判断
+	switch (ex)
+	{
+	case LoadExtension::kObj:
+		fullPath += ".obj";
+		break;
+	case LoadExtension::kGltf:
+		fullPath += ".obj";
+		break;
+	}
+
+
 	std::ifstream file(fullPath);
 	assert(file.is_open());
 
@@ -135,7 +144,7 @@ ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fi
 				aiVector3D& normal = mesh->mNormals[vertexIndex];
 				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
 
-				VertexData vertex;
+				VertexData vertex{};
 
 				//VertexData vertex;
 				vertex.position = { position.x,position.y,position.z,1.0f };
@@ -197,4 +206,10 @@ MaterialData Loader::LoadMaterial(const std::string& directory, const std::strin
 	MaterialData result = materialData;
 
 	return result;
+}
+
+Node Loader::ReadNode(aiNode* node)
+{
+	node;
+	return Node();
 }

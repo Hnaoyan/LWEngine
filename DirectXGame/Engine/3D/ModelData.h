@@ -3,6 +3,17 @@
 #include <vector>
 #include "CBuffer.h"
 
+/// <summary>
+/// 読み込み拡張子
+/// </summary>
+enum class LoadExtension : uint16_t
+{
+	kObj,	// .obj
+	kGltf,	// .gltf
+
+	kEndCount,	// 最後
+};
+
 // マテリアル名
 struct MaterialData {
 	// テクスチャパス
@@ -16,4 +27,10 @@ struct ModelData {
 	std::vector<VertexData> vertices;
 	// マテリアル
 	MaterialData material;
+};
+// ノード情報
+struct Node {
+	Matrix4x4 localMatrix;
+	std::string name;
+	std::vector<Node> children;
 };

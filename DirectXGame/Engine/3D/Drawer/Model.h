@@ -17,6 +17,7 @@
 #include "../Mesh.h"
 #include "../Material.h"
 #include "../ModelData.h"
+#include "../Loader.h"
 
 
 class Model
@@ -45,12 +46,12 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::string& modelName);
+	void Initialize(const std::string& modelName, LoadExtension ex);
 
 	/// <summary>
 	/// モデル生成
 	/// </summary>
-	static Model* CreateObj(const std::string& modelName);
+	static Model* CreateObj(const std::string& modelName, LoadExtension ex);
 public:
 	/// <summary>
 	/// 描画

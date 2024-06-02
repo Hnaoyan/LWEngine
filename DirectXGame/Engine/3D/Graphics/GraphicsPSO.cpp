@@ -274,7 +274,7 @@ void GraphicsPSO::CreateModelPSO()
 	descRangeSRV = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ModelRegister::kCountOfParameter)];
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ModelRegister::kCountOfParameter)]{};
 	// テクスチャ
 	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// WorldTransform
@@ -288,7 +288,7 @@ void GraphicsPSO::CreateModelPSO()
 
 
 	// スタティックサンプラー
-	D3D12_STATIC_SAMPLER_DESC samplerDesc[1];
+	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
 	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
 	//samplerDesc[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
 	//samplerDesc[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;

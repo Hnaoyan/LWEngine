@@ -5,10 +5,10 @@
 
 ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 
-void Model::Initialize(const std::string& modelName)
+void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
 	// モデル読み込み
-	modelData_ = Loader::LoadAssimp("Resources", modelName);
+	modelData_ = Loader::LoadObj("Resources", modelName, ex);
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
@@ -26,12 +26,12 @@ void Model::Initialize(const std::string& modelName)
 	blendMode_ = Pipeline::BlendMode::kNormal;
 }
 
-Model* Model::CreateObj(const std::string& modelName)
+Model* Model::CreateObj(const std::string& modelName, LoadExtension ex)
 {
 	// メモリ確保
 	Model* instance = new Model;
 	// 初期化
-	instance->Initialize(modelName);
+	instance->Initialize(modelName, ex);
 
 	return instance;
 }
