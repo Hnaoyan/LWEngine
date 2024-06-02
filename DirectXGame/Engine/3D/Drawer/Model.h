@@ -16,6 +16,7 @@
 #include "../../Camera/ICamera.h"
 #include "../Mesh.h"
 #include "../Material.h"
+#include "../ModelData.h"
 
 
 class Model
@@ -35,22 +36,6 @@ public:
 	/// 描画後
 	/// </summary>
 	static void PostDraw();
-
-public:
-	// マテリアル名
-	struct MaterialData {
-		// テクスチャパス
-		std::string textureFilename;
-		// テクスチャハンドル
-		uint32_t textureHandle;
-	};
-	// モデル情報
-	struct ModelData {
-		// 頂点情報
-		std::vector<VertexData> vertices;
-		// マテリアル
-		MaterialData material;
-	};
 
 private:
 	// モデルのデータ

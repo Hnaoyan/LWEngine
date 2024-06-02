@@ -4,9 +4,13 @@
 #include <sstream>
 #include <cassert>
 
-Model::ModelData Loader::LoadObj(const std::string& directory, const std::string& fileName)
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+ModelData Loader::LoadObj(const std::string& directory, const std::string& fileName)
 {
-	Model::ModelData modelData;
+	ModelData modelData;
 	std::vector<Vector4> positions;
 	std::vector<Vector2> texcoords;
 	std::vector<Vector3> normals;
@@ -97,15 +101,75 @@ Model::ModelData Loader::LoadObj(const std::string& directory, const std::string
 		}
 
 	}
-	Model::ModelData result = modelData;
+	ModelData result = modelData;
 
 	return result;
 
 }
 
-Model::MaterialData Loader::LoadMaterial(const std::string& directory, const std::string& fileName)
+ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fileName)
 {
-	Model::MaterialData materialData;
+	ModelData modelData;
+
+	
+	Assimp::Importer importer;
+	// ファイルまでのパス
+	std::string fileDirectory = directory + "/" + fileName;
+	std::string filePath = fileDirectory + "/" + fileName + ".obj";
+	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+	assert(scene->HasMeshes());
+
+
+	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
+		aiMesh* mesh = scene->mMeshes[meshIndex];
+		assert(mesh->HasNormals());	// 法線がないMeshは今回は非対応
+		assert(mesh->HasTextureCoords(0));	// TexCoordが無い場合は今回は非対応
+		// ここからMeshのFaceを解析
+		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
+			aiFace& face = mesh->mFaces[faceIndex];
+			assert(face.mNumIndices == 3);	// 三角のみサポート
+			// ここからFaceのVertexの解析
+			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+				uint32_t vertexIndex = face.mIndices[element];
+				aiVector3D& position = mesh->mVertices[vertexIndex];
+				aiVector3D& normal = mesh->mNormals[vertexIndex];
+				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
+
+				VertexData vertex;
+
+				//VertexData vertex;
+				vertex.position = { position.x,position.y,position.z,1.0f };
+				vertex.normal = { normal.x,normal.y,normal.z };
+				vertex.texcoord = { texcoord.x,texcoord.y };
+
+				vertex.position.x *= -1.0f;
+				vertex.normal.x *= -1.0f;
+				//vertex.normal.z *= -1.0f;
+
+				// Meshに追加
+				modelData.vertices.push_back(vertex);
+			}
+		}
+
+	}
+
+	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
+		aiMaterial* material = scene->mMaterials[materialIndex];
+		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
+			aiString textureFilePath;
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
+			modelData.material.textureFilename = directory + "/" + textureFilePath.C_Str();
+			modelData.material.textureHandle = TextureManager::Load(modelData.material.textureFilename);
+		}
+
+	}
+	ModelData result = modelData;
+	return result;
+}
+
+MaterialData Loader::LoadMaterial(const std::string& directory, const std::string& fileName)
+{
+	MaterialData materialData;
 	std::string line;
 	// フルパス
 	std::string fullPath = directory + "/" + fileName;
@@ -130,7 +194,7 @@ Model::MaterialData Loader::LoadMaterial(const std::string& directory, const std
 
 	materialData.textureHandle = TextureManager::Load(materialData.textureFilename);
 	// 返す値
-	Model::MaterialData result = materialData;
+	MaterialData result = materialData;
 
 	return result;
 }

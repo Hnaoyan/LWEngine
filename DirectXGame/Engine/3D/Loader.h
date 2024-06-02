@@ -14,7 +14,15 @@ public:
 	/// <param name="directory"></param>
 	/// <param name="fileName"></param>
 	/// <returns></returns>
-	static Model::ModelData LoadObj(const std::string& directory, const std::string& fileName);
+	static ModelData LoadObj(const std::string& directory, const std::string& fileName);
+
+	/// <summary>
+	/// Assimpでの読み込み
+	/// </summary>
+	/// <param name="directory"></param>
+	/// <param name="fileName"></param>
+	/// <returns></returns>
+	static ModelData LoadAssimp(const std::string& directory, const std::string& fileName);
 
 	/// <summary>
 	/// マテリアル読み込み
@@ -22,6 +30,7 @@ public:
 	/// <param name="directory"></param>
 	/// <param name="fileName"></param>
 	/// <returns></returns>
-	static Model::MaterialData LoadMaterial(const std::string& directory, const std::string& fileName);
+	static MaterialData LoadMaterial(const std::string& directory, const std::string& fileName);
+
 
 };
