@@ -28,6 +28,8 @@ public:
 	/// <returns></returns>
 	static ModelData LoadAssimp(const std::string& directory, const std::string& fileName);
 
+	static ModelData LoadGlTF(const std::string& directory, const std::string& fileName, LoadExtension ex = LoadExtension::kGltf);
+
 	/// <summary>
 	/// マテリアル読み込み
 	/// </summary>

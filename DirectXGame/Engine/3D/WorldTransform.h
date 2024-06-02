@@ -29,6 +29,10 @@ public:
 	/// <returns></returns>
 	Vector3 GetWorldPosition() const{ return { worldMatrix_.m[3][0],worldMatrix_.m[3][1] ,worldMatrix_.m[3][2] }; }
 
+	void SetModelData(const Matrix4x4& local) {
+		localMatrix_ = local;
+	}
+
 private:
 	/// <summary>
 	/// 定数バッファ作成
@@ -50,6 +54,9 @@ public:
 	const WorldTransform* parent_ = nullptr;
 	// ワールド行列
 	Matrix4x4 worldMatrix_;
+
+	Matrix4x4 localMatrix_;
+
 	// カメラのポインタ
 	ICamera* camera_ = nullptr;
 	bool isBillBoard_ = false;

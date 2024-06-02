@@ -37,6 +37,10 @@ public:
 	/// 描画後
 	/// </summary>
 	static void PostDraw();
+	/// <summary>
+	// モデル生成
+	/// </summary>
+	static Model* CreateObj(const std::string& modelName, LoadExtension ex);
 
 private:
 	// モデルのデータ
@@ -48,10 +52,7 @@ public:
 	/// </summary>
 	void Initialize(const std::string& modelName, LoadExtension ex);
 
-	/// <summary>
-	/// モデル生成
-	/// </summary>
-	static Model* CreateObj(const std::string& modelName, LoadExtension ex);
+
 public:
 	/// <summary>
 	/// 描画
@@ -60,6 +61,7 @@ public:
 	/// <param name="camera"></param>
 	void Draw(const WorldTransform& worldTransform, ICamera* camera);
 
+	ModelData GetModelData() { return modelData_; }
 private:
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;

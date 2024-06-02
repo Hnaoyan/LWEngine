@@ -8,7 +8,7 @@ ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
 	// モデル読み込み
-	modelData_ = Loader::LoadObj("Resources", modelName, ex);
+	modelData_ = Loader::LoadGlTF("Resources", modelName, ex);
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();

@@ -10,8 +10,10 @@ void WorldTransform::Initialize()
 	this->CreateConstBuffer();
 	// マッピング
 	this->Map();
-	// 行列の送信
+	// 単位行列
 	worldMatrix_ = Matrix4x4::MakeIdentity4x4();
+	localMatrix_ = Matrix4x4::MakeIdentity4x4();
+	// 行列の送信
 	this->TransferMatrix();
 }
 
@@ -30,6 +32,10 @@ void WorldTransform::UpdateMatrix()
 	if (parent_) {
 		worldMatrix_ = Matrix4x4::Multiply(worldMatrix_, parent_->worldMatrix_);
 	}
+
+
+	worldMatrix_ = Matrix4x4::Multiply(worldMatrix_, localMatrix_);
+	
 
 	// 定数バッファに送信
 	TransferMatrix();

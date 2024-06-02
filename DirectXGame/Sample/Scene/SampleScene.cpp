@@ -13,6 +13,7 @@ void SampleScene::Initialize()
 
 	//---ここから書く---//
 	testWTF_.Initialize();
+	testWTF_.SetModelData(testModel_->GetModelData().rootNode.localMatrix);
 	testWTF_.transform_.translate.y = -1.6f;
 	testWTF_.transform_.translate.z = 6.0f;
 }
@@ -78,7 +79,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("axis", LoadExtension::kObj));
+	testModel_.reset(Model::CreateObj("plane", LoadExtension::kGltf));
 }
 
 void SampleScene::LoadTexture()

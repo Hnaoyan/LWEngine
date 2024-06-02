@@ -14,6 +14,13 @@ enum class LoadExtension : uint16_t
 	kEndCount,	// 最後
 };
 
+// ノード情報
+struct Node {
+	Matrix4x4 localMatrix;
+	std::string name;
+	std::vector<Node> children;
+};
+
 // マテリアル名
 struct MaterialData {
 	// テクスチャパス
@@ -27,10 +34,6 @@ struct ModelData {
 	std::vector<VertexData> vertices;
 	// マテリアル
 	MaterialData material;
-};
-// ノード情報
-struct Node {
-	Matrix4x4 localMatrix;
-	std::string name;
-	std::vector<Node> children;
+	// ノード
+	Node rootNode;
 };
