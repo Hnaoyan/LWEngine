@@ -14,10 +14,8 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 	std::string line;
 
 	// ファイル開く
-	// ファイルまでのパス
-	std::string fileDirectory = directory + "/" + fileName;
 	// フルパス
-	std::string fullPath = fileDirectory + "/" + fileName;
+	std::string fullPath = directory + "/" + fileName;
 
 	// 識別子を判断
 	switch (ex)
@@ -26,7 +24,7 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 		fullPath += ".obj";
 		break;
 	case LoadExtension::kGltf:
-		fullPath += ".obj";
+		fullPath += ".gltf";
 		break;
 	}
 
@@ -46,7 +44,6 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 		if (identifier == "v") {
 			Vector4 pos = {};
 			s >> pos.x >> pos.y >> pos.z;
-			//pos.x *= -1.0f;
 			pos.w = 1.0f;
 			positions.push_back(pos);
 		}
@@ -54,7 +51,6 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 		else if (identifier == "vn") {
 			Vector3 normal = {};
 			s >> normal.x >> normal.y >> normal.z;
-			//normal.x *= -1.0f;
 			normals.push_back(normal);
 		}
 		// 
@@ -62,7 +58,6 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 			Vector2 texcoord = {};
 			s >> texcoord.x >> texcoord.y;
 			// Y方向反転
-			//texcoord.y = 1.0f - texcoord.y;
 			texcoords.push_back(texcoord);
 		}
 		// 三角形限定
@@ -83,10 +78,15 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 					elementIndices[element] = std::stoi(index);
 				}
 
-				//
-				Vector4 position = positions[elementIndices[0] - 1];
-				Vector3 normal = normals[elementIndices[2] - 1];
-				Vector2 texcoord = texcoords[elementIndices[1] - 1];
+				// 座標
+				uint32_t index = elementIndices[0] - 1;
+				Vector4 position = positions[index];
+				// 法線
+				index = elementIndices[2] - 1;
+				Vector3 normal = normals[index];
+				// テクスチャ
+				index = elementIndices[1] - 1;
+				Vector2 texcoord = texcoords[index];
 
 				// 反転処理
 				position.x *= -1.0f;
@@ -106,7 +106,7 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 			std::string materialFilename;
 
 			s >> materialFilename;
-			modelData.material = LoadMaterial(fileDirectory, materialFilename);
+			modelData.material = LoadMaterial(directory, materialFilename);
 		}
 
 	}
@@ -123,8 +123,7 @@ ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fi
 	
 	Assimp::Importer importer;
 	// ファイルまでのパス
-	std::string fileDirectory = directory + "/" + fileName;
-	std::string filePath = fileDirectory + "/" + fileName + ".obj";
+	std::string filePath = directory + "/" + fileName + ".obj";
 	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
 	assert(scene->HasMeshes());
 
@@ -167,7 +166,7 @@ ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fi
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
 			aiString textureFilePath;
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
-			modelData.material.textureFilename = fileDirectory + "/" + textureFilePath.C_Str();
+			modelData.material.textureFilename = directory + "/" + textureFilePath.C_Str();
 			modelData.material.textureHandle = TextureManager::Load(modelData.material.textureFilename);
 		}
 
@@ -181,8 +180,7 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 	ModelData modelData;
 	ex;
 	Assimp::Importer importer;
-	std::string fileDirectory = directory + "/" + fileName;
-	std::string filePath = fileDirectory + "/" + fileName + ".gltf";
+	std::string filePath = directory + "/" + fileName + ".gltf";
 	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
 	assert(scene->HasMeshes());
 
@@ -208,7 +206,7 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 				vertex.normal = { -normal.x,normal.y,normal.z };
 				vertex.texcoord = { texcoord.x,texcoord.y };
 
-				//vertex.position.x *= -1.0f;
+				vertex.position.x *= -1.0f;
 				vertex.normal.x *= -1.0f;
 				//vertex.texcoord.y = 1.0f - texcoord.y;
 
@@ -224,7 +222,7 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
 			aiString textureFilePath;
 			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
-			modelData.material.textureFilename = fileDirectory + "/" + textureFilePath.C_Str();
+			modelData.material.textureFilename = directory + "/" + textureFilePath.C_Str();
 			modelData.material.textureHandle = TextureManager::Load(modelData.material.textureFilename);
 		}
 
@@ -269,9 +267,57 @@ MaterialData Loader::LoadMaterial(const std::string& directory, const std::strin
 	return result;
 }
 
-Node Loader::ReadNode(aiNode* node)
+AnimationData Loader::LoadAnimationFile(const std::string& directoryPath, const std::string& fileName)
 {
-	Node result;
+	AnimationData animation; // 作る奴
+	Assimp::Importer importer;
+	std::string filePath = directoryPath + "/" + fileName + ".gltf";
+	const aiScene* scene = importer.ReadFile(filePath.c_str(), 0);
+
+	assert(scene->mNumAnimations != 0); // アニメーションがない
+
+	aiAnimation* animationAssimp = scene->mAnimations[0]; // 最初のアニメーションのみ採用
+	animation.duration = float(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);// 時間を秒単位に変換
+
+	// assimpでは個々のNodeのAnimationをChannelと呼んでいるのでChannelを回してNodeAnimationの情報を取得する
+	for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; ++channelIndex) {
+
+		aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
+		NodeAnimation& nodeAnimation = animation.nodeAnimations[nodeAnimationAssimp->mNodeName.C_Str()];
+		// Position
+		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumPositionKeys; ++keyIndex) {
+			aiVectorKey& keyAssimp = nodeAnimationAssimp->mPositionKeys[keyIndex];
+			KeyframeVector3 keyframe{};
+			keyframe.time = float(keyAssimp.mTime / animationAssimp->mTicksPerSecond);// 秒変換
+			keyframe.value = { -keyAssimp.mValue.x,keyAssimp.mValue.y,keyAssimp.mValue.z };	// 右手→左手
+			nodeAnimation.translate.keyframes.push_back(keyframe);
+		}
+		// Rotate
+		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumRotationKeys; ++keyIndex) {
+			aiQuatKey& keyAssimp = nodeAnimationAssimp->mRotationKeys[keyIndex];
+			KeyframeQuaternion keyframe{};
+			keyframe.time = float(keyAssimp.mTime / animationAssimp->mTicksPerSecond);// 秒変換
+			keyframe.value = { keyAssimp.mValue.x,-keyAssimp.mValue.y,-keyAssimp.mValue.z,keyAssimp.mValue.w };	// 右手→左手
+			nodeAnimation.rotate.keyframes.push_back(keyframe);
+		}
+		// Scale
+		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumScalingKeys; ++keyIndex) {
+			aiVectorKey& keyAssimp = nodeAnimationAssimp->mScalingKeys[keyIndex];
+			KeyframeVector3 keyframe{};
+			keyframe.time = float(keyAssimp.mTime / animationAssimp->mTicksPerSecond);// 秒変換
+			keyframe.value = { keyAssimp.mValue.x,keyAssimp.mValue.y,keyAssimp.mValue.z };	// 右手→左手
+			nodeAnimation.scale.keyframes.push_back(keyframe);
+		}
+
+	}
+
+	AnimationData result = animation;
+	return result;
+}
+
+ModelNode Loader::ReadNode(aiNode* node)
+{
+	ModelNode result;
 	aiMatrix4x4 aiLocalMatrix = node->mTransformation;	// NodeのLocalMatrixを取得
 	aiLocalMatrix.Transpose();							// 列ベクトル形式を行ベクトル形式に転置
 	//result.localMatrix.m[0][0] = aiLocalMatrix[0][0];	// 他の要素も同様に

@@ -49,12 +49,12 @@ private:
 
 public:
 	// トランスフォーム
-	Transform transform_ = { {1.0f,1.0f,1.0f} ,{},{} };
+	EulerTransform transform_ = { {1.0f,1.0f,1.0f} ,{},{} };
 	// 親子ポインタ
 	const WorldTransform* parent_ = nullptr;
 	// ワールド行列
 	Matrix4x4 worldMatrix_;
-
+	// ローカル行列
 	Matrix4x4 localMatrix_;
 
 	// カメラのポインタ

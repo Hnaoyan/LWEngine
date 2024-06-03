@@ -5,7 +5,7 @@
 
 class IScene
 {
-public: // 仮想関数
+public: // フレーム関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -23,7 +23,7 @@ public: // 仮想関数
 	/// ImGuiの処理
 	/// </summary>
 	virtual void ImGuiDraw() = 0;
-
+public:	// ロード関数
 	/// <summary>
 	/// モデル読み込み
 	/// </summary>
@@ -34,6 +34,13 @@ public: // 仮想関数
 	/// </summary>
 	virtual void LoadTexture() {};
 
+public:	// 初期化
+	/// <summary>
+	/// アプリ関係の初期化
+	/// </summary>
+	virtual void ApplicationInitialize() {};
+
+public:	// カメラなどの更新
 	/// <summary>
 	/// カメラ更新
 	/// </summary>

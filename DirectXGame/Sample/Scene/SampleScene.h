@@ -2,6 +2,7 @@
 #include "../../Engine/Scene/IScene.h"
 #include "../../Engine/2D/Drawer/Sprite.h"
 #include "../../Engine/3D/Drawer/Model.h"
+#include "../Object/AnimSampleObject.h"
 
 class SampleScene : public IScene
 {
@@ -33,6 +34,8 @@ public:
 	void CameraUpdate() override;
 private:
 	// 試し
+	std::unique_ptr<AnimSampleObject> sampleObj_;
+
 	std::unique_ptr<Sprite> newSprite_;
 	uint32_t uvTexture_ = 0u;
 	Vector2 position_ = {};

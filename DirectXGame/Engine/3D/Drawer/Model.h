@@ -13,12 +13,11 @@
 #include "../Graphics/GraphicsPSO.h"
 #include "../CBuffer.h"
 #include "../WorldTransform.h"
-#include "../../Camera/ICamera.h"
 #include "../Mesh.h"
 #include "../Material.h"
 #include "../ModelData.h"
 #include "../Loader.h"
-
+#include "../../Camera/ICamera.h"
 
 class Model
 {
@@ -28,7 +27,10 @@ private:
 public:
 	// コマンドリスト
 	static ID3D12GraphicsCommandList* sCommandList_;
+	// ディレクトリパス
+	static std::string sDirectoryPath;
 
+public:
 	/// <summary>
 	/// 描画前
 	/// </summary>
@@ -51,25 +53,23 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize(const std::string& modelName, LoadExtension ex);
-
-
-public:
+	void Initialize(const std::string& modelName);
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="worldTransform"></param>
 	/// <param name="camera"></param>
-	void Draw(const WorldTransform& worldTransform, ICamera* camera);
+	void Draw(const ModelDrawDesc& desc);
 
+	//void AnimationDraw(const AnimDrawDesc& desc);
+
+public: // アクセッサ
 	ModelData GetModelData() { return modelData_; }
 private:
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;
 	// マテリアル
 	std::unique_ptr<Material> material_;
-
-	// テクスチャコンテナ
-	//std::vector<uint32_t> textures_;
 	// テクスチャ
 	uint32_t texture_ = 0u;
 private:

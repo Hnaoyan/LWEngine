@@ -1,5 +1,6 @@
 #pragma once
 #include "Drawer/Model.h"
+#include "../Animation/AnimationData.h"
 #include "../Utility/Singleton.h"
 
 #include <assimp/Importer.hpp>
@@ -38,11 +39,20 @@ public:
 	/// <returns></returns>
 	static MaterialData LoadMaterial(const std::string& directory, const std::string& fileName);
 
+public:	// アニメーション関係
+	/// <summary>
+	/// アニメーションデータの読み込み
+	/// </summary>
+	/// <param name="directoryPath"></param>
+	/// <param name="fileName"></param>
+	/// <returns></returns>
+	static AnimationData LoadAnimationFile(const std::string& directoryPath, const std::string& fileName);
+
 	/// <summary>
 	/// ノード読み込み
 	/// </summary>
 	/// <param name="node"></param>
 	/// <returns></returns>
-	static Node ReadNode(aiNode* node);
+	static ModelNode ReadNode(aiNode* node);
 
 };

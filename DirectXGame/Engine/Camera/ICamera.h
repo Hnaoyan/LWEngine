@@ -54,7 +54,7 @@ protected:
 
 public:
 	// 
-	Transform transform_ = {};
+	EulerTransform transform_ = {};
 	// 視野角の値
 	float fov_ = 45.0f;
 	// 視野角の角度

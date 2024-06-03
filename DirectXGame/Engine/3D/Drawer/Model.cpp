@@ -4,11 +4,12 @@
 #include <cassert>
 
 ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
+std::string Model::sDirectoryPath = "Resources";
 
 void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
 	// モデル読み込み
-	modelData_ = Loader::LoadGlTF("Resources", modelName, ex);
+	modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName, ex);
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
@@ -20,7 +21,28 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 
 	// テクスチャの設定
 	texture_ = modelData_.material.textureHandle;
-	//textures_.push_back(TextureManager::Load(modelData_.material.textureFilename));
+
+	// ブレンドモード設定
+	blendMode_ = Pipeline::BlendMode::kNormal;
+}
+
+void Model::Initialize(const std::string& modelName)
+{
+	// モデル読み込み
+	modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
+	// アニメーションの読み込み
+	modelData_.animData = Loader::LoadAnimationFile(sDirectoryPath + "/" + modelName, modelName);
+
+	// メッシュ生成
+	mesh_ = std::make_unique<Mesh>();
+	mesh_->CreateMesh(modelData_.vertices);
+
+	// マテリアル生成
+	material_ = std::make_unique<Material>();
+	material_->CreateMaterial();
+
+	// テクスチャの設定
+	texture_ = modelData_.material.textureHandle;
 
 	// ブレンドモード設定
 	blendMode_ = Pipeline::BlendMode::kNormal;
@@ -31,14 +53,19 @@ Model* Model::CreateObj(const std::string& modelName, LoadExtension ex)
 	// メモリ確保
 	Model* instance = new Model;
 	// 初期化
-	instance->Initialize(modelName, ex);
+	ex;
+	instance->Initialize(modelName);
 
 	return instance;
 }
 
-void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
-
+void Model::Draw(const ModelDrawDesc& desc) {
+	// マテリアル更新
 	material_->Update();
+
+	// Descの設定・更新
+	desc.worldTransform->SetModelData(modelData_.rootNode.localMatrix);
+	desc.worldTransform->UpdateMatrix();
 
 	// パイプラインステートの設定
 	sCommandList_->SetPipelineState(GraphicsPSO::sModelPipelineStates_[size_t(blendMode_)].Get());
@@ -46,12 +73,11 @@ void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kWorldTransform),
-		worldTransform.constBuffer_->GetGPUVirtualAddress());
+		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kViewProjection),
-		camera->constBuff_->GetGPUVirtualAddress());
-
+		desc.camera->constBuff_->GetGPUVirtualAddress());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定
@@ -63,9 +89,7 @@ void Model::Draw(const WorldTransform& worldTransform, ICamera* camera) {
 	// SRVのセット
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
-
-	// ここでマテリアル設定しろ
-
+	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 

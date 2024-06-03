@@ -2,13 +2,23 @@
 #include "../Math/MathLib.h"
 
 /// <summary>
-/// 全体的に使うトランスフォーム構造体
+/// 全体的に使うオイラートランスフォーム構造体
 /// </summary>
-struct Transform {
+struct EulerTransform {
 	Vector3 scale;
 	Vector3 rotate;
 	Vector3 translate;
 };
+
+/// <summary>
+/// クォータニオントランスフォーム
+/// </summary>
+struct QuaternionTransform {
+	Vector3 scale;
+	Quaternion rotate;
+	Vector3 translate;
+};
+
 
 struct CBufferWorldTransform {
 	Matrix4x4 world;

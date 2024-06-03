@@ -22,6 +22,8 @@
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Mesh.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\WorldTransform.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\Animation.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\AnimationData.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
@@ -42,6 +44,7 @@
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectXCommon.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
+    <ClCompile Include="DirectXGame\Sample\Object\AnimSampleObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +61,8 @@
     <ClInclude Include="DirectXGame\Engine\3D\Mesh.h" />
     <ClInclude Include="DirectXGame\Engine\3D\ModelData.h" />
     <ClInclude Include="DirectXGame\Engine\3D\WorldTransform.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\Animation.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\AnimationData.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
@@ -78,10 +83,12 @@
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector2.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="DirectXGame\Engine\Math\Vector\VectorLib.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
+    <ClInclude Include="DirectXGame\Engine\System\DeltaTime.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h" />
@@ -94,6 +101,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
+    <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h" />
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
   </ItemGroup>
   <ItemGroup>

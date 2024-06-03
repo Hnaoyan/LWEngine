@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector/Vector3.h"
 
 class Quaternion {
 public:
@@ -17,5 +18,21 @@ public: // 基本的な計算
 	static Quaternion Normalize(const Quaternion& quaternion);
 	// 逆
 	static Quaternion Inverse(const Quaternion& quaternion);
+	// 内積
+	static float Dot(const Quaternion& q0, const Quaternion& q1);
+	// 球面線形補間
+	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+	// スカラー
+	static Quaternion Scaler(const Quaternion& q, float scaler);
+	// 加算
+	static Quaternion Add(const Quaternion& q0, const Quaternion& q1);
+
+	/// <summary>
+	/// 任意軸回転を表すクォータニオン
+	/// </summary>
+	/// <param name="axis"></param>
+	/// <param name="angle"></param>
+	/// <returns></returns>
+	static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
 
 };

@@ -2,6 +2,11 @@
 #include <string>
 #include <vector>
 #include "CBuffer.h"
+#include "../Animation/AnimationData.h"
+
+class Model;
+class WorldTransform;
+class ICamera;
 
 /// <summary>
 /// 読み込み拡張子
@@ -15,10 +20,15 @@ enum class LoadExtension : uint16_t
 };
 
 // ノード情報
-struct Node {
+struct ModelNode {
+	// クォータニオン
+	QuaternionTransform transform;
+	// ローカル行列
 	Matrix4x4 localMatrix;
+	// 名前
 	std::string name;
-	std::vector<Node> children;
+	// 子
+	std::vector<ModelNode> children;
 };
 
 // マテリアル名
@@ -35,5 +45,23 @@ struct ModelData {
 	// マテリアル
 	MaterialData material;
 	// ノード
-	Node rootNode;
+	ModelNode rootNode;
+	// アニメーションデータ
+	AnimationData animData;
+};
+
+// アニメーションの際に必要なやつ
+struct AnimDrawDesc
+{
+	//Model* model;
+	WorldTransform* worldTransform;
+	ICamera* camera;
+};
+
+// モデルの描画に必要な者たち
+struct ModelDrawDesc
+{
+	ModelNode* modelNode;
+	WorldTransform* worldTransform;
+	ICamera* camera;
 };

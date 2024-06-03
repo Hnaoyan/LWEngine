@@ -12,17 +12,17 @@ void SampleScene::Initialize()
 	LoadTexture();
 
 	//---ここから書く---//
-	testWTF_.Initialize();
-	testWTF_.SetModelData(testModel_->GetModelData().rootNode.localMatrix);
-	testWTF_.transform_.translate.y = -1.6f;
-	testWTF_.transform_.translate.z = 6.0f;
+
+	sampleObj_ = std::make_unique<AnimSampleObject>();
+	sampleObj_->Initialize(this->testModel_.get());
+
 }
 
 void SampleScene::Update()
 {
 	newSprite_->SetPosition(position_);
 
-	testWTF_.UpdateMatrix();
+	sampleObj_->Update();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -35,7 +35,7 @@ void SampleScene::Draw()
 		
 	Sprite::PreDraw(commandList);
 
-	newSprite_->Draw();
+	//newSprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -45,7 +45,8 @@ void SampleScene::Draw()
 
 	Model::PreDraw(commandList);
 
-	testModel_->Draw(testWTF_, &camera_);
+	// サンプル
+	sampleObj_->Draw(&camera_);
 
 	Model::PostDraw();
 
@@ -72,6 +73,8 @@ void SampleScene::ImGuiDraw()
 	ImGui::End();
 	ImGui::ShowDemoWindow();
 
+	sampleObj_->ImGuiDraw();
+
 	// カメラの
 	camera_.ImGuiDraw();
 
@@ -79,7 +82,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("plane", LoadExtension::kGltf));
+	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
 }
 
 void SampleScene::LoadTexture()
