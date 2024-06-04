@@ -51,6 +51,11 @@ public:
 	// 現在の時間
 	float animationTime_;
 	
+	// アニメーション用のトランスフォーム
+	QuaternionTransform transform_;
+	// ローカル行列
+	Matrix4x4 localMatrix_ = {};
+
 public:
 	void UpdateAnimation();
 
