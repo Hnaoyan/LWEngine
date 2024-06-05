@@ -15,6 +15,7 @@ void WorldTransform::Initialize()
 	localMatrix_ = Matrix4x4::MakeIdentity4x4();
 	// 行列の送信
 	this->TransferMatrix();
+	this->UpdateMatrix();
 }
 
 void WorldTransform::UpdateMatrix()
@@ -33,8 +34,8 @@ void WorldTransform::UpdateMatrix()
 		worldMatrix_ = Matrix4x4::Multiply(worldMatrix_, parent_->worldMatrix_);
 	}
 
-
-	worldMatrix_ = Matrix4x4::Multiply(worldMatrix_, localMatrix_);
+	// ワールド行列をローカルに適応
+	worldMatrix_ = Matrix4x4::Multiply(localMatrix_, worldMatrix_);
 	
 
 	// 定数バッファに送信

@@ -15,6 +15,9 @@ void SampleScene::Initialize()
 
 	sampleObj_ = std::make_unique<AnimSampleObject>();
 	sampleObj_->Initialize(this->testModel_.get());
+	
+	// 初期カメラ
+	camera_.transform_.translate.z = -10.0f;
 
 }
 

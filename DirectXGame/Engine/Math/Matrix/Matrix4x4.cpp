@@ -1,4 +1,6 @@
 #include "Matrix4x4.h"
+#include "../MathLib.h"
+
 #include <cmath>
 #include <cassert>
 
@@ -251,6 +253,21 @@ Matrix4x4 Matrix4x4::MakeRotateXYZMatrix(const Vector3& rotate)
 	return matrixRotate;
 }
 
+Matrix4x4 Matrix4x4::MakeRotateMatrix(const Quaternion& rotate)
+{
+	Matrix4x4 result = MakeIdentity4x4();
+	result.m[0][0] = std::powf(rotate.w, 2) + std::powf(rotate.x, 2) - std::powf(rotate.y, 2) - std::powf(rotate.z, 2);
+	result.m[0][1] = 2 * (rotate.x * rotate.y + rotate.w * rotate.z);
+	result.m[0][2] = 2 * (rotate.x * rotate.z - rotate.w * rotate.y);
+	result.m[1][0] = 2 * (rotate.x * rotate.y - rotate.w * rotate.z);
+	result.m[1][1] = std::powf(rotate.w, 2) - std::powf(rotate.x, 2) + std::powf(rotate.y, 2) - std::powf(rotate.z, 2);
+	result.m[1][2] = 2 * (rotate.y * rotate.z + rotate.w * rotate.x);
+	result.m[2][0] = 2 * (rotate.x * rotate.z + rotate.w * rotate.y);
+	result.m[2][1] = 2 * (rotate.y * rotate.z - rotate.w * rotate.x);
+	result.m[2][2] = std::powf(rotate.w, 2) - std::powf(rotate.x, 2) - std::powf(rotate.y, 2) + std::powf(rotate.z, 2);
+	return result;
+}
+
 Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate)
 {
 	// スケール
@@ -261,6 +278,21 @@ Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotat
 	Matrix4x4 translateMat = MakeTranslateMatrix(translate);
 
 	Matrix4x4 affineMatrix = Multiply(scaleMat, Multiply(rotateMat, translateMat));
+
+	return affineMatrix;
+}
+
+Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate)
+{
+	Matrix4x4 affineMatrix = {};
+	// スケール
+	Matrix4x4 scaleMat = MakeScaleMatrix(scale);
+	// 回転
+	Matrix4x4 rotateMat = MakeRotateMatrix(rotate);
+	// 平行移動
+	Matrix4x4 translateMat = MakeTranslateMatrix(translate);
+
+	affineMatrix = Multiply(scaleMat, Multiply(rotateMat, translateMat));
 
 	return affineMatrix;
 }

@@ -64,8 +64,9 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	material_->Update();
 
 	// Descの設定・更新
-	desc.worldTransform->SetModelData(modelData_.rootNode.localMatrix);
-	desc.worldTransform->UpdateMatrix();
+	//Matrix4x4 local = Matrix4x4::Multiply(desc.localMatrix, modelData_.rootNode.localMatrix);
+	//desc.worldTransform->SetModelData(local);
+	//desc.worldTransform->UpdateMatrix();
 
 	// パイプラインステートの設定
 	sCommandList_->SetPipelineState(GraphicsPSO::sModelPipelineStates_[size_t(blendMode_)].Get());

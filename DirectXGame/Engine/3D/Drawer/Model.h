@@ -64,7 +64,7 @@ public:
 	//void AnimationDraw(const AnimDrawDesc& desc);
 
 public: // アクセッサ
-	ModelData GetModelData() { return modelData_; }
+	ModelData* GetModelData() { return &modelData_; }
 private:
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;

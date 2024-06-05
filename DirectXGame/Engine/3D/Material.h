@@ -25,10 +25,10 @@ public:
 	CBufferDataMaterial* materialData_ = nullptr;
 
 	// 色
-	Vector4 color_;
+	Vector4 color_{ 1,1,1,1 };
 	// ライティングの設定
-	int32_t enableLighting_;
+	int32_t enableLighting_ = false;
 	// 輝度
-	float shininess_;
+	float shininess_ = 100.0f;
 
 };

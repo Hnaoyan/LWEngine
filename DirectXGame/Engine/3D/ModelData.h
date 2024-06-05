@@ -64,4 +64,5 @@ struct ModelDrawDesc
 	ModelNode* modelNode;
 	WorldTransform* worldTransform;
 	ICamera* camera;
+	Matrix4x4 localMatrix;
 };

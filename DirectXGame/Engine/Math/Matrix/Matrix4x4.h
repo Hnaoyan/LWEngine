@@ -1,5 +1,8 @@
 #pragma once
-#include "../MathLib.h"
+
+class Quaternion;
+class Vector3;
+class Vector2;
 
 class Matrix4x4
 {
@@ -75,6 +78,13 @@ public:
 	static Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate);
 
 	/// <summary>
+	/// クォータニオンを回転行列に
+	/// </summary>
+	/// <param name="rotate"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeRotateMatrix(const Quaternion& rotate);
+
+	/// <summary>
 	/// アフィン変換
 	/// </summary>
 	/// <param name="scale"></param>
@@ -83,6 +93,16 @@ public:
 	/// <returns></returns>
 	static Matrix4x4
 		MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
+	/// <summary>
+	/// アフィン変換（クォータニオン
+	/// </summary>
+	/// <param name="scale"></param>
+	/// <param name="rotate"></param>
+	/// <param name="translate"></param>
+	/// <returns></returns>
+	static Matrix4x4
+		MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
 
 public: // その他計算関数
 	static Matrix4x4 MakeOrthographicMatrix(

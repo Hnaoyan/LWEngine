@@ -18,7 +18,9 @@ VSOutput main(VSInput input)
     // 法線
     float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3)gWorldTransform.worldMat));
 
-    output.position = mul(input.position, mul(gWorldTransform.worldMat, mul(gCamera.view, gCamera.projection)));
+    float32_t4x4 viewProjection = mul(gCamera.view, gCamera.projection);
+    
+    output.position = mul(input.position, mul(gWorldTransform.worldMat, viewProjection));
     output.normal = input.normal;
     output.texcoord = input.texcoord;
     

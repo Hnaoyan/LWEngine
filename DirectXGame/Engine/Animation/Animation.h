@@ -57,6 +57,7 @@ public:
 	Matrix4x4 localMatrix_ = {};
 
 public:
+	void Initialize(ModelData* modelData);
 	void UpdateAnimation();
 
 };
