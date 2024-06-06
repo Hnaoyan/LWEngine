@@ -41,9 +41,8 @@ void Animation::UpdateSkelton()
 		else {
 			joint.skeletonSpaceMatrix = joint.localMatrix;
 		}
-		localMatrix_ = joint.skeletonSpaceMatrix;
 	}
-
+	localMatrix_ = skeleton_.joints[0].localMatrix;
 }
 
 void Animation::ApplyAnimation()

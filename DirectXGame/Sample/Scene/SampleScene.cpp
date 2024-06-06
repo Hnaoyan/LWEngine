@@ -85,7 +85,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("simpleSkin", LoadExtension::kGltf));
+	testModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 }
 
 void SampleScene::LoadTexture()
