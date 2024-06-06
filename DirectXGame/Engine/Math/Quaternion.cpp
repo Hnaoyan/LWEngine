@@ -65,11 +65,11 @@ float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1)
 
 Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 {
-    Quaternion quat0 = q0;
-    Quaternion quat1 = q1;
-    float dot = Dot(q0, q1);
+    Quaternion quat0 = Quaternion::Normalize(q0);
+    Quaternion quat1 = Quaternion::Normalize(q1);
+    float dot = Dot(quat0, quat1);
     if (dot < 0) {
-        quat0 = Scaler(q0, -1.0f);
+        quat0 = Scaler(quat0, -1.0f);
         dot *= -1.0f;
     }
     // なす角
@@ -78,7 +78,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
     float scale0 = std::sinf((1 - t) * theta) / std::sinf(theta);
     float scale1 = std::sinf(t * theta) / std::sinf(theta);
 
-    return Add(Scaler(q0, scale0), Scaler(q1, scale1));
+    return Add(Scaler(quat0, scale0), Scaler(quat1, scale1));
 }
 
 Quaternion Quaternion::Scaler(const Quaternion& q, float scaler)

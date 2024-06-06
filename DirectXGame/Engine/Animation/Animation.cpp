@@ -42,7 +42,7 @@ void Animation::UpdateSkelton()
 			joint.skeletonSpaceMatrix = joint.localMatrix;
 		}
 	}
-	localMatrix_ = skeleton_.joints[0].localMatrix;
+	//localMatrix_ = skeleton_.joints[0].localMatrix;
 }
 
 void Animation::ApplyAnimation()
