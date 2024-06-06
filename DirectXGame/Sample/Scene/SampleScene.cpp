@@ -66,14 +66,14 @@ void SampleScene::Draw()
 
 void SampleScene::ImGuiDraw()
 {
-	ImGui::Begin("Test");
-	ImGui::DragFloat2("pos", &position_.x, 0.01f);
+	//ImGui::Begin("Test");
+	//ImGui::DragFloat2("pos", &position_.x, 0.01f);
 
-	ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
+	//ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
+	//ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
+	//ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
 
-	ImGui::End();
+	//ImGui::End();
 	ImGui::ShowDemoWindow();
 
 	sampleObj_->ImGuiDraw();
@@ -85,7 +85,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
+	testModel_.reset(Model::CreateObj("simpleSkin", LoadExtension::kGltf));
 }
 
 void SampleScene::LoadTexture()

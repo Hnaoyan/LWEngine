@@ -54,6 +54,7 @@
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\CBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Render.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Loader.h" />

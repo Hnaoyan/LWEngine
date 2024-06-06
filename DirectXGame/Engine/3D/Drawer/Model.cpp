@@ -13,7 +13,7 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
-	mesh_->CreateMesh(modelData_.vertices);
+	mesh_->CreateMesh(&modelData_);
 
 	// マテリアル生成
 	material_ = std::make_unique<Material>();
@@ -30,12 +30,13 @@ void Model::Initialize(const std::string& modelName)
 {
 	// モデル読み込み
 	modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
+	//modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
 	// アニメーションの読み込み
 	modelData_.animData = Loader::LoadAnimationFile(sDirectoryPath + "/" + modelName, modelName);
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
-	mesh_->CreateMesh(modelData_.vertices);
+	mesh_->CreateMesh(&modelData_);
 
 	// マテリアル生成
 	material_ = std::make_unique<Material>();
@@ -95,7 +96,7 @@ void Model::Draw(const ModelDrawDesc& desc) {
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
 	// ドローコール
-	sCommandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
+	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
 }
 

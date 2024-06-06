@@ -287,6 +287,9 @@
     <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_VS.hlsl" />

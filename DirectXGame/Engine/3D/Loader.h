@@ -55,4 +55,8 @@ public:	// アニメーション関係
 	/// <returns></returns>
 	static ModelNode ReadNode(aiNode* node);
 
+	static Skeleton CreateSkeleton(const ModelNode& rootNode);
+
+	static int32_t CreateJoint(const ModelNode& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
+
 };

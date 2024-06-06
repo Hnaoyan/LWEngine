@@ -7,6 +7,30 @@
 class Animation
 {
 public:
+	// モデルデータ
+	ModelData* modelData_ = nullptr;
+	// アニメーションデータ
+	AnimationData animData_;
+	// 現在の時間
+	float animationTime_ = 0.0f;
+
+	// アニメーション用のトランスフォーム
+	QuaternionTransform transform_;
+	// ローカル行列
+	Matrix4x4 localMatrix_ = {};
+	// SkeletonSpaceでの変換行列
+	Matrix4x4  skeltonSpaceMatrix_; 
+
+	Skeleton skeleton_;
+public:
+	void Initialize(ModelData* modelData);
+	void UpdateAnimation();
+
+public:
+	void UpdateSkelton();
+	void ApplyAnimation();
+
+public:
 	inline static Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time) {
 		assert(!keyframes.empty());
 		if (keyframes.size() == 1 || time <= keyframes[0].time) {
@@ -42,22 +66,5 @@ public:
 		}
 		return (*keyframes.rbegin()).value;
 	}
-
-public:
-	// モデルデータ
-	ModelData* modelData_ = nullptr;
-	// アニメーションデータ
-	AnimationData animData_;
-	// 現在の時間
-	float animationTime_;
-	
-	// アニメーション用のトランスフォーム
-	QuaternionTransform transform_;
-	// ローカル行列
-	Matrix4x4 localMatrix_ = {};
-
-public:
-	void Initialize(ModelData* modelData);
-	void UpdateAnimation();
 
 };

@@ -39,7 +39,8 @@ struct MaterialData {
 	uint32_t textureHandle;
 };
 // モデル情報
-struct ModelData {
+class ModelData {
+public:
 	// 頂点情報
 	std::vector<VertexData> vertices;
 	// マテリアル
@@ -48,6 +49,8 @@ struct ModelData {
 	ModelNode rootNode;
 	// アニメーションデータ
 	AnimationData animData;
+	// Index情報
+	std::vector<uint32_t> indices;
 };
 
 // アニメーションの際に必要なやつ

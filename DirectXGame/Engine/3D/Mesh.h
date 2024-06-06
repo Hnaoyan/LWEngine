@@ -3,7 +3,7 @@
 #include <vector>
 #include <d3d12.h>
 #include "../3D/CBuffer.h"
-
+#include "ModelData.h"
 
 class Mesh
 {
@@ -12,7 +12,7 @@ public:
 	/// メッシュ生成
 	/// </summary>
 	/// <param name="vertices"></param>
-	void CreateMesh(std::vector<VertexData> vertices);
+	void CreateMesh(ModelData* modelData);
 
 public:
 	// 頂点バッファ
