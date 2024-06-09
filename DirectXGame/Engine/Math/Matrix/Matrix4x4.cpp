@@ -176,6 +176,17 @@ Vector3 Matrix4x4::Transform(const Vector3& vector, const Matrix4x4& matrix)
 	return result;
 }
 
+Matrix4x4 Matrix4x4::MakeTranspose(const Matrix4x4& m)
+{
+	Matrix4x4 result;
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			result.m[y][x] = m.m[x][y];
+		}
+	}
+	return result;
+}
+
 Matrix4x4 Matrix4x4::MakeTranslateMatrix(const Vector3& translate)
 {
 	Matrix4x4 result = {};

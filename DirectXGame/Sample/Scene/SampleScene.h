@@ -35,12 +35,16 @@ public:
 private:
 	// 試し
 	std::unique_ptr<AnimSampleObject> sampleObj_;
+	std::unique_ptr<AnimSampleObject> walkObj_;
 
 	std::unique_ptr<Sprite> newSprite_;
 	uint32_t uvTexture_ = 0u;
 	Vector2 position_ = {};
 	Vector4 color = { 1,1,1,1 };
+
 	std::unique_ptr<Model> testModel_;
+	std::unique_ptr<Model> walkModel_;
+
 	WorldTransform testWTF_;
-	
+
 };

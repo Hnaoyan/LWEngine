@@ -215,6 +215,28 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 			}
 
 		}
+
+		// ここからSkinのBoneを解析
+		for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
+			// 格納領域の作成
+			aiBone* bone = mesh->mBones[boneIndex];
+			std::string jointName = bone->mName.C_Str();
+			JointWeightData& jointWeightData = modelData.skinClusterData[jointName];
+
+			// InverseBindPose行列の抽出
+			aiMatrix4x4 bindPoseMatrixAssimp = bone->mOffsetMatrix.Inverse();
+			aiVector3D scale, translate;
+			aiQuaternion rotate;
+			bindPoseMatrixAssimp.Decompose(scale, rotate, translate);
+			Matrix4x4 bindPoseMatrix = Matrix4x4::MakeAffineMatrix({ scale.x,scale.y,scale.z }, { rotate.x,-rotate.y,-rotate.z,rotate.w }, { -translate.x,translate.y,translate.z });
+			jointWeightData.inverseBindPoseMatrix = Matrix4x4::MakeInverse(bindPoseMatrix);
+
+			// Weight情報の取り出し
+			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
+				jointWeightData.vertexWeights.push_back({ bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId });
+			}
+		}
+
 	}
 
 	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
@@ -348,38 +370,4 @@ ModelNode Loader::ReadNode(aiNode* node)
 
 	return ModelNode(modelNode);
 
-}
-
-Skeleton Loader::CreateSkeleton(const ModelNode& rootNode)
-{
-	Skeleton skelton;
-	skelton.root = CreateJoint(rootNode, {}, skelton.joints);
-
-	// 名前とindexのマッピングを行いアクセスしやすくする
-	for (const Joint& joint : skelton.joints) {
-		skelton.jointMap.emplace(joint.name, joint.index);
-	}
-
-	return Skeleton(skelton);
-}
-
-int32_t Loader::CreateJoint(const ModelNode& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)
-{
-	Joint joint;
-	joint.name = node.name;
-	joint.localMatrix = node.localMatrix;
-	joint.skeletonSpaceMatrix = Matrix4x4::MakeIdentity4x4();
-	joint.transform = node.transform;
-	joint.index = int32_t(joints.size());	// 現在登録されてる数をIndexに
-	joint.parent = parent;
-
-	joints.push_back(joint); // SkeletonのJoint列に追加
-
-	for (const ModelNode& child : node.children) {
-		// 子Jointを作成し、そのIndexを登録
-		int32_t childIndex = CreateJoint(child, joint.index, joints);
-		joints[joint.index].children.push_back(childIndex);
-	}
-	// 自身のIndexを返す
-	return joint.index;
 }

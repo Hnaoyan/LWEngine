@@ -3,6 +3,8 @@
 #include <vector>
 #include "CBuffer.h"
 #include "../Animation/AnimationData.h"
+#include "../Animation/ModelNode.h"
+#include "../Animation/SkinCluster.h"
 
 class Model;
 class WorldTransform;
@@ -19,17 +21,6 @@ enum class LoadExtension : uint16_t
 	kEndCount,	// 最後
 };
 
-// ノード情報
-struct ModelNode {
-	// クォータニオン
-	QuaternionTransform transform;
-	// ローカル行列
-	Matrix4x4 localMatrix;
-	// 名前
-	std::string name;
-	// 子
-	std::vector<ModelNode> children;
-};
 
 // マテリアル名
 struct MaterialData {
@@ -38,6 +29,7 @@ struct MaterialData {
 	// テクスチャハンドル
 	uint32_t textureHandle;
 };
+
 // モデル情報
 class ModelData {
 public:
@@ -51,6 +43,10 @@ public:
 	AnimationData animData;
 	// Index情報
 	std::vector<uint32_t> indices;
+
+	// SkinCluster用のデータ
+	std::map<std::string, JointWeightData> skinClusterData;
+
 };
 
 // アニメーションの際に必要なやつ

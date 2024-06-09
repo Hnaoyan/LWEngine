@@ -54,8 +54,6 @@ void Framework::Initialize()
 
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
 
-	uint32_t test = TextureManager::Load("Resources/default/white2x2.png");
-	test;
 	// シーンマネージャーの生成
 	sceneManager_ = std::make_unique<SceneManager>();
 	

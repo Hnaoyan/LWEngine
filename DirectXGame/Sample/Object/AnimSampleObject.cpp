@@ -1,10 +1,20 @@
 #include "AnimSampleObject.h"
 #include "imgui.h"
 
+int32_t AnimSampleObject::sSerialNumber = 0u;
+std::string AnimSampleObject::sObjectName = "SampleObject";
+
 void AnimSampleObject::Initialize(Model* model)
 {
 	// モデル
 	animModel_ = model;
+
+	// 番号
+	serialNumber_ = sSerialNumber;
+	sSerialNumber++;
+
+	// 名前
+	objectName_ = sObjectName + std::to_string(serialNumber_);
 
 	worldTransform_.Initialize();
 	animation_.Initialize(animModel_->GetModelData());
@@ -38,10 +48,13 @@ void AnimSampleObject::Draw(ICamera* camera)
 void AnimSampleObject::ImGuiDraw()
 {
 
-	ImGui::Begin("Sample");
-	ImGui::DragFloat3("pos", &worldTransform_.transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("rot", &worldTransform_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("sca", &worldTransform_.transform_.scale.x, 0.01f);
+	ImGui::Begin(objectName_.c_str());
+	std::string name = "Position" + std::to_string(serialNumber_);
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, 0.01f);
+	name = "Rotate" + std::to_string(serialNumber_);
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.rotate.x, 0.01f);
+	name = "Scale" + std::to_string(serialNumber_);
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, 0.01f);
 	ImGui::End();
 
 }

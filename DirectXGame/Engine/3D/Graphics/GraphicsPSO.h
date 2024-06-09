@@ -11,6 +11,7 @@
 
 namespace Pipeline
 {
+	// 通常モデルのレジスタ番号
 	enum class ModelRegister : int {
 		kMaterial,
 		kTexture,
@@ -19,6 +20,16 @@ namespace Pipeline
 		//kLight,
 
 		// サイズを取得する為の値
+		kCountOfParameter,
+	};
+
+	// スキニングモデル用のレジスタ番号
+	enum class SkinningModelRegister : int {
+		kMaterial,
+		kTexture,
+		kWorldTransform,
+		kViewProjection,
+		kMatrixPalette,
 		kCountOfParameter,
 	};
 
@@ -78,12 +89,17 @@ public:
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sParticleRootSignature_;
 
+	// SkinningModel用
+	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sSkinningModelPipelineStates_;
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkinningModelRootSignature_;
+
 private:
 
 	static void CreateSpritePSO();
 	static void CreateModelPSO();
 	static void CreateParticlePSO();
-
+	static void CreateSkinningModelPSO();
 
 	/// <summary>
 	/// RootSignature作成関数（まだ
@@ -92,7 +108,7 @@ private:
 	/// <param name="rootParamSize"></param>
 	/// <param name="staticSamplers"></param>
 	/// <param name="samplerSize"></param>
-	static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature);
+	//static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature);
 
 	/// <summary>
 	/// PSO作成

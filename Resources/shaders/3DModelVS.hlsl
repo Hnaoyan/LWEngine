@@ -23,6 +23,7 @@ VSOutput main(VSInput input)
     output.position = /*mul(input.position, */mul(worldPos, viewProjection);
     output.normal = worldNormal;
     output.texcoord = input.texcoord;
+    output.worldPosition = worldPos.xyz;
     
     return output;
 }

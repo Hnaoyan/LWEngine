@@ -15,7 +15,13 @@ void SampleScene::Initialize()
 
 	sampleObj_ = std::make_unique<AnimSampleObject>();
 	sampleObj_->Initialize(this->testModel_.get());
-	
+	sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
+
+	// 歩くオブジェ
+	walkObj_ = std::make_unique<AnimSampleObject>();
+	walkObj_->Initialize(this->walkModel_.get());
+	walkObj_->worldTransform_.transform_.translate = { 2.5f,0,0 };
+
 	// 初期カメラ
 	camera_.transform_.translate.z = -10.0f;
 
@@ -26,6 +32,7 @@ void SampleScene::Update()
 	newSprite_->SetPosition(position_);
 
 	sampleObj_->Update();
+	walkObj_->Update();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -50,6 +57,7 @@ void SampleScene::Draw()
 
 	// サンプル
 	sampleObj_->Draw(&camera_);
+	walkObj_->Draw(&camera_);
 
 	Model::PostDraw();
 
@@ -77,15 +85,22 @@ void SampleScene::ImGuiDraw()
 	ImGui::ShowDemoWindow();
 
 	sampleObj_->ImGuiDraw();
+	walkObj_->ImGuiDraw();
 
 	// カメラの
 	camera_.ImGuiDraw();
+
+	ImGui::Begin("Scene");
+	int srvIndex = dxCommon_->GetSrvHandler()->sNextDescriptorNum_;
+	ImGui::InputInt("srvIndex", &srvIndex);
+	ImGui::End();
 
 }
 
 void SampleScene::LoadModel()
 {
 	testModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
+	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 }
 
 void SampleScene::LoadTexture()

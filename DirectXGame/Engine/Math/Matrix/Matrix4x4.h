@@ -37,6 +37,13 @@ public: // 演算関数
 	/// <returns></returns>
 	static Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
 
+	/// <summary>
+	/// 転置行列
+	/// </summary>
+	/// <param name="m"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeTranspose(const Matrix4x4& m);
+
 public:
 	/// <summary>
 	/// 平行移動

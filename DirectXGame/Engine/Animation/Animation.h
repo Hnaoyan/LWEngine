@@ -22,6 +22,7 @@ public:
 	Matrix4x4  skeltonSpaceMatrix_; 
 
 	Skeleton skeleton_;
+	SkinCluster skinCluster_;
 public:
 	void Initialize(ModelData* modelData);
 	void UpdateAnimation();
@@ -29,6 +30,8 @@ public:
 public:
 	void UpdateSkelton();
 	void ApplyAnimation();
+
+	void UpdateSkinCluster();
 
 public:
 	inline static Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time) {

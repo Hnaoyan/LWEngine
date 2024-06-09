@@ -24,6 +24,9 @@
     <ClCompile Include="DirectXGame\Engine\3D\WorldTransform.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\Animation.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\AnimationData.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\Joint.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\Skeleton.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\SkinCluster.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
@@ -64,6 +67,10 @@
     <ClInclude Include="DirectXGame\Engine\3D\WorldTransform.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Animation.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\AnimationData.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\Joint.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\ModelNode.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\Skeleton.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\SkinCluster.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
@@ -135,6 +142,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Skining3DModelVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

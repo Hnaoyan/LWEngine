@@ -6,7 +6,7 @@ void Animation::Initialize(ModelData* modelData)
 {
 	modelData_ = modelData;
 	animData_ = modelData_->animData;
-	skeleton_ = Loader::CreateSkeleton(modelData_->rootNode);
+	skeleton_ = Skeleton::Create(modelData_->rootNode);
 }
 
 void Animation::UpdateAnimation()
@@ -57,5 +57,17 @@ void Animation::ApplyAnimation()
 		}
 	}
 
+
+}
+
+void Animation::UpdateSkinCluster()
+{
+	for (size_t jointIndex = 0; jointIndex < skeleton_.joints.size(); ++jointIndex) {
+		assert(jointIndex < skinCluster_.inverseBindPoseMatrices.size());
+		skinCluster_.mappedPalette[jointIndex].skeletonSpaceMatrix =
+			Matrix4x4::Multiply(skinCluster_.inverseBindPoseMatrices[jointIndex], skeleton_.joints[jointIndex].skeletonSpaceMatrix);
+		skinCluster_.mappedPalette[jointIndex].skeletonSpaceInverseTransposeMatrix =
+			Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse(skinCluster_.mappedPalette[jointIndex].skeletonSpaceMatrix));
+	}
 
 }

@@ -20,6 +20,12 @@ public:
 	static uint32_t GetNextDescriptorNum() { return sNextDescriptorNum_; }
 
 	/// <summary>
+	/// ヒープ番号を進める
+	/// </summary>
+	/// <returns></returns>
+	static void AllocateNextDescriptorNum() { sNextDescriptorNum_++; }
+
+	/// <summary>
 	/// 静的初期化
 	/// </summary>
 	/// <param name="dxDevice"></param>
@@ -46,7 +52,5 @@ private:
 	//uint32_t index_ = 0;
 	static uint32_t kDescriptorSizeSRV_;
 
-	//D3D12_CPU_DESCRIPTOR_HANDLE handleCPU[kDescpritorSize] = {};
-	//D3D12_GPU_DESCRIPTOR_HANDLE handleGPU[kDescpritorSize] = {};
 };
 

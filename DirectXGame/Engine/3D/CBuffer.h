@@ -22,6 +22,7 @@ struct QuaternionTransform {
 
 struct CBufferWorldTransform {
 	Matrix4x4 world;
+	Matrix4x4 worldInverseTranspose;
 };
 
 #pragma region Model
@@ -34,7 +35,6 @@ struct VertexData
 };
 
 #pragma endregion
-
 
 //struct ModelData {
 //	VertexData vertices;	// 頂点データ
@@ -52,3 +52,5 @@ struct CBufferDataMaterial {
 	Vector4 color;			// カラー
 	int32_t enableLighting;	// ライティングのswitch
 };
+
+

@@ -17,6 +17,11 @@ std::array<ComPtr<ID3D12PipelineState>,
 	size_t(BlendMode::kCountOfBlendMode)> GraphicsPSO::sModelPipelineStates_;
 ComPtr<ID3D12RootSignature> GraphicsPSO::sModelRootSignature_;
 
+// Model用
+std::array<ComPtr<ID3D12PipelineState>,
+	size_t(BlendMode::kCountOfBlendMode)> GraphicsPSO::sSkinningModelPipelineStates_;
+ComPtr<ID3D12RootSignature> GraphicsPSO::sSkinningModelRootSignature_;
+
 // Particle用（インスタンシング
 ComPtr<ID3D12PipelineState> GraphicsPSO::sParticlePipelineStates_;
 ComPtr<ID3D12RootSignature> GraphicsPSO::sParticleRootSignature_;
@@ -35,7 +40,8 @@ void GraphicsPSO::Initialize(ID3D12Device* device)
 	CreateModelPSO();
 	// Particle
 	CreateParticlePSO();
-
+	// Skin
+	CreateSkinningModelPSO();
 }
 
 void GraphicsPSO::CreateSpritePSO()
@@ -320,7 +326,7 @@ void GraphicsPSO::CreateModelPSO()
 
 	gPipeline.pRootSignature = sModelRootSignature_.Get();	// ルートシグネチャ
 
-	#pragma region ブレンド
+#pragma region ブレンド
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
@@ -385,32 +391,183 @@ void GraphicsPSO::CreateParticlePSO()
 {
 }
 
-void GraphicsPSO::CreateRootSignature(D3D12_ROOT_PARAMETER rootParameters[], size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature)
+void GraphicsPSO::CreateSkinningModelPSO()
 {
-	rootParameters, rootParamSize, staticSamplers, samplerSize, rootSignature;
-	//HRESULT result = S_FALSE;
-	//ComPtr<ID3DBlob> errorBlob;
-	//ComPtr<ID3DBlob> rootSigBlob;
+	HRESULT result = S_FALSE;
 
-	//D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
-	//descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-	//
-	//descriptionRootSignature.pParameters = rootParameters;	// ルートパラメータ配列へのポインタ
-	//descriptionRootSignature.NumParameters = _countof(rootParameters);
+	ComPtr<IDxcBlob> vsBlob;
+	ComPtr<IDxcBlob> psBlob;
 
-	//descriptionRootSignature.pStaticSamplers = staticSamplers;
-	//descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
+	// 頂点シェーダの読み込みとコンパイル
+	vsBlob = Shader::GetInstance()->Compile(L"Skining3DModelVS.hlsl", L"vs_6_0");
+	assert(vsBlob != nullptr);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"3DModelPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	D3D12_INPUT_ELEMENT_DESC weight{};
+	weight.SemanticName = "WEIGHT";
+	weight.SemanticIndex = 0;
+	weight.InputSlot = 1;
+	weight.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	weight.AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+	D3D12_INPUT_ELEMENT_DESC index{};
+	index.SemanticName = "INDEX";
+	index.SemanticIndex = 0;
+	index.InputSlot = 1;
+	index.Format = DXGI_FORMAT_R32G32B32A32_SINT;
+	index.AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	D3D12_INPUT_ELEMENT_DESC inputLayout[5] = {
+	{
+		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
+	},
+	{
+		weight
+	},
+	{
+		index
+	},
+	};
+	// グラフィックスパイプライン
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};
+	gPipeline.VS = Shader::ShaderByteCode(vsBlob.Get());
+	gPipeline.PS = Shader::ShaderByteCode(psBlob.Get());
+
+	// サンプルマスク
+	gPipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	// ラスタライザステート
+	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
+	gPipeline.RasterizerState = rasterizer;
+	// デプスステンシルステート
+	gPipeline.DepthStencilState.DepthEnable = true;
+	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	gPipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	// 深度バッファのフォーマット
+	gPipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	// 頂点レイアウト
+	gPipeline.InputLayout.pInputElementDescs = inputLayout;
+	gPipeline.InputLayout.NumElements = _countof(inputLayout);
+	// 図形の形状設定
+	gPipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	gPipeline.NumRenderTargets = 1;
+	gPipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	gPipeline.SampleDesc.Count = 1;
 
 
-	//result = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
-	//if (FAILED(result)) {
-	//	Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
-	//	assert(false);
-	//}
-	//// ルートシグネチャの生成
-	//result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
-	//	rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
-	//assert(SUCCEEDED(result));
+	// デスクリプタレンジ
+	D3D12_DESCRIPTOR_RANGE descRangeSRV;
+	descRangeSRV = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+
+	// ルートパラメータ
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(SkinningModelRegister::kCountOfParameter)]{};
+	// テクスチャ
+	rootparams[static_cast<int>(SkinningModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// WorldTransform
+	rootparams[static_cast<int>(SkinningModelRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	// View
+	rootparams[static_cast<int>(SkinningModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_ALL);
+	// マテリアル
+	rootparams[static_cast<int>(SkinningModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	// Palette
+	rootparams[static_cast<int>(SkinningModelRegister::kMatrixPalette)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
+	//rootparams[static_cast<int>(ModelRegister::kLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+
+
+	// スタティックサンプラー
+	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
+	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+
+	// ルートシグネチャの設定
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	rootSignatureDesc.pParameters = rootparams;
+	rootSignatureDesc.NumParameters = _countof(rootparams);
+
+	rootSignatureDesc.pStaticSamplers = samplerDesc;
+	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
+
+	ComPtr<ID3DBlob> errorBlob;
+	ComPtr<ID3DBlob> rootSigBlob;
+
+	// シリアライズしてバイナリにする
+	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
+	if (FAILED(result)) {
+		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	// ルートシグネチャの生成
+	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sSkinningModelRootSignature_));
+	assert(SUCCEEDED(result));
+
+	gPipeline.pRootSignature = sSkinningModelRootSignature_.Get();	// ルートシグネチャ
+
+#pragma region ブレンド
+	// ブレンドなし
+	D3D12_BLEND_DESC blenddesc{};
+	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	blenddesc.RenderTarget[0].BlendEnable = false;
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kNone)]));
+	assert(SUCCEEDED(result));
+
+	// αブレンド
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kNormal)]));
+	assert(SUCCEEDED(result));
+
+	// 加算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kAdd)]));
+	assert(SUCCEEDED(result));
+
+	// 減算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kSubtract)]));
+	assert(SUCCEEDED(result));
+
+	// 乗算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kMultiply)]));
+	assert(SUCCEEDED(result));
+
+	// スクリーン合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	result = sDevice_->CreateGraphicsPipelineState(
+		&gPipeline, IID_PPV_ARGS(
+			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kScreen)]));
+	assert(SUCCEEDED(result));
+
+#pragma endregion
 
 }
 
