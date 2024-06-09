@@ -12,6 +12,8 @@ public:
 	int32_t serialNumber_ = 0u;
 	std::string objectName_;
 
+	~AnimSampleObject() = default;
+
 public:
 	void Initialize(Model* model);
 	void Update();

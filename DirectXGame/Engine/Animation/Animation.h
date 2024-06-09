@@ -8,7 +8,7 @@ class Animation
 {
 public:
 	// モデルデータ
-	ModelData* modelData_ = nullptr;
+	ModelData modelData_;
 	// アニメーションデータ
 	AnimationData animData_;
 	// 現在の時間
@@ -24,7 +24,7 @@ public:
 	Skeleton skeleton_;
 	SkinCluster skinCluster_;
 public:
-	void Initialize(ModelData* modelData);
+	void Initialize(ModelData& modelData);
 	void UpdateAnimation();
 
 public:

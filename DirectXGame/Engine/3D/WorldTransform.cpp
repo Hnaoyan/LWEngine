@@ -53,7 +53,7 @@ void WorldTransform::CreateConstBuffer()
 void WorldTransform::TransferMatrix()
 {
 	constMap_->world = worldMatrix_;
-	constMap_->worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse(worldMatrix_));
+	constMap_->worldInverseTranspose = (Matrix4x4::MakeInverse(worldMatrix_));
 }
 
 void WorldTransform::Map()

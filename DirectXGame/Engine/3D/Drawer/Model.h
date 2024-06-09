@@ -19,10 +19,13 @@
 #include "../Loader.h"
 #include "../../Camera/ICamera.h"
 
+class Animation;
+
 class Model
 {
 private:
 	using ModelRegister = Pipeline::ModelRegister;
+	using SkinningModelRegister = Pipeline::SkinningModelRegister;
 	using BlendMode = Pipeline::BlendMode;
 public:
 	// コマンドリスト
@@ -61,10 +64,15 @@ public:
 	/// <param name="camera"></param>
 	void Draw(const ModelDrawDesc& desc);
 
+	void SkinningDraw(const ModelDrawDesc& desc, Animation* animation);
+
 	//void AnimationDraw(const AnimDrawDesc& desc);
 
 public: // アクセッサ
 	ModelData* GetModelData() { return &modelData_; }
+
+	ModelData& GetModelDataAdress() { return modelData_; }
+
 private:
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;

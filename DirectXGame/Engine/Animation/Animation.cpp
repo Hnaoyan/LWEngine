@@ -1,12 +1,14 @@
 #include "Animation.h"
 #include "../System/DeltaTime.h"
 #include "../3D/Loader.h"
+#include "../Base/DirectXCommon.h"
 
-void Animation::Initialize(ModelData* modelData)
+void Animation::Initialize(ModelData& modelData)
 {
 	modelData_ = modelData;
-	animData_ = modelData_->animData;
-	skeleton_ = Skeleton::Create(modelData_->rootNode);
+	animData_ = modelData_.animData;
+	skeleton_ = Skeleton::Create(modelData_.rootNode);
+	skinCluster_ = SkinCluster::Create(DirectXCommon::GetInstance()->GetDevice(), skeleton_, modelData_);
 }
 
 void Animation::UpdateAnimation()
@@ -26,7 +28,10 @@ void Animation::UpdateAnimation()
 	//// ローカル行列
 	//localMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, normalizeRotate, transform_.translate);
 	ApplyAnimation();
+
 	UpdateSkelton();
+
+	UpdateSkinCluster();
 }
 
 void Animation::UpdateSkelton()

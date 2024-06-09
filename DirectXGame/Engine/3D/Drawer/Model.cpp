@@ -2,6 +2,7 @@
 #include "../Loader.h"
 #include "../../2D/TextureManager.h"
 #include <cassert>
+#include "../../Animation/Animation.h"
 
 ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 std::string Model::sDirectoryPath = "Resources";
@@ -100,6 +101,52 @@ void Model::Draw(const ModelDrawDesc& desc) {
 
 }
 
+void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation)
+{
+	// マテリアル更新
+	material_->Update();
+
+	// パイプラインステートの設定
+	sCommandList_->SetPipelineState(GraphicsPSO::sSkinningModelPipelineStates_[size_t(blendMode_)].Get());
+
+	// ワールド行列
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(SkinningModelRegister::kWorldTransform),
+		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
+	// ビュープロジェクション行列
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(SkinningModelRegister::kViewProjection),
+		desc.camera->constBuff_->GetGPUVirtualAddress());
+
+	//---メッシュの設定---//
+	// 頂点バッファの設定
+	D3D12_VERTEX_BUFFER_VIEW vbvs[2] =
+	{
+		mesh_->vbView_,
+		animation->skinCluster_.influenceBufferView
+	};
+
+	sCommandList_->IASetVertexBuffers(0, 2, vbvs);
+	// インデックスバッファの設定
+	sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
+
+	//---マテリアルの設定---//
+	// SRVのセット
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(SkinningModelRegister::kTexture), modelData_.material.textureHandle);
+
+	// Skinning
+	sCommandList_->SetGraphicsRootDescriptorTable(
+		static_cast<UINT>(SkinningModelRegister::kMatrixPalette), animation->skinCluster_.paletteSrvHandle.second);
+
+	// マテリアル
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(SkinningModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+
+	// ドローコール
+	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
+}
+
 void Model::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// チェック
@@ -109,7 +156,7 @@ void Model::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	sCommandList_ = cmdList;
 
 	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sModelRootSignature_.Get());
+	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sSkinningModelRootSignature_.Get());
 
 	// プリミティブ形状を設定
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

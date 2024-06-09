@@ -17,7 +17,7 @@ void AnimSampleObject::Initialize(Model* model)
 	objectName_ = sObjectName + std::to_string(serialNumber_);
 
 	worldTransform_.Initialize();
-	animation_.Initialize(animModel_->GetModelData());
+	animation_.Initialize(animModel_->GetModelDataAdress());
 	//animation_.modelData_ = &animModel_->GetModelData();
 	//animation_.animData_ = animModel_->GetModelData().animData;
 	animation_.animationTime_ = 60;
@@ -42,7 +42,7 @@ void AnimSampleObject::Draw(ICamera* camera)
 	desc.camera = camera;
 	desc.localMatrix = animation_.localMatrix_;
 
-	animModel_->Draw(desc);
+	animModel_->SkinningDraw(desc, &animation_);
 }
 
 void AnimSampleObject::ImGuiDraw()
