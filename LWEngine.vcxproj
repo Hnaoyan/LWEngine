@@ -17,6 +17,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Sphere.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Loader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
