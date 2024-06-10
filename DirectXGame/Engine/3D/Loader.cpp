@@ -350,6 +350,15 @@ ModelNode Loader::ReadNode(aiNode* node)
 	modelNode.transform.translate = { -translate.x,translate.y,translate.z };
 	modelNode.localMatrix = Matrix4x4::MakeAffineMatrix(modelNode.transform.scale, modelNode.transform.rotate, modelNode.transform.translate);
 
+	//modelNode.offsetMatrix = Matrix4x4::MakeIdentity4x4();
+	//if (!boneOffsetMatrixes_.empty()) {
+	//	for (uint32_t i = 0; i < boneOffsetMatrixes_.size(); ++i) {
+	//		if (boneOffsetMatrixes_[i].first == node->mName.C_Str()) {
+	//			result.offsetMatrix = boneOffsetMatrixes_[i].second;
+	//		}
+	//	}
+	//}
+
 	// ...
 	modelNode.name = node->mName.C_Str();
 	modelNode.children.resize(node->mNumChildren);
