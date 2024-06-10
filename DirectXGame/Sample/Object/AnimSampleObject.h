@@ -15,7 +15,7 @@ public:
 	~AnimSampleObject() = default;
 
 public:
-	void Initialize(Model* model);
+	void Initialize(Model* model, Model* cube);
 	void Update();
 	void Draw(ICamera* camera);
 
@@ -24,6 +24,9 @@ public:
 public:
 	// アニメーション用のモデル
 	Model* animModel_ = nullptr;
+
+	Model* debugCube_ = nullptr;
+
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// アニメーション

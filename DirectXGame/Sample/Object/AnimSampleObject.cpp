@@ -4,10 +4,12 @@
 int32_t AnimSampleObject::sSerialNumber = 0u;
 std::string AnimSampleObject::sObjectName = "SampleObject";
 
-void AnimSampleObject::Initialize(Model* model)
+void AnimSampleObject::Initialize(Model* model, Model* cube)
 {
 	// モデル
 	animModel_ = model;
+
+	debugCube_ = cube;
 
 	// 番号
 	serialNumber_ = sSerialNumber;
@@ -42,6 +44,19 @@ void AnimSampleObject::Draw(ICamera* camera)
 	desc.localMatrix = animation_.localMatrix_;
 
 	animModel_->SkinningDraw(desc, &animation_);
+
+
+	//for (int i = 0; i < animation_.skeleton_.joints.size(); ++i) {
+	//	Matrix4x4 local = animation_.skeleton_.joints[i].localMatrix;
+
+	//	WorldTransform world = worldTransform_;
+	//	world.worldMatrix_ = Matrix4x4::Multiply(world.worldMatrix_, local);
+
+	//	desc.worldTransform = &world;
+	//	desc.camera = camera;
+	//	debugCube_->Draw(desc);
+	//}
+
 }
 
 void AnimSampleObject::ImGuiDraw()

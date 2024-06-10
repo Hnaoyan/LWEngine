@@ -171,8 +171,8 @@ ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fi
 		}
 
 	}
-	ModelData result = modelData;
-	return result;
+
+	return ModelData(modelData);
 }
 
 ModelData Loader::LoadGlTF(const std::string& directory, const std::string& fileName, LoadExtension ex)

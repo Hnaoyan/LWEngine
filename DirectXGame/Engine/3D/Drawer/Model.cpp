@@ -10,11 +10,11 @@ std::string Model::sDirectoryPath = "Resources";
 void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
 	// モデル読み込み
-	modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName, ex);
-
+	modelData_ = Loader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
+	ex;
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
-	mesh_->CreateMesh(&modelData_);
+	mesh_->CreateMeshObj(&modelData_);
 
 	// マテリアル生成
 	material_ = std::make_unique<Material>();
@@ -61,6 +61,17 @@ Model* Model::CreateObj(const std::string& modelName, LoadExtension ex)
 	return instance;
 }
 
+Model* Model::CreateDefault(const std::string& modelName)
+{
+	// メモリ確保
+	Model* instance = new Model;
+	// 初期化
+	LoadExtension ex = LoadExtension::kObj;
+	instance->Initialize(modelName, ex);
+
+	return instance;
+}
+
 void Model::Draw(const ModelDrawDesc& desc) {
 	// マテリアル更新
 	material_->Update();
@@ -88,7 +99,7 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// 頂点バッファの設定
 	sCommandList_->IASetVertexBuffers(0, 1,&mesh_->vbView_);
 	// インデックスバッファの設定
-	sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
+	//sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
 
 	//---マテリアルの設定---//
 	// SRVのセット
@@ -99,7 +110,7 @@ void Model::Draw(const ModelDrawDesc& desc) {
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
 	// ドローコール
-	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
+	sCommandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
 
 }
 

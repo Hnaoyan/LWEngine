@@ -14,12 +14,12 @@ void SampleScene::Initialize()
 	//---ここから書く---//
 
 	sampleObj_ = std::make_unique<AnimSampleObject>();
-	sampleObj_->Initialize(this->testModel_.get());
+	sampleObj_->Initialize(this->testModel_.get(),cubeModel_.get());
 	sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
 
 	// 歩くオブジェ
 	walkObj_ = std::make_unique<AnimSampleObject>();
-	walkObj_->Initialize(this->walkModel_.get());
+	walkObj_->Initialize(this->walkModel_.get(),cubeModel_.get());
 	walkObj_->worldTransform_.transform_.translate = { 2.5f,0,0 };
 
 	// 初期カメラ
@@ -101,6 +101,8 @@ void SampleScene::LoadModel()
 {
 	testModel_.reset(Model::CreateObj("simpleSkin", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
+
+	cubeModel_.reset(Model::CreateDefault("cube"));
 }
 
 void SampleScene::LoadTexture()

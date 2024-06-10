@@ -85,5 +85,15 @@ void Animation::ImGuiDraw()
 {
 	//ImGui::Begin("anim");
 	ImGui::DragFloat("AnimFrame",&animationTime_,0.01f);
+	if (ImGui::TreeNode("Joints")) {
+		for (int i = 0; i < skeleton_.joints.size(); i++) {
+			Vector3 localPos = skeleton_.joints[i].transform.translate;
+			std::string name = "LocalPos" + std::to_string(i);
+			ImGui::DragFloat3(name.c_str(), &localPos.x,0.01f);
+			skeleton_.joints[i].transform.translate = localPos;
+		}
+		ImGui::TreePop();
+	}
+
 	//ImGui::End();
 }

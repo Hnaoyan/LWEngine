@@ -14,6 +14,8 @@ public:
 	/// <param name="vertices"></param>
 	void CreateMesh(ModelData* modelData);
 
+	void CreateMeshObj(ModelData* modelData);
+
 public:
 	// 頂点バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_;

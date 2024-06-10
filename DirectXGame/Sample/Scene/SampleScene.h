@@ -45,6 +45,8 @@ private:
 	std::unique_ptr<Model> testModel_;
 	std::unique_ptr<Model> walkModel_;
 
+	std::unique_ptr<Model> cubeModel_;
+
 	WorldTransform testWTF_;
 
 };

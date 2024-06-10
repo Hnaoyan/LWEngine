@@ -47,6 +47,9 @@ public:
 	/// </summary>
 	static Model* CreateObj(const std::string& modelName, LoadExtension ex);
 
+	// 通常のモデル
+	static Model* CreateDefault(const std::string& modelName);
+
 private:
 	// モデルのデータ
 	ModelData modelData_;
