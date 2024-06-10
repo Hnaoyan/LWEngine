@@ -70,6 +70,8 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	//desc.worldTransform->SetModelData(local);
 	//desc.worldTransform->UpdateMatrix();
 
+	// ルートシグネチャの設定
+	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sModelRootSignature_.Get());
 	// パイプラインステートの設定
 	sCommandList_->SetPipelineState(GraphicsPSO::sModelPipelineStates_[size_t(blendMode_)].Get());
 
@@ -106,6 +108,8 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation)
 	// マテリアル更新
 	material_->Update();
 
+	// ルートシグネチャの設定
+	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sSkinningModelRootSignature_.Get());
 	// パイプラインステートの設定
 	sCommandList_->SetPipelineState(GraphicsPSO::sSkinningModelPipelineStates_[size_t(blendMode_)].Get());
 
@@ -154,9 +158,6 @@ void Model::PreDraw(ID3D12GraphicsCommandList* cmdList)
 
 	// コマンドリストをセット
 	sCommandList_ = cmdList;
-
-	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sSkinningModelRootSignature_.Get());
 
 	// プリミティブ形状を設定
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

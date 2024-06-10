@@ -197,10 +197,12 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 			aiVector3D& normal = mesh->mNormals[vertexIndex];
 			aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
 
-			modelData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
-			modelData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
+			modelData.vertices[vertexIndex].position = { position.x,position.y,position.z,1.0f };
+			modelData.vertices[vertexIndex].normal = { normal.x,normal.y,normal.z };
 			modelData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
 
+			modelData.vertices[vertexIndex].position.x *= -1.0f;
+			modelData.vertices[vertexIndex].normal.x *= -1.0f;
 		}
 
 		// ここからMeshのFaceを解析
@@ -253,8 +255,7 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 	// ノード読み込み
 	modelData.rootNode = ReadNode(scene->mRootNode);
 
-	ModelData data = modelData;
-	return data;
+	return ModelData(modelData);
 }
 
 MaterialData Loader::LoadMaterial(const std::string& directory, const std::string& fileName)
@@ -283,10 +284,8 @@ MaterialData Loader::LoadMaterial(const std::string& directory, const std::strin
 	}
 
 	materialData.textureHandle = TextureManager::Load(materialData.textureFilename);
-	// 返す値
-	MaterialData result = materialData;
-
-	return result;
+	
+	return MaterialData(materialData);
 }
 
 AnimationData Loader::LoadAnimationFile(const std::string& directoryPath, const std::string& fileName)
@@ -350,15 +349,6 @@ ModelNode Loader::ReadNode(aiNode* node)
 	modelNode.transform.rotate = { rotate.x,-rotate.y,-rotate.z,rotate.w };
 	modelNode.transform.translate = { -translate.x,translate.y,translate.z };
 	modelNode.localMatrix = Matrix4x4::MakeAffineMatrix(modelNode.transform.scale, modelNode.transform.rotate, modelNode.transform.translate);
-
-	//aiMatrix4x4 aiLocalMatrix = node->mTransformation;	// NodeのLocalMatrixを取得
-	//aiLocalMatrix.Transpose();							// 列ベクトル形式を行ベクトル形式に転置
-	////result.localMatrix.m[0][0] = aiLocalMatrix[0][0];	// 他の要素も同様に
-	//for (uint32_t y = 0; y < 4; ++y) {
-	//	for (uint32_t x = 0; x < 4; ++x) {
-	//		result.localMatrix.m[y][x] = aiLocalMatrix[y][x];
-	//	}
-	//}
 
 	// ...
 	modelNode.name = node->mName.C_Str();

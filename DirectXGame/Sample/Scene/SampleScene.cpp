@@ -23,7 +23,7 @@ void SampleScene::Initialize()
 	walkObj_->worldTransform_.transform_.translate = { 2.5f,0,0 };
 
 	// 初期カメラ
-	camera_.transform_.translate.z = -10.0f;
+	camera_.transform_.translate.z = -5.0f;
 
 }
 
@@ -99,7 +99,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
+	testModel_.reset(Model::CreateObj("simpleSkin", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 }
 

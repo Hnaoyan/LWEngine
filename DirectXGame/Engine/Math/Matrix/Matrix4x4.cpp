@@ -160,7 +160,7 @@ Matrix4x4 Matrix4x4::Multiply(const Matrix4x4& m1, const Matrix4x4& m2)
 
 Vector3 Matrix4x4::Transform(const Vector3& vector, const Matrix4x4& matrix)
 {
-	Vector3 result;
+	Vector3 result{};
 	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0] +
 		1.0f * matrix.m[3][0];
 	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1] +
@@ -178,7 +178,7 @@ Vector3 Matrix4x4::Transform(const Vector3& vector, const Matrix4x4& matrix)
 
 Matrix4x4 Matrix4x4::MakeTranspose(const Matrix4x4& m)
 {
-	Matrix4x4 result;
+	Matrix4x4 result{};
 	for (int y = 0; y < 4; y++) {
 		for (int x = 0; x < 4; x++) {
 			result.m[y][x] = m.m[x][y];
@@ -267,15 +267,16 @@ Matrix4x4 Matrix4x4::MakeRotateXYZMatrix(const Vector3& rotate)
 Matrix4x4 Matrix4x4::MakeRotateMatrix(const Quaternion& rotate)
 {
 	Matrix4x4 result = MakeIdentity4x4();
-	result.m[0][0] = std::powf(rotate.w, 2) + std::powf(rotate.x, 2) - std::powf(rotate.y, 2) - std::powf(rotate.z, 2);
-	result.m[0][1] = 2 * (rotate.x * rotate.y + rotate.w * rotate.z);
-	result.m[0][2] = 2 * (rotate.x * rotate.z - rotate.w * rotate.y);
-	result.m[1][0] = 2 * (rotate.x * rotate.y - rotate.w * rotate.z);
-	result.m[1][1] = std::powf(rotate.w, 2) - std::powf(rotate.x, 2) + std::powf(rotate.y, 2) - std::powf(rotate.z, 2);
-	result.m[1][2] = 2 * (rotate.y * rotate.z + rotate.w * rotate.x);
-	result.m[2][0] = 2 * (rotate.x * rotate.z + rotate.w * rotate.y);
-	result.m[2][1] = 2 * (rotate.y * rotate.z - rotate.w * rotate.x);
-	result.m[2][2] = std::powf(rotate.w, 2) - std::powf(rotate.x, 2) - std::powf(rotate.y, 2) + std::powf(rotate.z, 2);
+	Quaternion normalizeRotate = Quaternion::Normalize(rotate);
+	result.m[0][0] = std::powf(normalizeRotate.w, 2) + std::powf(normalizeRotate.x, 2) - std::powf(normalizeRotate.y, 2) - std::powf(normalizeRotate.z, 2);
+	result.m[0][1] = 2 * (normalizeRotate.x * normalizeRotate.y + normalizeRotate.w * normalizeRotate.z);
+	result.m[0][2] = 2 * (normalizeRotate.x * normalizeRotate.z - normalizeRotate.w * normalizeRotate.y);
+	result.m[1][0] = 2 * (normalizeRotate.x * normalizeRotate.y - normalizeRotate.w * normalizeRotate.z);
+	result.m[1][1] = std::powf(normalizeRotate.w, 2) - std::powf(normalizeRotate.x, 2) + std::powf(normalizeRotate.y, 2) - std::powf(normalizeRotate.z, 2);
+	result.m[1][2] = 2 * (normalizeRotate.y * normalizeRotate.z + normalizeRotate.w * normalizeRotate.x);
+	result.m[2][0] = 2 * (normalizeRotate.x * normalizeRotate.z + normalizeRotate.w * normalizeRotate.y);
+	result.m[2][1] = 2 * (normalizeRotate.y * normalizeRotate.z - normalizeRotate.w * normalizeRotate.x);
+	result.m[2][2] = std::powf(normalizeRotate.w, 2) - std::powf(normalizeRotate.x, 2) - std::powf(normalizeRotate.y, 2) + std::powf(normalizeRotate.z, 2);
 	return result;
 }
 

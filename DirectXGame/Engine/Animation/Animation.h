@@ -28,10 +28,14 @@ public:
 	void UpdateAnimation();
 
 public:
+	// Skeleton
 	void UpdateSkelton();
+	// Animation
 	void ApplyAnimation();
-
+	// Skinning更新
 	void UpdateSkinCluster();
+
+	void ImGuiDraw();
 
 public:
 	inline static Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time) {

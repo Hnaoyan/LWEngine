@@ -51,7 +51,7 @@ VSOutput main(VSInput input)
 
     float32_t4x4 viewProjection = mul(gCamera.view, gCamera.projection);
     
-    output.position = mul(skinned.position, viewProjection);
+    output.position = mul(worldPos, viewProjection);
     output.worldPosition = worldPos.xyz;
     output.texcoord = input.texcoord;
     output.normal = normalize(mul(skinned.normal, (float32_t3x3) gWorldTransform.WorldInverseTranspose));

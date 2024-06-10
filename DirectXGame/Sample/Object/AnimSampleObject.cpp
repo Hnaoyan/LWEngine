@@ -20,7 +20,6 @@ void AnimSampleObject::Initialize(Model* model)
 	animation_.Initialize(animModel_->GetModelDataAdress());
 	//animation_.modelData_ = &animModel_->GetModelData();
 	//animation_.animData_ = animModel_->GetModelData().animData;
-	animation_.animationTime_ = 60;
 }
 
 void AnimSampleObject::Update()
@@ -55,6 +54,9 @@ void AnimSampleObject::ImGuiDraw()
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.rotate.x, 0.01f);
 	name = "Scale" + std::to_string(serialNumber_);
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, 0.01f);
+
+	animation_.ImGuiDraw();
+
 	ImGui::End();
 
 }
