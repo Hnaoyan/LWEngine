@@ -98,7 +98,7 @@ void GraphicsPSO::CreateSpritePSO()
 	gPipeline.DepthStencilState = dsDesc;
 
 	// 深度バッファのフォーマット
-	gPipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	gPipeline.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	// 頂点レイアウトの設定
 	gPipeline.InputLayout.pInputElementDescs = inputLayout;
@@ -264,7 +264,7 @@ void GraphicsPSO::CreateModelPSO()
 	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	gPipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	// 深度バッファのフォーマット
-	gPipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	gPipeline.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	// 頂点レイアウト
 	gPipeline.InputLayout.pInputElementDescs = inputLayout;
 	gPipeline.InputLayout.NumElements = _countof(inputLayout);
@@ -450,7 +450,7 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	gPipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	// 深度バッファのフォーマット
-	gPipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	gPipeline.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	// 頂点レイアウト
 	gPipeline.InputLayout.pInputElementDescs = inputLayout;
 	gPipeline.InputLayout.NumElements = _countof(inputLayout);
@@ -483,6 +483,7 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	// スタティックサンプラー
 	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
 	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+	samplerDesc[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};

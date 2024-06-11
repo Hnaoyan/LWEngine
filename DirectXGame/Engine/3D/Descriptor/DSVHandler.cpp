@@ -30,14 +30,14 @@ void DSVHandler::CreateDepthBuffer()
 	ID3D12Device* device = dxDevice_->GetDevice();
 	// リソースの設定
 	D3D12_RESOURCE_DESC resourceDesc = DxCreateLib::ResourceLib::CreateResourceDesc(
-		DXGI_FORMAT_D32_FLOAT, D3D12_RESOURCE_DIMENSION_TEXTURE2D, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL, bufferWidth_, bufferHeight_);
+		DXGI_FORMAT_D24_UNORM_S8_UINT, D3D12_RESOURCE_DIMENSION_TEXTURE2D, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL, bufferWidth_, bufferHeight_);
 	resourceDesc.MipLevels = 0;
 
 	// Heapの設定
 	D3D12_HEAP_PROPERTIES heapProp = DxCreateLib::HeapLib::CreateHeapProps(D3D12_HEAP_TYPE_DEFAULT);
 
 	// 深度値
-	D3D12_CLEAR_VALUE depthClearValue = DxCreateLib::DSVLib::CreateClearValue(DXGI_FORMAT_D32_FLOAT, 1.0f);
+	D3D12_CLEAR_VALUE depthClearValue = DxCreateLib::DSVLib::CreateClearValue(DXGI_FORMAT_D24_UNORM_S8_UINT, 1.0f);
 
 	// Resourceの生成
 	ComPtr<ID3D12Resource> resource;
@@ -60,7 +60,7 @@ void DSVHandler::CreateDepthBuffer()
 
 	// DSVDescの設定
 	D3D12_DEPTH_STENCIL_VIEW_DESC depthStencilDesc{};
-	depthStencilDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	depthStencilDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	// DSVHeapの先頭にDSVをつくる
 	device->CreateDepthStencilView(depthStencilResource_.Get(), &depthStencilDesc, dsvHeap_->GetCPUDescriptorHandleForHeapStart());
