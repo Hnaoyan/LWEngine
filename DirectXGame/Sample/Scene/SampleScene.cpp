@@ -11,6 +11,11 @@ void SampleScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+
+	testWTF_.Initialize();
+	testWTF_.transform_.translate = { 0,0,0.0f };
+	testWTF_.transform_.scale = { 0.2f,0.2f,0.2f };
+	testWTF_.UpdateMatrix();
 	//---ここから書く---//
 
 	sampleObj_ = std::make_unique<AnimSampleObject>();
@@ -20,7 +25,7 @@ void SampleScene::Initialize()
 	// 歩くオブジェ
 	walkObj_ = std::make_unique<AnimSampleObject>();
 	walkObj_->Initialize(this->walkModel_.get(),cubeModel_.get());
-	walkObj_->worldTransform_.transform_.translate = { 2.5f,0,0 };
+	walkObj_->worldTransform_.transform_.translate = { 0,0,0 };
 
 	// 初期カメラ
 	camera_.transform_.translate.z = -5.0f;
@@ -58,6 +63,12 @@ void SampleScene::Draw()
 	// サンプル
 	sampleObj_->Draw(&camera_);
 	walkObj_->Draw(&camera_);
+
+
+	ModelDrawDesc desc;
+	desc.worldTransform = &testWTF_;
+	desc.camera = &camera_;
+	sphere_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -103,6 +114,9 @@ void SampleScene::LoadModel()
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 
 	cubeModel_.reset(Model::CreateDefault("cube"));
+
+	sphere_.reset(Sphere::CreateSphere());
+
 }
 
 void SampleScene::LoadTexture()

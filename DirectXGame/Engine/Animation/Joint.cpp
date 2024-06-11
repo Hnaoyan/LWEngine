@@ -6,6 +6,8 @@
 int32_t Joint::Create(const ModelNode& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)
 {
 	Joint joint;
+	joint.debug_.Initialize();
+	joint.debug_.transform_.scale = { 0.3f,0.3f,0.3f };
 	joint.name = node.name;
 	joint.localMatrix = node.localMatrix;
 	joint.skeletonSpaceMatrix = Matrix4x4::MakeIdentity4x4();

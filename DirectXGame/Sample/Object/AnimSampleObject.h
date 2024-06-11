@@ -27,6 +27,8 @@ public:
 
 	Model* debugCube_ = nullptr;
 
+	Sphere* debugSphere_;
+
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// アニメーション

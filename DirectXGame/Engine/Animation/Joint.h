@@ -4,6 +4,7 @@
 #include <map>
 #include <optional>
 #include "../3D/CBuffer.h"
+#include "../3D/WorldTransform.h"
 
 class ModelNode;
 
@@ -12,6 +13,7 @@ public:
 	static int32_t Create(const ModelNode& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
 
 public:
+	WorldTransform debug_;
 	QuaternionTransform transform;	// Transform情報
 	Matrix4x4 localMatrix;	// ローカル
 	Matrix4x4 skeletonSpaceMatrix;	// SkeltonSpaceでの変換行列

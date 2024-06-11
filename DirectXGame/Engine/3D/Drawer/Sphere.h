@@ -6,12 +6,15 @@
 class Sphere
 {
 public:
-	// コマンドリスト
-	static ID3D12GraphicsCommandList* sCommandList_;
-
-public:
+	/// <summary>
+	/// 作成
+	/// </summary>
+	/// <returns></returns>
 	static Sphere* CreateSphere();
 
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
 
 	/// <summary>
@@ -23,18 +26,25 @@ public:
 	/// </summary>
 	void CreateMaterial();
 
+	/// <summary>
+	/// Sphereの描画
+	/// </summary>
+	/// <param name="desc"></param>
 	void Draw(const ModelDrawDesc& desc);
 
 private:
 	// 分割数
-	int32_t subdivision_ = 0;
+	uint32_t subdivision_ = 0;
 	// 頂点数
-	int32_t vertexIndex_ = 0;
+	uint32_t vertexIndex_ = 0;
 
 	// 緯度（横
-	int32_t latIndex_ = 0;
+	uint32_t latIndex_ = 0;
 	// 経度（縦
-	int32_t lonIndex_ = 0;
+	uint32_t lonIndex_ = 0;
+
+	// テクスチャ
+	uint32_t textureHandle_ = 0u;
 
 private: // メッシュ
 	// 頂点バッファ

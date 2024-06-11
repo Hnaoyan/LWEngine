@@ -46,16 +46,17 @@ void AnimSampleObject::Draw(ICamera* camera)
 	animModel_->SkinningDraw(desc, &animation_);
 
 
-	//for (int i = 0; i < animation_.skeleton_.joints.size(); ++i) {
-	//	Matrix4x4 local = animation_.skeleton_.joints[i].localMatrix;
+	for (int i = 0; i < animation_.skeleton_.joints.size(); ++i) {
+		Matrix4x4 local = animation_.skeleton_.joints[i].localMatrix;
 
-	//	WorldTransform world = worldTransform_;
-	//	world.worldMatrix_ = Matrix4x4::Multiply(world.worldMatrix_, local);
-
-	//	desc.worldTransform = &world;
-	//	desc.camera = camera;
-	//	debugCube_->Draw(desc);
-	//}
+		//animation_.skeleton_.joints[i].debug_.worldMatrix_ = Matrix4x4::Multiply(worldTransform_.worldMatrix_, local);
+		animation_.skeleton_.joints[i].debug_.transform_.translate = animation_.skeleton_.joints[i].transform.translate;
+		animation_.skeleton_.joints[i].debug_.transform_.scale = { 0.2f,0.2f,0.2f };
+		animation_.skeleton_.joints[i].debug_.UpdateMatrix();
+		desc.worldTransform = &animation_.skeleton_.joints[i].debug_;
+		desc.camera = camera;
+		debugCube_->Draw(desc);
+	}
 
 }
 

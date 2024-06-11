@@ -2,6 +2,7 @@
 #include "../../Engine/Scene/IScene.h"
 #include "../../Engine/2D/Drawer/Sprite.h"
 #include "../../Engine/3D/Drawer/Model.h"
+#include "../../Engine/3D/Drawer/Sphere.h"
 #include "../Object/AnimSampleObject.h"
 
 class SampleScene : public IScene
@@ -46,6 +47,8 @@ private:
 	std::unique_ptr<Model> walkModel_;
 
 	std::unique_ptr<Model> cubeModel_;
+
+	std::unique_ptr<Sphere> sphere_;
 
 	WorldTransform testWTF_;
 
