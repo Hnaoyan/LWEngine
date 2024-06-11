@@ -18,9 +18,9 @@ void SampleScene::Initialize()
 	testWTF_.UpdateMatrix();
 	//---ここから書く---//
 
-	sampleObj_ = std::make_unique<AnimSampleObject>();
-	sampleObj_->Initialize(this->testModel_.get(),cubeModel_.get());
-	sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
+	//sampleObj_ = std::make_unique<AnimSampleObject>();
+	//sampleObj_->Initialize(this->testModel_.get(),cubeModel_.get());
+	//sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
 
 	// 歩くオブジェ
 	walkObj_ = std::make_unique<AnimSampleObject>();
@@ -36,7 +36,7 @@ void SampleScene::Update()
 {
 	newSprite_->SetPosition(position_);
 
-	sampleObj_->Update();
+	//sampleObj_->Update();
 	walkObj_->Update();
 	// カメラの更新
 	CameraUpdate();
@@ -61,7 +61,7 @@ void SampleScene::Draw()
 	Model::PreDraw(commandList);
 
 	// サンプル
-	sampleObj_->Draw(&camera_);
+	//sampleObj_->Draw(&camera_);
 	walkObj_->Draw(&camera_);
 
 
@@ -95,7 +95,7 @@ void SampleScene::ImGuiDraw()
 	//ImGui::End();
 	ImGui::ShowDemoWindow();
 
-	sampleObj_->ImGuiDraw();
+	//sampleObj_->ImGuiDraw();
 	walkObj_->ImGuiDraw();
 
 	// カメラの

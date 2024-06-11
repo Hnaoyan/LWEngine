@@ -197,12 +197,10 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 			aiVector3D& normal = mesh->mNormals[vertexIndex];
 			aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
 
-			modelData.vertices[vertexIndex].position = { position.x,position.y,position.z,1.0f };
-			modelData.vertices[vertexIndex].normal = { normal.x,normal.y,normal.z };
+			modelData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
+			modelData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
 			modelData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
 
-			modelData.vertices[vertexIndex].position.x *= -1.0f;
-			modelData.vertices[vertexIndex].normal.x *= -1.0f;
 		}
 
 		// ここからMeshのFaceを解析
