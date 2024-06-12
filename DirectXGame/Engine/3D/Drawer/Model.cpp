@@ -99,7 +99,7 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// 頂点バッファの設定
 	sCommandList_->IASetVertexBuffers(0, 1,&mesh_->vbView_);
 	// インデックスバッファの設定
-	//sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
+	sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
 
 	//---マテリアルの設定---//
 	// SRVのセット
@@ -110,7 +110,7 @@ void Model::Draw(const ModelDrawDesc& desc) {
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
 	// ドローコール
-	sCommandList_->DrawInstanced(UINT(modelData_.vertices.size()), 1, 0, 0);
+	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
 }
 
