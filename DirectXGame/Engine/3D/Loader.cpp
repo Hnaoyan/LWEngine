@@ -337,16 +337,15 @@ ModelNode Loader::ReadNode(aiNode* node)
 	ModelNode modelNode;
 	aiMatrix4x4 aiLocalMatrix = node->mTransformation;
 
-	//aiVector3D scale, translate;
-	//aiQuaternion rotate;
+	aiVector3D scale, translate;
+	aiQuaternion rotate;
 
+	aiLocalMatrix.Decompose(scale, rotate, translate);
 
-	//aiLocalMatrix.Decompose(scale, rotate, translate);
-
-	//modelNode.transform.scale = { scale.x,scale.y,scale.z };
-	//modelNode.transform.rotate = { rotate.x,-rotate.y,-rotate.z,rotate.w };
-	//modelNode.transform.translate = { -translate.x,translate.y,translate.z };
-	//modelNode.localMatrix = Matrix4x4::MakeAffineMatrix(modelNode.transform.scale, modelNode.transform.rotate, modelNode.transform.translate);
+	modelNode.transform.scale = { scale.x,scale.y,scale.z };
+	modelNode.transform.rotate = { rotate.x,-rotate.y,-rotate.z,rotate.w };
+	modelNode.transform.translate = { -translate.x,translate.y,translate.z };
+	modelNode.localMatrix = Matrix4x4::MakeAffineMatrix(modelNode.transform.scale, modelNode.transform.rotate, modelNode.transform.translate);
 
 	//modelNode.offsetMatrix = Matrix4x4::MakeIdentity4x4();
 	//if (!boneOffsetMatrixes_.empty()) {
@@ -356,13 +355,6 @@ ModelNode Loader::ReadNode(aiNode* node)
 	//		}
 	//	}
 	//}
-	aiLocalMatrix.Transpose();							// 列ベクトル形式を行ベクトル形式に転置
-	//result.localMatrix.m[0][0] = aiLocalMatrix[0][0];	// 他の要素も同様に
-	for (uint32_t y = 0; y < 4; ++y) {
-		for (uint32_t x = 0; x < 4; ++x) {
-			modelNode.localMatrix.m[y][x] = aiLocalMatrix[y][x];
-		}
-	}
 
 	// ...
 	modelNode.name = node->mName.C_Str();
