@@ -34,7 +34,7 @@ void AnimCubeObject::Update()
 	// ローカル行列
 	localMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, normalizeRotate, transform_.translate);
 
-	worldTransform_.worldMatrix_ = Matrix4x4::Multiply(localMatrix_, worldTransform_.worldMatrix_);
+	worldTransform_.localMatrix_ = localMatrix_;
 	worldTransform_.UpdateMatrix();
 }
 
