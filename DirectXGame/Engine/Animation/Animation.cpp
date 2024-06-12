@@ -15,8 +15,7 @@ void Animation::Initialize(ModelData& modelData)
 
 void Animation::UpdateAnimation()
 {
-	//animationTime_ += (kDeltaTime / 200.0f);
-	//animationTime_ += (1.0f / 300.0f);
+	//animationTime_ = nowFrame_ / 180.0f;
 	animationTime_ = std::fmod(animationTime_, animData_.duration);
 	// ノード取得
 	//NodeAnimation& nodeAnim = animData_.nodeAnimations[modelData_->rootNode.name];

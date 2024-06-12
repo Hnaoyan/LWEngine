@@ -65,8 +65,8 @@ float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1)
 
 Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 {
-    Quaternion quat0 = Quaternion::Normalize(q0);
-    Quaternion quat1 = Quaternion::Normalize(q1);
+    Quaternion quat0 = q0;
+    Quaternion quat1 = q1;
     float dot = Dot(quat0, quat1);
     if (dot < 0) {
         quat0 = Scaler(quat0, -1.0f);

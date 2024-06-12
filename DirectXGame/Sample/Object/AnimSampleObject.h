@@ -3,6 +3,8 @@
 #include "../../Engine/Animation/Animation.h"
 #include <string>
 
+class Sphere;
+
 class AnimSampleObject
 {
 public:
@@ -27,7 +29,7 @@ public:
 
 	Model* debugCube_ = nullptr;
 
-	//Sphere* debugSphere_;
+	std::unique_ptr<Sphere> debugSphere_;
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;

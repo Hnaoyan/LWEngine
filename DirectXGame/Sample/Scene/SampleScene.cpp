@@ -65,10 +65,10 @@ void SampleScene::Draw()
 	walkObj_->Draw(&camera_);
 
 
-	ModelDrawDesc desc;
-	desc.worldTransform = &testWTF_;
-	desc.camera = &camera_;
-	sphere_->Draw(desc);
+	//ModelDrawDesc desc;
+	//desc.worldTransform = &testWTF_;
+	//desc.camera = &camera_;
+	//sphere_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -111,7 +111,7 @@ void SampleScene::ImGuiDraw()
 void SampleScene::LoadModel()
 {
 	testModel_.reset(Model::CreateObj("simpleSkin", LoadExtension::kGltf));
-	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
+	walkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 
 	cubeModel_.reset(Model::CreateDefault("cube"));
 
