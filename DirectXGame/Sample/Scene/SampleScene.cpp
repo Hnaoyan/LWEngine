@@ -25,7 +25,11 @@ void SampleScene::Initialize()
 	// 歩くオブジェ
 	walkObj_ = std::make_unique<AnimSampleObject>();
 	walkObj_->Initialize(this->walkModel_.get(),cubeModel_.get());
-	walkObj_->worldTransform_.transform_.translate = { 0,0,0 };
+	walkObj_->worldTransform_.transform_.translate = { 10.0f,0,0 };
+
+	cubeObj_ = std::make_unique<AnimCubeObject>();
+	cubeObj_->Initialize(testModel_.get());
+	cubeObj_->worldTransform_.transform_.translate = { 0,0,0 };
 
 	// 初期カメラ
 	camera_.transform_.translate.z = -5.0f;
@@ -38,6 +42,7 @@ void SampleScene::Update()
 
 	//sampleObj_->Update();
 	walkObj_->Update();
+	cubeObj_->Update();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -64,7 +69,7 @@ void SampleScene::Draw()
 	//sampleObj_->Draw(&camera_);
 	walkObj_->Draw(&camera_);
 
-
+	cubeObj_->Draw(&camera_);
 	//ModelDrawDesc desc;
 	//desc.worldTransform = &testWTF_;
 	//desc.camera = &camera_;
@@ -97,7 +102,7 @@ void SampleScene::ImGuiDraw()
 
 	//sampleObj_->ImGuiDraw();
 	walkObj_->ImGuiDraw();
-
+	cubeObj_->ImGuiDraw();
 	// カメラの
 	camera_.ImGuiDraw();
 
@@ -110,7 +115,7 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("simpleSkin", LoadExtension::kGltf));
+	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 
 	cubeModel_.reset(Model::CreateDefault("cube"));
