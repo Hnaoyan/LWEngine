@@ -65,20 +65,35 @@ float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1)
 
 Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
 {
-    Quaternion quat0 = Quaternion::Normalize(q0);
-    Quaternion quat1 = Quaternion::Normalize(q1);
-    float dot = Dot(quat0, quat1);
+    Quaternion quaternion0 = q0;
+    float dot = Dot(q0, q1);
+
     if (dot < 0) {
-        quat0 = Scaler(quat0, -1.0f);
-        dot *= -1.0f;
+        quaternion0 = { -q0.x, -q0.y, -q0.z, -q0.w };
+        dot = -dot;
     }
-    // なす角
-    float theta = std::acosf(dot);
 
-    float scale0 = std::sinf((1 - t) * theta) / std::sinf(theta);
-    float scale1 = std::sinf(t * theta) / std::sinf(theta);
+    if (dot >= 1.0f - 0.0005f) {
+        return Quaternion{
+            (1.0f - t) * quaternion0.x + t * q1.x,
+            (1.0f - t) * quaternion0.y + t * q1.y,
+            (1.0f - t) * quaternion0.z + t * q1.z,
+            (1.0f - t) * quaternion0.w + t * q1.w
+        };
+    }
 
-    return Add(Scaler(quat0, scale0), Scaler(quat1, scale1));
+    float theta = std::acos(dot);
+
+    //
+    float scale0 = std::sin((1.0f - t) * theta) / std::sin(theta);
+    float scale1 = std::sin(t * theta) / std::sin(theta);
+
+    return Quaternion{
+        scale0 * quaternion0.x + scale1 * q1.x,
+        scale0 * quaternion0.y + scale1 * q1.y,
+        scale0 * quaternion0.z + scale1 * q1.z,
+        scale0 * quaternion0.w + scale1 * q1.w
+    };
 }
 
 Quaternion Quaternion::Scaler(const Quaternion& q, float scaler)

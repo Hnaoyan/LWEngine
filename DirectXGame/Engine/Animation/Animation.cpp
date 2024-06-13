@@ -9,14 +9,14 @@ void Animation::Initialize(ModelData& modelData)
 	modelData_ = modelData;
 	animData_ = modelData_.animData;
 	skeleton_ = Skeleton::Create(modelData_.rootNode);
+	UpdateSkelton();
 	skinCluster_ = SkinCluster::Create(DirectXCommon::GetInstance()->GetDevice(), skeleton_, modelData_);
 	animationTime_ = 0;
 }
 
 void Animation::UpdateAnimation()
 {
-	//animationTime_ += (kDeltaTime / 200.0f);
-	//animationTime_ += (1.0f / 300.0f);
+	animationTime_ += nowFrame_ / 60.0f;
 	animationTime_ = std::fmod(animationTime_, animData_.duration);
 	// ノード取得
 	//NodeAnimation& nodeAnim = animData_.nodeAnimations[modelData_->rootNode.name];
@@ -41,6 +41,8 @@ void Animation::UpdateSkelton()
 {
 	// 全てのJointを更新。親が若いので通常ループで処理可能
 	for (Joint& joint : skeleton_.joints) {
+		// ローカル行列作成
+		joint.localMatrix = Matrix4x4::MakeAffineMatrix(joint.transform.scale, joint.transform.rotate, joint.transform.translate);
 		if (joint.parent) {
 			joint.skeletonSpaceMatrix = Matrix4x4::Multiply(joint.localMatrix, skeleton_.joints[*joint.parent].skeletonSpaceMatrix);
 		}
@@ -57,12 +59,10 @@ void Animation::ApplyAnimation()
 		if (auto it = animData_.nodeAnimations.find(joint.name); it != animData_.nodeAnimations.end()) {
 			const NodeAnimation& rootNodeAnimation = (*it).second;
 			// トランスフォームの作成
-			joint.transform.translate = CalculateValue(rootNodeAnimation.translate.keyframes, animationTime_);
-			joint.transform.rotate = CalculateValue(rootNodeAnimation.rotate.keyframes, animationTime_);
-			joint.transform.rotate = Quaternion::Normalize(joint.transform.rotate);
-			joint.transform.scale = CalculateValue(rootNodeAnimation.scale.keyframes, animationTime_);
-			// ローカル行列作成
-			joint.localMatrix = Matrix4x4::MakeAffineMatrix(joint.transform.scale, joint.transform.rotate, joint.transform.translate);
+			joint.transform.translate = Animation::CalculateValue(rootNodeAnimation.translate.keyframes, animationTime_);
+			joint.transform.rotate = Animation::CalculateValue(rootNodeAnimation.rotate.keyframes, animationTime_);
+			//joint.transform.rotate = Quaternion::Normalize(joint.transform.rotate);
+			joint.transform.scale = Animation::CalculateValue(rootNodeAnimation.scale.keyframes, animationTime_);
 		}
 	}
 

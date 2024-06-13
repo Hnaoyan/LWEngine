@@ -48,6 +48,7 @@
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectXCommon.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
+    <ClCompile Include="DirectXGame\Sample\Object\AnimCubeObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Object\AnimSampleObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
@@ -112,6 +113,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
+    <ClInclude Include="DirectXGame\Sample\Object\AnimCubeObject.h" />
     <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h" />
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
   </ItemGroup>

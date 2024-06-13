@@ -67,7 +67,7 @@ public:
 	/// <param name="camera"></param>
 	void Draw(const ModelDrawDesc& desc);
 
-	void SkinningDraw(const ModelDrawDesc& desc, Animation* animation);
+	void SkinningDraw(const ModelDrawDesc& desc, Animation* animation, uint32_t texture);
 
 	//void AnimationDraw(const AnimDrawDesc& desc);
 

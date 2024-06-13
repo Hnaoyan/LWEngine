@@ -18,7 +18,7 @@ Sphere* Sphere::CreateSphere()
 void Sphere::Initialize()
 {
 	// 分割数	
-	subdivision_ = 512;
+	subdivision_ = 512/4;
 	// 頂点数
 	vertexIndex_ = subdivision_ * subdivision_ * 6;
 
