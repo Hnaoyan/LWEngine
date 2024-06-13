@@ -1,5 +1,5 @@
 #include "Animation.h"
-#include "../System/DeltaTime.h"
+#include "../LwLib/LwEngineLib.h"
 #include "../3D/Loader.h"
 #include "../Base/DirectXCommon.h"
 #include "imgui.h"

@@ -9,7 +9,7 @@
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
-#include "../Utility/StructLists.h"
+#include "../Math/MathLib.h"
 #include "../Utility/Singleton.h"
 
 class Input : public Singleton<Input>

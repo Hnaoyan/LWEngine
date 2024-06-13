@@ -21,7 +21,8 @@ public: // メンバ関数
 public: // アクセッサ
 	IDXGISwapChain4* GetSwapChain() { return swapChain_.Get(); }
 	ID3D12Fence* GetFence() { return fence_.Get(); }
-
+	uint32_t GetBufferWidth() { return bufferWidth_; }
+	uint32_t GetBufferHeight() { return bufferHeight_; }
 private: // 生成関数
 	/// <summary>
 	/// SwapChain生成

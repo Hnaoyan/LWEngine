@@ -7,7 +7,12 @@ class SRVHandler;
 class PostEffectRender : public Singleton<PostEffectRender>
 {
 public:
-	//void Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="device"></param>
+	/// <param name="commandList"></param>
+	void Initialize(ID3D12Device* device, ID3D12GraphicsCommandList* commandList);
 
 	//void Draw(SRVHandler* srv);
 
