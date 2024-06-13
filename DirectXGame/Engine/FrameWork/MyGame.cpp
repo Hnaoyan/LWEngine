@@ -26,6 +26,9 @@ void MyGame::Update()
 	// 基底クラス
 	Framework::Update();
 
+	// 入力受付
+	input_->Update();
+
 	// シーンの更新
 	sceneManager_->Update();
 

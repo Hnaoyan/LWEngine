@@ -38,6 +38,9 @@ void Framework::Initialize()
 	dxCommon_ = DirectXCommon::GetInstance();
 	dxCommon_->Initialize(winApp_);
 
+	input_ = Input::GetInstance();
+	input_->Initialize();
+
 	// シェーダー読み込みクラス初期化
 	Shader::GetInstance()->Initialize();
 	// パイプラインの初期化
