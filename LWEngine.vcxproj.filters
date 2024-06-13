@@ -326,6 +326,9 @@
     <ClInclude Include="DirectXGame\Sample\Object\AnimCubeObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Animation\AnimationDataManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_VS.hlsl" />

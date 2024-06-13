@@ -70,6 +70,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\WorldTransform.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Animation.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\AnimationData.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\AnimationDataManager.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Joint.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\ModelNode.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Skeleton.h" />

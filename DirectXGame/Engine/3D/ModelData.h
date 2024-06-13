@@ -21,6 +21,15 @@ enum class LoadExtension : uint16_t
 	kEndCount,	// 最後
 };
 
+/// <summary>
+/// モデルの種類
+/// </summary>
+enum class ModelType : uint32_t
+{
+	kNormal,
+	kSkinning,
+};
+
 
 // マテリアル名
 struct MaterialData {
