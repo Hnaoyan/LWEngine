@@ -114,7 +114,7 @@ void Model::Draw(const ModelDrawDesc& desc) {
 
 }
 
-void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation)
+void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_t texture)
 {
 	// マテリアル更新
 	material_->Update();
@@ -148,7 +148,7 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation)
 	//---マテリアルの設定---//
 	// SRVのセット
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList_, static_cast<UINT>(SkinningModelRegister::kTexture), modelData_.material.textureHandle);
+		sCommandList_, static_cast<UINT>(SkinningModelRegister::kTexture), texture);
 
 	// Skinning
 	sCommandList_->SetGraphicsRootDescriptorTable(

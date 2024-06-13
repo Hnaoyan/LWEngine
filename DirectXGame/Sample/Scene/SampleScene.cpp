@@ -25,7 +25,8 @@ void SampleScene::Initialize()
 	// 歩くオブジェ
 	walkObj_ = std::make_unique<AnimSampleObject>();
 	walkObj_->Initialize(this->walkModel_.get(),cubeModel_.get());
-	walkObj_->worldTransform_.transform_.translate = { 10.0f,0,0 };
+	walkObj_->worldTransform_.transform_.translate = { 0,0,0 };
+	walkObj_->worldTransform_.transform_.rotate = { 0,3.14f,0 };
 
 	cubeObj_ = std::make_unique<AnimCubeObject>();
 	cubeObj_->Initialize(testModel_.get());
@@ -69,7 +70,7 @@ void SampleScene::Draw()
 	//sampleObj_->Draw(&camera_);
 	walkObj_->Draw(&camera_);
 
-	cubeObj_->Draw(&camera_);
+	//cubeObj_->Draw(&camera_);
 	//ModelDrawDesc desc;
 	//desc.worldTransform = &testWTF_;
 	//desc.camera = &camera_;
@@ -116,7 +117,7 @@ void SampleScene::ImGuiDraw()
 void SampleScene::LoadModel()
 {
 	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
-	walkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
+	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 
 	cubeModel_.reset(Model::CreateDefault("cube"));
 

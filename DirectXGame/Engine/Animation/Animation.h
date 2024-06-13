@@ -50,7 +50,7 @@ public:
 			// indexとnextIndexの2つのKeyframeを取得して範囲内に自国があるかを判定
 			if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 				// 範囲内を補間する
-				float t = (time - keyframes[index].time / (keyframes[nextIndex].time - keyframes[index].time));
+				float t = ((time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time));
 				return VectorLib::Lerp(keyframes[index].value, keyframes[nextIndex].value, t);
 			}
 		}
@@ -68,7 +68,7 @@ public:
 			// indexとnextIndexの2つのKeyframeを取得して範囲内に自国があるかを判定
 			if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 				// 範囲内を補間する
-				float t = (time - keyframes[index].time / (keyframes[nextIndex].time - keyframes[index].time));
+				float t = ((time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time));
 				return Quaternion::Slerp(keyframes[index].value, keyframes[nextIndex].value, t);
 			}
 		}

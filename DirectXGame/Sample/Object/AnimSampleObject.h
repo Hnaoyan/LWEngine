@@ -29,6 +29,8 @@ public:
 
 	Model* debugCube_ = nullptr;
 
+	uint32_t texture_ = 0u;
+
 	std::unique_ptr<Sphere> debugSphere_;
 
 	// ワールドトランスフォーム
