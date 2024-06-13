@@ -37,6 +37,7 @@
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
+    <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp" />
@@ -89,6 +90,8 @@
     <ClInclude Include="DirectXGame\Engine\Light\DirectionalLight\DirectionalLight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightingManager.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\Timer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />
@@ -101,11 +104,10 @@
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
-    <ClInclude Include="DirectXGame\Engine\System\DeltaTime.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h" />
-    <ClInclude Include="DirectXGame\Engine\Utility\StructLists.h" />
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\Framework.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\MyGame.h" />
