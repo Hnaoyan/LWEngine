@@ -1,5 +1,6 @@
 #include "AnimSampleObject.h"
 #include "imgui.h"
+#include "../../Engine/3D/Drawer/Sphere.h"
 
 int32_t AnimSampleObject::sSerialNumber = 0u;
 std::string AnimSampleObject::sObjectName = "SampleObject";
@@ -10,6 +11,8 @@ void AnimSampleObject::Initialize(Model* model, Model* cube)
 	animModel_ = model;
 
 	debugCube_ = cube;
+
+	debugSphere_.reset(Sphere::CreateSphere());
 
 	// 番号
 	serialNumber_ = sSerialNumber;
@@ -46,17 +49,20 @@ void AnimSampleObject::Draw(ICamera* camera)
 	animModel_->SkinningDraw(desc, &animation_);
 
 
-	for (int i = 0; i < animation_.skeleton_.joints.size(); ++i) {
-		Matrix4x4 local = animation_.skeleton_.joints[i].localMatrix;
+	//for (int i = 0; i < animation_.skeleton_.joints.size(); ++i) {
+	//	Matrix4x4 local = animation_.skeleton_.joints[i].localMatrix;
 
-		//animation_.skeleton_.joints[i].debug_.worldMatrix_ = Matrix4x4::Multiply(worldTransform_.worldMatrix_, local);
-		animation_.skeleton_.joints[i].debug_.transform_.translate = animation_.skeleton_.joints[i].transform.translate;
-		animation_.skeleton_.joints[i].debug_.transform_.scale = { 0.2f,0.2f,0.2f };
-		animation_.skeleton_.joints[i].debug_.UpdateMatrix();
-		desc.worldTransform = &animation_.skeleton_.joints[i].debug_;
-		desc.camera = camera;
-		debugCube_->Draw(desc);
-	}
+	//	//animation_.skeleton_.joints[i].debug_.worldMatrix_ = Matrix4x4::Multiply(worldTransform_.worldMatrix_, local);
+	//	//animation_.skeleton_.joints[i].debug_.transform_.translate = animation_.skeleton_.joints[i].transform.translate;
+	//	animation_.skeleton_.joints[i].debug_.worldMatrix_ = animation_.skeleton_.joints[i].skeletonSpaceMatrix;
+	//	animation_.skeleton_.joints[i].debug_.transform_.scale = { 0.2f,0.2f,0.2f };
+	//	animation_.skeleton_.joints[i].debug_.UpdateMatrix();
+	//	//animation_.skeleton_.joints[i].debug_.worldMatrix_ = Matrix4x4::Multiply(animation_.skeleton_.joints[i].debug_.worldMatrix_, worldTransform_.worldMatrix_);
+	//	//animation_.skeleton_.joints[i].debug_.UpdateMatrix();
+	//	desc.worldTransform = &animation_.skeleton_.joints[i].debug_;
+	//	desc.camera = camera;
+	//	debugCube_->Draw(desc);
+	//}
 
 }
 

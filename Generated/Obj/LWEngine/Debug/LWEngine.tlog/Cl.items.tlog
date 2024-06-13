@@ -35,5 +35,6 @@ C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Engine\Scene\IScene.
 C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Engine\Input\Input.cpp;C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\Generated\Obj\LWEngine\Debug\Input.obj
 C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Engine\Base\DirectXCommon.cpp;C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\Generated\Obj\LWEngine\Debug\DirectXCommon.obj
 C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp;C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\Generated\Obj\LWEngine\Debug\GraphicsPSO.obj
+C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Sample\Object\AnimCubeObject.cpp;C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\Generated\Obj\LWEngine\Debug\AnimCubeObject.obj
 C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Sample\Object\AnimSampleObject.cpp;C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\Generated\Obj\LWEngine\Debug\AnimSampleObject.obj
 C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\DirectXGame\Sample\Scene\SampleScene.cpp;C:\Users\hazama naoya\Desktop\NaEngine\LWEngine\Generated\Obj\LWEngine\Debug\SampleScene.obj

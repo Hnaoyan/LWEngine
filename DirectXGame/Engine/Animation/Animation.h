@@ -13,6 +13,7 @@ public:
 	AnimationData animData_;
 	// 現在の時間
 	float animationTime_ = 0.0f;
+	float nowFrame_ = 1.0f;
 
 	// アニメーション用のトランスフォーム
 	QuaternionTransform transform_;
@@ -38,7 +39,7 @@ public:
 	void ImGuiDraw();
 
 public:
-	inline static Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time) {
+	static Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time) {
 		assert(!keyframes.empty());
 		if (keyframes.size() == 1 || time <= keyframes[0].time) {
 			return keyframes[0].value;
@@ -56,7 +57,7 @@ public:
 		return (*keyframes.rbegin()).value;
 	}
 
-	inline static Quaternion CalculateValue(const std::vector<KeyframeQuaternion>& keyframes, float time) {
+	static Quaternion CalculateValue(const std::vector<KeyframeQuaternion>& keyframes, float time) {
 		assert(!keyframes.empty());
 		if (keyframes.size() == 1 || time <= keyframes[0].time) {
 			return keyframes[0].value;

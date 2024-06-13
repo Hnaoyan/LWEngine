@@ -335,11 +335,10 @@ AnimationData Loader::LoadAnimationFile(const std::string& directoryPath, const 
 ModelNode Loader::ReadNode(aiNode* node)
 {
 	ModelNode modelNode;
+	aiMatrix4x4 aiLocalMatrix = node->mTransformation;
 
 	aiVector3D scale, translate;
 	aiQuaternion rotate;
-
-	aiMatrix4x4 aiLocalMatrix = node->mTransformation;
 
 	aiLocalMatrix.Decompose(scale, rotate, translate);
 
