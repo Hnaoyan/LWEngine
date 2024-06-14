@@ -371,6 +371,42 @@ Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Quaternion& ro
 	return affineMatrix;
 }
 
+Matrix4x4 Matrix4x4::DirectionToDirection(const Vector3& from, const Vector3& to)
+{
+	// cos
+	float cosine = Vector3::Dot(from, to);
+	// sin
+	float sine = Vector3::Length(Vector3::Cross(from, to));
+	// normalize
+	Vector3 axisNormal = {};
+	Vector3 fromMinus = Vector3::Scaler(from, -1.0f);
+	if (fromMinus.x == to.x && fromMinus.y == to.y && fromMinus.z == to.z) {
+		if (from.x != 0 || from.y != 0) {
+			axisNormal = { from.y,-from.x,0 };
+		}
+		else if (from.x != 0 || from.z != 0) {
+			axisNormal = { from.z,0,-from.x };
+		}
+	}
+	else {
+		axisNormal = Vector3::Normalize(Vector3::Cross(from, to));
+	}
+	Matrix4x4 result = MakeIdentity4x4();
+	result.m[0][0] = std::powf(axisNormal.x, 2) * (1 - cosine) + cosine;
+	result.m[0][1] = axisNormal.x * axisNormal.y * (1 - cosine) + axisNormal.z * sine;
+	result.m[0][2] = axisNormal.x * axisNormal.z * (1 - cosine) - axisNormal.y * sine;
+
+	result.m[1][0] = axisNormal.x * axisNormal.y * (1 - cosine) - axisNormal.z * sine;
+	result.m[1][1] = std::powf(axisNormal.y, 2) * (1 - cosine) + cosine;
+	result.m[1][2] = axisNormal.y * axisNormal.z * (1 - cosine) + axisNormal.x * sine;
+
+	result.m[2][0] = axisNormal.x * axisNormal.z * (1 - cosine) + axisNormal.y * sine;
+	result.m[2][1] = axisNormal.y * axisNormal.z * (1 - cosine) - axisNormal.x * sine;
+	result.m[2][2] = std::powf(axisNormal.z, 2) * (1 - cosine) + cosine;
+
+	return result;
+}
+
 Matrix4x4 Matrix4x4::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
 {
 	Matrix4x4 result = {};

@@ -111,6 +111,14 @@ public:
 	static Matrix4x4
 		MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
 
+	/// <summary>
+	/// 任意軸の回転行列を求める計算
+	/// </summary>
+	/// <param name="from"></param>
+	/// <param name="to"></param>
+	/// <returns></returns>
+	static Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
+
 public: // その他計算関数
 	static Matrix4x4 MakeOrthographicMatrix(
 		float left, float top, float right, float bottom, float nearClip, float farClip);
