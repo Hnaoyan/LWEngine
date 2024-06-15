@@ -30,7 +30,7 @@ void SampleScene::Initialize()
 
 	cubeObj_ = std::make_unique<AnimCubeObject>();
 	cubeObj_->Initialize(testModel_.get());
-	cubeObj_->worldTransform_.transform_.translate = { 0,0,0 };
+	cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
 
 	// 初期カメラ
 	camera_.transform_.translate.z = -5.0f;
@@ -70,7 +70,7 @@ void SampleScene::Draw()
 	//sampleObj_->Draw(&camera_);
 	walkObj_->Draw(&camera_);
 
-	//cubeObj_->Draw(&camera_);
+	cubeObj_->Draw(&camera_);
 	//ModelDrawDesc desc;
 	//desc.worldTransform = &testWTF_;
 	//desc.camera = &camera_;

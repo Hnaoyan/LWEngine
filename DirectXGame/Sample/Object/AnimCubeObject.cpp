@@ -13,14 +13,21 @@ void AnimCubeObject::Initialize(Model* model)
 	//objectName_ = sObjectName + std::to_string(serialNumber_);
 
 	worldTransform_.Initialize();
-
-
+	// アニメーションプレイヤー
+	animPlayer_.Initialize(&animData_);
 }
 
 void AnimCubeObject::Update()
 {
-	animationTime_ += 1.0f / 60.0f;
-	animationTime_ = std::fmod(animationTime_, animData_.duration);
+	animPlayer_.Update();
+	//animationTime_ -= 1.0f / 60.0f;
+	////animationTime_ = std::fmod(animationTime_, animData_.duration);
+	//	 
+	//if (animationTime_ < 0) {
+	//	animationTime_ = animData_.duration;
+	//}
+	//
+	animationTime_ = animPlayer_.animationTime_;
 	// ノード取得
 	NodeAnimation& nodeAnim = animData_.nodeAnimations[animModel_->GetModelData()->rootNode.name];
 
@@ -52,6 +59,6 @@ void AnimCubeObject::ImGuiDraw()
 
 	ImGui::DragFloat("AnimTimer", &animationTime_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
-
+	animPlayer_.ImguiDraw("cubeAnim");
 	ImGui::End();
 }
