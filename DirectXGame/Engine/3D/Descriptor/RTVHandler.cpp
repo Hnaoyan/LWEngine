@@ -2,6 +2,7 @@
 #include "../../Base/Utility/DxCreateLib.h"
 #include "../../Base/DirectX/DirectXDevice.h"
 #include "../../Base/DirectX/SwapChainManager.h"
+#include "../../PostEffect/PostEffectRender.h"
 #include "SRVHandler.h"
 
 #include <cassert>
@@ -86,6 +87,8 @@ void RTVHandler::CreateRenderTexture()
 	SRVHandler* srv = SRVHandler::GetInstance();
 	ID3D12Device* device = dxDevice_->GetDevice();
 
+	PostEffectRender* postRender = PostEffectRender::GetInstance();
+
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = GetCPUDescriptorHandle();
 	AllocateNextDescriptorNum();
 
@@ -95,16 +98,18 @@ void RTVHandler::CreateRenderTexture()
 	renderTextureResource_ = DxCreateLib::RenderTextureLib::CreateRenderTextureResource(device, bufferWidth_, bufferHeight_, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, {1,1,1,1});
 	device->CreateRenderTargetView(renderTextureResource_.Get(), &rtvDesc_, handle);
 	//SRVの作成
-		//D3D12_CPU_DESCRIPTOR_HANDLE handleSrv = DescriptorManager::GetCPUDescriptorHandle(heap_.Get(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 3);
 	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
 	renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	renderTextureSrvDesc.Texture2D.MipLevels = 1;
-	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srv->GetSrvHandleCPU();
+
+
+	postRender->renderTextureHandle_.first = srv->GetSrvHandleCPU();
+	postRender->renderTextureHandle_.second = srv->GetSrvHandleGPU();
+
 	srv->AllocateNextDescriptorNum();
-	//D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = DescriptorManager::GetCPUDescriptorHandle(srv->GetHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV), 2);
-	device->CreateShaderResourceView(renderTextureResource_.Get(), &renderTextureSrvDesc, srvHandle);
+	device->CreateShaderResourceView(renderTextureResource_.Get(), &renderTextureSrvDesc, postRender->renderTextureHandle_.first);
 
 
 }

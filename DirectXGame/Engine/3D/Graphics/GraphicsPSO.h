@@ -62,6 +62,15 @@ namespace Pipeline
 		kCountOfDrawer,
 	};
 
+	enum class PostEffectType : int {
+		kNormal,
+		kGrayScale,
+		kVignette,
+		kSmoothing,
+		kGaussian,	
+		kCountOfType,
+	};
+
 }
 
 class GraphicsPSO : public Singleton<GraphicsPSO>
@@ -69,6 +78,8 @@ class GraphicsPSO : public Singleton<GraphicsPSO>
 private:
 	// パイプライン用の関数をまとめたライブラリのパス
 	using PSOLib = DxCreateLib::PSOLib;
+	using BlendMode = Pipeline::BlendMode;
+	using PostEffect = Pipeline::PostEffectType;
 
 public:
 
@@ -77,12 +88,12 @@ public:
 public:
 	// Sprite用
 	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sSpritePipelineStates_;
+		size_t(BlendMode::kCountOfBlendMode)> sSpritePipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSpriteRootSignature_;
 
 	// Model用
 	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sModelPipelineStates_;
+		size_t(BlendMode::kCountOfBlendMode)> sModelPipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sModelRootSignature_;
 
 	// Particle用（インスタンシング
@@ -91,15 +102,35 @@ public:
 
 	// SkinningModel用
 	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sSkinningModelPipelineStates_;
+		size_t(BlendMode::kCountOfBlendMode)> sSkinningModelPipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkinningModelRootSignature_;
 
-private:
+	// PostEffect用
+	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(PostEffect::kCountOfType)> sPostEffectPipelineStates_;
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sPostEffectRootSignature_;
 
+private:
+	/// <summary>
+	/// 2DSprite作成
+	/// </summary>
 	static void CreateSpritePSO();
+	/// <summary>
+	/// 3DModel作成
+	/// </summary>
 	static void CreateModelPSO();
+	/// <summary>
+	/// パーティクル作成
+	/// </summary>
 	static void CreateParticlePSO();
+	/// <summary>
+	/// Skinning作成
+	/// </summary>
 	static void CreateSkinningModelPSO();
+	/// <summary>
+	/// ポストエフェクト作成
+	/// </summary>
+	static void CreatePostEffectPSO();
 
 	/// <summary>
 	/// RootSignature作成関数（まだ

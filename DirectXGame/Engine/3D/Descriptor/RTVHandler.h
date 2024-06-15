@@ -42,6 +42,7 @@ public: // アクセッサ
 	ID3D12DescriptorHeap* GetRtvHeap() { return rtvHeap_.Get(); }
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle();
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle();
 
 	/// <summary>
 	/// ヒープ番号を進める
@@ -67,8 +68,8 @@ private:
 	uint32_t kDescriptorSizeRTV_ = 0;
 	uint32_t size_ = 0;
 
-	int32_t bufferWidth_;
-	int32_t bufferHeight_;
+	int32_t bufferWidth_ = 0;
+	int32_t bufferHeight_ = 0;
 
 	const uint32_t kNumDescriptor = 256;
 
