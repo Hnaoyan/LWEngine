@@ -165,12 +165,11 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
     // 利用するHeapの設定。非常に特殊な運用。02_04exで一般的なケース版がある
     D3D12_HEAP_PROPERTIES heapProperties{};
     heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;	// 細かい設定を行う
-    //heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;	// WriteBackポリシーでVPUアクセス可能
-    //heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;	// プロセッサ
 
     // Resourceの生成
     Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
-    HRESULT hr = device_->CreateCommittedResource(
+    HRESULT hr = S_FALSE;
+    hr = device_->CreateCommittedResource(
         &heapProperties,	// Heapの設定
         D3D12_HEAP_FLAG_NONE,	// Heapの特殊な設定。特になし
         &resourceDesc,	// Resourceの設定
@@ -187,7 +186,6 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microso
     std::vector<D3D12_SUBRESOURCE_DATA> subresources;
     PrepareUpload(device_, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
     uint64_t intermediateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresources.size()));
-    //ID3D12Resource* intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
     
     Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
     UpdateSubresources(commandList, texture.Get(), intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());
