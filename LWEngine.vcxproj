@@ -28,6 +28,7 @@
     <ClCompile Include="DirectXGame\Engine\Animation\Joint.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\Skeleton.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\SkinCluster.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\System\AnimationPlayer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="DirectXGame\Engine\Animation\ModelNode.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Skeleton.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\SkinCluster.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\System\AnimationPlayer.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
@@ -145,11 +147,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\3DModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -173,11 +177,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
