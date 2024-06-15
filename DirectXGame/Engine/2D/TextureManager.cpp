@@ -78,20 +78,51 @@ uint32_t TextureManager::LoadInternal(const std::string fileName)
     texture.resource = CreateTextureResource(metadata);
 
     Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = UploadTextureData(texture.resource, mipImages, dxCommon_->GetCommandList());
+  
+    // コマンドリスト関係の処理
+    HRESULT hr = dxCommon_->GetCommandList()->Close();
+    assert(SUCCEEDED(hr));
+
+    ID3D12CommandList* cmdLists[] = { dxCommon_->GetCommandList() };
+    DirectXCommand::sCommandQueue_->ExecuteCommandLists(1, cmdLists);
+    
+    // 実行待ち
+    dxCommon_->SetFenceVal(dxCommon_->GetFenceVal() + 1);
+    // GPUがここまでたどり着いたときに、Fenceの値を代入するようにSignalを送る
+    DirectXCommand::sCommandQueue_->Signal(dxCommon_->GetSwapChainManager()->GetFence(), dxCommon_->GetFenceVal());
+
+    // Fenceの値が指定したSignal値にたどり着いているか確認
+    if (dxCommon_->GetSwapChainManager()->GetFence()->GetCompletedValue() < dxCommon_->GetFenceVal()) {
+        //FrenceのSignalを持つためのイベントを作成する
+        HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+        assert(fenceEvent != nullptr);
+        //指定したSignalにたどりついていないので、たどりつくまで待つようにイベントを設定する
+        dxCommon_->GetSwapChainManager()->GetFence()->SetEventOnCompletion(dxCommon_->GetFenceVal(), fenceEvent);
+        //イベントを待つ
+        WaitForSingleObject(fenceEvent, INFINITE);
+    }
+
+    // 実行が完了したのでアロケータとコマンドリストをリセット
+    hr = DirectXCommand::sCommandAllocator_->Reset();
+    assert(SUCCEEDED(hr));
+    hr = DirectXCommand::sCommandList_->Reset(DirectXCommand::sCommandAllocator_.Get(), nullptr);
+    assert(SUCCEEDED(hr));
+
     // metaDataを基にSRVの設定
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
     D3D12_RESOURCE_DESC resDesc = texture.resource->GetDesc();
 
     srvDesc.Format = resDesc.Format;
     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+   
+    
     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
     srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
 
+    // SRVのインデックスのインクリメント
     texture.cpuDescriptorHandle = SRVHandler::GetSrvHandleCPU();
     texture.gpuDescriptorHandle = SRVHandler::GetSrvHandleGPU();
     texture.descriptorNumIndex = SRVHandler::GetNextDescriptorNum();
-    // SRVのインデックスのインクリメント
-    //SRVHandler::sNextDescriptorNum_++;
     SRVHandler::AllocateNextDescriptorNum();
     // テクスチャ管理インデックスのインクリメント
     descriptorIndex_++;

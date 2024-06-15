@@ -15,11 +15,11 @@ public:
 
 public:	// メンバ変数
 	// キュー
-	static Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
+	static Microsoft::WRL::ComPtr<ID3D12CommandQueue> sCommandQueue_;
 	// アロケータ
-	static Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
+	static Microsoft::WRL::ComPtr<ID3D12CommandAllocator> sCommandAllocator_;
 	// リスト
-	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
+	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> sCommandList_;
 
 private: // 
 

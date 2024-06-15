@@ -38,7 +38,7 @@ void SwapChainManager::CreateSwapChain()
 
 	// SwapChain1で生成
 	result = dxDevice_->GetDXGIFactory()->CreateSwapChainForHwnd(
-		DirectXCommand::GetInstance()->commandQueue_.Get(),
+		DirectXCommand::GetInstance()->sCommandQueue_.Get(),
 		WindowAPI::GetInstance()->GetHwnd(),
 		&swapChainDesc,
 		nullptr, nullptr,
