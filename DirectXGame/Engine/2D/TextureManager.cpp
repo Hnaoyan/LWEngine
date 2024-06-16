@@ -115,9 +115,17 @@ uint32_t TextureManager::LoadInternal(const std::string fileName)
     srvDesc.Format = resDesc.Format;
     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
    
-    
-    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-    srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+    // CubeMapかそれ以外か
+    if (metadata.IsCubemap()) {
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
+        srvDesc.TextureCube.MostDetailedMip = 0;
+        srvDesc.TextureCube.MipLevels = UINT_MAX;
+        srvDesc.TextureCube.ResourceMinLODClamp = 0.0f;
+    }
+    else {
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+        srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+    }
 
     // SRVのインデックスのインクリメント
     texture.cpuDescriptorHandle = SRVHandler::GetSrvHandleCPU();
@@ -139,12 +147,23 @@ ScratchImage TextureManager::LoadTexture(const std::string& filePath)
     ScratchImage image{};
 
     std::wstring filePathW = ConvertString(filePath);
-    HRESULT result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_FORCE_SRGB, nullptr, image);
+    HRESULT result;
+    if (filePathW.ends_with(L".dds")) {
+        result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_NONE, nullptr, image);
+    }
+    else {
+        result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_FORCE_SRGB, nullptr, image);
+    }
     assert(SUCCEEDED(result));
 
     // ミップマップの作成
     ScratchImage mipImages{};
-    result = GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), TEX_FILTER_SRGB, 0, mipImages);
+    if (DirectX::IsCompressed(image.GetMetadata().format)) {
+        mipImages = std::move(image);
+    }
+    else {
+        result = GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), TEX_FILTER_SRGB, 0, mipImages);
+    }
     assert(SUCCEEDED(result));
 
     return mipImages;
