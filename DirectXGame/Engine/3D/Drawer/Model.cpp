@@ -6,6 +6,7 @@
 
 ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 std::string Model::sDirectoryPath = "Resources";
+GeneralPipeline Model::sPipeline_;
 
 void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
@@ -73,6 +74,9 @@ Model* Model::CreateDefault(const std::string& modelName)
 }
 
 void Model::Draw(const ModelDrawDesc& desc) {
+	// パイプラインの設定
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
+
 	// マテリアル更新
 	material_->Update();
 
@@ -82,9 +86,9 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	//desc.worldTransform->UpdateMatrix();
 
 	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sModelRootSignature_.Get());
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	// パイプラインステートの設定
-	sCommandList_->SetPipelineState(GraphicsPSO::sModelPipelineStates_[size_t(blendMode_)].Get());
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
 
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
@@ -116,13 +120,15 @@ void Model::Draw(const ModelDrawDesc& desc) {
 
 void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_t texture)
 {
+	// パイプラインの設定
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kSkinningModel)]);
 	// マテリアル更新
 	material_->Update();
 
 	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sSkinningModelRootSignature_.Get());
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	// パイプラインステートの設定
-	sCommandList_->SetPipelineState(GraphicsPSO::sSkinningModelPipelineStates_[size_t(blendMode_)].Get());
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
 
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(

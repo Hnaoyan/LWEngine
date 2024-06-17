@@ -18,7 +18,7 @@ Sphere* Sphere::CreateSphere()
 void Sphere::Initialize()
 {
 	// 分割数	
-	subdivision_ = 512/4;
+	subdivision_ = 512;
 	// 頂点数
 	vertexIndex_ = subdivision_ * subdivision_ * 6;
 
@@ -137,10 +137,11 @@ void Sphere::CreateMaterial()
 
 void Sphere::Draw(const ModelDrawDesc& desc)
 {
+	GeneralPipeline pipeline = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
 	// ルートシグネチャの設定
-	Model::sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sModelRootSignature_.Get());
+	Model::sCommandList_->SetGraphicsRootSignature(pipeline.rootSignature.Get());
 	// パイプラインステートの設定
-	Model::sCommandList_->SetPipelineState(GraphicsPSO::sModelPipelineStates_[size_t(Pipeline::BlendMode::kNormal)].Get());
+	Model::sCommandList_->SetPipelineState(pipeline.pipelineState.Get());
 
 	// ワールド行列
 	Model::sCommandList_->SetGraphicsRootConstantBufferView(

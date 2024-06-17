@@ -5,12 +5,22 @@
 #include <memory>
 #include <array>
 #include <wrl.h>
+#include <variant>
 
 #include <d3d12.h>
 #include <dxcapi.h>
 
 namespace Pipeline
 {
+	enum class Order : int {
+		kSkybox,
+		kSpirte,
+		kModel,
+		kSkinningModel,
+		kParticle,
+		kPostEffect,
+		kCountOfParameter,
+	};
 	// 通常モデルのレジスタ番号
 	enum class ModelRegister : int {
 		kMaterial,
@@ -73,6 +83,28 @@ namespace Pipeline
 
 }
 
+struct GeneralPipeline
+{
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct BlendPipeline
+{
+	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::BlendMode::kCountOfBlendMode)> pipelineStates;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct PostEffectPipeline
+{
+	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::PostEffectType::kCountOfType)> pipelineStates;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+using PipelineVariant = std::variant<GeneralPipeline, BlendPipeline, PostEffectPipeline>;
+
 class GraphicsPSO : public Singleton<GraphicsPSO>
 {
 private:
@@ -80,35 +112,27 @@ private:
 	using PSOLib = DxCreateLib::PSOLib;
 	using BlendMode = Pipeline::BlendMode;
 	using PostEffect = Pipeline::PostEffectType;
+	using Order = Pipeline::Order;
 
 public:
 
 	static void Initialize(ID3D12Device* device);
 
 public:
-	// Sprite用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(BlendMode::kCountOfBlendMode)> sSpritePipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSpriteRootSignature_;
+	// 統合
+	//static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>, size_t(Order::kCountOfParameter)> sPipelineStates_;
+	//static std::array<Microsoft::WRL::ComPtr<ID3D12RootSignature>, size_t(Order::kCountOfParameter)> sRootSignatures_;
 
-	// Model用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(BlendMode::kCountOfBlendMode)> sModelPipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sModelRootSignature_;
+	// 統合
+	static std::array<PipelineVariant, size_t(Order::kCountOfParameter)>sPipelines_;
 
 	// Particle用（インスタンシング
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sParticleRootSignature_;
 
-	// SkinningModel用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(BlendMode::kCountOfBlendMode)> sSkinningModelPipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkinningModelRootSignature_;
-
-	// PostEffect用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(PostEffect::kCountOfType)> sPostEffectPipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sPostEffectRootSignature_;
+	// Skybox用
+	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sSkyboxPipelineStates_;
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkyboxRootSignature_;
 
 private:
 	/// <summary>
@@ -147,6 +171,10 @@ private:
 	/// <param name="gPipeline"></param>
 	/// <param name="pipelineState"></param>
 	static void CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState);
+
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> CreateRootSignature(D3D12_ROOT_SIGNATURE_DESC desc);
+
+	static Microsoft::WRL::ComPtr<ID3D12PipelineState> CreatePipelineState(D3D12_GRAPHICS_PIPELINE_STATE_DESC desc);
 
 private:
 	static ID3D12Device* sDevice_;

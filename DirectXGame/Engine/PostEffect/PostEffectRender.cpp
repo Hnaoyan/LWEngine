@@ -6,9 +6,10 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	commandList_ = cmdList;
 
+	PostEffectPipeline pipeline = std::get<PostEffectPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kPostEffect)]);
 	// PSO
-	commandList_->SetPipelineState(GraphicsPSO::sPostEffectPipelineStates_[size_t(Pipeline::PostEffectType::kNormal)].Get());
-	commandList_->SetGraphicsRootSignature(GraphicsPSO::sPostEffectRootSignature_.Get());
+	commandList_->SetPipelineState(pipeline.pipelineStates[size_t(Pipeline::PostEffectType::kNormal)].Get());
+	commandList_->SetGraphicsRootSignature(pipeline.rootSignature.Get());
 
 	// SRVヒープ
 	ID3D12DescriptorHeap* ppHeap[] = { SRVHandler::GetInstance()->GetSrvHeap() };

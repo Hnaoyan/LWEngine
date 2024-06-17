@@ -8,28 +8,11 @@
 using namespace Microsoft::WRL;
 using namespace Pipeline;
 
-std::array<ComPtr<ID3D12PipelineState>,
-	size_t(BlendMode::kCountOfBlendMode)> GraphicsPSO::sSpritePipelineStates_;
-ComPtr<ID3D12RootSignature> GraphicsPSO::sSpriteRootSignature_;
-
-// Model用
-std::array<ComPtr<ID3D12PipelineState>,
-	size_t(BlendMode::kCountOfBlendMode)> GraphicsPSO::sModelPipelineStates_;
-ComPtr<ID3D12RootSignature> GraphicsPSO::sModelRootSignature_;
-
-// Model用
-std::array<ComPtr<ID3D12PipelineState>,
-	size_t(BlendMode::kCountOfBlendMode)> GraphicsPSO::sSkinningModelPipelineStates_;
-ComPtr<ID3D12RootSignature> GraphicsPSO::sSkinningModelRootSignature_;
+std::array<PipelineVariant, size_t(Order::kCountOfParameter)> GraphicsPSO::sPipelines_;
 
 // Particle用（インスタンシング
 ComPtr<ID3D12PipelineState> GraphicsPSO::sParticlePipelineStates_;
 ComPtr<ID3D12RootSignature> GraphicsPSO::sParticleRootSignature_;
-
-// PostEffect用
-std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-	size_t(PostEffectType::kCountOfType)> GraphicsPSO::sPostEffectPipelineStates_;
-Microsoft::WRL::ComPtr<ID3D12RootSignature> GraphicsPSO::sPostEffectRootSignature_;
 
 ID3D12Device* GraphicsPSO::sDevice_;
 
@@ -40,7 +23,7 @@ void GraphicsPSO::Initialize(ID3D12Device* device)
 
 	sDevice_ = device;
 
-	// Sprite
+	// sPipelines_
 	CreateSpritePSO();
 	// Model
 	CreateModelPSO();
@@ -54,6 +37,8 @@ void GraphicsPSO::Initialize(ID3D12Device* device)
 
 void GraphicsPSO::CreateSpritePSO()
 {
+	BlendPipeline resultPipeline;
+
 	ComPtr<IDxcBlob> vsBlob;
 	ComPtr<IDxcBlob> psBlob;
 
@@ -150,23 +135,23 @@ void GraphicsPSO::CreateSpritePSO()
 	descriptionRootSignature.pStaticSamplers = staticSamplers;
 	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
 
-	HRESULT result = S_FALSE;
+	//HRESULT result = S_FALSE;
 
-	ComPtr<ID3DBlob> errorBlob;
-	ComPtr<ID3DBlob> rootSigBlob;
+	//ComPtr<ID3DBlob> errorBlob;
+	//ComPtr<ID3DBlob> rootSigBlob;
 
-	// シリアライズしてバイナリにする
-	result = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
-	if (FAILED(result)) {
-		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
-		assert(false);
-	}
-	// ルートシグネチャの生成
-	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
-		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sSpriteRootSignature_));
-	assert(SUCCEEDED(result));
-
-	gPipeline.pRootSignature = sSpriteRootSignature_.Get();	// ルートシグネチャ
+	//// シリアライズしてバイナリにする
+	//result = D3D12SerializeRootSignature(&descriptionRootSignature, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
+	//if (FAILED(result)) {
+	//	Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+	//	assert(false);
+	//}
+	//// ルートシグネチャの生成
+	//result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+	//	rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&resultPipeline.rootSignature));
+	//assert(SUCCEEDED(result));
+	resultPipeline.rootSignature = CreateRootSignature(descriptionRootSignature);
+	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ
 
 	//CreateRootSignature(rootParameters, static_cast<size_t>(rootParameters),staticSamplers);
 
@@ -177,63 +162,46 @@ void GraphicsPSO::CreateSpritePSO()
 	blenddesc.RenderTarget[0].BlendEnable = false;
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kNone)]));
-	assert(SUCCEEDED(result));
-
+	resultPipeline.pipelineStates[size_t(BlendMode::kNone)] = CreatePipelineState(gPipeline);
 	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kNormal)]));
-	assert(SUCCEEDED(result));
+	resultPipeline.pipelineStates[size_t(BlendMode::kNormal)] = CreatePipelineState(gPipeline);
 
 	// 加算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kAdd)]));
-	assert(SUCCEEDED(result));
+	resultPipeline.pipelineStates[size_t(BlendMode::kAdd)] = CreatePipelineState(gPipeline);
 
 	// 減算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kSubtract)]));
-	assert(SUCCEEDED(result));
+	resultPipeline.pipelineStates[size_t(BlendMode::kSubtract)] = CreatePipelineState(gPipeline);
 
 	// 乗算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kMultiply)]));
-	assert(SUCCEEDED(result));
+	resultPipeline.pipelineStates[size_t(BlendMode::kMultiply)] = CreatePipelineState(gPipeline);
 
 	// スクリーン合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSpritePipelineStates_[size_t(BlendMode::kScreen)]));
-	assert(SUCCEEDED(result));
+	resultPipeline.pipelineStates[size_t(BlendMode::kScreen)] = CreatePipelineState(gPipeline);
 
 #pragma endregion
+
+	sPipelines_[size_t(Pipeline::Order::kSpirte)] = std::move(resultPipeline);
 
 }
 
 void GraphicsPSO::CreateModelPSO()
 {
-	HRESULT result = S_FALSE;
+	GeneralPipeline resultPipeline;
 
 	ComPtr<IDxcBlob> vsBlob;
 	ComPtr<IDxcBlob> psBlob;
@@ -304,9 +272,6 @@ void GraphicsPSO::CreateModelPSO()
 	// スタティックサンプラー
 	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
 	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
-	//samplerDesc[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-	//samplerDesc[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
-	//samplerDesc[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
@@ -318,80 +283,64 @@ void GraphicsPSO::CreateModelPSO()
 	rootSignatureDesc.pStaticSamplers = samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
 
-	ComPtr<ID3DBlob> errorBlob;
-	ComPtr<ID3DBlob> rootSigBlob;
+	// 
+	resultPipeline.rootSignature = CreateRootSignature(rootSignatureDesc);
 
-	// シリアライズしてバイナリにする
-	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
-	if (FAILED(result)) {
-		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
-		assert(false);
-	}
-	// ルートシグネチャの生成
-	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
-		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sModelRootSignature_));
-	assert(SUCCEEDED(result));
-
-	gPipeline.pRootSignature = sModelRootSignature_.Get();	// ルートシグネチャ
+	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ
 
 #pragma region ブレンド
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 	blenddesc.RenderTarget[0].BlendEnable = false;
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kNone)]));
-	assert(SUCCEEDED(result));
+	//gPipeline.BlendState = blenddesc;
+	//// PSO作成
+	//result = sDevice_->CreateGraphicsPipelineState(
+	//	&gPipeline, IID_PPV_ARGS(
+	//		&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kNone)]));
+	//assert(SUCCEEDED(result));
 
 	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kNormal)]));
-	assert(SUCCEEDED(result));
+	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 
-	// 加算合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kAdd)]));
-	assert(SUCCEEDED(result));
-
-	// 減算合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kSubtract)]));
-	assert(SUCCEEDED(result));
-
-	// 乗算合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kMultiply)]));
-	assert(SUCCEEDED(result));
-
-	// スクリーン合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kScreen)]));
-	assert(SUCCEEDED(result));
+	//// 加算合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	//gPipeline.BlendState = blenddesc;
+	//// PSO作成
+	//result = sDevice_->CreateGraphicsPipelineState(
+	//	&gPipeline, IID_PPV_ARGS(
+	//		&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kAdd)]));
+	//assert(SUCCEEDED(result));
+	//// 減算合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
+	//gPipeline.BlendState = blenddesc;
+	//// PSO作成
+	//result = sDevice_->CreateGraphicsPipelineState(
+	//	&gPipeline, IID_PPV_ARGS(
+	//		&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kSubtract)]));
+	//assert(SUCCEEDED(result));
+	//// 乗算合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
+	//gPipeline.BlendState = blenddesc;
+	//// PSO作成
+	//result = sDevice_->CreateGraphicsPipelineState(
+	//	&gPipeline, IID_PPV_ARGS(
+	//		&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kMultiply)]));
+	//assert(SUCCEEDED(result));
+	//// スクリーン合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	//gPipeline.BlendState = blenddesc;
+	//// PSO作成
+	//result = sDevice_->CreateGraphicsPipelineState(
+	//	&gPipeline, IID_PPV_ARGS(
+	//		&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kScreen)]));
+	//assert(SUCCEEDED(result));
 
 #pragma endregion
+	sPipelines_[size_t(Pipeline::Order::kModel)] = std::move(resultPipeline);
 
 }
 
@@ -401,7 +350,7 @@ void GraphicsPSO::CreateParticlePSO()
 
 void GraphicsPSO::CreateSkinningModelPSO()
 {
-	HRESULT result = S_FALSE;
+	GeneralPipeline resultPipeline;
 
 	ComPtr<IDxcBlob> vsBlob;
 	ComPtr<IDxcBlob> psBlob;
@@ -503,91 +452,32 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	rootSignatureDesc.pStaticSamplers = samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
 
-	ComPtr<ID3DBlob> errorBlob;
-	ComPtr<ID3DBlob> rootSigBlob;
+	// ルートシグネチャ作成
+	resultPipeline.rootSignature = CreateRootSignature(rootSignatureDesc);
 
-	// シリアライズしてバイナリにする
-	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
-	if (FAILED(result)) {
-		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
-		assert(false);
-	}
-	// ルートシグネチャの生成
-	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
-		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sSkinningModelRootSignature_));
-	assert(SUCCEEDED(result));
+	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ
 
-	gPipeline.pRootSignature = sSkinningModelRootSignature_.Get();	// ルートシグネチャ
 
 #pragma region ブレンド
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 	blenddesc.RenderTarget[0].BlendEnable = false;
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kNone)]));
-	assert(SUCCEEDED(result));
-
 	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kNormal)]));
-	assert(SUCCEEDED(result));
 
-	// 加算合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kAdd)]));
-	assert(SUCCEEDED(result));
-
-	// 減算合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kSubtract)]));
-	assert(SUCCEEDED(result));
-
-	// 乗算合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kMultiply)]));
-	assert(SUCCEEDED(result));
-
-	// スクリーン合成
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
-	gPipeline.BlendState = blenddesc;
-	// PSO作成
-	result = sDevice_->CreateGraphicsPipelineState(
-		&gPipeline, IID_PPV_ARGS(
-			&GraphicsPSO::sSkinningModelPipelineStates_[size_t(BlendMode::kScreen)]));
-	assert(SUCCEEDED(result));
-
+	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 #pragma endregion
+	sPipelines_[size_t(Pipeline::Order::kSkinningModel)] = std::move(resultPipeline);
 
 }
 
 void GraphicsPSO::CreatePostEffectPSO()
 {
-	HRESULT result = S_FALSE;
+	PostEffectPipeline resultPipeline;
 
 #pragma region RootSignature
-
-	ComPtr<ID3DBlob> errorBlob;
-	ComPtr<ID3DBlob> rootSigBlob;
 
 	// RootSignature作成
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
@@ -626,16 +516,9 @@ void GraphicsPSO::CreatePostEffectPSO()
 	descriptionRootSignature.pStaticSamplers = staticSampler;
 	descriptionRootSignature.NumStaticSamplers = _countof(staticSampler);
 
-	result = D3D12SerializeRootSignature(&descriptionRootSignature,
-		D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
-	if (FAILED(result)) {
-		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
-		assert(false);
-	}
-	// バイナリを元に生成
-	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
-		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sPostEffectRootSignature_));
-	assert(SUCCEEDED(result));
+	// ルートシグネチャ作成
+	resultPipeline.rootSignature = CreateRootSignature(descriptionRootSignature);
+
 #pragma endregion
 	ComPtr<IDxcBlob> vsBlob;
 	ComPtr<IDxcBlob> psBlob;
@@ -655,7 +538,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
-	graphicsPipelineStateDesc.pRootSignature = sPostEffectRootSignature_.Get();	// RootSignature
+	graphicsPipelineStateDesc.pRootSignature = resultPipeline.rootSignature.Get();	// RootSignature
 	graphicsPipelineStateDesc.InputLayout = inputLayout;	// InputLayout
 	graphicsPipelineStateDesc.BlendState = blendDesc;	// BlendState
 	graphicsPipelineStateDesc.RasterizerState = rasterrizerDesc;	// RasterizerState
@@ -681,11 +564,11 @@ void GraphicsPSO::CreatePostEffectPSO()
 	graphicsPipelineStateDesc.VS = { vsBlob->GetBufferPointer(),vsBlob->GetBufferSize() };	// VertexShader
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 
-	// 実際に生成
-	result = sDevice_->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
-		IID_PPV_ARGS(&sPostEffectPipelineStates_[sizeof(PostEffect::kNormal)]));
-	assert(SUCCEEDED(result));
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[sizeof(PostEffect::kNormal)] = CreatePipelineState(graphicsPipelineStateDesc);
 
+	// 登録
+	sPipelines_[size_t(Pipeline::Order::kPostEffect)] = std::move(resultPipeline);
 }
 
 void GraphicsPSO::CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState)
@@ -694,4 +577,35 @@ void GraphicsPSO::CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Micros
 	// PSO作成
 	result = sDevice_->CreateGraphicsPipelineState(&gPipeline, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
+}
+
+Microsoft::WRL::ComPtr<ID3D12RootSignature> GraphicsPSO::CreateRootSignature(D3D12_ROOT_SIGNATURE_DESC desc)
+{
+	ComPtr<ID3DBlob> errorBlob;
+	ComPtr<ID3DBlob> rootSigBlob;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> resultSignature;
+	HRESULT result = S_FALSE;
+	// シリアライズしてバイナリにする
+	result = D3D12SerializeRootSignature(&desc, D3D_ROOT_SIGNATURE_VERSION_1, &rootSigBlob, &errorBlob);
+	if (FAILED(result)) {
+		Log(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	// ルートシグネチャの生成
+	result = sDevice_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(),
+		rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&resultSignature));
+	assert(SUCCEEDED(result));
+
+	return resultSignature;
+}
+
+Microsoft::WRL::ComPtr<ID3D12PipelineState> GraphicsPSO::CreatePipelineState(D3D12_GRAPHICS_PIPELINE_STATE_DESC desc)
+{
+	// 実際に生成
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> resultPipelineState;
+	HRESULT result = S_FALSE;
+	result = sDevice_->CreateGraphicsPipelineState(&desc,IID_PPV_ARGS(&resultPipelineState));
+	assert(SUCCEEDED(result));
+
+	return resultPipelineState;
 }
