@@ -54,7 +54,7 @@ void AnimSampleObject::Update()
 	}
 
 	// アニメーション更新
-	animation_.UpdateAnimation();
+	animation_.Update();
 
 	// アニメーションのローカル行列を
 	//worldTransform_.localMatrix_ = animation_.localMatrix_;

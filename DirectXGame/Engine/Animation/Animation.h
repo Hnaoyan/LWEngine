@@ -26,7 +26,7 @@ public:
 	SkinCluster skinCluster_;
 public:
 	void Initialize(ModelData& modelData);
-	void UpdateAnimation();
+	void Update();
 
 public:
 	// Skeleton
