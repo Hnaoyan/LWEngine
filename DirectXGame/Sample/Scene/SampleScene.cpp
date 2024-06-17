@@ -40,7 +40,7 @@ void SampleScene::Initialize()
 void SampleScene::Update()
 {
 	newSprite_->SetPosition(position_);
-
+	testWTF_.UpdateMatrix();
 	//sampleObj_->Update();
 	walkObj_->Update();
 	cubeObj_->Update();
@@ -71,10 +71,10 @@ void SampleScene::Draw()
 	walkObj_->Draw(&camera_);
 
 	cubeObj_->Draw(&camera_);
-	//ModelDrawDesc desc;
-	//desc.worldTransform = &testWTF_;
-	//desc.camera = &camera_;
-	//sphere_->Draw(desc);
+	ModelDrawDesc desc;
+	desc.worldTransform = &testWTF_;
+	desc.camera = &camera_;
+	sphere_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -91,14 +91,14 @@ void SampleScene::Draw()
 
 void SampleScene::ImGuiDraw()
 {
-	//ImGui::Begin("Test");
-	//ImGui::DragFloat2("pos", &position_.x, 0.01f);
+	ImGui::Begin("Test");
+	ImGui::DragFloat2("pos", &position_.x, 0.01f);
 
-	//ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
-	//ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
-	//ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
 
-	//ImGui::End();
+	ImGui::End();
 	ImGui::ShowDemoWindow();
 
 	//sampleObj_->ImGuiDraw();
