@@ -352,6 +352,8 @@
     <FxCompile Include="Resources\shaders\Skining3DModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenVS.hlsl" />
+    <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl" />
+    <FxCompile Include="Resources\shaders\SkyBox\SkyboxPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXGame\Engine\3D\Shader\Object3D.hlsli" />

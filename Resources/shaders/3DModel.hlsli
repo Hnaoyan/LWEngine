@@ -4,12 +4,6 @@ struct WorldTransform
     float32_t4x4 WorldInverseTranspose;
 };
 
-//struct TransformationMatrix
-//{
-//    float32_t4x4 worldMat;
-//    float32_t4x4 WorldInverseTranspose;
-//};
-
 struct Camera
 {
     float32_t4x4 view;
