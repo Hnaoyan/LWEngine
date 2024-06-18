@@ -120,10 +120,6 @@ public:
 
 public:
 	// 統合
-	//static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>, size_t(Order::kCountOfParameter)> sPipelineStates_;
-	//static std::array<Microsoft::WRL::ComPtr<ID3D12RootSignature>, size_t(Order::kCountOfParameter)> sRootSignatures_;
-
-	// 統合
 	static std::array<PipelineVariant, size_t(Order::kCountOfParameter)>sPipelines_;
 
 	// Particle用（インスタンシング
@@ -157,15 +153,6 @@ private:
 	static void CreatePostEffectPSO();
 
 	/// <summary>
-	/// RootSignature作成関数（まだ
-	/// </summary>
-	/// <param name="rootParameters"></param>
-	/// <param name="rootParamSize"></param>
-	/// <param name="staticSamplers"></param>
-	/// <param name="samplerSize"></param>
-	//static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature);
-
-	/// <summary>
 	/// PSO作成
 	/// </summary>
 	/// <param name="gPipeline"></param>
@@ -178,9 +165,5 @@ private:
 
 private:
 	static ID3D12Device* sDevice_;
-
-private:
-
-
 };
 

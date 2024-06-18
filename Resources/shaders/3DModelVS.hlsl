@@ -19,8 +19,9 @@ VSOutput main(VSInput input)
     float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3)gWorldTransform.worldMat));
 
     float32_t4x4 viewProjection = mul(gCamera.view, gCamera.projection);
-    
-    output.position = /*mul(input.position, */mul(worldPos, viewProjection);
+    float32_t4x4 worldViewProjection = mul(gWorldTransform.worldMat, viewProjection);
+
+    output.position = mul(input.position, worldViewProjection);
     output.normal = worldNormal;
     output.texcoord = input.texcoord;
     output.worldPosition = worldPos.xyz;
