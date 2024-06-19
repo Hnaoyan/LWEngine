@@ -23,7 +23,7 @@ void FollowCamera::Update()
 		}
 
 		// 遅延追尾時の座標
-		interTarget_ = 
+		//interTarget_ = 
 		Vector3 offset = CreateOffset();
 
 		transform_.translate = target_->transform_.translate + offset;
