@@ -146,11 +146,11 @@ void Sphere::Draw(const ModelDrawDesc& desc)
 	// ワールド行列
 	Model::sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(Pipeline::ModelRegister::kWorldTransform),
-		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
+		desc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
 	// ビュープロジェクション行列
 	Model::sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(Pipeline::ModelRegister::kViewProjection),
-		desc.camera->constBuff_->GetGPUVirtualAddress());
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定

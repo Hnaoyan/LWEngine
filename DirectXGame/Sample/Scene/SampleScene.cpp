@@ -37,7 +37,8 @@ void SampleScene::Initialize()
 
 	// 初期カメラ
 	camera_.transform_.translate.z = -5.0f;
-
+	debugCamera_ = std::make_unique<DebugCamera>();
+	debugCamera_->Initialize();
 }
 
 void SampleScene::Update()
@@ -96,6 +97,7 @@ void SampleScene::Draw()
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("Test");
+	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 	ImGui::DragFloat2("pos", &position_.x, 0.01f);
 
 	ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
@@ -113,6 +115,7 @@ void SampleScene::ImGuiDraw()
 	cubeObj_->ImGuiDraw();
 	// カメラの
 	camera_.ImGuiDraw();
+	debugCamera_->ImGuiDraw();
 
 	ImGui::Begin("Scene");
 	int srvIndex = dxCommon_->GetSrvHandler()->sNextDescriptorNum_;
@@ -140,6 +143,17 @@ void SampleScene::LoadTexture()
 
 void SampleScene::CameraUpdate()
 {
-	// 基底更新
-	IScene::CameraUpdate();
+	debugCamera_->Update();
+
+	if (isDebugCamera_) {
+		camera_.viewMatrix_ = debugCamera_->viewMatrix_;
+		camera_.projectionMatrix_ = debugCamera_->projectionMatrix_;
+		camera_.TransferMatrix();
+		//camera_.Update();
+	}
+	else {
+		// 基底更新
+		IScene::CameraUpdate();
+	}
+
 }

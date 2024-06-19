@@ -54,10 +54,10 @@ void ICamera::TransferMatrix()
 	constMap_->viewMatrix = viewMatrix_;
 	// プロジェクション
 	constMap_->projectionMatrix = projectionMatrix_;
-
 	Matrix4x4 translateMatrix = Matrix4x4::MakeTranslateMatrix(transform_.translate);
 	// ワールド座標
 	constMap_->worldPosition = { translateMatrix.m[3][0],translateMatrix.m[3][1] ,translateMatrix.m[3][2] };
+
 }
 
 void ICamera::ImGuiDraw()

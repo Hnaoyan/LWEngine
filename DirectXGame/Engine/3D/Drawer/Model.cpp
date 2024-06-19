@@ -93,11 +93,11 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kWorldTransform),
-		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
+		desc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kViewProjection),
-		desc.camera->constBuff_->GetGPUVirtualAddress());
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定
@@ -133,11 +133,11 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(SkinningModelRegister::kWorldTransform),
-		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
+		desc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(SkinningModelRegister::kViewProjection),
-		desc.camera->constBuff_->GetGPUVirtualAddress());
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定
