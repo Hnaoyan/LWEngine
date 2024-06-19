@@ -5,6 +5,7 @@
 #include "../../Engine/3D/Drawer/Sphere.h"
 #include "../Object/AnimSampleObject.h"
 #include "../Object/AnimCubeObject.h"
+#include "../../Engine/Camera/Custom/DebugCamera.h"
 
 class SampleScene : public IScene
 {
@@ -54,4 +55,6 @@ private:
 
 	WorldTransform testWTF_;
 
+	std::unique_ptr<DebugCamera> debugCamera_;
+	bool isDebugCamera_ = false;
 };

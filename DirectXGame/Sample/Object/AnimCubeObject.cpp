@@ -47,7 +47,7 @@ void AnimCubeObject::Update()
 
 void AnimCubeObject::Draw(ICamera* camera)
 {
-	ModelDrawDesc desc;
+	ModelDrawDesc desc{};
 	desc.worldTransform = &worldTransform_;
 	desc.camera = camera;
 	animModel_->Draw(desc);
