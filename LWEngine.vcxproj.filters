@@ -344,6 +344,12 @@
     <ClInclude Include="DirectXGame\Engine\Animation\System\AnimationPlayer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Object\ObjectLists.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Object\Player\Player.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_VS.hlsl" />
