@@ -71,7 +71,7 @@ void SampleScene::Draw()
 	walkObj_->Draw(&camera_);
 
 	cubeObj_->Draw(&camera_);
-	ModelDrawDesc desc;
+	ModelDrawDesc desc{};
 	desc.worldTransform = &testWTF_;
 	desc.camera = &camera_;
 	sphere_->Draw(desc);

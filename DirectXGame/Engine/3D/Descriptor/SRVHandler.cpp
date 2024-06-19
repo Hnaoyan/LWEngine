@@ -30,13 +30,13 @@ void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 D3D12_CPU_DESCRIPTOR_HANDLE SRVHandler::GetSrvHandleCPU()
 {
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = srvHeap_->GetCPUDescriptorHandleForHeapStart();
-	handle.ptr += (kDescriptorSizeSRV_ * sNextDescriptorNum_);
+	handle.ptr += size_t(kDescriptorSizeSRV_ * sNextDescriptorNum_);
 	return handle;
 }
 
 D3D12_GPU_DESCRIPTOR_HANDLE SRVHandler::GetSrvHandleGPU()
 {
 	D3D12_GPU_DESCRIPTOR_HANDLE handle = srvHeap_->GetGPUDescriptorHandleForHeapStart();
-	handle.ptr += (kDescriptorSizeSRV_ * sNextDescriptorNum_);
+	handle.ptr += size_t(kDescriptorSizeSRV_ * sNextDescriptorNum_);
 	return handle;
 }

@@ -84,7 +84,7 @@ void RTVHandler::CreateRenderTargetView()
 void RTVHandler::CreateRenderTexture()
 {
 
-	SRVHandler* srv = SRVHandler::GetInstance();
+	//SRVHandler* srv = SRVHandler::GetInstance();
 	ID3D12Device* device = dxDevice_->GetDevice();
 
 	PostEffectRender* postRender = PostEffectRender::GetInstance();
@@ -105,10 +105,10 @@ void RTVHandler::CreateRenderTexture()
 	renderTextureSrvDesc.Texture2D.MipLevels = 1;
 
 
-	postRender->renderTextureHandle_.first = srv->GetSrvHandleCPU();
-	postRender->renderTextureHandle_.second = srv->GetSrvHandleGPU();
+	postRender->renderTextureHandle_.first = SRVHandler::GetSrvHandleCPU();
+	postRender->renderTextureHandle_.second = SRVHandler::GetSrvHandleGPU();
+	postRender->srvIndex_ = SRVHandler::AllocateDescriptor();
 
-	srv->AllocateNextDescriptorNum();
 	device->CreateShaderResourceView(renderTextureResource_.Get(), &renderTextureSrvDesc, postRender->renderTextureHandle_.first);
 
 
@@ -120,7 +120,7 @@ D3D12_CPU_DESCRIPTOR_HANDLE RTVHandler::GetCPUDescriptorHandle()
 
 	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = rtvHeap_->GetCPUDescriptorHandleForHeapStart();
 
-	handleCPU.ptr += (size * sNextIndexDescriptorHeap_);
+	handleCPU.ptr += size_t(size * sNextIndexDescriptorHeap_);
 
 	return handleCPU;
 }

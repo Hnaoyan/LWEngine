@@ -39,6 +39,8 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
+	// RenderGraph
+
 	// 描画前処理
 	dxCommon_->PreDraw();
 
