@@ -53,6 +53,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
     <ClCompile Include="DirectXGame\Sample\Object\AnimCubeObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Object\AnimSampleObject.cpp" />
+    <ClCompile Include="DirectXGame\Sample\Object\PlSampleObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +122,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
     <ClInclude Include="DirectXGame\Sample\Object\AnimCubeObject.h" />
     <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h" />
+    <ClInclude Include="DirectXGame\Sample\Object\PlSampleObject.h" />
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
   </ItemGroup>
   <ItemGroup>

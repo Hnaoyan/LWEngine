@@ -5,6 +5,7 @@
 #include "../../Engine/3D/Drawer/Sphere.h"
 #include "../Object/AnimSampleObject.h"
 #include "../Object/AnimCubeObject.h"
+#include "../Object/PlSampleObject.h"
 
 class SampleScene : public IScene
 {
@@ -39,6 +40,8 @@ private:
 	std::unique_ptr<AnimSampleObject> sampleObj_;
 	std::unique_ptr<AnimSampleObject> walkObj_;
 	std::unique_ptr<AnimCubeObject> cubeObj_;
+
+	std::unique_ptr<PlSampleObject> player_;
 
 	std::unique_ptr<Sprite> newSprite_;
 	uint32_t uvTexture_ = 0u;

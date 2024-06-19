@@ -32,6 +32,9 @@ void SampleScene::Initialize()
 	cubeObj_->Initialize(testModel_.get());
 	cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
 
+	player_ = std::make_unique<PlSampleObject>();
+	player_->Initialize(testModel_.get());
+
 	// 初期カメラ
 	camera_.transform_.translate.z = -5.0f;
 
@@ -44,6 +47,7 @@ void SampleScene::Update()
 	//sampleObj_->Update();
 	walkObj_->Update();
 	cubeObj_->Update();
+	player_->Update();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -68,13 +72,13 @@ void SampleScene::Draw()
 
 	// サンプル
 	//sampleObj_->Draw(&camera_);
-	walkObj_->Draw(&camera_);
-
-	cubeObj_->Draw(&camera_);
-	ModelDrawDesc desc{};
-	desc.worldTransform = &testWTF_;
-	desc.camera = &camera_;
-	sphere_->Draw(desc);
+	//walkObj_->Draw(&camera_);
+	player_->Draw(&camera_);
+	//cubeObj_->Draw(&camera_);
+	//ModelDrawDesc desc{};
+	//desc.worldTransform = &testWTF_;
+	//desc.camera = &camera_;
+	//sphere_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -102,6 +106,9 @@ void SampleScene::ImGuiDraw()
 	ImGui::ShowDemoWindow();
 
 	//sampleObj_->ImGuiDraw();
+
+	player_->ImGuiDraw();
+
 	walkObj_->ImGuiDraw();
 	cubeObj_->ImGuiDraw();
 	// カメラの
