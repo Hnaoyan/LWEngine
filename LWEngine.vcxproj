@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
