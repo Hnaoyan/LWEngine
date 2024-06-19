@@ -33,6 +33,10 @@ public:
 	// ディレクトリパス
 	static std::string sDirectoryPath;
 
+private:
+	// パイプライン
+	static GeneralPipeline sPipeline_;
+
 public:
 	/// <summary>
 	/// 描画前

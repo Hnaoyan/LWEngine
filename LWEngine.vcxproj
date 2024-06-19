@@ -28,6 +28,7 @@
     <ClCompile Include="DirectXGame\Engine\Animation\Joint.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\Skeleton.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\SkinCluster.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Animation\System\AnimationPlayer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
@@ -37,6 +38,7 @@
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
+    <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp" />
@@ -70,10 +72,12 @@
     <ClInclude Include="DirectXGame\Engine\3D\WorldTransform.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Animation.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\AnimationData.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\AnimationDataManager.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Joint.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\ModelNode.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Skeleton.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\SkinCluster.h" />
+    <ClInclude Include="DirectXGame\Engine\Animation\System\AnimationPlayer.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
@@ -88,6 +92,8 @@
     <ClInclude Include="DirectXGame\Engine\Light\DirectionalLight\DirectionalLight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightingManager.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\Timer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />
@@ -100,11 +106,10 @@
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
-    <ClInclude Include="DirectXGame\Engine\System\DeltaTime.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h" />
-    <ClInclude Include="DirectXGame\Engine\Utility\StructLists.h" />
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\Framework.h" />
     <ClInclude Include="DirectXGame\Engine\FrameWork\MyGame.h" />
@@ -142,13 +147,39 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\3DModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\FullScreenPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\FullScreenVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\Skining3DModelVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SkyBox\SkyboxPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -158,16 +189,20 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXGame\Engine\3D\Shader\Object3D.hlsli" />
     <None Include="Resources\shaders\3DModel.hlsli" />
+    <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
+    <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -204,12 +239,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\Obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Generated\Outputs\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\Obj\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

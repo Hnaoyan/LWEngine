@@ -31,7 +31,7 @@ class AnimationData
 {
 public:
 	// 全体の尺
-	float duration;
+	float duration = 0.0f;
 	// NodeAnimationの集合、Node名で引けるように
 	std::map<std::string, NodeAnimation> nodeAnimations;
 	// ローカル行列

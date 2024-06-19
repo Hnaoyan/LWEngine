@@ -2,6 +2,8 @@
 #include "imgui.h"
 #include "../../Engine/2D/TextureManager.h"
 #include "../../Engine/3D/Drawer/Sphere.h"
+#include "../../Engine/Input/Input.h"
+#include "../../Engine/LwLib/LwEngineLib.h"
 
 int32_t AnimSampleObject::sSerialNumber = 0u;
 std::string AnimSampleObject::sObjectName = "SampleObject";
@@ -33,8 +35,26 @@ void AnimSampleObject::Initialize(Model* model, Model* cube)
 void AnimSampleObject::Update()
 {
 
+	Input* input = Input::GetInstance();
+	XINPUT_STATE joyState;
+	if (input->GetJoystickState(0, joyState)) {
+		if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX < 0) {
+			worldTransform_.transform_.rotate.y = 3.14f + 1.57f;
+		}
+		else if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX > 0) {
+			worldTransform_.transform_.rotate.y = 1.57f;
+		}
+		worldTransform_.transform_.translate.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kDeltaTime;
+	}
+	if (input->PressKey(DIK_D)) {
+		worldTransform_.transform_.translate.x += 0.01f;
+	}
+	else if (input->PressKey(DIK_A)) {
+		worldTransform_.transform_.translate.x -= 0.01f;
+	}
+
 	// アニメーション更新
-	animation_.UpdateAnimation();
+	animation_.Update();
 
 	// アニメーションのローカル行列を
 	//worldTransform_.localMatrix_ = animation_.localMatrix_;

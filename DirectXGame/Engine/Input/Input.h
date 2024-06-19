@@ -9,9 +9,10 @@
 #pragma comment(lib, "dinput8.lib")
 #pragma comment(lib, "dxguid.lib")
 
-#include "../Utility/StructLists.h"
+#include "../Math/MathLib.h"
+#include "../Utility/Singleton.h"
 
-class Input
+class Input : public Singleton<Input>
 {
 private:
 	// ComPtrのテンプレート
@@ -23,12 +24,6 @@ public: // インナークラス
 		LONG lY;
 		LONG lZ;
 	};
-
-	// インスタンス取得
-	static Input* GetInstance() {
-		static Input instance;
-		return &instance;
-	}
 
 public:
 
@@ -125,13 +120,11 @@ public: // マウス系
 	/// <returns></returns>
 	const Vector2& GetMousePosition() const;
 
+public:
+	~Input() override;
+
 private:
 	static BOOL CALLBACK EnumJoysticksCallback(const DIDEVICEINSTANCE* pdidInstance, VOID* pContext) noexcept;
-
-	Input() {};
-	~Input();
-	Input(const Input&) = delete;
-	const Input& operator=(const Input&) = delete;
 	// ジョイスティックの設定
 	void SetupJoySticks();
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Engine/3D/Drawer/Model.h"
 #include "../../Engine/Animation/Animation.h"
+#include "../../Engine/Animation/System/AnimationPlayer.h"
 #include <string>
 
 class AnimCubeObject
@@ -29,6 +30,8 @@ public:
 	Animation animation_;
 
 	AnimationData animData_;
+
+	AnimationPlayer animPlayer_;
 
 	float animationTime_ = 0;
 

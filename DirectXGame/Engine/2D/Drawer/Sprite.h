@@ -59,6 +59,8 @@ private:
 	// 頂点数
 	static const uint32_t kVertNum = 6;
 
+	static BlendPipeline sPipeline_;
+
 public:
 	~Sprite() = default;
 	Sprite() {};

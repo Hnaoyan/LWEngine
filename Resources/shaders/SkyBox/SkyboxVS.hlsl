@@ -1,4 +1,4 @@
-#include "3DModel.hlsli"
+#include "Skybox.hlsli"
 
 struct VSInput
 {
@@ -16,24 +16,13 @@ VSOutput main(VSInput input)
     // ワールド座標計算
     float32_t4 worldPos = mul(input.position, gWorldTransform.worldMat);
     // 法線
-    float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3)gWorldTransform.worldMat));
+    float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3) gWorldTransform.worldMat));
 
     float32_t4x4 viewProjection = mul(gCamera.view, gCamera.projection);
     float32_t4x4 worldViewProjection = mul(gWorldTransform.worldMat, viewProjection);
-
-    output.position = mul(input.position, worldViewProjection);
-    output.normal = worldNormal;
+    
+    output.position = mul(input.position, worldViewProjection).xyww;
     output.texcoord = input.texcoord;
-    output.worldPosition = worldPos.xyz;
     
     return output;
 }
-
-//VertexShaderOutput main(VertexShaderInput input)
-//{
-//    VertexShaderOutput output;
-//    output.position = mul(input.position, gTransformationMatrix.WVP);
-//    output.texcoord = input.texcoord;
-//    output.normal = normalize(mul(input.normal, (float32_t3x3) gTransformationMatrix.World));
-//    return output;
-//}

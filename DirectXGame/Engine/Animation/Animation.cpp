@@ -1,5 +1,5 @@
 #include "Animation.h"
-#include "../System/DeltaTime.h"
+#include "../LwLib/LwEngineLib.h"
 #include "../3D/Loader.h"
 #include "../Base/DirectXCommon.h"
 #include "imgui.h"
@@ -14,7 +14,7 @@ void Animation::Initialize(ModelData& modelData)
 	animationTime_ = 0;
 }
 
-void Animation::UpdateAnimation()
+void Animation::Update()
 {
 	animationTime_ += nowFrame_ / 60.0f;
 	animationTime_ = std::fmod(animationTime_, animData_.duration);

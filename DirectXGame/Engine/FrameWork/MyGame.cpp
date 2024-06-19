@@ -26,6 +26,9 @@ void MyGame::Update()
 	// 基底クラス
 	Framework::Update();
 
+	// 入力受付
+	input_->Update();
+
 	// シーンの更新
 	sceneManager_->Update();
 
@@ -36,6 +39,8 @@ void MyGame::Update()
 
 void MyGame::Draw()
 {
+	// RenderGraph
+
 	// 描画前処理
 	dxCommon_->PreDraw();
 

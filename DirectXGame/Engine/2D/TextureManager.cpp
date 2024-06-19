@@ -78,21 +78,60 @@ uint32_t TextureManager::LoadInternal(const std::string fileName)
     texture.resource = CreateTextureResource(metadata);
 
     Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = UploadTextureData(texture.resource, mipImages, dxCommon_->GetCommandList());
+  
+    // コマンドリスト関係の処理
+    HRESULT hr = dxCommon_->GetCommandList()->Close();
+    assert(SUCCEEDED(hr));
+
+    ID3D12CommandList* cmdLists[] = { dxCommon_->GetCommandList() };
+    DirectXCommand::sCommandQueue_->ExecuteCommandLists(1, cmdLists);
+    
+    // 実行待ち
+    dxCommon_->SetFenceVal(dxCommon_->GetFenceVal() + 1);
+    // GPUがここまでたどり着いたときに、Fenceの値を代入するようにSignalを送る
+    DirectXCommand::sCommandQueue_->Signal(dxCommon_->GetSwapChainManager()->GetFence(), dxCommon_->GetFenceVal());
+
+    // Fenceの値が指定したSignal値にたどり着いているか確認
+    if (dxCommon_->GetSwapChainManager()->GetFence()->GetCompletedValue() < dxCommon_->GetFenceVal()) {
+        //FrenceのSignalを持つためのイベントを作成する
+        HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+        assert(fenceEvent != nullptr);
+        //指定したSignalにたどりついていないので、たどりつくまで待つようにイベントを設定する
+        dxCommon_->GetSwapChainManager()->GetFence()->SetEventOnCompletion(dxCommon_->GetFenceVal(), fenceEvent);
+        //イベントを待つ
+        WaitForSingleObject(fenceEvent, INFINITE);
+    }
+
+    // 実行が完了したのでアロケータとコマンドリストをリセット
+    hr = DirectXCommand::sCommandAllocator_->Reset();
+    assert(SUCCEEDED(hr));
+    hr = DirectXCommand::sCommandList_->Reset(DirectXCommand::sCommandAllocator_.Get(), nullptr);
+    assert(SUCCEEDED(hr));
+
     // metaDataを基にSRVの設定
     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
     D3D12_RESOURCE_DESC resDesc = texture.resource->GetDesc();
 
     srvDesc.Format = resDesc.Format;
     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-    srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-    srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+   
+    // CubeMapかそれ以外か
+    if (metadata.IsCubemap()) {
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURECUBE;
+        srvDesc.TextureCube.MostDetailedMip = 0;
+        srvDesc.TextureCube.MipLevels = UINT_MAX;
+        srvDesc.TextureCube.ResourceMinLODClamp = 0.0f;
+    }
+    else {
+        srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+        srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
+    }
 
+    // SRVのインデックスのインクリメント
     texture.cpuDescriptorHandle = SRVHandler::GetSrvHandleCPU();
     texture.gpuDescriptorHandle = SRVHandler::GetSrvHandleGPU();
-    texture.descriptorNumIndex = SRVHandler::GetNextDescriptorNum();
-    // SRVのインデックスのインクリメント
-    //SRVHandler::sNextDescriptorNum_++;
-    SRVHandler::AllocateNextDescriptorNum();
+    texture.descriptorNumIndex = SRVHandler::AllocateDescriptor();
+
     // テクスチャ管理インデックスのインクリメント
     descriptorIndex_++;
 
@@ -108,12 +147,23 @@ ScratchImage TextureManager::LoadTexture(const std::string& filePath)
     ScratchImage image{};
 
     std::wstring filePathW = ConvertString(filePath);
-    HRESULT result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_FORCE_SRGB, nullptr, image);
+    HRESULT result;
+    if (filePathW.ends_with(L".dds")) {
+        result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_NONE, nullptr, image);
+    }
+    else {
+        result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_FORCE_SRGB, nullptr, image);
+    }
     assert(SUCCEEDED(result));
 
     // ミップマップの作成
     ScratchImage mipImages{};
-    result = GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), TEX_FILTER_SRGB, 0, mipImages);
+    if (DirectX::IsCompressed(image.GetMetadata().format)) {
+        mipImages = std::move(image);
+    }
+    else {
+        result = GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), TEX_FILTER_SRGB, 0, mipImages);
+    }
     assert(SUCCEEDED(result));
 
     return mipImages;
@@ -134,12 +184,11 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
     // 利用するHeapの設定。非常に特殊な運用。02_04exで一般的なケース版がある
     D3D12_HEAP_PROPERTIES heapProperties{};
     heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;	// 細かい設定を行う
-    //heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;	// WriteBackポリシーでVPUアクセス可能
-    //heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;	// プロセッサ
 
     // Resourceの生成
     Microsoft::WRL::ComPtr<ID3D12Resource> resource = nullptr;
-    HRESULT hr = device_->CreateCommittedResource(
+    HRESULT hr = S_FALSE;
+    hr = device_->CreateCommittedResource(
         &heapProperties,	// Heapの設定
         D3D12_HEAP_FLAG_NONE,	// Heapの特殊な設定。特になし
         &resourceDesc,	// Resourceの設定
@@ -156,7 +205,6 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microso
     std::vector<D3D12_SUBRESOURCE_DATA> subresources;
     PrepareUpload(device_, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
     uint64_t intermediateSize = GetRequiredIntermediateSize(texture.Get(), 0, UINT(subresources.size()));
-    //ID3D12Resource* intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
     
     Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = DxCreateLib::ResourceLib::CreateBufferResource(device_, intermediateSize);
     UpdateSubresources(commandList, texture.Get(), intermediateResource.Get(), 0, 0, UINT(subresources.size()), subresources.data());

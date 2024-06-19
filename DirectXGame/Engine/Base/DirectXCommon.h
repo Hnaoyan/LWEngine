@@ -38,7 +38,7 @@ public:
 	/// 深度クリア
 	/// </summary>
 	void ClearDepthBuffer() {
-		dsvHandler_->ClearDepthBuffer(DirectXCommand::commandList_.Get());
+		dsvHandler_->ClearDepthBuffer(DirectXCommand::sCommandList_.Get());
 	}
 
 private:
@@ -78,9 +78,14 @@ private: // Heap
 	// DSV
 	std::unique_ptr<DSVHandler> dsvHandler_;
 
+public: // Fence関係
+	void SetFenceVal(UINT fenceVal) { fenceVal_ = fenceVal; }
+	UINT GetFenceVal() { return fenceVal_; }
+
 public: // アクセッサ
 	ID3D12Device* GetDevice() { return dxDevice_->GetDevice(); }
-	ID3D12GraphicsCommandList* GetCommandList() { return DirectXCommand::commandList_.Get(); }
+	ID3D12GraphicsCommandList* GetCommandList() { return DirectXCommand::sCommandList_.Get(); }
+	SwapChainManager* GetSwapChainManager() { return swapChainManager_.get(); }
 
 	// HeapHandlerのゲッター
 	SRVHandler* GetSrvHandler() { return srvHandler_.get(); }

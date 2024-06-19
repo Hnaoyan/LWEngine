@@ -4,6 +4,7 @@
 ID3D12Device* Sprite::sDevice_ = nullptr;
 ID3D12GraphicsCommandList* Sprite::sCommandList_;
 Matrix4x4 Sprite::sMatProjection_;
+BlendPipeline Sprite::sPipeline_;
 
 Sprite* Sprite::Create(uint32_t textureHandle, Vector2 position, Vector2 anchorpoint, Vector4 color, bool isFlipX, bool isFlipY)
 {
@@ -46,8 +47,9 @@ void Sprite::PreDraw(ID3D12GraphicsCommandList* cmdList)
 	assert(Sprite::sCommandList_ == nullptr);
 	// コマンドリストをセット
 	sCommandList_ = cmdList;
+	sPipeline_ = std::get<BlendPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kSpirte)]);
 	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(GraphicsPSO::sSpriteRootSignature_.Get());
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 
 	// 形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけば良い
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -147,7 +149,7 @@ void Sprite::Draw()
 		return;
 	}
 	// パイプラインの設定
-	sCommandList_->SetPipelineState(GraphicsPSO::sSpritePipelineStates_[size_t(blendMode_)].Get());
+	sCommandList_->SetPipelineState(sPipeline_.pipelineStates[size_t(blendMode_)].Get());
 
 	// 頂点バッファ
 	sCommandList_->IASetVertexBuffers(0, 1, &vbView_);

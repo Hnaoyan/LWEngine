@@ -5,12 +5,22 @@
 #include <memory>
 #include <array>
 #include <wrl.h>
+#include <variant>
 
 #include <d3d12.h>
 #include <dxcapi.h>
 
 namespace Pipeline
 {
+	enum class Order : int {
+		kSkybox,
+		kSpirte,
+		kModel,
+		kSkinningModel,
+		kParticle,
+		kPostEffect,
+		kCountOfParameter,
+	};
 	// 通常モデルのレジスタ番号
 	enum class ModelRegister : int {
 		kMaterial,
@@ -62,53 +72,85 @@ namespace Pipeline
 		kCountOfDrawer,
 	};
 
+	enum class PostEffectType : int {
+		kNormal,
+		kGrayScale,
+		kVignette,
+		kSmoothing,
+		kGaussian,	
+		kCountOfType,
+	};
+
 }
+
+struct GeneralPipeline
+{
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct BlendPipeline
+{
+	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::BlendMode::kCountOfBlendMode)> pipelineStates;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct PostEffectPipeline
+{
+	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::PostEffectType::kCountOfType)> pipelineStates;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+using PipelineVariant = std::variant<GeneralPipeline, BlendPipeline, PostEffectPipeline>;
 
 class GraphicsPSO : public Singleton<GraphicsPSO>
 {
 private:
 	// パイプライン用の関数をまとめたライブラリのパス
 	using PSOLib = DxCreateLib::PSOLib;
+	using BlendMode = Pipeline::BlendMode;
+	using PostEffect = Pipeline::PostEffectType;
+	using Order = Pipeline::Order;
 
 public:
 
 	static void Initialize(ID3D12Device* device);
 
 public:
-	// Sprite用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sSpritePipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSpriteRootSignature_;
-
-	// Model用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sModelPipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sModelRootSignature_;
+	// 統合
+	static std::array<PipelineVariant, size_t(Order::kCountOfParameter)>sPipelines_;
 
 	// Particle用（インスタンシング
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sParticleRootSignature_;
 
-	// SkinningModel用
-	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
-		size_t(Pipeline::BlendMode::kCountOfBlendMode)> sSkinningModelPipelineStates_;
-	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkinningModelRootSignature_;
+	// Skybox用
+	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sSkyboxPipelineStates_;
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkyboxRootSignature_;
 
 private:
-
-	static void CreateSpritePSO();
-	static void CreateModelPSO();
-	static void CreateParticlePSO();
-	static void CreateSkinningModelPSO();
-
 	/// <summary>
-	/// RootSignature作成関数（まだ
+	/// 2DSprite作成
 	/// </summary>
-	/// <param name="rootParameters"></param>
-	/// <param name="rootParamSize"></param>
-	/// <param name="staticSamplers"></param>
-	/// <param name="samplerSize"></param>
-	//static void CreateRootSignature(D3D12_ROOT_PARAMETER* rootParameters, size_t rootParamSize, D3D12_STATIC_SAMPLER_DESC* staticSamplers, size_t samplerSize, Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature);
+	static void CreateSpritePSO();
+	/// <summary>
+	/// 3DModel作成
+	/// </summary>
+	static void CreateModelPSO();
+	/// <summary>
+	/// パーティクル作成
+	/// </summary>
+	static void CreateParticlePSO();
+	/// <summary>
+	/// Skinning作成
+	/// </summary>
+	static void CreateSkinningModelPSO();
+	/// <summary>
+	/// ポストエフェクト作成
+	/// </summary>
+	static void CreatePostEffectPSO();
 
 	/// <summary>
 	/// PSO作成
@@ -117,11 +159,11 @@ private:
 	/// <param name="pipelineState"></param>
 	static void CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState);
 
+	static Microsoft::WRL::ComPtr<ID3D12RootSignature> CreateRootSignature(D3D12_ROOT_SIGNATURE_DESC desc);
+
+	static Microsoft::WRL::ComPtr<ID3D12PipelineState> CreatePipelineState(D3D12_GRAPHICS_PIPELINE_STATE_DESC desc);
+
 private:
 	static ID3D12Device* sDevice_;
-
-private:
-
-
 };
 

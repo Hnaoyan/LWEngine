@@ -3,6 +3,7 @@
 #include "../Base/DirectXCommon.h"
 #include "../Base/ImGui/ImGuiManager.h"
 
+#include "../Input/Input.h"
 #include "../Scene/SceneManager.h"
 
 /// <summary>
@@ -60,6 +61,7 @@ protected:	// ポインタ
 	// ウィンドウAPI
 	WindowAPI* winApp_ = nullptr;
 	DirectXCommon* dxCommon_ = nullptr;
+	Input* input_ = nullptr;
 
 protected:
 	std::unique_ptr<SceneManager> sceneManager_;

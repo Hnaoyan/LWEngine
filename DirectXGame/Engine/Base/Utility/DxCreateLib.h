@@ -2,6 +2,9 @@
 #include <d3d12.h>
 #include <cstdint>
 #include <cassert>
+#include <wrl.h>
+
+#include "../../Math/MathLib.h"
 
 namespace DxCreateLib
 {
@@ -138,6 +141,49 @@ namespace DxCreateLib
 			depthClearValue.DepthStencil.Depth = depth;
 			depthClearValue.Format = format;
 			return depthClearValue;
+		}
+	};
+
+	/// <summary>
+	/// RenderTexture生成関数
+	/// </summary>
+	class RenderTextureLib
+	{
+	public:
+		inline static Microsoft::WRL::ComPtr<ID3D12Resource> CreateRenderTextureResource(ID3D12Device* device, uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& clearColor)
+		{
+			D3D12_RESOURCE_DESC resourceDesc{};
+			// RenderTarget
+			resourceDesc.Width = width;
+			resourceDesc.Height = height;
+			resourceDesc.MipLevels = 1;		// mipMapの数
+			resourceDesc.DepthOrArraySize = 1;	// 奥行き or 配列Textureの配列数
+			resourceDesc.Format = format;	// DepthStencilとして両可能なフォーマット
+			resourceDesc.SampleDesc.Count = 1;	// サンプリングカウント。1固定
+			resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;	// 2次元
+			resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
+
+			D3D12_HEAP_PROPERTIES heapProperties{};
+			// VRAM上に
+			heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+
+			D3D12_CLEAR_VALUE clearValue;
+			clearValue.Format = format;
+			clearValue.Color[0] = clearColor.x;
+			clearValue.Color[1] = clearColor.y;
+			clearValue.Color[2] = clearColor.z;
+			clearValue.Color[3] = clearColor.w;
+
+			Microsoft::WRL::ComPtr<ID3D12Resource> resultResource;
+			device->CreateCommittedResource(
+				&heapProperties,
+				D3D12_HEAP_FLAG_NONE,
+				&resourceDesc,
+				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+				&clearValue,
+				IID_PPV_ARGS(&resultResource)
+			);
+			return Microsoft::WRL::ComPtr<ID3D12Resource>(resultResource);
 		}
 	};
 

@@ -10,7 +10,7 @@ class SRVHandler : public Singleton<SRVHandler>
 {
 public:
 	// 最大カウント
-	static const int kDescpritorSize = 256;
+	static const int kDescpritorSize = 512;
 	// 次の番号
 	static uint32_t sNextDescriptorNum_;
 	/// <summary>
@@ -24,6 +24,15 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	static void AllocateNextDescriptorNum() { sNextDescriptorNum_++; }
+
+	static uint32_t AllocateDescriptor() {
+		// 現在の値
+		uint32_t result = sNextDescriptorNum_;
+		// 進める
+		sNextDescriptorNum_++;
+
+		return result;
+	}
 
 	/// <summary>
 	/// 静的初期化
