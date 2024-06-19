@@ -35,7 +35,7 @@ public: // 演算関数
 	/// <param name="vector"></param>
 	/// <param name="matrix"></param>
 	/// <returns></returns>
-	static Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+	static Vector3 TransformVector3(const Vector3& vector, const Matrix4x4& matrix);
 
 	/// <summary>
 	/// 転置行列
