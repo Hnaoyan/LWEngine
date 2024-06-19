@@ -37,6 +37,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Core\ICamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
