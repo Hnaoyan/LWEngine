@@ -1,6 +1,6 @@
 #pragma once
-#include "../3D/CBuffer.h"
-#include "../WindowAPI/WindowAPI.h"
+#include "../../3D/CBuffer.h"
+#include "../../WindowAPI/WindowAPI.h"
 #include <wrl.h>
 #include <d3d12.h>
 #include <numbers>

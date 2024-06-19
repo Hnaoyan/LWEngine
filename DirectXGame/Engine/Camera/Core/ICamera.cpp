@@ -1,6 +1,6 @@
 #include "ICamera.h"
-#include "../Base/DirectXCommon.h"
-#include "../Base/Utility/DxCreateLib.h"
+#include "../../Base/DirectXCommon.h"
+#include "../../Base/Utility/DxCreateLib.h"
 #include "imgui.h"
 
 #include <cassert>

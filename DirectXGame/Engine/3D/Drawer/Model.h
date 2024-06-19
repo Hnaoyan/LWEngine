@@ -17,7 +17,7 @@
 #include "../Material.h"
 #include "../ModelData.h"
 #include "../Loader.h"
-#include "../../Camera/ICamera.h"
+#include "../../Camera/Core/ICamera.h"
 
 class Animation;
 

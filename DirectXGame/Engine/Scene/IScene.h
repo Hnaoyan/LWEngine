@@ -1,7 +1,7 @@
 #pragma once
 #include "../Base/DirectXCommon.h"
 #include "../Input/Input.h"
-#include "../Camera/ICamera.h"
+#include "../Camera/Core/ICamera.h"
 
 class IScene
 {

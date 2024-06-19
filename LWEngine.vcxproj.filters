@@ -87,7 +87,7 @@
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Camera\ICamera.cpp">
+    <ClCompile Include="DirectXGame\Engine\Camera\Core\ICamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\3D\WorldTransform.cpp">
@@ -260,7 +260,7 @@
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Camera\ICamera.h">
+    <ClInclude Include="DirectXGame\Engine\Camera\Core\ICamera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Render.h">
