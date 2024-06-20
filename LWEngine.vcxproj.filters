@@ -290,7 +290,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Light\DirectionalLight\DirectionalLight.h">
+    <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Light\LightData.h">
@@ -369,6 +369,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Light\Lights\PointLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Light\Lights\SpotLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Light\LightLists.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
