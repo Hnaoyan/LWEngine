@@ -8,8 +8,6 @@ public:
 	float y;
 	float z;
 
-	//Vector3(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
-
 #pragma region 四則演算
 
 	Vector3 operator+(const Vector3& Other) const {
@@ -97,6 +95,17 @@ public: // 複合演算子
 	}
 
 	/// <summary>
+	/// 距離
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v2"></param>
+	/// <returns></returns>
+	inline static float Distance(const Vector3& v1, const Vector3& v2) {
+		Vector3 distance = v1 - v2;
+		return float(sqrtf(powf(distance.x, 2) + powf(distance.y, 2)));
+	}
+
+	/// <summary>
 	/// 正規化
 	/// </summary>
 	/// <param name="v"></param>
@@ -113,8 +122,15 @@ public: // 複合演算子
 		return Vector3(result);
 	}
 
+	/// <summary>
+	/// 線形補間
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
 	inline static Vector3 Lerp(const Vector3& start, const Vector3& end, float t) {
-		Vector3 result;
+		Vector3 result{};
 
 		result.x = (1.0f - t) * start.x + t * end.x;
 		result.y = (1.0f - t) * start.y + t * end.y;
