@@ -22,7 +22,7 @@ VSOutput main(VSInput input)
     float32_t4x4 worldViewProjection = mul(gWorldTransform.worldMat, viewProjection);
     
     output.position = mul(input.position, worldViewProjection).xyww;
-    output.texcoord = input.texcoord;
+    output.texcoord = input.position.xyz;
     
     return output;
 }

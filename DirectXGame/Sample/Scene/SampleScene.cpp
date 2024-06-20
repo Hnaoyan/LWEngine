@@ -14,7 +14,7 @@ void SampleScene::Initialize()
 
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
-	testWTF_.transform_.scale = { 0.2f,0.2f,0.2f };
+	testWTF_.transform_.scale = { 1,1,1 };
 	testWTF_.UpdateMatrix();
 	//---ここから書く---//
 
@@ -74,12 +74,14 @@ void SampleScene::Draw()
 	// サンプル
 	//sampleObj_->Draw(&camera_);
 	//walkObj_->Draw(&camera_);
-	player_->Draw(&camera_);
+	//player_->Draw(&camera_);
 	//cubeObj_->Draw(&camera_);
-	//ModelDrawDesc desc{};
-	//desc.worldTransform = &testWTF_;
-	//desc.camera = &camera_;
+	ModelDrawDesc desc{};
+	desc.worldTransform = &testWTF_;
+	desc.camera = &camera_;
 	//sphere_->Draw(desc);
+
+	skybox_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -133,6 +135,7 @@ void SampleScene::LoadModel()
 
 	sphere_.reset(Sphere::CreateSphere());
 
+	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
 
 void SampleScene::LoadTexture()

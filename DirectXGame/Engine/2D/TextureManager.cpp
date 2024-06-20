@@ -149,7 +149,7 @@ ScratchImage TextureManager::LoadTexture(const std::string& filePath)
     std::wstring filePathW = ConvertString(filePath);
     HRESULT result;
     if (filePathW.ends_with(L".dds")) {
-        result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_NONE, nullptr, image);
+        result = LoadFromDDSFile(filePathW.c_str(), DDS_FLAGS_NONE, nullptr, image);
     }
     else {
         result = LoadFromWICFile(filePathW.c_str(), WIC_FLAGS_FORCE_SRGB, nullptr, image);
@@ -160,6 +160,7 @@ ScratchImage TextureManager::LoadTexture(const std::string& filePath)
     ScratchImage mipImages{};
     if (DirectX::IsCompressed(image.GetMetadata().format)) {
         mipImages = std::move(image);
+        return mipImages;
     }
     else {
         result = GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), TEX_FILTER_SRGB, 0, mipImages);

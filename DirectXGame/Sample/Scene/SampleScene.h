@@ -1,8 +1,7 @@
 #pragma once
 #include "../../Engine/Scene/IScene.h"
 #include "../../Engine/2D/Drawer/Sprite.h"
-#include "../../Engine/3D/Drawer/Model.h"
-#include "../../Engine/3D/Drawer/Sphere.h"
+#include "../../Engine/3D/Drawer/3DDrawers.h"
 #include "../Object/AnimSampleObject.h"
 #include "../Object/AnimCubeObject.h"
 #include "../Object/PlSampleObject.h"
@@ -60,4 +59,7 @@ private:
 
 	std::unique_ptr<DebugCamera> debugCamera_;
 	bool isDebugCamera_ = false;
+
+	std::unique_ptr<Skybox> skybox_;
+
 };

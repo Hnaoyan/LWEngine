@@ -51,7 +51,7 @@ public:
 			if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 				// 範囲内を補間する
 				float t = ((time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time));
-				return VectorLib::Lerp(keyframes[index].value, keyframes[nextIndex].value, t);
+				return Vector3::Lerp(keyframes[index].value, keyframes[nextIndex].value, t);
 			}
 		}
 		return (*keyframes.rbegin()).value;

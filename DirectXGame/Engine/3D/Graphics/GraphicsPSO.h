@@ -151,6 +151,10 @@ private:
 	/// ポストエフェクト作成
 	/// </summary>
 	static void CreatePostEffectPSO();
+	/// <summary>
+	/// Skybox作成
+	/// </summary>
+	static void CreateSkyboxPSO();
 
 	/// <summary>
 	/// PSO作成
