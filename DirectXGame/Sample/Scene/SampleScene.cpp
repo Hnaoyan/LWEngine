@@ -77,7 +77,6 @@ void SampleScene::Draw()
 	//player_->Draw(&camera_);
 	//cubeObj_->Draw(&camera_);
 	ModelDrawDesc desc{};
-	desc.worldTransform = &testWTF_;
 	desc.camera = &camera_;
 	//sphere_->Draw(desc);
 
@@ -98,7 +97,7 @@ void SampleScene::Draw()
 
 void SampleScene::ImGuiDraw()
 {
-	ImGui::Begin("Test");
+	ImGui::Begin("SampleScene");
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 	ImGui::DragFloat2("pos", &position_.x, 0.01f);
 
@@ -112,7 +111,7 @@ void SampleScene::ImGuiDraw()
 	//sampleObj_->ImGuiDraw();
 
 	player_->ImGuiDraw();
-
+	skybox_->ImGuiDraw();
 	walkObj_->ImGuiDraw();
 	cubeObj_->ImGuiDraw();
 	// カメラの

@@ -1,8 +1,10 @@
 #include "Skybox.h"
 #include "../../2D/TextureManager.h"
 #include "../Loader.h"
+#include "imgui.h"
 
 GeneralPipeline Skybox::sPipeline_;
+uint32_t Skybox::sSerialNumber_ = 0u;
 
 Skybox* Skybox::CreateSkybox(std::string fileName)
 {
@@ -15,6 +17,7 @@ Skybox* Skybox::CreateSkybox(std::string fileName)
 
 void Skybox::Initialize(const std::string& fileName)
 {
+    // 頂点生成
     {
         modelData_.vertices.resize(24);
         for (int i = 0; i < 24; ++i) {
@@ -134,10 +137,20 @@ void Skybox::Initialize(const std::string& fileName)
     material_ = std::make_unique<Material>();
     material_->CreateMaterial();
 
+    // マテリアルの情報
     MaterialData data{};
     data.textureFilename = "Resources/Skybox/" + fileName;
     data.textureHandle = TextureManager::Load(data.textureFilename);
     modelData_.material = data;
+
+    // トランスフォーム
+    worldTransform_.Initialize();
+    worldTransform_.transform_.scale = { 20.0f,20.0f,20.0f };
+
+    // シリアル番号設定
+    serialNum_ = sSerialNumber_;
+    // 全体のシリアル
+    sSerialNumber_++;
 
 }
 
@@ -148,6 +161,7 @@ void Skybox::Draw(const ModelDrawDesc& desc)
 
     // マテリアル更新
     material_->Update();
+    worldTransform_.UpdateMatrix();
 
     // ルートシグネチャの設定
     Model::sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
@@ -157,7 +171,7 @@ void Skybox::Draw(const ModelDrawDesc& desc)
     // ワールド行列
     Model::sCommandList_->SetGraphicsRootConstantBufferView(
         static_cast<UINT>(Pipeline::ModelRegister::kWorldTransform),
-        desc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
+        worldTransform_.GetCBuffer()->GetGPUVirtualAddress());
     // ビュープロジェクション行列
     Model::sCommandList_->SetGraphicsRootConstantBufferView(
         static_cast<UINT>(Pipeline::ModelRegister::kViewProjection),
@@ -180,4 +194,16 @@ void Skybox::Draw(const ModelDrawDesc& desc)
     // ドローコール
     Model::sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
+}
+
+void Skybox::ImGuiDraw()
+{
+    std::string name = "Skybox" + std::to_string(serialNum_);
+    ImGui::Begin(name.c_str());
+    name = "Position" + std::to_string(serialNum_);
+    float speed = 0.01f;
+    ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, speed);
+    name = "Scale" + std::to_string(serialNum_);
+    ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, speed);
+    ImGui::End();
 }

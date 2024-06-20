@@ -12,6 +12,12 @@ private:
 	// パイプライン
 	static GeneralPipeline sPipeline_;
 
+	// シリアルナンバー
+	uint32_t serialNum_ = 0;
+	// 全体のシリアル
+	static uint32_t sSerialNumber_;
+
+
 public:
 	/// <summary>
 	/// 生成関数
@@ -30,12 +36,26 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	void Draw(const ModelDrawDesc& desc);
-
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
+public:
+	/// <summary>
+	/// 座標設定
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPosition(const Vector3& position) {
+		worldTransform_.transform_.translate = position;
+	}
+private:
 	// モデルデータ
 	ModelData modelData_{};
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;
 	// マテリアル
 	std::unique_ptr<Material> material_;
+	// ワールドトランスフォーム
+	WorldTransform worldTransform_{};
 
 };
