@@ -15,8 +15,8 @@ struct Skinned
     float32_t3 normal;
 };
 
-ConstantBuffer<WorldTransform> gWorldTransform : register(b0);
-ConstantBuffer<Camera> gCamera : register(b1);
+ConstantBuffer<Camera> gCamera : register(b0);
+ConstantBuffer<WorldTransform> gWorldTransform : register(b1);
 StructuredBuffer<Well> gMatrixPalette : register(t0);
 
 Skinned Skinning(VSInput input)

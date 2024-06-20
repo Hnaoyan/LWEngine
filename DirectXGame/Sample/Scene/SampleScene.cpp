@@ -73,9 +73,9 @@ void SampleScene::Draw()
 
 	// サンプル
 	//sampleObj_->Draw(&camera_);
-	//walkObj_->Draw(&camera_);
+	walkObj_->Draw(&camera_);
 	//player_->Draw(&camera_);
-	//cubeObj_->Draw(&camera_);
+	cubeObj_->Draw(&camera_);
 	ModelDrawDesc desc{};
 	desc.camera = &camera_;
 	//sphere_->Draw(desc);

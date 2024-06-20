@@ -7,8 +7,8 @@ struct VSInput
     float32_t2 texcoord : TEXCOORD0;
 };
 
-ConstantBuffer<WorldTransform> gWorldTransform : register(b0);
-ConstantBuffer<Camera> gCamera : register(b1);
+ConstantBuffer<Camera> gCamera : register(b0);
+ConstantBuffer<WorldTransform> gWorldTransform : register(b1);
 
 VSOutput main(VSInput input)
 {

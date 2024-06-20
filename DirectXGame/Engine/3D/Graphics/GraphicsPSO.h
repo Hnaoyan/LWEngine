@@ -27,7 +27,7 @@ namespace Pipeline
 		kTexture,
 		kWorldTransform,
 		kViewProjection,
-		//kLight,
+		kDirectionalLight,
 
 		// サイズを取得する為の値
 		kCountOfParameter,
