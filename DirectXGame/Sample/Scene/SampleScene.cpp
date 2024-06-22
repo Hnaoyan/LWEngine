@@ -71,6 +71,8 @@ void SampleScene::Initialize()
 	};
 	newSpriteData_.isInvisible_ = true;
 
+	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
+
 	//testWTF_.transform_.translate = { 0,-3.5f,7.0f };
 	//testWTF_.transform_.rotate.y = -1.85f;
 }
@@ -123,8 +125,8 @@ void SampleScene::Draw()
 	cubeObj_->Draw(desc);
 	desc.worldTransform = &testWTF_;
 	//sphere_->Draw(desc);
-	cubeModel_->Draw(desc);
-	//skybox_->Draw(desc);
+	//cubeModel_->Draw(desc);
+	skybox_->Draw(desc);
 
 	Model::PostDraw();
 

@@ -1,6 +1,7 @@
 #include "3DModel.hlsli"
 
 Texture2D<float32_t4> gTexture : register(t0);
+TextureCube<float32_t4> gEnvironmentTexture : register(t1);
 SamplerState gSampler : register(s0);
 // カメラ
 ConstantBuffer<Camera> gCamera : register(b0);
@@ -118,6 +119,13 @@ PixelShaderOutput main(VSOutput input)
     
     // 現状の通常
     resultColor = BlinnPhongReflection(input, textureColor, toEye);
+    
+    float32_t3 cameraToPosition = normalize(input.worldPosition - gCamera.position);
+    float32_t3 relectedVector = reflect(cameraToPosition, normalize(input.normal));
+    float32_t4 environmentColor = gEnvironmentTexture.Sample(gSampler, relectedVector);
+
+    resultColor.rgb += environmentColor.rgb * gMaterial.coefficient;
+    
     output.color = resultColor;
     
     return output;

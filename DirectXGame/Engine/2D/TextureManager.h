@@ -19,6 +19,8 @@ public: // 静的メンバ変数
 
 	static const uint32_t kNumTextureHandle = 256;
 
+	static uint32_t sEnvironmentTexture;
+
 	struct Texture
 	{
 		// テクスチャリソース

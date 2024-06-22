@@ -7,6 +7,7 @@
 #include <d3dx12.h>
 
 uint32_t TextureManager::sNextHandleIndex = 0u;
+uint32_t TextureManager::sEnvironmentTexture = 0u;
 
 uint32_t TextureManager::Load(const std::string& fileName)
 {

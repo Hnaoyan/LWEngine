@@ -49,6 +49,7 @@ struct CBufferDataMaterial {
 	Matrix4x4 uvTransform;	// UV
 	int32_t enableLighting;	// ライティングのswitch
 	float shininess;	// 輝度
+	float coefficient;	// 環境マップの係数
 };
 
 

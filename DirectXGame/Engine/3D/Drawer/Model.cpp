@@ -109,6 +109,9 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// SRVのセット
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
+	// 環境マップ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
@@ -168,6 +171,9 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(SkinningModelRegister::kTexture), texture);
 
+	// 環境マップ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(SkinningModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// Skinning
 	sCommandList_->SetGraphicsRootDescriptorTable(
 		static_cast<UINT>(SkinningModelRegister::kMatrixPalette), animation->skinCluster_.paletteSrvHandle.second);

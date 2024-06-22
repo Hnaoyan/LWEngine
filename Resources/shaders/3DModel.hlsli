@@ -17,6 +17,7 @@ struct Material
     float32_t4x4 uvTransform;
     int32_t enableLighting;
     float32_t shininess;
+    float32_t coefficient;
 };
 
 struct DirectionalLight

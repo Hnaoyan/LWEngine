@@ -25,6 +25,7 @@ namespace Pipeline
 	enum class ModelRegister : int {
 		kMaterial,
 		kTexture,
+		kMapTexture,
 		kWorldTransform,
 		kViewProjection,
 		kDirectionalLight,
@@ -38,6 +39,7 @@ namespace Pipeline
 	enum class SkinningModelRegister : int {
 		kMaterial,
 		kTexture,
+		kMapTexture,
 		kWorldTransform,
 		kViewProjection,
 		kDirectionalLight,

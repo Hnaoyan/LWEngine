@@ -48,6 +48,13 @@ public:
 	void SetPosition(const Vector3& position) {
 		worldTransform_.transform_.translate = position;
 	}
+
+	/// <summary>
+	/// テクスチャ
+	/// </summary>
+	/// <returns></returns>
+	uint32_t GetTexture() { return modelData_.material.textureHandle; }
+
 private:
 	// モデルデータ
 	ModelData modelData_{};

@@ -254,14 +254,18 @@ void GraphicsPSO::CreateModelPSO()
 
 
 	// デスクリプタレンジ
-	D3D12_DESCRIPTOR_RANGE descRangeSRV;
-	descRangeSRV = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1];
+	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 
 	// ルートパラメータ
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ModelRegister::kCountOfParameter)]{};
 	//---共通---//
 	// テクスチャ
-	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// 環境マップ
+	rootparams[static_cast<int>(ModelRegister::kMapTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCubeSRV), descRangeCubeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// View
 	rootparams[static_cast<int>(ModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 
@@ -422,14 +426,18 @@ void GraphicsPSO::CreateSkinningModelPSO()
 
 
 	// デスクリプタレンジ
-	D3D12_DESCRIPTOR_RANGE descRangeSRV;
-	descRangeSRV = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1];
+	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 
 	// ルートパラメータ
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(SkinningModelRegister::kCountOfParameter)]{};
 	//---共通---//
 	// テクスチャ
-	rootparams[static_cast<int>(SkinningModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(SkinningModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// 環境マップ
+	rootparams[static_cast<int>(SkinningModelRegister::kMapTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCubeSRV), descRangeCubeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// View
 	rootparams[static_cast<int>(SkinningModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 
@@ -445,7 +453,7 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	rootparams[static_cast<int>(SkinningModelRegister::kPointLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootparams[static_cast<int>(SkinningModelRegister::kSpotLight)] = PSOLib::InitAsConstantBufferView(4, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	// Palette
-	rootparams[static_cast<int>(SkinningModelRegister::kMatrixPalette)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(SkinningModelRegister::kMatrixPalette)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
 	//rootparams[static_cast<int>(ModelRegister::kLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 

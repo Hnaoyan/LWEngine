@@ -42,6 +42,7 @@ void Material::Update()
 	materialData_->enableLighting = enableLighting_;
 	materialData_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
 	materialData_->shininess = shininess_;
+	materialData_->coefficient = coefficient_;
 }
 
 void Material::ImGuiDraw(const std::string& objName)
@@ -52,4 +53,6 @@ void Material::ImGuiDraw(const std::string& objName)
 	ImGui::ColorEdit4(name.c_str(), &color_.x);
 	name = objName + ":Shininess";
 	ImGui::DragFloat(name.c_str(), &shininess_, 0.01f);
+	name = objName + ":Coefficient";
+	ImGui::DragFloat(name.c_str(), &coefficient_, 0.01f);
 }
