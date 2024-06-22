@@ -18,7 +18,7 @@ struct CBufferDataDirectionalLight {
 
 struct CBufferDataPointLight {
 	Vector4 color;	// ライトの色
-	Vector3 direction;	// ライトの方向
+	Vector3 position;	// 位置
 	float intensity;	// 輝度
 	float radius;	// 届く距離
 	float decay;	// 減衰率
@@ -34,5 +34,6 @@ struct CBufferDataSpotLight
 	float distance;	// ライトの届く距離
 	float decay;	// 減衰率
 	float cosAngle;	// スポットライトの余弦
+	float cosFalloffStart; // 開始角度
 	float padding[2];
 };

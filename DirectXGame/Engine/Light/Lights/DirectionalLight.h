@@ -1,14 +1,8 @@
 #pragma once
 #include "../LightData.h"
+#include "ILight.h"
 
-#include <wrl.h>
-#include<d3d12.h>
-#include<dxgi1_6.h>
-
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-
-class DirectionalLight
+class DirectionalLight : public ILight<CBufferDataDirectionalLight>
 {
 public:
 	/// <summary>
@@ -16,28 +10,22 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	static DirectionalLight* CreateLight();
-	// コマンドリスト
-	static ID3D12GraphicsCommandList* sCommandList;
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize() override;
 	/// <summary>
 	/// 更新
 	/// </summary>
 	/// <param name="data"></param>
-	void Update(const CBufferDataDirectionalLight& data);
+	void Update(const CBufferDataDirectionalLight& data)override;
 	/// <summary>
 	/// 描画処理
 	/// </summary>
 	/// <param name="cmdList"></param>
 	/// <param name="rootParamIndex"></param>
-	void Draw(ID3D12GraphicsCommandList* cmdList,uint32_t rootParamIndex);
-
-public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightBuff_;
-	CBufferDataDirectionalLight* directionalLightMap_ = nullptr;
+	void Draw(ID3D12GraphicsCommandList* cmdList,uint32_t rootParamIndex)override;
 
 };
 

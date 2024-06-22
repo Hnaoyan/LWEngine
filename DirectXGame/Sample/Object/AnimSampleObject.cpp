@@ -69,6 +69,8 @@ void AnimSampleObject::Draw(const ModelDrawDesc& desc)
 	drawDesc.camera = desc.camera;
 	drawDesc.localMatrix = animation_.localMatrix_;
 	drawDesc.directionalLight = desc.directionalLight;
+	drawDesc.spotLight = desc.spotLight;
+	drawDesc.pointLight = desc.pointLight;
 
 	animModel_->SkinningDraw(drawDesc, &animation_, texture_);
 

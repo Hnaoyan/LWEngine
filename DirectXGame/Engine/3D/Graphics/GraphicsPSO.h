@@ -28,7 +28,8 @@ namespace Pipeline
 		kWorldTransform,
 		kViewProjection,
 		kDirectionalLight,
-
+		kPointLight,
+		kSpotLight,
 		// サイズを取得する為の値
 		kCountOfParameter,
 	};
@@ -40,6 +41,8 @@ namespace Pipeline
 		kWorldTransform,
 		kViewProjection,
 		kDirectionalLight,
+		kPointLight,
+		kSpotLight,
 
 		kMatrixPalette,
 		kCountOfParameter,

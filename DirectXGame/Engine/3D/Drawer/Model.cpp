@@ -15,7 +15,7 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 	ex;
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
-	mesh_->CreateMeshObj(&modelData_);
+	mesh_->CreateMesh(&modelData_);
 
 	// マテリアル生成
 	material_ = std::make_unique<Material>();
@@ -115,7 +115,15 @@ void Model::Draw(const ModelDrawDesc& desc) {
 
 
 	// ライト
-	desc.directionalLight->Draw(sCommandList_,static_cast<uint32_t>(ModelRegister::kDirectionalLight));
+	if (desc.directionalLight) {
+		desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kDirectionalLight));
+	}
+	if (desc.spotLight) {
+		desc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kSpotLight));
+	}
+	if (desc.pointLight) {
+		desc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kPointLight));
+	}
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
@@ -169,7 +177,15 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 		static_cast<UINT>(SkinningModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
 	// ライト
-	desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kDirectionalLight));
+	if (desc.directionalLight) {
+		desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kDirectionalLight));
+	}
+	if (desc.spotLight) {
+		desc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kSpotLight));
+	}
+	if (desc.pointLight) {
+		desc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kPointLight));
+	}
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);

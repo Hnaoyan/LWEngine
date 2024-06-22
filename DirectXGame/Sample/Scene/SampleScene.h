@@ -72,4 +72,10 @@ private:
 	std::unique_ptr<DirectionalLight> directionalLight_;
 	CBufferDataDirectionalLight lightData_;
 
+	std::unique_ptr<SpotLight> spotLight_;
+	CBufferDataSpotLight spLightData_;
+
+	std::unique_ptr<PointLight> pointLight_;
+	CBufferDataPointLight ptLightData_;
+
 };

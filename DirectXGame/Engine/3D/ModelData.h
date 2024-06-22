@@ -77,4 +77,6 @@ struct ModelDrawDesc
 	Matrix4x4 localMatrix;
 	// 平行光源
 	DirectionalLight* directionalLight;
+	SpotLight* spotLight;
+	PointLight* pointLight;
 };

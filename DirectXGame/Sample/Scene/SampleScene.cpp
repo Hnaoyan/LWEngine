@@ -11,7 +11,24 @@ void SampleScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+	// ライト作成
 	directionalLight_.reset(DirectionalLight::CreateLight());
+	pointLight_.reset(PointLight::CreateLight());
+	spotLight_.reset(SpotLight::CreateLight());
+
+	ptLightData_.intensity = 1.0f;
+	ptLightData_.position = { 0,2.0f,0 };
+	ptLightData_.color = { 1,1,1,1 };
+	ptLightData_.decay = 1.0f;
+	ptLightData_.radius = 2.0f;
+
+	spLightData_.color = { 1,1,1,1 };
+	spLightData_.position = { 2.0f,1.25f,0.0f };
+	spLightData_.distance = 7.0f;
+	spLightData_.direction = Vector3::Normalize({ -1.0f,-1.0f,0.0f });
+	spLightData_.intensity = 4.0f;
+	spLightData_.decay = 2.0f;
+	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
 
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
@@ -31,13 +48,15 @@ void SampleScene::Initialize()
 
 	cubeObj_ = std::make_unique<AnimCubeObject>();
 	cubeObj_->Initialize(testModel_.get());
-	cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
+	//cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
 
 	player_ = std::make_unique<PlSampleObject>();
 	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
-	camera_.transform_.translate.z = -5.0f;
+	camera_.transform_.translate.y = 5.0f;
+	camera_.transform_.rotate.x = 0.4f;
+	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
 
@@ -51,6 +70,9 @@ void SampleScene::Initialize()
 		{0,0,0},
 	};
 	newSpriteData_.isInvisible_ = true;
+
+	//testWTF_.transform_.translate = { 0,-3.5f,7.0f };
+	//testWTF_.transform_.rotate.y = -1.85f;
 }
 
 void SampleScene::Update()
@@ -68,6 +90,8 @@ void SampleScene::Update()
 	CameraUpdate();
 
 	directionalLight_->Update(lightData_);
+	spotLight_->Update(spLightData_);
+	pointLight_->Update(ptLightData_);
 }
 
 void SampleScene::Draw()
@@ -92,13 +116,15 @@ void SampleScene::Draw()
 	ModelDrawDesc desc{};
 	desc.camera = &camera_;
 	desc.directionalLight = directionalLight_.get();
+	desc.spotLight = spotLight_.get();
+	desc.pointLight = pointLight_.get();
 	walkObj_->Draw(desc);
 	//player_->Draw(&camera_);
 	cubeObj_->Draw(desc);
 	desc.worldTransform = &testWTF_;
-	sphere_->Draw(desc);
-
-	skybox_->Draw(desc);
+	//sphere_->Draw(desc);
+	cubeModel_->Draw(desc);
+	//skybox_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -132,18 +158,46 @@ void SampleScene::ImGuiDraw()
 	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
 
 
-	if (ImGui::TreeNode("Lighting")) {
-		ImGui::ColorEdit4("Color", &lightData_.color.x);
-		ImGui::DragFloat3("Direction", &lightData_.direction.x, 0.01f);
-		lightData_.direction = Vector3::Normalize(lightData_.direction);
-		ImGui::DragFloat("Intensity", &lightData_.intensity, 0.01f);
+	if (ImGui::TreeNode("DirectionalLight")) {
 		ImGui::TreePop();
+	}
+	if (ImGui::BeginTabBar("Lighting"))
+	{
+		float defaultSpeed = 0.01f;
+		if (ImGui::BeginTabItem("DirectionalLight"))
+		{
+			ImGui::ColorEdit4("Color", &lightData_.color.x);
+			ImGui::DragFloat3("Direction", &lightData_.direction.x, defaultSpeed);
+			lightData_.direction = Vector3::Normalize(lightData_.direction);
+			ImGui::DragFloat("Intensity", &lightData_.intensity, defaultSpeed);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("PointLight"))
+		{
+			ImGui::ColorEdit4("ptColor", &ptLightData_.color.x);
+			ImGui::DragFloat("ptDecay", &ptLightData_.decay, defaultSpeed);
+			ImGui::DragFloat("ptIntensity", &ptLightData_.intensity, defaultSpeed);
+			ImGui::DragFloat("ptRadius", &ptLightData_.radius, defaultSpeed);
+			ImGui::DragFloat3("ptPosition", &ptLightData_.position.x, defaultSpeed);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("SpotLight"))
+		{
+			ImGui::ColorEdit4("spColor", &spLightData_.color.x);
+			ImGui::DragFloat("spDecay", &spLightData_.decay, defaultSpeed);
+			ImGui::DragFloat("spIntensity", &spLightData_.intensity, defaultSpeed);
+			ImGui::DragFloat("spCosAngle", &spLightData_.cosAngle, defaultSpeed);
+			ImGui::DragFloat("spCosFalloffStart", &spLightData_.cosFalloffStart, defaultSpeed);
+			ImGui::DragFloat("spDistance", &spLightData_.distance, defaultSpeed);
+			ImGui::DragFloat3("spPosition", &spLightData_.position.x, defaultSpeed);
+			ImGui::DragFloat3("spDirection", &spLightData_.direction.x, defaultSpeed);
+			spLightData_.direction = Vector3::Normalize(spLightData_.direction);
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
 	}
 
 	ImGui::End();
-	ImGui::ShowDemoWindow();
-
-	//sampleObj_->ImGuiDraw();
 
 	player_->ImGuiDraw();
 	skybox_->ImGuiDraw();
@@ -165,7 +219,7 @@ void SampleScene::LoadModel()
 	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 
-	cubeModel_.reset(Model::CreateDefault("cube"));
+	cubeModel_.reset(Model::CreateDefault("terrain"));
 
 	sphere_.reset(Sphere::CreateSphere());
 
