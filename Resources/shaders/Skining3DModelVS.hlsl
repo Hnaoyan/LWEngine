@@ -47,8 +47,6 @@ VSOutput main(VSInput input)
     // ワールド座標計算
     float32_t4 worldPos = mul(skinned.position, gWorldTransform.worldMat);
     // 法線
-    float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3) gWorldTransform.worldMat));
-
     float32_t4x4 viewProjection = mul(gCamera.view, gCamera.projection);
     
     output.position = mul(worldPos, viewProjection);

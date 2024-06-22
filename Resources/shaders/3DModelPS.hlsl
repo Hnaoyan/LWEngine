@@ -31,8 +31,10 @@ float32_t3 Specular(VSOutput input)
     // 入射光の反射ベクトル
     float32_t3 reflectLight = reflect(gDirectionalLight.direction, normalize(input.normal));
     // 鏡面反射の強度
-    float RdotE = dot(reflectLight, toEye);
-    float specularPow = pow(saturate(RdotE), gMaterial.shininess);
+    float32_t3 halfVector = normalize(-gDirectionalLight.direction + toEye);
+    float NDotH = dot(normalize(input.normal), halfVector);
+    //float RdotE = dot(reflectLight, toEye);
+    float specularPow = pow(saturate(NDotH), gMaterial.shininess);
     float32_t3 specular = gDirectionalLight.color.rgb * gDirectionalLight.intensity * specularPow * float32_t3(1.0f, 1.0f, 1.0f);
     return specular;
 }
