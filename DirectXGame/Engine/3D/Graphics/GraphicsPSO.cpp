@@ -273,7 +273,7 @@ void GraphicsPSO::CreateModelPSO()
 	// マテリアル
 	rootparams[static_cast<int>(ModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	// ライト
-	//rootparams[static_cast<int>(ModelRegister::kDirectionalLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(ModelRegister::kDirectionalLight)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 
 	// スタティックサンプラー
@@ -299,16 +299,10 @@ void GraphicsPSO::CreateModelPSO()
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-	blenddesc.RenderTarget[0].BlendEnable = false;
-	//gPipeline.BlendState = blenddesc;
-	//// PSO作成
-	//result = sDevice_->CreateGraphicsPipelineState(
-	//	&gPipeline, IID_PPV_ARGS(
-	//		&GraphicsPSO::sModelPipelineStates_[size_t(BlendMode::kNone)]));
-	//assert(SUCCEEDED(result));
+	//blenddesc.RenderTarget[0].BlendEnable = false;
 
 	// αブレンド
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
@@ -433,17 +427,19 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(SkinningModelRegister::kCountOfParameter)]{};
 	//---共通---//
 	// テクスチャ
-	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(SkinningModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// View
-	rootparams[static_cast<int>(ModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	rootparams[static_cast<int>(SkinningModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 
 	//---VS---//
 	// WorldTransform
-	rootparams[static_cast<int>(ModelRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(SkinningModelRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_VERTEX);
 
 	//---PS---//
 	// マテリアル
-	rootparams[static_cast<int>(ModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(SkinningModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	// ライト
+	rootparams[static_cast<int>(SkinningModelRegister::kDirectionalLight)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	// Palette
 	rootparams[static_cast<int>(SkinningModelRegister::kMatrixPalette)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
 	//rootparams[static_cast<int>(ModelRegister::kLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
@@ -474,9 +470,9 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-	blenddesc.RenderTarget[0].BlendEnable = false;
+	//blenddesc.RenderTarget[0].BlendEnable = false;
 	// αブレンド
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);

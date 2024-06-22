@@ -40,6 +40,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Light\Lights\DirectionalLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />

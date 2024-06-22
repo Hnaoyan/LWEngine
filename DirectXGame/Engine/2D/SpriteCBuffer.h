@@ -13,5 +13,6 @@ struct SpriteDataForGPU {
 	Vector4 color;	// 色
 	Matrix4x4 world;// ワールド行列
 	Matrix4x4 WVP;	// ワールドビュープロジェクション行列
+	Matrix4x4 uvTransform;	// UV
 };
 #pragma endregion

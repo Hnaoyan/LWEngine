@@ -113,6 +113,10 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
+
+	// ライト
+	desc.directionalLight->Draw(sCommandList_,static_cast<uint32_t>(ModelRegister::kDirectionalLight));
+
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
 
@@ -163,6 +167,9 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(SkinningModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+
+	// ライト
+	desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kDirectionalLight));
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);

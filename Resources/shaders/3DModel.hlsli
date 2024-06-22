@@ -14,13 +14,34 @@ struct Camera
 struct Material
 {
     float32_t4 color;
+    float32_t4x4 uvTransform;
     int32_t enableLighting;
+    float32_t shininess;
 };
 
 struct DirectionalLight
 {
-    float32_t4 color;
-    float32_t3 direction;
+    float32_t4 color;   // 
+    float32_t3 direction;   // 
+    float intensity;    // 
+};
+
+struct PointLight
+{
+    float32_t4 color;   // 
+    float32_t3 position;    // 
+    float intensity;    // 
+    float radius;   // 
+    float decay;    // 
+};
+
+struct SpotLight
+{
+    float32_t4 color; // 
+    float32_t3 position; // 
+    float intensity; // 
+    float radius; // 
+    float decay; // 
 };
 
 struct VSOutput

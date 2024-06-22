@@ -16,7 +16,7 @@ public:
 public:
 	void Initialize(Model* model);
 	void Update();
-	void Draw(ICamera* camera);
+	void Draw(const ModelDrawDesc& desc);
 
 	void ImGuiDraw();
 

@@ -8,20 +8,36 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-class DirectionLight
+class DirectionalLight
 {
 public:
-
-	//static DirectionLight* Create();
+	/// <summary>
+	/// 作成関数
+	/// </summary>
+	/// <returns></returns>
+	static DirectionalLight* CreateLight();
+	// コマンドリスト
+	static ID3D12GraphicsCommandList* sCommandList;
+public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="data"></param>
+	void Update(const CBufferDataDirectionalLight& data);
+	/// <summary>
+	/// 描画処理
+	/// </summary>
+	/// <param name="cmdList"></param>
+	/// <param name="rootParamIndex"></param>
+	void Draw(ID3D12GraphicsCommandList* cmdList,uint32_t rootParamIndex);
 
 public:
-	//void Initialize();
-	//void Update();
-	//void Draw();
-
-public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> directionLightBuff_;
-	CBufferDataDirectionalLight* directionLightMap_ = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightBuff_;
+	CBufferDataDirectionalLight* directionalLightMap_ = nullptr;
 
 };
 

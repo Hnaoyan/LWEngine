@@ -253,7 +253,7 @@ namespace DxCreateLib
 			D3D12_BLEND_DESC blendDesc{};
 			// 初期設定
 			blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-			blendDesc.RenderTarget[0].BlendEnable = TRUE;
+			blendDesc.RenderTarget[0].BlendEnable = true;
 
 			// 基本設定
 			blendDesc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;

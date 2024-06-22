@@ -30,5 +30,11 @@ public:
 	int32_t enableLighting_ = false;
 	// 輝度
 	float shininess_ = 100.0f;
+	// UVトランスフォーム
+	EulerTransform uvTransform_ = {
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
 
 };

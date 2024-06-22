@@ -6,6 +6,8 @@
 #include "../Animation/ModelNode.h"
 #include "../Animation/SkinCluster.h"
 
+#include "../Light/LightLists.h"
+
 class Model;
 class WorldTransform;
 class ICamera;
@@ -73,4 +75,6 @@ struct ModelDrawDesc
 	WorldTransform* worldTransform;
 	ICamera* camera;
 	Matrix4x4 localMatrix;
+	// 平行光源
+	DirectionalLight* directionalLight;
 };

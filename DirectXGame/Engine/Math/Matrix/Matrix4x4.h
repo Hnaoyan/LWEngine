@@ -112,6 +112,13 @@ public:
 		MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
 
 	/// <summary>
+	/// UVTransform用・Z軸回転のみ
+	/// </summary>
+	/// <param name="transform"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeUvTransformMatirx(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
+	/// <summary>
 	/// 任意軸の回転行列を求める計算
 	/// </summary>
 	/// <param name="from"></param>

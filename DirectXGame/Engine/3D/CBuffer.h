@@ -36,10 +36,6 @@ struct VertexData
 
 #pragma endregion
 
-//struct ModelData {
-//	VertexData vertices;	// 頂点データ
-//};
-
 // カメラ用
 struct CBufferDataCamera {
 	Matrix4x4 viewMatrix;		// ビュー行列
@@ -50,7 +46,9 @@ struct CBufferDataCamera {
 // マテリアル用
 struct CBufferDataMaterial {
 	Vector4 color;			// カラー
+	Matrix4x4 uvTransform;	// UV
 	int32_t enableLighting;	// ライティングのswitch
+	float shininess;	// 輝度
 };
 
 

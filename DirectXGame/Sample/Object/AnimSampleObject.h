@@ -19,7 +19,7 @@ public:
 public:
 	void Initialize(Model* model, Model* cube);
 	void Update();
-	void Draw(ICamera* camera);
+	void Draw(const ModelDrawDesc& desc);
 
 	void ImGuiDraw();
 

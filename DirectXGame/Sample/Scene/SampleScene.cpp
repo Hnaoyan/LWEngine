@@ -11,6 +11,7 @@ void SampleScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+	directionalLight_.reset(DirectionalLight::CreateLight());
 
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
@@ -39,11 +40,25 @@ void SampleScene::Initialize()
 	camera_.transform_.translate.z = -5.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
+
+	lightData_.color = { 1,1,1,1 };
+	lightData_.direction = { 0,-1,0 };
+	lightData_.intensity = 1.0f;
+
+	newSpriteData_.spriteTransform_ = {
+		{1.0f,1.0f,1.0f},
+		{0,0,0},
+		{0,0,0},
+	};
+	newSpriteData_.isInvisible_ = true;
 }
 
 void SampleScene::Update()
 {
-	newSprite_->SetPosition(position_);
+	newSprite_->SetPosition(newSpriteData_.position_);
+	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
+	newSprite_->SetInvisible(newSpriteData_.isInvisible_);
+
 	testWTF_.UpdateMatrix();
 	//sampleObj_->Update();
 	walkObj_->Update();
@@ -51,6 +66,8 @@ void SampleScene::Update()
 	player_->Update();
 	// カメラの更新
 	CameraUpdate();
+
+	directionalLight_->Update(lightData_);
 }
 
 void SampleScene::Draw()
@@ -61,7 +78,6 @@ void SampleScene::Draw()
 		
 	Sprite::PreDraw(commandList);
 
-	//newSprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -73,12 +89,14 @@ void SampleScene::Draw()
 
 	// サンプル
 	//sampleObj_->Draw(&camera_);
-	walkObj_->Draw(&camera_);
-	//player_->Draw(&camera_);
-	cubeObj_->Draw(&camera_);
 	ModelDrawDesc desc{};
 	desc.camera = &camera_;
-	//sphere_->Draw(desc);
+	desc.directionalLight = directionalLight_.get();
+	walkObj_->Draw(desc);
+	//player_->Draw(&camera_);
+	cubeObj_->Draw(desc);
+	desc.worldTransform = &testWTF_;
+	sphere_->Draw(desc);
 
 	skybox_->Draw(desc);
 
@@ -88,6 +106,7 @@ void SampleScene::Draw()
 
 	Sprite::PreDraw(commandList);
 
+	newSprite_->Draw();
 
 	Sprite::PostDraw();
 
@@ -99,11 +118,26 @@ void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
-	ImGui::DragFloat2("pos", &position_.x, 0.01f);
+	if (ImGui::TreeNode("SpriteData")) {
+		ImGui::Checkbox("Invisible", &newSpriteData_.isInvisible_);
+		ImGui::DragFloat2("pos", &newSpriteData_.position_.x, 0.01f);
+		ImGui::DragFloat3("SpriteTPos", &newSpriteData_.spriteTransform_.translate.x, 0.01f);
+		ImGui::DragFloat3("SpriteTRot", &newSpriteData_.spriteTransform_.rotate.x, 0.01f);
+		ImGui::DragFloat3("SpriteTSca", &newSpriteData_.spriteTransform_.scale.x, 0.01f);
+		ImGui::TreePop();
+	}
 
 	ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
+
+
+	if (ImGui::TreeNode("Lighting")) {
+		ImGui::ColorEdit4("Color", &lightData_.color.x);
+		ImGui::DragFloat3("Direction", &lightData_.direction.x, 0.01f);
+		ImGui::DragFloat("Intensity", &lightData_.intensity, 0.01f);
+		ImGui::TreePop();
+	}
 
 	ImGui::End();
 	ImGui::ShowDemoWindow();
@@ -139,8 +173,8 @@ void SampleScene::LoadModel()
 
 void SampleScene::LoadTexture()
 {
-	uvTexture_ = TextureManager::Load("Resources/default/uvChecker.png");
-	newSprite_.reset(Sprite::Create(uvTexture_, { 300.0f,0.0f }, { 0,0 }));
+	newSpriteData_.uvTexture_ = TextureManager::Load("Resources/default/uvChecker.png");
+	newSprite_.reset(Sprite::Create(newSpriteData_.uvTexture_, { 300.0f,0.0f }, { 0,0 }));
 }
 
 void SampleScene::CameraUpdate()

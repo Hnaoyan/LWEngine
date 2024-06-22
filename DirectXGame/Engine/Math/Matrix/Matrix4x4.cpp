@@ -372,6 +372,14 @@ Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Quaternion& ro
 	return affineMatrix;
 }
 
+Matrix4x4 Matrix4x4::MakeUvTransformMatirx(const Vector3& scale, const Vector3& rotate, const Vector3& translate)
+{
+	Matrix4x4 uvMatrix = Matrix4x4::MakeScaleMatrix(scale);
+	uvMatrix = Matrix4x4::Multiply(uvMatrix, Matrix4x4::MakeRotateZMatrix(rotate.z));
+	uvMatrix = Matrix4x4::Multiply(uvMatrix, Matrix4x4::MakeTranslateMatrix(translate));
+	return Matrix4x4(uvMatrix);
+}
+
 Matrix4x4 Matrix4x4::DirectionToDirection(const Vector3& from, const Vector3& to)
 {
 	// cos

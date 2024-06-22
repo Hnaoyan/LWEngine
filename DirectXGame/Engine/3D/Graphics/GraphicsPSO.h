@@ -39,6 +39,8 @@ namespace Pipeline
 		kTexture,
 		kWorldTransform,
 		kViewProjection,
+		kDirectionalLight,
+
 		kMatrixPalette,
 		kCountOfParameter,
 	};

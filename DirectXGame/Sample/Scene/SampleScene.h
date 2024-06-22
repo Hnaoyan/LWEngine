@@ -6,6 +6,7 @@
 #include "../Object/AnimCubeObject.h"
 #include "../Object/PlSampleObject.h"
 #include "../../Engine/Camera/Custom/DebugCamera.h"
+#include "../../Engine/Light/LightLists.h"
 
 class SampleScene : public IScene
 {
@@ -43,10 +44,15 @@ private:
 
 	std::unique_ptr<PlSampleObject> player_;
 
+	struct spriteInfo {
+		uint32_t uvTexture_ = 0u;
+		Vector2 position_ = {};
+		Vector4 color = { 1,1,1,1 };
+		EulerTransform spriteTransform_{};
+		bool isInvisible_ = false;
+	};
 	std::unique_ptr<Sprite> newSprite_;
-	uint32_t uvTexture_ = 0u;
-	Vector2 position_ = {};
-	Vector4 color = { 1,1,1,1 };
+	spriteInfo newSpriteData_;
 
 	std::unique_ptr<Model> testModel_;
 	std::unique_ptr<Model> walkModel_;
@@ -61,5 +67,9 @@ private:
 	bool isDebugCamera_ = false;
 
 	std::unique_ptr<Skybox> skybox_;
+
+	// ライト君
+	std::unique_ptr<DirectionalLight> directionalLight_;
+	CBufferDataDirectionalLight lightData_;
 
 };
