@@ -102,6 +102,7 @@ void AnimSampleObject::ImGuiDraw()
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, 0.01f);
 
 	animation_.ImGuiDraw();
+	this->animModel_->GetMaterial()->ImGuiDraw(objectName_);
 
 	ImGui::End();
 

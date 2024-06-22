@@ -135,6 +135,7 @@ void SampleScene::ImGuiDraw()
 	if (ImGui::TreeNode("Lighting")) {
 		ImGui::ColorEdit4("Color", &lightData_.color.x);
 		ImGui::DragFloat3("Direction", &lightData_.direction.x, 0.01f);
+		lightData_.direction = Vector3::Normalize(lightData_.direction);
 		ImGui::DragFloat("Intensity", &lightData_.intensity, 0.01f);
 		ImGui::TreePop();
 	}

@@ -4,6 +4,7 @@
 #include "../Light/LightData.h"
 #include <wrl.h>
 #include <d3d12.h>
+#include <string>
 
 class Material
 {
@@ -17,6 +18,12 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	/// <param name="objName"></param>
+	void ImGuiDraw(const std::string& objName);
 
 public:
 	// マテリアルリソース
