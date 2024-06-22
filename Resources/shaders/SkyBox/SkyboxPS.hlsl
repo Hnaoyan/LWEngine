@@ -3,7 +3,7 @@
 TextureCube<float32_t4> gTexture : register(t0);
 SamplerState gSampler : register(s0);
 
-ConstantBuffer<Material> gMaterial : register(b2);
+ConstantBuffer<Material> gMaterial : register(b1);
 //ConstantBuffer<DirectionalLight> gLight : register(b1);
 
 // マテリアル

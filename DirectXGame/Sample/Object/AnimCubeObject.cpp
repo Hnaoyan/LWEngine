@@ -45,12 +45,16 @@ void AnimCubeObject::Update()
 	worldTransform_.UpdateMatrix();
 }
 
-void AnimCubeObject::Draw(ICamera* camera)
+void AnimCubeObject::Draw(const ModelDrawDesc& desc)
 {
-	ModelDrawDesc desc;
-	desc.worldTransform = &worldTransform_;
-	desc.camera = camera;
-	animModel_->Draw(desc);
+	ModelDrawDesc drawDesc{};
+	drawDesc.worldTransform = &worldTransform_;
+	drawDesc.camera = desc.camera;
+	drawDesc.directionalLight = desc.directionalLight;
+	drawDesc.spotLight = desc.spotLight;
+	drawDesc.pointLight = desc.pointLight;
+
+	animModel_->Draw(drawDesc);
 }
 
 void AnimCubeObject::ImGuiDraw()

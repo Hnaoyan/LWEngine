@@ -15,7 +15,7 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 	ex;
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
-	mesh_->CreateMeshObj(&modelData_);
+	mesh_->CreateMesh(&modelData_);
 
 	// マテリアル生成
 	material_ = std::make_unique<Material>();
@@ -93,11 +93,11 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kWorldTransform),
-		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
+		desc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kViewProjection),
-		desc.camera->constBuff_->GetGPUVirtualAddress());
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定
@@ -109,9 +109,24 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// SRVのセット
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
+	// 環境マップ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+
+
+	// ライト
+	if (desc.directionalLight) {
+		desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kDirectionalLight));
+	}
+	if (desc.spotLight) {
+		desc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kSpotLight));
+	}
+	if (desc.pointLight) {
+		desc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kPointLight));
+	}
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);
@@ -133,11 +148,11 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 	// ワールド行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(SkinningModelRegister::kWorldTransform),
-		desc.worldTransform->constBuffer_->GetGPUVirtualAddress());
+		desc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(SkinningModelRegister::kViewProjection),
-		desc.camera->constBuff_->GetGPUVirtualAddress());
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定
@@ -156,6 +171,9 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(SkinningModelRegister::kTexture), texture);
 
+	// 環境マップ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(SkinningModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// Skinning
 	sCommandList_->SetGraphicsRootDescriptorTable(
 		static_cast<UINT>(SkinningModelRegister::kMatrixPalette), animation->skinCluster_.paletteSrvHandle.second);
@@ -163,6 +181,17 @@ void Model::SkinningDraw(const ModelDrawDesc& desc, Animation* animation,uint32_
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(SkinningModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+
+	// ライト
+	if (desc.directionalLight) {
+		desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kDirectionalLight));
+	}
+	if (desc.spotLight) {
+		desc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kSpotLight));
+	}
+	if (desc.pointLight) {
+		desc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(SkinningModelRegister::kPointLight));
+	}
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);

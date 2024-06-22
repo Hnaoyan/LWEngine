@@ -8,11 +8,14 @@
 
 class WorldTransform
 {
-public:
+private:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer_;
 	CBufferWorldTransform* constMap_ = nullptr;
-
+public:
+	// 定数バッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return constBuffer_; }
+	CBufferWorldTransform* GetCMap() { return constMap_; }
 public:
 	/// <summary>
 	/// 初期化

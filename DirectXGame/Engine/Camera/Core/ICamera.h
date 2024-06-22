@@ -7,11 +7,16 @@
 
 class ICamera
 {
-public:
+private:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
 	// マッピング用
 	CBufferDataCamera* constMap_ = nullptr;
+public: // 定数バッファのアクセッサ
+	// 定数バッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return constBuff_; }
+	// マップ
+	CBufferDataCamera* GetView() { return constMap_; }
 
 public:	// 継承できるように
 	/// <summary>
@@ -26,7 +31,7 @@ public:	// 継承できるように
 	/// <summary>
 	/// ImGui
 	/// </summary>
-	void ImGuiDraw();
+	virtual void ImGuiDraw();
 
 protected: // 共通で使う関数
 	/// <summary>
@@ -41,22 +46,25 @@ protected: // 共通で使う関数
 	/// 行列更新
 	/// </summary>
 	void UpdateMatrix();
+public:
 	/// <summary>
 	/// マップに送る処理
 	/// </summary>
 	void TransferMatrix();
 
 protected:
+	// 視野角の値
+	float fov_ = 45.0f;
+
+public:
 	// ビュー行列
 	Matrix4x4 viewMatrix_;
 	// プロジェクション行列
 	Matrix4x4 projectionMatrix_;
-
-public:
 	// 
 	EulerTransform transform_ = {};
-	// 視野角の値
-	float fov_ = 45.0f;
+
+private:
 	// 視野角の角度
 	float fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0);
 	// アスペクト比率

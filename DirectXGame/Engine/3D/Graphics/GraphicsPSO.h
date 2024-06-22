@@ -25,10 +25,12 @@ namespace Pipeline
 	enum class ModelRegister : int {
 		kMaterial,
 		kTexture,
+		kMapTexture,
 		kWorldTransform,
 		kViewProjection,
-		//kLight,
-
+		kDirectionalLight,
+		kPointLight,
+		kSpotLight,
 		// サイズを取得する為の値
 		kCountOfParameter,
 	};
@@ -37,8 +39,13 @@ namespace Pipeline
 	enum class SkinningModelRegister : int {
 		kMaterial,
 		kTexture,
+		kMapTexture,
 		kWorldTransform,
 		kViewProjection,
+		kDirectionalLight,
+		kPointLight,
+		kSpotLight,
+
 		kMatrixPalette,
 		kCountOfParameter,
 	};
@@ -151,6 +158,10 @@ private:
 	/// ポストエフェクト作成
 	/// </summary>
 	static void CreatePostEffectPSO();
+	/// <summary>
+	/// Skybox作成
+	/// </summary>
+	static void CreateSkyboxPSO();
 
 	/// <summary>
 	/// PSO作成

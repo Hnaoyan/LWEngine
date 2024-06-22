@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Math/MathLib.h"
 #include "../SpriteCBuffer.h"
+#include "../../3D/CBuffer.h"
 #include "../../3D/Graphics/GraphicsPSO.h"
 #include "../../Base/Utility/DxCreateLib.h"
 
@@ -123,6 +124,7 @@ private: // メンバ変数
 	Vector2 texSize_ = {};
 
 	Matrix4x4 matWorld_ = {};
+	EulerTransform uvTransform_ = {};
 
 	// ブレンドモード
 	BlendMode blendMode_ = BlendMode::kNormal;
@@ -204,4 +206,11 @@ public: // アクセッサ
 		texSize_ = texSize;
 	}
 
+	void SetUVTransform(const EulerTransform& transform) {
+		uvTransform_ = transform;
+	}
+
+	EulerTransform GetUVTransform() {
+		return uvTransform_;
+	}
 };

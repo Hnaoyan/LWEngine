@@ -136,29 +136,26 @@ ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fi
 		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
 			aiFace& face = mesh->mFaces[faceIndex];
 			assert(face.mNumIndices == 3);	// 三角のみサポート
+			// 頂点数分にリサイズ
+			modelData.vertices.resize(mesh->mNumVertices);
 			// ここからFaceのVertexの解析
-			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
-				uint32_t vertexIndex = face.mIndices[element];
+			for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
 				aiVector3D& position = mesh->mVertices[vertexIndex];
 				aiVector3D& normal = mesh->mNormals[vertexIndex];
 				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
 
-				VertexData vertex{};
+				modelData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
+				modelData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
+				modelData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
 
-				//VertexData vertex;
-				vertex.position = { position.x,position.y,position.z,1.0f };
-				vertex.normal = { normal.x,normal.y,normal.z };
-				vertex.texcoord = { texcoord.x,texcoord.y };
-
-				vertex.position.x *= -1.0f;
-				vertex.normal.x *= -1.0f;
-				//vertex.normal.z *= -1.0f;
-
-				// Meshに追加
-				modelData.vertices.push_back(vertex);
+			}
+			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+				// vertexIndex
+				uint32_t vertexIndex = face.mIndices[element];
+				// Indexの登録
+				modelData.indices.push_back(vertexIndex);
 			}
 		}
-
 	}
 
 	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {

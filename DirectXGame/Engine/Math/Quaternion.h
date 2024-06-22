@@ -27,6 +27,7 @@ public: // 基本的な計算
 	// 加算
 	static Quaternion Add(const Quaternion& q0, const Quaternion& q1);
 
+public:
 	/// <summary>
 	/// 任意軸回転を表すクォータニオン
 	/// </summary>

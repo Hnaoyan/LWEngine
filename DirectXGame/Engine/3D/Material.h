@@ -4,6 +4,7 @@
 #include "../Light/LightData.h"
 #include <wrl.h>
 #include <d3d12.h>
+#include <string>
 
 class Material
 {
@@ -18,6 +19,12 @@ public:
 	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	/// <param name="objName"></param>
+	void ImGuiDraw(const std::string& objName);
+
 public:
 	// マテリアルリソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialBuff_;
@@ -30,5 +37,13 @@ public:
 	int32_t enableLighting_ = false;
 	// 輝度
 	float shininess_ = 100.0f;
+	// 環境マップの係数
+	float coefficient_ = 1.0f;
+	// UVトランスフォーム
+	EulerTransform uvTransform_ = {
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
 
 };

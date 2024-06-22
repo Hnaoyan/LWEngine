@@ -35,7 +35,7 @@ public: // 演算関数
 	/// <param name="vector"></param>
 	/// <param name="matrix"></param>
 	/// <returns></returns>
-	static Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix);
+	static Vector3 TransformVector3(const Vector3& vector, const Matrix4x4& matrix);
 
 	/// <summary>
 	/// 転置行列
@@ -112,6 +112,13 @@ public:
 		MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
 
 	/// <summary>
+	/// UVTransform用・Z軸回転のみ
+	/// </summary>
+	/// <param name="transform"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeUvTransformMatirx(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
+	/// <summary>
 	/// 任意軸の回転行列を求める計算
 	/// </summary>
 	/// <param name="from"></param>
@@ -122,6 +129,9 @@ public:
 public: // その他計算関数
 	static Matrix4x4 MakeOrthographicMatrix(
 		float left, float top, float right, float bottom, float nearClip, float farClip);
+
+	static Matrix4x4 MakeViewportMatrix(
+		float left, float top, float width, float height, float minDepth, float maxDepth);
 
 	/// <summary>
 	/// プロジェクション行列作成

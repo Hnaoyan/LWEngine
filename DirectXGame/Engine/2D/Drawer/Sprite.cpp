@@ -76,6 +76,11 @@ Sprite::Sprite(uint32_t textureHandle, const Vector2& position, const Vector2& s
 	isInvisible_ = false;
 
 	texSize_ = size;
+	uvTransform_ = {
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f},
+	};
 }
 
 bool Sprite::Initialize()
@@ -178,6 +183,7 @@ void Sprite::Update()
 	spriteGPUData_->WVP = sMatProjection_;
 	spriteGPUData_->world = matWorld_;
 
+	spriteGPUData_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
 }
 
 void Sprite::TransferVertices()

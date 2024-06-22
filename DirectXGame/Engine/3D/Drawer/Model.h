@@ -80,6 +80,7 @@ public: // アクセッサ
 
 	ModelData& GetModelDataAdress() { return modelData_; }
 
+	Material* GetMaterial() { return material_.get(); }
 private:
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;

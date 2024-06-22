@@ -62,14 +62,17 @@ void AnimSampleObject::Update()
 
 }
 
-void AnimSampleObject::Draw(ICamera* camera)
+void AnimSampleObject::Draw(const ModelDrawDesc& desc)
 {
-	ModelDrawDesc desc{};
-	desc.worldTransform = &worldTransform_;
-	desc.camera = camera;
-	desc.localMatrix = animation_.localMatrix_;
+	ModelDrawDesc drawDesc{};
+	drawDesc.worldTransform = &worldTransform_;
+	drawDesc.camera = desc.camera;
+	drawDesc.localMatrix = animation_.localMatrix_;
+	drawDesc.directionalLight = desc.directionalLight;
+	drawDesc.spotLight = desc.spotLight;
+	drawDesc.pointLight = desc.pointLight;
 
-	animModel_->SkinningDraw(desc, &animation_, texture_);
+	animModel_->SkinningDraw(drawDesc, &animation_, texture_);
 
 
 	//for (int i = 0; i < animation_.skeleton_.joints.size(); ++i) {
@@ -101,6 +104,7 @@ void AnimSampleObject::ImGuiDraw()
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, 0.01f);
 
 	animation_.ImGuiDraw();
+	this->animModel_->GetMaterial()->ImGuiDraw(objectName_);
 
 	ImGui::End();
 

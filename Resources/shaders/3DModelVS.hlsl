@@ -7,8 +7,8 @@ struct VSInput
     float32_t2 texcoord : TEXCOORD0;
 };
 
-ConstantBuffer<WorldTransform> gWorldTransform : register(b0);
-ConstantBuffer<Camera> gCamera : register(b1);
+ConstantBuffer<Camera> gCamera : register(b0);
+ConstantBuffer<WorldTransform> gWorldTransform : register(b1);
 
 VSOutput main(VSInput input)
 {
@@ -16,7 +16,7 @@ VSOutput main(VSInput input)
     // ワールド座標計算
     float32_t4 worldPos = mul(input.position, gWorldTransform.worldMat);
     // 法線
-    float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3)gWorldTransform.worldMat));
+    float32_t3 worldNormal = normalize(mul(input.normal, (float32_t3x3)gWorldTransform.WorldInverseTranspose));
 
     float32_t4x4 viewProjection = mul(gCamera.view, gCamera.projection);
     float32_t4x4 worldViewProjection = mul(gWorldTransform.worldMat, viewProjection);
