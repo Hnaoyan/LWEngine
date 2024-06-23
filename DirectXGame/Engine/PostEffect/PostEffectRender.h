@@ -1,5 +1,6 @@
 #pragma once
 #include "../Utility/Singleton.h"
+#include "../3D/Graphics/GraphicsPSO.h"
 #include <d3d12.h>
 #include <utility>
 

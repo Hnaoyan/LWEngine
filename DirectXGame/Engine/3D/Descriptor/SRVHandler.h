@@ -13,18 +13,8 @@ public:
 	static const int kDescpritorSize = 512;
 	// 次の番号
 	static uint32_t sNextDescriptorNum_;
-	/// <summary>
-	/// 次のヒープ番号取得
-	/// </summary>
-	/// <returns></returns>
-	static uint32_t GetNextDescriptorNum() { return sNextDescriptorNum_; }
 
-	/// <summary>
-	/// ヒープ番号を進める
-	/// </summary>
-	/// <returns></returns>
-	static void AllocateNextDescriptorNum() { sNextDescriptorNum_++; }
-
+public:
 	/// <summary>
 	/// ヒープ番号進めて値を取得
 	/// </summary>

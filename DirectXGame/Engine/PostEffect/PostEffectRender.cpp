@@ -1,6 +1,5 @@
 #include "PostEffectRender.h"
 #include "../3D/Descriptor/SRVHandler.h"
-#include "../3D/Graphics/GraphicsPSO.h"
 
 Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 

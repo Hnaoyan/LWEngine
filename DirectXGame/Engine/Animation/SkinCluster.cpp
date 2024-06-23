@@ -17,9 +17,8 @@ SkinCluster SkinCluster::Create(ID3D12Device* device, const Skeleton& skeleton, 
     skinCluster.mappedPalette = { mappedPalette,skeleton.joints.size() };
     skinCluster.paletteSrvHandle.first = SRVHandler::GetSrvHandleCPU();
     skinCluster.paletteSrvHandle.second = SRVHandler::GetSrvHandleGPU();
-    skinCluster.srvHandleIndex = SRVHandler::GetNextDescriptorNum();
     // SRVを次に進める
-    SRVHandler::AllocateNextDescriptorNum();
+    skinCluster.srvHandleIndex = SRVHandler::AllocateDescriptor();
 
     // palette用のsrvを作成
     D3D12_SHADER_RESOURCE_VIEW_DESC paletteSrvDesc{};
