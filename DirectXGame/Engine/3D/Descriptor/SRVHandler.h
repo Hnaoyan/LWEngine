@@ -25,6 +25,10 @@ public:
 	/// <returns></returns>
 	static void AllocateNextDescriptorNum() { sNextDescriptorNum_++; }
 
+	/// <summary>
+	/// ヒープ番号進めて値を取得
+	/// </summary>
+	/// <returns></returns>
 	static uint32_t AllocateDescriptor() {
 		// 現在の値
 		uint32_t result = sNextDescriptorNum_;

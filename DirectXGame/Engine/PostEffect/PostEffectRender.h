@@ -22,4 +22,5 @@ public:
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> renderTextureHandle_;
 	uint32_t srvIndex_ = 0u;
 
+	static Pipeline::PostEffectType sPostEffect;
 };

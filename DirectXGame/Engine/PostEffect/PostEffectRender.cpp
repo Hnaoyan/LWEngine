@@ -2,13 +2,15 @@
 #include "../3D/Descriptor/SRVHandler.h"
 #include "../3D/Graphics/GraphicsPSO.h"
 
+Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+
 void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	commandList_ = cmdList;
 
 	PostEffectPipeline pipeline = std::get<PostEffectPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kPostEffect)]);
 	// PSO
-	commandList_->SetPipelineState(pipeline.pipelineStates[size_t(Pipeline::PostEffectType::kNormal)].Get());
+	commandList_->SetPipelineState(pipeline.pipelineStates[size_t(sPostEffect)].Get());
 	commandList_->SetGraphicsRootSignature(pipeline.rootSignature.Get());
 
 	// SRVヒープ

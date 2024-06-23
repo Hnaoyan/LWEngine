@@ -577,15 +577,24 @@ void GraphicsPSO::CreatePostEffectPSO()
 	// 頂点シェーダの読み込みとコンパイル
 	vsBlob = Shader::GetInstance()->Compile(L"PostEffect/FullScreenVS.hlsl", L"vs_6_0");
 	assert(vsBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.VS = { vsBlob->GetBufferPointer(),vsBlob->GetBufferSize() };	// VertexShader
+
 	// ピクセルシェーダの読み込みとコンパイル
 	psBlob = Shader::GetInstance()->Compile(L"PostEffect/FullScreenPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	// シェーダの設定
-	graphicsPipelineStateDesc.VS = { vsBlob->GetBufferPointer(),vsBlob->GetBufferSize() };	// VertexShader
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
-
 	// パイプラインステート作成
 	resultPipeline.pipelineStates[size_t(PostEffect::kNormal)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/GrayscalePS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kGrayScale)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// 登録
 	sPipelines_[size_t(Pipeline::Order::kPostEffect)] = std::move(resultPipeline);

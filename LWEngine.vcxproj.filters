@@ -411,6 +411,12 @@
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenVS.hlsl" />
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl" />
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\VignettePS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\GaussianFilterPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\GrayscalePS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\LuminanceBasedOutlinePS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\BoxFilterPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\GrayscaleVignettePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DirectXGame\Engine\3D\Shader\Object3D.hlsli" />
