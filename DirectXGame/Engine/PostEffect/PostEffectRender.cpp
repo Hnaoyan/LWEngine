@@ -13,7 +13,7 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList_->SetGraphicsRootSignature(pipeline.rootSignature.Get());
 
 	// SRVヒープ
-	ID3D12DescriptorHeap* ppHeap[] = { SRVHandler::GetInstance()->GetSrvHeap() };
+	ID3D12DescriptorHeap* ppHeap[] = { SRVHandler::GetInstance()->GetHeap() };
 	commandList_->SetDescriptorHeaps(_countof(ppHeap), ppHeap);
 
 	// テーブル設定

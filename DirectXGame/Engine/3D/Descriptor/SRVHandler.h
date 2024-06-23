@@ -45,7 +45,7 @@ public: // アクセッサ
 	/// SRVヒープの取得
 	/// </summary>
 	/// <returns></returns>
-	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap_.Get(); }
+	ID3D12DescriptorHeap* GetHeap() { return srvHeap_.Get(); }
 private:
 	// デバイスクラス
 	static DirectXDevice* dxDevice_;

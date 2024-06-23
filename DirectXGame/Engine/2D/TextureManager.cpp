@@ -23,7 +23,7 @@ void TextureManager::SetGraphicsRootDescriptorTable(ID3D12GraphicsCommandList* c
 {
     // デスクリプタヒープの配列
     assert(textureHandle < textures_.size());
-    ID3D12DescriptorHeap* ppHeaps[] = { dxCommon_->GetSrvHandler()->GetSrvHeap()};
+    ID3D12DescriptorHeap* ppHeaps[] = { dxCommon_->GetSrvHandler()->GetHeap()};
     commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 
     // シェーダリソースビューをセット
