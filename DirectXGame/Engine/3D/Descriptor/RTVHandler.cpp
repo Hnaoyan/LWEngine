@@ -49,6 +49,17 @@ void RTVHandler::ClearRenderTarget(ID3D12GraphicsCommandList* cmdList)
 	cmdList->ClearRenderTargetView(rtvHandle, clearColor_, 0, nullptr);
 }
 
+void RTVHandler::ClearRenderTexture(ID3D12GraphicsCommandList* cmdList)
+{
+	// 描画先のRTVを設定する
+	// ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHeap_.Get(), dxDevice_->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), 2);
+
+	// 指定した色で画面全体をクリアする
+	//float color[4] = { kRenderTargetClearValue_.x,kRenderTargetClearValue_.y,kRenderTargetClearValue_.z,kRenderTargetClearValue_.w };
+	cmdList->ClearRenderTargetView(rtvHandle, clearColor_, 0, nullptr);
+}
+
 
 void RTVHandler::CreateRenderTargetView()
 {
@@ -95,7 +106,7 @@ void RTVHandler::CreateRenderTexture()
 	rtvDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	// 出力結果をSRGBに変換して書き込む
 	rtvDesc_.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;	// 2Dテクスチャとして書き込む
 
-	renderTextureResource_ = DxCreateLib::RenderTextureLib::CreateRenderTextureResource(device, bufferWidth_, bufferHeight_, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, {1,1,1,1});
+	renderTextureResource_ = DxCreateLib::RenderTextureLib::CreateRenderTextureResource(device, bufferWidth_, bufferHeight_, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, { 0.1f,0.25f,0.5f,1.0f });
 	device->CreateRenderTargetView(renderTextureResource_.Get(), &rtvDesc_, handle);
 	//SRVの作成
 	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};

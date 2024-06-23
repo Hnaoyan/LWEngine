@@ -1,6 +1,7 @@
 #include "MyGame.h"
 #include "../Scene/SceneFactory/SceneFactory.h"
 #include "../GlobalVariables/GlobalVariables.h"
+#include "../PostEffect/PostEffectRender.h"
 
 #include "imgui.h"
 
@@ -44,13 +45,17 @@ void MyGame::Update()
 void MyGame::Draw()
 {
 	// RenderGraph
+	//
+	dxCommon_->RenderPreDraw();
+	// シーンの描画
+	sceneManager_->Draw();
+	//
+	dxCommon_->RenderPostDraw();
 
 	// 描画前処理
 	dxCommon_->PreDraw();
-
-	// シーンの描画
-	sceneManager_->Draw();
-
+	// PostEffectの描画
+	PostEffectRender::GetInstance()->Draw(dxCommon_->GetCommandList());
 	// ImGuiの描画
 	ImGuiDraw();
 	// 描画後処理

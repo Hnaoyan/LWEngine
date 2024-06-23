@@ -585,7 +585,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 
 	// パイプラインステート作成
-	resultPipeline.pipelineStates[sizeof(PostEffect::kNormal)] = CreatePipelineState(graphicsPipelineStateDesc);
+	resultPipeline.pipelineStates[size_t(PostEffect::kNormal)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// 登録
 	sPipelines_[size_t(Pipeline::Order::kPostEffect)] = std::move(resultPipeline);

@@ -35,6 +35,15 @@ public:
 	void PostDraw();
 
 	/// <summary>
+	/// レンダーテクスチャの描画前
+	/// </summary>
+	void RenderPreDraw();
+	/// <summary>
+	/// レンダーテクスチャの描画後
+	/// </summary>
+	void RenderPostDraw();
+
+	/// <summary>
 	/// 深度クリア
 	/// </summary>
 	void ClearDepthBuffer() {

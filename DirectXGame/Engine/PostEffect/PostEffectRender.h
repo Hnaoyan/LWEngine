@@ -8,7 +8,10 @@ class SRVHandler;
 class PostEffectRender : public Singleton<PostEffectRender>
 {
 public:
-
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="cmdList"></param>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 private:
