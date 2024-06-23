@@ -23,9 +23,10 @@ void FollowCamera::Update()
 		}
 
 		// 遅延追尾時の座標
-		//interTarget_ = 
+		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);
+		// オフセット作成
 		Vector3 offset = CreateOffset();
-
+		// カメラの座標作成
 		transform_.translate = target_->transform_.translate + offset;
 	}
 

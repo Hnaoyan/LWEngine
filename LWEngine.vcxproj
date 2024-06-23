@@ -39,6 +39,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Core\ICamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\DirectionalLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\PointLight.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Core\ICamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\DebugCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
+    <ClInclude Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />

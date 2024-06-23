@@ -1,11 +1,15 @@
 #include "MyGame.h"
 #include "../Scene/SceneFactory/SceneFactory.h"
+#include "../GlobalVariables/GlobalVariables.h"
+
 #include "imgui.h"
 
 void MyGame::Initialize()
 {
 	// 基底クラス
 	Framework::Initialize();
+	// ロード
+	GlobalVariables::GetInstance()->LoadFiles();
 
 	// シーンの初期化
 	sceneFactory_ = std::make_unique<SceneFactory>();
@@ -57,6 +61,8 @@ void MyGame::ImGuiDraw()
 {
 	// 受付開始
 	imGuiManager_->Begin();
+	// グローバル変数群
+	GlobalVariables::GetInstance()->Update();
 	// シーンのImGuiまとめた関数呼び出し
 	sceneManager_->ImGuiDraw();
 	// 受付終了
