@@ -36,6 +36,8 @@ public:
 	void LoadTexture() override;
 
 	void CameraUpdate() override;
+
+	void LightingInitialize() override;
 private:
 	// 試し
 	std::array<std::unique_ptr<AnimCubeObject>, 2> cubes_;
