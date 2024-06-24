@@ -1,6 +1,7 @@
 #include "SampleScene.h"
 #include "imgui.h"
 #include "../../Engine/2D/TextureManager.h"
+#include "../../Engine/Scene/SceneManager.h"
 
 void SampleScene::Initialize()
 {
@@ -75,6 +76,11 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
+
+	if (input_->TriggerKey(DIK_RSHIFT)) {
+		sceneManager_->ChangeScene("GAME");
+	}
+
 	newSprite_->SetPosition(newSpriteData_.position_);
 	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
 	newSprite_->SetInvisible(newSpriteData_.isInvisible_);

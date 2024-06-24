@@ -64,6 +64,7 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\SpriteCBuffer.h" />
@@ -99,6 +100,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\CameraList.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Core\ICamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\DebugCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
