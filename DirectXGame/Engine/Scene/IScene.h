@@ -3,6 +3,8 @@
 #include "../Input/Input.h"
 #include "../Camera/Core/ICamera.h"
 
+class SceneManager;
+
 class IScene
 {
 public: // フレーム関数
@@ -66,12 +68,20 @@ public: // 取得・設定
 	/// <returns></returns>
 	int GetSceneNum() { return sceneNum; }
 
+	/// <summary>
+	/// マネージャー設定
+	/// </summary>
+	/// <param name="sceneM"></param>
+	void SetSceneManager(SceneManager* sceneM) { sceneManager_ = sceneM; }
+
 protected:
 	/// <summary>
 	/// シーン番号
 	/// </summary>
 	static int sceneNum;
 
+	// シーンマネージャー
+	SceneManager* sceneManager_ = nullptr;
 	// DxCommon
 	DirectXCommon* dxCommon_ = nullptr;
 	// インプット

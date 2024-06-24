@@ -11,6 +11,9 @@ void SceneManager::Update()
 		// シーン切り替え
 		nowScene_ = nextScene_;
 		nextScene_ = nullptr;
+
+		// シーンマネージャー設定
+		nowScene_->SetSceneManager(this);
 		// 次のシーンの初期化
 		nowScene_->Initialize();
 	}
@@ -33,11 +36,12 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 	assert(sceneFactory_);
 	assert(nextScene_ == nullptr);
 
-	if (nowScene_ == nullptr) {
-		nextScene_ = sceneFactory_->CreateScene(sceneName);
-		return;
-	}
+	//if (nowScene_ == nullptr) {
+	//	nextScene_ = sceneFactory_->CreateScene(sceneName);
+	//	return;
+	//}
 
 	// 次のシーン生成
+	nextScene_ = sceneFactory_->CreateScene(sceneName);
 	nextSceneName_ = sceneName;
 }
