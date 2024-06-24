@@ -1,4 +1,5 @@
 #include "IScene.h"
+#include "SceneManager.h"
 
 void IScene::Initialize()
 {

@@ -1,34 +1,18 @@
 #include "SampleScene.h"
 #include "imgui.h"
 #include "../../Engine/2D/TextureManager.h"
+#include "../../Engine/Scene/SceneManager.h"
 
 void SampleScene::Initialize()
 {
 	// 基底クラス初期化
 	IScene::Initialize();
+	// ライティング初期化
+	LightingInitialize();
 	// モデル読み込み
 	LoadModel();
 	// テクスチャ関係読み込み
 	LoadTexture();
-
-	// ライト作成
-	directionalLight_.reset(DirectionalLight::CreateLight());
-	pointLight_.reset(PointLight::CreateLight());
-	spotLight_.reset(SpotLight::CreateLight());
-
-	ptLightData_.intensity = 1.0f;
-	ptLightData_.position = { 0,2.0f,0 };
-	ptLightData_.color = { 1,1,1,1 };
-	ptLightData_.decay = 1.0f;
-	ptLightData_.radius = 2.0f;
-
-	spLightData_.color = { 1,1,1,1 };
-	spLightData_.position = { 2.0f,1.25f,0.0f };
-	spLightData_.distance = 7.0f;
-	spLightData_.direction = Vector3::Normalize({ -1.0f,-1.0f,0.0f });
-	spLightData_.intensity = 4.0f;
-	spLightData_.decay = 2.0f;
-	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
 
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
@@ -92,6 +76,11 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
+
+	if (input_->TriggerKey(DIK_RSHIFT)) {
+		sceneManager_->ChangeScene("GAME");
+	}
+
 	newSprite_->SetPosition(newSpriteData_.position_);
 	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
 	newSprite_->SetInvisible(newSpriteData_.isInvisible_);
@@ -277,4 +266,28 @@ void SampleScene::CameraUpdate()
 		IScene::CameraUpdate();
 	}
 
+}
+
+void SampleScene::LightingInitialize()
+{
+	// ライト作成
+	directionalLight_.reset(DirectionalLight::CreateLight());
+	pointLight_.reset(PointLight::CreateLight());
+	spotLight_.reset(SpotLight::CreateLight());
+
+	// 点光源データ
+	ptLightData_.intensity = 1.0f;
+	ptLightData_.position = { 0,2.0f,0 };
+	ptLightData_.color = { 1,1,1,1 };
+	ptLightData_.decay = 1.0f;
+	ptLightData_.radius = 2.0f;
+
+	// 照光源データ
+	spLightData_.color = { 1,1,1,1 };
+	spLightData_.position = { 2.0f,1.25f,0.0f };
+	spLightData_.distance = 7.0f;
+	spLightData_.direction = Vector3::Normalize({ -1.0f,-1.0f,0.0f });
+	spLightData_.intensity = 4.0f;
+	spLightData_.decay = 2.0f;
+	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
 }

@@ -3,6 +3,8 @@
 #include "../Input/Input.h"
 #include "../Camera/Core/ICamera.h"
 
+class SceneManager;
+
 class IScene
 {
 public: // フレーム関数
@@ -18,7 +20,6 @@ public: // フレーム関数
 	/// 描画処理
 	/// </summary>
 	virtual void Draw() = 0;
-
 	/// <summary>
 	/// ImGuiの処理
 	/// </summary>
@@ -39,6 +40,10 @@ public:	// 初期化
 	/// アプリ関係の初期化
 	/// </summary>
 	virtual void ApplicationInitialize() {};
+	/// <summary>
+	/// ライティング初期化関数
+	/// </summary>
+	virtual void LightingInitialize() {};
 
 public:	// カメラなどの更新
 	/// <summary>
@@ -63,12 +68,20 @@ public: // 取得・設定
 	/// <returns></returns>
 	int GetSceneNum() { return sceneNum; }
 
+	/// <summary>
+	/// マネージャー設定
+	/// </summary>
+	/// <param name="sceneM"></param>
+	void SetSceneManager(SceneManager* sceneM) { sceneManager_ = sceneM; }
+
 protected:
 	/// <summary>
 	/// シーン番号
 	/// </summary>
 	static int sceneNum;
 
+	// シーンマネージャー
+	SceneManager* sceneManager_ = nullptr;
 	// DxCommon
 	DirectXCommon* dxCommon_ = nullptr;
 	// インプット
