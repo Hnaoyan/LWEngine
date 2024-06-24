@@ -28,19 +28,24 @@ public:
 	/// </summary>
 	/// <param name="cmdList"></param>
 	void ClearRenderTarget(ID3D12GraphicsCommandList* cmdList);
-
+	/// <summary>
+	/// PostEffectTextureのクリア
+	/// </summary>
+	/// <param name="cmdList"></param>
+	void ClearRenderTexture(ID3D12GraphicsCommandList* cmdList);
 
 public: // アクセッサ
+	// RTVDesc
 	D3D12_RENDER_TARGET_VIEW_DESC GetDesc() { return rtvDesc_; }
+	// BackBuffer
 	ID3D12Resource* GetBackBuffer(UINT index) { return backBuffer_[index].Get(); }
+	// RenderTexture
+	ID3D12Resource* GetRenderTexture() { return renderTextureResource_.Get(); }
+	// BufferCount
 	size_t GetBackBufferCount() const { return backBuffer_.size(); }
-
-	/// <summary>
-	/// RTVヒープの取得
-	/// </summary>
-	/// <returns></returns>
-	ID3D12DescriptorHeap* GetRtvHeap() { return rtvHeap_.Get(); }
-
+	// Heap取得
+	ID3D12DescriptorHeap* GetHeap() { return rtvHeap_.Get(); }
+	// ハンドル取得
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle();
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle();
 
@@ -54,14 +59,16 @@ private:
 	/// RTV作成
 	/// </summary>
 	void CreateRenderTargetView();
-
+	/// <summary>
+	/// PostEffectTexture作成
+	/// </summary>
 	void CreateRenderTexture();
 
 private:
+	// デバイス関係
 	DirectXDevice* dxDevice_ = nullptr;
+	// スワップチェーン
 	SwapChainManager* swapChainManager_ = nullptr;
-	// デバイス
-	//ID3D12Device* device_ = nullptr;
 	// ヒープ自体
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeap_;
 
@@ -80,8 +87,6 @@ private:
 	std::vector<D3D12_CPU_DESCRIPTOR_HANDLE> rtvHandles_;
 
 	float clearColor_[4] = { 0.1f,0.25f,0.5f,1.0f };
-
-public:
 	// レンダーテクスチャ
 	Microsoft::WRL::ComPtr<ID3D12Resource> renderTextureResource_;
 

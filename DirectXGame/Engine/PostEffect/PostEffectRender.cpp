@@ -1,6 +1,7 @@
 #include "PostEffectRender.h"
 #include "../3D/Descriptor/SRVHandler.h"
-#include "../3D/Graphics/GraphicsPSO.h"
+
+Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 
 void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 {
@@ -8,11 +9,11 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	PostEffectPipeline pipeline = std::get<PostEffectPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kPostEffect)]);
 	// PSO
-	commandList_->SetPipelineState(pipeline.pipelineStates[size_t(Pipeline::PostEffectType::kNormal)].Get());
+	commandList_->SetPipelineState(pipeline.pipelineStates[size_t(sPostEffect)].Get());
 	commandList_->SetGraphicsRootSignature(pipeline.rootSignature.Get());
 
 	// SRVヒープ
-	ID3D12DescriptorHeap* ppHeap[] = { SRVHandler::GetInstance()->GetSrvHeap() };
+	ID3D12DescriptorHeap* ppHeap[] = { SRVHandler::GetInstance()->GetHeap() };
 	commandList_->SetDescriptorHeaps(_countof(ppHeap), ppHeap);
 
 	// テーブル設定

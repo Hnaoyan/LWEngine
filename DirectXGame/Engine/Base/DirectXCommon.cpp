@@ -50,13 +50,13 @@ void DirectXCommon::PreDraw()
 	D3D12_RESOURCE_BARRIER barrier = DxCreateLib::ResourceLib::GetResourceBarrier(rtvHandler_->GetBackBuffer(backBufferIndex),
 		D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	// TransionBarrier
-	dxCommand_->sCommandList_->ResourceBarrier(1, &barrier);
+	DirectXCommand::sCommandList_->ResourceBarrier(1, &barrier);
 
 	// ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHandler_->GetRtvHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), backBufferIndex);
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHandler_->GetHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), backBufferIndex);
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvHandler_->GetHeap()->GetCPUDescriptorHandleForHeapStart();
 	// レンダーターゲットを設定
-	dxCommand_->sCommandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+	DirectXCommand::sCommandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
 	rtvHandler_->ClearRenderTarget(DirectXCommand::sCommandList_.Get());
 	dsvHandler_->ClearDepthBuffer(DirectXCommand::sCommandList_.Get());
@@ -65,8 +65,8 @@ void DirectXCommon::PreDraw()
 	// ビューポートの設定
 	D3D12_VIEWPORT viewport = DxCreateLib::ViewLib::CreateViewport(FLOAT(backBufferWidth_), FLOAT(backBufferHeight_), 0, 0, 0.0f, 1.0f);
 	D3D12_RECT scissorRect = DxCreateLib::ViewLib::CreateScissorRect(0, FLOAT(backBufferWidth_), 0, FLOAT(backBufferHeight_));
-	dxCommand_->sCommandList_->RSSetViewports(1, &viewport);
-	dxCommand_->sCommandList_->RSSetScissorRects(1, &scissorRect);
+	DirectXCommand::sCommandList_->RSSetViewports(1, &viewport);
+	DirectXCommand::sCommandList_->RSSetScissorRects(1, &scissorRect);
 
 
 }
@@ -115,6 +115,40 @@ void DirectXCommon::PostDraw()
 	assert(SUCCEEDED(result));
 	result = dxCommand_->sCommandList_->Reset(DirectXCommand::sCommandAllocator_.Get(), nullptr);
 
+}
+
+void DirectXCommon::RenderPreDraw()
+{
+	// Barrier
+	D3D12_RESOURCE_BARRIER barrier = DxCreateLib::ResourceLib::GetResourceBarrier(rtvHandler_->GetRenderTexture(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	// TransitionBarrierを張る
+	DirectXCommand::sCommandList_->ResourceBarrier(1, &barrier);
+	// 描画先のRTVを設定する
+	// ハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHandler_->GetHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), 2);
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvHandler_->GetHeap()->GetCPUDescriptorHandleForHeapStart();
+	// レンダーターゲットを設定
+	DirectXCommand::sCommandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+
+	rtvHandler_->ClearRenderTexture(DirectXCommand::sCommandList_.Get());
+	dsvHandler_->ClearDepthBuffer(DirectXCommand::sCommandList_.Get());
+
+	// ビューポートの設定
+	D3D12_VIEWPORT viewport = DxCreateLib::ViewLib::CreateViewport(FLOAT(backBufferWidth_), FLOAT(backBufferHeight_), 0, 0, 0.0f, 1.0f);
+	D3D12_RECT scissorRect = DxCreateLib::ViewLib::CreateScissorRect(0, FLOAT(backBufferWidth_), 0, FLOAT(backBufferHeight_));
+	DirectXCommand::sCommandList_->RSSetViewports(1, &viewport);
+	DirectXCommand::sCommandList_->RSSetScissorRects(1, &scissorRect);
+}
+
+void DirectXCommon::RenderPostDraw()
+{
+	// Barrier
+	D3D12_RESOURCE_BARRIER barrier = DxCreateLib::ResourceLib::GetResourceBarrier(rtvHandler_->GetRenderTexture(),
+		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+
+	DirectXCommand::sCommandList_->ResourceBarrier(1, &barrier);
 }
 
 void DirectXCommon::InitializeFixFPS()

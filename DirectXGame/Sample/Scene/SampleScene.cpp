@@ -41,14 +41,27 @@ void SampleScene::Initialize()
 	//sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
 
 	// 歩くオブジェ
-	walkObj_ = std::make_unique<AnimSampleObject>();
-	walkObj_->Initialize(this->walkModel_.get(),cubeModel_.get());
-	walkObj_->worldTransform_.transform_.translate = { 0,0,0 };
-	walkObj_->worldTransform_.transform_.rotate = { 0,3.14f,0 };
+	humans_[0] = std::make_unique<AnimSampleObject>();
+	humans_[0]->Initialize(this->walkModel_.get(),cubeModel_.get());
+	humans_[0]->worldTransform_.transform_.translate = { 0,0,0 };
+	humans_[0]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
 
-	cubeObj_ = std::make_unique<AnimCubeObject>();
-	cubeObj_->Initialize(testModel_.get());
+	humans_[1] = std::make_unique<AnimSampleObject>();
+	humans_[1]->Initialize(this->walkModel_.get(), cubeModel_.get());
+	humans_[1]->worldTransform_.transform_.translate = { 0,0,0 };
+	humans_[1]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
+
+	humans_[2] = std::make_unique<AnimSampleObject>();
+	humans_[2]->Initialize(this->sneakWalkModel_.get(), cubeModel_.get());
+	humans_[2]->worldTransform_.transform_.translate = { 0,0,0 };
+	humans_[2]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
+
+	cubes_[0] = std::make_unique<AnimCubeObject>();
+	cubes_[0]->Initialize(testModel_.get());
 	//cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
+
+	cubes_[1] = std::make_unique<AnimCubeObject>();
+	cubes_[1]->Initialize(testModel_.get());
 
 	player_ = std::make_unique<PlSampleObject>();
 	player_->Initialize(testModel_.get());
@@ -84,9 +97,14 @@ void SampleScene::Update()
 	newSprite_->SetInvisible(newSpriteData_.isInvisible_);
 
 	testWTF_.UpdateMatrix();
-	//sampleObj_->Update();
-	walkObj_->Update();
-	cubeObj_->Update();
+
+	humans_[0]->Update();
+	humans_[1]->Update();
+	humans_[2]->Update();
+
+	for (int i = 0; i < cubes_.size(); ++i) {
+		cubes_[i]->Update();
+	}
 	player_->Update();
 	// カメラの更新
 	CameraUpdate();
@@ -120,12 +138,18 @@ void SampleScene::Draw()
 	desc.directionalLight = directionalLight_.get();
 	desc.spotLight = spotLight_.get();
 	desc.pointLight = pointLight_.get();
-	walkObj_->Draw(desc);
-	player_->Draw(desc);
-	cubeObj_->Draw(desc);
+
+	humans_[0]->Draw(desc);
+	humans_[1]->Draw(desc);
+	humans_[2]->Draw(desc);
+
+	//player_->Draw(&camera_);
+	for (int i = 0; i < cubes_.size(); ++i) {
+		cubes_[i]->Draw(desc);
+	}
 	desc.worldTransform = &testWTF_;
 	//sphere_->Draw(desc);
-	//cubeModel_->Draw(desc);
+	cubeModel_->Draw(desc);
 	skybox_->Draw(desc);
 
 	Model::PostDraw();
@@ -203,8 +227,12 @@ void SampleScene::ImGuiDraw()
 
 	player_->ImGuiDraw();
 	skybox_->ImGuiDraw();
-	walkObj_->ImGuiDraw();
-	cubeObj_->ImGuiDraw();
+	humans_[0]->ImGuiDraw();
+	humans_[1]->ImGuiDraw();
+	humans_[2]->ImGuiDraw();
+	for (int i = 0; i < cubes_.size(); ++i) {
+		cubes_[i]->ImGuiDraw();
+	}
 	// カメラの
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
@@ -220,7 +248,7 @@ void SampleScene::LoadModel()
 {
 	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
-
+	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 	cubeModel_.reset(Model::CreateDefault("terrain"));
 
 	sphere_.reset(Sphere::CreateSphere());

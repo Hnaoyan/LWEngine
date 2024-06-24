@@ -3,9 +3,17 @@
 #include "AnimationData.h"
 #include <cassert>
 #include "../Math/MathLib.h"
+#include "../Animation/System/AnimationPlayer.h"
 
 class Animation
 {
+public:
+	enum class PlayBack : uint32_t {
+		kForward,
+		kReverse,
+		kStop,
+	};
+
 public:
 	// モデルデータ
 	ModelData modelData_;
@@ -24,6 +32,13 @@ public:
 
 	Skeleton skeleton_;
 	SkinCluster skinCluster_;
+
+	bool isForward_ = true;
+
+	bool isStop_ = false;
+	// 再生方向
+	PlayBack playType_ = PlayBack::kForward;
+
 public:
 	void Initialize(ModelData& modelData);
 	void Update();
@@ -36,7 +51,7 @@ public:
 	// Skinning更新
 	void UpdateSkinCluster();
 
-	void ImGuiDraw();
+	void ImGuiDraw(std::string parentName);
 
 public:
 	static Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time) {

@@ -13,18 +13,12 @@ public:
 	static const int kDescpritorSize = 512;
 	// 次の番号
 	static uint32_t sNextDescriptorNum_;
+
+public:
 	/// <summary>
-	/// 次のヒープ番号取得
+	/// ヒープ番号進めて値を取得
 	/// </summary>
 	/// <returns></returns>
-	static uint32_t GetNextDescriptorNum() { return sNextDescriptorNum_; }
-
-	/// <summary>
-	/// ヒープ番号を進める
-	/// </summary>
-	/// <returns></returns>
-	static void AllocateNextDescriptorNum() { sNextDescriptorNum_++; }
-
 	static uint32_t AllocateDescriptor() {
 		// 現在の値
 		uint32_t result = sNextDescriptorNum_;
@@ -51,7 +45,7 @@ public: // アクセッサ
 	/// SRVヒープの取得
 	/// </summary>
 	/// <returns></returns>
-	ID3D12DescriptorHeap* GetSrvHeap() { return srvHeap_.Get(); }
+	ID3D12DescriptorHeap* GetHeap() { return srvHeap_.Get(); }
 private:
 	// デバイスクラス
 	static DirectXDevice* dxDevice_;

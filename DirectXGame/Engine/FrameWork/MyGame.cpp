@@ -1,11 +1,16 @@
 #include "MyGame.h"
 #include "../Scene/SceneFactory/SceneFactory.h"
+#include "../GlobalVariables/GlobalVariables.h"
+#include "../PostEffect/PostEffectRender.h"
+
 #include "imgui.h"
 
 void MyGame::Initialize()
 {
 	// 基底クラス
 	Framework::Initialize();
+	// ロード
+	GlobalVariables::GetInstance()->LoadFiles();
 
 	// シーンの初期化
 	sceneFactory_ = std::make_unique<SceneFactory>();
@@ -40,13 +45,17 @@ void MyGame::Update()
 void MyGame::Draw()
 {
 	// RenderGraph
+	//
+	dxCommon_->RenderPreDraw();
+	// シーンの描画
+	sceneManager_->Draw();
+	//
+	dxCommon_->RenderPostDraw();
 
 	// 描画前処理
 	dxCommon_->PreDraw();
-
-	// シーンの描画
-	sceneManager_->Draw();
-
+	// PostEffectの描画
+	PostEffectRender::GetInstance()->Draw(dxCommon_->GetCommandList());
 	// ImGuiの描画
 	ImGuiDraw();
 	// 描画後処理
@@ -57,6 +66,8 @@ void MyGame::ImGuiDraw()
 {
 	// 受付開始
 	imGuiManager_->Begin();
+	// グローバル変数群
+	GlobalVariables::GetInstance()->Update();
 	// シーンのImGuiまとめた関数呼び出し
 	sceneManager_->ImGuiDraw();
 	// 受付終了
