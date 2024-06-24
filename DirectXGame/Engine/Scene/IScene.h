@@ -18,7 +18,6 @@ public: // フレーム関数
 	/// 描画処理
 	/// </summary>
 	virtual void Draw() = 0;
-
 	/// <summary>
 	/// ImGuiの処理
 	/// </summary>
@@ -39,6 +38,10 @@ public:	// 初期化
 	/// アプリ関係の初期化
 	/// </summary>
 	virtual void ApplicationInitialize() {};
+	/// <summary>
+	/// ライティング初期化関数
+	/// </summary>
+	virtual void LightingInitialize() {};
 
 public:	// カメラなどの更新
 	/// <summary>
