@@ -42,7 +42,7 @@ void Material::Update()
 	materialData_->enableLighting = enableLighting_;
 	materialData_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
 	materialData_->shininess = shininess_;
-	materialData_->coefficient = coefficient_;
+	materialData_->coefficient = 0;
 }
 
 void Material::ImGuiDraw(const std::string& objName)

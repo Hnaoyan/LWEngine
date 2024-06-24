@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include <imgui.h>
 
 void GameScene::Initialize()
 {
@@ -64,6 +65,49 @@ void GameScene::Draw()
 
 void GameScene::ImGuiDraw()
 {
+	ImGui::Begin("SampleScene");
+	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
+
+	if (ImGui::TreeNode("DirectionalLight")) {
+		ImGui::TreePop();
+	}
+	if (ImGui::BeginTabBar("Lighting"))
+	{
+		float defaultSpeed = 0.01f;
+		if (ImGui::BeginTabItem("DirectionalLight"))
+		{
+			ImGui::ColorEdit4("Color", &lightData_.color.x);
+			ImGui::DragFloat3("Direction", &lightData_.direction.x, defaultSpeed);
+			lightData_.direction = Vector3::Normalize(lightData_.direction);
+			ImGui::DragFloat("Intensity", &lightData_.intensity, defaultSpeed);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("PointLight"))
+		{
+			ImGui::ColorEdit4("ptColor", &ptLightData_.color.x);
+			ImGui::DragFloat("ptDecay", &ptLightData_.decay, defaultSpeed);
+			ImGui::DragFloat("ptIntensity", &ptLightData_.intensity, defaultSpeed);
+			ImGui::DragFloat("ptRadius", &ptLightData_.radius, defaultSpeed);
+			ImGui::DragFloat3("ptPosition", &ptLightData_.position.x, defaultSpeed);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("SpotLight"))
+		{
+			ImGui::ColorEdit4("spColor", &spLightData_.color.x);
+			ImGui::DragFloat("spDecay", &spLightData_.decay, defaultSpeed);
+			ImGui::DragFloat("spIntensity", &spLightData_.intensity, defaultSpeed);
+			ImGui::DragFloat("spCosAngle", &spLightData_.cosAngle, defaultSpeed);
+			ImGui::DragFloat("spCosFalloffStart", &spLightData_.cosFalloffStart, defaultSpeed);
+			ImGui::DragFloat("spDistance", &spLightData_.distance, defaultSpeed);
+			ImGui::DragFloat3("spPosition", &spLightData_.position.x, defaultSpeed);
+			ImGui::DragFloat3("spDirection", &spLightData_.direction.x, defaultSpeed);
+			spLightData_.direction = Vector3::Normalize(spLightData_.direction);
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+
+	ImGui::End();
 	// カメラ
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
