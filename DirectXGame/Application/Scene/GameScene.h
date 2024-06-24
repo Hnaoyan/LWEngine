@@ -51,7 +51,10 @@ private: // アプリ
 
 private: // システム関係
 	// カメラ君
+	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
+	// 追従カメラ
+	std::unique_ptr<FollowCamera> followCamera_;
 	bool isDebugCamera_ = false;
 
 	// ライト君

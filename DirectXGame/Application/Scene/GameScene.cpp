@@ -20,6 +20,8 @@ void GameScene::Initialize()
 	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
 #pragma endregion
 
 }
@@ -65,6 +67,7 @@ void GameScene::ImGuiDraw()
 	// カメラ
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
+	followCamera_->ImGuiDraw();
 }
 
 void GameScene::LoadModel()
@@ -82,6 +85,7 @@ void GameScene::CameraUpdate()
 
 	if (isDebugCamera_) {
 		debugCamera_->Update();
+		followCamera_->Update();
 		camera_.viewMatrix_ = debugCamera_->viewMatrix_;
 		camera_.projectionMatrix_ = debugCamera_->projectionMatrix_;
 		camera_.TransferMatrix();
