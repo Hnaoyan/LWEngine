@@ -64,8 +64,6 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXGame\Application\Object\ObjectLists.h" />
-    <ClInclude Include="DirectXGame\Application\Object\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
