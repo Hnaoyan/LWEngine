@@ -38,9 +38,8 @@ public:
 	void CameraUpdate() override;
 private:
 	// 試し
-	std::unique_ptr<AnimSampleObject> sampleObj_;
-	std::unique_ptr<AnimSampleObject> walkObj_;
-	std::unique_ptr<AnimCubeObject> cubeObj_;
+	std::array<std::unique_ptr<AnimCubeObject>, 2> cubes_;
+	std::array<std::unique_ptr<AnimSampleObject>, 3> humans_;
 
 	std::unique_ptr<PlSampleObject> player_;
 
@@ -56,6 +55,7 @@ private:
 
 	std::unique_ptr<Model> testModel_;
 	std::unique_ptr<Model> walkModel_;
+	std::unique_ptr<Model> sneakWalkModel_;
 
 	std::unique_ptr<Model> cubeModel_;
 

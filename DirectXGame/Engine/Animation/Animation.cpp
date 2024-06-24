@@ -16,20 +16,27 @@ void Animation::Initialize(ModelData& modelData)
 
 void Animation::Update()
 {
-	animationTime_ += nowFrame_ / 60.0f;
-	animationTime_ = std::fmod(animationTime_, animData_.duration);
-	// ノード取得
-	//NodeAnimation& nodeAnim = animData_.nodeAnimations[modelData_->rootNode.name];
+	//animationTime_ += nowFrame_ / 60.0f;
+	//animationTime_ = std::fmod(animationTime_, animData_.duration);
+	// 停止なら
+	if (isStop_) {
+		return;
+	}
+	// アニメーション再生処理
+	switch (playType_)
+	{
+	case PlayBack::kForward:
+		animationTime_ += 1.0f / 60.0f;
+		animationTime_ = std::fmod(animationTime_, animData_.duration);
+		break;
+	case PlayBack::kReverse:
+		animationTime_ -= 1.0f / 60.0f;
 
-	//// トランスフォームの取得
-	//transform_.translate = CalculateValue(nodeAnim.translate.keyframes, animationTime_);
-	//transform_.rotate = CalculateValue(nodeAnim.rotate.keyframes, animationTime_);
-	//transform_.scale = CalculateValue(nodeAnim.scale.keyframes, animationTime_);
-	//
-	//Quaternion normalizeRotate = Quaternion::Normalize(transform_.rotate);
-
-	//// ローカル行列
-	//localMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, normalizeRotate, transform_.translate);
+		if (animationTime_ < 0) {
+			animationTime_ = animData_.duration;
+		}
+		break;
+	}
 	ApplyAnimation();
 
 	UpdateSkelton();
@@ -81,19 +88,32 @@ void Animation::UpdateSkinCluster()
 
 }
 
-void Animation::ImGuiDraw()
+void Animation::ImGuiDraw(std::string parentName)
 {
 	//ImGui::Begin("anim");
-	ImGui::DragFloat("AnimFrame",&animationTime_,0.01f);
-	if (ImGui::TreeNode("Joints")) {
+	std::string name = parentName + "AnimFrame";
+
+	ImGui::DragFloat(name.c_str(), &animationTime_, 0.01f);
+	name = parentName + "Joints";
+	if (ImGui::TreeNode(name.c_str())) {
 		for (int i = 0; i < skeleton_.joints.size(); i++) {
 			Vector3 localPos = skeleton_.joints[i].transform.translate;
-			std::string name = "LocalPos" + std::to_string(i);
+			name = "LocalPos" + std::to_string(i);
 			ImGui::DragFloat3(name.c_str(), &localPos.x,0.01f);
 			skeleton_.joints[i].transform.translate = localPos;
 		}
 		ImGui::TreePop();
 	}
+	ImGui::Checkbox(parentName.c_str(), &isForward_);
+
+	if (isForward_) {
+		playType_ = PlayBack::kForward;
+	}
+	else {
+		playType_ = PlayBack::kReverse;
+	}
+	name = parentName + "IsStop";
+	ImGui::Checkbox(name.c_str(), &isStop_);
 
 	//ImGui::End();
 }

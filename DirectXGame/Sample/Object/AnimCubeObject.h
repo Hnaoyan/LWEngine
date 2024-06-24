@@ -7,7 +7,7 @@
 class AnimCubeObject
 {
 public:
-	//static int32_t sSerialNumber;
+	static int32_t sSerialNumber;
 	//static std::string sObjectName;
 
 	int32_t serialNumber_ = 0u;

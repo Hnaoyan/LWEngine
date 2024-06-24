@@ -24,7 +24,7 @@ void AnimSampleObject::Initialize(Model* model, Model* cube)
 	sSerialNumber++;
 
 	// 名前
-	objectName_ = sObjectName + std::to_string(serialNumber_);
+	objectName_ = "Human" + std::to_string(serialNumber_);
 
 	worldTransform_.Initialize();
 	animation_.Initialize(animModel_->GetModelDataAdress());
@@ -103,7 +103,7 @@ void AnimSampleObject::ImGuiDraw()
 	name = "Scale" + std::to_string(serialNumber_);
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, 0.01f);
 
-	animation_.ImGuiDraw();
+	animation_.ImGuiDraw(objectName_.c_str());
 	this->animModel_->GetMaterial()->ImGuiDraw(objectName_);
 
 	ImGui::End();

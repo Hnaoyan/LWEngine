@@ -1,16 +1,18 @@
 #include "AnimCubeObject.h"
 #include "imgui.h"
 
+int32_t AnimCubeObject::sSerialNumber = 0u;
+
 void AnimCubeObject::Initialize(Model* model)
 {
 	animModel_ = model;
 	animData_ = animModel_->GetModelData()->animData;
-	//// 番号
-	//serialNumber_ = sSerialNumber;
-	//sSerialNumber++;
+	// 番号
+	serialNumber_ = sSerialNumber;
+	sSerialNumber++;
 
-	//// 名前
-	//objectName_ = sObjectName + std::to_string(serialNumber_);
+	// 名前
+	objectName_ = "AnimCube" + std::to_string(serialNumber_);
 
 	worldTransform_.Initialize();
 	// アニメーションプレイヤー
@@ -59,10 +61,11 @@ void AnimCubeObject::Draw(const ModelDrawDesc& desc)
 
 void AnimCubeObject::ImGuiDraw()
 {
-	ImGui::Begin("cubeAnim");
-
-	ImGui::DragFloat("AnimTimer", &animationTime_);
-	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
-	animPlayer_.ImguiDraw("cubeAnim");
+	ImGui::Begin(objectName_.c_str());
+	std::string name = "AnimTimer:" + std::to_string(serialNumber_);
+	ImGui::DragFloat(name.c_str(), &animationTime_);
+	name = "Position:" + std::to_string(serialNumber_);
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, 0.01f);
+	animPlayer_.ImguiDraw(objectName_.c_str());
 	ImGui::End();
 }
