@@ -56,9 +56,9 @@ public:
 	// 親子ポインタ
 	const WorldTransform* parent_ = nullptr;
 	// ワールド行列
-	Matrix4x4 worldMatrix_;
+	Matrix4x4 worldMatrix_ = {};
 	// ローカル行列
-	Matrix4x4 localMatrix_;
+	Matrix4x4 localMatrix_ = {};
 
 	// カメラのポインタ
 	ICamera* camera_ = nullptr;
