@@ -33,6 +33,7 @@ public:
 protected:
 	// モデル
 	Model* model_ = nullptr;
+public:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 

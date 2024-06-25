@@ -27,7 +27,7 @@ void FollowCamera::Update()
 		// オフセット作成
 		Vector3 offset = CreateOffset();
 		// カメラの座標作成
-		transform_.translate = target_->transform_.translate + offset;
+		transform_.translate = interTarget_ + offset;
 	}
 
 	ICamera::Update();
@@ -41,11 +41,26 @@ void FollowCamera::ImGuiDraw()
 
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x);
 
+	ImGui::DragFloat("DeleyRate", &delayRate_, 0.01f);
+
 	ImGui::End();
 }
 
 void FollowCamera::Reset()
 {
+	if (target_) {
+		// 追従対象・角度初期化
+		Vector3 worldPosition = target_->GetWorldPosition();
+		interTarget_ = worldPosition;
+		//viewProjection_.rotation_.y = target_->rotation_.y;
+	}
+
+	//destinationAngleY_ = viewProjection_.rotation_.y;
+	// 追従対象からのオフセット
+	Vector3 offset = CreateOffset();
+	transform_.translate = interTarget_ + offset;
+	//transform_.translate += offset;
+
 }
 
 Vector3 FollowCamera::CreateOffset() const

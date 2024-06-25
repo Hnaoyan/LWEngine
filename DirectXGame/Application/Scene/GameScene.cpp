@@ -15,7 +15,9 @@ void GameScene::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-
+	terrainWtf_.Initialize();
+	terrainWtf_.transform_.scale = { 20.0f,1.0f,20.0f };
+	terrainWtf_.transform_.translate.y -= 0.5f;
 #pragma region カメラ関係
 	// 初期カメラ
 	camera_.transform_.translate.y = 5.0f;
@@ -25,12 +27,14 @@ void GameScene::Initialize()
 	debugCamera_->Initialize();
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
+	followCamera_->SetParent(player_->GetWorldTransform());
 #pragma endregion
 
 }
 
 void GameScene::Update()
 {
+	terrainWtf_.UpdateMatrix();
 	player_->Update();
 	// カメラの更新
 	CameraUpdate();
@@ -60,7 +64,8 @@ void GameScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.spotLight = spotLight_.get();
 	player_->Draw(desc);
-
+	desc.worldTransform = &terrainWtf_;
+	terrain_->Draw(desc);
 	Model::PostDraw();
 
 #pragma region UI
@@ -130,7 +135,8 @@ void GameScene::ImGuiDraw()
 void GameScene::LoadModel()
 {
 	// モデルのロード
-
+	ModelManager::LoadNormalModel("Terrain", "terrain");
+	terrain_ = ModelManager::GetModel("Terrain");
 }
 
 void GameScene::LoadTexture()
@@ -144,15 +150,18 @@ void GameScene::CameraUpdate()
 
 	if (isDebugCamera_) {
 		debugCamera_->Update();
-		followCamera_->Update();
 		camera_.viewMatrix_ = debugCamera_->viewMatrix_;
 		camera_.projectionMatrix_ = debugCamera_->projectionMatrix_;
 		camera_.TransferMatrix();
 		//camera_.Update();
 	}
 	else {
+		followCamera_->Update();
+		camera_.viewMatrix_ = followCamera_->viewMatrix_;
+		camera_.projectionMatrix_ = followCamera_->projectionMatrix_;
+		camera_.TransferMatrix();
 		// 基底更新
-		IScene::CameraUpdate();
+		//IScene::CameraUpdate();
 	}
 }
 

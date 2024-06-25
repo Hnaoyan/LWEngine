@@ -1,5 +1,6 @@
 #pragma once
 #include "../IGameObject.h"
+#include "System/PlayerSystemLists.h"
 
 class Player : public IGameObject
 {
@@ -23,4 +24,22 @@ public:
 	/// </summary>
 	/// <param name="name"></param>
 	void ImGuiDraw() override;
+
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
+
+private:
+	/// <summary>
+	/// システム関係の初期化
+	/// </summary>
+	void SystemInitialize();
+	/// <summary>
+	/// システム関係の更新
+	/// </summary>
+	void SystemUpdate();
+	
+public:
+	Vector3 worldPosition_ = {};
+
+private:
+	OparationManager systemManager_;
 };
