@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "../../Engine/2D/TextureManager.h"
 #include "../../Engine/Scene/SceneManager.h"
+#include "../../Engine/3D/ModelManager.h"
 
 void SampleScene::Initialize()
 {
@@ -26,17 +27,17 @@ void SampleScene::Initialize()
 
 	// 歩くオブジェ
 	humans_[0] = std::make_unique<AnimSampleObject>();
-	humans_[0]->Initialize(this->walkModel_.get(),cubeModel_.get());
+	humans_[0]->Initialize(this->walkModel_.get(),cubeModel_);
 	humans_[0]->worldTransform_.transform_.translate = { 0,0,0 };
 	humans_[0]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
 
 	humans_[1] = std::make_unique<AnimSampleObject>();
-	humans_[1]->Initialize(this->walkModel_.get(), cubeModel_.get());
+	humans_[1]->Initialize(this->walkModel_.get(), cubeModel_);
 	humans_[1]->worldTransform_.transform_.translate = { 0,0,0 };
 	humans_[1]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
 
 	humans_[2] = std::make_unique<AnimSampleObject>();
-	humans_[2]->Initialize(this->sneakWalkModel_.get(), cubeModel_.get());
+	humans_[2]->Initialize(this->sneakWalkModel_.get(), cubeModel_);
 	humans_[2]->worldTransform_.transform_.translate = { 0,0,0 };
 	humans_[2]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
 
@@ -127,6 +128,7 @@ void SampleScene::Draw()
 	desc.directionalLight = directionalLight_.get();
 	desc.spotLight = spotLight_.get();
 	desc.pointLight = pointLight_.get();
+	desc.worldTransform = &testWTF_;
 
 	humans_[0]->Draw(desc);
 	humans_[1]->Draw(desc);
@@ -136,9 +138,14 @@ void SampleScene::Draw()
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->Draw(desc);
 	}
-	desc.worldTransform = &testWTF_;
-	//sphere_->Draw(desc);
-	cubeModel_->Draw(desc);
+	ModelDrawDesc textureDesc{};
+	textureDesc.camera = &camera_;
+	textureDesc.directionalLight = directionalLight_.get();
+	textureDesc.spotLight = spotLight_.get();
+	textureDesc.pointLight = pointLight_.get();
+	textureDesc.texture = newSpriteData_.uvTexture_;
+	textureDesc.worldTransform = &testWTF_;
+	cubeModel_->Draw(textureDesc);
 	skybox_->Draw(desc);
 
 	Model::PostDraw();
@@ -238,8 +245,8 @@ void SampleScene::LoadModel()
 	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
-	cubeModel_.reset(Model::CreateDefault("terrain"));
-
+	//cubeModel_.reset(Model::CreateDefault("terrain"));
+	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Sphere::CreateSphere());
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
@@ -247,7 +254,7 @@ void SampleScene::LoadModel()
 
 void SampleScene::LoadTexture()
 {
-	newSpriteData_.uvTexture_ = TextureManager::Load("Resources/default/uvChecker.png");
+	newSpriteData_.uvTexture_ = TextureManager::Load("Resources/default/white2x2.png");
 	newSprite_.reset(Sprite::Create(newSpriteData_.uvTexture_, { 300.0f,0.0f }, { 0,0 }));
 }
 

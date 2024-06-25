@@ -59,7 +59,7 @@ private:
 	std::unique_ptr<Model> walkModel_;
 	std::unique_ptr<Model> sneakWalkModel_;
 
-	std::unique_ptr<Model> cubeModel_;
+	Model* cubeModel_;
 
 	std::unique_ptr<Sphere> sphere_;
 
