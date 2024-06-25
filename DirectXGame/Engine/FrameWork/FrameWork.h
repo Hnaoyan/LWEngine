@@ -6,6 +6,7 @@
 #include "../Input/Input.h"
 #include "../Scene/SceneManager.h"
 #include "../3D/ModelManager.h"
+#include "../2D/TextureManager.h"
 
 /// <summary>
 /// 
@@ -68,6 +69,7 @@ protected:
 	std::unique_ptr<SceneManager> sceneManager_;
 	std::unique_ptr<ImGuiManager> imGuiManager_;
 	std::unique_ptr<ModelManager> modelManager_;
+	std::unique_ptr<TextureManager> textureManager_;
 
 };
 
