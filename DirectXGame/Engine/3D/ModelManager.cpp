@@ -4,10 +4,13 @@ std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::sModels_;
 
 void ModelManager::LoadAnimModel(const std::string& tag, const std::string& filePath)
 {
+	// イテレータ取得
 	std::unordered_map<std::string, std::unique_ptr<Model>>::iterator it = sModels_.find(tag);
+	// あれば早期
 	if (it != sModels_.end()) {
 		return;
 	}
+	// なければ作成
 	else {
 		std::unique_ptr<Model> model;
 		model.reset(Model::CreateObj(filePath, LoadExtension::kGltf));
@@ -18,10 +21,13 @@ void ModelManager::LoadAnimModel(const std::string& tag, const std::string& file
 
 void ModelManager::LoadNormalModel(const std::string& tag, const std::string& filePath)
 {
+	// イテレータ取得
 	std::unordered_map<std::string, std::unique_ptr<Model>>::iterator it = sModels_.find(tag);
+	// あれば早期
 	if (it != sModels_.end()) {
 		return;
 	}
+	// なければ作成
 	else {
 		std::unique_ptr<Model> model;
 		model.reset(Model::CreateDefault(filePath));

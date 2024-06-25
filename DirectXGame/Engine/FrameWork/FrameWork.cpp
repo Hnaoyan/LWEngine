@@ -1,7 +1,6 @@
 #include "FrameWork.h"
 #include "../3D/Graphics/Shader.h"
 #include "../3D/Graphics/GraphicsPSO.h"
-#include "../2D/TextureManager.h"
 #include "../2D/Drawer/Sprite.h"
 
 void Framework::Execute()
@@ -51,9 +50,10 @@ void Framework::Initialize()
 	imGuiManager_->Initialize(dxCommon_, winApp_);
 
 	// テクスチャマネージャの初期化
+	textureManager_ = std::make_unique<TextureManager>();
 	TextureManager::GetInstance()->Initialize(dxCommon_);
-	TextureManager::Load("Resources/default/white2x2.png");
-	TextureManager::Load("Resources/default/uvChecker.png");
+	textureManager_->Load("Resources/default/white2x2.png");
+	textureManager_->Load("Resources/default/uvChecker.png");
 	// モデルマネージャの初期化
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->LoadNormalModel("DefaultCube", "cube");
