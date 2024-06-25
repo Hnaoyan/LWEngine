@@ -45,17 +45,19 @@ void MyGame::Update()
 void MyGame::Draw()
 {
 	// RenderGraph
-	//
+	// RenderTextureの描画前
 	dxCommon_->RenderPreDraw();
 	// シーンの描画
 	sceneManager_->Draw();
-	//
+	// RenderTextureの描画後
 	dxCommon_->RenderPostDraw();
 
 	// 描画前処理
 	dxCommon_->PreDraw();
 	// PostEffectの描画
 	PostEffectRender::GetInstance()->Draw(dxCommon_->GetCommandList());
+	// PostEffectを掛けないUIの描画
+	sceneManager_->UIDraw();
 	// ImGuiの描画
 	ImGuiDraw();
 	// 描画後処理

@@ -58,9 +58,9 @@ protected:
 
 public:
 	// ビュー行列
-	Matrix4x4 viewMatrix_;
+	Matrix4x4 viewMatrix_ = {};
 	// プロジェクション行列
-	Matrix4x4 projectionMatrix_;
+	Matrix4x4 projectionMatrix_ = {};
 	// 
 	EulerTransform transform_ = {};
 

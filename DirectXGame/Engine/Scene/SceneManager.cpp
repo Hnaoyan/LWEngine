@@ -26,6 +26,11 @@ void SceneManager::Draw()
 	nowScene_->Draw();
 }
 
+void SceneManager::UIDraw()
+{
+
+}
+
 void SceneManager::ImGuiDraw()
 {
 	nowScene_->ImGuiDraw();

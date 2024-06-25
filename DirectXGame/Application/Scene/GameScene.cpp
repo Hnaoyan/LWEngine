@@ -51,6 +51,12 @@ void GameScene::Draw()
 
 	Model::PreDraw(commandList);
 
+	ModelDrawDesc desc{};
+	desc.camera = &camera_;
+	desc.directionalLight = directionalLight_.get();
+	desc.pointLight = pointLight_.get();
+	desc.spotLight = spotLight_.get();
+
 	Model::PostDraw();
 
 #pragma region UI
@@ -116,11 +122,13 @@ void GameScene::ImGuiDraw()
 
 void GameScene::LoadModel()
 {
+	// モデルのロード
 
 }
 
 void GameScene::LoadTexture()
 {
+	// テクスチャのロード
 
 }
 
