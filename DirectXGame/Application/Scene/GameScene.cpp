@@ -12,6 +12,8 @@ void GameScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+	player_ = std::make_unique<Player>();
+	player_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 
 #pragma region カメラ関係
@@ -29,6 +31,7 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
+	player_->Update();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -56,6 +59,7 @@ void GameScene::Draw()
 	desc.directionalLight = directionalLight_.get();
 	desc.pointLight = pointLight_.get();
 	desc.spotLight = spotLight_.get();
+	player_->Draw(desc);
 
 	Model::PostDraw();
 
@@ -114,6 +118,9 @@ void GameScene::ImGuiDraw()
 	}
 
 	ImGui::End();
+	// ゲームオブジェクト
+	player_->ImGuiDraw();
+
 	// カメラ
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
