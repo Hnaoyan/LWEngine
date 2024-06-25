@@ -80,11 +80,6 @@ void Model::Draw(const ModelDrawDesc& desc) {
 	// マテリアル更新
 	material_->Update();
 
-	// Descの設定・更新
-	//Matrix4x4 local = Matrix4x4::Multiply(desc.localMatrix, modelData_.rootNode.localMatrix);
-	//desc.worldTransform->SetModelData(local);
-	//desc.worldTransform->UpdateMatrix();
-
 	// ルートシグネチャの設定
 	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	// パイプラインステートの設定
@@ -107,8 +102,14 @@ void Model::Draw(const ModelDrawDesc& desc) {
 
 	//---マテリアルの設定---//
 	// SRVのセット
-	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
+	if (desc.texture != 100) {
+		TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+			sCommandList_, static_cast<UINT>(ModelRegister::kTexture), desc.texture);
+	}
+	else {
+		TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+			sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
+	}
 	// 環境マップ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);

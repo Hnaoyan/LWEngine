@@ -54,6 +54,9 @@ void Framework::Initialize()
 	TextureManager::GetInstance()->Initialize(dxCommon_);
 	TextureManager::Load("Resources/default/white2x2.png");
 	TextureManager::Load("Resources/default/uvChecker.png");
+	// モデルマネージャの初期化
+	modelManager_ = std::make_unique<ModelManager>();
+	modelManager_->LoadNormalModel("DefaultCube", "cube");
 
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
 

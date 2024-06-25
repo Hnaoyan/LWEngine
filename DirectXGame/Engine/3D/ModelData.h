@@ -75,6 +75,7 @@ struct ModelDrawDesc
 	WorldTransform* worldTransform;
 	ICamera* camera;
 	Matrix4x4 localMatrix;
+	uint32_t texture = 100;
 	// 平行光源
 	DirectionalLight* directionalLight;
 	SpotLight* spotLight;
