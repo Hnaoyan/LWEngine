@@ -39,6 +39,8 @@ private:
 	
 public:
 	Vector3 worldPosition_ = {};
+	// 移動速度
+	Vector3 velocity_ = {};
 
 private:
 	OparationManager systemManager_;

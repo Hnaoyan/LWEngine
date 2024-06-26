@@ -19,10 +19,13 @@ public:
 	/// </summary>
 	void InputUpdate();
 
+	/// <summary>
+	/// 落下処理
+	/// </summary>
+	void GravityUpdate();
 private:
 	// 親
 	Player* player_ = nullptr;
 	// 入力クラス
 	Input* input_ = nullptr;
-
 };

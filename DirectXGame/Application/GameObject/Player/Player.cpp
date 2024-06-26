@@ -17,7 +17,7 @@ void Player::Update()
 	SystemUpdate();
 
 	// ワールド座標を設定
-	//worldTransform_.transform_.translate = worldPosition_;
+	worldTransform_.transform_.translate = worldPosition_;
 	// 基底クラスの更新
 	IGameObject::Update();
 }
