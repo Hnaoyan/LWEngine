@@ -5,6 +5,8 @@
 #include "../Math/MathLib.h"
 #include "../Camera/CameraList.h"
 
+#include <algorithm>
+
 namespace LwLib
 {
 	/// <summary>
