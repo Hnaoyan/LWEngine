@@ -27,6 +27,8 @@ public:
 
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 
+	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
+
 private:
 	/// <summary>
 	/// システム関係の初期化
@@ -41,7 +43,7 @@ public:
 	Vector3 worldPosition_ = {};
 	// 移動速度
 	Vector3 velocity_ = {};
-
+	ICamera* camera_ = nullptr;
 private:
 	OparationManager systemManager_;
 };

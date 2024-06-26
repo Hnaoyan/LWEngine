@@ -28,16 +28,22 @@ void OparationManager::Update()
 void OparationManager::InputUpdate()
 {
 	XINPUT_STATE joyState;
-	float speed = 2.5f;
+	float speed = 1.5f;
 	Vector3 direct = {};
 	// コントローラー操作
 	if (input_->GetJoystickState(0, joyState)) {
+		// 方向取得
 		direct = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,(float)joyState.Gamepad.sThumbLY / SHRT_MAX ,0 };
-		if ((direct.x != 0 || direct.y != 0) && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		// ジャンプ入力
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A && player_->velocity_.y == 0.0f)
 		{
-			player_->worldPosition_.x += (direct.x * GameSystem::GameSpeedFactor() * 20.0f);
-			player_->worldPosition_.z += (direct.y * GameSystem::GameSpeedFactor() * 20.0f);
+			float jumpPower = 50.0f;
+			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
+		if (input_->GetJoystickState(0, joyState)) {
+			player_->worldTransform_.transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
+		}
+
 	}
 	// キーボード操作
 	else {
@@ -61,19 +67,21 @@ void OparationManager::InputUpdate()
 			float jumpPower = 50.0f;
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
-		//if (input_->TriggerKey(DIK_LSHIFT) && direct.y == 0.0f) {
-		//	float highSpeed = 200.0f;
-		//	player_->velocity_.z += highSpeed * GameSystem::GameSpeedFactor();
-		//}
 	}
 
 	direct = Vector3::Normalize(direct);
+
+	float playerYaw = player_->worldTransform_.transform_.rotate.y;
+	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
+	
+	Vector3 rotateVector = Matrix4x4::TransformVector3({ direct.x,0,direct.y }, rotateY);
+	direct = rotateVector;
 
 	// 入力しているかどうか
 	float slowFactor = 0.2f;
 	if (direct.x == 0)
 	{
-		player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
+		//player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
 	}
 	else {
 		if (input_->TriggerKey(DIK_LSHIFT)) {
@@ -81,36 +89,56 @@ void OparationManager::InputUpdate()
 		}
 		player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
 	}
-
-	if (direct.y == 0) {
-		player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
+	if (direct.z == 0) {
+		//player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
 	}
 	else {
 		if (input_->TriggerKey(DIK_LSHIFT)) {
-			player_->velocity_.z += (direct.y * GameSystem::GameSpeedFactor() * 100.0f);
+			player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * 100.0f);
 		}
-		player_->velocity_.z += (direct.y * GameSystem::GameSpeedFactor() * speed);
+		player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
 	}
+	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
+	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
+
 	// 入力による移動の速度制限
 	// 左右
-	if (direct.x == 0 || direct.y == 0 || speed == 20.0f) {
+	if (direct.x == 0 || direct.z == 0 || speed == 20.0f) {
 		return;
 	}
-	float maxSpeed = 1.5f;
-	if (player_->velocity_.x < 0) {
-		player_->velocity_.x = std::clamp(player_->velocity_.x, -maxSpeed, 0.0f);
-	}
-	else if (player_->velocity_.x > 0) {
-		player_->velocity_.x = std::clamp(player_->velocity_.x, 0.0f, maxSpeed);
-	}
-	// 前後
-	if (player_->velocity_.z < 0) {
-		player_->velocity_.z = std::clamp(player_->velocity_.z, -maxSpeed, 0.0f);
-	}
-	else if (player_->velocity_.z > 0) {
-		player_->velocity_.z = std::clamp(player_->velocity_.z, 0.0f, maxSpeed);
+	if (isDash_) {
+		++resetTime_;
+		if (resetTime_ > 10) {
+			isDash_ = false;
+			resetTime_ = 0;
+		}
+		return;
 	}
 
+	//float maxSpeed = 1.5f;
+	//if (player_->velocity_.x < 0) {
+	//	player_->velocity_.x = std::clamp(player_->velocity_.x, -maxSpeed, 0.0f);
+	//}
+	//else if (player_->velocity_.x > 0) {
+	//	player_->velocity_.x = std::clamp(player_->velocity_.x, 0.0f, maxSpeed);
+	//}
+	//// 前後
+	//if (player_->velocity_.z < 0) {
+	//	player_->velocity_.z = std::clamp(player_->velocity_.z, -maxSpeed, 0.0f);
+	//}
+	//else if (player_->velocity_.z > 0) {
+	//	player_->velocity_.z = std::clamp(player_->velocity_.z, 0.0f, maxSpeed);
+	//}
+
+	if (direct.x != 0 || direct.z != 0) {
+		if (!isDash_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+			isDash_ = true;
+			float dashPower = 100.0f * GameSystem::GameSpeedFactor();
+			player_->velocity_.x = direct.x * dashPower;
+			player_->velocity_.z = direct.z * dashPower;
+		}
+	}
+	
 }
 
 void OparationManager::GravityUpdate()

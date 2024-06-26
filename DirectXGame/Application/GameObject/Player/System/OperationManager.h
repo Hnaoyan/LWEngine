@@ -28,4 +28,7 @@ private:
 	Player* player_ = nullptr;
 	// 入力クラス
 	Input* input_ = nullptr;
+
+	bool isDash_ = false;
+	int resetTime_ = 0;
 };

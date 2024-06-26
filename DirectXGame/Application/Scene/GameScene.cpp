@@ -28,6 +28,8 @@ void GameScene::Initialize()
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 	followCamera_->SetParent(player_->GetWorldTransform());
+
+	player_->SetFollowCamera(followCamera_.get());
 #pragma endregion
 
 }
