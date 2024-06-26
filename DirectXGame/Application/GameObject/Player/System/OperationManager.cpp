@@ -60,8 +60,18 @@ void OparationManager::InputUpdate()
 	}
 
 	// 座標移動（ここ後で変更する
-	player_->worldPosition_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
-	player_->worldPosition_.z += (direct.y * GameSystem::GameSpeedFactor() * speed);
+	if (direct.x == 0)
+	{
+		//player_->velocity_.x = 
+	}
+	player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
+	player_->velocity_.z += (direct.y * GameSystem::GameSpeedFactor() * speed);
+	if (player_->velocity_.x < 0) {
+		player_->velocity_.x = std::clamp(player_->velocity_.x, -1.0f, 0.0f);
+	}
+	else if (player_->velocity_.x > 0) {
+		player_->velocity_.x = std::clamp(player_->velocity_.x, 0.0f, 1.0f);
+	}
 
 }
 
@@ -72,9 +82,10 @@ void OparationManager::GravityUpdate()
 		player_->velocity_.y += (-2.5f) * GameSystem::GameSpeedFactor();
 	}
 	// 座標更新
-	player_->worldPosition_.y += player_->velocity_.y;
+	player_->worldPosition_ += player_->velocity_;
+	//player_->worldPosition_.y += player_->velocity_.y;
 	// 仮の着地
-	if (player_->worldPosition_.y <= -0.5f) {
+	if (player_->worldPosition_.y <= -0.25f) {
 		player_->worldPosition_.y = 0.0f;
 		player_->velocity_.y = 0;
 	}

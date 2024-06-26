@@ -69,6 +69,7 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Player.h" />
