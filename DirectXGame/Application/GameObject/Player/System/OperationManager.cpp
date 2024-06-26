@@ -2,6 +2,7 @@
 #include "../../../GameSystem/GameSystem.h"
 #include "../../../../Engine/Input/Input.h"
 #include "../Player.h"
+#include "../../../../Engine/LwLib/LwEngineLib.h"
 
 void OparationManager::Initialize(Player* player)
 {
@@ -19,12 +20,15 @@ void OparationManager::Update()
 
 	// 落下処理
 	GravityUpdate();
+
+	// 座標更新
+	player_->worldPosition_ += player_->velocity_;
 }
 
 void OparationManager::InputUpdate()
 {
 	XINPUT_STATE joyState;
-	float speed = 4.0f;
+	float speed = 2.5f;
 	Vector3 direct = {};
 	// コントローラー操作
 	if (input_->GetJoystickState(0, joyState)) {
@@ -57,20 +61,54 @@ void OparationManager::InputUpdate()
 			float jumpPower = 50.0f;
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
+		//if (input_->TriggerKey(DIK_LSHIFT) && direct.y == 0.0f) {
+		//	float highSpeed = 200.0f;
+		//	player_->velocity_.z += highSpeed * GameSystem::GameSpeedFactor();
+		//}
 	}
 
-	// 座標移動（ここ後で変更する
+	direct = Vector3::Normalize(direct);
+
+	// 入力しているかどうか
+	float slowFactor = 0.2f;
 	if (direct.x == 0)
 	{
-		//player_->velocity_.x = 
+		player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
 	}
-	player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
-	player_->velocity_.z += (direct.y * GameSystem::GameSpeedFactor() * speed);
+	else {
+		if (input_->TriggerKey(DIK_LSHIFT)) {
+			player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * 100.0f);
+		}
+		player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
+	}
+
+	if (direct.y == 0) {
+		player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
+	}
+	else {
+		if (input_->TriggerKey(DIK_LSHIFT)) {
+			player_->velocity_.z += (direct.y * GameSystem::GameSpeedFactor() * 100.0f);
+		}
+		player_->velocity_.z += (direct.y * GameSystem::GameSpeedFactor() * speed);
+	}
+	// 入力による移動の速度制限
+	// 左右
+	if (direct.x == 0 || direct.y == 0 || speed == 20.0f) {
+		return;
+	}
+	float maxSpeed = 1.5f;
 	if (player_->velocity_.x < 0) {
-		player_->velocity_.x = std::clamp(player_->velocity_.x, -1.0f, 0.0f);
+		player_->velocity_.x = std::clamp(player_->velocity_.x, -maxSpeed, 0.0f);
 	}
 	else if (player_->velocity_.x > 0) {
-		player_->velocity_.x = std::clamp(player_->velocity_.x, 0.0f, 1.0f);
+		player_->velocity_.x = std::clamp(player_->velocity_.x, 0.0f, maxSpeed);
+	}
+	// 前後
+	if (player_->velocity_.z < 0) {
+		player_->velocity_.z = std::clamp(player_->velocity_.z, -maxSpeed, 0.0f);
+	}
+	else if (player_->velocity_.z > 0) {
+		player_->velocity_.z = std::clamp(player_->velocity_.z, 0.0f, maxSpeed);
 	}
 
 }
@@ -81,8 +119,6 @@ void OparationManager::GravityUpdate()
 	if (player_->velocity_.y != 0.0f) {
 		player_->velocity_.y += (-2.5f) * GameSystem::GameSpeedFactor();
 	}
-	// 座標更新
-	player_->worldPosition_ += player_->velocity_;
 	//player_->worldPosition_.y += player_->velocity_.y;
 	// 仮の着地
 	if (player_->worldPosition_.y <= -0.25f) {

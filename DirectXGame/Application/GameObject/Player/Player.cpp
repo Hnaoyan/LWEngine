@@ -41,6 +41,8 @@ void Player::ImGuiDraw()
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
 
+	ImGui::DragFloat3("Velocity", &velocity_.x);
+
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
