@@ -27,4 +27,16 @@ namespace LwLib
 		return Vector2(result.x, result.y);
 	}
 
+	/// <summary>
+	/// ラープ
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	inline static float Lerp(float a, float b, float t) {
+		float clampT = std::clamp(t, 0.0f, 1.0f);
+		return (1.0f - clampT) * a + clampT * b;
+	}
+
 }
