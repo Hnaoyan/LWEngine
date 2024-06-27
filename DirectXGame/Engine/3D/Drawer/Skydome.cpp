@@ -1,21 +1,21 @@
-#include "Sphere.h"
+#include "Skydome.h"
 #include "../../Base/DirectXCommon.h"
 #include "../../2D/TextureManager.h"
 #include "../../3D/CBuffer.h"
 #include "../../Base/Utility/DxCreateLib.h"
 #include "Model.h"
 
-Sphere* Sphere::CreateSphere()
+Skydome* Skydome::CreateSkydome()
 {
     // メモリ確保
-    Sphere* instance = new Sphere;
+    Skydome* instance = new Skydome;
     // 初期化
     instance->Initialize();
 
     return instance;
 }
 
-void Sphere::Initialize()
+void Skydome::Initialize()
 {
 	// 分割数	
 	subdivision_ = 512;
@@ -31,7 +31,7 @@ void Sphere::Initialize()
 
 }
 
-void Sphere::CreateVertex()
+void Skydome::CreateVertex()
 {
 	// デバイス
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
@@ -131,7 +131,7 @@ void Sphere::CreateVertex()
 	}
 }
 
-void Sphere::CreateMaterial()
+void Skydome::CreateMaterial()
 {
 	// 色
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
@@ -156,7 +156,7 @@ void Sphere::CreateMaterial()
 	materialData_->shininess = shininess_;
 }
 
-void Sphere::Draw(const ModelDrawDesc& desc)
+void Skydome::Draw(const ModelDrawDesc& desc)
 {
 	GeneralPipeline pipeline = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
 	// ルートシグネチャの設定

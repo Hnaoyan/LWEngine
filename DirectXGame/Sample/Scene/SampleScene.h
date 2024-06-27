@@ -61,7 +61,7 @@ private:
 
 	Model* cubeModel_;
 
-	std::unique_ptr<Sphere> sphere_;
+	std::unique_ptr<Skydome> sphere_;
 
 	WorldTransform testWTF_;
 

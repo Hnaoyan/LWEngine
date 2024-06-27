@@ -247,7 +247,7 @@ void SampleScene::LoadModel()
 	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	cubeModel_ = ModelManager::GetModel("DefaultCube");
-	sphere_.reset(Sphere::CreateSphere());
+	sphere_.reset(Skydome::CreateSkydome());
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

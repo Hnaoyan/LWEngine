@@ -39,7 +39,7 @@ public:
 		Reset();
 	}
 
-private:
+private: // UserMethod
 	// ターゲット
 	const WorldTransform* target_ = nullptr;
 	// デフォルトオフセット
@@ -49,4 +49,8 @@ private:
 	// 目標地点の角度
 	float destinationAngleY_ = 0.0f;
 	float delayRate_ = 0.01f;
+
+	// 右スティックのカメラ操作関係
+	float rStickRotateSpeed_ = 0;
+	float rStickLerpRate_ = 0;
 };

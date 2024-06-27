@@ -14,8 +14,9 @@ public:
 	/// </summary>
 	void Update() override;
 
-private:
-	// 半径
-	Vector3 radius_ = {};
-
+public:
+	// サイズ
+	Vector3 min_;
+	Vector3 max_;
+	
 };

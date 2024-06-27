@@ -1,4 +1,4 @@
 #pragma once
 #include "Model.h"
-#include "Sphere.h"
+#include "Skydome.h"
 #include "Skybox.h"

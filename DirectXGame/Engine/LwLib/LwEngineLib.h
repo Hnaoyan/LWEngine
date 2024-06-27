@@ -41,4 +41,32 @@ namespace LwLib
 		return (1.0f - clampT) * a + clampT * b;
 	}
 
+	/// <summary>
+	/// 角度補間
+	/// </summary>
+	/// <param name="a"></param>
+	/// <param name="b"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	inline static float LerpShortAngle(float a, float b, float t) {
+		// 角度差分
+		float diff = b - a;
+		diff = std::fmodf(diff, 2.0f * float(std::numbers::pi));
+		// 角度を[-PI, +PI]に補正
+		diff = std::fmodf(diff + (float(std::numbers::pi)), 2.0f * (float(std::numbers::pi))) - (float(std::numbers::pi));
+		diff = Lerp(a, diff, t);
+		return diff;
+	}
+
+	/// <summary>
+	/// 割合計算
+	/// </summary>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <param name="rate"></param>
+	/// <returns></returns>
+	inline static float RatioCalc(float min, float max, float rate) {
+		return min + (max - min) * rate;
+	}
+
 }

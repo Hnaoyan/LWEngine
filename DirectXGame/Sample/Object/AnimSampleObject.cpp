@@ -1,7 +1,7 @@
 #include "AnimSampleObject.h"
 #include "imgui.h"
 #include "../../Engine/2D/TextureManager.h"
-#include "../../Engine/3D/Drawer/Sphere.h"
+#include "../../Engine/3D/Drawer/Skydome.h"
 #include "../../Engine/Input/Input.h"
 #include "../../Engine/LwLib/LwEngineLib.h"
 
@@ -17,7 +17,7 @@ void AnimSampleObject::Initialize(Model* model, Model* cube)
 
 	texture_ = TextureManager::Load("Resources/uvChecker.png");
 
-	debugSphere_.reset(Sphere::CreateSphere());
+	debugSphere_.reset(Skydome::CreateSkydome());
 
 	// 番号
 	serialNumber_ = sSerialNumber;

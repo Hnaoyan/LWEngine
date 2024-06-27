@@ -1,12 +1,17 @@
 #include "FollowCamera.h"
 #include "../../Input/Input.h"
 #include "imgui.h"
+#include "../../LwLib/LwEngineLib.h"
 
 void FollowCamera::Initialize()
 {
 	// 初期化
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,2.0f,-10.0f };
+
+	rStickRotateSpeed_ = 0.1f;
+	rStickLerpRate_ = 0.1f;
+
 }
 
 void FollowCamera::Update()
@@ -16,12 +21,16 @@ void FollowCamera::Update()
 
 	// 追尾
 	if (target_) {
+		// 入力クラス
 		Input* input = Input::GetInstance();
-
+		// スティック操作
 		if (input->GetJoystickState(0, joyState)) {
-			transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
+			// 目標回転角の設定
+			destinationAngleY_ += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
 		}
 
+		// 回転の速度調節
+		transform_.rotate.y = LwLib::LerpShortAngle(transform_.rotate.y, destinationAngleY_, rStickLerpRate_);
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);
 		// オフセット作成
@@ -41,11 +50,26 @@ void FollowCamera::ImGuiDraw()
 
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x);
 
+	ImGui::DragFloat("rStick", &rStickRotateSpeed_, 0.01f);
+
+	ImGui::DragFloat("rStickRate", &rStickLerpRate_, 0.01f);
+
 	ImGui::End();
 }
 
 void FollowCamera::Reset()
 {
+	if (target_) {
+		// 追従対象・角度初期化
+		Vector3 worldPosition = target_->GetWorldPosition();
+		interTarget_ = worldPosition;
+		transform_.rotate.y = target_->transform_.rotate.y;
+	}
+
+	destinationAngleY_ = transform_.rotate.y;
+	// 追従対象からのオフセット
+	Vector3 offset = CreateOffset();
+	transform_.translate = interTarget_ + offset;
 }
 
 Vector3 FollowCamera::CreateOffset() const
