@@ -81,6 +81,13 @@ void SampleScene::Update()
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeScene("GAME");
 	}
+	// コントローラー
+	XINPUT_STATE joyState;
+	if (input_->GetJoystickState(0, joyState)) {
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
+			sceneManager_->ChangeScene("GAME");
+		}
+	}
 
 	newSprite_->SetPosition(newSpriteData_.position_);
 	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
