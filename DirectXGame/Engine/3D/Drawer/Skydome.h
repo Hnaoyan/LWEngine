@@ -3,14 +3,14 @@
 #include "../ModelData.h"
 #include "../WorldTransform.h"
 
-class Sphere
+class Skydome
 {
 public:
 	/// <summary>
 	/// 作成
 	/// </summary>
 	/// <returns></returns>
-	static Sphere* CreateSphere();
+	static Skydome* CreateSkydome();
 
 	/// <summary>
 	/// 初期化
