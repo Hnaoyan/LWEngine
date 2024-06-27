@@ -47,7 +47,7 @@ private: // UserMethod
 	// 残像座標
 	Vector3 interTarget_ = {};
 	// 目標地点の角度
-	float destinationAngleY_ = 0.0f;
+	Vector3 destinationAngle_ = {};
 	float delayRate_ = 0.01f;
 
 	// 右スティックのカメラ操作関係

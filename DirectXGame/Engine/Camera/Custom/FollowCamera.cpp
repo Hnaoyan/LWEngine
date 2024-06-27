@@ -26,11 +26,14 @@ void FollowCamera::Update()
 		// スティック操作
 		if (input->GetJoystickState(0, joyState)) {
 			// 目標回転角の設定
-			destinationAngleY_ += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
+			destinationAngle_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
+			destinationAngle_.z += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_;
 		}
 
 		// 回転の速度調節
-		transform_.rotate.y = LwLib::LerpShortAngle(transform_.rotate.y, destinationAngleY_, rStickLerpRate_);
+		transform_.rotate.y = LwLib::LerpShortAngle(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
+		transform_.rotate.z = LwLib::LerpShortAngle(transform_.rotate.z, destinationAngle_.z, rStickLerpRate_);
+
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);
 		// オフセット作成
@@ -66,9 +69,11 @@ void FollowCamera::Reset()
 		Vector3 worldPosition = target_->GetWorldPosition();
 		interTarget_ = worldPosition;
 		transform_.rotate.y = target_->transform_.rotate.y;
+		transform_.rotate.z = target_->transform_.rotate.z;
 	}
-
-	destinationAngleY_ = transform_.rotate.y;
+	// 目標角の設定
+	destinationAngle_.y = transform_.rotate.y;
+	destinationAngle_.z = transform_.rotate.z;
 	// 追従対象からのオフセット
 	Vector3 offset = CreateOffset();
 	transform_.translate = interTarget_ + offset;
