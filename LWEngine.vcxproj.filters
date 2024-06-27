@@ -481,8 +481,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_VS.hlsl" />
-    <FxCompile Include="DirectXGame\Engine\3D\Shader\Object3D_PS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />
     <FxCompile Include="Resources\shaders\3DModelVS.hlsl" />
@@ -500,7 +498,6 @@
     <FxCompile Include="Resources\shaders\PostEffect\GrayscaleVignettePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DirectXGame\Engine\3D\Shader\Object3D.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\3DModel.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
