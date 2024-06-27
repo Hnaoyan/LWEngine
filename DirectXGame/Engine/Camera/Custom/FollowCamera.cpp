@@ -11,7 +11,7 @@ void FollowCamera::Initialize()
 
 	rStickRotateSpeed_ = 0.1f;
 	rStickLerpRate_ = 0.1f;
-
+	delayRate_ = 0.1f;
 }
 
 void FollowCamera::Update()
@@ -27,7 +27,7 @@ void FollowCamera::Update()
 		if (input->GetJoystickState(0, joyState)) {
 			// 目標回転角の設定
 			destinationAngle_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
-			destinationAngle_.z += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_;
+			//destinationAngle_.z += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_;
 		}
 
 		// 回転の速度調節
