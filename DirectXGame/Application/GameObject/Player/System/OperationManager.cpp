@@ -40,9 +40,9 @@ void OparationManager::InputUpdate()
 			float jumpPower = 50.0f;
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
-		if (input_->GetJoystickState(0, joyState)) {
-			player_->worldTransform_.transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
-		}
+		//if (input_->GetJoystickState(0, joyState)) {
+		//	player_->worldTransform_.transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
+		//}
 
 	}
 	// キーボード操作
@@ -71,9 +71,11 @@ void OparationManager::InputUpdate()
 
 	direct = Vector3::Normalize(direct);
 
-	float playerYaw = player_->worldTransform_.transform_.rotate.y;
+	float playerYaw = player_->camera_->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
-	
+
+	player_->worldTransform_.transform_.rotate.y = player_->camera_->transform_.rotate.y;
+
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ direct.x,0,direct.y }, rotateY);
 	direct = rotateVector;
 
