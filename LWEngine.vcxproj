@@ -21,7 +21,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Sphere.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Loader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
@@ -42,12 +42,17 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Core\ICamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\ICollider.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\Collision.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\CollisionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\DirectionalLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\PointLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\SpotLight.cpp" />
+    <ClCompile Include="DirectXGame\Engine\LwLib\Ease\Ease.cpp" />
+    <ClCompile Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />
@@ -82,7 +87,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Drawer\Sphere.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skydome.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Render.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Loader.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Material.h" />
@@ -113,9 +118,11 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\DebugCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderLists.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderShape.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ICollider.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collision.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
@@ -126,7 +133,7 @@
     <ClInclude Include="DirectXGame\Engine\Light\Lights\SpotLight.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Ease\Ease.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
-    <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\Timer.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Quaternion.h" />

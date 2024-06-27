@@ -3,7 +3,7 @@
 #include "../../Engine/Animation/Animation.h"
 #include <string>
 
-class Sphere;
+class Skydome;
 
 class AnimSampleObject
 {
@@ -31,7 +31,7 @@ public:
 
 	uint32_t texture_ = 0u;
 
-	std::unique_ptr<Sphere> debugSphere_;
+	std::unique_ptr<Skydome> debugSphere_;
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
