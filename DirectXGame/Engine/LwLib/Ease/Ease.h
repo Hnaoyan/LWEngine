@@ -8,12 +8,31 @@ public:
 	{
 		kDefault,
 		kEaseInQuadF,
-		kEaseOutQuedF,
+		kEaseOutQuadF,
+		kEaseInOutQuadF,
+		kEaseInCubicF,
+		kEaseOutCubicF,
+		kEaseInOutCubicF,
 	};
 
+	/// <summary>
+	/// イージング処理
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <param name="t"></param>
+	/// <param name="type"></param>
+	/// <returns></returns>
 	template<typename T>
 	static T Easing(const T& start, const T& end, float t, EaseType type = EaseType::kDefault);
 
+	/// <summary>
+	/// イージングの補間の値取得関数
+	/// </summary>
+	/// <param name="type"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
 	static float EaseT(EaseType type, float t);
 
 };
@@ -22,5 +41,5 @@ template<typename T>
 inline T Ease::Easing(const T& start, const T& end, float t, EaseType type)
 {
 	float easeT = EaseT(type, t);
-	return T();
+	return T(((1.0f - easeT) * start) + (easeT * end));
 }
