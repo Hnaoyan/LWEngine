@@ -35,6 +35,8 @@ void GraphicsPSO::Initialize(ID3D12Device* device)
 	CreatePostEffectPSO();
 	// Skybox
 	CreateSkyboxPSO();
+	// InstancedModel
+	CreateInstancedPSO();
 }
 
 void GraphicsPSO::CreateSpritePSO()
@@ -713,6 +715,117 @@ void GraphicsPSO::CreateSkyboxPSO()
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 #pragma endregion
 	sPipelines_[size_t(Pipeline::Order::kSkybox)] = std::move(resultPipeline);
+}
+
+void GraphicsPSO::CreateInstancedPSO()
+{
+	GeneralPipeline resultPipeline;
+
+	ComPtr<IDxcBlob> vsBlob;
+	ComPtr<IDxcBlob> psBlob;
+
+	// 頂点シェーダの読み込みとコンパイル
+	vsBlob = Shader::GetInstance()->Compile(L"Instanced/InstancedModelVS.hlsl", L"vs_6_0");
+	assert(vsBlob != nullptr);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"Instanced/InstancedModelPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+
+	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+	{
+		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("NORMAL", DXGI_FORMAT_R32G32B32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
+	},
+	};
+	// グラフィックスパイプライン
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};
+	gPipeline.VS = Shader::ShaderByteCode(vsBlob.Get());
+	gPipeline.PS = Shader::ShaderByteCode(psBlob.Get());
+
+	// サンプルマスク
+	gPipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	// ラスタライザステート
+	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
+	gPipeline.RasterizerState = rasterizer;
+	// デプスステンシルステート
+	gPipeline.DepthStencilState.DepthEnable = true;
+	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	gPipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+	// 深度バッファのフォーマット
+	gPipeline.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	// 頂点レイアウト
+	gPipeline.InputLayout.pInputElementDescs = inputLayout;
+	gPipeline.InputLayout.NumElements = _countof(inputLayout);
+	// 図形の形状設定
+	gPipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	gPipeline.NumRenderTargets = 1;
+	gPipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	gPipeline.SampleDesc.Count = 1;
+
+
+	// デスクリプタレンジ
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1];
+	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
+
+	// ルートパラメータ
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(InstancedUnitRegister::kCountOfParameter)]{};
+	//---共通---//
+	// テクスチャ
+	rootparams[static_cast<int>(InstancedUnitRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// 環境マップ
+	rootparams[static_cast<int>(InstancedUnitRegister::kMapTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCubeSRV), descRangeCubeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// View
+	rootparams[static_cast<int>(InstancedUnitRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+
+	//---VS---//
+	// WorldTransform
+	rootparams[static_cast<int>(InstancedUnitRegister::kWorldTransform)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
+
+	//---PS---//
+	// マテリアル
+	rootparams[static_cast<int>(InstancedUnitRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	// ライト
+	rootparams[static_cast<int>(InstancedUnitRegister::kDirectionalLight)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(InstancedUnitRegister::kPointLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(InstancedUnitRegister::kSpotLight)] = PSOLib::InitAsConstantBufferView(4, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+
+
+	// スタティックサンプラー
+	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
+	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+
+	// ルートシグネチャの設定
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	rootSignatureDesc.pParameters = rootparams;
+	rootSignatureDesc.NumParameters = _countof(rootparams);
+
+	rootSignatureDesc.pStaticSamplers = samplerDesc;
+	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
+
+	// 
+	resultPipeline.rootSignature = CreateRootSignature(rootSignatureDesc);
+
+	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ
+
+#pragma region ブレンド
+	// ブレンドなし
+	D3D12_BLEND_DESC blenddesc{};
+	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
+#pragma endregion
+	sPipelines_[size_t(Pipeline::Order::kInstancedModel)] = std::move(resultPipeline);
 }
 
 void GraphicsPSO::CreatePSO(D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline, Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState)

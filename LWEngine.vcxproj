@@ -89,6 +89,9 @@
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skydome.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Render.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedGroup.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancingData.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Loader.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Material.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Mesh.h" />
@@ -183,6 +186,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\Instanced\InstancedModelPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Instanced\InstancedModelVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\BoxFilterPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -264,6 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
+    <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />

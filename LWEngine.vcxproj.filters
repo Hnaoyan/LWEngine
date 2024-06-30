@@ -461,6 +461,15 @@
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderLists.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedGroup.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancingData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -478,11 +487,14 @@
     <FxCompile Include="Resources\shaders\PostEffect\LuminanceBasedOutlinePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\BoxFilterPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\GrayscaleVignettePS.hlsl" />
+    <FxCompile Include="Resources\shaders\Instanced\InstancedModelVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Instanced\InstancedModelPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\3DModel.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
+    <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
   </ItemGroup>
 </Project>
