@@ -19,10 +19,24 @@ namespace Pipeline
 		kSkinningModel,
 		kParticle,
 		kPostEffect,
+		kInstancedModel,
 		kCountOfParameter,
 	};
 	// 通常モデルのレジスタ番号
 	enum class ModelRegister : int {
+		kMaterial,
+		kTexture,
+		kMapTexture,
+		kWorldTransform,
+		kViewProjection,
+		kDirectionalLight,
+		kPointLight,
+		kSpotLight,
+		// サイズを取得する為の値
+		kCountOfParameter,
+	};
+
+	enum class InstancedUnitRegister : int {
 		kMaterial,
 		kTexture,
 		kMapTexture,
@@ -162,6 +176,10 @@ private:
 	/// Skybox作成
 	/// </summary>
 	static void CreateSkyboxPSO();
+	/// <summary>
+	/// インスタンシング用
+	/// </summary>
+	static void CreateInstancedPSO();
 
 	/// <summary>
 	/// PSO作成
