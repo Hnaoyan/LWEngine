@@ -24,11 +24,11 @@ public:
 	float nowFrame_ = 1.0f;
 
 	// アニメーション用のトランスフォーム
-	QuaternionTransform transform_;
+	QuaternionTransform transform_ = {};
 	// ローカル行列
 	Matrix4x4 localMatrix_ = {};
 	// SkeletonSpaceでの変換行列
-	Matrix4x4  skeltonSpaceMatrix_; 
+	Matrix4x4  skeltonSpaceMatrix_ = {};
 
 	Skeleton skeleton_;
 	SkinCluster skinCluster_;

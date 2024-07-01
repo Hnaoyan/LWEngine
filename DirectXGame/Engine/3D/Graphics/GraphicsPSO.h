@@ -19,10 +19,24 @@ namespace Pipeline
 		kSkinningModel,
 		kParticle,
 		kPostEffect,
+		kInstancedModel,
 		kCountOfParameter,
 	};
 	// 通常モデルのレジスタ番号
 	enum class ModelRegister : int {
+		kMaterial,
+		kTexture,
+		kMapTexture,
+		kWorldTransform,
+		kViewProjection,
+		kDirectionalLight,
+		kPointLight,
+		kSpotLight,
+		// サイズを取得する為の値
+		kCountOfParameter,
+	};
+
+	enum class InstancedUnitRegister : int {
 		kMaterial,
 		kTexture,
 		kMapTexture,
@@ -60,6 +74,13 @@ namespace Pipeline
 		kCountOfParameter,
 	};
 
+	enum class PostEffectRegister : int {
+		kTexture,
+		kVignette,
+		kBlur,
+		kCountOfParameter,
+	};
+
 	enum class BlendMode : int {
 		kNone,
 		kNormal,
@@ -80,12 +101,13 @@ namespace Pipeline
 	};
 
 	enum class PostEffectType : int {
-		kNormal,
-		kGrayScale,
-		kVignette,
-		kSmoothing,
-		kGaussian,	
-		kCountOfType,
+		kNormal,			// 通常
+		kGrayScale,			// グレースケール
+		kVignette,			// ビネット
+		kGrayscaleVignette,	// グレースケールとビネット
+		kSmoothing,			// 平滑
+		kGaussian,			// ぼかし
+		kCountOfType,		
 	};
 
 }
@@ -162,6 +184,10 @@ private:
 	/// Skybox作成
 	/// </summary>
 	static void CreateSkyboxPSO();
+	/// <summary>
+	/// インスタンシング用
+	/// </summary>
+	static void CreateInstancedPSO();
 
 	/// <summary>
 	/// PSO作成

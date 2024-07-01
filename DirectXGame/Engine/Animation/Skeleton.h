@@ -14,7 +14,7 @@ public:
 
 
 public:
-	int32_t root;	// RootJointのIndex
+	int32_t root = 0;	// RootJointのIndex
 	std::map<std::string, int32_t> jointMap; // 名前とIndex
 	std::vector<Joint> joints;	// ジョイント
 };

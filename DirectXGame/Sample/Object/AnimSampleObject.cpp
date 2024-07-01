@@ -67,7 +67,6 @@ void AnimSampleObject::Draw(const ModelDrawDesc& desc)
 	ModelDrawDesc drawDesc{};
 	drawDesc.worldTransform = &worldTransform_;
 	drawDesc.camera = desc.camera;
-	drawDesc.localMatrix = animation_.localMatrix_;
 	drawDesc.directionalLight = desc.directionalLight;
 	drawDesc.spotLight = desc.spotLight;
 	drawDesc.pointLight = desc.pointLight;
