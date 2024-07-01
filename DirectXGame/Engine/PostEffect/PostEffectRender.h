@@ -1,6 +1,9 @@
 #pragma once
 #include "../Utility/Singleton.h"
 #include "../3D/Graphics/GraphicsPSO.h"
+#include "PostEffectData.h"
+
+#include <wrl.h>
 #include <d3d12.h>
 #include <utility>
 
@@ -8,6 +11,33 @@ class SRVHandler;
 
 class PostEffectRender : public Singleton<PostEffectRender>
 {
+private:
+	using EffectRegister = Pipeline::PostEffectRegister;
+
+public:	// 定数バッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> vignetteCBuffer_;
+	CBufferDataVignette* vignetteMap_ = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> blurCBuffer_;
+	CBufferDataBlur* blurMap_ = nullptr;
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void StaticInitialize();
+
+public:
+	// ポストエフェクトのバッファーに送るデータ体
+	struct PostEffectDesc {
+		CBufferDataBlur blur;
+		CBufferDataVignette vignette;
+	};
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	/// <param name="desc"></param>
+	void Update(const PostEffectDesc& desc);
+
 public:
 	/// <summary>
 	/// 描画

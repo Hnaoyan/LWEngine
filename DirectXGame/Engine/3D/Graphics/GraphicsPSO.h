@@ -74,6 +74,13 @@ namespace Pipeline
 		kCountOfParameter,
 	};
 
+	enum class PostEffectRegister : int {
+		kTexture,
+		kVignette,
+		kBlur,
+		kCountOfParameter,
+	};
+
 	enum class BlendMode : int {
 		kNone,
 		kNormal,
@@ -94,12 +101,13 @@ namespace Pipeline
 	};
 
 	enum class PostEffectType : int {
-		kNormal,
-		kGrayScale,
-		kVignette,
-		kSmoothing,
-		kGaussian,	
-		kCountOfType,
+		kNormal,			// 通常
+		kGrayScale,			// グレースケール
+		kVignette,			// ビネット
+		kGrayscaleVignette,	// グレースケールとビネット
+		kSmoothing,			// 平滑
+		kGaussian,			// ぼかし
+		kCountOfType,		
 	};
 
 }

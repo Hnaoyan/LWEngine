@@ -256,9 +256,9 @@ void GraphicsPSO::CreateModelPSO()
 
 
 	// デスクリプタレンジ
-	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1]{};
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1]{};
 	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 
 	// ルートパラメータ
@@ -428,9 +428,9 @@ void GraphicsPSO::CreateSkinningModelPSO()
 
 
 	// デスクリプタレンジ
-	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1]{};
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1]{};
 	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 
 	// ルートパラメータ
@@ -515,11 +515,14 @@ void GraphicsPSO::CreatePostEffectPSO()
 
 	// RootParameter作成。複数設定できるので配列。今回は結果1つだけなので長さ1の配列
 	// PixelShaderのMaterialとVertexShaderのTransform
-	D3D12_ROOT_PARAMETER rootParameters[1] = {};
-	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	// 
-	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	// 
-	rootParameters[0].DescriptorTable.pDescriptorRanges = descriptorRange;// 
-	rootParameters[0].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+	D3D12_ROOT_PARAMETER rootParameters[static_cast<int>(PostEffectRegister::kCountOfParameter)] = {};
+	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	// 
+	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	// 
+	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].DescriptorTable.pDescriptorRanges = descriptorRange;// 
+	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+	rootParameters[static_cast<int>(PostEffectRegister::kVignette)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootParameters[static_cast<int>(PostEffectRegister::kBlur)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	descriptionRootSignature.pParameters = rootParameters;	// ルートパラメータ配列へのポインタ
 	descriptionRootSignature.NumParameters = _countof(rootParameters);	// 配列の長さ
@@ -597,6 +600,39 @@ void GraphicsPSO::CreatePostEffectPSO()
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
 	resultPipeline.pipelineStates[size_t(PostEffect::kGrayScale)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/VignettePS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kVignette)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/GrayscaleVignettePS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kGrayscaleVignette)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BoxFilterPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kSmoothing)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/RadialBlurPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kGaussian)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// 登録
 	sPipelines_[size_t(Pipeline::Order::kPostEffect)] = std::move(resultPipeline);
@@ -770,9 +806,9 @@ void GraphicsPSO::CreateInstancedPSO()
 
 
 	// デスクリプタレンジ
-	D3D12_DESCRIPTOR_RANGE descRangeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1]{};
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
-	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1];
+	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1]{};
 	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 
 	// ルートパラメータ
