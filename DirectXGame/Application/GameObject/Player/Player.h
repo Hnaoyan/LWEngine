@@ -2,6 +2,8 @@
 #include "../IGameObject.h"
 #include "System/PlayerSystemLists.h"
 
+class SampleBulletManager;
+
 class Player : public IGameObject
 {
 public:
@@ -29,6 +31,8 @@ public:
 
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 
+	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
+
 private:
 	/// <summary>
 	/// システム関係の初期化
@@ -44,6 +48,9 @@ public:
 	// 移動速度
 	Vector3 velocity_ = {};
 	ICamera* camera_ = nullptr;
+
+	WorldTransform frontOffset_;
+
 private:
 	OparationManager systemManager_;
 };

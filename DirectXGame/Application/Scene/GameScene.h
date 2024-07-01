@@ -51,6 +51,7 @@ public:
 
 private: // アプリ
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<SampleBulletManager> bulletManager_;
 
 private: // システム関係
 	// カメラ君

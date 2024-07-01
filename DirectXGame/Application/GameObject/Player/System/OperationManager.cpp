@@ -3,6 +3,7 @@
 #include "../../../../Engine/Input/Input.h"
 #include "../Player.h"
 #include "../../../../Engine/LwLib/LwEngineLib.h"
+#include "../../Bullet/SampleBulletManager.h"
 
 void OparationManager::Initialize(Player* player)
 {
@@ -35,10 +36,19 @@ void OparationManager::InputUpdate()
 		// 方向取得
 		direct = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,(float)joyState.Gamepad.sThumbLY / SHRT_MAX ,0 };
 		// ジャンプ入力
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A && player_->velocity_.y == 0.0f)
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && player_->velocity_.y == 0.0f)
 		{
 			float jumpPower = 50.0f;
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
+		}
+		
+		if (joyState.Gamepad.bRightTrigger) {
+			SampleBulletManager::GenerateData data{};
+			data.position = player_->worldTransform_.GetWorldPosition();
+			Vector3 bulletDirect = player_->frontOffset_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition();
+			bulletDirect = Vector3::Normalize(bulletDirect);
+			data.velocity = bulletDirect * 20.0f;
+			bulletManager_->AddBullet(data);
 		}
 		//if (input_->GetJoystickState(0, joyState)) {
 		//	player_->worldTransform_.transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
@@ -133,7 +143,7 @@ void OparationManager::InputUpdate()
 	//}
 
 	if (direct.x != 0 || direct.z != 0) {
-		if (!isDash_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) {
+		if (!isDash_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
 			isDash_ = true;
 			float dashPower = 100.0f * GameSystem::GameSpeedFactor();
 			player_->velocity_.x = direct.x * dashPower;

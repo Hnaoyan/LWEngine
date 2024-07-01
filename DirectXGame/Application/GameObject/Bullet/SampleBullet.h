@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../IGameObject.h"
+#include "../../../Engine/LwLib/Utillity/FrameTimer.h"
 
 class SampleBullet : public IGameObject
 {
@@ -25,4 +26,15 @@ public:
 	/// <param name="name"></param>
 	void ImGuiDraw() override;
 
+public:
+	void SetPosition(const Vector3& position) {
+		worldTransform_.transform_.translate = position;
+		worldTransform_.UpdateMatrix();
+	}
+
+	Vector3 velocity_ = {};
+	// 死亡フラグ
+	bool isDead_ = false;
+
+	FrameTimer deathTimer_;
 };

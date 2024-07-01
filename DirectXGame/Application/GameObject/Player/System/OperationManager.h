@@ -2,6 +2,7 @@
 
 class Player;
 class Input;
+class SampleBulletManager;
 
 class OparationManager
 {
@@ -23,6 +24,9 @@ public:
 	/// 落下処理
 	/// </summary>
 	void GravityUpdate();
+
+	void SetManager(SampleBulletManager* manager) { bulletManager_ = manager; }
+
 private:
 	// 親
 	Player* player_ = nullptr;
@@ -31,4 +35,7 @@ private:
 
 	bool isDash_ = false;
 	int resetTime_ = 0;
+
+	SampleBulletManager* bulletManager_ = nullptr;
+
 };

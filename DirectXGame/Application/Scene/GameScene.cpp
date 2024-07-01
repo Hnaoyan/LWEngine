@@ -13,7 +13,12 @@ void GameScene::Initialize()
 	LoadTexture();
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(ModelManager::GetModel("DefaultCube"));
+	player_->Initialize(ModelManager::GetModel("Jett"));
+
+	bulletManager_ = std::make_unique<SampleBulletManager>();
+	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+
+	player_->SetBulletManager(bulletManager_.get());
 
 	terrainWtf_.Initialize();
 	terrainWtf_.transform_.scale = { 20.0f,1.0f,20.0f };
@@ -38,6 +43,7 @@ void GameScene::Update()
 {
 	terrainWtf_.UpdateMatrix();
 	player_->Update();
+	bulletManager_->Update();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -66,6 +72,9 @@ void GameScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.spotLight = spotLight_.get();
 	player_->Draw(desc);
+
+	bulletManager_->Draw(desc);
+
 	desc.worldTransform = &terrainWtf_;
 	terrain_->Draw(desc);
 	Model::PostDraw();
@@ -139,6 +148,9 @@ void GameScene::LoadModel()
 	// モデルのロード
 	ModelManager::LoadNormalModel("Terrain", "terrain");
 	terrain_ = ModelManager::GetModel("Terrain");
+
+	ModelManager::LoadNormalModel("Jett", "jett");
+
 }
 
 void GameScene::LoadTexture()

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBullet.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBullet.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Player.h" />

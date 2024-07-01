@@ -9,6 +9,11 @@ void Player::Initialize(Model* model)
 	worldPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の初期化
 	SystemInitialize();
+
+	frontOffset_.Initialize();
+	frontOffset_.transform_.translate = { 0,0,1.0f };
+	frontOffset_.parent_ = &worldTransform_;
+
 }
 
 void Player::Update()
@@ -20,6 +25,7 @@ void Player::Update()
 	worldTransform_.transform_.translate = worldPosition_;
 	// 基底クラスの更新
 	IGameObject::Update();
+	frontOffset_.UpdateMatrix();
 }
 
 void Player::Draw(ModelDrawDesc desc)
@@ -42,6 +48,8 @@ void Player::ImGuiDraw()
 	ImGui::Begin(name.c_str());
 
 	ImGui::DragFloat3("Velocity", &velocity_.x);
+	Vector3 world = frontOffset_.GetWorldPosition();
+	ImGui::DragFloat3("World", &world.x);
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))

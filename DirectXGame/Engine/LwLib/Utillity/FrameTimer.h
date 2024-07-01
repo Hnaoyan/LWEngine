@@ -31,7 +31,7 @@ private:
 	/// </summary>
 	void StartUp();
 
-private:
+public:
 	// 経過フレーム（現在フレーム
 	float elapsedFrame_ = 0.0f;
 	// 終了フレーム
