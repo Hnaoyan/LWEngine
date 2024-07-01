@@ -50,6 +50,8 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	Vector3 world = frontOffset_.GetWorldPosition();
 	ImGui::DragFloat3("World", &world.x);
+	frontOffset_.transform_.translate.x;
+	ImGui::DragFloat3("Offset", &frontOffset_.transform_.translate.x, 0.01f);
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
