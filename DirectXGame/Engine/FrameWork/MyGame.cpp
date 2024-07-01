@@ -11,12 +11,13 @@ void MyGame::Initialize()
 	Framework::Initialize();
 	// ロード
 	GlobalVariables::GetInstance()->LoadFiles();
+	// 初期化
+	PostEffectRender::GetInstance()->StaticInitialize();
 
 	// シーンの初期化
 	sceneFactory_ = std::make_unique<SceneFactory>();
 	sceneManager_->SetSceneFactory(sceneFactory_.get());
 	sceneManager_->ChangeScene("SAMPLE");
-
 }
 
 void MyGame::Finalize()

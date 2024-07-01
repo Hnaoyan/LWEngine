@@ -7,6 +7,7 @@
 #include "../Object/PlSampleObject.h"
 #include "../../Engine/Camera/Custom/DebugCamera.h"
 #include "../../Engine/Light/LightLists.h"
+#include "../../Engine/PostEffect/PostEffectData.h"
 
 class SampleScene : public IScene
 {
@@ -79,5 +80,10 @@ private:
 
 	std::unique_ptr<PointLight> pointLight_;
 	CBufferDataPointLight ptLightData_;
+
+	CBufferDataBlur blurData_;
+	CBufferDataVignette vignetteData_;
+
+	int postEffecter_ = 0;
 
 };

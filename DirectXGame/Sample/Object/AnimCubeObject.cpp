@@ -49,12 +49,8 @@ void AnimCubeObject::Update()
 
 void AnimCubeObject::Draw(const ModelDrawDesc& desc)
 {
-	ModelDrawDesc drawDesc{};
+	ModelDrawDesc drawDesc = ModelDrawDesc::SetDesc(desc);
 	drawDesc.worldTransform = &worldTransform_;
-	drawDesc.camera = desc.camera;
-	drawDesc.directionalLight = desc.directionalLight;
-	drawDesc.spotLight = desc.spotLight;
-	drawDesc.pointLight = desc.pointLight;
 
 	animModel_->Draw(drawDesc);
 }

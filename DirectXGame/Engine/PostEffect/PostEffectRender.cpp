@@ -1,7 +1,44 @@
 #include "PostEffectRender.h"
 #include "../3D/Descriptor/SRVHandler.h"
+#include "../Base/DirectXCommon.h"
+#include <cassert>
 
 Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+
+void PostEffectRender::StaticInitialize()
+{
+	// デバイス取得
+	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
+
+	// リソース作成
+	vignetteCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataVignette) + 0xff) & ~0xff);
+	blurCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataBlur) + 0xff) & ~0xff);
+
+	HRESULT result = S_FALSE;
+	result = vignetteCBuffer_->Map(0, nullptr, (void**)&vignetteMap_);
+	assert(SUCCEEDED(result));
+	result = blurCBuffer_->Map(0, nullptr, (void**)&blurMap_);
+	assert(SUCCEEDED(result));
+
+	vignetteMap_->scale = 16.0f;
+	vignetteMap_->powValue = 0.8f;
+	vignetteMap_->color = { 1.0f,0.0f,0.0f };
+
+	blurMap_->centerPoint = { 0.5f,0.5f };
+	blurMap_->samplesNum = 5;
+	blurMap_->blurWidth = 0.01f;
+}
+
+void PostEffectRender::Update(const PostEffectDesc& desc)
+{
+	vignetteMap_->color = desc.vignette.color;
+	vignetteMap_->powValue = desc.vignette.powValue;
+	vignetteMap_->scale = desc.vignette.scale;
+
+	blurMap_->blurWidth = desc.blur.blurWidth;
+	blurMap_->centerPoint = desc.blur.centerPoint;
+	blurMap_->samplesNum = desc.blur.samplesNum;
+}
 
 void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 {
@@ -18,7 +55,10 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	// テーブル設定
 	commandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	commandList_->SetGraphicsRootDescriptorTable(0, this->renderTextureHandle_.second);
+	commandList_->SetGraphicsRootDescriptorTable(static_cast<UINT>(EffectRegister::kTexture), this->renderTextureHandle_.second);
+
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kVignette), vignetteCBuffer_->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBlur), blurCBuffer_->GetGPUVirtualAddress());
 
 	// 描画
 	commandList_->DrawInstanced(3, 1, 0, 0);

@@ -71,13 +71,28 @@ struct AnimDrawDesc
 // モデルの描画に必要な者たち
 struct ModelDrawDesc
 {
-	ModelNode* modelNode;
+	//ModelNode* modelNode;
 	WorldTransform* worldTransform;
 	ICamera* camera;
-	Matrix4x4 localMatrix;
+	//Matrix4x4 localMatrix;
+	// テクスチャ
 	uint32_t texture = 100;
 	// 平行光源
 	DirectionalLight* directionalLight;
+	// 方向光源
 	SpotLight* spotLight;
+	// 点光源
 	PointLight* pointLight;
+
+	static ModelDrawDesc SetDesc(const ModelDrawDesc& desc) {
+		ModelDrawDesc result{};
+		// カメラ
+		result.camera = desc.camera;
+		// ライト
+		result.directionalLight = desc.directionalLight;
+		result.pointLight = desc.pointLight;
+		result.spotLight = desc.spotLight;
+		return result;
+	}
+
 };

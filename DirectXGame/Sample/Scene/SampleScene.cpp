@@ -3,6 +3,7 @@
 #include "../../Engine/2D/TextureManager.h"
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/3D/ModelManager.h"
+#include "../../Engine/PostEffect/PostEffectRender.h"
 
 void SampleScene::Initialize()
 {
@@ -71,6 +72,17 @@ void SampleScene::Initialize()
 
 	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
 
+#pragma region PostEffect
+	vignetteData_.scale = 16.0f;
+	vignetteData_.powValue = 0.8f;
+	vignetteData_.color = { 1.0f,0.0f,0.0f };
+
+	blurData_.centerPoint = { 0.5f,0.5f };
+	blurData_.samplesNum = 5;
+	blurData_.blurWidth = 0.01f;
+#pragma endregion
+
+
 	//testWTF_.transform_.translate = { 0,-3.5f,7.0f };
 	//testWTF_.transform_.rotate.y = -1.85f;
 }
@@ -109,6 +121,12 @@ void SampleScene::Update()
 	directionalLight_->Update(lightData_);
 	spotLight_->Update(spLightData_);
 	pointLight_->Update(ptLightData_);
+
+	PostEffectRender::PostEffectDesc desc{};
+	desc.blur = blurData_;
+	desc.vignette = vignetteData_;
+	PostEffectRender::GetInstance()->Update(desc);
+
 }
 
 void SampleScene::Draw()
@@ -172,6 +190,33 @@ void SampleScene::Draw()
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
+	ImGui::InputInt("PostEffect", &postEffecter_, 1);
+
+	switch (postEffecter_)
+	{
+	case 0:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		break;
+	case 1:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
+		break;
+	case 2:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
+		break;
+	case 3:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayscaleVignette;
+		break;
+	case 4:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGaussian;
+		break;
+	case 5:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
+		break;
+	default:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		break;
+	}
+
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 	if (ImGui::TreeNode("SpriteData")) {
 		ImGui::Checkbox("Invisible", &newSpriteData_.isInvisible_);
@@ -187,8 +232,24 @@ void SampleScene::ImGuiDraw()
 	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
 
 
-	if (ImGui::TreeNode("DirectionalLight")) {
-		ImGui::TreePop();
+	if (ImGui::BeginTabBar("PostEffect"))
+	{
+		float defaultSpeed = 0.01f;
+		if (ImGui::BeginTabItem("Vignette"))
+		{
+			ImGui::ColorEdit3("ViColor", &vignetteData_.color.x);
+			ImGui::DragFloat("ViPowValue", &vignetteData_.powValue, defaultSpeed);
+			ImGui::DragFloat("ViScale", &vignetteData_.scale, defaultSpeed);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Blur"))
+		{
+			ImGui::DragFloat2("BlColor", &blurData_.centerPoint.x, defaultSpeed);
+			ImGui::DragFloat("BlBlurWidth", &blurData_.blurWidth, defaultSpeed);
+			ImGui::InputInt("BlSampleNum", &blurData_.samplesNum, 1);
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
 	}
 	if (ImGui::BeginTabBar("Lighting"))
 	{

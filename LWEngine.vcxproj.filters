@@ -470,6 +470,9 @@
     <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancingData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -489,6 +492,8 @@
     <FxCompile Include="Resources\shaders\PostEffect\GrayscaleVignettePS.hlsl" />
     <FxCompile Include="Resources\shaders\Instanced\InstancedModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\Instanced\InstancedModelPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\RadialBlurPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\Dissolve.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
