@@ -4,6 +4,7 @@
 #include "../Player.h"
 #include "../../../../Engine/LwLib/LwEngineLib.h"
 #include "../../Bullet/SampleBulletManager.h"
+#include "../../../../Engine/PostEffect/PostEffectRender.h"
 
 void OparationManager::Initialize(Player* player)
 {
@@ -50,6 +51,16 @@ void OparationManager::InputUpdate()
 			data.velocity = bulletDirect * 20.0f;
 			bulletManager_->AddBullet(data);
 		}
+
+		if (input_->PressKey(DIK_G)) {
+			GameSystem::sSpeedFactor = 5.0f;
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
+		}
+		else {
+			GameSystem::sSpeedFactor = 1.0f;
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		}
+
 		//if (input_->GetJoystickState(0, joyState)) {
 		//	player_->worldTransform_.transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
 		//}
