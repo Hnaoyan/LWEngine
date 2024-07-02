@@ -20,5 +20,6 @@ struct VignetteData
 
 struct DissolveData
 {
+    float32_t3 color;
     float32_t threshold;
 };

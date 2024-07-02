@@ -78,6 +78,7 @@ namespace Pipeline
 		kTexture,
 		kVignette,
 		kBlur,
+		kDissolve,
 		kCountOfParameter,
 	};
 

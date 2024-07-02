@@ -4,6 +4,7 @@
 #include <cassert>
 
 uint32_t SRVHandler::kDescriptorSizeSRV_ = 0u;
+uint32_t SRVHandler::sNowDescriptorNum_ = 2;
 uint32_t SRVHandler::sNextDescriptorNum_ = 2;
 DirectXDevice* SRVHandler::dxDevice_ = nullptr;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SRVHandler::srvHeap_;

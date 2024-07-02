@@ -12,3 +12,9 @@ struct CBufferDataVignette {
 	float scale;	// 幅のスケール
 	float powValue;	// 累乗の値
 };
+
+struct CBufferDataDissolve
+{
+	Vector3 color;	// エッジの色
+	float threshold;// 閾値
+};
