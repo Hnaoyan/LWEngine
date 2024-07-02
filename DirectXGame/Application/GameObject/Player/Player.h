@@ -27,11 +27,20 @@ public:
 	/// <param name="name"></param>
 	void ImGuiDraw() override;
 
+	/// <summary>
+	/// UI描画
+	/// </summary>
+	void UISpriteDraw();
+
+public: // アクセッサ
+
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 
 	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
+
+	Vector3 GetAimReticle() { return aimManager_.GetWorldPosition(); }
 
 private:
 	/// <summary>
@@ -48,8 +57,6 @@ public:
 	// 移動速度
 	Vector3 velocity_ = {};
 	ICamera* camera_ = nullptr;
-
-	WorldTransform frontOffset_;
 
 private:
 	// 操作関係

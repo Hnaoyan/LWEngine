@@ -53,6 +53,9 @@ private: // アプリ
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<SampleBulletManager> bulletManager_;
 
+private: // リソース
+	std::unique_ptr<Sprite> reticleSprite_;
+
 private: // システム関係
 	// カメラ君
 	// デバッグカメラ

@@ -83,6 +83,7 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(commandList);
 
+	player_->UISpriteDraw();
 
 	Sprite::PostDraw();
 

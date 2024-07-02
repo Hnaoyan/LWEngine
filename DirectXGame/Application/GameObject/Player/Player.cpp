@@ -10,10 +10,6 @@ void Player::Initialize(Model* model)
 	// システム関係の初期化
 	SystemInitialize();
 
-	frontOffset_.Initialize();
-	frontOffset_.transform_.translate = { 0,0,1.0f };
-	frontOffset_.parent_ = &worldTransform_;
-
 }
 
 void Player::Update()
@@ -25,7 +21,6 @@ void Player::Update()
 	worldTransform_.transform_.translate = worldPosition_;
 	// 基底クラスの更新
 	IGameObject::Update();
-	frontOffset_.UpdateMatrix();
 }
 
 void Player::Draw(ModelDrawDesc desc)
@@ -48,16 +43,12 @@ void Player::ImGuiDraw()
 	ImGui::Begin(name.c_str());
 
 	ImGui::DragFloat3("Velocity", &velocity_.x);
-	Vector3 world = frontOffset_.GetWorldPosition();
-	ImGui::DragFloat3("World", &world.x);
-	frontOffset_.transform_.translate.x;
-	ImGui::DragFloat3("Offset", &frontOffset_.transform_.translate.x, 0.01f);
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
-		if (ImGui::BeginTabItem("S1")) {
-
+		if (ImGui::BeginTabItem("Aim")) {
+			aimManager_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("S2")) {
@@ -74,12 +65,22 @@ void Player::ImGuiDraw()
 	ImGui::End();
 }
 
+void Player::UISpriteDraw()
+{
+	aimManager_.Draw();
+}
+
 void Player::SystemInitialize()
 {
+	// 操作システム
 	systemManager_.Initialize(this);
+	// エイムシステム
+	aimManager_.Initialize(this);
 }
 
 void Player::SystemUpdate()
 {
 	systemManager_.Update();
+
+	aimManager_.Update(camera_);
 }
