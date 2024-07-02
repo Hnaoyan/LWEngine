@@ -52,5 +52,8 @@ public:
 	WorldTransform frontOffset_;
 
 private:
+	// 操作関係
 	OparationManager systemManager_;
+	// エイム関係
+	AimManager aimManager_;
 };

@@ -86,6 +86,7 @@
     <ClCompile Include="DirectXGame\Sample\Object\PlSampleObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AimManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="DirectXGame\Sample\Object\PlSampleObject.h" />
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AimManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
