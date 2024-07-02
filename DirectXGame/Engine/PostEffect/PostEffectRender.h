@@ -21,6 +21,9 @@ public:	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> blurCBuffer_;
 	CBufferDataBlur* blurMap_ = nullptr;
 
+	Microsoft::WRL::ComPtr<ID3D12Resource> dissolveCBuffer_;
+	CBufferDataDissolve* dissolveMap_ = nullptr;
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -31,6 +34,7 @@ public:
 	struct PostEffectDesc {
 		CBufferDataBlur blur;
 		CBufferDataVignette vignette;
+		CBufferDataDissolve dissolve;
 	};
 	/// <summary>
 	/// 更新処理
