@@ -39,6 +39,9 @@ public:
 	float shininess_ = 100.0f;
 	// 環境マップの係数
 	float coefficient_ = 1.0f;
+	// 閾値
+	float threshold_ = 0.0f;
+
 	// UVトランスフォーム
 	EulerTransform uvTransform_ = {
 		{1.0f,1.0f,1.0f},

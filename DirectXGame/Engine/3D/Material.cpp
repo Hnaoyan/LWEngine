@@ -33,6 +33,7 @@ void Material::CreateMaterial()
 	materialData_->enableLighting = enableLighting_;
 	materialData_->uvTransform = Matrix4x4::MakeIdentity4x4();
 	materialData_->shininess = shininess_;
+	materialData_->threshold = threshold_;
 }
 
 void Material::Update()
@@ -43,6 +44,7 @@ void Material::Update()
 	materialData_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
 	materialData_->shininess = shininess_;
 	materialData_->coefficient = 0;
+	materialData_->threshold = threshold_;
 }
 
 void Material::ImGuiDraw(const std::string& objName)
