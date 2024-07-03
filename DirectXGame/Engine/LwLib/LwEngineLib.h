@@ -51,9 +51,19 @@ namespace LwLib
 	inline static float LerpShortAngle(float a, float b, float t) {
 		// 角度差分
 		float diff = b - a;
-		diff = std::fmodf(diff, 2.0f * float(std::numbers::pi));
+
 		// 角度を[-PI, +PI]に補正
-		diff = std::fmodf(diff + (float(std::numbers::pi)), 2.0f * (float(std::numbers::pi))) - (float(std::numbers::pi));
+		if (diff > 2.0f * float(std::numbers::pi) || diff < -2.0f * float(std::numbers::pi)) {
+			diff = std::fmodf(diff, 2.0f * float(std::numbers::pi));
+		}
+		if (diff > float(std::numbers::pi)) {
+			diff += -2.0f * float(std::numbers::pi);
+		}
+		else if (diff < -float(std::numbers::pi)) {
+			diff += -2.0f * float(std::numbers::pi);
+		}
+		//diff = std::fmodf(diff + (float(std::numbers::pi)), 2.0f * (float(std::numbers::pi))) - (float(std::numbers::pi));
+		// Lerp
 		diff = Lerp(a, diff, t);
 		return diff;
 	}

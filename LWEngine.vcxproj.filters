@@ -188,6 +188,8 @@
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AimManager.h" />
+    <FxCompile Include="Resources\shaders\PostEffect\Dissolve.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />

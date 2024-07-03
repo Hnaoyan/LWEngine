@@ -23,3 +23,9 @@ struct DissolveData
     float32_t3 color;
     float32_t threshold;
 };
+
+struct RandomNoiseData
+{
+    int32_t enable;
+    float32_t time;
+};

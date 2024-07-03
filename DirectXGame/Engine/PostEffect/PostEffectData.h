@@ -18,3 +18,9 @@ struct CBufferDataDissolve
 	Vector3 color;	// エッジの色
 	float threshold;// 閾値
 };
+
+struct CBufferDataNoise
+{
+	int32_t enableScreen;	// 画面にかけるかノイズのみか
+	float time;	// 変化時間
+};
