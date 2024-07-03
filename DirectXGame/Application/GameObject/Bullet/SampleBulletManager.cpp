@@ -30,5 +30,7 @@ void SampleBulletManager::AddBullet(const GenerateData& data)
 	bullet->Initialize(model_);
 	bullet->velocity_ = data.velocity;
 	bullet->SetPosition(data.position);
+	bullet->worldTransform_.isVectorRotate_ = true;
+	bullet->worldTransform_.rotateDirect_ = Vector3::Normalize(data.velocity);
 	bullets_.push_back(std::move(bullet));
 }
