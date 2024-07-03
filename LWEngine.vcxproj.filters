@@ -494,6 +494,7 @@
     <FxCompile Include="Resources\shaders\Instanced\InstancedModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\RadialBlurPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\Dissolve.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
