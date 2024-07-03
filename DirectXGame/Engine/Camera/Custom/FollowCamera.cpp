@@ -57,6 +57,8 @@ void FollowCamera::ImGuiDraw()
 
 	ImGui::DragFloat("rStickRate", &rStickLerpRate_, 0.01f);
 
+	ImGui::DragFloat3("Front", &frontVector_.x);
+
 	ImGui::End();
 }
 

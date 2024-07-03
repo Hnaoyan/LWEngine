@@ -64,6 +64,10 @@ public:
 	// 
 	EulerTransform transform_ = {};
 
+	const Vector3 kFrontVector = { 0.0f,0.0f,1.0f };
+
+	Vector3 frontVector_ = {};
+
 private:
 	// 視野角の角度
 	float fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0);
