@@ -80,6 +80,10 @@ void SampleScene::Initialize()
 	blurData_.centerPoint = { 0.5f,0.5f };
 	blurData_.samplesNum = 5;
 	blurData_.blurWidth = 0.01f;
+
+	dissolveData_.color = {};
+	dissolveData_.threshold = 0;
+
 #pragma endregion
 
 
@@ -126,6 +130,7 @@ void SampleScene::Update()
 	desc.blur = blurData_;
 	desc.vignette = vignetteData_;
 	desc.noise = noiseData_;
+	desc.dissolve = dissolveData_;
 	PostEffectRender::GetInstance()->Update(desc);
 
 }
@@ -214,6 +219,9 @@ void SampleScene::ImGuiDraw()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
 		break;
 	case 6:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+		break;
+	case 7:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
 		break;
 	default:
@@ -258,6 +266,12 @@ void SampleScene::ImGuiDraw()
 			bool isEnable = noiseData_.enableScreen;
 			ImGui::Checkbox("Screen", &isEnable);
 			noiseData_.enableScreen = isEnable;
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Dissolve"))
+		{
+			ImGui::ColorEdit3("DiColor", &dissolveData_.color.x);
+			ImGui::DragFloat("DiThreshold", &dissolveData_.threshold, 0.01f, 0.0f, 1.0f);
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();

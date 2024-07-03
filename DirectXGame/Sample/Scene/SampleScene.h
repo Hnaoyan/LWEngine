@@ -83,6 +83,7 @@ private:
 
 	CBufferDataBlur blurData_;
 	CBufferDataVignette vignetteData_;
+	CBufferDataDissolve dissolveData_;
 	CBufferDataNoise noiseData_;
 
 	int postEffecter_ = 0;
