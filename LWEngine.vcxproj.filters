@@ -6,7 +6,6 @@
     <FxCompile Include="Resources\shaders\Instanced\InstancedModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\Instanced\InstancedModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\BoxFilterPS.hlsl" />
-    <FxCompile Include="Resources\shaders\PostEffect\Dissolve.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenVS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\GaussianFilterPS.hlsl" />
@@ -191,6 +190,7 @@
     <FxCompile Include="Resources\shaders\PostEffect\Dissolve.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\DissolvePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\LockOn.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
