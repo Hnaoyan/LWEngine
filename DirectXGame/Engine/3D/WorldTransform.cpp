@@ -26,7 +26,20 @@ void WorldTransform::UpdateMatrix()
 	}
 	// ビルボードなし
 	else {
-		worldMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
+		if (isVectorRotate_) {
+			// スケール
+			Matrix4x4 scaleMat = Matrix4x4::MakeScaleMatrix(transform_.scale);
+			// 回転
+			Matrix4x4 rotateMat = Matrix4x4::DirectionToDirection({ 0.0f,0.0f,1.0f }, rotateDirect_);
+			// 平行移動
+			Matrix4x4 translateMat = Matrix4x4::MakeTranslateMatrix(transform_.translate);
+
+			worldMatrix_ = Matrix4x4::Multiply(scaleMat, Matrix4x4::Multiply(rotateMat, translateMat));
+
+		}
+		else {
+			worldMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
+		}
 	}
 
 	// 親があれば
