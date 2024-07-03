@@ -76,9 +76,10 @@ namespace Pipeline
 
 	enum class PostEffectRegister : int {
 		kTexture,
+		kDissolveTexture,
 		kVignette,
 		kBlur,
-		//kDissolve,
+		kDissolve,
 		kNoise,
 		kCountOfParameter,
 	};
@@ -109,6 +110,8 @@ namespace Pipeline
 		kGrayscaleVignette,	// グレースケールとビネット
 		kSmoothing,			// 平滑
 		kGaussian,			// ぼかし
+		kRadialBlur,		// ブラー
+		kDissolve,			// Dissolve
 		kNoise,				// ランダムノイズ
 		kCountOfType,		
 	};

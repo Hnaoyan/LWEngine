@@ -508,22 +508,21 @@ void GraphicsPSO::CreatePostEffectPSO()
 
 	// DescriptorRangeの作成
 	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
-	descriptorRange[0].BaseShaderRegister = 0;	// 0から始まる
-	descriptorRange[0].NumDescriptors = 1;	// 数は1つ
-	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;	 // SRVを使う
-	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;	// Offsetを自動計算
+	descriptorRange[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descriptorRangeDissolve[1] = {};
+	descriptorRangeDissolve[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 
 	// RootParameter作成。複数設定できるので配列。今回は結果1つだけなので長さ1の配列
 	// PixelShaderのMaterialとVertexShaderのTransform
 	D3D12_ROOT_PARAMETER rootParameters[static_cast<int>(PostEffectRegister::kCountOfParameter)] = {};
-	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	// 
-	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	// 
-	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].DescriptorTable.pDescriptorRanges = descriptorRange;// 
-	rootParameters[static_cast<int>(PostEffectRegister::kTexture)].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+	// テクスチャ
+	rootParameters[static_cast<int>(PostEffectRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descriptorRange), descriptorRange, D3D12_SHADER_VISIBILITY_PIXEL);
+	// Dissolveのテクスチャ
+	rootParameters[static_cast<int>(PostEffectRegister::kDissolveTexture)] = PSOLib::InitAsDescriptorTable(_countof(descriptorRangeDissolve), descriptorRangeDissolve, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	rootParameters[static_cast<int>(PostEffectRegister::kVignette)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootParameters[static_cast<int>(PostEffectRegister::kBlur)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
-	//rootParameters[static_cast<int>(PostEffectRegister::kDissolve)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootParameters[static_cast<int>(PostEffectRegister::kDissolve)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootParameters[static_cast<int>(PostEffectRegister::kNoise)] = PSOLib::InitAsConstantBufferView(4, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	descriptionRootSignature.pParameters = rootParameters;	// ルートパラメータ配列へのポインタ
@@ -629,12 +628,28 @@ void GraphicsPSO::CreatePostEffectPSO()
 	resultPipeline.pipelineStates[size_t(PostEffect::kSmoothing)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"PostEffect/RadialBlurPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/GaussianFilterPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
 	resultPipeline.pipelineStates[size_t(PostEffect::kGaussian)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/RadialBlurPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kRadialBlur)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/DissolvePS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kRadialBlur)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
 	psBlob = Shader::GetInstance()->Compile(L"PostEffect/RandomNoisePS.hlsl", L"ps_6_0");
