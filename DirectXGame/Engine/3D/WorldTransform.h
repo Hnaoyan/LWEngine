@@ -59,9 +59,13 @@ public:
 	Matrix4x4 worldMatrix_ = {};
 	// ローカル行列
 	Matrix4x4 localMatrix_ = {};
+	// 方向ベクトル
+	Vector3 rotateDirect_;
 
 	// カメラのポインタ
 	ICamera* camera_ = nullptr;
 	bool isBillBoard_ = false;
+	// ベクトルでの回転行列の作成
+	bool isVectorRotate_ = false;
 
 };
