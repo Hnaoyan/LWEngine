@@ -78,7 +78,8 @@ namespace Pipeline
 		kTexture,
 		kVignette,
 		kBlur,
-		kDissolve,
+		//kDissolve,
+		kNoise,
 		kCountOfParameter,
 	};
 
@@ -108,6 +109,7 @@ namespace Pipeline
 		kGrayscaleVignette,	// グレースケールとビネット
 		kSmoothing,			// 平滑
 		kGaussian,			// ぼかし
+		kNoise,				// ランダムノイズ
 		kCountOfType,		
 	};
 
