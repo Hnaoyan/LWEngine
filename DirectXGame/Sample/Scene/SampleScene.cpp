@@ -212,6 +212,9 @@ void SampleScene::ImGuiDraw()
 	case 5:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
 		break;
+	case 6:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
+		break;
 	default:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 		break;

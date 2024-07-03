@@ -13,12 +13,17 @@ void PostEffectRender::StaticInitialize()
 	// リソース作成
 	vignetteCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataVignette) + 0xff) & ~0xff);
 	blurCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataBlur) + 0xff) & ~0xff);
+	noiseCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataNoise) + 0xff) & ~0xff);
 
+#pragma region マッピング
 	HRESULT result = S_FALSE;
 	result = vignetteCBuffer_->Map(0, nullptr, (void**)&vignetteMap_);
 	assert(SUCCEEDED(result));
 	result = blurCBuffer_->Map(0, nullptr, (void**)&blurMap_);
 	assert(SUCCEEDED(result));
+	result = noiseCBuffer_->Map(0, nullptr, (void**)&noiseMap_);
+	assert(SUCCEEDED(result));
+#pragma endregion
 
 	vignetteMap_->scale = 16.0f;
 	vignetteMap_->powValue = 0.8f;
@@ -27,6 +32,9 @@ void PostEffectRender::StaticInitialize()
 	blurMap_->centerPoint = { 0.5f,0.5f };
 	blurMap_->samplesNum = 5;
 	blurMap_->blurWidth = 0.01f;
+
+	noiseMap_->time = 0;
+
 }
 
 void PostEffectRender::Update(const PostEffectDesc& desc)
@@ -38,6 +46,13 @@ void PostEffectRender::Update(const PostEffectDesc& desc)
 	blurMap_->blurWidth = desc.blur.blurWidth;
 	blurMap_->centerPoint = desc.blur.centerPoint;
 	blurMap_->samplesNum = desc.blur.samplesNum;
+
+	// ノイズでの処理時のみ
+	if (sPostEffect != Pipeline::PostEffectType::kNoise) {
+		noiseMap_->time = 0;
+		return;
+	}
+	noiseMap_->time++;
 }
 
 void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -59,6 +74,7 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kVignette), vignetteCBuffer_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBlur), blurCBuffer_->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kNoise), noiseCBuffer_->GetGPUVirtualAddress());
 
 	// 描画
 	commandList_->DrawInstanced(3, 1, 0, 0);
