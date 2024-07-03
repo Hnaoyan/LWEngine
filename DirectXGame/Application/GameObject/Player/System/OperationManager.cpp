@@ -46,9 +46,9 @@ void OparationManager::InputUpdate()
 		if (joyState.Gamepad.bRightTrigger) {
 			SampleBulletManager::GenerateData data{};
 			data.position = player_->worldTransform_.GetWorldPosition();
-			Vector3 bulletDirect = player_->GetAimReticle() - player_->worldTransform_.GetWorldPosition();
-			bulletDirect = Vector3::Normalize(bulletDirect);
-			data.velocity = bulletDirect * 20.0f;
+			data.velocity = Vector3::Normalize(player_->GetAimReticle() - player_->worldTransform_.GetWorldPosition());
+			float speedValue = 30.0f;
+			data.velocity *= speedValue;
 			bulletManager_->AddBullet(data);
 		}
 
