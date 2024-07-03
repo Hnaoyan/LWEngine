@@ -26,5 +26,6 @@ struct DissolveData
 
 struct RandomNoiseData
 {
+    int32_t enable;
     float32_t time;
 };

@@ -21,5 +21,6 @@ struct CBufferDataDissolve
 
 struct CBufferDataNoise
 {
+	int32_t enableScreen;	// 画面にかけるかノイズのみか
 	float time;	// 変化時間
 };

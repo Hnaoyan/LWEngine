@@ -34,6 +34,7 @@ void PostEffectRender::StaticInitialize()
 	blurMap_->blurWidth = 0.01f;
 
 	noiseMap_->time = 0;
+	noiseMap_->enableScreen = 0;
 
 }
 
@@ -53,6 +54,7 @@ void PostEffectRender::Update(const PostEffectDesc& desc)
 		return;
 	}
 	noiseMap_->time++;
+	noiseMap_->enableScreen = desc.noise.enableScreen;
 }
 
 void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)

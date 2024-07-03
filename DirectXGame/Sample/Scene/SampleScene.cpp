@@ -125,6 +125,7 @@ void SampleScene::Update()
 	PostEffectRender::PostEffectDesc desc{};
 	desc.blur = blurData_;
 	desc.vignette = vignetteData_;
+	desc.noise = noiseData_;
 	PostEffectRender::GetInstance()->Update(desc);
 
 }
@@ -250,6 +251,13 @@ void SampleScene::ImGuiDraw()
 			ImGui::DragFloat2("BlColor", &blurData_.centerPoint.x, defaultSpeed);
 			ImGui::DragFloat("BlBlurWidth", &blurData_.blurWidth, defaultSpeed);
 			ImGui::InputInt("BlSampleNum", &blurData_.samplesNum, 1);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Noise"))
+		{
+			bool isEnable = noiseData_.enableScreen;
+			ImGui::Checkbox("Screen", &isEnable);
+			noiseData_.enableScreen = isEnable;
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();
