@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class Player;
 class Input;
@@ -37,5 +38,7 @@ private:
 	int resetTime_ = 0;
 
 	SampleBulletManager* bulletManager_ = nullptr;
+
+	FrameTimer shotTimer_;
 
 };

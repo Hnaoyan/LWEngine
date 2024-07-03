@@ -31,7 +31,7 @@ void FollowCamera::Update()
 		}
 
 		// 回転の速度調節
-		transform_.rotate.y = LwLib::LerpShortAngle(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
+		transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
 		transform_.rotate.z = LwLib::LerpShortAngle(transform_.rotate.z, destinationAngle_.z, rStickLerpRate_);
 
 		// 遅延追尾時の座標

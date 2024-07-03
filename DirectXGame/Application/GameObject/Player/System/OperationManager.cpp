@@ -23,6 +23,8 @@ void OparationManager::Update()
 	// 落下処理
 	GravityUpdate();
 
+	shotTimer_.Update(GameSystem::sSpeedFactor);
+
 	// 座標更新
 	player_->worldPosition_ += player_->velocity_;
 }
@@ -43,13 +45,14 @@ void OparationManager::InputUpdate()
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
 		
-		if (joyState.Gamepad.bRightTrigger) {
+		if (joyState.Gamepad.bRightTrigger && !shotTimer_.isActive_) {
 			SampleBulletManager::GenerateData data{};
 			data.position = player_->worldTransform_.GetWorldPosition();
 			data.velocity = Vector3::Normalize(player_->GetAimReticle() - player_->worldTransform_.GetWorldPosition());
 			float speedValue = 30.0f;
 			data.velocity *= speedValue;
 			bulletManager_->AddBullet(data);
+			shotTimer_.Start(30.0f);
 		}
 
 		if (input_->PressKey(DIK_G)) {
