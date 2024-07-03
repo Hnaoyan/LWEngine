@@ -42,6 +42,10 @@ void ICamera::UpdateMatrix()
 	projectionMatrix_ = Matrix4x4::MakePerspectiveFovMatrix(fov_, aspectRatio_, nearZ, farZ);
 	// 角度
 	fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0f);
+	// 前方ベクトル
+	Matrix4x4 frontMat = Matrix4x4::MakeRotateYMatrix(transform_.rotate.y);
+	frontVector_ = Matrix4x4::TransformVector3(kFrontVector, frontMat);
+	frontVector_ = Vector3::Normalize(frontVector_);
 
 	// 定数バッファに送信
 	TransferMatrix();

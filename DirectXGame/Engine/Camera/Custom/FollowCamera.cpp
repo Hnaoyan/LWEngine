@@ -59,6 +59,8 @@ void FollowCamera::ImGuiDraw()
 
 	ImGui::DragFloat("DeleyRate", &delayRate_, 0.01f);
 
+	ImGui::DragFloat3("Front", &frontVector_.x);
+
 	ImGui::End();
 }
 
