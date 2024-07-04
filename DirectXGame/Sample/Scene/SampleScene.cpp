@@ -222,6 +222,9 @@ void SampleScene::ImGuiDraw()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 		break;
 	case 7:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kDissolve;
+		break;
+	case 8:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
 		break;
 	default:

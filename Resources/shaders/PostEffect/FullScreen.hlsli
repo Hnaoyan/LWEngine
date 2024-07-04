@@ -7,8 +7,8 @@ struct VertexShaderOutput
 struct BlurData
 {
     float32_t2 center;
-    int32_t samplerNum;
     float32_t blurWidth;
+    int32_t samplerNum;
 };
 
 struct VignetteData
