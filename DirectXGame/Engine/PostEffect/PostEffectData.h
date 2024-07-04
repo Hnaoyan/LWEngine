@@ -3,8 +3,8 @@
 
 struct CBufferDataBlur {
 	Vector2 centerPoint;	// 中心座標
-	int32_t samplesNum;	// サンプリング数
 	float blurWidth;	// ぼかしの幅
+	int32_t samplesNum;	// サンプリング数
 };
 
 struct CBufferDataVignette {
