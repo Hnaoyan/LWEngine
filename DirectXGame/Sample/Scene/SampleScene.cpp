@@ -105,6 +105,35 @@ void SampleScene::Update()
 		}
 	}
 
+	if (input_->TriggerKey(DIK_0)) {
+		postEffecter_ = 0;
+	}
+	if (input_->TriggerKey(DIK_1)) {
+		postEffecter_ = 1;
+	}
+	if (input_->TriggerKey(DIK_2)) {
+		postEffecter_ = 2;
+	}
+	if (input_->TriggerKey(DIK_3)) {
+		postEffecter_ = 3;
+	}
+	if (input_->TriggerKey(DIK_4)) {
+		postEffecter_ = 4;
+	}
+	if (input_->TriggerKey(DIK_5)) {
+		postEffecter_ = 5;
+	}
+	if (input_->TriggerKey(DIK_6)) {
+		postEffecter_ = 6;
+	}
+	if (input_->TriggerKey(DIK_7)) {
+		postEffecter_ = 7;
+	}
+	if (input_->TriggerKey(DIK_8)) {
+		postEffecter_ = 8;
+	}
+
+
 	newSprite_->SetPosition(newSpriteData_.position_);
 	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
 	newSprite_->SetInvisible(newSpriteData_.isInvisible_);
