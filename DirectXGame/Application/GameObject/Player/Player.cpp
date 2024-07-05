@@ -55,3 +55,8 @@ void Player::ImGuiDraw()
 
 	ImGui::End();
 }
+
+void Player::OnCollision(ColliderObject target)
+{
+	target;
+}

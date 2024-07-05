@@ -1,9 +1,9 @@
 #include "AABB.h"
 
-void AABB::Initialize(ColliderShape shape)
+void AABB::Initialize(ColliderObject object)
 {
 	// 基底クラス
-	ICollider::Initialize(shape);
+	ICollider::Initialize(object);
 	// ワールド
 	worldTransform_.Initialize();
 

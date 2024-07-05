@@ -1,9 +1,9 @@
 #include "Sphere.h"
 
-void Sphere::Initialize(ColliderShape shape)
+void Sphere::Initialize(ColliderObject object)
 {
 	// 基底クラス
-	ICollider::Initialize(shape);
+	ICollider::Initialize(object);
 	// ワールド
 	worldTransform_.Initialize();
 
