@@ -8,7 +8,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="shape"></param>
-	void Initialize(ColliderShape shape) override;
+	void Initialize(ColliderObject object) override;
 	/// <summary>
 	/// 更新
 	/// </summary>

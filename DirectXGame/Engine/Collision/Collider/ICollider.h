@@ -10,7 +10,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="shape"></param>
-	virtual void Initialize(ColliderShape shape);
+	virtual void Initialize(ColliderObject object);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -37,17 +37,17 @@ public:
 	/// </summary>
 	/// <param name="mask"></param>
 	void SetMask(uint32_t mask) { collisionMask_ = mask; }
-private:
+
+	ColliderObject GetColliderObject() { return objectRegistry_; }
+protected:
 	// 衝突属性（自分）
 	uint32_t collisionAttribute_ = 0xffffffff;
 	// 衝突マスク
 	uint32_t collisionMask_ = 0xffffffff;
+	// 自分のオブジェクトタイプ
+	ColliderObject objectRegistry_;
 
 public:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_{};
-	// 形状のポインタ
-	ColliderShape colliderShape_;
-	// 自分のオブジェクトタイプ
-	ColliderObject objectRegistry_;
 };
