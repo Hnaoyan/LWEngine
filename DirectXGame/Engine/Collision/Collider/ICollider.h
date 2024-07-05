@@ -37,7 +37,10 @@ public:
 	/// </summary>
 	/// <param name="mask"></param>
 	void SetMask(uint32_t mask) { collisionMask_ = mask; }
-
+	/// <summary>
+	/// クラスの取得
+	/// </summary>
+	/// <returns></returns>
 	ColliderObject GetColliderObject() { return objectRegistry_; }
 protected:
 	// 衝突属性（自分）
