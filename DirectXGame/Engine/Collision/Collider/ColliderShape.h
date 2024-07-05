@@ -9,4 +9,4 @@ class Triangle;
 
 
 // 形状のまとめ
-using ColliderShape = std::variant<AABB*>;
+using ColliderShape = std::variant<AABB*, Sphere*>;

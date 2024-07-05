@@ -1,6 +1,7 @@
 #pragma once
 #include "../../3D/WorldTransform.h"
 #include "ColliderShape.h"
+#include "Application/Collision/ColliderObject.h"
 
 class ICollider
 {
@@ -47,4 +48,6 @@ public:
 	WorldTransform worldTransform_{};
 	// 形状のポインタ
 	ColliderShape colliderShape_;
+	// 自分のオブジェクトタイプ
+	ColliderObject objectRegistry_;
 };
