@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "../Loader.h"
+#include "../ModelLoader.h"
 #include "../../2D/TextureManager.h"
 #include <cassert>
 #include "../../Animation/Animation.h"
@@ -11,7 +11,7 @@ GeneralPipeline Model::sPipeline_;
 void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
 	// モデル読み込み
-	modelData_ = Loader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
+	modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
 	ex;
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
@@ -31,10 +31,10 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 void Model::Initialize(const std::string& modelName)
 {
 	// モデル読み込み
-	modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
-	//modelData_ = Loader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
+	modelData_ = ModelLoader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
+	//modelData_ = ModelLoader::LoadGlTF(sDirectoryPath + "/" + modelName, modelName);
 	// アニメーションの読み込み
-	modelData_.animData = Loader::LoadAnimationFile(sDirectoryPath + "/" + modelName, modelName);
+	modelData_.animData = ModelLoader::LoadAnimationFile(sDirectoryPath + "/" + modelName, modelName);
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();

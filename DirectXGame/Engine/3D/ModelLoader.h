@@ -10,7 +10,7 @@
 /// <summary>
 /// モデルなどの読み込み関数用クラス
 /// </summary>
-class Loader : public Singleton<Loader>
+class ModelLoader : public Singleton<ModelLoader>
 {
 public:
 	/// <summary>
