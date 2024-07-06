@@ -73,6 +73,7 @@ public:
 
 	void SkinningDraw(const ModelDrawDesc& desc, Animation* animation, uint32_t texture);
 
+	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 	//void AnimationDraw(const AnimDrawDesc& desc);
 
 public: // アクセッサ
@@ -81,6 +82,8 @@ public: // アクセッサ
 	ModelData& GetModelDataAdress() { return modelData_; }
 
 	Material* GetMaterial() { return material_.get(); }
+
+	Mesh* GetMesh() { return mesh_.get(); }
 private:
 	// メッシュ
 	std::unique_ptr<Mesh> mesh_;

@@ -2,6 +2,7 @@ struct WorldTransform
 {
     float32_t4x4 worldMat;
     float32_t4x4 WorldInverseTranspose;
+    int32_t instanceNum;
 };
 
 struct Camera

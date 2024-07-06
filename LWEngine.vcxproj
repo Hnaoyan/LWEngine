@@ -30,6 +30,8 @@
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Instancing\InstancedGroup.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\ModelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Mesh.cpp" />
@@ -112,7 +114,6 @@
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Render.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedGroup.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancingData.h" />
     <ClInclude Include="DirectXGame\Engine\3D\ModelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Material.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Mesh.h" />

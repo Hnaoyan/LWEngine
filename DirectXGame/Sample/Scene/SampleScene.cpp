@@ -22,6 +22,9 @@ void SampleScene::Initialize()
 	testWTF_.UpdateMatrix();
 	//---ここから書く---//
 
+	testGroup1_ = std::make_unique<InstancedGroup>();
+	testGroup1_->Initialize(ModelManager::GetModel("DefaultCube"));
+
 	//sampleObj_ = std::make_unique<AnimSampleObject>();
 	//sampleObj_->Initialize(this->testModel_.get(),cubeModel_.get());
 	//sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
@@ -144,6 +147,8 @@ void SampleScene::Update()
 	humans_[1]->Update();
 	humans_[2]->Update();
 
+	testGroup1_->Update();
+
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->Update();
 	}
@@ -194,6 +199,8 @@ void SampleScene::Draw()
 	humans_[1]->Draw(desc);
 	humans_[2]->Draw(desc);
 
+	testGroup1_->Draw(desc);
+
 	//player_->Draw(&camera_);
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->Draw(desc);
@@ -207,6 +214,7 @@ void SampleScene::Draw()
 	textureDesc.worldTransform = &testWTF_;
 	cubeModel_->Draw(textureDesc);
 	skybox_->Draw(desc);
+
 
 	Model::PostDraw();
 
@@ -225,6 +233,10 @@ void SampleScene::Draw()
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
+	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
+	if (ImGui::Button("Test1Add")) {
+		testGroup1_->Add(generatePosition_);
+	}
 	ImGui::InputInt("PostEffect", &postEffecter_, 1);
 
 	switch (postEffecter_)

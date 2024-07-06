@@ -166,6 +166,7 @@ public:
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sSkyboxRootSignature_;
 
 private:
+#pragma region PSO作成関数
 	/// <summary>
 	/// 2DSprite作成
 	/// </summary>
@@ -194,6 +195,8 @@ private:
 	/// インスタンシング用
 	/// </summary>
 	static void CreateInstancedPSO();
+#pragma endregion
+
 
 	/// <summary>
 	/// PSO作成
