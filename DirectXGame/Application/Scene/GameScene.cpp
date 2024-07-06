@@ -22,8 +22,11 @@ void GameScene::Initialize()
 	bulletManager_->SetCollisionManager(collisionManager_.get());
 
 	enemyManager_ = std::make_unique<SampleEnemyManager>();
-	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
+	enemyManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	enemyManager_->SetCollisionManager(collisionManager_.get());
+
+	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
+	enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
 
 	player_->SetBulletManager(bulletManager_.get());
 

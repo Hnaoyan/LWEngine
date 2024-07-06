@@ -7,6 +7,15 @@ class SampleEnemyManager
 {
 public:
 	/// <summary>
+	/// 追加用のデータ
+	/// </summary>
+	struct GenerateData {
+		Vector3 position;
+		//Vector3 velocity;
+	};
+
+public:
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="model"></param>
@@ -20,6 +29,11 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	void Draw(ModelDrawDesc desc);
+	/// <summary>
+	/// 追加
+	/// </summary>
+	/// <param name="data"></param>
+	void AddEnemy(const GenerateData& data);
 
 	/// <summary>
 	/// 衝突マネージャーに設定

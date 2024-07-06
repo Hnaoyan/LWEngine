@@ -28,6 +28,17 @@ void SampleEnemyManager::Draw(ModelDrawDesc desc)
 	}
 }
 
+void SampleEnemyManager::AddEnemy(const GenerateData& data)
+{
+	std::unique_ptr<SampleEnemy> enemy = std::make_unique<SampleEnemy>();
+	enemy->Initialize(model_);
+	enemy->worldTransform_.transform_.translate = data.position;
+	enemy->Update();
+	//enemy->worldTransform_.rotateDirect_ = Vector3::Normalize(data.velocity);
+	enemys_.push_back(std::move(enemy));
+
+}
+
 void SampleEnemyManager::CollisionRegist()
 {
 

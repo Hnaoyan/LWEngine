@@ -1,5 +1,6 @@
 #include "SampleBullet.h"
 #include "../../GameSystem/GameSystem.h"
+#include "../GameObjectLists.h"
 
 void SampleBullet::Initialize(Model* model)
 {
@@ -47,5 +48,7 @@ void SampleBullet::ImGuiDraw()
 
 void SampleBullet::OnCollision(ColliderObject object)
 {
-	object;
+	if (std::holds_alternative<SampleEnemy*>(object)) {
+		isDead_ = true;
+	}
 }
