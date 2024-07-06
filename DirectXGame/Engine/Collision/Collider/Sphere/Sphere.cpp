@@ -1,16 +1,20 @@
 #include "Sphere.h"
 
-void Sphere::Initialize(ColliderObject object)
+void Sphere::Initialize(float radius, ColliderObject object)
 {
-	// 基底クラス
-	ICollider::Initialize(object);
+	// クラス設定
+	objectRegistry_ = object;
+	// 半径
+	radius_ = radius;
+
 	// ワールド
 	worldTransform_.Initialize();
 
 }
 
-void Sphere::Update()
+void Sphere::Update(const Vector3& worldPosition)
 {
-	// 更新
-	worldTransform_.UpdateMatrix();
+	// 基底クラス
+	ICollider::Update(worldPosition);
+
 }
