@@ -1,6 +1,6 @@
 #include "ICollider.h"
 
-void ICollider::Initialize(ColliderShape shape)
+void ICollider::Initialize(ColliderObject object)
 {
-	colliderShape_ = shape;
+	objectRegistry_ = object;
 }

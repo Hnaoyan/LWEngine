@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Engine/3D/Drawer/Model.h"
+#include "Engine/Collision/Collider/ColliderLists.h"
 
 class IGameObject
 {
@@ -34,6 +35,13 @@ public:
 	/// </summary>
 	/// <param name="name"></param>
 	virtual void ImGuiDraw() = 0;
+
+	/// <summary>
+	/// コールバック関数
+	/// </summary>
+	/// <param name="target"></param>
+	/// <param name="tag"></param>
+	virtual void OnCollision(ColliderObject target) = 0;
 
 protected:
 	// モデル

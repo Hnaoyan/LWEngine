@@ -65,6 +65,11 @@ void Player::ImGuiDraw()
 	ImGui::End();
 }
 
+void Player::OnCollision(ColliderObject target)
+{
+	target;
+}
+
 void Player::UISpriteDraw()
 {
 	aimManager_.Draw();

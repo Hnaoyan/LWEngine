@@ -649,7 +649,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
-	resultPipeline.pipelineStates[size_t(PostEffect::kRadialBlur)] = CreatePipelineState(graphicsPipelineStateDesc);
+	resultPipeline.pipelineStates[size_t(PostEffect::kDissolve)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
 	psBlob = Shader::GetInstance()->Compile(L"PostEffect/RandomNoisePS.hlsl", L"ps_6_0");

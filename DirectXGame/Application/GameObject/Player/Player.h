@@ -26,6 +26,12 @@ public:
 	/// </summary>
 	/// <param name="name"></param>
 	void ImGuiDraw() override;
+	/// <summary>
+	/// コールバック
+	/// </summary>
+	/// <param name="target"></param>
+	/// <param name="tag"></param>
+	void OnCollision(ColliderObject target) override;
 
 	/// <summary>
 	/// UI描画

@@ -1,6 +1,6 @@
-#include "AABB.h"
+#include "Sphere.h"
 
-void AABB::Initialize(ColliderObject object)
+void Sphere::Initialize(ColliderObject object)
 {
 	// 基底クラス
 	ICollider::Initialize(object);
@@ -9,9 +9,8 @@ void AABB::Initialize(ColliderObject object)
 
 }
 
-void AABB::Update()
+void Sphere::Update()
 {
-
 	// 更新
 	worldTransform_.UpdateMatrix();
 }

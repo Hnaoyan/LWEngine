@@ -1,7 +1,7 @@
 #pragma once
 #include "../ICollider.h"
 
-class AABB : public ICollider
+class Sphere : public ICollider
 {
 public:
 	/// <summary>
@@ -16,7 +16,6 @@ public:
 
 public:
 	// サイズ
-	Vector3 min_;
-	Vector3 max_;
-	
+	float radius_;
+
 };

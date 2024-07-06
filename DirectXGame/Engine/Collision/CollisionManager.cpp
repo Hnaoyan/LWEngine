@@ -1,6 +1,7 @@
 #include "CollisionManager.h"
 #include "Collider/ColliderLists.h"
 #include "Collision.h"
+#include "Application/GameObject/GameObjectLists.h"
 
 void CollisionManager::CheckAllCollisions()
 {
@@ -42,6 +43,11 @@ void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape
 
 		// 衝突処理
 		if (Collision::IsCollision(*a, *b)) {
+
+			std::visit([=](const auto& x, const auto& y) {
+				x->OnCollision(y);
+				y->OnCollision(x);
+				}, a->GetColliderObject(), b->GetColliderObject());
 
 		}
 
