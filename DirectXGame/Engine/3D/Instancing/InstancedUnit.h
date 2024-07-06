@@ -1,7 +1,10 @@
 #pragma once
+#include "../CBuffer.h"
 
-class InstancedUint
+class InstancedUnit
 {
 public:
 
+
+	EulerTransform eulerTransform_;
 };
