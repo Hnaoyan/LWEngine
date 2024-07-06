@@ -1,6 +1,11 @@
 #include "InstancedGroup.h"
+#include "../../2D/TextureManager.h"
 #include "../Descriptor/SRVHandler.h"
 #include "InstancedUnit.h"
+
+#include <cassert>
+
+GeneralPipeline InstancedGroup::sPipeline_;
 
 void InstancedGroup::Initialize(Model* model)
 {
@@ -18,8 +23,8 @@ void InstancedGroup::Update()
 	for (std::vector<std::unique_ptr<InstancedUnit>>::iterator it = units_.begin();
 		it != units_.end(); ++it) {
 		// 行列の処理
-		unitDataMap_[unitNum_].worldMatrix = (*it)->worldMatrix_;
-		unitDataMap_[unitNum_].worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse((*it)->worldMatrix_));
+		unitDataMap_[unitNum_].worldMatrix = (*it)->GetWorldMatrix();
+		unitDataMap_[unitNum_].worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse((*it)->GetWorldMatrix()));
 		unitDataMap_[unitNum_].instancedNum = unitNum_;
 		// イテレート
 		unitNum_++;
@@ -29,7 +34,8 @@ void InstancedGroup::Update()
 
 void InstancedGroup::Draw(ModelDrawDesc desc)
 {
-
+	// 描画
+	model_->InstancedDraw(desc, unitNum_, srvHandles_.second);
 }
 
 void InstancedGroup::CreateData()

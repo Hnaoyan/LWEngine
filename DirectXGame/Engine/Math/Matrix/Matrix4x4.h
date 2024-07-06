@@ -9,6 +9,34 @@ class Matrix4x4
 public:
 	float m[4][4];
 
+	Matrix4x4() {
+		for (int y = 0; y < 4; y++) {
+			for (int x = 0; x < 4; x++) {
+				if (x == y) {
+					m[y][x] = 1.0f;
+				}
+				else {
+					m[y][x] = 0.0f;
+				}
+			}
+		}
+	}
+	// コピーコンストラクタ（深いコピーを行う）
+	Matrix4x4(const Matrix4x4& other) {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				m[i][j] = other.m[i][j];
+			}
+		}
+	}
+	Matrix4x4(const Matrix4x4* other) {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				m[i][j] = other->m[i][j];
+			}
+		}
+	}
+
 public: // 演算関数
 	/// <summary>
 	/// 逆行列
