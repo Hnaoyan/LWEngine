@@ -6,7 +6,7 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
-	collider_.Initialize(this);
+	collider_.Initialize(1.0f, this);
 	// システム関係の初期化
 	SystemInitialize();
 
@@ -17,10 +17,10 @@ void Player::Update()
 	// システム関係の更新
 	SystemUpdate();
 
-
-	collider_.Update();
 	// 基底クラスの更新
 	IGameObject::Update();
+	// コライダー更新
+	collider_.Update(worldTransform_.GetWorldPosition());
 }
 
 void Player::Draw(ModelDrawDesc desc)

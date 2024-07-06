@@ -38,7 +38,7 @@ public:
 	/// </summary>
 	void UISpriteDraw();
 
-	AABB* GetCollider() { return &collider_; }
+	Sphere* GetCollider() { return &collider_; }
 
 public: // アクセッサ
 
@@ -73,6 +73,6 @@ private:
 	AimManager aimManager_;
 
 	// AABBコライダー
-	AABB collider_;
+	Sphere collider_;
 
 };

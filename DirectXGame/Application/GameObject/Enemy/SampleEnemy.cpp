@@ -4,12 +4,16 @@ void SampleEnemy::Initialize(Model* model)
 {
 	// 基底初期化
 	IGameObject::Initialize(model);
+	// 初期化
+	collider_.Initialize(1.0f, this);
 }
 
 void SampleEnemy::Update()
 {
 	// 行列更新
 	IGameObject::Update();
+	// コライダー更新
+	collider_.Update(worldTransform_.GetWorldPosition());
 }
 
 void SampleEnemy::Draw(ModelDrawDesc desc)

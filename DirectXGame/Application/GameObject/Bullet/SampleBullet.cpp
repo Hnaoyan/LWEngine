@@ -6,6 +6,9 @@ void SampleBullet::Initialize(Model* model)
 	// 基底初期化
 	IGameObject::Initialize(model);
 	deathTimer_.Start(120.0f);
+
+	collider_.Initialize(1.0f, this);
+
 }
 
 void SampleBullet::Update()
@@ -20,6 +23,8 @@ void SampleBullet::Update()
 	worldTransform_.transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	// 行列更新
 	IGameObject::Update();
+	// コライダー更新
+	collider_.Update(worldTransform_.GetWorldPosition());
 }
 
 void SampleBullet::Draw(ModelDrawDesc desc)
