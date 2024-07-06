@@ -2,6 +2,8 @@
 #include "SampleBullet.h"
 #include <vector>
 
+class CollisionManager;
+
 /// <summary>
 /// 弾のマネージャー
 /// </summary>
@@ -37,10 +39,18 @@ public:
 	/// <param name="data"></param>
 	void AddBullet(const GenerateData& data);
 
+	void CollisionRegist();
+public:	// アクセッサ
+	void SetCollisionManager(CollisionManager* manager) {
+		collisionManager_ = manager;
+	}
+
 private:
 	// 全部のモデル
 	Model* model_ = nullptr;
 	// 弾のリスト
 	std::vector<std::unique_ptr<SampleBullet>> bullets_;
+	// 衝突マネ
+	CollisionManager* collisionManager_ = nullptr;
 
 };

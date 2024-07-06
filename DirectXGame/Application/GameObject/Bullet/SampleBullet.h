@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../IGameObject.h"
-#include "../../../Engine/LwLib/Utillity/FrameTimer.h"
+#include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class SampleBullet : public IGameObject
 {
@@ -31,14 +31,23 @@ public:
 	/// <param name="object"></param>
 	void OnCollision(ColliderObject object);
 public:
+	/// <summary>
+	/// コライダー取得
+	/// </summary>
+	/// <returns></returns>
+	Sphere* GetCollider() { return &collider_; }
+
+public:
 	void SetPosition(const Vector3& position) {
 		worldTransform_.transform_.translate = position;
 		worldTransform_.UpdateMatrix();
 	}
 
 	Vector3 velocity_ = {};
-	// 死亡フラグ
-	bool isDead_ = false;
 
 	FrameTimer deathTimer_;
+
+private:
+	// コライダー
+	Sphere collider_;
 };

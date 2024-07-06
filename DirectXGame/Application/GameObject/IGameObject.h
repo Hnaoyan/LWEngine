@@ -55,9 +55,15 @@ public:
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
 
+public: // アクセッサ
+	bool IsDead() { return isDead_; }
+
 protected:
 	// モデル
 	Model* model_ = nullptr;
+	// 死亡フラグ
+	bool isDead_ = false;
+
 public:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;

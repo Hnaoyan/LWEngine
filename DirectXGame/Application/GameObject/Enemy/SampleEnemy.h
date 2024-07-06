@@ -1,6 +1,7 @@
 #pragma once
 #include "../IGameObject.h"
-#include "../../../Engine/LwLib/Utillity/FrameTimer.h"
+#include "Engine/LwLib/Utillity/FrameTimer.h"
+#include "Engine/Collision/Collider/ColliderLists.h"
 
 class SampleEnemy : public IGameObject
 {
@@ -29,5 +30,11 @@ public:
 	/// </summary>
 	/// <param name="object"></param>
 	void OnCollision(ColliderObject object);
+
+public:
+	Sphere* GetCollider() { return &collider_; }
+
+private:
+	Sphere collider_;
 
 };

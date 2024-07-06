@@ -38,6 +38,8 @@ public:
 	/// </summary>
 	void UISpriteDraw();
 
+	AABB* GetCollider() { return &collider_; }
+
 public: // アクセッサ
 
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }

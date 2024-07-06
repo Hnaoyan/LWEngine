@@ -5,6 +5,7 @@
 #include "../../Engine/3D/ModelManager.h"
 #include "../../Engine/Camera/CameraList.h"
 #include "../GameObject/GameObjectLists.h"
+#include "Engine/Collision/CollisionManager.h"
 
 class GameScene : public IScene
 {
@@ -48,10 +49,20 @@ public:
 	/// ライト初期化
 	/// </summary>
 	void LightingInitialize() override;
+private:
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	void CollisionUpdate();
 
 private: // アプリ
 	std::unique_ptr<Player> player_;
+	std::unique_ptr<SampleEnemyManager> enemyManager_;
 	std::unique_ptr<SampleBulletManager> bulletManager_;
+
+	
+	// コリジョンマネ
+	std::unique_ptr<CollisionManager> collisionManager_;
 
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;

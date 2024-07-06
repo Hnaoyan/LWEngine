@@ -1,4 +1,5 @@
 #include "SampleBulletManager.h"
+#include "Engine/Collision/CollisionManager.h"
 
 void SampleBulletManager::Initialize(Model* model)
 {
@@ -7,13 +8,15 @@ void SampleBulletManager::Initialize(Model* model)
 
 void SampleBulletManager::Update()
 {
+	// 削除処理
+	bullets_.erase(std::remove_if(bullets_.begin(), bullets_.end(), [](const std::unique_ptr<SampleBullet>& obj) {
+		return obj->IsDead();
+		}), bullets_.end());
+	// 更新
 	for (std::vector<std::unique_ptr<SampleBullet>>::iterator it = bullets_.begin();
 		it != bullets_.end(); ++it) {
 		(*it)->Update();
 	}
-	bullets_.erase(std::remove_if(bullets_.begin(), bullets_.end(), [](const std::unique_ptr<SampleBullet>& obj) {
-		return obj->isDead_;
-		}), bullets_.end());
 }
 
 void SampleBulletManager::Draw(ModelDrawDesc desc)
@@ -33,4 +36,12 @@ void SampleBulletManager::AddBullet(const GenerateData& data)
 	bullet->worldTransform_.isVectorRotate_ = true;
 	bullet->worldTransform_.rotateDirect_ = Vector3::Normalize(data.velocity);
 	bullets_.push_back(std::move(bullet));
+}
+
+void SampleBulletManager::CollisionRegist()
+{
+	for (std::vector<std::unique_ptr<SampleBullet>>::iterator it = bullets_.begin();
+		it != bullets_.end(); ++it) {
+		collisionManager_->ListRegist((*it)->GetCollider());
+	}
 }

@@ -12,11 +12,18 @@ void GameScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+	collisionManager_ = std::make_unique<CollisionManager>();
+
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Jett"));
 
 	bulletManager_ = std::make_unique<SampleBulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+	bulletManager_->SetCollisionManager(collisionManager_.get());
+
+	enemyManager_ = std::make_unique<SampleEnemyManager>();
+	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
+	enemyManager_->SetCollisionManager(collisionManager_.get());
 
 	player_->SetBulletManager(bulletManager_.get());
 
@@ -44,6 +51,10 @@ void GameScene::Update()
 	terrainWtf_.UpdateMatrix();
 	player_->Update();
 	bulletManager_->Update();
+	enemyManager_->Update();
+
+	// 衝突処理
+	CollisionUpdate();
 	// カメラの更新
 	CameraUpdate();
 }
@@ -74,6 +85,8 @@ void GameScene::Draw()
 	player_->Draw(desc);
 
 	bulletManager_->Draw(desc);
+
+	enemyManager_->Draw(desc);
 
 	desc.worldTransform = &terrainWtf_;
 	terrain_->Draw(desc);
@@ -148,9 +161,11 @@ void GameScene::LoadModel()
 {
 	// モデルのロード
 	ModelManager::LoadNormalModel("Terrain", "terrain");
+	ModelManager::LoadNormalModel("Jett", "jett");
+	ModelManager::LoadNormalModel("Enemy", "enemy");
+
 	terrain_ = ModelManager::GetModel("Terrain");
 
-	ModelManager::LoadNormalModel("Jett", "jett");
 
 }
 
@@ -202,4 +217,18 @@ void GameScene::LightingInitialize()
 	spLightData_.intensity = 4.0f;
 	spLightData_.decay = 2.0f;
 	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
+}
+
+void GameScene::CollisionUpdate()
+{
+	// クリア
+	collisionManager_->ListClear();
+	// 登録
+	collisionManager_->ListRegist(player_->GetCollider());
+
+	enemyManager_->CollisionRegist();
+	bulletManager_->CollisionRegist();
+
+	// 衝突処理
+	collisionManager_->CheckAllCollisions();
 }

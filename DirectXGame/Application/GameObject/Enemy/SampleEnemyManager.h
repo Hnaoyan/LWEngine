@@ -1,6 +1,8 @@
 #pragma once
 #include "SampleEnemy.h"
 
+class CollisionManager;
+
 class SampleEnemyManager
 {
 public:
@@ -19,11 +21,22 @@ public:
 	/// <param name="desc"></param>
 	void Draw(ModelDrawDesc desc);
 
+	/// <summary>
+	/// 衝突マネージャーに設定
+	/// </summary>
+	void CollisionRegist();
+
+public:	// アクセッサ
+	void SetCollisionManager(CollisionManager* manager) {
+		collisionManager_ = manager;
+	}
+
 private:
 	// 全部のモデル
 	Model* model_ = nullptr;
 	// 弾のリスト
 	std::vector<std::unique_ptr<SampleEnemy>> enemys_;
-
+	// 衝突マネ
+	CollisionManager* collisionManager_ = nullptr;
 
 };
