@@ -198,6 +198,12 @@
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -482,6 +488,12 @@
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -503,6 +515,7 @@
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
+    <FxCompile Include="Resources\shaders\3DModelPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBullet.cpp" />
@@ -671,7 +684,6 @@
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AimManager.h" />
-    <FxCompile Include="Resources\shaders\PostEffect\Dissolve.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\DissolvePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\LockOn.h" />

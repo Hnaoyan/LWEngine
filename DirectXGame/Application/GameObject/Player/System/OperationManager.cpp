@@ -1,10 +1,11 @@
 #include "OperationManager.h"
 #include "../../../GameSystem/GameSystem.h"
-#include "../../../../Engine/Input/Input.h"
 #include "../Player.h"
-#include "../../../../Engine/LwLib/LwEngineLib.h"
 #include "../../Bullet/SampleBulletManager.h"
-#include "../../../../Engine/PostEffect/PostEffectRender.h"
+
+#include "Engine/Input/Input.h"
+#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/PostEffect/PostEffectRender.h"
 
 void OparationManager::Initialize(Player* player)
 {
@@ -26,7 +27,7 @@ void OparationManager::Update()
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 
 	// 座標更新
-	player_->worldPosition_ += player_->velocity_;
+	player_->worldTransform_.transform_.translate += player_->velocity_;
 }
 
 void OparationManager::InputUpdate()
@@ -175,8 +176,8 @@ void OparationManager::GravityUpdate()
 	}
 	//player_->worldPosition_.y += player_->velocity_.y;
 	// 仮の着地
-	if (player_->worldPosition_.y <= -0.25f) {
-		player_->worldPosition_.y = 0.0f;
+	if (player_->worldTransform_.transform_.translate.y <= -0.25f) {
+		player_->worldTransform_.transform_.translate.y = 0.0f;
 		player_->velocity_.y = 0;
 	}
 

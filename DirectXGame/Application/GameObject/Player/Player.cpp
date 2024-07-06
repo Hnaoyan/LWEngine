@@ -6,7 +6,7 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
-	worldPosition_ = worldTransform_.GetWorldPosition();
+	collider_.Initialize(this);
 	// システム関係の初期化
 	SystemInitialize();
 
@@ -17,8 +17,8 @@ void Player::Update()
 	// システム関係の更新
 	SystemUpdate();
 
-	// ワールド座標を設定
-	worldTransform_.transform_.translate = worldPosition_;
+
+	collider_.Update();
 	// 基底クラスの更新
 	IGameObject::Update();
 }

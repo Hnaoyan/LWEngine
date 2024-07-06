@@ -59,9 +59,9 @@ private:
 	void SystemUpdate();
 	
 public:
-	Vector3 worldPosition_ = {};
 	// 移動速度
 	Vector3 velocity_ = {};
+	// カメラ
 	ICamera* camera_ = nullptr;
 
 private:
@@ -69,4 +69,8 @@ private:
 	OparationManager systemManager_;
 	// エイム関係
 	AimManager aimManager_;
+
+	// AABBコライダー
+	AABB collider_;
+
 };
