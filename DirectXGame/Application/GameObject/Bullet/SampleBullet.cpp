@@ -38,3 +38,8 @@ void SampleBullet::ImGuiDraw()
 {
 
 }
+
+void SampleBullet::OnCollision(ColliderObject object)
+{
+	object;
+}

@@ -4,6 +4,18 @@
 
 class IGameObject
 {
+public:
+	ColliderObject SelectColliderObject(ColliderObject obj) {
+		if (std::holds_alternative<Player*>(obj)) {
+			return std::get<Player*>(obj);
+		}
+		else if (std::holds_alternative<SampleBullet*>(obj)) {
+			return std::get<SampleBullet*>(obj);
+		}
+
+		return std::get<IGameObject*>(obj);
+	}
+
 protected:
 	// 共通のシリアル
 	static int32_t sSerialNumber;

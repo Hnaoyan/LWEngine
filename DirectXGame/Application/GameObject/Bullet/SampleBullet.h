@@ -25,7 +25,11 @@ public:
 	/// </summary>
 	/// <param name="name"></param>
 	void ImGuiDraw() override;
-
+	/// <summary>
+	/// コールバック関数
+	/// </summary>
+	/// <param name="object"></param>
+	void OnCollision(ColliderObject object);
 public:
 	void SetPosition(const Vector3& position) {
 		worldTransform_.transform_.translate = position;
