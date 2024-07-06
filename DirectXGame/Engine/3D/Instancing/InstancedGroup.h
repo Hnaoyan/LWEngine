@@ -1,17 +1,16 @@
 #pragma once
 #include <vector>
 #include <memory>
+
+#include "InstancedUnit.h"
 #include "../Drawer/Model.h"
 #include "../../Base/Utility/DxCreateLib.h"
-#include "InstancedUnit.h"
 
 class InstancedGroup
 {
 public:
 	// 最大数
 	static const uint32_t kNumInstanceMax = 256;
-	// パイプライン
-	static GeneralPipeline sPipeline_;
 
 private:
 	// リソース
@@ -40,8 +39,15 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	virtual void Draw(ModelDrawDesc desc);
-
-	void Add(const Vector3& position);
+	/// <summary>
+	/// リストに登録する関数
+	/// </summary>
+	/// <param name="position"></param>
+	virtual void UnitRegist(const Vector3& position);
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	virtual void ImGuiDraw();
 private:
 	/// <summary>
 	/// インスタンシングのSRV確保など
@@ -53,5 +59,7 @@ private:
 	std::vector<std::unique_ptr<InstancedUnit>> units_;
 	// モデル
 	Model* model_ = nullptr;
+
+	Vector3 registPosition_ = {};
 
 };

@@ -1,10 +1,9 @@
 #include "InstancedGroup.h"
-#include "../../2D/TextureManager.h"
 #include "../Descriptor/SRVHandler.h"
+#include "../../2D/TextureManager.h"
 
 #include <cassert>
-
-GeneralPipeline InstancedGroup::sPipeline_;
+#include <imgui.h>
 
 void InstancedGroup::Initialize(Model* model)
 {
@@ -39,13 +38,27 @@ void InstancedGroup::Draw(ModelDrawDesc desc)
 	model_->InstancedDraw(desc, unitNum_, srvHandles_.second);
 }
 
-void InstancedGroup::Add(const Vector3& position)
+void InstancedGroup::UnitRegist(const Vector3& position)
 {
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<InstancedUnit>();
 	instance->Intialize();
 	instance->transform_.translate = position;
 	instance->Update();
 	units_.push_back(std::move(instance));
+}
+
+void InstancedGroup::ImGuiDraw()
+{
+	std::string name = "Group" + std::to_string(srvIndex);
+	ImGui::Begin(name.c_str());
+	name = "Position" + std::to_string(srvIndex);
+	ImGui::DragFloat3(name.c_str(), &registPosition_.x, 0.01f);
+	name = "Add" + std::to_string(srvIndex);
+	if (ImGui::Button(name.c_str())) {
+		this->UnitRegist(registPosition_);
+	}
+
+	ImGui::End();
 }
 
 void InstancedGroup::CreateData()
