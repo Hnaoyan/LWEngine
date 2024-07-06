@@ -74,6 +74,7 @@ public:
 	void SkinningDraw(const ModelDrawDesc& desc, Animation* animation, uint32_t texture);
 
 	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
+	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle, uint32_t texture);
 	//void AnimationDraw(const AnimDrawDesc& desc);
 
 public: // アクセッサ

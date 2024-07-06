@@ -243,6 +243,51 @@ void Model::InstancedDraw(const ModelDrawDesc& desc,uint32_t instanceNum, D3D12_
 	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), instanceNum, 0, 0, 0);
 }
 
+void Model::InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle, uint32_t texture)
+{
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kInstancedModel)]);
+	// ルートシグネチャの設定
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	// パイプラインステートの設定
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	//---メッシュの設定---//
+	// 頂点バッファの設定
+	sCommandList_->IASetVertexBuffers(0, 1, &mesh_->vbView_);
+	// インデックスバッファの設定
+	sCommandList_->IASetIndexBuffer(&mesh_->ibView_);
+
+	// ビュープロジェクション行列
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(Pipeline::InstancedUnitRegister::kViewProjection),
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
+
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(Model::sCommandList_,
+		static_cast<UINT>(Pipeline::InstancedUnitRegister::kTexture), texture);
+	// 環境マップ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(Pipeline::InstancedUnitRegister::kMapTexture), TextureManager::sEnvironmentTexture);
+	// マテリアル
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(Pipeline::InstancedUnitRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+	// トランスフォーム
+	sCommandList_->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::InstancedUnitRegister::kWorldTransform), handle);
+
+	// ライト
+	if (desc.directionalLight) {
+		desc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kDirectionalLight));
+	}
+	if (desc.spotLight) {
+		desc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kSpotLight));
+	}
+	if (desc.pointLight) {
+		desc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kPointLight));
+	}
+
+	// ドローコール
+	sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), instanceNum, 0, 0, 0);
+}
+
 void Model::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
 	// チェック

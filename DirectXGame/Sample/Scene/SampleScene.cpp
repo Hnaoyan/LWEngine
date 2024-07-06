@@ -152,6 +152,12 @@ void SampleScene::Update()
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->Update();
 	}
+
+	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
+		it != group_.end(); ++it) {
+		(*it)->Update();
+	}
+
 	player_->Update();
 	// カメラの更新
 	CameraUpdate();
@@ -200,6 +206,10 @@ void SampleScene::Draw()
 	humans_[2]->Draw(desc);
 
 	testGroup1_->Draw(desc);
+	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
+		it != group_.end(); ++it) {
+		(*it)->Draw(desc);
+	}
 
 	//player_->Draw(&camera_);
 	for (int i = 0; i < cubes_.size(); ++i) {
@@ -235,8 +245,15 @@ void SampleScene::ImGuiDraw()
 	ImGui::Begin("SampleScene");
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
 	if (ImGui::Button("Test1Add")) {
-		testGroup1_->Add(generatePosition_);
+		testGroup1_->UnitRegist(generatePosition_);
 	}
+
+	if (ImGui::Button("AddGroup")) {
+		std::unique_ptr<InstancedGroup> instance = std::make_unique<InstancedGroup>();
+		instance->Initialize(ModelManager::GetModel("DefaultCube"));
+		group_.push_back(std::move(instance));
+	}
+
 	ImGui::InputInt("PostEffect", &postEffecter_, 1);
 
 	switch (postEffecter_)
@@ -357,6 +374,11 @@ void SampleScene::ImGuiDraw()
 	}
 
 	ImGui::End();
+
+	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
+		it != group_.end(); ++it) {
+		(*it)->ImGuiDraw();
+	}
 
 	player_->ImGuiDraw();
 	skybox_->ImGuiDraw();

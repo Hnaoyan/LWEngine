@@ -10,6 +10,8 @@
 #include "Engine/PostEffect/PostEffectData.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
+#include <list>
+
 class SampleScene : public IScene
 {
 public:
@@ -47,6 +49,7 @@ private:
 
 	std::unique_ptr<PlSampleObject> player_;
 
+	std::list<std::unique_ptr<InstancedGroup>> group_;
 	std::unique_ptr<InstancedGroup> testGroup1_;
 
 	struct spriteInfo {
