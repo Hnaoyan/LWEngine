@@ -99,6 +99,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\OperationManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
