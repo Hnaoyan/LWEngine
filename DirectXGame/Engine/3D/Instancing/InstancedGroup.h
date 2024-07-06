@@ -3,8 +3,7 @@
 #include <memory>
 #include "../Drawer/Model.h"
 #include "../../Base/Utility/DxCreateLib.h"
-
-class InstancedUnit;
+#include "InstancedUnit.h"
 
 class InstancedGroup
 {
@@ -42,6 +41,7 @@ public:
 	/// <param name="desc"></param>
 	virtual void Draw(ModelDrawDesc desc);
 
+	void Add(const Vector3& position);
 private:
 	/// <summary>
 	/// インスタンシングのSRV確保など

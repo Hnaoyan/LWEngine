@@ -1,4 +1,4 @@
-#include "../3DModel.hlsli"
+#include "Instanced.hlsli"
 
 Texture2D<float32_t4> gTexture : register(t0);
 TextureCube<float32_t4> gEnvironmentTexture : register(t1);

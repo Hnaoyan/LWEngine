@@ -6,6 +6,8 @@ void InstancedUnit::Intialize()
 
 	worldMatrix_ = Matrix4x4::MakeIdentity4x4();
 	localMatrix_ = Matrix4x4::MakeIdentity4x4();
+
+	isDead_ = false;
 }
 
 void InstancedUnit::Update()

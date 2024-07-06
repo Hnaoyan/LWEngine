@@ -23,11 +23,13 @@ public: // アクセッサ
 	// 親の設定
 	void SetParent(Matrix4x4* parent) { parent_ = parent; }
 
-protected:
+public:
 	EulerTransform transform_;
+
+protected:
 	Matrix4x4 worldMatrix_;
 	Matrix4x4 localMatrix_;
 	const Matrix4x4* parent_ = nullptr;
-	bool isDead_;
+	bool isDead_ = false;
 
 };
