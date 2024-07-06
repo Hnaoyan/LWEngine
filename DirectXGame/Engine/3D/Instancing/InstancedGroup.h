@@ -14,11 +14,16 @@ public:
 	static const uint32_t kNumInstanceMax = 256;
 
 private:
+	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> groupResources;
 	CBufferInstancedUnit* unitDataMap_ = nullptr;
 
+	// SRV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;
 	uint32_t srvIndex;
+
+	// Unitの数
+	uint32_t unitNum_ = 0u;
 
 public:
 	/// <summary>
