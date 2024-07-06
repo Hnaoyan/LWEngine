@@ -7,4 +7,5 @@ public:
 
 
 	EulerTransform eulerTransform_;
+	Matrix4x4 worldMatrix_;
 };

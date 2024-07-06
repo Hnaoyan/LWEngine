@@ -1,5 +1,6 @@
 #include "InstancedGroup.h"
 #include "../Descriptor/SRVHandler.h"
+#include "InstancedUnit.h"
 
 void InstancedGroup::Initialize(Model* model)
 {
@@ -13,11 +14,21 @@ void InstancedGroup::Initialize(Model* model)
 
 void InstancedGroup::Update()
 {
-
+	unitNum_ = 0;
 	for (std::vector<std::unique_ptr<InstancedUnit>>::iterator it = units_.begin();
 		it != units_.end(); ++it) {
-		//(*it)
+		// 行列の処理
+		unitDataMap_[unitNum_].worldMatrix = (*it)->worldMatrix_;
+		unitDataMap_[unitNum_].worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse((*it)->worldMatrix_));
+		unitDataMap_[unitNum_].instancedNum = unitNum_;
+		// イテレート
+		unitNum_++;
 	}
+
+}
+
+void InstancedGroup::Draw(ModelDrawDesc desc)
+{
 
 }
 
