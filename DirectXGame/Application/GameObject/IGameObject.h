@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Engine/3D/Drawer/Model.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
+#include "../Collision/ColliderFilter.h"
 
 class IGameObject
 {

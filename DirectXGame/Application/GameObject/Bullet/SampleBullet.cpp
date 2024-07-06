@@ -8,6 +8,7 @@ void SampleBullet::Initialize(Model* model)
 	deathTimer_.Start(120.0f);
 
 	collider_.Initialize(1.0f, this);
+	collider_.SetAttribute(kCollisionAttributePlayer);
 
 }
 

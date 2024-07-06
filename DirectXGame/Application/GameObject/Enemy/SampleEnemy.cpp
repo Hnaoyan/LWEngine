@@ -6,6 +6,7 @@ void SampleEnemy::Initialize(Model* model)
 	IGameObject::Initialize(model);
 	// 初期化
 	collider_.Initialize(1.0f, this);
+	collider_.SetAttribute(kCollisionAttributeEnemy);
 }
 
 void SampleEnemy::Update()

@@ -7,6 +7,7 @@ void Player::Initialize(Model* model)
 	IGameObject::Initialize(model);
 
 	collider_.Initialize(1.0f, this);
+	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
 	SystemInitialize();
 

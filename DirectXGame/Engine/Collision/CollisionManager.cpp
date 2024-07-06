@@ -39,7 +39,10 @@ void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape
 	// variantの中身を自動変換
 	std::visit([](const auto& a, const auto& b) {
 		// マスク処理
-
+		// 同じマスク同士ならスキップ
+		if (a->GetAttribute() == b->GetAttribute()) {
+			return;
+		}
 
 		// 衝突処理
 		if (Collision::IsCollision(*a, *b)) {
