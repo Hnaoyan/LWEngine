@@ -1,13 +1,14 @@
 #pragma once
-#include "../../Engine/Scene/IScene.h"
-#include "../../Engine/2D/Drawer/Sprite.h"
-#include "../../Engine/3D/Drawer/3DDrawers.h"
+#include "Engine/Scene/IScene.h"
+#include "Engine/2D/Drawer/Sprite.h"
+#include "Engine/3D/Drawer/3DDrawers.h"
 #include "../Object/AnimSampleObject.h"
 #include "../Object/AnimCubeObject.h"
 #include "../Object/PlSampleObject.h"
-#include "../../Engine/Camera/Custom/DebugCamera.h"
-#include "../../Engine/Light/LightLists.h"
-#include "../../Engine/PostEffect/PostEffectData.h"
+#include "Engine/Camera/Custom/DebugCamera.h"
+#include "Engine/Light/LightLists.h"
+#include "Engine/PostEffect/PostEffectData.h"
+#include "Engine/3D/Instancing/InstancedGroup.h"
 
 class SampleScene : public IScene
 {
@@ -46,6 +47,8 @@ private:
 
 	std::unique_ptr<PlSampleObject> player_;
 
+	std::unique_ptr<InstancedGroup> testGroup1_;
+
 	struct spriteInfo {
 		uint32_t uvTexture_ = 0u;
 		Vector2 position_ = {};
@@ -61,6 +64,8 @@ private:
 	std::unique_ptr<Model> sneakWalkModel_;
 
 	Model* cubeModel_;
+
+	Vector3 generatePosition_ = {};
 
 	std::unique_ptr<Skydome> sphere_;
 
