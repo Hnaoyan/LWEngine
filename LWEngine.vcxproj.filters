@@ -99,7 +99,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Loader.cpp">
+    <ClCompile Include="DirectXGame\Engine\3D\ModelLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp">
@@ -202,6 +202,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\LevelEditor\LevelLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,7 +335,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Loader.h">
+    <ClInclude Include="DirectXGame\Engine\3D\ModelLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Material.h">
@@ -492,6 +495,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

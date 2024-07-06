@@ -1,10 +1,10 @@
-#include "Loader.h"
+#include "ModelLoader.h"
 #include "../2D/TextureManager.h"
 #include <fstream>
 #include <sstream>
 #include <cassert>
 
-ModelData Loader::LoadObj(const std::string& directory, const std::string& fileName, LoadExtension ex)
+ModelData ModelLoader::LoadObj(const std::string& directory, const std::string& fileName, LoadExtension ex)
 {
 	ModelData modelData;
 	std::vector<Vector4> positions;
@@ -116,7 +116,7 @@ ModelData Loader::LoadObj(const std::string& directory, const std::string& fileN
 
 }
 
-ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fileName)
+ModelData ModelLoader::LoadAssimp(const std::string& directory, const std::string& fileName)
 {
 	ModelData modelData;
 
@@ -172,7 +172,7 @@ ModelData Loader::LoadAssimp(const std::string& directory, const std::string& fi
 	return ModelData(modelData);
 }
 
-ModelData Loader::LoadGlTF(const std::string& directory, const std::string& fileName, LoadExtension ex)
+ModelData ModelLoader::LoadGlTF(const std::string& directory, const std::string& fileName, LoadExtension ex)
 {
 	ModelData modelData;
 	ex;
@@ -253,7 +253,7 @@ ModelData Loader::LoadGlTF(const std::string& directory, const std::string& file
 	return ModelData(modelData);
 }
 
-MaterialData Loader::LoadMaterial(const std::string& directory, const std::string& fileName)
+MaterialData ModelLoader::LoadMaterial(const std::string& directory, const std::string& fileName)
 {
 	MaterialData materialData;
 	std::string line;
@@ -283,7 +283,7 @@ MaterialData Loader::LoadMaterial(const std::string& directory, const std::strin
 	return MaterialData(materialData);
 }
 
-AnimationData Loader::LoadAnimationFile(const std::string& directoryPath, const std::string& fileName)
+AnimationData ModelLoader::LoadAnimationFile(const std::string& directoryPath, const std::string& fileName)
 {
 	AnimationData animation; // 作る奴
 	Assimp::Importer importer;
@@ -329,7 +329,7 @@ AnimationData Loader::LoadAnimationFile(const std::string& directoryPath, const 
 	return AnimationData(animation);
 }
 
-ModelNode Loader::ReadNode(aiNode* node)
+ModelNode ModelLoader::ReadNode(aiNode* node)
 {
 	ModelNode modelNode;
 	aiMatrix4x4 aiLocalMatrix = node->mTransformation;

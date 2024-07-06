@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	virtual void Update() = 0;
+	virtual void Update(const Vector3& worldPosition);
 
 public:
 	/// <summary>

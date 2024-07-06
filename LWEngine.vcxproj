@@ -30,7 +30,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Loader.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\ModelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Mesh.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\ModelManager.cpp" />
@@ -55,6 +55,7 @@
     <ClCompile Include="DirectXGame\Engine\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\CollisionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.cpp" />
+    <ClCompile Include="DirectXGame\Engine\LevelEditor\LevelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\LightingManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\DirectionalLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\PointLight.cpp" />
@@ -111,7 +112,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedGroup.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Instancing\InstancingData.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Loader.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\ModelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Material.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Mesh.h" />
     <ClInclude Include="DirectXGame\Engine\3D\ModelData.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="DirectXGame\Engine\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.h" />
+    <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />

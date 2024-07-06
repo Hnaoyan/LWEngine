@@ -8,11 +8,11 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="shape"></param>
-	void Initialize(ColliderObject object) override;
+	void Initialize(float radius, ColliderObject object);
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update() override;
+	void Update(const Vector3& worldPosition) override;
 
 public:
 	// サイズ
