@@ -16,7 +16,7 @@
 #include "../Mesh.h"
 #include "../Material.h"
 #include "../ModelData.h"
-#include "../Loader.h"
+#include "../ModelLoader.h"
 #include "../../Camera/Core/ICamera.h"
 
 class Animation;
