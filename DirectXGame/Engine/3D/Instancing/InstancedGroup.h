@@ -2,7 +2,6 @@
 #include <vector>
 #include <memory>
 #include "../Drawer/Model.h"
-#include "InstancingData.h"
 #include "../../Base/Utility/DxCreateLib.h"
 
 class InstancedUnit;
@@ -12,6 +11,8 @@ class InstancedGroup
 public:
 	// 最大数
 	static const uint32_t kNumInstanceMax = 256;
+	// パイプライン
+	static GeneralPipeline sPipeline_;
 
 private:
 	// リソース
