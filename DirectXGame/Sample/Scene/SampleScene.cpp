@@ -16,6 +16,9 @@ void SampleScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+	levelLoader_ = std::make_unique<LevelLoader>();
+	levelLoader_->LoadSceneData("testData");
+
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
 	testWTF_.transform_.scale = { 1,1,1 };
