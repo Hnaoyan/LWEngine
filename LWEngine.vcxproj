@@ -132,6 +132,7 @@
     <ClInclude Include="DirectXGame\Engine\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.h" />
+    <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelData.h" />
     <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
