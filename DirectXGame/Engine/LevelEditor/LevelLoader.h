@@ -6,9 +6,15 @@
 class LevelLoader : public Singleton<LevelLoader>
 {
 public:
-	const std::string kDefaultDirectoryPath = std::string("Resources") + ("/") + ("LevelData");
+	// ディレクトリパス
+	const std::string kDefaultDirectoryPath = std::string("Resources") + ("/") + ("LevelData") + ("/");
+	// 拡張子
 	const std::string kExtension = ".json";
 public:
+	/// <summary>
+	/// jsonの読み込み
+	/// </summary>
+	/// <param name="filename"></param>
 	void LoadSceneData(const std::string& filename);
 
 };
