@@ -7,7 +7,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	virtual void Intialize();
+	virtual void Initialize();
 	/// <summary>
 	/// 更新
 	/// </summary>

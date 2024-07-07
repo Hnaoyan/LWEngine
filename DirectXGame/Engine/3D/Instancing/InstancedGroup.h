@@ -12,7 +12,7 @@ public:
 	// 最大数
 	static const uint32_t kNumInstanceMax = 256;
 
-private:
+protected:
 	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> groupResources;
 	CBufferInstancedUnit* unitDataMap_ = nullptr;
@@ -54,7 +54,7 @@ private:
 	/// </summary>
 	void CreateData();
 
-private:
+protected:
 	// ユニットリスト
 	std::vector<std::unique_ptr<InstancedUnit>> units_;
 	// モデル
