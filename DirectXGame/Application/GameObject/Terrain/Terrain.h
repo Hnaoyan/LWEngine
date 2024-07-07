@@ -5,6 +5,10 @@
 class Terrain : public InstancedUnit
 {
 public:
+	static uint32_t sSerialNumber;
+	uint32_t serialNumber_ = 0u;
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>

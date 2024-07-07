@@ -96,6 +96,8 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />

@@ -18,5 +18,6 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	void Draw(ModelDrawDesc desc) override;
-
+private:
+	uint32_t texture_ = 0;
 };

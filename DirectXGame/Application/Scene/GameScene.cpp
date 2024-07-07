@@ -13,6 +13,8 @@ void GameScene::Initialize()
 	LoadTexture();
 
 	collisionManager_ = std::make_unique<CollisionManager>();
+	terrainManager_ = std::make_unique<TerrainManager>();
+	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Jett"));
@@ -55,6 +57,7 @@ void GameScene::Update()
 	player_->Update();
 	bulletManager_->Update();
 	enemyManager_->Update();
+	terrainManager_->Update();
 
 	// 衝突処理
 	CollisionUpdate();
@@ -90,6 +93,8 @@ void GameScene::Draw()
 	bulletManager_->Draw(desc);
 
 	enemyManager_->Draw(desc);
+	// 地形
+	terrainManager_->Draw(desc);
 
 	desc.worldTransform = &terrainWtf_;
 	terrain_->Draw(desc);
@@ -108,6 +113,15 @@ void GameScene::Draw()
 
 void GameScene::ImGuiDraw()
 {
+	// ゲームオブジェクト
+	player_->ImGuiDraw();
+	terrainManager_->ImGuiDraw();
+	// カメラ
+	camera_.ImGuiDraw();
+	debugCamera_->ImGuiDraw();
+	followCamera_->ImGuiDraw();
+
+
 	ImGui::Begin("SampleScene");
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 
@@ -151,13 +165,6 @@ void GameScene::ImGuiDraw()
 	}
 
 	ImGui::End();
-	// ゲームオブジェクト
-	player_->ImGuiDraw();
-
-	// カメラ
-	camera_.ImGuiDraw();
-	debugCamera_->ImGuiDraw();
-	followCamera_->ImGuiDraw();
 }
 
 void GameScene::LoadModel()

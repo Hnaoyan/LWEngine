@@ -8,3 +8,5 @@
 #include "Player/Player.h"
 #include "Bullet/SampleBulletManager.h"
 #include "Enemy/SampleEnemyManager.h"
+#include "Terrain/Terrain.h"
+#include "Terrain/TerrainManager.h"

@@ -60,6 +60,8 @@ private: // アプリ
 	std::unique_ptr<SampleEnemyManager> enemyManager_;
 	std::unique_ptr<SampleBulletManager> bulletManager_;
 
+	// 地形マネ
+	std::unique_ptr<TerrainManager> terrainManager_;
 	
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
