@@ -9,6 +9,7 @@
 #include "Engine/Light/LightLists.h"
 #include "Engine/PostEffect/PostEffectData.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
+#include "Engine/LevelEditor/LevelLoader.h"
 
 #include <list>
 
@@ -43,6 +44,8 @@ public:
 
 	void LightingInitialize() override;
 private:
+	std::unique_ptr<LevelLoader> levelLoader_;
+
 	// 試し
 	std::array<std::unique_ptr<AnimCubeObject>, 2> cubes_;
 	std::array<std::unique_ptr<AnimSampleObject>, 3> humans_;

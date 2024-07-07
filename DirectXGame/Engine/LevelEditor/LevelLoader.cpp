@@ -52,9 +52,9 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 			// 今追加した要素の参照を得る
 			LevelData::ObjectData& objectData = levelData->objects.back();
 
-			if (object.contains("file_name")) {
+			if (object.contains("name")) {
 				// ファイル名
-				objectData.filename = object["file_name"];
+				objectData.filename = object["name"];
 			}
 
 			// トランスフォームのデータ
@@ -82,6 +82,4 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 		}
 
 	}
-
-	filename;
 }
