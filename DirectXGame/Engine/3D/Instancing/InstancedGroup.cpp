@@ -41,7 +41,7 @@ void InstancedGroup::Draw(ModelDrawDesc desc)
 void InstancedGroup::UnitRegist(const Vector3& position)
 {
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<InstancedUnit>();
-	instance->Intialize();
+	instance->Initialize();
 	instance->transform_.translate = position;
 	instance->Update();
 	units_.push_back(std::move(instance));
