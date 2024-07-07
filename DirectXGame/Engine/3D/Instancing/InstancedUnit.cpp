@@ -1,6 +1,6 @@
 #include "InstancedUnit.h"
 
-void InstancedUnit::Intialize()
+void InstancedUnit::Initialize()
 {
 	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
