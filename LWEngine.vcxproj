@@ -19,6 +19,8 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AimManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
@@ -98,7 +100,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\LockOn.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\OperationManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />

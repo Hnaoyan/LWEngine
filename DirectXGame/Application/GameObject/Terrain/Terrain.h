@@ -1,28 +1,24 @@
 #pragma once
-#include "../IGameObject.h"
+#include "Engine/3D/Instancing/InstancedUnit.h"
+#include "../../Collision/ColliderObject.h"
 
-class Terrain : public IGameObject
+class Terrain : public InstancedUnit
 {
 public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="model"></param>
-	void Initialize(Model* model) override;
+	void Initialize() override;
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
 	/// <summary>
-	/// 描画
-	/// </summary>
-	/// <param name="desc"></param>
-	void Draw(ModelDrawDesc desc) override;
-	/// <summary>
 	/// ImGui描画
 	/// </summary>
 	/// <param name="name"></param>
-	void ImGuiDraw() override;
+	void ImGuiDraw();
 	/// <summary>
 	/// コールバック関数
 	/// </summary>
