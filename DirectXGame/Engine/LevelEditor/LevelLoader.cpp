@@ -1,9 +1,10 @@
 #include "LevelLoader.h"
-#include "LevelData.h"
 
 #include <json.hpp>
 #include <fstream>
 #include <cassert>
+
+std::unique_ptr<LevelData> LevelLoader::data_;
 
 void LevelLoader::LoadSceneData(const std::string& filename)
 {
@@ -36,7 +37,8 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 	assert(name.compare("scene") == 0);
 
 	// レベルデータ格納用インスタンスを生成
-	LevelData* levelData = new LevelData();
+	//LevelData* levelData = new LevelData();
+	data_ = std::make_unique<LevelData>();
 
 	// "objects"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"]) {
@@ -48,9 +50,9 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 		// MESH
 		if (type.compare("MESH") == 0) {
 			// 要素追加
-			levelData->objects.emplace_back(LevelData::ObjectData{});
+			data_->objects.emplace_back(LevelData::ObjectData{});
 			// 今追加した要素の参照を得る
-			LevelData::ObjectData& objectData = levelData->objects.back();
+			LevelData::ObjectData& objectData = data_->objects.back();
 
 			if (object.contains("name")) {
 				// ファイル名
