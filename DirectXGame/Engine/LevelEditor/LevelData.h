@@ -8,9 +8,7 @@ class LevelData
 public:
 	struct ObjectData
 	{
-		Vector3 translation;
-		Vector3 rotation;
-		Vector3 scaling;
+		EulerTransform transform;
 		std::string filename;
 	};
 

@@ -61,17 +61,17 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 			nlohmann::json& transform = object["transform"];
 
 			// 
-			objectData.translation.x = (float)transform["translation"][0];
-			objectData.translation.y = (float)transform["translation"][2];
-			objectData.translation.z = (float)transform["translation"][1];
+			objectData.transform.translate.x = (float)transform["translation"][0];
+			objectData.transform.translate.y = (float)transform["translation"][2];
+			objectData.transform.translate.z = (float)transform["translation"][1];
 			//
-			objectData.rotation.x = -(float)transform["rotation"][0];
-			objectData.rotation.y = -(float)transform["rotation"][2];
-			objectData.rotation.z = -(float)transform["rotation"][1];
+			objectData.transform.rotate.x = -(float)transform["rotation"][0];
+			objectData.transform.rotate.y = -(float)transform["rotation"][2];
+			objectData.transform.rotate.z = -(float)transform["rotation"][1];
 			//
-			objectData.scaling.x = (float)transform["scaling"][0];
-			objectData.scaling.y = (float)transform["scaling"][2];
-			objectData.scaling.z = (float)transform["scaling"][1];
+			objectData.transform.scale.x = (float)transform["scaling"][0];
+			objectData.transform.scale.y = (float)transform["scaling"][2];
+			objectData.transform.scale.z = (float)transform["scaling"][1];
 
 		}
 
