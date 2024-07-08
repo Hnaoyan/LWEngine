@@ -98,6 +98,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
@@ -210,6 +211,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />

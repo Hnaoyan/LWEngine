@@ -31,7 +31,7 @@ public:
 	void OnCollision(ColliderObject object);
 public: // アクセッサ
 	AABB* GetCollider() { return &collider_; }
-
+	EulerTransform GetTransform() { return transform_; }
 private:
 	AABB collider_;
 

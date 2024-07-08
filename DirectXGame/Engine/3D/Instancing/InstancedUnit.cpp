@@ -2,7 +2,7 @@
 
 void InstancedUnit::Initialize()
 {
-	transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	//transform_ = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
 	worldMatrix_ = Matrix4x4::MakeIdentity4x4();
 	localMatrix_ = Matrix4x4::MakeIdentity4x4();

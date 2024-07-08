@@ -1,6 +1,7 @@
 #pragma once
 #include "../IGameObject.h"
 #include "System/PlayerSystemLists.h"
+#include "Module/PlayerFootCollider.h"
 
 class SampleBulletManager;
 
@@ -32,25 +33,21 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
-
 	/// <summary>
 	/// UI描画
 	/// </summary>
 	void UISpriteDraw();
 
-	Sphere* GetCollider() { return &collider_; }
-
 public: // アクセッサ
-
+	Sphere* GetCollider() { return &collider_; }
+	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-
-	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
-
-	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
-
 	Vector3 GetAimReticle() { return aimManager_.GetWorldPosition(); }
 
-private:
+	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
+	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
+
+private: // USER
 	/// <summary>
 	/// システム関係の初期化
 	/// </summary>
@@ -65,13 +62,16 @@ public:
 	Vector3 velocity_ = {};
 	// カメラ
 	ICamera* camera_ = nullptr;
+	// 落下フラグ
+	bool isGround_ = false;
 
 private:
 	// 操作関係
 	OparationManager systemManager_;
 	// エイム関係
 	AimManager aimManager_;
-
+	// 足場コライダー
+	PlayerFootCollider footCollider_;
 	// AABBコライダー
 	Sphere collider_;
 

@@ -43,6 +43,18 @@ void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape
 		if (a->GetAttribute() == b->GetAttribute()) {
 			return;
 		}
+		else if ((a->GetAttribute() == kCollisionAttributePlayer &&
+			b->GetAttribute() == kCollisionAttributeFootCollider) ||
+			(a->GetAttribute() == kCollisionAttributeFootCollider &&
+				b->GetAttribute() == kCollisionAttributePlayer)) {
+			return;
+		}
+		else if ((a->GetAttribute() == kCollisionAttributeEnemy &&
+			b->GetAttribute() == kCollisionAttributeFootCollider) ||
+			(a->GetAttribute() == kCollisionAttributeFootCollider &&
+				b->GetAttribute() == kCollisionAttributeEnemy)) {
+			return;
+		}
 
 		// 衝突処理
 		if (Collision::IsCollision(*a, *b)) {

@@ -51,8 +51,8 @@ void TerrainCluster::TerrainRegister(const EulerTransform& transform)
 {
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<Terrain>();
-	instance->Initialize();
 	instance->transform_ = transform;
+	static_cast<Terrain*>(instance.get())->Initialize();
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }

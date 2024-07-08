@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "imgui.h"
+#include "../GameObjectLists.h"
+#include "../../GameSystem/GameSystem.h"
 
 void Player::Initialize(Model* model)
 {
@@ -22,6 +24,8 @@ void Player::Update()
 	IGameObject::Update();
 	// コライダー更新
 	collider_.Update(worldTransform_.GetWorldPosition());
+	// 足場コライダー
+	footCollider_.Update();
 }
 
 void Player::Draw(ModelDrawDesc desc)
@@ -42,7 +46,7 @@ void Player::ImGuiDraw()
 {
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
-
+	ImGui::Text("IsGround:%d", this->isGround_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 
@@ -53,8 +57,8 @@ void Player::ImGuiDraw()
 			aimManager_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem("S2")) {
-			
+		if (ImGui::BeginTabItem("FootCollider")) {
+			footCollider_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("S3")) {
@@ -69,6 +73,14 @@ void Player::ImGuiDraw()
 
 void Player::OnCollision(ColliderObject target)
 {
+	if (std::holds_alternative<Terrain*>(target)) {
+		Terrain** terrain = std::get_if<Terrain*>(&target);
+		Vector3 correctPos = {};
+
+		correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y;
+		worldTransform_.transform_.translate.y = correctPos.y;
+
+	}
 	target;
 }
 
@@ -83,6 +95,8 @@ void Player::SystemInitialize()
 	systemManager_.Initialize(this);
 	// エイムシステム
 	aimManager_.Initialize(this);
+	// 足場コライダー
+	footCollider_.Initialize(this);
 }
 
 void Player::SystemUpdate()

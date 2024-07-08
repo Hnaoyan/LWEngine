@@ -235,6 +235,7 @@ void GameScene::CollisionUpdate()
 	collisionManager_->ListClear();
 	// 登録
 	collisionManager_->ListRegist(player_->GetCollider());
+	collisionManager_->ListRegist(player_->GetFootCollider());
 
 	enemyManager_->CollisionRegist();
 	bulletManager_->CollisionRegist();
