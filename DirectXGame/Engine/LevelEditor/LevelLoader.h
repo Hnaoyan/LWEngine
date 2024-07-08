@@ -1,7 +1,9 @@
 #pragma once
 #include "../Utility/Singleton.h"
+#include "LevelData.h"
 
 #include <string>
+#include <memory>
 
 class LevelLoader : public Singleton<LevelLoader>
 {
@@ -16,5 +18,7 @@ public:
 	/// </summary>
 	/// <param name="filename"></param>
 	void LoadSceneData(const std::string& filename);
+
+	static std::unique_ptr<LevelData> data_;
 
 };
