@@ -11,10 +11,10 @@ void Terrain::Initialize()
 	serialNumber_ = sSerialNumber;
 	sSerialNumber++;
 
-	collider_.Initialize({ 1.0f,1.0f,1.0f }, this);
-	collider_.SetAttribute(kCollisionAttributeTerrain);
-
 	InstancedUnit::Initialize();
+
+	collider_.Initialize(transform_.scale, this);
+	collider_.SetAttribute(kCollisionAttributeTerrain);
 }
 
 void Terrain::Update()

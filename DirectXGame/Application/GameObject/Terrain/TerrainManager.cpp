@@ -33,14 +33,13 @@ void TerrainManager::Draw(ModelDrawDesc desc)
 
 void TerrainManager::AddCluster()
 {
-
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
+	static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
 	for (std::list<LevelData::ObjectData>::iterator it = LevelLoader::data_->objects.begin();
 		it != LevelLoader::data_->objects.end(); ++it) {
-		std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
-		static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
 		static_cast<TerrainCluster*>(instance.get())->TerrainRegister((*it).transform);
-		clusters_.push_back(std::move(instance));
 	}
+	clusters_.push_back(std::move(instance));
 	//std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
 	//static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
 	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{10.0f,0.0f,0.0f} });
@@ -52,7 +51,21 @@ void TerrainManager::AddCluster()
 void TerrainManager::ImGuiDraw()
 {
 	ImGui::Begin("TerrainManager");
-
+	std::string name = "Cluster";
+	if (ImGui::BeginTabBar(name.c_str()))
+	{
+		for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = clusters_.begin();
+			it != clusters_.end(); ++it) {
+			TerrainCluster* cluster = static_cast<TerrainCluster*>((*it).get());
+			name = "Cluster" + std::to_string(cluster->serialNumber_);
+			if (ImGui::BeginTabItem(name.c_str()))
+			{
+				(*it)->ImGuiDraw();
+				ImGui::EndTabItem();
+			}
+		}
+		ImGui::EndTabBar();
+	}
 	ImGui::End();
 }
 

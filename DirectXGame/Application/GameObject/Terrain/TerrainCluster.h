@@ -6,6 +6,10 @@ class CollisionManager;
 class TerrainCluster : public InstancedGroup
 {
 public:
+	static uint32_t sSerialNumber;
+	uint32_t serialNumber_ = 0u;
+
+public: // 仮想関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -20,13 +24,17 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	void Draw(ModelDrawDesc desc) override;
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw() override;
 
+public: // USER
 	/// <summary>
 	/// ブロックの追加
 	/// </summary>
 	/// <param name="transform"></param>
 	void TerrainRegister(const EulerTransform& transform);
-
 	/// <summary>
 	/// 衝突登録
 	/// </summary>

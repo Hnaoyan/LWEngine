@@ -43,6 +43,7 @@ void Player::ImGuiDraw()
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
 
+	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 
 	// システムのタブ

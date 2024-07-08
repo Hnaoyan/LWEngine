@@ -17,7 +17,7 @@ void SampleScene::Initialize()
 	LoadTexture();
 
 	levelLoader_ = std::make_unique<LevelLoader>();
-	levelLoader_->LoadSceneData("GameData");
+	levelLoader_->LoadSceneData("stage");
 
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };

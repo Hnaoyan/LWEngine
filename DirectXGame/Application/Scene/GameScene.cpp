@@ -17,7 +17,7 @@ void GameScene::Initialize()
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(ModelManager::GetModel("Jett"));
+	player_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	bulletManager_ = std::make_unique<SampleBulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -97,7 +97,7 @@ void GameScene::Draw()
 	terrainManager_->Draw(desc);
 
 	desc.worldTransform = &terrainWtf_;
-	terrain_->Draw(desc);
+	//terrain_->Draw(desc);
 	Model::PostDraw();
 
 #pragma region UI
@@ -120,7 +120,7 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
 	followCamera_->ImGuiDraw();
-
+	ImGui::ShowDemoWindow();
 
 	ImGui::Begin("SampleScene");
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
