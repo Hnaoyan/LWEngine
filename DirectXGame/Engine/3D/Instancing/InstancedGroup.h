@@ -51,7 +51,7 @@ public:
 public: // アクセッサ
 
 	// ユニットリスト取得
-	std::vector<std::unique_ptr<InstancedUnit>> GetUnitList() { return units_; }
+	//std::vector<std::unique_ptr<InstancedUnit>> GetUnitList() { return units_; }
 
 private:
 	/// <summary>
