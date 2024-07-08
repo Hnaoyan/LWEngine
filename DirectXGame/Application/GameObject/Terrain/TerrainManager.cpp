@@ -1,5 +1,6 @@
 #include "TerrainManager.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
+#include "Engine/LevelEditor/LevelLoader.h"
 
 #include "Terrain.h"
 #include "imgui.h"
@@ -32,13 +33,20 @@ void TerrainManager::Draw(ModelDrawDesc desc)
 
 void TerrainManager::AddCluster()
 {
-	std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
-	static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
-	static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{10.0f,0.0f,0.0f} });
-	static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,10.0f,0.0f} });
-	static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,10.0f} });
-	clusters_.push_back(std::move(instance));
 
+	for (std::list<LevelData::ObjectData>::iterator it = LevelLoader::data_->objects.begin();
+		it != LevelLoader::data_->objects.end(); ++it) {
+		std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
+		static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
+		static_cast<TerrainCluster*>(instance.get())->TerrainRegister((*it).transform);
+		clusters_.push_back(std::move(instance));
+	}
+	//std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
+	//static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
+	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{10.0f,0.0f,0.0f} });
+	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,10.0f,0.0f} });
+	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,10.0f} });
+	//clusters_.push_back(std::move(instance));
 }
 
 void TerrainManager::ImGuiDraw()
