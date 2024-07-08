@@ -1,6 +1,7 @@
 #include "TerrainCluster.h"
 #include "Terrain.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/Collision/CollisionManager.h"
 
 void TerrainCluster::Initialize(Model* model)
 {
@@ -32,4 +33,14 @@ void TerrainCluster::TerrainRegister(const EulerTransform& transform)
 	instance->transform_ = transform;
 	// リストにムーブ
 	units_.push_back(std::move(instance));
+}
+
+void TerrainCluster::CollisionUpdate(CollisionManager* manager)
+{
+	for (std::vector<std::unique_ptr<InstancedUnit>>::iterator it = units_.begin();
+		it != units_.end(); ++it) {
+		Terrain* obj = static_cast<Terrain*>((*it).get());
+		manager->ListRegist(obj->GetCollider());
+	}
+
 }

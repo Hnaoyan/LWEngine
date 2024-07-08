@@ -1,6 +1,6 @@
 #include "Terrain.h"
 #include "imgui.h"
-
+#include "../../Collision/ColliderFilter.h"
 #include <string>
 
 uint32_t Terrain::sSerialNumber = 0;
@@ -11,12 +11,16 @@ void Terrain::Initialize()
 	serialNumber_ = sSerialNumber;
 	sSerialNumber++;
 
+	collider_.Initialize({ 1.0f,1.0f,1.0f }, this);
+	collider_.SetAttribute(kCollisionAttributeTerrain);
+
 	InstancedUnit::Initialize();
 }
 
 void Terrain::Update()
 {
 	InstancedUnit::Update();
+	collider_.Update(transform_.translate);
 }
 
 void Terrain::ImGuiDraw()

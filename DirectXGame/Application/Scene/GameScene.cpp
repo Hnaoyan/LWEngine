@@ -238,6 +238,7 @@ void GameScene::CollisionUpdate()
 
 	enemyManager_->CollisionRegist();
 	bulletManager_->CollisionRegist();
+	terrainManager_->CollisionUpdate(collisionManager_.get());
 
 	// 衝突処理
 	collisionManager_->CheckAllCollisions();

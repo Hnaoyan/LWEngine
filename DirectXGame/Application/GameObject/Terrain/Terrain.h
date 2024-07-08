@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedUnit.h"
 #include "../../Collision/ColliderObject.h"
+#include "Engine/Collision/Collider/ColliderLists.h"
 
 class Terrain : public InstancedUnit
 {
@@ -28,5 +29,10 @@ public:
 	/// </summary>
 	/// <param name="object"></param>
 	void OnCollision(ColliderObject object);
+public: // アクセッサ
+	AABB* GetCollider() { return &collider_; }
+
+private:
+	AABB collider_;
 
 };

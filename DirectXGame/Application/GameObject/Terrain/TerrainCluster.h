@@ -1,6 +1,8 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
+class CollisionManager;
+
 class TerrainCluster : public InstancedGroup
 {
 public:
@@ -24,6 +26,12 @@ public:
 	/// </summary>
 	/// <param name="transform"></param>
 	void TerrainRegister(const EulerTransform& transform);
+
+	/// <summary>
+	/// 衝突登録
+	/// </summary>
+	/// <param name="manager"></param>
+	void CollisionUpdate(CollisionManager* manager);
 
 private:
 	uint32_t texture_ = 0;

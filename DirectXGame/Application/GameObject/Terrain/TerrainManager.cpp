@@ -1,6 +1,7 @@
 #include "TerrainManager.h"
-#include "Engine/Collision/CollisionManager.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
+
+#include "Terrain.h"
 #include "imgui.h"
 #include <cassert>
 
@@ -52,7 +53,8 @@ void TerrainManager::CollisionUpdate(CollisionManager* manager)
 
 	for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = clusters_.begin();
 		it != clusters_.end(); ++it) {
-		//clusters_
+		TerrainCluster* obj = static_cast<TerrainCluster*>((*it).get());
+		obj->CollisionUpdate(manager);
 	}
 
 }
