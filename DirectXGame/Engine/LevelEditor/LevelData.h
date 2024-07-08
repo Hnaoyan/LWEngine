@@ -2,6 +2,7 @@
 #include "../3D/CBuffer.h"
 
 #include <list>
+#include <string>
 
 class LevelData
 {
