@@ -48,6 +48,11 @@ public:
 	/// ImGui
 	/// </summary>
 	virtual void ImGuiDraw();
+public: // アクセッサ
+
+	// ユニットリスト取得
+	std::vector<std::unique_ptr<InstancedUnit>> GetUnitList() { return units_; }
+
 private:
 	/// <summary>
 	/// インスタンシングのSRV確保など
