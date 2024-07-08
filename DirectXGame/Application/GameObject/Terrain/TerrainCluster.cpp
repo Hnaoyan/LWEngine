@@ -1,4 +1,5 @@
 #include "TerrainCluster.h"
+#include "Terrain.h"
 #include "Engine/2D/TextureManager.h"
 
 void TerrainCluster::Initialize(Model* model)
@@ -18,9 +19,17 @@ void TerrainCluster::Update()
 
 void TerrainCluster::Draw(ModelDrawDesc desc)
 {
-	// 基底クラス描画
-	//InstancedGroup::Draw(desc);
-
+	// 描画
 	model_->InstancedDraw(desc, this->unitNum_, srvHandles_.second, texture_);
 
+}
+
+void TerrainCluster::TerrainRegister(const EulerTransform& transform)
+{
+	// インスタンス作成
+	std::unique_ptr<InstancedUnit> instance = std::make_unique<Terrain>();
+	instance->Initialize();
+	instance->transform_ = transform;
+	// リストにムーブ
+	units_.push_back(std::move(instance));
 }

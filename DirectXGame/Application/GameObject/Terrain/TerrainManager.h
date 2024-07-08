@@ -2,6 +2,8 @@
 #include "TerrainCluster.h"
 #include <vector>
 
+class CollisionManager;
+
 class TerrainManager
 {
 public:
@@ -28,6 +30,12 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
+
+	/// <summary>
+	/// コリジョン登録処理
+	/// </summary>
+	/// <param name="manager"></param>
+	void CollisionUpdate(CollisionManager* manager);
 
 private:
 	// モデル

@@ -18,6 +18,13 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	void Draw(ModelDrawDesc desc) override;
+
+	/// <summary>
+	/// ブロックの追加
+	/// </summary>
+	/// <param name="transform"></param>
+	void TerrainRegister(const EulerTransform& transform);
+
 private:
 	uint32_t texture_ = 0;
 };
