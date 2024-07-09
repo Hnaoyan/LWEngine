@@ -77,8 +77,19 @@ void Player::OnCollision(ColliderObject target)
 		Terrain** terrain = std::get_if<Terrain*>(&target);
 		Vector3 correctPos = {};
 
-		correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
-		worldTransform_.transform_.translate.y = correctPos.y;
+		Vector3 min{}, max{};
+
+		max = (*terrain)->GetCollider()->max_;
+		min = (*terrain)->GetCollider()->min_;
+
+		ICollider::BoxVertices box = ICollider::CreateBoxVertices(collider_.min_, collider_.max_);
+
+		ICollider::CollisionType3D type = ICollider::GetCollisionType3D(box, min, max);
+
+		if (type == ICollider::CollisionType3D::kMultiplePoints) {
+			correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
+			worldTransform_.transform_.translate.y = correctPos.y;
+		}
 
 	}
 	target;
