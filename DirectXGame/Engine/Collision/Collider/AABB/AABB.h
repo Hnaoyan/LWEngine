@@ -15,6 +15,11 @@ public:
 	void Update(const Vector3& worldPosition) override;
 
 public:
+	void SetRadius(const Vector3& radius) {
+		radius_ = radius;
+	}
+
+public:
 	// 衝突判定用
 	Vector3 min_;
 	Vector3 max_;
