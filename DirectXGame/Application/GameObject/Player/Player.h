@@ -39,7 +39,7 @@ public:
 	void UISpriteDraw();
 
 public: // アクセッサ
-	Sphere* GetCollider() { return &collider_; }
+	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Vector3 GetAimReticle() { return aimManager_.GetWorldPosition(); }
@@ -73,6 +73,6 @@ private:
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
-	Sphere collider_;
+	AABB collider_;
 
 };

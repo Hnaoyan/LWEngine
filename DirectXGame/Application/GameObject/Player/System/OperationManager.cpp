@@ -171,18 +171,10 @@ void OparationManager::InputUpdate()
 void OparationManager::GravityUpdate()
 {
 	if (!player_->isGround_) {
-		player_->worldTransform_.transform_.translate.y += (-9.8f) * GameSystem::GameSpeedFactor();
-	}
-	// 落下処理
-	if (player_->velocity_.y != 0.0f) {
 		player_->velocity_.y += (-9.8f) * GameSystem::GameSpeedFactor();
 	}
-
-	////player_->worldPosition_.y += player_->velocity_.y;
-	//// 仮の着地
-	//if (player_->worldTransform_.transform_.translate.y <= -0.25f) {
-	//	player_->worldTransform_.transform_.translate.y = 0.0f;
-	//	player_->velocity_.y = 0;
-	//}
-
+	else {
+		player_->velocity_.y = 0;
+	}
+	
 }

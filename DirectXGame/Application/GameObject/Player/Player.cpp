@@ -8,7 +8,7 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
-	collider_.Initialize(1.0f, this);
+	collider_.Initialize(worldTransform_.transform_.scale, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
 	SystemInitialize();
