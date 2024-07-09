@@ -171,7 +171,7 @@ void OparationManager::InputUpdate()
 void OparationManager::GravityUpdate()
 {
 	if (!player_->isGround_) {
-		player_->velocity_.y += (-9.8f) * GameSystem::GameSpeedFactor();
+		//player_->velocity_.y += (-9.8f) * GameSystem::GameSpeedFactor();
 	}
 	else {
 		player_->velocity_.y = 0;

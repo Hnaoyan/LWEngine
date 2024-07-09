@@ -86,9 +86,9 @@ void Player::OnCollision(ColliderObject target)
 
 		ICollider::CollisionType3D type = ICollider::GetCollisionType3D(box, min, max);
 
-		if (type == ICollider::CollisionType3D::kMultiplePoints) {
-			correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
-			worldTransform_.transform_.translate.y = correctPos.y;
+		if (type == ICollider::CollisionType3D::kBottomFace) {
+			//correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
+			//worldTransform_.transform_.translate.y = correctPos.y;
 		}
 
 	}
