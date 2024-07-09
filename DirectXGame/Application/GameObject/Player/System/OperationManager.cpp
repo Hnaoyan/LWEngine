@@ -18,11 +18,11 @@ void OparationManager::Initialize(Player* player)
 
 void OparationManager::Update()
 {
+	// 落下処理
+	GravityUpdate();
 	// 入力
 	InputUpdate();
 
-	// 落下処理
-	GravityUpdate();
 
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 
@@ -42,7 +42,7 @@ void OparationManager::InputUpdate()
 		// ジャンプ入力
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && player_->velocity_.y == 0.0f)
 		{
-			float jumpPower = 50.0f;
+			float jumpPower = 100.0f;
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
 		
