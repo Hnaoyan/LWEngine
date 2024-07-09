@@ -12,9 +12,13 @@ public:
 	};
 	enum CollisionType3D {
 		// 8頂点（四隅
-		kLeftBottomFront,kLeftBottomBack,kLeftTopFront,kLeftTopBack,
+		kLeftBottomFront, kLeftBottomBack, kLeftTopFront, kLeftTopBack,
 		kRightBottomFront, kRightBottomBack, kRightTopFront, kRightTopBack,
 
+		// 面
+		kFrontFace, kBackFace, kLeftFace, kRightFace, kTopFace, kBottomFace,
+
+		// 複数
 		kMultiplePoints,
 		kNone,
 	};
@@ -102,7 +106,27 @@ public:
 				return CollisionType3D::kRightTopBack;
 			}
 		}
-		else if (inSideCount >= 3) {
+		else if (inSideCount >= 2 && inSideCount < 5) {
+			if (!isInLeftBottomBack && !isInLeftBottomFront && !isInLeftTopBack && !isInLeftTopFront) {
+				return CollisionType3D::kRightFace;
+			}
+			else if (!isInRightBottomBack && !isInRightBottomFront && !isInRightTopBack && !isInRightTopFront) {
+				return CollisionType3D::kLeftFace;
+			}
+			else if (!isInLeftBottomBack && !isInLeftBottomFront && !isInRightBottomBack && !isInRightBottomFront) {
+				return CollisionType3D::kTopFace;
+			}
+			else if (!isInLeftTopBack && !isInLeftTopFront && !isInRightTopBack && !isInRightTopFront) {
+				return CollisionType3D::kBottomFace;
+			}
+			else if (!isInLeftBottomBack && !isInLeftTopBack && !isInRightBottomBack && !isInRightTopBack) {
+				return CollisionType3D::kFrontFace;
+			}
+			else if (!isInLeftBottomFront && !isInLeftTopFront && !isInRightBottomFront && !isInRightTopFront) {
+				return CollisionType3D::kBackFace;
+			}
+		}
+		else if (inSideCount >= 5) {
 			return CollisionType3D::kMultiplePoints;
 		}
 
