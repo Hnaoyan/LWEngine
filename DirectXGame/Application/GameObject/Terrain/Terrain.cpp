@@ -31,6 +31,7 @@ void Terrain::ImGuiDraw()
 	ImGui::DragFloat3(name.c_str(), &transform_.rotate.x, 0.01f);
 	name = "Scale" + std::to_string(serialNumber_);
 	ImGui::DragFloat3(name.c_str(), &transform_.scale.x, 0.01f);
+	collider_.SetRadius(transform_.scale);
 }
 
 void Terrain::OnCollision(ColliderObject object)

@@ -113,6 +113,7 @@ void GameScene::Draw()
 
 void GameScene::ImGuiDraw()
 {
+#ifdef _DEBUG
 	// ゲームオブジェクト
 	player_->ImGuiDraw();
 	terrainManager_->ImGuiDraw();
@@ -165,6 +166,7 @@ void GameScene::ImGuiDraw()
 	}
 
 	ImGui::End();
+#endif // _DEBUG
 }
 
 void GameScene::LoadModel()
