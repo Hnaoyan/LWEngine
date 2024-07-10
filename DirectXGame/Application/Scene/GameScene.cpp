@@ -1,4 +1,6 @@
 #include "GameScene.h"
+#include "Engine/Scene/SceneManager.h"
+
 #include <imgui.h>
 
 void GameScene::Initialize()
@@ -53,6 +55,13 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
+#ifdef _DEBUG
+	if (input_->TriggerKey(DIK_LSHIFT)) {
+		sceneManager_->ChangeScene("SAMPLE");
+	}
+#endif // _DEBUG
+
+
 	terrainWtf_.UpdateMatrix();
 	player_->Update();
 	bulletManager_->Update();

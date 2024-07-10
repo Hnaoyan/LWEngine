@@ -1,0 +1,110 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Back",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -15.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Floar",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    -4.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    100.0,
+                    100.0,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Left",
+            "transform": {
+                "translation": [
+                    -15.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    90.00000762939453
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Right",
+            "transform": {
+                "translation": [
+                    15.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    90.00000762939453
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    3.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "Front",
+            "transform": {
+                "translation": [
+                    0.0,
+                    15.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    3.0
+                ]
+            }
+        }
+    ]
+}

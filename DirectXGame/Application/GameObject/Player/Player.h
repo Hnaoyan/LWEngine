@@ -56,8 +56,12 @@ private: // USER
 	/// システム関係の更新
 	/// </summary>
 	void SystemUpdate();
+
+	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 	
 public:
+	// 前フレームの位置
+	Vector3 prevPosition_ = {};
 	// 移動速度
 	Vector3 velocity_ = {};
 	// カメラ

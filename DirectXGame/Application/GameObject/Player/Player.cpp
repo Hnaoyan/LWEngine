@@ -17,6 +17,8 @@ void Player::Initialize(Model* model)
 
 void Player::Update()
 {
+	// 前フレの位置
+	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
 	SystemUpdate();
 
@@ -48,6 +50,7 @@ void Player::ImGuiDraw()
 	ImGui::Begin(name.c_str());
 	ImGui::Text("IsGround:%d", this->isGround_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 
 	// システムのタブ
@@ -86,10 +89,13 @@ void Player::OnCollision(ColliderObject target)
 
 		ICollider::CollisionType3D type = ICollider::GetCollisionType3D(box, min, max);
 
-		if (type == ICollider::CollisionType3D::kBottomFace) {
-			//correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
-			//worldTransform_.transform_.translate.y = correctPos.y;
-		}
+		// 座標修正関数
+		CollisionCorrect(type, min, max);
+
+		//if (type == ICollider::CollisionType3D::kBottomFace) {
+		//	correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
+		//	worldTransform_.transform_.translate.y = correctPos.y;
+		//}
 
 	}
 	target;
@@ -115,4 +121,95 @@ void Player::SystemUpdate()
 	systemManager_.Update();
 
 	aimManager_.Update(camera_);
+}
+
+void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)
+{
+	// 修正座標（最後にこれを渡す	
+	Vector3 correctPosition = worldTransform_.GetWorldPosition();
+	Vector3 prevToNow = prevPosition_ - worldTransform_.GetWorldPosition();
+
+	switch (type)
+	{
+	//---点---//
+	case ICollider::kLeftBottomFront:
+
+		break;
+	case ICollider::kLeftBottomBack:
+
+		break;
+	case ICollider::kLeftTopFront:
+
+		break;
+	case ICollider::kLeftTopBack:
+
+		break;
+	case ICollider::kRightBottomFront:
+
+		break;
+	case ICollider::kRightBottomBack:
+
+		break;
+	case ICollider::kRightTopFront:
+
+		break;
+	case ICollider::kRightTopBack:
+
+		break;
+	//---辺---//
+	case ICollider::kLeftBottomSide:
+
+		break;
+	case ICollider::kLeftTopSide:
+
+		break;
+	case ICollider::kRightBottomSide:
+
+		break;
+	case ICollider::kRightTopSide:
+		break;
+	case ICollider::kFrontBottomSide:
+		break;
+	case ICollider::kFrontTopSide:
+		break;
+	case ICollider::kBackBottomSide:
+		break;
+	case ICollider::kBackTopSide:
+		break;
+	case ICollider::kLeftFrontSide:
+		break;
+	case ICollider::kLeftBackSide:
+		break;
+	case ICollider::kRightFrontSide:
+		break;
+	case ICollider::kRightBackSide:
+		break;
+	//---面---//
+	case ICollider::kFrontFace:
+		correctPosition.z = max.z + worldTransform_.transform_.scale.z;
+		break;
+	case ICollider::kBackFace:
+		correctPosition.z = min.z - worldTransform_.transform_.scale.z;
+		break;
+	case ICollider::kLeftFace:
+		correctPosition.x = max.x + worldTransform_.transform_.scale.x;
+		break;
+	case ICollider::kRightFace:
+		correctPosition.x = min.x - worldTransform_.transform_.scale.x;
+		break;
+	case ICollider::kTopFace:
+		correctPosition.y = min.y - worldTransform_.transform_.scale.y;
+		break;
+	case ICollider::kBottomFace:
+		correctPosition.y = max.y + worldTransform_.transform_.scale.y;
+		break;
+	// 例外
+	case ICollider::kMultiplePoints:
+		break;
+	case ICollider::kNone:
+		break;
+	}
+
+	worldTransform_.transform_.translate = correctPosition;
+
 }
