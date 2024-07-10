@@ -51,4 +51,7 @@ void SampleBullet::OnCollision(ColliderObject object)
 	if (std::holds_alternative<SampleEnemy*>(object)) {
 		isDead_ = true;
 	}
+	else if (std::holds_alternative<Terrain*>(object)) {
+		isDead_ = true;
+	}
 }
