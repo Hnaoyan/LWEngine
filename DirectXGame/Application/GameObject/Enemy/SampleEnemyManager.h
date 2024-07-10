@@ -45,6 +45,8 @@ public:	// アクセッサ
 		collisionManager_ = manager;
 	}
 
+	std::vector<std::unique_ptr<SampleEnemy>>* GetEnemysList() { return &enemys_; }
+
 private:
 	// 全部のモデル
 	Model* model_ = nullptr;

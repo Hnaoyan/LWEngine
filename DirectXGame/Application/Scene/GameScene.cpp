@@ -49,6 +49,7 @@ void GameScene::Initialize()
 	followCamera_->SetParent(player_->GetWorldTransform());
 
 	player_->SetFollowCamera(followCamera_.get());
+	player_->SetEnemyList(enemyManager_->GetEnemysList());
 #pragma endregion
 
 }

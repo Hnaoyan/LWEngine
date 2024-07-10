@@ -46,6 +46,7 @@ public: // アクセッサ
 
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
+	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
 
 private: // USER
 	/// <summary>
@@ -74,6 +75,9 @@ private:
 	OparationManager systemManager_;
 	// エイム関係
 	AimManager aimManager_;
+	// ロックオンシステム
+	LockOn lockOn_;
+
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
