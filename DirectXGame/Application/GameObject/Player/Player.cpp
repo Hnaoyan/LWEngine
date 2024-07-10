@@ -158,31 +158,64 @@ void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& mi
 		break;
 	//---辺---//
 	case ICollider::kLeftBottomSide:
-
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
+		}
 		break;
 	case ICollider::kLeftTopSide:
-
-		break;
-	case ICollider::kRightBottomSide:
-
-		break;
-	case ICollider::kRightTopSide:
-		break;
-	case ICollider::kFrontBottomSide:
-		break;
-	case ICollider::kFrontTopSide:
-		break;
-	case ICollider::kBackBottomSide:
-		break;
-	case ICollider::kBackTopSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
+		}
 		break;
 	case ICollider::kLeftFrontSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
+		}
 		break;
 	case ICollider::kLeftBackSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
+		}
+		break;
+	case ICollider::kRightBottomSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
+		}
+		break;
+	case ICollider::kRightTopSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
+		}
 		break;
 	case ICollider::kRightFrontSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
+		}
 		break;
 	case ICollider::kRightBackSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
+		}
+		break;
+	case ICollider::kFrontBottomSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.z = max.z + worldTransform_.transform_.scale.z;
+		}
+		break;
+	case ICollider::kFrontTopSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.z = max.z + worldTransform_.transform_.scale.z;
+		}
+		break;
+	case ICollider::kBackBottomSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.z = min.z - worldTransform_.transform_.scale.z;
+		}
+		break;
+	case ICollider::kBackTopSide:
+		if (prevToNow.y == 0.0f) {
+			correctPosition.z = min.z - worldTransform_.transform_.scale.z;
+		}
 		break;
 	//---面---//
 	case ICollider::kFrontFace:
@@ -201,7 +234,7 @@ void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& mi
 		correctPosition.y = min.y - worldTransform_.transform_.scale.y;
 		break;
 	case ICollider::kBottomFace:
-		correctPosition.y = max.y + worldTransform_.transform_.scale.y;
+		correctPosition.y = max.y + worldTransform_.transform_.scale.y + 0.02f;
 		break;
 	// 例外
 	case ICollider::kMultiplePoints:
