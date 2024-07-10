@@ -15,6 +15,11 @@ public:
 		kLeftBottomFront, kLeftBottomBack, kLeftTopFront, kLeftTopBack,
 		kRightBottomFront, kRightBottomBack, kRightTopFront, kRightTopBack,
 
+		// 辺
+		kLeftBottomSide, kLeftTopSide, kRightBottomSide, kRightTopSide,
+		kFrontBottomSide, kFrontTopSide, kBackBottomSide, kBackTopSide,
+		kLeftFrontSide, kLeftBackSide, kRightFrontSide, kRightBackSide,
+
 		// 面
 		kFrontFace, kBackFace, kLeftFace, kRightFace, kTopFace, kBottomFace,
 
@@ -107,23 +112,80 @@ public:
 			}
 		}
 		else if (inSideCount >= 2 && inSideCount < 5) {
+			// 右面
 			if (!isInLeftBottomBack && !isInLeftBottomFront && !isInLeftTopBack && !isInLeftTopFront) {
+				// 面
+				if (!isInRightTopBack && !isInRightTopFront) {
+					return CollisionType3D::kRightTopSide;
+				}
+				else if (!isInRightBottomBack && !isInRightBottomFront) {
+					return CollisionType3D::kRightBottomSide;
+				}
+				else if (!isInRightBottomBack && !isInRightTopBack) {
+					return CollisionType3D::kRightFrontSide;
+				}
+				else if (!isInRightBottomFront && !isInRightTopFront) {
+					return CollisionType3D::kRightBackSide;
+				}
+				// 辺
 				return CollisionType3D::kRightFace;
 			}
+			// 左面
 			else if (!isInRightBottomBack && !isInRightBottomFront && !isInRightTopBack && !isInRightTopFront) {
+				// 辺
+				if (!isInLeftBottomBack && !isInLeftBottomFront) {
+					return CollisionType3D::kLeftTopSide;
+				}
+				else if (!isInLeftTopBack && !isInLeftTopFront) {
+					return CollisionType3D::kLeftBottomSide;
+				}
+				else if (!isInLeftBottomBack && !isInLeftTopBack) {
+					return CollisionType3D::kLeftFrontSide;
+				}
+				else if (!isInLeftBottomFront && !isInLeftTopFront) {
+					return CollisionType3D::kLeftBackSide;
+				}
+				// 面
 				return CollisionType3D::kLeftFace;
+			}
+			// 前面
+			else if (!isInLeftBottomBack && !isInLeftTopBack && !isInRightBottomBack && !isInRightTopBack) {
+				if (!isInLeftBottomFront && !isInLeftTopFront) {
+					return CollisionType3D::kRightFrontSide;
+				}
+				else if (!isInRightBottomFront && !isInRightTopFront) {
+					return CollisionType3D::kLeftFrontSide;
+				}
+				else if (!isInRightBottomFront && !isInLeftBottomFront) {
+					return CollisionType3D::kFrontBottomSide;
+				}
+				else if (!isInLeftBottomFront && !isInRightBottomFront) {
+					return CollisionType3D::kFrontTopSide;
+				}
+				return CollisionType3D::kFrontFace;
+			}
+			// 背面
+			else if (!isInLeftBottomFront && !isInLeftTopFront && !isInRightBottomFront && !isInRightTopFront) {
+				if (!isInLeftBottomBack && !isInLeftTopBack) {
+					return CollisionType3D::kRightBackSide;
+				}
+				else if (!isInRightBottomBack && !isInRightTopBack) {
+					return CollisionType3D::kLeftBackSide;
+				}
+				else if (!isInLeftBottomBack && !isInRightBottomBack) {
+					return CollisionType3D::kBackTopSide;
+				}
+				else if (!isInLeftTopBack && !isInRightTopBack) {
+					return CollisionType3D::kBackBottomSide;
+				}
+
+				return CollisionType3D::kBackFace;
 			}
 			else if (!isInLeftBottomBack && !isInLeftBottomFront && !isInRightBottomBack && !isInRightBottomFront) {
 				return CollisionType3D::kTopFace;
 			}
 			else if (!isInLeftTopBack && !isInLeftTopFront && !isInRightTopBack && !isInRightTopFront) {
 				return CollisionType3D::kBottomFace;
-			}
-			else if (!isInLeftBottomBack && !isInLeftTopBack && !isInRightBottomBack && !isInRightTopBack) {
-				return CollisionType3D::kFrontFace;
-			}
-			else if (!isInLeftBottomFront && !isInLeftTopFront && !isInRightBottomFront && !isInRightTopFront) {
-				return CollisionType3D::kBackFace;
 			}
 		}
 		else if (inSideCount >= 5) {
