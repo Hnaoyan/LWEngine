@@ -2,6 +2,7 @@
 #include "../IGameObject.h"
 #include "System/PlayerSystemLists.h"
 #include "Module/PlayerFootCollider.h"
+#include "Module/State/IPlayerState.h"
 
 class SampleBulletManager;
 
@@ -70,5 +71,8 @@ private:
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
 	AABB collider_;
+
+	// state
+	std::unique_ptr<IPlayerState> playerState_;
 
 };

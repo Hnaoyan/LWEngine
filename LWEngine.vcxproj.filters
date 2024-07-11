@@ -213,6 +213,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
