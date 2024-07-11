@@ -3,6 +3,8 @@
 #include "../GameObjectLists.h"
 #include "../../GameSystem/GameSystem.h"
 
+#include "Engine/PostEffect/PostEffectRender.h"
+
 void Player::Initialize(Model* model)
 {
 	// 基底クラスの初期化
@@ -56,7 +58,7 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 
-	collider_.SetRadius(worldTransform_.transform_.scale);
+	collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 
 	// システムのタブ

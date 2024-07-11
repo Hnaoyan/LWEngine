@@ -11,6 +11,7 @@ void SampleBullet::Initialize(Model* model)
 	collider_.Initialize(1.0f, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 
+	worldTransform_.transform_.scale *= 0.5f;
 }
 
 void SampleBullet::Update()

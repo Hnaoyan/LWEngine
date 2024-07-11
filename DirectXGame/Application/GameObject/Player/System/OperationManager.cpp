@@ -49,7 +49,7 @@ void OparationManager::InputUpdate()
 		// ジャンプ入力
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && player_->velocity_.y == 0.0f)
 		{
-			float jumpPower = 100.0f;
+			float jumpPower = 75.0f;
 			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
 		
@@ -141,10 +141,13 @@ void OparationManager::InputUpdate()
 		return;
 	}
 	if (isDash_) {
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 		++resetTime_;
 		if (resetTime_ > 10) {
 			isDash_ = false;
 			resetTime_ = 0;
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+
 		}
 		return;
 	}
@@ -163,7 +166,7 @@ void OparationManager::InputUpdate()
 void OparationManager::GravityUpdate()
 {
 	if (!player_->isGround_) {
-		player_->velocity_.y += (-9.8f) * GameSystem::GameSpeedFactor();
+		player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
 	}
 	else {
 		player_->velocity_.y = 0;

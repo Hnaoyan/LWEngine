@@ -37,4 +37,8 @@ public:
 private:
 	Sphere collider_;
 
+	bool isLeft_ = false;
+
+	FrameTimer timer_;
+
 };

@@ -7,10 +7,32 @@ void SampleEnemy::Initialize(Model* model)
 	// 初期化
 	collider_.Initialize(1.0f, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
+
+	timer_.Start(120.0f);
+
 }
 
 void SampleEnemy::Update()
 {
+	if (isLeft_) {
+		worldTransform_.transform_.translate.x -= 0.1f;
+	}
+	else {
+		worldTransform_.transform_.translate.x += 0.1f;
+	}
+
+	if (timer_.isEnd_) {
+		if (isLeft_) {
+			isLeft_ = false;
+		}
+		else {
+			isLeft_ = true;
+		}
+
+		timer_.Start(120.0f);
+	}
+
+	timer_.Update(1.0f);
 	// 行列更新
 	IGameObject::Update();
 	// コライダー更新
