@@ -9,16 +9,18 @@ void SampleEnemy::Initialize(Model* model)
 	collider_.SetAttribute(kCollisionAttributeEnemy);
 
 	timer_.Start(120.0f);
-
+	isLeft_ = false;
 }
 
 void SampleEnemy::Update()
 {
 	if (isLeft_) {
 		worldTransform_.transform_.translate.x -= 0.1f;
+		worldTransform_.transform_.translate.y -= 0.1f;
 	}
 	else {
 		worldTransform_.transform_.translate.x += 0.1f;
+		worldTransform_.transform_.translate.y += 0.1f;
 	}
 
 	if (timer_.isEnd_) {

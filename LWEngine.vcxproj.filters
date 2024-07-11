@@ -215,6 +215,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\GamePostEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />

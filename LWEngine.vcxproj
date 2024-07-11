@@ -112,6 +112,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\GamePostEffectManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />

@@ -6,6 +6,10 @@ class Player;
 class IPlayerState
 {
 public:
+	IPlayerState() {};
+	virtual ~IPlayerState() = default;
+
+public:
 	/// <summary>
 	/// 前初期化
 	/// </summary>
