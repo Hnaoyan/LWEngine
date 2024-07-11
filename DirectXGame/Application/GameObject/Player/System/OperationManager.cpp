@@ -14,6 +14,10 @@ void OparationManager::Initialize(Player* player)
 	player_ = player;
 	// 入力
 	input_ = Input::GetInstance();
+	// ロックオン
+	lockOn_.Initialize(player);
+	// Aim
+	aimManager_.Initialize(player);
 }
 
 void OparationManager::Update()
@@ -22,8 +26,9 @@ void OparationManager::Update()
 	GravityUpdate();
 	// 入力
 	InputUpdate();
-
-
+	// Aimの処理
+	aimManager_.Update(player_->camera_);
+	// クールタイム
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 
 	// 座標更新
@@ -49,7 +54,7 @@ void OparationManager::InputUpdate()
 		if (joyState.Gamepad.bRightTrigger && !shotTimer_.isActive_) {
 			SampleBulletManager::GenerateData data{};
 			data.position = player_->worldTransform_.GetWorldPosition();
-			data.velocity = Vector3::Normalize(player_->GetAimReticle() - player_->worldTransform_.GetWorldPosition());
+			data.velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 			float speedValue = 30.0f;
 			data.velocity *= speedValue;
 			bulletManager_->AddBullet(data);
@@ -65,9 +70,9 @@ void OparationManager::InputUpdate()
 			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 		}
 
-		//if (input_->GetJoystickState(0, joyState)) {
-		//	player_->worldTransform_.transform_.rotate.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * 0.01f;
-		//}
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
+			lockOn_.ToggleLockOn(player_->camera_);
+		}
 
 	}
 	// キーボード操作
@@ -141,21 +146,6 @@ void OparationManager::InputUpdate()
 		}
 		return;
 	}
-
-	//float maxSpeed = 1.5f;
-	//if (player_->velocity_.x < 0) {
-	//	player_->velocity_.x = std::clamp(player_->velocity_.x, -maxSpeed, 0.0f);
-	//}
-	//else if (player_->velocity_.x > 0) {
-	//	player_->velocity_.x = std::clamp(player_->velocity_.x, 0.0f, maxSpeed);
-	//}
-	//// 前後
-	//if (player_->velocity_.z < 0) {
-	//	player_->velocity_.z = std::clamp(player_->velocity_.z, -maxSpeed, 0.0f);
-	//}
-	//else if (player_->velocity_.z > 0) {
-	//	player_->velocity_.z = std::clamp(player_->velocity_.z, 0.0f, maxSpeed);
-	//}
 
 	if (direct.x != 0 || direct.z != 0) {
 		if (!isDash_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {

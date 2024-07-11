@@ -42,21 +42,12 @@ public: // アクセッサ
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-	Vector3 GetAimReticle() { return aimManager_.GetWorldPosition(); }
 
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
-	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
+	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { systemManager_.SetEnemyList(lists); }
 
 private: // USER
-	/// <summary>
-	/// システム関係の初期化
-	/// </summary>
-	void SystemInitialize();
-	/// <summary>
-	/// システム関係の更新
-	/// </summary>
-	void SystemUpdate();
 
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 	
@@ -73,10 +64,6 @@ public:
 private:
 	// 操作関係
 	OparationManager systemManager_;
-	// エイム関係
-	AimManager aimManager_;
-	// ロックオンシステム
-	LockOn lockOn_;
 
 	// 足場コライダー
 	PlayerFootCollider footCollider_;

@@ -11,7 +11,10 @@ void Player::Initialize(Model* model)
 	collider_.Initialize(worldTransform_.transform_.scale, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
-	SystemInitialize();
+	// 操作システム
+	systemManager_.Initialize(this);
+	// 足場コライダー
+	footCollider_.Initialize(this);
 
 }
 
@@ -20,7 +23,7 @@ void Player::Update()
 	// 前フレの位置
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
-	SystemUpdate();
+	systemManager_.Update();
 
 	// 基底クラスの更新
 	IGameObject::Update();
@@ -52,6 +55,7 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+
 	collider_.SetRadius(worldTransform_.transform_.scale);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 
@@ -59,7 +63,7 @@ void Player::ImGuiDraw()
 	if (ImGui::BeginTabBar("System"))
 	{
 		if (ImGui::BeginTabItem("Aim")) {
-			aimManager_.ImGuiDraw();
+			systemManager_.GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("FootCollider")) {
@@ -105,24 +109,7 @@ void Player::OnCollision(ColliderObject target)
 
 void Player::UISpriteDraw()
 {
-	aimManager_.Draw();
-}
-
-void Player::SystemInitialize()
-{
-	// 操作システム
-	systemManager_.Initialize(this);
-	// エイムシステム
-	aimManager_.Initialize(this);
-	// 足場コライダー
-	footCollider_.Initialize(this);
-}
-
-void Player::SystemUpdate()
-{
-	systemManager_.Update();
-
-	aimManager_.Update(camera_);
+	systemManager_.GetAimManager()->Draw();
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)

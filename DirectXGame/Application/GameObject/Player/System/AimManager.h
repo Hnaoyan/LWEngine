@@ -28,7 +28,9 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
-
+	/// <summary>
+	/// レティクルの描画
+	/// </summary>
 	void Draw();
 
 private: // ユーザー

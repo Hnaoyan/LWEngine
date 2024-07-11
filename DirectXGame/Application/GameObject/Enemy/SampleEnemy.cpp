@@ -35,5 +35,8 @@ void SampleEnemy::ImGuiDraw()
 
 void SampleEnemy::OnCollision(ColliderObject object)
 {
-	object;
+	if (std::holds_alternative<SampleBullet*>(object)) {
+		isDead_ = true;
+	}
+
 }
