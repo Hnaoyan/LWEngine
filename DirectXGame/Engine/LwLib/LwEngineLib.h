@@ -79,4 +79,17 @@ namespace LwLib
 		return min + (max - min) * rate;
 	}
 
+	inline static float CalculateYawFromVector(const Vector3& direction)
+	{
+		float dot = Vector3::Dot(direction, Vector3(0, 0, 1.0f));
+		float fromLength = Vector3::Length(direction);
+		float toLength = Vector3::Length(Vector3(0, 0, 1.0f));
+		float result = std::acosf(dot / (fromLength * toLength));
+
+		if (direction.x < 0) {
+			result = -result;
+		}
+
+		return result;
+	}
 }
