@@ -15,7 +15,7 @@ void AnimSampleObject::Initialize(Model* model, Model* cube)
 
 	debugCube_ = cube;
 
-	texture_ = TextureManager::Load("Resources/uvChecker.png");
+	texture_ = TextureManager::Load("Resources/default/uvChecker.png");
 
 	debugSphere_.reset(Skydome::CreateSkydome());
 

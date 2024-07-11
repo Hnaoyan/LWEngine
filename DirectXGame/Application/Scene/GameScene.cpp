@@ -19,7 +19,7 @@ void GameScene::Initialize()
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(ModelManager::GetModel("DefaultCube"));
+	player_->Initialize(ModelManager::GetModel("Sphere"));
 
 	bulletManager_ = std::make_unique<SampleBulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -187,6 +187,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Terrain", "terrain");
 	ModelManager::LoadNormalModel("Jett", "jett");
 	ModelManager::LoadNormalModel("Enemy", "enemy");
+	ModelManager::LoadNormalModel("Sphere", "sphere");
 
 	terrain_ = ModelManager::GetModel("Terrain");
 
