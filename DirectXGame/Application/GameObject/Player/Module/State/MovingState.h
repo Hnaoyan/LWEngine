@@ -1,7 +1,7 @@
 #pragma once
 #include "IPlayerState.h"
 
-class IdleState : public IPlayerState
+class MovingState : public IPlayerState
 {
 public:
 	void Initialize() override;

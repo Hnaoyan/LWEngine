@@ -40,7 +40,7 @@ void OparationManager::Update()
 void OparationManager::InputUpdate()
 {
 	XINPUT_STATE joyState;
-	float speed = 1.5f;
+	float speed = 4.0f;
 	Vector3 direct = {};
 	// コントローラー操作
 	if (input_->GetJoystickState(0, joyState)) {

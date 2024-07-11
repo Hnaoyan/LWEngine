@@ -28,6 +28,7 @@ void FollowCamera::Update()
 		// スティック操作
 		if (input->GetJoystickState(0, joyState)) {
 			// 目標回転角の設定
+			//destinationAngle_.x += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_ * (1.0f / 2.0f);
 			destinationAngle_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
 			//destinationAngle_.z += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_;
 		}
@@ -38,14 +39,17 @@ void FollowCamera::Update()
 			// 追尾してるオブジェクトの座標
 			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
 			sub = Vector3::Normalize(sub);
+
 			// Y軸角度
 			destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 			//destinationAngle_.y = std::atan2f(sub.x, sub.z);
+
+			//destinationAngle_.x = LwLib::CalculateYawFromVector({ 0,sub.y,sub.z });
 		}
 
 		// 回転の速度調節
 		transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
-		transform_.rotate.z = LwLib::LerpShortAngle(transform_.rotate.z, destinationAngle_.z, rStickLerpRate_);
+		//transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);

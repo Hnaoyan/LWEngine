@@ -100,7 +100,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\FallingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\JumpingState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\MovingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AimManager.h" />

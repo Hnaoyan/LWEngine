@@ -216,6 +216,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GamePostEffectManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\MovingState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\JumpingState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\FallingState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />

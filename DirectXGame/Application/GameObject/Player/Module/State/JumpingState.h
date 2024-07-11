@@ -1,7 +1,7 @@
 #pragma once
 #include "IPlayerState.h"
 
-class IdleState : public IPlayerState
+class JumpingState : public IPlayerState
 {
 public:
 	void Initialize() override;
@@ -10,5 +10,4 @@ public:
 	void InputHandle() override;
 
 private:
-
 };
