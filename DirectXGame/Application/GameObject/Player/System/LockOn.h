@@ -13,6 +13,12 @@ class ICamera;
 class LockOn
 {
 public:
+	struct LockOnData {
+		float threshold = 0.0f;
+		float minDistanceZ = 5.0f;
+		float maxDistanceZ = 50.0f;
+	};
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -22,6 +28,10 @@ public:
 	/// 入力による対象設定・対象解除
 	/// </summary>
 	void ToggleLockOn(ICamera* camera);
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 private:
 	/// <summary>
 	/// ターゲット解除
@@ -48,4 +58,6 @@ private:
 	std::vector<std::unique_ptr<SampleEnemy>>* enemys_;
 	// ターゲット
 	SampleEnemy* target_ = nullptr;
+	// 内積の閾値
+	LockOnData data{};
 };

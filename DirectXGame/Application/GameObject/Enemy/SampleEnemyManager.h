@@ -40,6 +40,8 @@ public:
 	/// </summary>
 	void CollisionRegist();
 
+	void ImGuiDraw();
+
 public:	// アクセッサ
 	void SetCollisionManager(CollisionManager* manager) {
 		collisionManager_ = manager;

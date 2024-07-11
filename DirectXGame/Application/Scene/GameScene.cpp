@@ -131,6 +131,7 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
 	followCamera_->ImGuiDraw();
+	enemyManager_->ImGuiDraw();
 	ImGui::ShowDemoWindow();
 
 	ImGui::Begin("SampleScene");

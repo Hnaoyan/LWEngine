@@ -17,7 +17,7 @@ public:
 		return std::get<IGameObject*>(obj);
 	}
 
-protected:
+public:
 	// 共通のシリアル
 	static int32_t sSerialNumber;
 	// 個体のシリアル

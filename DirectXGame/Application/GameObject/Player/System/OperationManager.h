@@ -31,6 +31,7 @@ public:
 	void SetManager(SampleBulletManager* manager) { bulletManager_ = manager; }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
 	AimManager* GetAimManager() { return &aimManager_; }
+	LockOn* GetLockOn() { return &lockOn_; }
 private: // POINTER
 	// 親
 	Player* player_ = nullptr;

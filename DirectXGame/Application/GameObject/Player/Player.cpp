@@ -66,6 +66,10 @@ void Player::ImGuiDraw()
 			systemManager_.GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("LockOn")) {
+			systemManager_.GetLockOn()->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
 		if (ImGui::BeginTabItem("FootCollider")) {
 			footCollider_.ImGuiDraw();
 			ImGui::EndTabItem();

@@ -1,5 +1,6 @@
 #include "SampleEnemyManager.h"
 #include "Engine/Collision/CollisionManager.h"
+#include <imgui.h>
 
 void SampleEnemyManager::Initialize(Model* model)
 {
@@ -47,4 +48,17 @@ void SampleEnemyManager::CollisionRegist()
 		collisionManager_->ListRegist((*it)->GetCollider());
 	}
 
+}
+
+void SampleEnemyManager::ImGuiDraw()
+{
+	ImGui::Begin("Enemys");
+	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_.begin();
+		it != enemys_.end(); ++it) {
+		Vector3 pos = (*it)->worldTransform_.GetWorldPosition();
+		std::string name = "Position" + std::to_string((*it)->commonSerialNumber_);
+		ImGui::DragFloat3(name.c_str(),&pos.x,0.01f);
+		(*it)->worldTransform_.transform_.translate = pos;
+	}
+	ImGui::End();
 }
