@@ -47,6 +47,7 @@ void GameScene::Initialize()
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 	followCamera_->SetParent(player_->GetWorldTransform());
+	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
 	player_->SetFollowCamera(followCamera_.get());
 	player_->SetEnemyList(enemyManager_->GetEnemysList());

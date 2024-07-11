@@ -3,7 +3,6 @@
 #include "Engine/Math/MathLib.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include <cassert>
-#include <list>
 #include <imgui.h>
 
 void LockOn::Initialize(Player* player)
@@ -15,6 +14,15 @@ void LockOn::Initialize(Player* player)
 	data.minDistanceZ = 5.0f;
 	data.maxDistanceZ = 50.0f;
 
+}
+
+void LockOn::Update()
+{
+	if (ExistTarget()) {
+		if (target_->IsDead()) {
+			target_ = nullptr;
+		}
+	}
 }
 
 void LockOn::ToggleLockOn(ICamera* camera)
@@ -44,7 +52,6 @@ void LockOn::TargetRelease()
 void LockOn::SearchTarget(ICamera* camera)
 {
 	std::list<std::pair<float, SampleEnemy*>> targets;
-	targets.clear();
 
 	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_->begin();
 		it != enemys_->end(); ++it) {
@@ -59,7 +66,7 @@ void LockOn::SearchTarget(ICamera* camera)
 		Vector2 screenPosition = LwLib::WorldToScreen((*it)->worldTransform_.GetWorldPosition(), camera);
 
 		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ) {
-			targets.emplace_back(std::make_pair(Vector3::Length(cameraToEnemy), (*it)));
+			targets.emplace_back(std::make_pair(Vector3::Length(cameraToEnemy), (*it).get()));
 		}
 
 	}

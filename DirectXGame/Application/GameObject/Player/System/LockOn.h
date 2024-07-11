@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include <list>
 
 // 敵
 class SampleEnemy;
@@ -25,6 +26,10 @@ public:
 	/// <param name="player"></param>
 	void Initialize(Player* player);
 	/// <summary>
+	/// 更新（対象の処理
+	/// </summary>
+	void Update();
+	/// <summary>
 	/// 入力による対象設定・対象解除
 	/// </summary>
 	void ToggleLockOn(ICamera* camera);
@@ -47,7 +52,7 @@ public:
 	// リストの設定
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { enemys_ = lists; }
 	// ターゲットのポインタ
-	SampleEnemy* GetTarget() { return target_; }
+	SampleEnemy* GetTarget() const { return target_; }
 	// 対象があるかどうか
 	bool ExistTarget() const { return target_ ? true : false; }
 
@@ -60,4 +65,5 @@ private:
 	SampleEnemy* target_ = nullptr;
 	// 内積の閾値
 	LockOnData data{};
+
 };

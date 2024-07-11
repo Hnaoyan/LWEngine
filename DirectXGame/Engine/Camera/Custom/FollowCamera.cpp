@@ -2,6 +2,8 @@
 #include "../../Input/Input.h"
 #include "imgui.h"
 #include "../../LwLib/LwEngineLib.h"
+#include "Application/GameObject/Player/System/LockOn.h"
+#include "Application/GameObject/Enemy/SampleEnemy.h"
 
 void FollowCamera::Initialize()
 {
@@ -28,6 +30,17 @@ void FollowCamera::Update()
 			// 目標回転角の設定
 			destinationAngle_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
 			//destinationAngle_.z += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_;
+		}
+
+		if (lockOn_->ExistTarget()) {
+			// ロックオンしたオブジェクトの座標
+			Vector3 lockOnPosition = lockOn_->GetTarget()->worldTransform_.GetWorldPosition();
+			// 追尾してるオブジェクトの座標
+			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
+			sub = Vector3::Normalize(sub);
+			// Y軸角度
+			destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
+			//destinationAngle_.y = std::atan2f(sub.x, sub.z);
 		}
 
 		// 回転の速度調節

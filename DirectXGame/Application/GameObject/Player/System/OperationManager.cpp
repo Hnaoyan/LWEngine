@@ -26,6 +26,8 @@ void OparationManager::Update()
 	GravityUpdate();
 	// 入力
 	InputUpdate();
+	// ターゲットが死んだ場合解除するための更新
+	lockOn_.Update();
 	// Aimの処理
 	aimManager_.Update(player_->camera_);
 	// クールタイム

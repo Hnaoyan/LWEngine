@@ -42,6 +42,7 @@ public: // アクセッサ
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
+	OparationManager* GetOperation() { return &systemManager_; }
 
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }

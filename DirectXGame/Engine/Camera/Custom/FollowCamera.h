@@ -2,6 +2,8 @@
 #include "../Core/ICamera.h"
 #include "../../3D/WorldTransform.h"
 
+class LockOn;
+
 class FollowCamera : public ICamera
 {
 public:
@@ -39,9 +41,16 @@ public:
 		Reset();
 	}
 
+	void SetLockOn(const LockOn* lockOn) {
+		lockOn_ = lockOn;
+	}
+
 private: // UserMethod
 	// ターゲット
 	const WorldTransform* target_ = nullptr;
+
+	const LockOn* lockOn_ = nullptr;
+
 	// デフォルトオフセット
 	Vector3 defaultOffset_ = {};
 	// 残像座標
