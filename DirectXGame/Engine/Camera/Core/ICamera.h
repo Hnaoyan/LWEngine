@@ -67,6 +67,9 @@ public:
 	const Vector3 kFrontVector = { 0.0f,0.0f,1.0f };
 
 	Vector3 frontVector_ = {};
+public:
+	// ワールド座標
+	Vector3 GetWorldPosition() { return Vector3(viewMatrix_.m[2][0], viewMatrix_.m[2][1], viewMatrix_.m[2][2]); }
 
 private:
 	// 視野角の角度
