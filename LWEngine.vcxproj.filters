@@ -100,6 +100,13 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\LockOn.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\JumpingState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\FallingState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\MovingState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\BoostState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
@@ -219,6 +226,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\MovingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\JumpingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\FallingState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\BoostState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateList.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />

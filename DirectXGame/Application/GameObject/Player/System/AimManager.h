@@ -34,13 +34,9 @@ public:
 	void Draw();
 
 private: // ユーザー
-	/// <summary>
-	/// 右スティックによるエイムの移動処理
-	/// </summary>
-	void AimUpdate();
 
 public: // アクセッサ
-	Vector3 GetWorldPosition() { return offSetTransform_.GetWorldPosition(); }
+	Vector3 GetWorldPosition() { return targetPosition_; }
 
 private: // 
 	// プレイヤー
@@ -49,14 +45,14 @@ private: //
 	Input* input_ = nullptr;
 
 private: // User
-	// エイムの位置
+	// プレイヤーからのオフセット
 	WorldTransform offSetTransform_;
+	// エイムの位置
+	Vector3 targetPosition_{};
 	// エイムのスクリーン上座標
 	Vector2 screenPosition_ = {};
-
+	// スプライト
 	std::unique_ptr<Sprite> reticleSprite_;
-
 	// 
 	ResetValue reset_{};
-
 };

@@ -13,10 +13,12 @@ void Player::Initialize(Model* model)
 	collider_.Initialize(worldTransform_.transform_.scale, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
-	// 操作システム
 	systemManager_.Initialize(this);
+	stateManager_.Initialize(this);
 	// 足場コライダー
 	footCollider_.Initialize(this);
+
+	stateManager_.ChangeRequest(StateManager::kIdle);
 
 }
 
@@ -26,6 +28,12 @@ void Player::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
 	systemManager_.Update();
+	if (currentState_) {
+		// 入力処理
+		currentState_->InputHandle();
+		// ステートの更新
+		currentState_->Update();
+	}
 
 	// 基底クラスの更新
 	IGameObject::Update();

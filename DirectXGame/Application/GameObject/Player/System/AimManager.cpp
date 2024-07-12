@@ -1,8 +1,9 @@
 #include "AimManager.h"
 #include "../Player.h"
-#include "../../../../Engine/Camera/CameraList.h"
-#include "../../../../Engine/LwLib/LwEngineLib.h"
-#include "../../../../Engine/2D/TextureManager.h"
+#include "Engine/Camera/CameraList.h"
+#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/2D/TextureManager.h"
+#include "../../GameObjectLists.h"
 #include "imgui.h"
 
 void AimManager::Initialize(Player* player)
@@ -31,16 +32,20 @@ void AimManager::Initialize(Player* player)
 
 void AimManager::Update(ICamera* camera)
 {
-	// エイムの位置変更
-	AimUpdate();
-
-	reticleSprite_->SetPosition(screenPosition_);
-
-	// 座標の更新
-	// スクリーン座標の更新
-	screenPosition_ = LwLib::WorldToScreen(offSetTransform_.GetWorldPosition(), camera);
 	// オフセットの座標更新
 	offSetTransform_.UpdateMatrix();
+	// ターゲットがいる場合ターゲットにAIM
+	if (player_->GetOperation()->GetLockOn()->ExistTarget()) {
+		screenPosition_ = LwLib::WorldToScreen(player_->GetOperation()->GetLockOn()->GetTarget()->worldTransform_.GetWorldPosition(), camera);
+		targetPosition_ = player_->GetOperation()->GetLockOn()->GetTarget()->worldTransform_.GetWorldPosition();
+	}
+	// ターゲットがいない場合オフセットに
+	else {
+		screenPosition_ = LwLib::WorldToScreen(offSetTransform_.GetWorldPosition(), camera);
+		targetPosition_ = offSetTransform_.GetWorldPosition();
+	}
+	// クロスヘアの座標設定
+	reticleSprite_->SetPosition(screenPosition_);
 }
 
 void AimManager::ImGuiDraw()
@@ -54,45 +59,4 @@ void AimManager::ImGuiDraw()
 void AimManager::Draw()
 {
 	reticleSprite_->Draw();
-}
-
-void AimManager::AimUpdate()
-{
-	XINPUT_STATE joyState;
-	// 移動速度
-	float reticleSpeed = 1.0f;
-	if (input_->GetJoystickState(0, joyState)) {
-		// 右スティックの動かす処理
-		offSetTransform_.transform_.translate.x += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * reticleSpeed;
-		offSetTransform_.transform_.translate.y += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * reticleSpeed;
-
-		float limit = 20.0f;
-		if (offSetTransform_.transform_.translate.x > limit) {
-			offSetTransform_.transform_.translate.x = limit;
-		}
-		else if (offSetTransform_.transform_.translate.x < -limit) {
-			offSetTransform_.transform_.translate.x = -limit;
-		}
-
-		if (offSetTransform_.transform_.translate.y > limit) {
-			offSetTransform_.transform_.translate.y = limit;
-		}
-		else if (offSetTransform_.transform_.translate.y < -limit) {
-			offSetTransform_.transform_.translate.y = -limit;
-		}
-
-		// 入力中か
-		if ((float)joyState.Gamepad.sThumbRX != 0 || (float)joyState.Gamepad.sThumbRY != 0) {
-			reset_.isReceivingInput = true;
-		}
-		else {
-			reset_.isReceivingInput = false;
-		}
-	}
-
-	if (!reset_.isReceivingInput) {
-		offSetTransform_.transform_.translate.x = LwLib::Lerp(offSetTransform_.transform_.translate.x, 0, reset_.rate);
-		offSetTransform_.transform_.translate.y = LwLib::Lerp(offSetTransform_.transform_.translate.y, 0, reset_.rate);
-	}
-
 }

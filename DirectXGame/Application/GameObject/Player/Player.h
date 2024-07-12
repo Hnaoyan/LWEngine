@@ -40,14 +40,22 @@ public:
 	void UISpriteDraw();
 
 public: // アクセッサ
+	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	OparationManager* GetOperation() { return &systemManager_; }
 
+	// ポインタ関係
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { systemManager_.SetEnemyList(lists); }
+	// ステート
+	IPlayerState* GetState() { return currentState_.get(); }
+	void SetState(std::unique_ptr<IPlayerState> newState) {
+		currentState_ = std::move(newState);
+	}
+	StateManager* GetStateManager() { return &stateManager_; }
 
 private: // USER
 
@@ -64,15 +72,16 @@ public:
 	bool isGround_ = false;
 
 private:
+	// ステート
+	std::unique_ptr<IPlayerState> currentState_;
 	// 操作関係
 	OparationManager systemManager_;
-
+	// ステートのマネージャー
+	StateManager stateManager_;
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
 	AABB collider_;
 
-	// state
-	std::unique_ptr<IPlayerState> playerState_;
 
 };

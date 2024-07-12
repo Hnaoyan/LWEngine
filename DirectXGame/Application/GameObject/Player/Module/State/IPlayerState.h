@@ -2,6 +2,7 @@
 #include "Engine/Input/Input.h"
 
 class Player;
+class StateManager;
 
 class IPlayerState
 {
@@ -14,10 +15,7 @@ public:
 	/// 前初期化
 	/// </summary>
 	/// <param name="player"></param>
-	void PreInitialize(Player* player) {
-		player_ = player;
-		input_ = Input::GetInstance();
-	}
+	void PreInitialize(Player* player);
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -38,5 +36,6 @@ public:
 protected:
 	// プレイヤー
 	Player* player_ = nullptr;
+	StateManager* stateManager_ = nullptr;
 	Input* input_ = nullptr;
 };

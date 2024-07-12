@@ -3,7 +3,7 @@
 
 class MovingState : public IPlayerState
 {
-public:
+public: // 継承部
 	void Initialize() override;
 	void Update() override;
 	void Exit() override;

@@ -62,4 +62,7 @@ private: // UserMethod
 	// 右スティックのカメラ操作関係
 	float rStickRotateSpeed_ = 0;
 	float rStickLerpRate_ = 0;
+
+	bool isAtan_ = false;
+
 };
