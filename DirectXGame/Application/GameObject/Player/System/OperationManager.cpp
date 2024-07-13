@@ -47,10 +47,11 @@ void OparationManager::InputUpdate()
 		// 方向取得
 		direct = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,(float)joyState.Gamepad.sThumbLY / SHRT_MAX ,0 };
 		// ジャンプ入力
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER && player_->velocity_.y == 0.0f)
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A && player_->velocity_.y == 0.0f)
 		{
-			float jumpPower = 75.0f;
-			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
+			player_->GetStateManager()->ChangeRequest(StateManager::kJump);
+			//float jumpPower = 75.0f;
+			//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 		}
 		
 		if (joyState.Gamepad.bRightTrigger && !shotTimer_.isActive_) {

@@ -32,10 +32,15 @@ public:
 	/// <summary>
 	/// 入力による処理
 	/// </summary>
-	virtual void InputHandle() = 0;
+	virtual void InputHandle();
 protected:
 	// プレイヤー
 	Player* player_ = nullptr;
 	StateManager* stateManager_ = nullptr;
 	Input* input_ = nullptr;
+
+	// 左スティック入力
+	Vector2 leftStick_ = {};
+	bool isLeftStickActive_ = false;
+
 };
