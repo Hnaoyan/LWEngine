@@ -141,6 +141,11 @@ private:
 	DIMOUSESTATE2 mouse_ = {};
 	DIMOUSESTATE2 preMouse_ = {};
 
+	DWORD xJoystick_;
+	XINPUT_STATE xJoyState_;
+	XINPUT_STATE xPreJoyState_;
+
+
 	HWND hwnd_ = {};
 
 	Vector2 mousePosition_ = {};
