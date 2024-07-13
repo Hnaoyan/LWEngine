@@ -36,16 +36,17 @@ void AnimSampleObject::Update()
 {
 
 	Input* input = Input::GetInstance();
-	XINPUT_STATE joyState;
-	if (input->GetJoystickState(0, joyState)) {
-		if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX < 0) {
+	//XINPUT_STATE joyState;
+	Vector2 leftStick = input->XGetLeftJoystick();
+	//if (input->GetJoystickState(0, joyState)) {
+		if (leftStick.x < 0) {
 			worldTransform_.transform_.rotate.y = 3.14f + 1.57f;
 		}
-		else if ((float)joyState.Gamepad.sThumbLX / SHRT_MAX > 0) {
+		else if (leftStick.x > 0) {
 			worldTransform_.transform_.rotate.y = 1.57f;
 		}
-		worldTransform_.transform_.translate.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kDeltaTime;
-	}
+		worldTransform_.transform_.translate.x += leftStick.x * kDeltaTime;
+	//}
 	if (input->PressKey(DIK_D)) {
 		worldTransform_.transform_.translate.x += 0.01f;
 	}
