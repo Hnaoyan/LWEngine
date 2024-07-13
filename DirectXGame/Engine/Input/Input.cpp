@@ -271,6 +271,9 @@ void Input::Update()
 		SetupJoySticks();
 		sRefreshInputDevices = false;
 	}
+	
+	xJoystick_ = XInputGetState(0, &xJoyState_);
+
 
 	// キーボード情報の取得開始
 	dKeyBoard_->Acquire();
