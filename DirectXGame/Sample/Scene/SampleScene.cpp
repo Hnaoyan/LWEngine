@@ -104,11 +104,8 @@ void SampleScene::Update()
 		sceneManager_->ChangeScene("GAME");
 	}
 	// コントローラー
-	XINPUT_STATE joyState;
-	if (input_->GetJoystickState(0, joyState)) {
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A) {
-			sceneManager_->ChangeScene("GAME");
-		}
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A)) {
+		sceneManager_->ChangeScene("GAME");
 	}
 
 	if (input_->TriggerKey(DIK_0)) {

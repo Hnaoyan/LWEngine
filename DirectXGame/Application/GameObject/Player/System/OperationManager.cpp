@@ -39,67 +39,63 @@ void OparationManager::Update()
 
 void OparationManager::InputUpdate()
 {
-	XINPUT_STATE joyState;
 	float speed = 4.0f;
 	Vector3 direct = {};
+	Vector2 sThumbL = input_->XGetLeftJoystick();
 	// コントローラー操作
-	if (input_->GetJoystickState(0, joyState)) {
-		// 方向取得
-		direct = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,(float)joyState.Gamepad.sThumbLY / SHRT_MAX ,0 };
-		// ジャンプ入力
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A && player_->velocity_.y == 0.0f)
-		{
-			player_->GetStateManager()->ChangeRequest(StateManager::kJump);
-			//float jumpPower = 75.0f;
-			//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
-		}
-		
-		if (joyState.Gamepad.bRightTrigger && !shotTimer_.isActive_) {
-			SampleBulletManager::GenerateData data{};
-			data.position = player_->worldTransform_.GetWorldPosition();
-			data.velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
-			float speedValue = 30.0f;
-			data.velocity *= speedValue;
-			bulletManager_->AddBullet(data);
-			shotTimer_.Start(30.0f);
-		}
-
-		if (input_->PressKey(DIK_G)) {
-			GameSystem::sSpeedFactor = 5.0f;
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
-		}
-		else {
-			GameSystem::sSpeedFactor = 1.0f;
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
-		}
-
-		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_B) {
-			lockOn_.ToggleLockOn(player_->camera_);
-		}
-
+	// 方向取得
+	direct = { sThumbL.x,sThumbL.y ,0 };
+	// ジャンプ入力
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A) && player_->velocity_.y == 0.0f)
+	{
+		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
+		//float jumpPower = 75.0f;
+		//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	}
-	// キーボード操作
+		
+	if (input_->XRTrigger() && !shotTimer_.isActive_) {
+		SampleBulletManager::GenerateData data{};
+		data.position = player_->worldTransform_.GetWorldPosition();
+		data.velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
+		float speedValue = 30.0f;
+		data.velocity *= speedValue;
+		bulletManager_->AddBullet(data);
+		shotTimer_.Start(30.0f);
+	}
+
+	if (input_->PressKey(DIK_G)) {
+		GameSystem::sSpeedFactor = 5.0f;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
+	}
 	else {
-		if (input_->PressKey(DIK_A))
-		{
-			direct.x -= 1.0f;
-		}
-		else if (input_->PressKey(DIK_D)) 
-		{
-			direct.x += 1.0f;
-		}
+		GameSystem::sSpeedFactor = 1.0f;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+	}
 
-		if (input_->PressKey(DIK_W)) {
-			direct.y += 1.0f;
-		}
-		else if (input_->PressKey(DIK_S)) {
-			direct.y -= 1.0f;
-		}
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+		lockOn_.ToggleLockOn(player_->camera_);
+	}
 
-		if (input_->TriggerKey(DIK_SPACE) && player_->velocity_.y == 0.0f) {
-			float jumpPower = 50.0f;
-			player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
-		}
+	// キーボード操作
+	if (input_->PressKey(DIK_A))
+	{
+		direct.x -= 1.0f;
+	}
+	else if (input_->PressKey(DIK_D)) 
+	{
+		direct.x += 1.0f;
+	}
+
+	if (input_->PressKey(DIK_W)) {
+		direct.y += 1.0f;
+	}
+	else if (input_->PressKey(DIK_S)) {
+		direct.y -= 1.0f;
+	}
+
+	if (input_->TriggerKey(DIK_SPACE) && player_->velocity_.y == 0.0f) {
+		float jumpPower = 50.0f;
+		player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	}
 
 	direct = Vector3::Normalize(direct);
@@ -154,7 +150,7 @@ void OparationManager::InputUpdate()
 	}
 
 	if (direct.x != 0 || direct.z != 0) {
-		if (!isDash_ && joyState.Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) {
+		if (!isDash_ && input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 			isDash_ = true;
 			float dashPower = 100.0f * GameSystem::GameSpeedFactor();
 			player_->velocity_.x = direct.x * dashPower;

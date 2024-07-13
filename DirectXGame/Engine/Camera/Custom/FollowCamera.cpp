@@ -19,19 +19,14 @@ void FollowCamera::Initialize()
 void FollowCamera::Update()
 {
 	// コントローラー
-	XINPUT_STATE joyState;
+	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick();
 
 	// 追尾
 	if (target_) {
 		// 入力クラス
-		Input* input = Input::GetInstance();
-		// スティック操作
-		if (input->GetJoystickState(0, joyState)) {
-			// 目標回転角の設定
-			//destinationAngle_.x += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_ * (1.0f / 2.0f);
-			destinationAngle_.y += (float)joyState.Gamepad.sThumbRX / SHRT_MAX * rStickRotateSpeed_;
-			//destinationAngle_.z += (float)joyState.Gamepad.sThumbRY / SHRT_MAX * rStickRotateSpeed_;
-		}
+		// 目標回転角の設定
+		destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
+		destinationAngle_.z += rightStick.y / SHRT_MAX * rStickRotateSpeed_;
 
 		if (lockOn_->ExistTarget()) {
 			// ロックオンしたオブジェクトの座標

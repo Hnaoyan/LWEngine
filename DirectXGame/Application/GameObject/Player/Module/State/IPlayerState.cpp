@@ -10,7 +10,7 @@ void IPlayerState::PreInitialize(Player* player)
 
 void IPlayerState::InputHandle()
 {
-	XINPUT_STATE joyState;
+	Vector2 sThumbL = input_->XGetLeftJoystick();
 
-	leftStick_ = { (float)joyState.Gamepad.sThumbLX / SHRT_MAX,(float)joyState.Gamepad.sThumbLY / SHRT_MAX };
+	leftStick_ = sThumbL;
 }
