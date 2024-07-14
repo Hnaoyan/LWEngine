@@ -162,11 +162,11 @@ void OparationManager::InputUpdate()
 
 void OparationManager::GravityUpdate()
 {
-	if (!player_->isGround_) {
-		player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
-	}
-	else {
-		player_->velocity_.y = 0;
-	}
+	//if (!player_->isGround_) {
+	//	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
+	//}
+	//else {
+	//	player_->velocity_.y = 0;
+	//}
 	
 }

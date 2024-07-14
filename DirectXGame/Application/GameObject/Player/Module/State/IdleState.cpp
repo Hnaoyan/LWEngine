@@ -8,6 +8,11 @@ void IdleState::Initialize()
 
 void IdleState::Update()
 {
+	// ステート変更
+	if (!player_->isGround_) {
+		stateManager_->ChangeRequest(StateManager::kFall);
+		return;
+	}
 
 }
 

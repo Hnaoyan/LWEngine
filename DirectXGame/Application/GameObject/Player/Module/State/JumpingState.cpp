@@ -13,11 +13,13 @@ void JumpingState::Initialize()
 
 void JumpingState::Update()
 {
-
+	// ステート変更
 	if (player_->velocity_.y < 0) {
 		stateManager_->ChangeRequest(StateManager::kFall);
+		return;
 	}
 
+	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
 }
 
 void JumpingState::Exit()
