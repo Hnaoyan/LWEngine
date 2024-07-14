@@ -79,10 +79,8 @@ void Input::Update()
 	KeyboardUpdate();
 	// マウスの更新
 	MouseUpdate();
-
-	if (isJoystickConnected_) {
-		XJoystickUpdate();
-	}
+	// コントローラー
+	XJoystickUpdate();
 }
 
 void Input::KeyboardUpdate()
