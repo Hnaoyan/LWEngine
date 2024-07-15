@@ -17,11 +17,12 @@ void JumpingState::Update()
 	if (player_->velocity_.y < 0) {
 		if (stateMachine_) {
 			stateMachine_->ChangeRequest(VerticalStates::kFall);
+			return;
 		}
 		else {
 			stateManager_->ChangeRequest(StateManager::kFall);
+			return;
 		}
-		return;
 	}
 
 	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();

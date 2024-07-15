@@ -19,14 +19,29 @@ enum class HorizontalStates : int32_t {
 
 class StateMachine
 {
+public: // どちらかを判断
+	enum class StateType : int32_t {
+		kVertical,
+		kHorizontal,
+		kNone,
+	};
+
 private:
 	// state
 	std::unique_ptr<IPlayerState> currentState_;
-public: // アクセッサ
-	// stateの取得
-	IPlayerState* GetState() { return currentState_.get(); }
 
-	std::string name_;
+	StateType stateType_ = StateType::kNone;
+
+public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="player"></param>
+	void Initialize(Player* player, StateType type);
+	/// <summary>
+	/// 更新
+	/// </summary>
+	void Update();
 
 public: // それぞれの名前
 	/// <summary>
@@ -36,17 +51,13 @@ public: // それぞれの名前
 	void ChangeRequest(VerticalStates type);
 	void ChangeRequest(HorizontalStates type);
 
-public:
-	/// <summary>
-	/// 初期化
-	/// </summary>
-	/// <param name="player"></param>
-	void Initialize(Player* player, std::string name);
-	/// <summary>
-	/// 更新
-	/// </summary>
-	void Update();
-	
+public: // アクセッサ
+	// stateの取得
+	IPlayerState* GetState() { return currentState_.get(); }
+	StateType GetStateType() { return stateType_; }
+
 private:
 	Player* player_ = nullptr;
+	std::string name_;
+
 };

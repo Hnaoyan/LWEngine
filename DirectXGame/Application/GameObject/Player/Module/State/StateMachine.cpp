@@ -51,12 +51,12 @@ void StateMachine::ChangeRequest(HorizontalStates type)
 	currentState_ = std::move(newState);
 }
 
-void StateMachine::Initialize(Player* player, std::string name)
+void StateMachine::Initialize(Player* player, StateType type)
 {
 	assert(player);
 	player_ = player;
 
-	name_ = name;
+	stateType_ = type;
 
 	if (currentState_ == nullptr) {
 		// 最初の初期化

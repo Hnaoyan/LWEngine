@@ -11,4 +11,5 @@ public: // 継承部
 
 private:
 
+
 };

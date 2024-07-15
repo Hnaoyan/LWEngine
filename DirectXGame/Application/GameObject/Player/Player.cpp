@@ -23,8 +23,8 @@ void Player::Initialize(Model* model)
 	VerticalState_ = std::make_unique<StateMachine>();
 	HorizontalState_ = std::make_unique<StateMachine>();
 
-	VerticalState_->Initialize(this, "Vertical");
-	HorizontalState_->Initialize(this, "Horizontal");
+	VerticalState_->Initialize(this, StateMachine::StateType::kVertical);
+	HorizontalState_->Initialize(this, StateMachine::StateType::kHorizontal);
 }
 
 void Player::Update()

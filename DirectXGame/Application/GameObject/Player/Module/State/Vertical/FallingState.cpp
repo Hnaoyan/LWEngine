@@ -12,11 +12,12 @@ void FallingState::Update()
 	if (player_->isGround_) {
 		if (stateMachine_) {
 			stateMachine_->ChangeRequest(VerticalStates::kIdle);
+			return;
 		}
 		else {
 			stateManager_->ChangeRequest(StateManager::kIdle);
+			return;
 		}
-		return;
 	}
 	
 	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();

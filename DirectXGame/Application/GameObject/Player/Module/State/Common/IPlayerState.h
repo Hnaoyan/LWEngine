@@ -10,10 +10,6 @@ class IPlayerState
 public:
 	IPlayerState() {};
 	virtual ~IPlayerState() = default;
-
-public: // アクセッサ
-	StateMachine* GetStateMachine() { return stateMachine_; }
-
 public:
 	/// <summary>
 	/// 前初期化
@@ -37,6 +33,9 @@ public:
 	/// 入力による処理
 	/// </summary>
 	virtual void InputHandle();
+public: // アクセッサ
+	StateMachine* GetStateMachine() { return stateMachine_; }
+
 protected:
 	// プレイヤー
 	Player* player_ = nullptr;
@@ -47,5 +46,6 @@ protected:
 	// 左スティック入力
 	Vector2 leftStick_ = {};
 	bool isLeftStickActive_ = false;
+	bool isBoost_ = false;
 
 };
