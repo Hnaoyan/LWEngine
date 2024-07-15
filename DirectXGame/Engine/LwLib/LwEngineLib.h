@@ -38,7 +38,13 @@ namespace LwLib
 	/// <returns></returns>
 	inline static float Lerp(float a, float b, float t) {
 		float clampT = std::clamp(t, 0.0f, 1.0f);
-		return (1.0f - clampT) * a + clampT * b;
+		float result = (1.0f - clampT) * a + clampT * b;
+		//float result = a + clampT * (b - a);
+		// 例外処理
+		if (std::fabsf(result) <= 0.00001f) {
+			return 0.0f;
+		}
+		return result;
 	}
 
 	/// <summary>
