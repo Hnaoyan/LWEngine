@@ -15,12 +15,10 @@ void JumpingState::Update()
 {
 	// ステート変更
 	if (player_->velocity_.y < 0) {
-		if (stateMachine_) {
-			stateMachine_->ChangeRequest(VerticalStates::kFall);
-		}
-		else {
-			stateManager_->ChangeRequest(StateManager::kFall);
-		}
+		
+		player_->GetVerticalState()->ChangeRequest(VerticalStates::kFall);
+		//stateMachine_->ChangeRequest(VerticalStates::kFall);
+		//stateManager_->ChangeRequest(StateManager::kFall);
 		return;
 	}
 

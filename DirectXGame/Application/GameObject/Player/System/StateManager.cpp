@@ -13,7 +13,7 @@ void StateManager::ChangeRequest(std::unique_ptr<IPlayerState> newState)
 	if (player_->GetState()) {
 		player_->GetState()->Exit();
 	}
-	newState->PreInitialize(player_, nullptr);
+	newState->PreInitialize(player_);
 	newState->Initialize();
 	player_->SetState(std::move(newState));
 }
@@ -43,7 +43,7 @@ void StateManager::ChangeRequest(StateList request)
 	if (player_->GetState()) {
 		player_->GetState()->Exit();
 	}
-	newState->PreInitialize(player_, nullptr);
+	newState->PreInitialize(player_);
 	newState->Initialize();
 	player_->SetState(std::move(newState));
 

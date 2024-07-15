@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "../GameObjectLists.h"
 #include "../../GameSystem/GameSystem.h"
+#include "Module/State/StateMachine.h"
 
 #include "Engine/PostEffect/PostEffectRender.h"
 
@@ -20,8 +21,8 @@ void Player::Initialize(Model* model)
 
 	stateManager_.ChangeRequest(StateManager::kIdle);
 
-	VerticalState_ = std::make_unique<StateMachine>();
-	HorizontalState_ = std::make_unique<StateMachine>();
+	VerticalState_ = std::make_unique<StateMachine<VerticalStates>>();
+	HorizontalState_ = std::make_unique<StateMachine<HorizontalStates>>();
 
 	VerticalState_->Initialize(this, "Vertical");
 	HorizontalState_->Initialize(this, "Horizontal");

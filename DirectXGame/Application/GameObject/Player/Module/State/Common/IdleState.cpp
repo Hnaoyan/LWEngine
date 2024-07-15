@@ -11,15 +11,9 @@ void IdleState::Update()
 {
 	// ステート変更
 	if (!player_->isGround_) {
-		if (stateMachine_) {
-			if (stateMachine_->name_ != "Vertical") {
-				return;
-			}
-			stateMachine_->ChangeRequest(VerticalStates::kFall);
-		}
-		else {
-			stateManager_->ChangeRequest(StateManager::kFall);
-		}
+		//stateMachine_->ChangeRequest(VerticalStates::kFall);
+		//stateManager_->ChangeRequest(StateManager::kFall);
+		player_->GetVerticalState()->ChangeRequest(VerticalStates::kFall);
 		return;
 	}
 
@@ -33,12 +27,8 @@ void IdleState::Exit()
 void IdleState::InputHandle()
 {
 	if (input_->TriggerKey(DIK_L)) {
-		if (stateMachine_) {
-			stateMachine_->ChangeRequest(VerticalStates::kJump);
-		}
-		else {
-			stateManager_->ChangeRequest(StateManager::kJump);
-		}
+		//stateMachine_->ChangeRequest(VerticalStates::kJump);
+		stateManager_->ChangeRequest(StateManager::kJump);
 		return;
 	}
 }

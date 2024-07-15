@@ -108,6 +108,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateEnum.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h" />

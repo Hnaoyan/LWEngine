@@ -1,11 +1,10 @@
 #include "IPlayerState.h"
 #include "../../../Player.h"
 
-void IPlayerState::PreInitialize(Player* player, StateMachine* stateMachine)
+void IPlayerState::PreInitialize(Player* player)
 {
 	// ポインタ
 	player_ = player;
-	stateMachine_ = stateMachine;
 
 	stateManager_ = player->GetStateManager();
 	input_ = Input::GetInstance();
