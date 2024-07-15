@@ -2,6 +2,8 @@
 #include "../../../Player.h"
 #include "../StateMachine.h"
 
+#include "Engine/LwLib/LwEngineLib.h"
+
 void IdleState::Initialize()
 {
 
@@ -9,6 +11,8 @@ void IdleState::Initialize()
 
 void IdleState::Update()
 {
+	float slowFactor = 0.2f;
+
 	switch (stateMachine_->GetStateType())
 	{
 	case StateMachine::StateType::kVertical:
@@ -38,8 +42,10 @@ void IdleState::Update()
 			}
 		}
 
-		break;
-	default:
+
+		player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
+		player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
+
 		break;
 	}
 
