@@ -1,7 +1,7 @@
 #pragma once
-#include "IPlayerState.h"
+#include "../IPlayerState.h"
 
-class BoostState : public IPlayerState
+class MovingState : public IPlayerState
 {
 public: // 継承部
 	void Initialize() override;

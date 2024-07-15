@@ -73,6 +73,7 @@ public:
 
 private:
 	// ステート
+	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
 	std::unique_ptr<IPlayerState> currentState_;
 	// 操作関係
 	OparationManager systemManager_;
