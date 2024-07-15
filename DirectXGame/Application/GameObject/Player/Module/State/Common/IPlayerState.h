@@ -3,6 +3,7 @@
 
 class Player;
 class StateManager;
+class StateMachine;
 
 class IPlayerState
 {
@@ -10,12 +11,15 @@ public:
 	IPlayerState() {};
 	virtual ~IPlayerState() = default;
 
+public: // アクセッサ
+	StateMachine* GetStateMachine() { return stateMachine_; }
+
 public:
 	/// <summary>
 	/// 前初期化
 	/// </summary>
 	/// <param name="player"></param>
-	void PreInitialize(Player* player);
+	void PreInitialize(Player* player, StateMachine* stateMachine);
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -37,6 +41,7 @@ protected:
 	// プレイヤー
 	Player* player_ = nullptr;
 	StateManager* stateManager_ = nullptr;
+	StateMachine* stateMachine_ = nullptr;
 	Input* input_ = nullptr;
 
 	// 左スティック入力

@@ -10,7 +10,12 @@ void FallingState::Update()
 {
 	// ステート変更
 	if (player_->isGround_) {
-		stateManager_->ChangeRequest(StateManager::kIdle);
+		if (stateMachine_) {
+			stateMachine_->ChangeRequest(VerticalStates::kIdle);
+		}
+		else {
+			stateManager_->ChangeRequest(StateManager::kIdle);
+		}
 		return;
 	}
 	

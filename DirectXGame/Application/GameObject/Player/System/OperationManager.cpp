@@ -33,8 +33,6 @@ void OparationManager::Update()
 	// クールタイム
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 
-	// 座標更新
-	player_->worldTransform_.transform_.translate += player_->velocity_;
 }
 
 void OparationManager::InputUpdate()
@@ -48,7 +46,9 @@ void OparationManager::InputUpdate()
 	// ジャンプ入力
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A) && player_->velocity_.y == 0.0f)
 	{
-		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
+		player_->GetVerticalState()->ChangeRequest(VerticalStates::kJump);
+		//player_->GetHorizontalState()->ChangeRequest(VerticalStates::kJump);
+		//player_->GetStateManager()->ChangeRequest(StateManager::kJump);
 		//float jumpPower = 75.0f;
 		//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	}
@@ -63,80 +63,32 @@ void OparationManager::InputUpdate()
 		shotTimer_.Start(30.0f);
 	}
 
-	if (input_->PressKey(DIK_G)) {
-		GameSystem::sSpeedFactor = 5.0f;
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
-	}
-	else {
-		GameSystem::sSpeedFactor = 1.0f;
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
-	}
-
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
 		lockOn_.ToggleLockOn(player_->camera_);
 	}
 
-	// キーボード操作
-	if (input_->PressKey(DIK_A))
-	{
-		direct.x -= 1.0f;
-	}
-	else if (input_->PressKey(DIK_D)) 
-	{
-		direct.x += 1.0f;
-	}
-
-	if (input_->PressKey(DIK_W)) {
-		direct.y += 1.0f;
-	}
-	else if (input_->PressKey(DIK_S)) {
-		direct.y -= 1.0f;
-	}
-
-	if (input_->TriggerKey(DIK_SPACE) && player_->velocity_.y == 0.0f) {
-		float jumpPower = 50.0f;
-		player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
-	}
-
 	direct = Vector3::Normalize(direct);
 
+	// カメラの回転に方向を適応
 	float playerYaw = player_->camera_->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
-
 	player_->worldTransform_.transform_.rotate.y = player_->camera_->transform_.rotate.y;
-
-	Vector3 rotateVector = Matrix4x4::TransformVector3({ direct.x,0,direct.y }, rotateY);
-	direct = rotateVector;
+	direct = Matrix4x4::TransformVector3({ direct.x,0,direct.y }, rotateY);
 
 	// 入力しているかどうか
 	float slowFactor = 0.2f;
-	if (direct.x == 0)
-	{
-		//player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
-	}
-	else {
-		if (input_->TriggerKey(DIK_LSHIFT)) {
-			player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * 100.0f);
-		}
-		player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
-	}
-	if (direct.z == 0) {
-		//player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
-	}
-	else {
-		if (input_->TriggerKey(DIK_LSHIFT)) {
-			player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * 100.0f);
-		}
-		player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
-	}
+	// 速度処理
+	player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
+	player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
+	// 減速処理
 	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
 	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
 
 	// 入力による移動の速度制限
 	// 左右
-	if (direct.x == 0 || direct.z == 0 || speed == 20.0f) {
-		return;
-	}
+	//if (direct.x == 0 || direct.z == 0 || speed == 20.0f) {
+	//	return;
+	//}
 	if (isDash_) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 		++resetTime_;

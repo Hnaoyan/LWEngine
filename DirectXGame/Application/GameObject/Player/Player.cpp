@@ -20,6 +20,11 @@ void Player::Initialize(Model* model)
 
 	stateManager_.ChangeRequest(StateManager::kIdle);
 
+	VerticalState_ = std::make_unique<StateMachine>();
+	HorizontalState_ = std::make_unique<StateMachine>();
+
+	VerticalState_->Initialize(this, "Vertical");
+	HorizontalState_->Initialize(this, "Horizontal");
 }
 
 void Player::Update()
@@ -28,12 +33,18 @@ void Player::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
 	systemManager_.Update();
-	if (currentState_) {
-		// 入力処理
-		currentState_->InputHandle();
-		// ステートの更新
-		currentState_->Update();
-	}
+	//if (currentState_) {
+	//	// 入力処理
+	//	currentState_->InputHandle();
+	//	// ステートの更新
+	//	currentState_->Update();
+	//}
+
+	VerticalState_->Update();
+	HorizontalState_->Update();
+
+	// 座標更新
+	worldTransform_.transform_.translate += velocity_;
 
 	// 基底クラスの更新
 	IGameObject::Update();

@@ -1,5 +1,5 @@
 #pragma once
-#include "../IPlayerState.h"
+#include "../Common/IPlayerState.h"
 
 class MovingState : public IPlayerState
 {

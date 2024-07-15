@@ -14,6 +14,7 @@ public:
 		kFall,
 		kBoost,
 	};
+
 public:
 	/// <summary>
 	/// 初期化
@@ -26,6 +27,8 @@ public:
 	/// <param name="newState"></param>
 	void ChangeRequest(std::unique_ptr<IPlayerState> newState);
 	void ChangeRequest(StateList request);
+	//void ChangeRequest(VerticalStates request);
+	//void ChangeRequest(HorizontalStates request);
 
 private:
 	// 自機

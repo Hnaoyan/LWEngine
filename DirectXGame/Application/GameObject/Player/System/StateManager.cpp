@@ -13,7 +13,7 @@ void StateManager::ChangeRequest(std::unique_ptr<IPlayerState> newState)
 	if (player_->GetState()) {
 		player_->GetState()->Exit();
 	}
-	newState->PreInitialize(player_);
+	newState->PreInitialize(player_, nullptr);
 	newState->Initialize();
 	player_->SetState(std::move(newState));
 }
@@ -23,19 +23,19 @@ void StateManager::ChangeRequest(StateList request)
 	std::unique_ptr<IPlayerState> newState;
 	switch (request)
 	{
-	case StateManager::kIdle:
+	case StateList::kIdle:
 		newState = std::make_unique<IdleState>();
 		break;
-	case StateManager::kMove:
+	case StateList::kMove:
 		newState = std::make_unique<MovingState>();
 		break;
-	case StateManager::kJump:
+	case StateList::kJump:
 		newState = std::make_unique<JumpingState>();
 		break;
-	case StateManager::kFall:
+	case StateList::kFall:
 		newState = std::make_unique<FallingState>();
 		break;
-	case StateManager::kBoost:
+	case StateList::kBoost:
 		newState = std::make_unique<BoostState>();
 		break;
 	}
@@ -43,7 +43,7 @@ void StateManager::ChangeRequest(StateList request)
 	if (player_->GetState()) {
 		player_->GetState()->Exit();
 	}
-	newState->PreInitialize(player_);
+	newState->PreInitialize(player_, nullptr);
 	newState->Initialize();
 	player_->SetState(std::move(newState));
 

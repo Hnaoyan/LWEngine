@@ -2,7 +2,8 @@
 #include "../IGameObject.h"
 #include "System/PlayerSystemLists.h"
 #include "Module/PlayerFootCollider.h"
-#include "Module/State/IPlayerState.h"
+#include "Module/State/Common/IPlayerState.h"
+#include "Module/State/StateMachine.h"
 
 class SampleBulletManager;
 
@@ -56,7 +57,9 @@ public: // アクセッサ
 		currentState_ = std::move(newState);
 	}
 	StateManager* GetStateManager() { return &stateManager_; }
-
+	// stateの取得
+	StateMachine* GetVerticalState() { return VerticalState_.get(); }
+	StateMachine* GetHorizontalState() { return HorizontalState_.get(); }
 private: // USER
 
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
@@ -73,8 +76,12 @@ public:
 
 private:
 	// ステート
-	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
 	std::unique_ptr<IPlayerState> currentState_;
+
+	// それぞれのステート
+	std::unique_ptr<StateMachine> VerticalState_;
+	std::unique_ptr<StateMachine> HorizontalState_;
+
 	// 操作関係
 	OparationManager systemManager_;
 	// ステートのマネージャー
