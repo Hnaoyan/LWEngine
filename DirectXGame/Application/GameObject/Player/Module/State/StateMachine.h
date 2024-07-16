@@ -54,7 +54,7 @@ public: // それぞれの名前
 public: // アクセッサ
 	// stateの取得
 	IPlayerState* GetState() { return currentState_.get(); }
-	StateType GetStateType() { return stateType_; }
+	StateType GetStateType() const { return stateType_; }
 
 private:
 	Player* player_ = nullptr;

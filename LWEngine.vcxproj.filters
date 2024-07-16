@@ -231,6 +231,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateList.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateMachine.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVerticalState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontalState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
