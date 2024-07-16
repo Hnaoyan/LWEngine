@@ -18,29 +18,45 @@ void QuickBoostState::Initialize()
 	float dashPower = 100.0f * GameSystem::GameSpeedFactor();
 	player_->velocity_.x = direct.x * dashPower;
 	player_->velocity_.z = direct.z * dashPower;
-	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-
+	//PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+	blurTimer_.Start(15.0f);
 }
 
 void QuickBoostState::Update()
 {
-	// 減速率
-	float slowFactor = 0.2f;
-
-	// 減速処理
-	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
-	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
-
+	// 速度の値で終了判定
 	if (player_->velocity_.x == 0.0f && player_->velocity_.z == 0.0f) {
-		stateMachine_->ChangeRequest(HorizontalStates::kIdle);
+		if (isLeftStickActive_) {
+			if (isBoost_) {
+				stateMachine_->ChangeRequest(HorizontalStates::kBoost);
+			}
+			else {
+				stateMachine_->ChangeRequest(HorizontalStates::kMove);
+			}
+		}
+		else {
+			stateMachine_->ChangeRequest(HorizontalStates::kIdle);
+		}
 		return;
 	}
+	if (blurTimer_.isActive_) {
+		blurTimer_.Update();
+		if (blurTimer_.isEnd_) {
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		}
+	}
+	// 減速率
+	float slowFactor = 0.175f;
+
+	// 減速処理
+	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor, 0.001f);
+	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor, 0.001f);
 
 }
 
 void QuickBoostState::Exit()
 {
-	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+	player_->velocity_ = {};
 }
 
 void QuickBoostState::InputHandle()

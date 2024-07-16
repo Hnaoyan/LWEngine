@@ -43,7 +43,7 @@ void BoostState::Update()
 void BoostState::Exit()
 {
 	// ブースト移動のフラグリセット
-	isBoost_ = false;
+	//isBoost_ = false;
 }
 
 void BoostState::InputHandle()
