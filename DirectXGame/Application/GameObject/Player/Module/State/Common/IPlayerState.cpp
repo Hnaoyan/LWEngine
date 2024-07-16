@@ -7,8 +7,12 @@ void IPlayerState::PreInitialize(Player* player, StateMachine* stateMachine)
 	player_ = player;
 	stateMachine_ = stateMachine;
 
-	stateManager_ = player->GetStateManager();
 	input_ = Input::GetInstance();
+}
+
+void IPlayerState::Initialize()
+{
+	nowState_ = this;
 }
 
 void IPlayerState::InputHandle()

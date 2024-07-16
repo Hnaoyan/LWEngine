@@ -56,7 +56,6 @@ public: // アクセッサ
 	void SetState(std::unique_ptr<IPlayerState> newState) {
 		currentState_ = std::move(newState);
 	}
-	StateManager* GetStateManager() { return &stateManager_; }
 	// stateの取得
 	StateMachine* GetVerticalState() { return VerticalState_.get(); }
 	StateMachine* GetHorizontalState() { return HorizontalState_.get(); }
@@ -84,8 +83,6 @@ private:
 
 	// 操作関係
 	OparationManager systemManager_;
-	// ステートのマネージャー
-	StateManager stateManager_;
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
 	// AABBコライダー

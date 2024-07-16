@@ -20,7 +20,7 @@ private:
 		void(IdleState::* updateFunc_)() = nullptr;
 	};
 
-	inline static const std::array<UpdateFunc, static_cast<int32_t>(StateMachine::StateType::kNone)> updateFunc{
+	inline static const std::array<UpdateFunc, static_cast<uint32_t>(StateMachine::StateType::kNone)> updateFunc{
 		UpdateFunc{&IdleState::VerticalUpdate,},
 		UpdateFunc{&IdleState::HorizontalUpdate,}
 	};

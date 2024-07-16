@@ -1,12 +1,12 @@
 #pragma once
 #include <variant>
 
-#include "Common/IPlayerState.h"
-#include "Common/IdleState.h"
-#include "Vertical/JumpingState.h"
-#include "Vertical/FallingState.h"
+class IPlayerState;
+class IdleState;
+class JumpingState;
+class FallingState;
+class MovingState;
+class BoostState;
+class QuickBoostState;
 
-#include "Horizontal/MovingState.h"
-#include "Horizontal/BoostState.h"
-
-//using PlayerState = std::variant<IPlayerState*, IdleState*, MovingState*, BoostState*, JumpingState*, FallingState*>;
+using PlayerState = std::variant<IPlayerState*, IdleState*, MovingState*, BoostState*, QuickBoostState*, JumpingState*, FallingState*>;

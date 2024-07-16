@@ -14,11 +14,8 @@ void Player::Initialize(Model* model)
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
 	systemManager_.Initialize(this);
-	stateManager_.Initialize(this);
 	// 足場コライダー
 	footCollider_.Initialize(this);
-
-	stateManager_.ChangeRequest(StateManager::kIdle);
 
 	VerticalState_ = std::make_unique<StateMachine>();
 	HorizontalState_ = std::make_unique<StateMachine>();

@@ -6,6 +6,7 @@
 
 void MovingState::Initialize()
 {
+	IPlayerState::Initialize();
 }
 
 void MovingState::Update()

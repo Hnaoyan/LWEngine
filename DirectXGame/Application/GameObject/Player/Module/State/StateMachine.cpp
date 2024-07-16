@@ -1,4 +1,5 @@
 #include "StateMachine.h"
+#include "PlayerStatePath.h"
 #include "../../Player.h"
 
 #include <cassert>
@@ -40,6 +41,9 @@ void StateMachine::ChangeRequest(HorizontalStates type)
 		break;
 	case HorizontalStates::kBoost:
 		newState = std::make_unique<BoostState>();
+		break;
+	case HorizontalStates::kQuickBoost:
+		newState = std::make_unique<QuickBoostState>();
 		break;
 	}
 	if (currentState_) {

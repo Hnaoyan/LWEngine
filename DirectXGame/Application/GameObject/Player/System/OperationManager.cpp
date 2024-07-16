@@ -63,12 +63,7 @@ void OparationManager::InputUpdate()
 		lockOn_.ToggleLockOn(player_->camera_);
 	}
 
-	// 入力による移動の速度制限
-	// 左右
-	//if (direct.x == 0 || direct.z == 0 || speed == 20.0f) {
-	//	return;
-	//}
-
+	Vector2 direct = input_->XGetLeftJoystick();
 
 	//if (isDash_) {
 	//	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
@@ -81,15 +76,17 @@ void OparationManager::InputUpdate()
 	//	}
 	//	return;
 	//}
+	bool isDash = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());
 
-	//if (direct.x != 0 || direct.z != 0) {
-	//	if (!isDash_ && input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-	//		isDash_ = true;
-	//		float dashPower = 100.0f * GameSystem::GameSpeedFactor();
-	//		player_->velocity_.x = direct.x * dashPower;
-	//		player_->velocity_.z = direct.z * dashPower;
-	//	}
-	//}
+	if ((direct.x != 0 || direct.y != 0) && !isDash) {
+		if (input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+			player_->GetHorizontalState()->ChangeRequest(HorizontalStates::kQuickBoost);
+			isDash_ = true;
+			//float dashPower = 100.0f * GameSystem::GameSpeedFactor();
+			//player_->velocity_.x = direct.x * dashPower;
+			//player_->velocity_.z = direct.y * dashPower;
+		}
+	}
 	//
 }
 

@@ -18,13 +18,13 @@
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\StateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Common\IdleState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Common\IPlayerState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AimManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\LockOn.cpp" />
@@ -108,10 +108,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontalState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStatePath.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateMachine.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVerticalState.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Common\IdleState.h" />

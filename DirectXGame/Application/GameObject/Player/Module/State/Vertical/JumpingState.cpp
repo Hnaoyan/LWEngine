@@ -4,6 +4,7 @@
 
 void JumpingState::Initialize()
 {
+	IPlayerState::Initialize();
 	float jumpPower = 75.0f;
 	player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	// 座標更新
@@ -20,7 +21,7 @@ void JumpingState::Update()
 			return;
 		}
 		else {
-			stateManager_->ChangeRequest(StateManager::kFall);
+			//stateManager_->ChangeRequest(StateManager::kFall);
 			return;
 		}
 	}

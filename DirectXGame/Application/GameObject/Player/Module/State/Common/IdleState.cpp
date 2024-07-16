@@ -1,29 +1,18 @@
 #include "IdleState.h"
 #include "../../../Player.h"
-#include "../StateMachine.h"
 
 #include "Engine/LwLib/LwEngineLib.h"
 
 void IdleState::Initialize()
 {
-
+	IPlayerState::Initialize();
 }
 
 void IdleState::Update()
 {
 	StateMachine::StateType type = stateMachine_->GetStateType();
 
-	updateFunc[static_cast<int32_t>(type)];
-
-	//switch (stateMachine_->GetStateType())
-	//{
-	//case StateMachine::StateType::kVertical:
-	//	break;
-	//case StateMachine::StateType::kHorizontal:
-
-	//	break;
-	//}
-
+	(this->*updateFunc[static_cast<uint32_t>(type)].updateFunc_)();
 }
 
 void IdleState::Exit()
@@ -47,7 +36,7 @@ void IdleState::VerticalUpdate()
 			return;
 		}
 		else {
-			stateManager_->ChangeRequest(StateManager::kFall);
+			//stateManager_->ChangeRequest(StateManager::kFall);
 			return;
 		}
 	}

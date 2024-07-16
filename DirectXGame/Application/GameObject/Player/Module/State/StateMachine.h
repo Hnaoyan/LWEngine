@@ -15,12 +15,13 @@ enum class HorizontalStates : int32_t {
 	kIdle,
 	kMove,
 	kBoost,
+	kQuickBoost,
 };
 
 class StateMachine
 {
 public: // どちらかを判断
-	enum class StateType : int32_t {
+	enum class StateType : uint32_t {
 		kVertical,
 		kHorizontal,
 		kNone,
@@ -29,7 +30,6 @@ public: // どちらかを判断
 private:
 	// state
 	std::unique_ptr<IPlayerState> currentState_;
-
 	StateType stateType_ = StateType::kNone;
 
 public:
@@ -55,6 +55,7 @@ public: // アクセッサ
 	// stateの取得
 	IPlayerState* GetState() { return currentState_.get(); }
 	StateType GetStateType() const { return stateType_; }
+	PlayerState GetNowState() { return currentState_->GetNowState(); }
 
 private:
 	Player* player_ = nullptr;

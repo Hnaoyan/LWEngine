@@ -6,7 +6,7 @@
 
 void BoostState::Initialize()
 {
-
+	IPlayerState::Initialize();
 }
 
 void BoostState::Update()
@@ -15,10 +15,7 @@ void BoostState::Update()
 		stateMachine_->ChangeRequest(HorizontalStates::kIdle);
 		return;
 	}
-	//if (!isBoost_) {
-	//	stateMachine_->ChangeRequest(HorizontalStates::kMove);
-	//	return;
-	//}
+
 	float speed = 5.0f;
 	Vector3 direct = {};
 	Vector2 sThumbL = input_->XGetLeftJoystick();

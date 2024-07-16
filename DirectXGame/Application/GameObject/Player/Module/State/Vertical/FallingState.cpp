@@ -4,6 +4,8 @@
 
 void FallingState::Initialize()
 {
+	IPlayerState::Initialize();
+
 }
 
 void FallingState::Update()
@@ -15,7 +17,7 @@ void FallingState::Update()
 			return;
 		}
 		else {
-			stateManager_->ChangeRequest(StateManager::kIdle);
+			//stateManager_->ChangeRequest(StateManager::kIdle);
 			return;
 		}
 	}
