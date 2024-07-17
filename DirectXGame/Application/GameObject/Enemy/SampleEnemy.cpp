@@ -15,11 +15,11 @@ void SampleEnemy::Initialize(Model* model)
 void SampleEnemy::Update()
 {
 	if (isLeft_) {
-		worldTransform_.transform_.translate.x -= 0.1f;
+		//worldTransform_.transform_.translate.x -= 0.1f;
 		worldTransform_.transform_.translate.y -= 0.1f;
 	}
 	else {
-		worldTransform_.transform_.translate.x += 0.1f;
+		//worldTransform_.transform_.translate.x += 0.1f;
 		worldTransform_.transform_.translate.y += 0.1f;
 	}
 

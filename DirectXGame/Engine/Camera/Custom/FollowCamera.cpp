@@ -26,10 +26,6 @@ void FollowCamera::Update()
 		// 入力クラス
 		// 目標回転角の設定
 		destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
-		// 縦回転
-		transform_.rotate.x -= rightStick.y * rStickRotateSpeed_;
-		// 値制限
-		transform_.rotate.x = std::clamp(transform_.rotate.x, -0.5f, 0.5f);
 
 		// ロックオン対象がいる場合
 		if (lockOn_->ExistTarget()) {
@@ -46,11 +42,18 @@ void FollowCamera::Update()
 			}
 			// Y軸角度
 			transform_.rotate.y = destinationAngle_.y;
+
+			transform_.rotate.x = std::atan2f(-sub.y, sub.z);
 		}
 		// いない場合
 		else {
 			transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
+			// 縦回転
+			transform_.rotate.x -= rightStick.y * rStickRotateSpeed_;
 		}
+
+		// 値制限
+		transform_.rotate.x = std::clamp(transform_.rotate.x, -0.5f, 0.5f);
 
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);

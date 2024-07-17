@@ -30,7 +30,7 @@ void OparationManager::Update()
 	aimManager_.Update(player_->camera_);
 	// クールタイム
 	shotTimer_.Update(GameSystem::sSpeedFactor);
-
+	lockToggleTimer_.Update(GameSystem::sSpeedFactor);
 }
 
 void OparationManager::InputUpdate()
@@ -53,8 +53,9 @@ void OparationManager::InputUpdate()
 		shotTimer_.Start(30.0f);
 	}
 	// ロックオン処理
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B) && !lockToggleTimer_.isActive_) {
 		lockOn_.ToggleLockOn(player_->camera_);
+		lockToggleTimer_.Start(15.0f);
 	}
 
 	bool isDash = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());

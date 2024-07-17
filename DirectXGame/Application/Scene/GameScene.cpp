@@ -29,8 +29,8 @@ void GameScene::Initialize()
 	enemyManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
-	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
-	enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
+	enemyManager_->AddEnemy({ 10.0f,-5.0f,10.0f });
+	enemyManager_->AddEnemy({ -10.0f,-5.0f,10.0f });
 
 	player_->SetBulletManager(bulletManager_.get());
 
