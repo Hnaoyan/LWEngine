@@ -90,6 +90,8 @@ void SampleScene::Initialize()
 	dissolveData_.color = {};
 	dissolveData_.threshold = 0;
 
+	hsvData_ = {};
+
 #pragma endregion
 
 
@@ -171,6 +173,7 @@ void SampleScene::Update()
 	desc.vignette = vignetteData_;
 	desc.noise = noiseData_;
 	desc.dissolve = dissolveData_;
+	desc.hsv = hsvData_;
 	PostEffectRender::GetInstance()->Update(desc);
 
 }
@@ -333,6 +336,13 @@ void SampleScene::ImGuiDraw()
 		{
 			ImGui::ColorEdit3("DiColor", &dissolveData_.color.x);
 			ImGui::DragFloat("DiThreshold", &dissolveData_.threshold, 0.01f, 0.0f, 1.0f);
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("HSV"))
+		{
+			ImGui::SliderFloat("HsvH", &hsvData_.hue, -1.0f, 1.0f);
+			ImGui::SliderFloat("HsvS", &hsvData_.saturation, -1.0f, 1.0f);
+			ImGui::SliderFloat("HsvV", &hsvData_.value, -1.0f, 1.0f);
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();

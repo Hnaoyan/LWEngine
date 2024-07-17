@@ -81,6 +81,7 @@ namespace Pipeline
 		kBlur,
 		kDissolve,
 		kNoise,
+		kHSV,
 		kCountOfParameter,
 	};
 

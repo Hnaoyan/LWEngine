@@ -524,6 +524,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	rootParameters[static_cast<int>(PostEffectRegister::kBlur)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootParameters[static_cast<int>(PostEffectRegister::kDissolve)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootParameters[static_cast<int>(PostEffectRegister::kNoise)] = PSOLib::InitAsConstantBufferView(4, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootParameters[static_cast<int>(PostEffectRegister::kHSV)] = PSOLib::InitAsConstantBufferView(5, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	descriptionRootSignature.pParameters = rootParameters;	// ルートパラメータ配列へのポインタ
 	descriptionRootSignature.NumParameters = _countof(rootParameters);	// 配列の長さ
