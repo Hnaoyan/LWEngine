@@ -36,14 +36,15 @@ void FollowCamera::Update()
 			sub = Vector3::Normalize(sub);
 			if (isAtan_) {
 				destinationAngle_.y = std::atan2f(sub.x, sub.z);
+				transform_.rotate.x = std::atan2f(-sub.y, sub.z);
 			}
 			else {
 				destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
+				transform_.rotate.x = LwLib::CalculateYawFromVector({ -sub.y, 0, sub.z });
 			}
 			// Y軸角度
 			transform_.rotate.y = destinationAngle_.y;
 
-			transform_.rotate.x = std::atan2f(-sub.y, sub.z);
 		}
 		// いない場合
 		else {
