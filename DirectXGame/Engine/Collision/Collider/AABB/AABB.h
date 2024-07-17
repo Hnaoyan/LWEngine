@@ -21,11 +21,11 @@ public:
 
 public:
 	// 衝突判定用
-	Vector3 min_;
-	Vector3 max_;
+	Vector3 min_ = {};
+	Vector3 max_ = {};
 
 private:
 	// 半径サイズ
-	Vector3 radius_;
+	Vector3 radius_ = {};
 	
 };
