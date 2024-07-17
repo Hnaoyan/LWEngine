@@ -17,9 +17,9 @@ void Player::Initialize(Model* model)
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
+	// ステートマシンの初期化
 	VerticalState_ = std::make_unique<StateMachine>();
 	HorizontalState_ = std::make_unique<StateMachine>();
-
 	VerticalState_->Initialize(this, StateMachine::StateType::kVertical);
 	HorizontalState_->Initialize(this, StateMachine::StateType::kHorizontal);
 }
@@ -30,13 +30,7 @@ void Player::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
 	systemManager_.Update();
-	//if (currentState_) {
-	//	// 入力処理
-	//	currentState_->InputHandle();
-	//	// ステートの更新
-	//	currentState_->Update();
-	//}
-
+	// ステートマシンの処理
 	VerticalState_->Update();
 	HorizontalState_->Update();
 
@@ -120,13 +114,7 @@ void Player::OnCollision(ColliderObject target)
 		// 座標修正関数
 		CollisionCorrect(type, min, max);
 
-		//if (type == ICollider::CollisionType3D::kBottomFace) {
-		//	correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
-		//	worldTransform_.transform_.translate.y = correctPos.y;
-		//}
-
 	}
-	target;
 }
 
 void Player::UISpriteDraw()

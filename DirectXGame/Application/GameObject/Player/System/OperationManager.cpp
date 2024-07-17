@@ -22,8 +22,6 @@ void OparationManager::Initialize(Player* player)
 
 void OparationManager::Update()
 {
-	// 落下処理
-	GravityUpdate();
 	// 入力
 	InputUpdate();
 	// ターゲットが死んだ場合解除するための更新
@@ -43,10 +41,7 @@ void OparationManager::InputUpdate()
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A) && player_->velocity_.y == 0.0f)
 	{
 		player_->GetVerticalState()->ChangeRequest(VerticalStates::kJump);
-		//player_->GetHorizontalState()->ChangeRequest(VerticalStates::kJump);
-		//player_->GetStateManager()->ChangeRequest(StateManager::kJump);
-		//float jumpPower = 75.0f;
-		//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
+
 	}
 		
 	if (input_->XRTrigger() && !shotTimer_.isActive_) {
@@ -65,38 +60,12 @@ void OparationManager::InputUpdate()
 
 	Vector2 direct = input_->XGetLeftJoystick();
 
-	//if (isDash_) {
-	//	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-	//	++resetTime_;
-	//	if (resetTime_ > 10) {
-	//		isDash_ = false;
-	//		resetTime_ = 0;
-	//		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
-
-	//	}
-	//	return;
-	//}
 	bool isDash = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());
 
 	if ((direct.x != 0 || direct.y != 0) && !isDash) {
 		if (input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 			player_->GetHorizontalState()->ChangeRequest(HorizontalStates::kQuickBoost);
-			isDash_ = true;
-			//float dashPower = 100.0f * GameSystem::GameSpeedFactor();
-			//player_->velocity_.x = direct.x * dashPower;
-			//player_->velocity_.z = direct.y * dashPower;
 		}
 	}
 	//
-}
-
-void OparationManager::GravityUpdate()
-{
-	//if (!player_->isGround_) {
-	//	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
-	//}
-	//else {
-	//	player_->velocity_.y = 0;
-	//}
-	
 }

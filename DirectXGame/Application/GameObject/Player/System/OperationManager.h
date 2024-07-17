@@ -23,10 +23,6 @@ private:
 	/// 入力更新
 	/// </summary>
 	void InputUpdate();
-	/// <summary>
-	/// 落下処理
-	/// </summary>
-	void GravityUpdate();
 public:
 	void SetManager(SampleBulletManager* manager) { bulletManager_ = manager; }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
@@ -40,10 +36,7 @@ private: // POINTER
 	// 弾の管理クラス
 	SampleBulletManager* bulletManager_ = nullptr;
 
-private: // USER
-	bool isDash_ = false;
-	int resetTime_ = 0;
-	
+private: // USER	
 	FrameTimer shotTimer_;
 
 private: // SYSTEM

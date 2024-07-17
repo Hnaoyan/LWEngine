@@ -15,7 +15,7 @@ public: // アクセッサ
 	AABB* GetCollider() { return &collider_; }
 
 private:
-	Player* player_;
+	Player* player_ = nullptr;
 	WorldTransform worldTransform_;
 	AABB collider_;
 	Vector3 scale_ = {};

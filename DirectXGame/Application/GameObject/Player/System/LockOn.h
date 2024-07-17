@@ -60,7 +60,7 @@ private:
 	// プレイヤー
 	Player* player_ = nullptr;
 	// リスト
-	std::vector<std::unique_ptr<SampleEnemy>>* enemys_;
+	std::vector<std::unique_ptr<SampleEnemy>>* enemys_ = nullptr;
 	// ターゲット
 	SampleEnemy* target_ = nullptr;
 	// 内積の閾値
