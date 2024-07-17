@@ -16,6 +16,6 @@ public:
 
 public:
 	// サイズ
-	float radius_;
+	float radius_ = 0.0f;
 
 };

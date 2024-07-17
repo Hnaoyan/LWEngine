@@ -96,6 +96,7 @@ private:
 	CBufferDataVignette vignetteData_;
 	CBufferDataDissolve dissolveData_;
 	CBufferDataNoise noiseData_;
+	CBufferDataHSV hsvData_;
 
 	int postEffecter_ = 0;
 

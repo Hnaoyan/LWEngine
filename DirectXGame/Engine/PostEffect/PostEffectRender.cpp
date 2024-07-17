@@ -20,6 +20,7 @@ void PostEffectRender::StaticInitialize()
 	blurCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataBlur) + 0xff) & ~0xff);
 	dissolveCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataDissolve) + 0xff) & ~0xff);
 	noiseCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataNoise) + 0xff) & ~0xff);
+	hsvCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataHSV) + 0xff) & ~0xff);
 
 #pragma region マッピング
 	HRESULT result = S_FALSE;
@@ -30,6 +31,8 @@ void PostEffectRender::StaticInitialize()
 	result = dissolveCBuffer_->Map(0, nullptr, (void**)&dissolveMap_);
 	assert(SUCCEEDED(result));
 	result = noiseCBuffer_->Map(0, nullptr, (void**)&noiseMap_);
+	assert(SUCCEEDED(result));
+	result = hsvCBuffer_->Map(0, nullptr, (void**)&hsvMap_);
 	assert(SUCCEEDED(result));
 #pragma endregion
 
@@ -47,20 +50,32 @@ void PostEffectRender::StaticInitialize()
 	noiseMap_->time = 0;
 	noiseMap_->enableScreen = 0;
 
+	hsvMap_->hue = 0.0f;
+	hsvMap_->saturation = 0.0f;
+	hsvMap_->value = 0.0f;
+
 }
 
 void PostEffectRender::Update(const PostEffectDesc& desc)
 {
+	// Vignette
 	vignetteMap_->color = desc.vignette.color;
 	vignetteMap_->powValue = desc.vignette.powValue;
 	vignetteMap_->scale = desc.vignette.scale;
 
+	// Blur
 	blurMap_->blurWidth = desc.blur.blurWidth;
 	blurMap_->centerPoint = desc.blur.centerPoint;
 	blurMap_->samplesNum = desc.blur.samplesNum;
 
+	// Dissolve
 	dissolveMap_->color = desc.dissolve.color;
 	dissolveMap_->threshold = desc.dissolve.threshold;
+
+	// HSV
+	hsvMap_->hue = desc.hsv.hue;
+	hsvMap_->saturation = desc.hsv.saturation;
+	hsvMap_->value = desc.hsv.value;
 
 	// ノイズでの処理時のみ
 	if (sPostEffect != Pipeline::PostEffectType::kNoise) {
@@ -94,7 +109,7 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBlur), blurCBuffer_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kDissolve), dissolveCBuffer_->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kNoise), noiseCBuffer_->GetGPUVirtualAddress());
-
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kHSV), hsvCBuffer_->GetGPUVirtualAddress());
 	// 描画
 	commandList_->DrawInstanced(3, 1, 0, 0);
 

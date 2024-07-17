@@ -29,3 +29,10 @@ struct RandomNoiseData
     int32_t enable;
     float32_t time;
 };
+
+struct HSVData
+{
+    float32_t hue;
+    float32_t saturation;
+    float32_t value;
+};
