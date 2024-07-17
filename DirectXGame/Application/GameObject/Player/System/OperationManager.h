@@ -38,6 +38,8 @@ private: // POINTER
 
 private: // USER	
 	FrameTimer shotTimer_;
+	// 多重クリック回避
+	FrameTimer lockToggleTimer_;
 
 private: // SYSTEM
 	// ロックオンシステム

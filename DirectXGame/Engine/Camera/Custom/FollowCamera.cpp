@@ -19,15 +19,19 @@ void FollowCamera::Initialize()
 void FollowCamera::Update()
 {
 	// コントローラー
-	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick();
+	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick(0.5f);
 
 	// 追尾
 	if (target_) {
 		// 入力クラス
 		// 目標回転角の設定
 		destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
-		destinationAngle_.z += rightStick.y / SHRT_MAX * rStickRotateSpeed_;
+		// 縦回転
+		transform_.rotate.x += rightStick.y * rStickRotateSpeed_;
+		// 値制限
+		transform_.rotate.x = std::clamp(transform_.rotate.x, -0.5f, 0.5f);
 
+		// ロックオン対象がいる場合
 		if (lockOn_->ExistTarget()) {
 			// ロックオンしたオブジェクトの座標
 			Vector3 lockOnPosition = lockOn_->GetTarget()->worldTransform_.GetWorldPosition();
@@ -41,17 +45,12 @@ void FollowCamera::Update()
 				destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 			}
 			// Y軸角度
-			//transform_.rotate.x = std::atan2f(std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)), sub.y);
-			//transform_.rotate.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
-			//destinationAngle_.x = LwLib::CalculateYawFromVector({ 0,sub.y,sub.z });
 			transform_.rotate.y = destinationAngle_.y;
 		}
+		// いない場合
 		else {
 			transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
 		}
-
-		// 回転の速度調節
-		//transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);

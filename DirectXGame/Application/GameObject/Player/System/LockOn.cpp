@@ -18,6 +18,7 @@ void LockOn::Initialize(Player* player)
 
 void LockOn::Update()
 {
+	// 死んだ場合のターゲット解除する処理
 	if (ExistTarget()) {
 		if (target_->IsDead()) {
 			target_ = nullptr;
@@ -56,15 +57,17 @@ void LockOn::SearchTarget(ICamera* camera)
 	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_->begin();
 		it != enemys_->end(); ++it) {
 
+		// カメラから敵へのベクトル
 		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+		// カメラからプレイヤーへのベクトル
 		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
-
+		// 敵のビューベクトル
 		Vector3 enemyViewVector = Matrix4x4::TransformVector3((*it)->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
-
+		// 敵へのベクトルとプレイヤーへのベクトルの内積
 		float dot = Vector3::Dot(Vector3::Normalize(cameraToEnemy), Vector3::Normalize(cameraToPlayer));
-
+		// スクリーン座標
 		Vector2 screenPosition = LwLib::WorldToScreen((*it)->worldTransform_.GetWorldPosition(), camera);
-
+		// ターゲットへの追加
 		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ) {
 			targets.emplace_back(std::make_pair(Vector3::Length(cameraToEnemy), (*it).get()));
 		}
@@ -72,12 +75,11 @@ void LockOn::SearchTarget(ICamera* camera)
 	}
 
 	target_ = nullptr;
+	// 近いのにソートして設定する
 	if (!targets.empty()) {
 		targets.sort([](auto& pair1, auto& pair2) {return pair1.first < pair2.first; });
 		// 一番近いのをソート
 		target_ = targets.front().second;
 	}
-
-	camera;
 
 }

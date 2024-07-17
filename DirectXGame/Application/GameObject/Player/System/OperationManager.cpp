@@ -35,15 +35,14 @@ void OparationManager::Update()
 
 void OparationManager::InputUpdate()
 {
-	// コントローラー操作
-	// 方向取得
+	// 左スティック
+	Vector2 direct = input_->XGetLeftJoystick();
 	// ジャンプ入力
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A) && player_->velocity_.y == 0.0f)
 	{
 		player_->GetVerticalState()->ChangeRequest(VerticalStates::kJump);
-
 	}
-		
+	// 射撃入力
 	if (input_->XRTrigger() && !shotTimer_.isActive_) {
 		SampleBulletManager::GenerateData data{};
 		data.position = player_->worldTransform_.GetWorldPosition();
@@ -53,15 +52,13 @@ void OparationManager::InputUpdate()
 		bulletManager_->AddBullet(data);
 		shotTimer_.Start(30.0f);
 	}
-
+	// ロックオン処理
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
 		lockOn_.ToggleLockOn(player_->camera_);
 	}
 
-	Vector2 direct = input_->XGetLeftJoystick();
-
 	bool isDash = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());
-
+	// ダッシュ入力
 	if ((direct.x != 0 || direct.y != 0) && !isDash) {
 		if (input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 			player_->GetHorizontalState()->ChangeRequest(HorizontalStates::kQuickBoost);
