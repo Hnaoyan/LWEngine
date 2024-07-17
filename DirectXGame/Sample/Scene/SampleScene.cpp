@@ -288,6 +288,9 @@ void SampleScene::ImGuiDraw()
 	case 8:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
 		break;
+	case 9:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kLuminanceOutline;
+		break;
 	default:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 		break;

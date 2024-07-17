@@ -659,6 +659,15 @@ void GraphicsPSO::CreatePostEffectPSO()
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
 	resultPipeline.pipelineStates[size_t(PostEffect::kNoise)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/LuminanceBasedOutlinePS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kLuminanceOutline)] = CreatePipelineState(graphicsPipelineStateDesc);
+
 	// 登録
 	sPipelines_[size_t(Pipeline::Order::kPostEffect)] = std::move(resultPipeline);
 }

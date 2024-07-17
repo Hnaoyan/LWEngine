@@ -114,6 +114,7 @@ namespace Pipeline
 		kRadialBlur,		// ブラー
 		kDissolve,			// Dissolve
 		kNoise,				// ランダムノイズ
+		kLuminanceOutline,	// 簡易アウトライン
 		kCountOfType,		
 	};
 
