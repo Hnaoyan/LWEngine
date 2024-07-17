@@ -27,7 +27,7 @@ void FollowCamera::Update()
 		// 目標回転角の設定
 		destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
 		// 縦回転
-		transform_.rotate.x += rightStick.y * rStickRotateSpeed_;
+		transform_.rotate.x -= rightStick.y * rStickRotateSpeed_;
 		// 値制限
 		transform_.rotate.x = std::clamp(transform_.rotate.x, -0.5f, 0.5f);
 
