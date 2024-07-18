@@ -528,6 +528,8 @@
     <FxCompile Include="Resources\shaders\Particle\ParticleCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\ParticleVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\ParticlePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
