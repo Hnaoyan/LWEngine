@@ -14,6 +14,9 @@ std::array<PipelineVariant, size_t(Order::kCountOfParameter)> GraphicsPSO::sPipe
 ComPtr<ID3D12PipelineState> GraphicsPSO::sParticlePipelineStates_;
 ComPtr<ID3D12RootSignature> GraphicsPSO::sParticleRootSignature_;
 
+GeneralPipeline GraphicsPSO::sParticleGPU_;
+GeneralPipeline GraphicsPSO::sSkinningGPU_;
+
 ID3D12Device* GraphicsPSO::sDevice_;
 
 void GraphicsPSO::Initialize(ID3D12Device* device)
@@ -31,6 +34,7 @@ void GraphicsPSO::Initialize(ID3D12Device* device)
 	CreateParticlePSO();
 	// Skin
 	CreateSkinningModelPSO();
+	CreateSkinningCS();
 	// PostEffect
 	CreatePostEffectPSO();
 	// Skybox
@@ -357,6 +361,22 @@ void GraphicsPSO::CreateParticlePSO()
 {
 }
 
+void GraphicsPSO::CreateParticleCSPSO()
+{
+	ComPtr<IDxcBlob> csBlob;
+
+	csBlob = Shader::GetInstance()->Compile(L"Particle/ParticleCS.hlsl", L"cs_6_0");
+
+	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
+	computePipelineStateDesc.CS = {
+		.pShaderBytecode = csBlob->GetBufferPointer(),
+		.BytecodeLength = csBlob->GetBufferSize()
+	};
+	computePipelineStateDesc.pRootSignature = sParticleGPU_.rootSignature.Get();
+	HRESULT result = S_FALSE;
+	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineState));
+}
+
 void GraphicsPSO::CreateSkinningModelPSO()
 {
 	GeneralPipeline resultPipeline;
@@ -365,11 +385,11 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	ComPtr<IDxcBlob> psBlob;
 
 	// 頂点シェーダの読み込みとコンパイル
-	vsBlob = Shader::GetInstance()->Compile(L"Skining3DModelVS.hlsl", L"vs_6_0");
+	vsBlob = Shader::GetInstance()->Compile(L"Skinning/Skinning3DModelVS.hlsl", L"vs_6_0");
 	assert(vsBlob != nullptr);
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"3DModelPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"Skinning/Skinning3DModelPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	D3D12_INPUT_ELEMENT_DESC weight{};
 	weight.SemanticName = "WEIGHT";
@@ -430,33 +450,32 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	// デスクリプタレンジ
 	D3D12_DESCRIPTOR_RANGE descRangeSRV[1]{};
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeTextureSRV[1]{};
+	descRangeTextureSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
 	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1]{};
-	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
+	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 2);
 
 	// ルートパラメータ
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(SkinningModelRegister::kCountOfParameter)]{};
 	//---共通---//
-	// テクスチャ
-	rootparams[static_cast<int>(SkinningModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
-	// 環境マップ
-	rootparams[static_cast<int>(SkinningModelRegister::kMapTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCubeSRV), descRangeCubeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// View
 	rootparams[static_cast<int>(SkinningModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
-
+	// Palette
+	rootparams[static_cast<int>(SkinningModelRegister::kMatrixPalette)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);
 	//---VS---//
 	// WorldTransform
 	rootparams[static_cast<int>(SkinningModelRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_VERTEX);
-
 	//---PS---//
+	// テクスチャ
+	rootparams[static_cast<int>(SkinningModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeTextureSRV), descRangeTextureSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	// 環境マップ
+	rootparams[static_cast<int>(SkinningModelRegister::kMapTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCubeSRV), descRangeCubeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// マテリアル
 	rootparams[static_cast<int>(SkinningModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	// ライト
 	rootparams[static_cast<int>(SkinningModelRegister::kDirectionalLight)] = PSOLib::InitAsConstantBufferView(2, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootparams[static_cast<int>(SkinningModelRegister::kPointLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootparams[static_cast<int>(SkinningModelRegister::kSpotLight)] = PSOLib::InitAsConstantBufferView(4, 0, D3D12_SHADER_VISIBILITY_PIXEL);
-	// Palette
-	rootparams[static_cast<int>(SkinningModelRegister::kMatrixPalette)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
-	//rootparams[static_cast<int>(ModelRegister::kLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 
 	// スタティックサンプラー
@@ -492,7 +511,62 @@ void GraphicsPSO::CreateSkinningModelPSO()
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 #pragma endregion
 	sPipelines_[size_t(Pipeline::Order::kSkinningModel)] = std::move(resultPipeline);
+}
 
+void GraphicsPSO::CreateSkinningCS()
+{
+	// CS
+	ComPtr<IDxcBlob> csBlob;
+	csBlob = Shader::GetInstance()->Compile(L"Skinning/Skinning3DModelCS.hlsl", L"cs_6_0");
+
+	// ルートパラメータ
+	D3D12_ROOT_PARAMETER rootparams[5]{};
+	D3D12_DESCRIPTOR_RANGE descRangePalette[1]{};
+	descRangePalette[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeInputVertices[1]{};
+	descRangeInputVertices[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
+	D3D12_DESCRIPTOR_RANGE descRangeInfluences[1]{};
+	descRangeInfluences[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 2);
+	D3D12_DESCRIPTOR_RANGE descRangeSkinnedVertex[1]{};
+	descRangeSkinnedVertex[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0);
+	//---共通---//
+	// Palette
+	rootparams[0] = PSOLib::InitAsDescriptorTable(_countof(descRangePalette), descRangePalette, D3D12_SHADER_VISIBILITY_ALL);
+	// InputVertices
+	rootparams[1] = PSOLib::InitAsDescriptorTable(_countof(descRangeInputVertices), descRangeInputVertices, D3D12_SHADER_VISIBILITY_ALL);
+	// Influences
+	rootparams[2] = PSOLib::InitAsDescriptorTable(_countof(descRangeInfluences), descRangeInfluences, D3D12_SHADER_VISIBILITY_ALL);
+	// SkinnedVertex
+	rootparams[3] = PSOLib::InitAsDescriptorTable(_countof(descRangeSkinnedVertex), descRangeSkinnedVertex, D3D12_SHADER_VISIBILITY_ALL);
+	// Info
+	rootparams[4] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+
+
+	// スタティックサンプラー
+	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
+	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+	samplerDesc[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+	// ルートシグネチャの設定
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	rootSignatureDesc.pParameters = rootparams;
+	rootSignatureDesc.NumParameters = _countof(rootparams);
+
+	rootSignatureDesc.pStaticSamplers = samplerDesc;
+	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
+
+	sSkinningGPU_.rootSignature = CreateRootSignature(rootSignatureDesc);
+
+	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
+	computePipelineStateDesc.CS = {
+		.pShaderBytecode = csBlob->GetBufferPointer(),
+		.BytecodeLength = csBlob->GetBufferSize()
+	};
+	computePipelineStateDesc.pRootSignature = sSkinningGPU_.rootSignature.Get();
+	HRESULT result = S_FALSE;
+	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sSkinningGPU_.pipelineState));
 }
 
 void GraphicsPSO::CreatePostEffectPSO()

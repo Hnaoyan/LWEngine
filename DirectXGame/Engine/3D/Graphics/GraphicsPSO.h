@@ -126,6 +126,12 @@ struct GeneralPipeline
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 };
 
+struct CSPipeline 
+{
+	GeneralPipeline graphicsPipeline;
+	GeneralPipeline computeShaderPipeline;
+};
+
 struct BlendPipeline
 {
 	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
@@ -159,6 +165,8 @@ public:
 	// 統合
 	static std::array<PipelineVariant, size_t(Order::kCountOfParameter)>sPipelines_;
 
+	static GeneralPipeline sParticleGPU_;
+	static GeneralPipeline sSkinningGPU_;
 	// Particle用（インスタンシング
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sParticleRootSignature_;
@@ -181,10 +189,12 @@ private:
 	/// パーティクル作成
 	/// </summary>
 	static void CreateParticlePSO();
+	static void CreateParticleCSPSO();
 	/// <summary>
 	/// Skinning作成
 	/// </summary>
 	static void CreateSkinningModelPSO();
+	static void CreateSkinningCS();
 	/// <summary>
 	/// ポストエフェクト作成
 	/// </summary>

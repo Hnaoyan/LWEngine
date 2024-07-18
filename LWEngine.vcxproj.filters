@@ -207,6 +207,9 @@
     <ClCompile Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -497,13 +500,16 @@
     <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\DebounceTimer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Particle\Particle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />
     <FxCompile Include="Resources\shaders\3DModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\3DModelPS.hlsl" />
-    <FxCompile Include="Resources\shaders\Skining3DModelVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\FullScreenVS.hlsl" />
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl" />
@@ -519,6 +525,9 @@
     <FxCompile Include="Resources\shaders\PostEffect\RadialBlurPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\DissolvePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\ParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
@@ -526,5 +535,6 @@
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
+    <None Include="Resources\shaders\Particle\Particle.hlsli" />
   </ItemGroup>
 </Project>
