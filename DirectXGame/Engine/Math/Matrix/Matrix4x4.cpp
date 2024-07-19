@@ -2,6 +2,7 @@
 #include "../MathLib.h"
 
 #include <cmath>
+#include <numbers>
 #include <cassert>
 
 Matrix4x4 Matrix4x4::MakeInverse(const Matrix4x4& m)
@@ -453,4 +454,14 @@ Matrix4x4 Matrix4x4::MakePerspectiveFovMatrix(float fovY, float aspectRatio, flo
 	result.m[3][2] = (-nearClip * farClip) / (farClip - nearClip);
 
 	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeBillBoardMatrix(const Matrix4x4& cameraMatrix)
+{
+	Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
+	Matrix4x4 billBoardMatrix = Multiply(backToFrontMatrix, cameraMatrix);
+	billBoardMatrix.m[3][0] = 0.0f;
+	billBoardMatrix.m[3][1] = 0.0f;
+	billBoardMatrix.m[3][2] = 0.0f;
+	return Matrix4x4(billBoardMatrix);
 }

@@ -171,4 +171,10 @@ public: // その他計算関数
 	/// <returns></returns>
 	static Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
 
+	/// <summary>
+	/// ビルボード行列作成
+	/// </summary>
+	/// <param name="cameraMatrix"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeBillBoardMatrix(const Matrix4x4& cameraMatrix);
 };
