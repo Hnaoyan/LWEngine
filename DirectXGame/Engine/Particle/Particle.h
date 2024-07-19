@@ -22,12 +22,22 @@ struct ParticleGPU {
 
 class Particle
 {
+private:
+	// パイプライン
+	static GeneralPipeline sPipeline_;
 public:
 	//void CreateUAV();
 	//void CreateSRV();
+	///
+	/// UAVとSRVの作成
+	/// 
 	void CreateData();
 	void Initialize(Model* model);
 	void Update(ICamera* camera);
+
+	void Draw(const ModelDrawDesc& desc);
+
+
 	// この場合板ポリ
 	Model* model_ = nullptr;
 public:

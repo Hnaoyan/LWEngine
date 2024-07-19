@@ -75,6 +75,8 @@ public:
 
 	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle, uint32_t texture);
+	
+	//void ParticleDraw(const ModelDrawDesc& desc,)
 	//void AnimationDraw(const AnimDrawDesc& desc);
 
 public: // アクセッサ

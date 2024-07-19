@@ -1,6 +1,9 @@
 #include "Particle.h"
 #include "Engine/Base/DirectXCommon.h"
+#include "Engine/2D/TextureManager.h"
 #include <cassert>
+
+GeneralPipeline Particle::sPipeline_;
 
 void Particle::CreateData()
 {
@@ -60,4 +63,20 @@ void Particle::Update(ICamera* camera)
 	Model::sCommandList_->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
 	Model::sCommandList_->SetComputeRootDescriptorTable(0, uavHandles_.second);
 	Model::sCommandList_->Dispatch(UINT(model_->GetModelData()->vertices.size() + 1023) / 1024, 1, 1);
+}
+
+void Particle::Draw(const ModelDrawDesc& desc) {
+
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kParticle)]);
+
+	ID3D12GraphicsCommandList* cmdList = Model::sCommandList_;
+
+	cmdList->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	cmdList->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		cmdList, static_cast<UINT>(Pipeline::ParticleRegister::kTexture), model_->GetModelData()->material.textureHandle);
+
+	//cmdList->SetGraphicsRootConstantBufferView();
+
 }
