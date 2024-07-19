@@ -462,6 +462,8 @@ void GraphicsPSO::CreateParticlePSO()
 
 	sPipelines_[size_t(Pipeline::Order::kParticle)] = std::move(resultPipeline);
 
+	// ComputeShader
+	CreateParticleCSPSO();
 }
 
 void GraphicsPSO::CreateParticleCSPSO()
@@ -469,6 +471,31 @@ void GraphicsPSO::CreateParticleCSPSO()
 	ComPtr<IDxcBlob> csBlob;
 
 	csBlob = Shader::GetInstance()->Compile(L"Particle/ParticleCS.hlsl", L"cs_6_0");
+
+	// ルートパラメータ
+	D3D12_ROOT_PARAMETER rootparams[1]{};
+	D3D12_DESCRIPTOR_RANGE descRangeParticle[1]{};
+	descRangeParticle[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0);
+	//---共通---//
+	// Particle
+	rootparams[0] = PSOLib::InitAsDescriptorTable(_countof(descRangeParticle), descRangeParticle, D3D12_SHADER_VISIBILITY_ALL);
+
+	// スタティックサンプラー
+	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
+	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+	samplerDesc[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+	// ルートシグネチャの設定
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	rootSignatureDesc.pParameters = rootparams;
+	rootSignatureDesc.NumParameters = _countof(rootparams);
+
+	rootSignatureDesc.pStaticSamplers = samplerDesc;
+	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
+
+	sParticleGPU_.rootSignature = CreateRootSignature(rootSignatureDesc);
 
 	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
 	computePipelineStateDesc.CS = {

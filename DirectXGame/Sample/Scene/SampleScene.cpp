@@ -19,6 +19,14 @@ void SampleScene::Initialize()
 	levelLoader_ = std::make_unique<LevelLoader>();
 	levelLoader_->LoadSceneData("testData");
 
+	particles_ = std::make_unique<Particle>();
+	particles_->Initialize(ModelManager::GetModel("Plane"));
+
+	plane_.worldTransform.Initialize();
+	plane_.worldTransform.transform_.rotate.y = 3.14f;
+	plane_.worldTransform.UpdateMatrix();
+	plane_.model = ModelManager::GetModel("Plane");
+
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
 	testWTF_.transform_.scale = { 1,1,1 };
@@ -160,6 +168,8 @@ void SampleScene::Update()
 		(*it)->Update();
 	}
 
+	plane_.worldTransform.UpdateMatrix();
+
 	player_->Update();
 	// カメラの更新
 	CameraUpdate();
@@ -195,6 +205,7 @@ void SampleScene::Draw()
 
 	Model::PreDraw(commandList);
 
+	particles_->Update(&camera_);
 	// サンプル
 	//sampleObj_->Draw(&camera_);
 	ModelDrawDesc desc{};
@@ -218,6 +229,10 @@ void SampleScene::Draw()
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->Draw(desc);
 	}
+	
+	desc.worldTransform = &plane_.worldTransform;
+	plane_.model->Draw(desc);
+
 	ModelDrawDesc textureDesc{};
 	textureDesc.camera = &camera_;
 	textureDesc.directionalLight = directionalLight_.get();
@@ -247,6 +262,8 @@ void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
+	ImGui::DragFloat3("PlanePos", &plane_.worldTransform.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("PlaneRot", &plane_.worldTransform.transform_.rotate.x, 0.01f);
 	if (ImGui::Button("Test1Add")) {
 		testGroup1_->UnitRegist(generatePosition_);
 	}
@@ -420,6 +437,7 @@ void SampleScene::LoadModel()
 	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Skydome::CreateSkydome());
+	ModelManager::LoadNormalModel("Plane", "plane");
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

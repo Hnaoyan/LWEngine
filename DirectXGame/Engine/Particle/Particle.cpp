@@ -2,14 +2,6 @@
 #include "Engine/Base/DirectXCommon.h"
 #include <cassert>
 
-void Particle::CreateCSResource()
-{
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-	
-	particleResources_ = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(ParticleCS) * 1024);
-
-}
-
 void Particle::CreateData()
 {
 	// デバイス取得
@@ -24,7 +16,13 @@ void Particle::CreateData()
 	instancingSrvDesc.Buffer.NumElements = kNumInstanceMax;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleGPU);
 	// リソース
-	particleResources_ = DxCreateLib::ResourceLib::CreateBufferResource(device, sizeof(ParticleGPU) * kNumInstanceMax);
+	particleResources_ = DxCreateLib::ResourceLib::CreateBufferResource(device, sizeof(ParticleGPU) * 1024);
+	particleResources_->Map(0, nullptr, reinterpret_cast<void**>(&dataMap_));
+	// SRVの設定
+	srvHandles_.first = SRVHandler::GetSrvHandleCPU();
+	srvHandles_.second = SRVHandler::GetSrvHandleGPU();
+	srvIndex_ = SRVHandler::AllocateDescriptor();
+
 	// UAV
 	D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc{};
 	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
@@ -34,9 +32,32 @@ void Particle::CreateData()
 	uavDesc.Buffer.CounterOffsetInBytes = 0;
 	uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
 	uavDesc.Buffer.StructureByteStride = sizeof(VertexData);
+	// リソース
+	particleUAVResources_ = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(ParticleCS) * 1024);
+	//particleUAVResources_->Map(0, nullptr, reinterpret_cast<void**>(&uavDataMap_));
+	// ハンドル
+	uavHandles_.first = SRVHandler::GetSrvHandleCPU();
+	uavHandles_.second = SRVHandler::GetSrvHandleGPU();
+	uavIndex_ = SRVHandler::AllocateDescriptor();
+	device->CreateUnorderedAccessView(particleUAVResources_.Get(), nullptr, &uavDesc, uavHandles_.first);
+
 }
 
 void Particle::Initialize(Model* model)
 {
 	model_ = model;
+
+	CreateData();
+}
+
+void Particle::Update(ICamera* camera)
+{
+
+	camera;
+	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap()};
+	Model::sCommandList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	Model::sCommandList_->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
+	Model::sCommandList_->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
+	Model::sCommandList_->SetComputeRootDescriptorTable(0, uavHandles_.second);
+	Model::sCommandList_->Dispatch(UINT(model_->GetModelData()->vertices.size() + 1023) / 1024, 1, 1);
 }

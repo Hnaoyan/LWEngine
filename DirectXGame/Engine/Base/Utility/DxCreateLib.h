@@ -148,7 +148,7 @@ namespace DxCreateLib
 			HRESULT hr = S_FALSE;
 
 			hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
-				&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+				&resourceDesc, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, nullptr,
 				IID_PPV_ARGS(&resultResource));
 			assert(SUCCEEDED(hr));
 
