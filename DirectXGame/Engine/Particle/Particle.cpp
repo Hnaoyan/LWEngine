@@ -33,9 +33,9 @@ void Particle::CreateData()
 	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
 	uavDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
 	uavDesc.Buffer.FirstElement = 0;
-	uavDesc.Buffer.NumElements = num;
 	uavDesc.Buffer.CounterOffsetInBytes = 0;
 	uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+	uavDesc.Buffer.NumElements = num;
 	uavDesc.Buffer.StructureByteStride = sizeof(ParticleCS);
 	// リソース
 	particleUAVResources_ = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(ParticleCS) * num);
@@ -81,8 +81,9 @@ void Particle::Update(ICamera* camera)
 	Model::sCommandList_->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
 	Model::sCommandList_->SetComputeRootDescriptorTable(0, uavHandles_.second);
 	Model::sCommandList_->Dispatch(1, 1, 1);
+	Model::sCommandList_->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
 	//Model::sCommandList_->Dispatch(UINT(model_->GetModelData()->vertices.size() + 1023) / 1024, 1, 1);
-
+	//Model::sCommandList_
 	//for (int i = 0; i < 1024; ++i) {
 	//	dataMap_[i] = uavDataMap_[i];
 	//}
@@ -97,6 +98,12 @@ void Particle::Draw() {
 
 	cmdList->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	cmdList->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	//---メッシュの設定---//
+	// 頂点バッファの設定
+	cmdList->IASetVertexBuffers(0, 1,&model_->GetMesh()->vbView_);
+	// インデックスバッファの設定
+	cmdList->IASetIndexBuffer(&model_->GetMesh()->ibView_);
 	// テクスチャ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		cmdList, static_cast<UINT>(Pipeline::ParticleRegister::kTexture), model_->GetModelData()->material.textureHandle);
