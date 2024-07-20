@@ -20,8 +20,8 @@ void Particle::CreateData()
 	instancingSrvDesc.Buffer.NumElements = num;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleCS);
 	// リソース
-	particleResources_ = DxCreateLib::ResourceLib::CreateBufferResource(device, sizeof(ParticleCS) * num);
-	particleResources_->Map(0, nullptr, reinterpret_cast<void**>(&dataMap_));
+	particleResources_ = DxCreateLib::ResourceLib::CreateResourceSRV(device, sizeof(ParticleCS) * num);
+	//particleResources_->Map(0, nullptr, reinterpret_cast<void**>(&dataMap_));
 	// SRVの設定
 	srvHandles_.first = SRVHandler::GetSrvHandleCPU();
 	srvHandles_.second = SRVHandler::GetSrvHandleGPU();
@@ -71,9 +71,9 @@ void Particle::Update(ICamera* camera)
 {
 	perView_.cMap_->viewMatrix = camera->viewMatrix_;
 	perView_.cMap_->projectionMatrix = camera->projectionMatrix_;
-	Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(camera->transform_.scale, camera->transform_.rotate, camera->transform_.translate);
-
-	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeBillBoardMatrix(cameraMatrix);
+	//Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(camera->transform_.scale, camera->transform_.rotate, camera->transform_.translate);
+	//perView_.cMap_->billBoardMatrix = Matrix4x4::MakeBillBoardMatrix(cameraMatrix);
+	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
 
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap()};
 	Model::sCommandList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
@@ -81,7 +81,24 @@ void Particle::Update(ICamera* camera)
 	Model::sCommandList_->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
 	Model::sCommandList_->SetComputeRootDescriptorTable(0, uavHandles_.second);
 	Model::sCommandList_->Dispatch(1, 1, 1);
+
+	// Barrier
+	D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
+		D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
+	Model::sCommandList_->ResourceBarrier(1, &barrierUAV);
+
+	D3D12_RESOURCE_BARRIER barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
+		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
+	Model::sCommandList_->ResourceBarrier(1, &barrierSRV);
+
 	Model::sCommandList_->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
+
+	barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
+		D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	Model::sCommandList_->ResourceBarrier(1, &barrierUAV);
+	barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
+		D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
+	Model::sCommandList_->ResourceBarrier(1, &barrierSRV);
 	//Model::sCommandList_->Dispatch(UINT(model_->GetModelData()->vertices.size() + 1023) / 1024, 1, 1);
 	//Model::sCommandList_
 	//for (int i = 0; i < 1024; ++i) {
