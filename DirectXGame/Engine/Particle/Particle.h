@@ -58,7 +58,7 @@ public:
 	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
-	ParticleGPU* dataMap_ = nullptr;
+	ParticleCS* dataMap_ = nullptr;
 	ParticleCS* uavDataMap_ = nullptr;
 
 	ConstantBufferContext<PerView> perView_;

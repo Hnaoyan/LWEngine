@@ -17,9 +17,9 @@ void Particle::CreateData()
 	instancingSrvDesc.Buffer.FirstElement = 0;
 	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	instancingSrvDesc.Buffer.NumElements = kNumInstanceMax;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleGPU);
+	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleCS);
 	// リソース
-	particleResources_ = DxCreateLib::ResourceLib::CreateBufferResource(device, sizeof(ParticleGPU) * 1024);
+	particleResources_ = DxCreateLib::ResourceLib::CreateBufferResource(device, sizeof(ParticleCS) * 1024);
 	particleResources_->Map(0, nullptr, reinterpret_cast<void**>(&dataMap_));
 	// SRVの設定
 	srvHandles_.first = SRVHandler::GetSrvHandleCPU();
@@ -43,7 +43,7 @@ void Particle::CreateData()
 	uavHandles_.second = SRVHandler::GetSrvHandleGPU();
 	uavIndex_ = SRVHandler::AllocateDescriptor();
 	device->CreateUnorderedAccessView(particleUAVResources_.Get(), nullptr, &uavDesc, uavHandles_.first);
-	//particleUAVResources_->Map(0, nullptr, reinterpret_cast<void**>(&uavDataMap_));
+	particleUAVResources_->Map(0, nullptr, reinterpret_cast<void**>(&uavDataMap_));
 
 }
 
@@ -70,7 +70,9 @@ void Particle::Update(ICamera* camera)
 {
 	perView_.cMap_->viewMatrix = camera->viewMatrix_;
 	perView_.cMap_->projectionMatrix = camera->projectionMatrix_;
-	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeBillBoardMatrix(camera->viewMatrix_);
+	Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(camera->transform_.scale, camera->transform_.rotate, camera->transform_.translate);
+
+	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeBillBoardMatrix(cameraMatrix);
 
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap()};
 	Model::sCommandList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
@@ -80,7 +82,7 @@ void Particle::Update(ICamera* camera)
 	Model::sCommandList_->Dispatch(UINT(model_->GetModelData()->vertices.size() + 1023) / 1024, 1, 1);
 
 	for (int i = 0; i < 1024; ++i) {
-		
+		dataMap_[i] = uavDataMap_[i];
 	}
 	//dataMap_->worldMatrix
 }
@@ -103,8 +105,8 @@ void Particle::Draw() {
 	// 行列
 	cmdList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::ParticleRegister::kMatrixs), srvHandles_.second);
 	
-	cmdList->DrawInstanced(6, 1024, 0, 0);
-	//cmdList->DrawIndexedInstanced(UINT(model_->GetModelData()->indices.size()), 1024, 0, 0, 0);
+	//cmdList->DrawInstanced(6, 1024, 0, 0);
+	cmdList->DrawIndexedInstanced(UINT(model_->GetModelData()->indices.size()), 1024, 0, 0, 0);
 	//cmdList->SetGraphicsRootConstantBufferView();
 
 }
