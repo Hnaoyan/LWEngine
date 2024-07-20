@@ -418,18 +418,18 @@ void GraphicsPSO::CreateParticlePSO()
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(4)]{};
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ParticleRegister::kCountOfParameter)]{};
 	//---共通---//
 	//---VS---//
 	// カメラ
-	rootparams[static_cast<int>(3)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(ParticleRegister::kCamera)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
 	// 行列
-	rootparams[static_cast<int>(2)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(ParticleRegister::kMatrixs)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
 	//---PS---//
 	// テクスチャ
-	rootparams[static_cast<int>(1)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(ParticleRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// マテリアル
-	rootparams[static_cast<int>(0)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(ParticleRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 
 	// スタティックサンプラー

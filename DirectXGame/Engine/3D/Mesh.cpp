@@ -22,6 +22,9 @@ void Mesh::CreateMesh(ModelData* modelData)
 		std::memcpy(vertData_, modelData->vertices.data(), sizeof(VertexData) * modelData->vertices.size());
 	}
 
+	if (modelData->indices.empty()) {
+		return;
+	}
 	// インデックス
 	{
 		// リソース設定

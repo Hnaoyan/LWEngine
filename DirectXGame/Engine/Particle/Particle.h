@@ -20,22 +20,34 @@ struct ParticleGPU {
 	Vector4 color;
 };
 
+struct PerView {
+	Matrix4x4 viewMatrix;
+	Matrix4x4 projectionMatrix;
+	Matrix4x4 billBoardMatrix;
+};
+
+template<typename T>
+struct ConstantBufferContext
+{
+	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
+	T* cMap_;
+};
+
 class Particle
 {
 private:
 	// パイプライン
 	static GeneralPipeline sPipeline_;
 public:
-	//void CreateUAV();
-	//void CreateSRV();
 	///
 	/// UAVとSRVの作成
 	/// 
 	void CreateData();
+	void CreateCBuffer();
 	void Initialize(Model* model);
 	void Update(ICamera* camera);
 
-	void Draw(const ModelDrawDesc& desc);
+	void Draw();
 
 
 	// この場合板ポリ
@@ -47,7 +59,9 @@ public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
 	ParticleGPU* dataMap_ = nullptr;
-	Particle* uavDataMap_ = nullptr;
+	ParticleCS* uavDataMap_ = nullptr;
+
+	ConstantBufferContext<PerView> perView_;
 
 	// SRV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;

@@ -34,7 +34,8 @@ struct Particle
 
 struct PerView
 {
-    float32_t4x4 viewProjection;
+    float32_t4x4 view;
+    float32_t4x4 projection;
     float32_t4x4 billboardMatrix;
 };
 

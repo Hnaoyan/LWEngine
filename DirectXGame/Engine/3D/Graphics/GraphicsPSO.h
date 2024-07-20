@@ -68,8 +68,8 @@ namespace Pipeline
 	enum class ParticleRegister : int {
 		kMaterial,
 		kTexture,
-		kWorldTransform,
-		kViewProjection,
+		kMatrixs,
+		kCamera,
 
 		kCountOfParameter,
 	};

@@ -23,7 +23,7 @@ void SampleScene::Initialize()
 	particles_->Initialize(ModelManager::GetModel("Plane"));
 
 	plane_.worldTransform.Initialize();
-	plane_.worldTransform.transform_.rotate.y = 3.14f;
+	//plane_.worldTransform.transform_.rotate.y = 3.14f;
 	plane_.worldTransform.UpdateMatrix();
 	plane_.model = ModelManager::GetModel("Plane");
 
@@ -215,19 +215,19 @@ void SampleScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.worldTransform = &testWTF_;
 
-	humans_[0]->Draw(desc);
-	humans_[1]->Draw(desc);
-	humans_[2]->Draw(desc);
+	//humans_[0]->Draw(desc);
+	//humans_[1]->Draw(desc);
+	//humans_[2]->Draw(desc);
 
-	testGroup1_->Draw(desc);
+	//testGroup1_->Draw(desc);
 	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
 		it != group_.end(); ++it) {
-		(*it)->Draw(desc);
+		//(*it)->Draw(desc);
 	}
 
 	//player_->Draw(&camera_);
 	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->Draw(desc);
+		//cubes_[i]->Draw(desc);
 	}
 	
 	desc.worldTransform = &plane_.worldTransform;
@@ -240,10 +240,10 @@ void SampleScene::Draw()
 	textureDesc.pointLight = pointLight_.get();
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
-	cubeModel_->Draw(textureDesc);
+	//cubeModel_->Draw(textureDesc);
 	skybox_->Draw(desc);
 
-
+	particles_->Draw();
 	Model::PostDraw();
 
 #pragma region スプライト
@@ -437,7 +437,7 @@ void SampleScene::LoadModel()
 	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Skydome::CreateSkydome());
-	ModelManager::LoadNormalModel("Plane", "plane");
+	ModelManager::LoadObjModel("Plane", "plane");
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

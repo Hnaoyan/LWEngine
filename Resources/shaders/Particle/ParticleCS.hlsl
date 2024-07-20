@@ -13,6 +13,9 @@ void main( uint3 DTid : SV_DispatchThreadID )
     {
         // Particle構造体の全要素を0で埋める
         gParticle[particleIndex] = (Particle) 0;
+        gParticle[particleIndex].scale = float32_t3(0.5f, 0.5f, 0.5f);
+        gParticle[particleIndex].color = float32_t4(1.0f, 1.0f, 1.0f, 1.0f);
+
     }
     
 }
