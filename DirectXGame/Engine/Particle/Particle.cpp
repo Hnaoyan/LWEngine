@@ -99,12 +99,6 @@ void Particle::Update(ICamera* camera)
 	barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
 		D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
 	Model::sCommandList_->ResourceBarrier(1, &barrierSRV);
-	//Model::sCommandList_->Dispatch(UINT(model_->GetModelData()->vertices.size() + 1023) / 1024, 1, 1);
-	//Model::sCommandList_
-	//for (int i = 0; i < 1024; ++i) {
-	//	dataMap_[i] = uavDataMap_[i];
-	//}
-	//dataMap_->worldMatrix
 }
 
 void Particle::Draw() {

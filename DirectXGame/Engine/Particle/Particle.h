@@ -1,37 +1,11 @@
 #pragma once
 #include <memory>
 
+#include "ParticleCBuffer.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 #include "Engine/3D/Drawer/Model.h"
 
 class ICamera;
-
-struct ParticleCS {
-	Vector3 translate;
-	Vector3 scale;
-	float lifetime;
-	Vector3 velocity;
-	float currentTime;
-	Vector4 color;
-};
-
-struct ParticleGPU {
-	Matrix4x4 worldMatrix;
-	Vector4 color;
-};
-
-struct PerView {
-	Matrix4x4 viewMatrix;
-	Matrix4x4 projectionMatrix;
-	Matrix4x4 billBoardMatrix;
-};
-
-template<typename T>
-struct ConstantBufferContext
-{
-	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
-	T* cMap_;
-};
 
 class Particle
 {
@@ -58,14 +32,16 @@ public:
 	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
-	ParticleCS* dataMap_ = nullptr;
-	ParticleCS* uavDataMap_ = nullptr;
 
-	ConstantBufferContext<PerView> perView_;
+	// Viewのリソース
+	ConstantBufferMapContext<PerView> perView_;
 
 	// SRV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;
 	uint32_t srvIndex_;
+
+	HeapAllocationData srvAllocater_;
+
 	// UAV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> uavHandles_;
 	uint32_t uavIndex_;
