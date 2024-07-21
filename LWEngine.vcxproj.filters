@@ -506,6 +506,9 @@
     <ClInclude Include="DirectXGame\Engine\Particle\ParticleCBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -533,6 +536,7 @@
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\ParticleVS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\ParticlePS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\Emitter\EmitParticleCS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />
