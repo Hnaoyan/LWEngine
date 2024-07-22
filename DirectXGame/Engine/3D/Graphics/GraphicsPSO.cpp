@@ -488,9 +488,13 @@ void GraphicsPSO::CreateParticleCSPSO()
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kCountOfParameter)]{};
 	D3D12_DESCRIPTOR_RANGE descRangeParticle[1]{};
 	descRangeParticle[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0);
+	D3D12_DESCRIPTOR_RANGE descRangeCounter[1]{};
+	descRangeCounter[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 1);
 	//---共通---//
 	// 書き込みParticle
 	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVParticle)] = PSOLib::InitAsDescriptorTable(_countof(descRangeParticle), descRangeParticle, D3D12_SHADER_VISIBILITY_ALL);
+	// 書き込みカウンター
+	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVCounter)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCounter), descRangeCounter, D3D12_SHADER_VISIBILITY_ALL);
 	// エミッター
 	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kEmitter)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 	// 時間

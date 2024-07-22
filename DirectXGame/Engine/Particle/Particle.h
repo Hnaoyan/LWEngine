@@ -32,6 +32,7 @@ public:
 	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> counterUAVResources_;
 
 	// Viewのリソース
 	ConstantBufferMapContext<PerView> perView_;
