@@ -151,7 +151,7 @@ struct ParticleCSPipeline
 struct CSPipeline 
 {
 	GeneralPipeline graphicsPipeline;
-	GeneralPipeline computeShaderPipeline;
+	ParticleCSPipeline computeShaderPipeline;
 };
 
 struct BlendPipeline
@@ -187,7 +187,7 @@ public:
 	// 統合
 	static std::array<PipelineVariant, size_t(Order::kCountOfParameter)>sPipelines_;
 
-	static GeneralPipeline sParticleGPU_;
+	static ParticleCSPipeline sParticleGPU_;
 	static GeneralPipeline sSkinningGPU_;
 	// Particle用（インスタンシング
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;

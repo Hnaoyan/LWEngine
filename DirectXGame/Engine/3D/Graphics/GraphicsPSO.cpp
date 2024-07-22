@@ -14,7 +14,7 @@ std::array<PipelineVariant, size_t(Order::kCountOfParameter)> GraphicsPSO::sPipe
 ComPtr<ID3D12PipelineState> GraphicsPSO::sParticlePipelineStates_;
 ComPtr<ID3D12RootSignature> GraphicsPSO::sParticleRootSignature_;
 
-GeneralPipeline GraphicsPSO::sParticleGPU_;
+ParticleCSPipeline GraphicsPSO::sParticleGPU_;
 GeneralPipeline GraphicsPSO::sSkinningGPU_;
 
 ID3D12Device* GraphicsPSO::sDevice_;
@@ -521,7 +521,14 @@ void GraphicsPSO::CreateParticleCSPSO()
 
 	computePipelineStateDesc.pRootSignature = sParticleGPU_.rootSignature.Get();
 	HRESULT result = S_FALSE;
-	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineState));
+	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)]));
+
+
+	csBlob = Shader::GetInstance()->Compile(L"Particle/InitializeParticleCS.hlsl", L"cs_6_0");
+
+	computePipelineStateDesc.CS = { .pShaderBytecode = csBlob->GetBufferPointer(),.BytecodeLength = csBlob->GetBufferSize() };
+	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kInitialize)]));
+
 }
 
 void GraphicsPSO::CreateSkinningModelPSO()

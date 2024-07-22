@@ -112,7 +112,7 @@ void Particle::Update(ICamera* camera)
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap()};
 	ID3D12GraphicsCommandList* cmdList = Model::sCommandList_;
 	cmdList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
-	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
+	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)].Get());
 
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVParticle), uavHandles_.second);
