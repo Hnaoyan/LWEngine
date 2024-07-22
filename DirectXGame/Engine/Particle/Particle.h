@@ -20,6 +20,7 @@ public:
 	void CreateCBuffer();
 	void Initialize(Model* model);
 	void Update(ICamera* camera);
+	void 
 
 	void Draw();
 

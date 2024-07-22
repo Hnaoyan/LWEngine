@@ -480,10 +480,6 @@ void GraphicsPSO::CreateParticlePSO()
 
 void GraphicsPSO::CreateParticleCSPSO()
 {
-	ComPtr<IDxcBlob> csBlob;
-
-	csBlob = Shader::GetInstance()->Compile(L"Particle/Emitter/EmitParticleCS.hlsl", L"cs_6_0");
-
 	// ルートパラメータ
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kCountOfParameter)]{};
 	D3D12_DESCRIPTOR_RANGE descRangeParticle[1]{};
@@ -517,11 +513,12 @@ void GraphicsPSO::CreateParticleCSPSO()
 
 	sParticleGPU_.rootSignature = CreateRootSignature(rootSignatureDesc);
 
+	ComPtr<IDxcBlob> csBlob;
+	csBlob = Shader::GetInstance()->Compile(L"Particle/Emitter/EmitParticleCS.hlsl", L"cs_6_0");
+
 	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
-	computePipelineStateDesc.CS = {
-		.pShaderBytecode = csBlob->GetBufferPointer(),
-		.BytecodeLength = csBlob->GetBufferSize()
-	};
+	computePipelineStateDesc.CS = { .pShaderBytecode = csBlob->GetBufferPointer(),.BytecodeLength = csBlob->GetBufferSize() };
+
 	computePipelineStateDesc.pRootSignature = sParticleGPU_.rootSignature.Get();
 	HRESULT result = S_FALSE;
 	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineState));

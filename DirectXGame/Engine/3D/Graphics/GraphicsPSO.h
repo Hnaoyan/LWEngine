@@ -125,11 +125,26 @@ namespace Pipeline
 		kPerTime,		// 時間関係のデータ
 		kCountOfParameter,	// 数
 	};
+
+	enum class GPUParticlePipeline {
+		kInitialize,
+		kEmit,
+		kUpdate,
+		kCountOfProcess,
+	};
+
 }
 
 struct GeneralPipeline
 {
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct ParticleCSPipeline 
+{
+	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::GPUParticlePipeline::kCountOfProcess)> pipelineStates;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 };
 
