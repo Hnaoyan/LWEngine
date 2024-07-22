@@ -534,7 +534,7 @@
     <FxCompile Include="Resources\shaders\PostEffect\RadialBlurPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\DissolvePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
-    <FxCompile Include="Resources\shaders\Particle\ParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\InitializeParticleCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\ParticleVS.hlsl" />
