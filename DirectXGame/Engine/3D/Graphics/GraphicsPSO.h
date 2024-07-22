@@ -118,6 +118,12 @@ namespace Pipeline
 		kCountOfType,		
 	};
 
+	enum class GPUParticleRegister : int {
+		kUAVParticle,	// 書き込み
+		kEmitter,		// エミッター
+		kPerTime,		// 時間関係のデータ
+		kCountOfParameter,	// 数
+	};
 }
 
 struct GeneralPipeline

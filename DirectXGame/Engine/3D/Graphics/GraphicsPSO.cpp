@@ -399,7 +399,7 @@ void GraphicsPSO::CreateParticlePSO()
 	gPipeline.RasterizerState = rasterizer;
 	// デプスステンシルステート
 	gPipeline.DepthStencilState.DepthEnable = true;
-	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	gPipeline.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
 	gPipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	// 深度バッファのフォーマット
 	gPipeline.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -454,9 +454,21 @@ void GraphicsPSO::CreateParticlePSO()
 #pragma region ブレンド
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
-	// αブレンド
-	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	//// αブレンド
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	//gPipeline.BlendState = blenddesc;
+	// 加算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
+	//// 減算合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
+	//gPipeline.BlendState = blenddesc;
+	//// 乗算合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
+	//gPipeline.BlendState = blenddesc;
+	//// スクリーン合成
+	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	//gPipeline.BlendState = blenddesc;
 	// PSO作成
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 
@@ -470,15 +482,19 @@ void GraphicsPSO::CreateParticleCSPSO()
 {
 	ComPtr<IDxcBlob> csBlob;
 
-	csBlob = Shader::GetInstance()->Compile(L"Particle/ParticleCS.hlsl", L"cs_6_0");
+	csBlob = Shader::GetInstance()->Compile(L"Particle/Emitter/EmitParticleCS.hlsl", L"cs_6_0");
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[1]{};
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kCountOfParameter)]{};
 	D3D12_DESCRIPTOR_RANGE descRangeParticle[1]{};
 	descRangeParticle[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0);
 	//---共通---//
-	// Particle
-	rootparams[0] = PSOLib::InitAsDescriptorTable(_countof(descRangeParticle), descRangeParticle, D3D12_SHADER_VISIBILITY_ALL);
+	// 書き込みParticle
+	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVParticle)] = PSOLib::InitAsDescriptorTable(_countof(descRangeParticle), descRangeParticle, D3D12_SHADER_VISIBILITY_ALL);
+	// エミッター
+	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kEmitter)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	// 時間
+	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kPerTime)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_ALL);
 
 	// スタティックサンプラー
 	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};

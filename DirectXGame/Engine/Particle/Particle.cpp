@@ -1,6 +1,7 @@
 #include "Particle.h"
 #include "Engine/Base/DirectXCommon.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/LwLib/DeltaTime.h"
 #include <cassert>
 
 GeneralPipeline Particle::sPipeline_;
@@ -53,10 +54,19 @@ void Particle::CreateCBuffer()
 	// デバイス取得
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
-	perView_.cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(PerView) + 0xff) & ~0xff);
-	HRESULT result = S_FALSE;
-	result = perView_.cBuffer->Map(0, nullptr, (void**)&perView_.cMap_);
-	assert(SUCCEEDED(result));
+	perFrame_.CreateConstantBuffer(device);
+	perFrame_.Mapping();
+
+	emit_.CreateConstantBuffer(device);
+	emit_.Mapping();
+
+	perView_.CreateConstantBuffer(device);
+	perView_.Mapping();
+
+	//perView_.cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(PerView) + 0xff) & ~0xff);
+	//HRESULT result = S_FALSE;
+	//result = perView_.cBuffer->Map(0, nullptr, (void**)&perView_.cMap_);
+	//assert(SUCCEEDED(result));
 }
 
 void Particle::Initialize(Model* model)
@@ -65,22 +75,50 @@ void Particle::Initialize(Model* model)
 
 	CreateData();
 	CreateCBuffer();
+
+	perFrame_.cMap_->deltaTime = kDeltaTime;
+	perFrame_.cMap_->time = 1.0f;
+
+	emit_.cMap_->count = 10;
+	emit_.cMap_->frequency = 0.5f;
+	emit_.cMap_->frequencyTime = 0.0f;
+	emit_.cMap_->translate = {};
+	emit_.cMap_->radius = 1.0f;
+	emit_.cMap_->emit = 0;
+
+	texture_ = TextureManager::GetInstance()->Load("Resources/circle.png");
+
 }
 
 void Particle::Update(ICamera* camera)
 {
+	// ビューの設定
 	perView_.cMap_->viewMatrix = camera->viewMatrix_;
 	perView_.cMap_->projectionMatrix = camera->projectionMatrix_;
-	//Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(camera->transform_.scale, camera->transform_.rotate, camera->transform_.translate);
-	//perView_.cMap_->billBoardMatrix = Matrix4x4::MakeBillBoardMatrix(cameraMatrix);
 	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
 
+	emit_.cMap_->frequencyTime += kDeltaTime;
+	perFrame_.cMap_->time += kDeltaTime;
+	if (emit_.cMap_->frequency <= emit_.cMap_->frequencyTime) {
+		emit_.cMap_->frequencyTime -= emit_.cMap_->frequency;
+		// フラグ
+		emit_.cMap_->emit = 1;
+	}
+	else {
+		emit_.cMap_->emit = 0;
+	}
+
+
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap()};
-	Model::sCommandList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	Model::sCommandList_->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
-	Model::sCommandList_->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
-	Model::sCommandList_->SetComputeRootDescriptorTable(0, uavHandles_.second);
-	Model::sCommandList_->Dispatch(1, 1, 1);
+	ID3D12GraphicsCommandList* cmdList = Model::sCommandList_;
+	cmdList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
+	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineState.Get());
+
+	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVParticle), uavHandles_.second);
+	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kEmitter), emit_.cBuffer->GetGPUVirtualAddress());
+	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
+	cmdList->Dispatch(1, 1, 1);
 
 	// Barrier
 	D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
@@ -117,7 +155,7 @@ void Particle::Draw() {
 	cmdList->IASetIndexBuffer(&model_->GetMesh()->ibView_);
 	// テクスチャ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		cmdList, static_cast<UINT>(Pipeline::ParticleRegister::kTexture), model_->GetModelData()->material.textureHandle);
+		cmdList, static_cast<UINT>(Pipeline::ParticleRegister::kTexture), texture_);
 	// カメラ
 	cmdList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kCamera), perView_.cBuffer->GetGPUVirtualAddress());
 	// マテリアル

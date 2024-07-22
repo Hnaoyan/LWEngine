@@ -35,6 +35,8 @@ public:
 
 	// Viewのリソース
 	ConstantBufferMapContext<PerView> perView_;
+	ConstantBufferMapContext<EmitterSphere> emit_;
+	ConstantBufferMapContext<PerFrame> perFrame_;
 
 	// SRV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;
@@ -49,4 +51,6 @@ public:
 	// Unitの数
 	uint32_t unitNum_ = 0u;
 
+
+	uint32_t texture_ = 0u;
 };

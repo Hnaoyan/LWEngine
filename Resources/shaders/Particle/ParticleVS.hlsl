@@ -28,7 +28,7 @@ VertexShaderOutput main(VertexShaderInput input, uint32_t instanceId : SV_Instan
     worldMatrix[0] *= particle.scale.x;
     worldMatrix[1] *= particle.scale.y;
     worldMatrix[2] *= particle.scale.z;
-    worldMatrix[3].xyz *= particle.translate;
+    worldMatrix[3].xyz = particle.translate;
     worldMatrix[3].w = 1.0f;
     output.position = mul(input.position, mul(worldMatrix, viewProjection));
     //output.normal = input.normal;

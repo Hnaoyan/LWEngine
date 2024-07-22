@@ -67,8 +67,8 @@ void SampleScene::Initialize()
 	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
-	camera_.transform_.translate.y = 5.0f;
-	camera_.transform_.rotate.x = 0.4f;
+	//camera_.transform_.translate.y = 5.0f;
+	//camera_.transform_.rotate.x = 0.4f;
 	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
@@ -241,7 +241,7 @@ void SampleScene::Draw()
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
 	//cubeModel_->Draw(textureDesc);
-	skybox_->Draw(desc);
+	//skybox_->Draw(desc);
 
 	particles_->Draw();
 	Model::PostDraw();

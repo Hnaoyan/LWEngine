@@ -1,5 +1,8 @@
 #pragma once
 #include <memory>
+#include <cassert>
+#include <type_traits>
+#include <concepts>
 
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Drawer/Model.h"
@@ -12,6 +15,12 @@ struct EmitterSphere {
 	float frequency;	// 間隔
 	float frequencyTime; // 間隔時間
 	uint32_t emit;	// 許可フラグ
+};
+
+struct PerFrame {
+	// 起動してからの時間
+	float time;
+	float deltaTime;
 };
 
 struct ParticleCS {
@@ -47,11 +56,28 @@ struct HeapAllocationData
 };
 
 template<typename T>
+concept IsStruct = std::is_class_v<T>;
+
+template<IsStruct T>
 struct ConstantBufferMapContext
 {
 	// BufferResource
 	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
 	// Map
 	T* cMap_;
+
+
+	void CreateConstantBuffer(ID3D12Device* device) {
+		// 作成
+		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) + 0xff) & ~0xff);
+	}
+	void Mapping() {
+		// マッピング
+		HRESULT result = S_FALSE;
+		result = cBuffer->Map(0, nullptr, (void**)&cMap_);
+		assert(SUCCEEDED(result));
+	}
+	//void CreateStructuredBuffer();
+
 };
 
