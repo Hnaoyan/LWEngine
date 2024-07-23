@@ -9,9 +9,5 @@ public:
 
 	void CreateData();
 
-	//HeapAllocationData 
-	// GPU関係データ
-	ConstantBufferMapContext<EmitterSphere> emit_;
-	ConstantBufferMapContext<PerFrame> perFrame_;
-
+	RWStructuredBufferContext<ParticleCS> particles_;
 };

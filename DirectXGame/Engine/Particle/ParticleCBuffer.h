@@ -6,6 +6,7 @@
 
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Drawer/Model.h"
+#include "Engine/Base/Utility/DxCreateLib.h"
 
 struct EmitterSphere {
 	Vector3 translate;	// 位置
@@ -77,7 +78,6 @@ struct ConstantBufferMapContext
 		result = cBuffer->Map(0, nullptr, (void**)&cMap_);
 		assert(SUCCEEDED(result));
 	}
-	//void CreateStructuredBuffer();
 
 };
 
@@ -86,9 +86,57 @@ struct RWStructuredBufferContext
 {
 	// Buffer
 	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
-	HeapAllocationData heapData;
-
-	//void CreateBuffer(ID3D12Device* device);
+	// SRV用
+	HeapAllocationData srvHeapData;
+	// UAV用
+	HeapAllocationData uavHeapData;
+	/// <summary>
+	/// バッファーデータ作成
+	/// </summary>
+	/// <param name="device"></param>
+	/// <param name="maxNum"></param>
+	void CreateBuffer(ID3D12Device* device, int32_t maxNum);
 
 };
 
+template<IsStruct T>
+inline void RWStructuredBufferContext<T>::CreateBuffer(ID3D12Device* device, int32_t maxNum)
+{
+#pragma region SRV
+	// SRVDesc
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+	srvDesc.Buffer.FirstElement = 0;
+	srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+	srvDesc.Buffer.NumElements = maxNum;
+	srvDesc.Buffer.StructureByteStride = sizeof(T);
+	// Heap
+	srvHeapData.handles.first = SRVHandler::GetSrvHandleCPU();
+	srvHeapData.handles.second = SRVHandler::GetSrvHandleGPU();
+	srvHeapData.index = SRVHandler::AllocateDescriptor();
+#pragma endregion
+
+#pragma region UAV
+	// UAVDesc
+	D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc{};
+	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+	uavDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+	uavDesc.Buffer.FirstElement = 0;
+	uavDesc.Buffer.CounterOffsetInBytes = 0;
+	uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+	uavDesc.Buffer.NumElements = maxNum;
+	uavDesc.Buffer.StructureByteStride = sizeof(T);
+	// Heap
+	uavHeapData.handles.first = SRVHandler::GetSrvHandleCPU();
+	uavHeapData.handles.second = SRVHandler::GetSrvHandleGPU();
+	uavHeapData.index = SRVHandler::AllocateDescriptor();
+#pragma endregion
+	// Resource作成
+	cBuffer = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(T) * maxNum);
+	// SRV
+	device->CreateShaderResourceView(cBuffer.Get(), &srvDesc, srvHeapData.handles.first);
+	// UAV
+	device->CreateUnorderedAccessView(cBuffer.Get(), nullptr, &uavDesc,uavHeapData.handles.first);
+}
