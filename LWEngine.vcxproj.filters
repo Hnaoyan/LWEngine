@@ -540,6 +540,7 @@
     <FxCompile Include="Resources\shaders\Particle\ParticleVS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\ParticlePS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\Emitter\EmitParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\UpdateParticleCS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli" />

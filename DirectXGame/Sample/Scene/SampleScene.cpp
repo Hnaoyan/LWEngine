@@ -109,6 +109,11 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
+#pragma region GPUUpdate
+
+	particles_->Update();
+
+#pragma endregion
 
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeScene("GAME");
@@ -205,7 +210,6 @@ void SampleScene::Draw()
 
 	Model::PreDraw(commandList);
 
-	particles_->Update(&camera_);
 	// サンプル
 	//sampleObj_->Draw(&camera_);
 	ModelDrawDesc desc{};
@@ -231,7 +235,7 @@ void SampleScene::Draw()
 	}
 	
 	desc.worldTransform = &plane_.worldTransform;
-	plane_.model->Draw(desc);
+	//plane_.model->Draw(desc);
 
 	ModelDrawDesc textureDesc{};
 	textureDesc.camera = &camera_;
@@ -243,7 +247,7 @@ void SampleScene::Draw()
 	//cubeModel_->Draw(textureDesc);
 	//skybox_->Draw(desc);
 
-	particles_->Draw();
+	particles_->Draw(&camera_);
 	Model::PostDraw();
 
 #pragma region スプライト

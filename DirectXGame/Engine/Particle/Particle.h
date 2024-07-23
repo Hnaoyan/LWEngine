@@ -19,9 +19,9 @@ public:
 	void CreateData();
 	void CreateCBuffer();
 	void Initialize(Model* model);
-	void Update(ICamera* camera);
-
-	void Draw();
+	void Update();
+	void GPUInitialize();
+	void Draw(ICamera* camera);
 
 
 	// この場合板ポリ
@@ -32,7 +32,8 @@ public:
 	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> counterUAVResources_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> listIndexUAVResources_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> listUAVResources_;
 
 	// Viewのリソース
 	ConstantBufferMapContext<PerView> perView_;
@@ -49,6 +50,10 @@ public:
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> uavHandles_;
 	uint32_t uavIndex_;
 
+	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> listIndexUAVHandles_;
+	uint32_t listIndexUAVIndex_;
+	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> listUAVHandles_;
+	uint32_t listUAVIndex_;
 	// Unitの数
 	uint32_t unitNum_ = 0u;
 

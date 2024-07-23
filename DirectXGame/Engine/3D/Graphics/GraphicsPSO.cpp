@@ -484,13 +484,16 @@ void GraphicsPSO::CreateParticleCSPSO()
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kCountOfParameter)]{};
 	D3D12_DESCRIPTOR_RANGE descRangeParticle[1]{};
 	descRangeParticle[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 0);
-	D3D12_DESCRIPTOR_RANGE descRangeCounter[1]{};
-	descRangeCounter[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 1);
+	D3D12_DESCRIPTOR_RANGE descRangeListIndex[1]{};
+	descRangeListIndex[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 1);
+	D3D12_DESCRIPTOR_RANGE descRangeList[1]{};
+	descRangeList[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_UAV, 1, 2);
 	//---共通---//
 	// 書き込みParticle
 	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVParticle)] = PSOLib::InitAsDescriptorTable(_countof(descRangeParticle), descRangeParticle, D3D12_SHADER_VISIBILITY_ALL);
-	// 書き込みカウンター
-	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVCounter)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCounter), descRangeCounter, D3D12_SHADER_VISIBILITY_ALL);
+	// リストの番号とリスト
+	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVFreeListIndex)] = PSOLib::InitAsDescriptorTable(_countof(descRangeListIndex), descRangeListIndex, D3D12_SHADER_VISIBILITY_ALL);
+	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kUAVFreeList)] = PSOLib::InitAsDescriptorTable(_countof(descRangeList), descRangeList, D3D12_SHADER_VISIBILITY_ALL);
 	// エミッター
 	rootparams[static_cast<int>(Pipeline::GPUParticleRegister::kEmitter)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 	// 時間
@@ -513,21 +516,26 @@ void GraphicsPSO::CreateParticleCSPSO()
 
 	sParticleGPU_.rootSignature = CreateRootSignature(rootSignatureDesc);
 
-	ComPtr<IDxcBlob> csBlob;
-	csBlob = Shader::GetInstance()->Compile(L"Particle/Emitter/EmitParticleCS.hlsl", L"cs_6_0");
-
-	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
-	computePipelineStateDesc.CS = { .pShaderBytecode = csBlob->GetBufferPointer(),.BytecodeLength = csBlob->GetBufferSize() };
-
-	computePipelineStateDesc.pRootSignature = sParticleGPU_.rootSignature.Get();
 	HRESULT result = S_FALSE;
-	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)]));
+	ComPtr<IDxcBlob> csBlob;
+	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
+	computePipelineStateDesc.pRootSignature = sParticleGPU_.rootSignature.Get();
 
-
+	// 初期化
 	csBlob = Shader::GetInstance()->Compile(L"Particle/InitializeParticleCS.hlsl", L"cs_6_0");
-
 	computePipelineStateDesc.CS = { .pShaderBytecode = csBlob->GetBufferPointer(),.BytecodeLength = csBlob->GetBufferSize() };
 	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kInitialize)]));
+	assert(SUCCEEDED(result));
+	// エミット
+	csBlob = Shader::GetInstance()->Compile(L"Particle/Emitter/EmitParticleCS.hlsl", L"cs_6_0");
+	computePipelineStateDesc.CS = { .pShaderBytecode = csBlob->GetBufferPointer(),.BytecodeLength = csBlob->GetBufferSize() };
+	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)]));
+	assert(SUCCEEDED(result));
+	// 更新
+	csBlob = Shader::GetInstance()->Compile(L"Particle/UpdateParticleCS.hlsl", L"cs_6_0");
+	computePipelineStateDesc.CS = { .pShaderBytecode = csBlob->GetBufferPointer(),.BytecodeLength = csBlob->GetBufferSize() };
+	result = sDevice_->CreateComputePipelineState(&computePipelineStateDesc, IID_PPV_ARGS(&sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kUpdate)]));
+	assert(SUCCEEDED(result));
 
 }
 

@@ -87,6 +87,18 @@ namespace DxCreateLib
 			return barrier;
 		}
 
+		inline static D3D12_RESOURCE_BARRIER GetUAVBarrier(ID3D12Resource* buffer) {
+			// TransitionBarrierの設定
+			D3D12_RESOURCE_BARRIER barrier{};
+			// 今回のバリアはTransition
+			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+			// Noneにしておく
+			barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+			// バリアを張る対象のリソース。
+			barrier.Transition.pResource = buffer;
+			return barrier;
+		}
+
 		inline static ID3D12Resource* CreateBufferResource(ID3D12Device* device, const size_t& sizeInBytes) {
 			ID3D12Resource* resultResource = nullptr;
 

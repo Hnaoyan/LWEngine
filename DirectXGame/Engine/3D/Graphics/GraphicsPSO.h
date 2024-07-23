@@ -120,7 +120,8 @@ namespace Pipeline
 
 	enum class GPUParticleRegister : int {
 		kUAVParticle,	// 書き込み
-		kUAVCounter,
+		kUAVFreeListIndex,	// リストの番号
+		kUAVFreeList,		// リスト
 		kEmitter,		// エミッター
 		kPerTime,		// 時間関係のデータ
 		kCountOfParameter,	// 数

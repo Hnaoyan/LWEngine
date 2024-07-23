@@ -45,7 +45,29 @@ void Particle::CreateData()
 	uavHandles_.second = SRVHandler::GetSrvHandleGPU();
 	uavIndex_ = SRVHandler::AllocateDescriptor();
 	device->CreateUnorderedAccessView(particleUAVResources_.Get(), nullptr, &uavDesc, uavHandles_.first);
-	//particleUAVResources_->Map(0, nullptr, reinterpret_cast<void**>(&uavDataMap_));
+
+
+#pragma region IndexList
+	// FreeIndex
+	uavDesc.Buffer.StructureByteStride = sizeof(int32_t);
+	// リソース
+	listIndexUAVResources_ = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(int32_t) * num);
+	// ハンドル
+	listIndexUAVHandles_.first = SRVHandler::GetSrvHandleCPU();
+	listIndexUAVHandles_.second = SRVHandler::GetSrvHandleGPU();
+	listIndexUAVIndex_ = SRVHandler::AllocateDescriptor();
+	device->CreateUnorderedAccessView(listIndexUAVResources_.Get(), nullptr, &uavDesc, listIndexUAVHandles_.first);
+
+	// FreeList
+	uavDesc.Buffer.StructureByteStride = sizeof(uint32_t);
+	// リソース
+	listUAVResources_ = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(uint32_t) * num);
+	// ハンドル
+	listUAVHandles_.first = SRVHandler::GetSrvHandleCPU();
+	listUAVHandles_.second = SRVHandler::GetSrvHandleGPU();
+	listUAVIndex_ = SRVHandler::AllocateDescriptor();
+	device->CreateUnorderedAccessView(listUAVResources_.Get(), nullptr, &uavDesc, listUAVHandles_.first);
+#pragma endregion
 
 }
 
@@ -63,10 +85,6 @@ void Particle::CreateCBuffer()
 	perView_.CreateConstantBuffer(device);
 	perView_.Mapping();
 
-	//perView_.cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(PerView) + 0xff) & ~0xff);
-	//HRESULT result = S_FALSE;
-	//result = perView_.cBuffer->Map(0, nullptr, (void**)&perView_.cMap_);
-	//assert(SUCCEEDED(result));
 }
 
 void Particle::Initialize(Model* model)
@@ -76,10 +94,12 @@ void Particle::Initialize(Model* model)
 	CreateData();
 	CreateCBuffer();
 
+	GPUInitialize();
+
 	perFrame_.cMap_->deltaTime = kDeltaTime;
 	perFrame_.cMap_->time = 1.0f;
 
-	emit_.cMap_->count = 10;
+	emit_.cMap_->count = 24;
 	emit_.cMap_->frequency = 0.5f;
 	emit_.cMap_->frequencyTime = 0.0f;
 	emit_.cMap_->translate = {};
@@ -90,13 +110,8 @@ void Particle::Initialize(Model* model)
 
 }
 
-void Particle::Update(ICamera* camera)
+void Particle::Update()
 {
-	// ビューの設定
-	perView_.cMap_->viewMatrix = camera->viewMatrix_;
-	perView_.cMap_->projectionMatrix = camera->projectionMatrix_;
-	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
-
 	emit_.cMap_->frequencyTime += kDeltaTime;
 	perFrame_.cMap_->time += kDeltaTime;
 	if (emit_.cMap_->frequency <= emit_.cMap_->frequencyTime) {
@@ -110,36 +125,114 @@ void Particle::Update(ICamera* camera)
 
 
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap()};
-	ID3D12GraphicsCommandList* cmdList = Model::sCommandList_;
+	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
+	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	cmdList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
+
+	// 初期化が後なので
+	D3D12_RESOURCE_BARRIER barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(particleUAVResources_.Get());
+	cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listIndexUAVResources_.Get());
+	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listUAVResources_.Get());
+	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
+
+#pragma region Emitter処理
+
 	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)].Get());
+	// パーティクルデータ
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVParticle), uavHandles_.second);
+	// カウンター
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeListIndex), listIndexUAVHandles_.second);
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeList), listUAVHandles_.second);
+	// エミッター
+	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kEmitter), emit_.cBuffer->GetGPUVirtualAddress());
+	// 時間
+	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
+	cmdList->Dispatch(1, 1, 1);
+
+#pragma endregion
+
+	barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(particleUAVResources_.Get());
+	cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listIndexUAVResources_.Get());
+	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listUAVResources_.Get());
+	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
+
+#pragma region Particle更新
+	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kUpdate)].Get());
+	// パーティクルデータ
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVParticle), uavHandles_.second);
+	// カウンター
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeListIndex), listIndexUAVHandles_.second);
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeList), listUAVHandles_.second);
+	// 時間
+	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
+	cmdList->Dispatch(1, 1, 1);
+#pragma endregion
+
+
+	///---Structuredに送る処理---///
+	// Barrier
+	D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
+		D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
+	cmdList->ResourceBarrier(1, &barrierUAV);
+
+	D3D12_RESOURCE_BARRIER barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
+		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
+	cmdList->ResourceBarrier(1, &barrierSRV);
+
+	cmdList->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
+
+	barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
+		D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+	cmdList->ResourceBarrier(1, &barrierUAV);
+	barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
+		D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
+	cmdList->ResourceBarrier(1, &barrierSRV);
+}
+
+void Particle::GPUInitialize()
+{
+	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
+	ID3D12GraphicsCommandList* cmdList = DirectXCommon::GetInstance()->GetCommandList();
+	cmdList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
+	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kInitialize)].Get());
 
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	// パーティクルデータ
 	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVParticle), uavHandles_.second);
-	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kEmitter), emit_.cBuffer->GetGPUVirtualAddress());
-	cmdList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
+	// カウンター
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeListIndex), listIndexUAVHandles_.second);
+	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeList), listUAVHandles_.second);
+
 	cmdList->Dispatch(1, 1, 1);
 
 	// Barrier
 	D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
 		D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
-	Model::sCommandList_->ResourceBarrier(1, &barrierUAV);
+	cmdList->ResourceBarrier(1, &barrierUAV);
 
 	D3D12_RESOURCE_BARRIER barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
 		D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
-	Model::sCommandList_->ResourceBarrier(1, &barrierSRV);
+	cmdList->ResourceBarrier(1, &barrierSRV);
 
-	Model::sCommandList_->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
+	cmdList->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
 
 	barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
 		D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-	Model::sCommandList_->ResourceBarrier(1, &barrierUAV);
+	cmdList->ResourceBarrier(1, &barrierUAV);
 	barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
 		D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
-	Model::sCommandList_->ResourceBarrier(1, &barrierSRV);
+	cmdList->ResourceBarrier(1, &barrierSRV);
 }
 
-void Particle::Draw() {
+void Particle::Draw(ICamera* camera) {
+	// ビューの設定
+	perView_.cMap_->viewMatrix = camera->viewMatrix_;
+	perView_.cMap_->projectionMatrix = camera->projectionMatrix_;
+	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
 
 	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kParticle)]);
 
