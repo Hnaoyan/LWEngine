@@ -32,6 +32,8 @@ public:
 	// リソース
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
+
+	// 管理のリスト（えみた
 	Microsoft::WRL::ComPtr<ID3D12Resource> listIndexUAVResources_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> listUAVResources_;
 

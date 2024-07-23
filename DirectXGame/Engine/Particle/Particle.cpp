@@ -132,10 +132,10 @@ void Particle::Update()
 	// 初期化が後なので
 	D3D12_RESOURCE_BARRIER barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(particleUAVResources_.Get());
 	cmdList->ResourceBarrier(1, &barrierParticleUAV);
-	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listIndexUAVResources_.Get());
-	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
-	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listUAVResources_.Get());
-	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listIndexUAVResources_.Get());
+	cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listUAVResources_.Get());
+	cmdList->ResourceBarrier(1, &barrierParticleUAV);
 
 #pragma region Emitter処理
 
@@ -155,10 +155,10 @@ void Particle::Update()
 
 	barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(particleUAVResources_.Get());
 	cmdList->ResourceBarrier(1, &barrierParticleUAV);
-	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listIndexUAVResources_.Get());
-	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
-	//barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listUAVResources_.Get());
-	//cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listIndexUAVResources_.Get());
+	cmdList->ResourceBarrier(1, &barrierParticleUAV);
+	barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(listUAVResources_.Get());
+	cmdList->ResourceBarrier(1, &barrierParticleUAV);
 
 #pragma region Particle更新
 	cmdList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kUpdate)].Get());

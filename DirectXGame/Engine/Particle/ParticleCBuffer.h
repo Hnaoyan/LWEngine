@@ -81,3 +81,14 @@ struct ConstantBufferMapContext
 
 };
 
+template<IsStruct T>
+struct RWStructuredBufferContext
+{
+	// Buffer
+	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
+	HeapAllocationData heapData;
+
+	//void CreateBuffer(ID3D12Device* device);
+
+};
+
