@@ -78,13 +78,13 @@ void Particle::CreateCBuffer()
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	perFrame_.CreateConstantBuffer(device);
-	perFrame_.Mapping();
+	//perFrame_.Mapping();
 
 	emit_.CreateConstantBuffer(device);
-	emit_.Mapping();
+	//emit_.Mapping();
 
 	perView_.CreateConstantBuffer(device);
-	perView_.Mapping();
+	//perView_.Mapping();
 
 }
 
@@ -177,25 +177,6 @@ void Particle::Update()
 		D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_ALL_SHADER_RESOURCE);
 	cmdList->ResourceBarrier(1, &barrierUAV);
 
-
-	///---Structuredに送る処理---///
-	// Barrier
-	//D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
-	//	D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
-	//cmdList->ResourceBarrier(1, &barrierUAV);
-
-	//D3D12_RESOURCE_BARRIER barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
-	//	D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
-	//cmdList->ResourceBarrier(1, &barrierSRV);
-
-	//cmdList->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
-
-	//barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
-	//	D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-	//cmdList->ResourceBarrier(1, &barrierUAV);
-	//barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
-	//	D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
-	//cmdList->ResourceBarrier(1, &barrierSRV);
 }
 
 void Particle::GPUInitialize()
@@ -213,24 +194,6 @@ void Particle::GPUInitialize()
 	cmdList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeList), listUAVHandles_.second);
 
 	cmdList->Dispatch(1, 1, 1);
-
-	//// Barrier
-	//D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
-	//	D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_COPY_SOURCE);
-	//cmdList->ResourceBarrier(1, &barrierUAV);
-
-	//D3D12_RESOURCE_BARRIER barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
-	//	D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_COPY_DEST);
-	//cmdList->ResourceBarrier(1, &barrierSRV);
-
-	//cmdList->CopyResource(particleResources_.Get(), particleUAVResources_.Get());
-
-	//barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particleUAVResources_.Get(),
-	//	D3D12_RESOURCE_STATE_COPY_SOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
-	//cmdList->ResourceBarrier(1, &barrierUAV);
-	//barrierSRV = DxCreateLib::ResourceLib::GetResourceBarrier(particleResources_.Get(),
-	//	D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_GENERIC_READ);
-	//cmdList->ResourceBarrier(1, &barrierSRV);
 }
 
 void Particle::Draw(ICamera* camera) {

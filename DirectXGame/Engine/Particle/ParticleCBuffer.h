@@ -59,21 +59,28 @@ struct HeapAllocationData
 template<typename T>
 concept IsStruct = std::is_class_v<T>;
 
-template<IsStruct T>
+template<typename T>
 struct ConstantBufferMapContext
 {
+public:
 	// BufferResource
 	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
 	// Map
 	T* cMap_;
 
-
+	/// <summary>
+	/// バッファー作成
+	/// </summary>
+	/// <param name="device"></param>
 	void CreateConstantBuffer(ID3D12Device* device) {
-		// 作成
 		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) + 0xff) & ~0xff);
+		Mapping();
 	}
+private:
+	/// <summary>
+	/// マッピング
+	/// </summary>
 	void Mapping() {
-		// マッピング
 		HRESULT result = S_FALSE;
 		result = cBuffer->Map(0, nullptr, (void**)&cMap_);
 		assert(SUCCEEDED(result));
@@ -81,11 +88,17 @@ struct ConstantBufferMapContext
 
 };
 
-template<IsStruct T>
+template<typename T>
 struct RWStructuredBufferContext
 {
 	// Buffer
 	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
+
+	D3D12_CPU_DESCRIPTOR_HANDLE GetSRVCPU() const{ return srvHeapData.handles.first; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVGPU() const{ return srvHeapData.handles.second; }
+	D3D12_CPU_DESCRIPTOR_HANDLE GetUAVCPU() const{ return uavHeapData.handles.first; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetUAVGPU() const{ return uavHeapData.handles.second; }
+
 	// SRV用
 	HeapAllocationData srvHeapData;
 	// UAV用
@@ -99,7 +112,7 @@ struct RWStructuredBufferContext
 
 };
 
-template<IsStruct T>
+template<typename T>
 inline void RWStructuredBufferContext<T>::CreateBuffer(ID3D12Device* device, int32_t maxNum)
 {
 #pragma region SRV

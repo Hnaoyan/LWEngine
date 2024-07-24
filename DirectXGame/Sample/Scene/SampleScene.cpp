@@ -22,6 +22,9 @@ void SampleScene::Initialize()
 	particles_ = std::make_unique<Particle>();
 	particles_->Initialize(ModelManager::GetModel("Plane"));
 
+	gpuParticle_ = std::make_unique<GPUParticleSystem>();
+	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
+
 	plane_.worldTransform.Initialize();
 	//plane_.worldTransform.transform_.rotate.y = 3.14f;
 	plane_.worldTransform.UpdateMatrix();
@@ -110,9 +113,7 @@ void SampleScene::Initialize()
 void SampleScene::Update()
 {
 #pragma region GPUUpdate
-
-	particles_->Update();
-
+	gpuParticle_->Update();
 #pragma endregion
 
 	if (input_->TriggerKey(DIK_RSHIFT)) {
@@ -247,7 +248,8 @@ void SampleScene::Draw()
 	//cubeModel_->Draw(textureDesc);
 	//skybox_->Draw(desc);
 
-	particles_->Draw(&camera_);
+	//particles_->Draw(&camera_);
+	gpuParticle_->Draw(&camera_);
 	Model::PostDraw();
 
 #pragma region スプライト
@@ -422,6 +424,8 @@ void SampleScene::ImGuiDraw()
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->ImGuiDraw();
 	}
+	// Particle
+	gpuParticle_->ImGuiDraw();
 	// カメラの
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();

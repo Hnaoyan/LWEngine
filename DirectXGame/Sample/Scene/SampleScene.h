@@ -11,6 +11,7 @@
 #include "Engine/3D/Instancing/InstancedGroup.h"
 #include "Engine/LevelEditor/LevelLoader.h"
 #include "Engine/Particle/Particle.h"
+#include "Engine/Particle/GPUParticleSystem.h"
 
 #include <list>
 
@@ -57,6 +58,8 @@ private:
 	// 試し
 	std::array<std::unique_ptr<AnimCubeObject>, 2> cubes_;
 	std::array<std::unique_ptr<AnimSampleObject>, 3> humans_;
+
+	std::unique_ptr<GPUParticleSystem> gpuParticle_;
 
 	std::unique_ptr<PlSampleObject> player_;
 
