@@ -49,9 +49,8 @@ public:
 	/// <summary>
 	// モデル生成
 	/// </summary>
+	static Model* Create(const std::string& modelName, LoadExtension ex);
 	static Model* CreateObj(const std::string& modelName, LoadExtension ex);
-
-	// 通常のモデル
 	static Model* CreateDefault(const std::string& modelName);
 
 private:
@@ -75,6 +74,8 @@ public:
 
 	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 	void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle, uint32_t texture);
+	
+	//void ParticleDraw(const ModelDrawDesc& desc,)
 	//void AnimationDraw(const AnimDrawDesc& desc);
 
 public: // アクセッサ

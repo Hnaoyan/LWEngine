@@ -2,6 +2,7 @@
 #include "../MathLib.h"
 
 #include <cmath>
+#include <numbers>
 #include <cassert>
 
 Matrix4x4 Matrix4x4::MakeInverse(const Matrix4x4& m)
@@ -451,6 +452,40 @@ Matrix4x4 Matrix4x4::MakePerspectiveFovMatrix(float fovY, float aspectRatio, flo
 	result.m[2][2] = (farClip) / (farClip - nearClip);
 	result.m[2][3] = 1;
 	result.m[3][2] = (-nearClip * farClip) / (farClip - nearClip);
+
+	return result;
+}
+
+Matrix4x4 Matrix4x4::MakeBillBoardMatrix(const Matrix4x4& cameraMatrix)
+{
+	Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
+	Matrix4x4 billBoardMatrix = Multiply(backToFrontMatrix, cameraMatrix);
+	billBoardMatrix.m[3][0] = 0.0f;
+	billBoardMatrix.m[3][1] = 0.0f;
+	billBoardMatrix.m[3][2] = 0.0f;
+	return Matrix4x4(billBoardMatrix);
+}
+Matrix4x4 Matrix4x4::MakeBillBoardMatrix(const Vector3& target, const Vector3& eye, const Vector3& up)
+{
+	// 回転行列
+	// X軸
+	Vector3 zAxis = Vector3::Normalize(target-eye);
+	// Y軸
+	Vector3 xAxis = Vector3::Normalize(Vector3::Cross(up, zAxis));
+	// Z軸
+	Vector3 yAxis = Vector3::Cross(zAxis, xAxis);
+
+	Matrix4x4 result{};
+
+	result.m[0][0] = xAxis.x;
+	result.m[0][1] = xAxis.y;
+	result.m[0][2] = xAxis.z;
+	result.m[1][0] = yAxis.x;
+	result.m[1][1] = yAxis.y;
+	result.m[1][2] = yAxis.z;
+	result.m[1][0] = zAxis.x;
+	result.m[1][1] = zAxis.y;
+	result.m[1][2] = zAxis.z;
 
 	return result;
 }

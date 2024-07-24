@@ -87,6 +87,18 @@ namespace DxCreateLib
 			return barrier;
 		}
 
+		inline static D3D12_RESOURCE_BARRIER GetUAVBarrier(ID3D12Resource* buffer) {
+			// TransitionBarrierの設定
+			D3D12_RESOURCE_BARRIER barrier{};
+			// 今回のバリアはTransition
+			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_UAV;
+			// Noneにしておく
+			barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+			// バリアを張る対象のリソース。
+			barrier.Transition.pResource = buffer;
+			return barrier;
+		}
+
 		inline static ID3D12Resource* CreateBufferResource(ID3D12Device* device, const size_t& sizeInBytes) {
 			ID3D12Resource* resultResource = nullptr;
 
@@ -115,6 +127,74 @@ namespace DxCreateLib
 
 			hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
 				&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+				IID_PPV_ARGS(&resultResource));
+			assert(SUCCEEDED(hr));
+
+			return resultResource;
+		}
+
+		inline static ID3D12Resource* CreateResourceSRV(ID3D12Device* device, const size_t& sizeInBytes) {
+			ID3D12Resource* resultResource = nullptr;
+
+			// 頂点リソースの設定
+			D3D12_RESOURCE_DESC resourceDesc{};
+			// バッファリソース。テクスチャの場合はまた別の設定をする
+			resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resourceDesc.Alignment = 0;
+			resourceDesc.Width = sizeInBytes;	// リソースのサイズ
+			// バッファの場合はこれらは1にする決まり
+			resourceDesc.Height = 1;
+			resourceDesc.DepthOrArraySize = 1;
+			resourceDesc.MipLevels = 1;
+			resourceDesc.Format = DXGI_FORMAT_UNKNOWN;
+			resourceDesc.SampleDesc.Count = 1;
+			resourceDesc.SampleDesc.Quality = 0;
+			// バッファの場合はこれにする決まり
+			resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+			resourceDesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+
+			// 頂点リソース用のヒープの設定
+			D3D12_HEAP_PROPERTIES uploadHeapProperties{};
+			uploadHeapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;	// UploadHeapを使う
+			// 実際に頂点リソースを作る
+			HRESULT hr = S_FALSE;
+
+			hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
+				&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+				IID_PPV_ARGS(&resultResource));
+			assert(SUCCEEDED(hr));
+
+			return resultResource;
+		}
+
+		inline static ID3D12Resource* CreateResourceUAV(ID3D12Device* device, const size_t& sizeInBytes) {
+			ID3D12Resource* resultResource = nullptr;
+
+			// 頂点リソースの設定
+			D3D12_RESOURCE_DESC resourceDesc{};
+			// バッファリソース。テクスチャの場合はまた別の設定をする
+			resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+			resourceDesc.Alignment = 0;
+			resourceDesc.Width = sizeInBytes;	// リソースのサイズ
+			// バッファの場合はこれらは1にする決まり
+			resourceDesc.Height = 1;
+			resourceDesc.DepthOrArraySize = 1;
+			resourceDesc.MipLevels = 1;
+			resourceDesc.Format = DXGI_FORMAT_UNKNOWN;
+			resourceDesc.SampleDesc.Count = 1;
+			resourceDesc.SampleDesc.Quality = 0;
+			// バッファの場合はこれにする決まり
+			resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+			resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS;
+
+			// 頂点リソース用のヒープの設定
+			D3D12_HEAP_PROPERTIES uploadHeapProperties{};
+			uploadHeapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+			// 実際に頂点リソースを作る
+			HRESULT hr = S_FALSE;
+
+			hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
+				&resourceDesc, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, nullptr,
 				IID_PPV_ARGS(&resultResource));
 			assert(SUCCEEDED(hr));
 

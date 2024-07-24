@@ -68,8 +68,8 @@ namespace Pipeline
 	enum class ParticleRegister : int {
 		kMaterial,
 		kTexture,
-		kWorldTransform,
-		kViewProjection,
+		kMatrixs,
+		kCamera,
 
 		kCountOfParameter,
 	};
@@ -118,12 +118,41 @@ namespace Pipeline
 		kCountOfType,		
 	};
 
+	enum class GPUParticleRegister : int {
+		kUAVParticle,	// 書き込み
+		kUAVFreeListIndex,	// リストの番号
+		kUAVFreeList,		// リスト
+		kEmitter,		// エミッター
+		kPerTime,		// 時間関係のデータ
+		kCountOfParameter,	// 数
+	};
+
+	enum class GPUParticlePipeline {
+		kInitialize,
+		kEmit,
+		kUpdate,
+		kCountOfProcess,
+	};
+
 }
 
 struct GeneralPipeline
 {
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct ParticleCSPipeline 
+{
+	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
+		size_t(Pipeline::GPUParticlePipeline::kCountOfProcess)> pipelineStates;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+};
+
+struct CSPipeline 
+{
+	GeneralPipeline graphicsPipeline;
+	ParticleCSPipeline computeShaderPipeline;
 };
 
 struct BlendPipeline
@@ -159,6 +188,8 @@ public:
 	// 統合
 	static std::array<PipelineVariant, size_t(Order::kCountOfParameter)>sPipelines_;
 
+	static ParticleCSPipeline sParticleGPU_;
+	static GeneralPipeline sSkinningGPU_;
 	// Particle用（インスタンシング
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sParticlePipelineStates_;
 	static Microsoft::WRL::ComPtr<ID3D12RootSignature> sParticleRootSignature_;
@@ -181,10 +212,12 @@ private:
 	/// パーティクル作成
 	/// </summary>
 	static void CreateParticlePSO();
+	static void CreateParticleCSPSO();
 	/// <summary>
 	/// Skinning作成
 	/// </summary>
 	static void CreateSkinningModelPSO();
+	static void CreateSkinningCS();
 	/// <summary>
 	/// ポストエフェクト作成
 	/// </summary>

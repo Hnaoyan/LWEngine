@@ -19,6 +19,17 @@ void SampleScene::Initialize()
 	levelLoader_ = std::make_unique<LevelLoader>();
 	levelLoader_->LoadSceneData("testData");
 
+	particles_ = std::make_unique<Particle>();
+	particles_->Initialize(ModelManager::GetModel("Plane"));
+
+	gpuParticle_ = std::make_unique<GPUParticleSystem>();
+	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
+
+	plane_.worldTransform.Initialize();
+	//plane_.worldTransform.transform_.rotate.y = 3.14f;
+	plane_.worldTransform.UpdateMatrix();
+	plane_.model = ModelManager::GetModel("Plane");
+
 	testWTF_.Initialize();
 	testWTF_.transform_.translate = { 0,0,0.0f };
 	testWTF_.transform_.scale = { 1,1,1 };
@@ -59,8 +70,8 @@ void SampleScene::Initialize()
 	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
-	camera_.transform_.translate.y = 5.0f;
-	camera_.transform_.rotate.x = 0.4f;
+	//camera_.transform_.translate.y = 5.0f;
+	//camera_.transform_.rotate.x = 0.4f;
 	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
@@ -101,6 +112,9 @@ void SampleScene::Initialize()
 
 void SampleScene::Update()
 {
+#pragma region GPUUpdate
+	gpuParticle_->Update();
+#pragma endregion
 
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeScene("GAME");
@@ -160,6 +174,8 @@ void SampleScene::Update()
 		(*it)->Update();
 	}
 
+	plane_.worldTransform.UpdateMatrix();
+
 	player_->Update();
 	// カメラの更新
 	CameraUpdate();
@@ -204,20 +220,24 @@ void SampleScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.worldTransform = &testWTF_;
 
-	humans_[0]->Draw(desc);
-	humans_[1]->Draw(desc);
-	humans_[2]->Draw(desc);
+	//humans_[0]->Draw(desc);
+	//humans_[1]->Draw(desc);
+	//humans_[2]->Draw(desc);
 
-	testGroup1_->Draw(desc);
+	//testGroup1_->Draw(desc);
 	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
 		it != group_.end(); ++it) {
-		(*it)->Draw(desc);
+		//(*it)->Draw(desc);
 	}
 
 	//player_->Draw(&camera_);
 	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->Draw(desc);
+		//cubes_[i]->Draw(desc);
 	}
+	
+	desc.worldTransform = &plane_.worldTransform;
+	//plane_.model->Draw(desc);
+
 	ModelDrawDesc textureDesc{};
 	textureDesc.camera = &camera_;
 	textureDesc.directionalLight = directionalLight_.get();
@@ -225,10 +245,11 @@ void SampleScene::Draw()
 	textureDesc.pointLight = pointLight_.get();
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
-	cubeModel_->Draw(textureDesc);
-	skybox_->Draw(desc);
+	//cubeModel_->Draw(textureDesc);
+	//skybox_->Draw(desc);
 
-
+	//particles_->Draw(&camera_);
+	gpuParticle_->Draw(&camera_);
 	Model::PostDraw();
 
 #pragma region スプライト
@@ -247,6 +268,8 @@ void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
+	ImGui::DragFloat3("PlanePos", &plane_.worldTransform.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("PlaneRot", &plane_.worldTransform.transform_.rotate.x, 0.01f);
 	if (ImGui::Button("Test1Add")) {
 		testGroup1_->UnitRegist(generatePosition_);
 	}
@@ -401,6 +424,8 @@ void SampleScene::ImGuiDraw()
 	for (int i = 0; i < cubes_.size(); ++i) {
 		cubes_[i]->ImGuiDraw();
 	}
+	// Particle
+	gpuParticle_->ImGuiDraw();
 	// カメラの
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
@@ -420,6 +445,7 @@ void SampleScene::LoadModel()
 	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Skydome::CreateSkydome());
+	ModelManager::LoadObjModel("Plane", "plane");
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
