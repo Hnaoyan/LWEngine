@@ -24,3 +24,10 @@ struct CBufferDataNoise
 	int32_t enableScreen;	// 画面にかけるかノイズのみか
 	float time;	// 変化時間
 };
+
+struct CBufferDataHSV
+{
+	float hue;			// H
+	float saturation;	// S
+	float value;		// V
+};

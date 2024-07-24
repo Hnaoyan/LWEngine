@@ -30,7 +30,7 @@ void WorldTransform::UpdateMatrix()
 			// スケール
 			Matrix4x4 scaleMat = Matrix4x4::MakeScaleMatrix(transform_.scale);
 			// 回転
-			Matrix4x4 rotateMat = Matrix4x4::DirectionToDirection({ 0.0f,0.0f,1.0f }, rotateDirect_);
+			Matrix4x4 rotateMat = Matrix4x4::DirectionToDirection({ 0.0f,0.0f,1.0f }, Vector3::Normalize(rotateDirect_));
 			// 平行移動
 			Matrix4x4 translateMat = Matrix4x4::MakeTranslateMatrix(transform_.translate);
 

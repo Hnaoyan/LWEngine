@@ -1,4 +1,4 @@
-#include "3DModel.hlsli"
+#include "../3DModel.hlsli"
 
 struct VSInput
 {

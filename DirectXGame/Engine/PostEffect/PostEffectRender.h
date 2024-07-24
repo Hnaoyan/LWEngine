@@ -27,6 +27,8 @@ public:	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> noiseCBuffer_;
 	CBufferDataNoise* noiseMap_ = nullptr;
 
+	Microsoft::WRL::ComPtr<ID3D12Resource> hsvCBuffer_;
+	CBufferDataHSV* hsvMap_ = nullptr;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -39,6 +41,7 @@ public:
 		CBufferDataVignette vignette;
 		CBufferDataDissolve dissolve;
 		CBufferDataNoise noise;
+		CBufferDataHSV hsv;
 	};
 	/// <summary>
 	/// 更新処理

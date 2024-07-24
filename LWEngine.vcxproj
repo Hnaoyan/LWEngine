@@ -79,6 +79,9 @@
     <ClCompile Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Particle\GPUParticleSystem.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
@@ -190,6 +193,7 @@
     <ClInclude Include="DirectXGame\Engine\Light\Lights\SpotLight.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Ease\Ease.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\DebounceTimer.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />
@@ -197,6 +201,10 @@
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector2.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\Particle.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\ParticleCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
@@ -250,6 +258,42 @@
     <FxCompile Include="Resources\shaders\Instanced\InstancedModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle\Emitter\EmitParticleCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle\InitializeParticleCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle\ParticlePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle\ParticleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle\UpdateParticleCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
@@ -319,9 +363,23 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\Skining3DModelVS.hlsl">
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
@@ -353,6 +411,7 @@
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
+    <None Include="Resources\shaders\Particle\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />

@@ -24,6 +24,13 @@ public:
 	static void LoadNormalModel(const std::string& tag, const std::string& filePath);
 
 	/// <summary>
+	/// Objの読み込み
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <param name="filePath"></param>
+	static void LoadObjModel(const std::string& tag, const std::string& filePath);
+
+	/// <summary>
 	/// モデルの取得
 	/// </summary>
 	/// <param name="tag"></param>
