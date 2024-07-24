@@ -33,6 +33,7 @@ public: // メンバ関数
 	/// エミッターの作成
 	/// </summary>
 	void CreateEmitter();
+	void DeleteEmitter();
 private:
 	EmitterSphere createData_{};
 	Model* model_ = nullptr;

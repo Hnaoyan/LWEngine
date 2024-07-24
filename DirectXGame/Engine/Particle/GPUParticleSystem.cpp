@@ -36,6 +36,9 @@ void GPUParticleSystem::ImGuiDraw()
 	if (ImGui::Button("Create")) {
 		CreateEmitter();
 	}
+	if (ImGui::Button("Delete")) {
+		DeleteEmitter();
+	}
 	ImGui::Separator();
 	if (ImGui::TreeNode("CreateData")) {
 		ImGui::DragFloat3("Position", &createData_.translate.x, 0.01f);
@@ -57,4 +60,11 @@ void GPUParticleSystem::CreateEmitter()
 	instance->Initialize(model_);
 	instance->UpdateEmitter(createData_);
 	emitters_.push_back(std::move(instance));
+}
+
+void GPUParticleSystem::DeleteEmitter()
+{
+	if (!emitters_.empty()) {
+		emitters_.erase(emitters_.begin());
+	}
 }

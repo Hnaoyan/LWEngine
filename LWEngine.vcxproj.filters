@@ -555,5 +555,6 @@
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
+    <None Include="Resources\shaders\Utillity\Random.hlsli" />
   </ItemGroup>
 </Project>
