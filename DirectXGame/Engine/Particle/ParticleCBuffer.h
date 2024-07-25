@@ -53,7 +53,7 @@ enum class BufferType {
 struct HeapAllocationData
 {
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> handles;
-	uint32_t index;
+	uint32_t index = 0u;
 };
 
 template<typename T>
@@ -66,7 +66,7 @@ public:
 	// BufferResource
 	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
 	// Map
-	T* cMap_;
+	T* cMap_ = nullptr;
 
 	/// <summary>
 	/// バッファー作成
@@ -100,9 +100,9 @@ struct RWStructuredBufferContext
 	D3D12_GPU_DESCRIPTOR_HANDLE GetUAVGPU() const{ return uavHeapData.handles.second; }
 
 	// SRV用
-	HeapAllocationData srvHeapData;
+	HeapAllocationData srvHeapData{};
 	// UAV用
-	HeapAllocationData uavHeapData;
+	HeapAllocationData uavHeapData{};
 	/// <summary>
 	/// バッファーデータ作成
 	/// </summary>

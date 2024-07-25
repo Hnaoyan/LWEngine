@@ -4,6 +4,7 @@
 
 #include <string>
 #include <memory>
+#include <map>
 
 class LevelLoader : public Singleton<LevelLoader>
 {
@@ -21,4 +22,5 @@ public:
 
 	static std::unique_ptr<LevelData> data_;
 
+	static std::map<std::string, std::unique_ptr<LevelData>> datas_;
 };

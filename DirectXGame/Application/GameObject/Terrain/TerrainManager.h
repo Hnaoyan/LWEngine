@@ -25,6 +25,7 @@ public:
 	/// 追加
 	/// </summary>
 	void AddCluster();
+	void AddCluster(std::string tag);
 
 	/// <summary>
 	/// ImGui

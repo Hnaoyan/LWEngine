@@ -17,7 +17,7 @@ void SampleScene::Initialize()
 	LoadTexture();
 
 	levelLoader_ = std::make_unique<LevelLoader>();
-	levelLoader_->LoadSceneData("TestData");
+	levelLoader_->LoadSceneData("01_12");
 
 	particles_ = std::make_unique<Particle>();
 	particles_->Initialize(ModelManager::GetModel("Plane"));
@@ -446,6 +446,7 @@ void SampleScene::LoadModel()
 	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Skydome::CreateSkydome());
 	ModelManager::LoadObjModel("Plane", "plane");
+	ModelManager::LoadObjModel("Axis", "BulletTest");
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

@@ -44,18 +44,18 @@ public:
 
 	// SRV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;
-	uint32_t srvIndex_;
+	uint32_t srvIndex_ = 0u;
 
 	HeapAllocationData srvAllocater_;
 
 	// UAV情報
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> uavHandles_;
-	uint32_t uavIndex_;
+	uint32_t uavIndex_ = 0u;
 
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> listIndexUAVHandles_;
 	uint32_t listIndexUAVIndex_;
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> listUAVHandles_;
-	uint32_t listUAVIndex_;
+	uint32_t listUAVIndex_ = 0u;
 	// Unitの数
 	uint32_t unitNum_ = 0u;
 

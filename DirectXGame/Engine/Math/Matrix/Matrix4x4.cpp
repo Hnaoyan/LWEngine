@@ -323,7 +323,7 @@ Matrix4x4 Matrix4x4::MakeRotateXYZMatrix(const Vector3& rotate)
 	// Z
 	Matrix4x4 matrixZ = MakeRotateZMatrix(rotate.z);
 	// 回転行列
-	Matrix4x4 matrixRotate = Multiply(matrixX, Multiply(matrixY, matrixZ));
+	Matrix4x4 matrixRotate = Multiply(matrixX, Multiply(matrixZ, matrixY));
 
 	return matrixRotate;
 }

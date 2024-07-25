@@ -36,7 +36,7 @@ public:
 	float animationTime_ = 0;
 
 	// アニメーション用のトランスフォーム
-	QuaternionTransform transform_;
+	QuaternionTransform transform_{};
 	// ローカル行列
 	Matrix4x4 localMatrix_ = {};
 

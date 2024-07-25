@@ -3,12 +3,12 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "Back",
+            "name": "Cube",
             "transform": {
                 "translation": [
                     0.0,
-                    -15.0,
-                    0.0
+                    0.0,
+                    -2.0
                 ],
                 "rotation": [
                     0.0,
@@ -16,41 +16,22 @@
                     0.0
                 ],
                 "scaling": [
-                    3.0,
-                    3.0,
-                    3.0
-                ]
-            }
-        },
-        {
-            "type": "MESH",
-            "name": "Floar",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    -4.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    100.0,
-                    100.0,
+                    200.0,
+                    200.0,
                     1.0
                 ]
-            }
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
         },
         {
             "type": "MESH",
-            "name": "Left",
+            "name": "立方体",
             "transform": {
                 "translation": [
-                    -15.0,
+                    20.0,
                     0.0,
-                    0.0
+                    3.0
                 ],
                 "rotation": [
                     0.0,
@@ -58,20 +39,22 @@
                     0.0
                 ],
                 "scaling": [
-                    3.0,
-                    3.0,
-                    3.0
+                    4.0,
+                    4.0,
+                    4.0
                 ]
-            }
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
         },
         {
             "type": "MESH",
-            "name": "Right",
+            "name": "立方体.001",
             "transform": {
                 "translation": [
-                    15.0,
+                    -20.0,
                     0.0,
-                    0.0
+                    3.0
                 ],
                 "rotation": [
                     0.0,
@@ -79,20 +62,22 @@
                     0.0
                 ],
                 "scaling": [
-                    3.0,
-                    3.0,
-                    3.0
+                    4.0,
+                    4.0,
+                    4.0
                 ]
-            }
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
         },
         {
             "type": "MESH",
-            "name": "Front",
+            "name": "立方体.002",
             "transform": {
                 "translation": [
                     0.0,
-                    15.0,
-                    0.0
+                    20.0,
+                    3.0
                 ],
                 "rotation": [
                     0.0,
@@ -100,11 +85,35 @@
                     0.0
                 ],
                 "scaling": [
-                    3.0,
-                    3.0,
-                    3.0
+                    4.0,
+                    4.0,
+                    4.0
                 ]
-            }
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
+        },
+        {
+            "type": "MESH",
+            "name": "薬莢",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.0,
+                    1.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Bullet"
         }
     ]
 }

@@ -1,5 +1,6 @@
 #include "TerrainManager.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
+#include "Engine/3D/ModelManager.h"
 #include "Engine/LevelEditor/LevelLoader.h"
 
 #include "Terrain.h"
@@ -11,7 +12,8 @@ void TerrainManager::Initialize(Model* model)
 	assert(model);
 	model_ = model;
 
-	AddCluster();
+	AddCluster("Terrain");
+	AddCluster("Object");
 
 }
 
@@ -35,17 +37,32 @@ void TerrainManager::AddCluster()
 {
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
 	static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
-	for (std::list<LevelData::ObjectData>::iterator it = LevelLoader::data_->objects.begin();
-		it != LevelLoader::data_->objects.end(); ++it) {
+	for (std::list<LevelData::ObjectData>::iterator it = LevelLoader::datas_["Terrain"]->objects.begin();
+		it != LevelLoader::datas_["Terrain"]->objects.end(); ++it) {
+		//if ("Block" != (*it).filename.substr(0, 5)) {
+		//	break;
+		//}
+		//LevelLoader::datas_.find("Block");
 		static_cast<TerrainCluster*>(instance.get())->TerrainRegister((*it).transform);
 	}
 	clusters_.push_back(std::move(instance));
-	//std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
-	//static_cast<TerrainCluster*>(instance.get())->Initialize(model_);
-	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{10.0f,0.0f,0.0f} });
-	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,10.0f,0.0f} });
-	//static_cast<TerrainCluster*>(instance.get())->TerrainRegister({ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,10.0f} });
-	//clusters_.push_back(std::move(instance));
+}
+
+void TerrainManager::AddCluster(std::string tag)
+{
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
+	if (tag == "Object") {
+		static_cast<TerrainCluster*>(instance.get())->Initialize(ModelManager::GetModel("Axis"));
+	}
+	else {
+		static_cast<TerrainCluster*>(instance.get())->Initialize(ModelManager::GetModel("DefaultCube"));
+	}
+	
+	for (std::list<LevelData::ObjectData>::iterator it = LevelLoader::datas_[tag]->objects.begin();
+		it != LevelLoader::datas_[tag]->objects.end(); ++it) {
+		static_cast<TerrainCluster*>(instance.get())->TerrainRegister((*it).transform);
+	}
+	clusters_.push_back(std::move(instance));
 }
 
 void TerrainManager::ImGuiDraw()

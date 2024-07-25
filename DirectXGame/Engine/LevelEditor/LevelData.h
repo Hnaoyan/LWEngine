@@ -16,5 +16,6 @@ public:
 	std::list<ObjectData> objects;
 
 	EulerTransform transform_;
+	//std::string 
 
 };

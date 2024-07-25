@@ -6,6 +6,7 @@
 #include <numbers>
 
 std::unique_ptr<LevelData> LevelLoader::data_;
+std::map<std::string, std::unique_ptr<LevelData>> LevelLoader::datas_;
 
 void LevelLoader::LoadSceneData(const std::string& filename)
 {
@@ -40,6 +41,8 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 	// レベルデータ格納用インスタンスを生成
 	//LevelData* levelData = new LevelData();
 	data_ = std::make_unique<LevelData>();
+	datas_["Terrain"] = std::make_unique<LevelData>();
+	datas_["Object"] = std::make_unique<LevelData>();
 
 	// "objects"の全オブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"]) {
@@ -51,9 +54,14 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 		// MESH
 		if (type.compare("MESH") == 0) {
 			// 要素追加
+			std::string listName = "Object";
+			if (object["file_name"] == "Terrain") {
+				listName = "Terrain";
+			}
+			datas_[listName]->objects.emplace_back(LevelData::ObjectData{});
 			data_->objects.emplace_back(LevelData::ObjectData{});
 			// 今追加した要素の参照を得る
-			LevelData::ObjectData& objectData = data_->objects.back();
+			LevelData::ObjectData& objectData = datas_[listName]->objects.back();
 
 			if (object.contains("name")) {
 				// ファイル名

@@ -33,7 +33,7 @@ public:
 
 	bool isForward_ = true;
 	bool isStop_ = false;
-	AnimationData* animationData_;
+	AnimationData* animationData_ = nullptr;
 	float animationTime_ = 0.0f;
 	// 再生方向
 	PlayBack playType_ = PlayBack::kForward;
