@@ -3,6 +3,7 @@
 #include <json.hpp>
 #include <fstream>
 #include <cassert>
+#include <numbers>
 
 std::unique_ptr<LevelData> LevelLoader::data_;
 
@@ -67,9 +68,9 @@ void LevelLoader::LoadSceneData(const std::string& filename)
 			objectData.transform.translate.y = (float)transform["translation"][2];
 			objectData.transform.translate.z = (float)transform["translation"][1];
 			//
-			objectData.transform.rotate.x = -(float)transform["rotation"][0];
-			objectData.transform.rotate.y = -(float)transform["rotation"][2];
-			objectData.transform.rotate.z = -(float)transform["rotation"][1];
+			objectData.transform.rotate.x = (-(float)transform["rotation"][0]) * (float)std::numbers::pi / 180.0f;
+			objectData.transform.rotate.y = (-(float)transform["rotation"][2]) * (float)std::numbers::pi / 180.0f;
+			objectData.transform.rotate.z = (-(float)transform["rotation"][1]) * (float)std::numbers::pi / 180.0f;
 			//
 			objectData.transform.scale.x = (float)transform["scaling"][0];
 			objectData.transform.scale.y = (float)transform["scaling"][2];

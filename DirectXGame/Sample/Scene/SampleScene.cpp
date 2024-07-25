@@ -17,7 +17,7 @@ void SampleScene::Initialize()
 	LoadTexture();
 
 	levelLoader_ = std::make_unique<LevelLoader>();
-	levelLoader_->LoadSceneData("TestStage");
+	levelLoader_->LoadSceneData("TestData");
 
 	particles_ = std::make_unique<Particle>();
 	particles_->Initialize(ModelManager::GetModel("Plane"));
@@ -120,7 +120,7 @@ void SampleScene::Update()
 		sceneManager_->ChangeScene("GAME");
 	}
 	// コントローラー
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A)) {
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
 		sceneManager_->ChangeScene("GAME");
 	}
 

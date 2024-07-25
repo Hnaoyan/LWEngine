@@ -3,12 +3,12 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "Cube",
+            "name": "Floar",
             "transform": {
                 "translation": [
-                    1.9900000095367432,
                     0.0,
-                    0.0
+                    0.0,
+                    -2.0
                 ],
                 "rotation": [
                     0.0,
@@ -16,20 +16,20 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
+                    200.0,
+                    200.0,
                     1.0
                 ]
             }
         },
         {
             "type": "MESH",
-            "name": "Cube1",
+            "name": "立方体.001",
             "transform": {
                 "translation": [
-                    -3.93999981880188,
                     0.0,
-                    0.0
+                    24.0,
+                    3.0
                 ],
                 "rotation": [
                     0.0,
@@ -37,9 +37,156 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -24.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.003",
+            "transform": {
+                "translation": [
+                    -24.0,
+                    0.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    24.0,
+                    0.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "naname",
+            "transform": {
+                "translation": [
+                    16.0,
+                    16.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "naname.001",
+            "transform": {
+                "translation": [
+                    16.0,
+                    -16.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "naname.002",
+            "transform": {
+                "translation": [
+                    -16.0,
+                    -16.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
+                ]
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "naname.003",
+            "transform": {
+                "translation": [
+                    -16.0,
+                    16.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    4.0,
+                    4.0,
+                    4.0
                 ]
             }
         }
