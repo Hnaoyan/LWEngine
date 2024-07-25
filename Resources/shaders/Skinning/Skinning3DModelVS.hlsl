@@ -18,6 +18,7 @@ struct Skinned
 ConstantBuffer<Camera> gCamera : register(b0);
 ConstantBuffer<WorldTransform> gWorldTransform : register(b1);
 StructuredBuffer<Well> gMatrixPalette : register(t0);
+//StructuredBuffer<Vertex> gVertex : register(t0);
 
 Skinned Skinning(VSInput input)
 {

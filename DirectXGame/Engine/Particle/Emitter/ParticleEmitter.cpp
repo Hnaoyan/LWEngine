@@ -45,13 +45,14 @@ void ParticleEmitter::Update()
 	else {
 		emitter_.cMap_->emit = 0;
 	}
-
+	
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
 	sCommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
 	sCommandList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)].Get());
 
 	BarrierUAV();
+
 #pragma region Emitter更新
 	// パーティクルデータ
 	sCommandList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVParticle), particles_.GetUAVGPU());
@@ -64,7 +65,9 @@ void ParticleEmitter::Update()
 	sCommandList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
 	sCommandList->Dispatch(1, 1, 1);
 #pragma endregion
+
 	BarrierUAV();
+
 #pragma region Particle更新
 	sCommandList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kUpdate)].Get());
 	// パーティクルデータ
@@ -76,6 +79,7 @@ void ParticleEmitter::Update()
 	sCommandList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
 	sCommandList->Dispatch(1, 1, 1);
 #pragma endregion
+
 	// SRVで使うように設定
 	D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particles_.cBuffer.Get(),
 		D3D12_RESOURCE_STATE_UNORDERED_ACCESS, D3D12_RESOURCE_STATE_ALL_SHADER_RESOURCE);
@@ -112,10 +116,12 @@ void ParticleEmitter::Draw(ICamera* camera)
 	sCommandList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::ParticleRegister::kMatrixs), particles_.GetSRVGPU());
 	// 描画処理
 	sCommandList->DrawIndexedInstanced(UINT(model_->GetModelData()->indices.size()), GPUParticleSystem::kNumInstanceMax, 0, 0, 0);
+#pragma endregion
+
+	// 元のリソースの状態に
 	D3D12_RESOURCE_BARRIER barrierUAV = DxCreateLib::ResourceLib::GetResourceBarrier(particles_.cBuffer.Get(),
 		D3D12_RESOURCE_STATE_ALL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
 	sCommandList->ResourceBarrier(1, &barrierUAV);
-#pragma endregion
 
 }
 
