@@ -45,6 +45,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\ICollider.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collision.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\DebugCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderLists.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderShape.h" />

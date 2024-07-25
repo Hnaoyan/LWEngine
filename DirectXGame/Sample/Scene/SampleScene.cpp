@@ -120,7 +120,7 @@ void SampleScene::Update()
 		sceneManager_->ChangeScene("GAME");
 	}
 	// コントローラー
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A)) {
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
 		sceneManager_->ChangeScene("GAME");
 	}
 
