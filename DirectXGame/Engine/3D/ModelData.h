@@ -96,3 +96,19 @@ struct ModelDrawDesc
 	}
 
 };
+
+/// <summary>
+/// 今後作る可能性のある設計図
+/// </summary>
+namespace Modeler {
+	class Drawer : public Singleton<Drawer> {
+
+	};
+	struct Desc {
+
+	};
+	class Loader {
+
+	};
+
+}

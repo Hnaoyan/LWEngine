@@ -4,7 +4,7 @@ class Quaternion;
 class Vector3;
 class Vector2;
 
-class Matrix4x4
+class Matrix4x4 final
 {
 public:
 	float m[4][4];

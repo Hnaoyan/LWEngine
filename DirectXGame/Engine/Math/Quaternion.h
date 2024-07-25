@@ -1,7 +1,8 @@
 #pragma once
 #include "Vector/Vector3.h"
 
-class Quaternion {
+class Quaternion final
+{
 public:
 	float x, y, z, w;
 

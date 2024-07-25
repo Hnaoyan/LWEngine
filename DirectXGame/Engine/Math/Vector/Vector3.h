@@ -1,7 +1,7 @@
 #pragma once
 #include <cmath>
 
-class Vector3
+class Vector3 final
 {
 public:
 	float x;

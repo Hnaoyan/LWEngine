@@ -1,6 +1,7 @@
 #pragma once
 
-class Vector2 {
+class Vector2 final
+{
 public:
 
 	float x;
