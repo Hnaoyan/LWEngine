@@ -59,6 +59,27 @@ public: // 複合演算子
 		return *this;
 	}
 
+	Vector3& operator=(const Vector3& Other) {
+		this->x = Other.x;
+		this->y = Other.y;
+		this->z = Other.z;
+		return *this;
+	}
+
+	bool operator==(const Vector3& Other) {
+		bool isX = this->x == Other.x;
+		bool isY = this->y == Other.y;
+		bool isZ = this->z == Other.z;
+		return isX && isY && isZ;
+	}
+
+	bool operator!=(const Vector3& Other) {
+		bool isX = this->x == Other.x;
+		bool isY = this->y == Other.y;
+		bool isZ = this->z == Other.z;
+		return !isX && !isY && !isZ;
+	}
+
 	inline static Vector3 Scaler(const Vector3& me, float scaler) {
 		return Vector3(me.x * scaler, me.y * scaler, me.z * scaler);
 	}

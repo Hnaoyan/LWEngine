@@ -53,6 +53,24 @@ public:
 		this->y /= Scaler;
 		return *this;
 	}
+	Vector2& operator=(const Vector2& Other) {
+		this->x = Other.x;
+		this->y = Other.y;
+		return *this;
+	}
+
+	bool operator==(const Vector2& Other) {
+		bool isX = this->x == Other.x;
+		bool isY = this->y == Other.y;
+		return isX && isY;
+	}
+
+	bool operator!=(const Vector2& Other) {
+		bool isX = this->x == Other.x;
+		bool isY = this->y == Other.y;
+		return !isX && !isY;
+	}
+
 #pragma endregion
 
 };
