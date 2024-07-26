@@ -48,7 +48,7 @@ public: // アクセッサ
 
 	// ポインタ関係
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
-	void SetBulletManager(SampleBulletManager* manager) { systemManager_.SetManager(manager); }
+	void SetBulletManager(BulletManager* manager) { systemManager_.SetManager(manager); }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { systemManager_.SetEnemyList(lists); }
 	// ステート
 	IPlayerState* GetState() { return currentState_.get(); }

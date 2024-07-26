@@ -1,7 +1,7 @@
 #include "OperationManager.h"
 #include "../../../GameSystem/GameSystem.h"
 #include "../Player.h"
-#include "../../Bullet/SampleBulletManager.h"
+#include "../../Bullet/BulletManager.h"
 
 #include "Engine/Input/Input.h"
 #include "Engine/LwLib/LwEngineLib.h"
@@ -54,12 +54,13 @@ void OparationManager::InputUpdate()
 	}
 		
 	if (input_->XRTrigger() && !shotTimer_.isActive_) {
-		SampleBulletManager::GenerateData data{};
-		data.position = player_->worldTransform_.GetWorldPosition();
-		data.velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
+		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		float speedValue = 30.0f;
-		data.velocity *= speedValue;
-		bulletManager_->AddBullet(data);
+		velocity *= speedValue;
+		EulerTransform transform{};
+		transform.scale = { 1.0f,1.0f,1.0f };
+		transform.translate = player_->worldTransform_.GetWorldPosition();
+		bulletManager_->GetBeginCluster()->AddBullet(transform, velocity);
 		shotTimer_.Start(30.0f);
 	}
 

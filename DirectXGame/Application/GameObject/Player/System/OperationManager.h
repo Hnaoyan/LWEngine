@@ -5,7 +5,7 @@
 
 class Player;
 class Input;
-class SampleBulletManager;
+class BulletManager;
 
 class OparationManager
 {
@@ -28,7 +28,7 @@ private:
 	/// </summary>
 	void GravityUpdate();
 public:
-	void SetManager(SampleBulletManager* manager) { bulletManager_ = manager; }
+	void SetManager(BulletManager* manager) { bulletManager_ = manager; }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
 	AimManager* GetAimManager() { return &aimManager_; }
 	LockOn* GetLockOn() { return &lockOn_; }
@@ -38,7 +38,7 @@ private: // POINTER
 	// 入力クラス
 	Input* input_ = nullptr;
 	// 弾の管理クラス
-	SampleBulletManager* bulletManager_ = nullptr;
+	BulletManager* bulletManager_ = nullptr;
 
 private: // USER
 	bool isDash_ = false;

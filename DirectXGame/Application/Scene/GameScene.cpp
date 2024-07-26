@@ -21,9 +21,9 @@ void GameScene::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Sphere"));
 
-	bulletManager_ = std::make_unique<SampleBulletManager>();
+	bulletManager_ = std::make_unique<BulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
-	bulletManager_->SetCollisionManager(collisionManager_.get());
+
 
 	enemyManager_ = std::make_unique<SampleEnemyManager>();
 	enemyManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -253,7 +253,7 @@ void GameScene::CollisionUpdate()
 	collisionManager_->ListRegist(player_->GetFootCollider());
 
 	enemyManager_->CollisionRegist();
-	bulletManager_->CollisionRegist();
+	bulletManager_->CollisionUpdate(collisionManager_.get());
 	terrainManager_->CollisionUpdate(collisionManager_.get());
 
 	// 衝突処理

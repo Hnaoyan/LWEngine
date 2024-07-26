@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -103,6 +106,8 @@
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\SampleBulletManager.h" />
