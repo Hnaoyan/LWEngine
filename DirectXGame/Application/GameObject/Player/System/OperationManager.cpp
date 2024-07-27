@@ -32,7 +32,7 @@ void OparationManager::Update()
 	aimManager_.Update(player_->camera_);
 	// クールタイム
 	shotTimer_.Update(GameSystem::sSpeedFactor);
-
+	lockOnCooltime_.Update(GameSystem::sSpeedFactor);
 	// 座標更新
 	player_->worldTransform_.transform_.translate += player_->velocity_;
 }
@@ -49,10 +49,8 @@ void OparationManager::InputUpdate()
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A) && player_->velocity_.y == 0.0f)
 	{
 		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
-		//float jumpPower = 75.0f;
-		//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	}
-		
+	// 射撃入力
 	if (input_->XRTrigger() && !shotTimer_.isActive_) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		float speedValue = 30.0f;
@@ -73,8 +71,9 @@ void OparationManager::InputUpdate()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	}
 
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B) && !lockOnCooltime_.isActive_) {
 		lockOn_.ToggleLockOn(player_->camera_);
+		lockOnCooltime_.Start(20.0f);
 	}
 
 	// キーボード操作

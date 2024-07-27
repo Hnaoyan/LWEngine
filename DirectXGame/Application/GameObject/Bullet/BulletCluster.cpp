@@ -1,5 +1,6 @@
 #include "BulletCluster.h"
 #include "IBullet.h"
+#include "Engine/Collision/CollisionManager.h"
 
 uint32_t BulletCluster::sSerialNumber = 0;
 
@@ -15,6 +16,10 @@ void BulletCluster::Initialize(Model* model)
 
 void BulletCluster::Update()
 {
+	// 死亡処理
+	units_.erase(std::remove_if(units_.begin(), units_.end(), [](const std::unique_ptr<InstancedUnit>& obj) {
+		return obj->IsDead();
+		}), units_.end());
 	// 基底クラス更新
 	InstancedGroup::Update();
 }
@@ -34,7 +39,7 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 {
 	for (std::vector<std::unique_ptr<InstancedUnit>>::iterator it = units_.begin();
 		it != units_.end(); ++it) {
-		manager;
+		manager->ListRegist(static_cast<IBullet*>((*it).get())->GetCollider());
 	}
 
 }

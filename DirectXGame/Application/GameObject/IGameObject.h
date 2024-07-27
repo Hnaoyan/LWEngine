@@ -10,8 +10,8 @@ public:
 		if (std::holds_alternative<Player*>(obj)) {
 			return std::get<Player*>(obj);
 		}
-		else if (std::holds_alternative<SampleBullet*>(obj)) {
-			return std::get<SampleBullet*>(obj);
+		else if (std::holds_alternative<IBullet*>(obj)) {
+			return std::get<IBullet*>(obj);
 		}
 
 		return std::get<IGameObject*>(obj);

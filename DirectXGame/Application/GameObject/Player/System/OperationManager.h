@@ -45,6 +45,7 @@ private: // USER
 	int resetTime_ = 0;
 	
 	FrameTimer shotTimer_;
+	FrameTimer lockOnCooltime_;
 
 private: // SYSTEM
 	// ロックオンシステム
