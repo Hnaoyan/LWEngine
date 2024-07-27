@@ -51,7 +51,7 @@ void OparationManager::InputUpdate()
 		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
 	}
 	// 射撃入力
-	if (input_->XRTrigger() && !shotTimer_.isActive_) {
+	if (input_->XRTrigger() && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		float speedValue = 30.0f;
 		velocity *= speedValue;
@@ -71,7 +71,7 @@ void OparationManager::InputUpdate()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	}
 
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B) && !lockOnCooltime_.isActive_) {
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B) && !lockOnCooltime_.IsActive()) {
 		lockOn_.ToggleLockOn(player_->camera_);
 		lockOnCooltime_.Start(20.0f);
 	}
