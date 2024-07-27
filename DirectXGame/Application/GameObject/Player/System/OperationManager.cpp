@@ -53,7 +53,7 @@ void OparationManager::InputUpdate()
 		//player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	}
 		
-	if (input_->XRTrigger() && !shotTimer_.isActive_) {
+	if (input_->XRTrigger() && !shotTimer_.IsActive()) {
 		SampleBulletManager::GenerateData data{};
 		data.position = player_->worldTransform_.GetWorldPosition();
 		data.velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());

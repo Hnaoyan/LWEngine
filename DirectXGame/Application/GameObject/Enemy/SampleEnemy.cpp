@@ -23,7 +23,7 @@ void SampleEnemy::Update()
 		worldTransform_.transform_.translate.y += 0.1f;
 	}
 
-	if (timer_.isEnd_) {
+	if (timer_.IsEnd()) {
 		if (isLeft_) {
 			isLeft_ = false;
 		}

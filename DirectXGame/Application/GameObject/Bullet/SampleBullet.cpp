@@ -18,7 +18,7 @@ void SampleBullet::Update()
 {
 	deathTimer_.Update();
 
-	if (deathTimer_.isEnd_) {
+	if (deathTimer_.IsEnd()) {
 		isDead_ = true;
 	}
 
