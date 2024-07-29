@@ -24,6 +24,10 @@ void TitleScene::Update()
 
 #endif // _DEBUG
 
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
+		sceneManager_->ChangeScene("GAME");
+	}
+
 }
 
 void TitleScene::Draw()

@@ -6,7 +6,7 @@ void Boss::Initialize(Model* model)
 
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
-
+	worldTransform_.transform_.translate = { 0,20.0f,50.0f };
 }
 
 void Boss::Update()

@@ -44,7 +44,8 @@ void FollowCamera::Update()
 			//transform_.rotate.x = std::atan2f(std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)), sub.y);
 			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
 			transform_.rotate.y = destinationAngle_.y;
-			transform_.rotate.x = destinationAngle_.x;
+			//transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
+			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 		}
 		else {
 			transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);

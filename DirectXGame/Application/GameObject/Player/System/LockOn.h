@@ -2,11 +2,14 @@
 #include <vector>
 #include <memory>
 #include <list>
+#include <variant>
 
 // 敵
+class IGameObject;
 class SampleEnemy;
 class Player;
 class ICamera;
+class Boss;
 
 /// <summary>
 /// ロックオン処理を管理する
@@ -19,6 +22,9 @@ public:
 		float minDistanceZ = 5.0f;
 		float maxDistanceZ = 50.0f;
 	};
+
+	using LockTarget = std::variant<SampleEnemy*, Boss*>;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -51,18 +57,19 @@ private:
 public:
 	// リストの設定
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { enemys_ = lists; }
+	void SetBoss(Boss* boss) { boss_ = boss; }
 	// ターゲットのポインタ
-	SampleEnemy* GetTarget() const { return target_; }
+	IGameObject* GetTarget() const { return target_; }
 	// 対象があるかどうか
 	bool ExistTarget() const { return target_ ? true : false; }
-
 private:
 	// プレイヤー
 	Player* player_ = nullptr;
 	// リスト
 	std::vector<std::unique_ptr<SampleEnemy>>* enemys_ = nullptr;
+	Boss* boss_ = nullptr;
 	// ターゲット
-	SampleEnemy* target_ = nullptr;
+	IGameObject* target_ = nullptr;
 	// 内積の閾値
 	LockOnData data{};
 

@@ -29,10 +29,14 @@ void GameScene::Initialize()
 	enemyManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
+	bossEnemy_ = std::make_unique<Boss>();
+	bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
+
 	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
 	enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
 
 	player_->SetBulletManager(bulletManager_.get());
+	player_->SetBoss(bossEnemy_.get());
 
 	terrainWtf_.Initialize();
 	terrainWtf_.transform_.scale = { 20.0f,1.0f,20.0f };
@@ -68,6 +72,7 @@ void GameScene::Update()
 	player_->Update();
 	bulletManager_->Update();
 	enemyManager_->Update();
+	bossEnemy_->Update();
 	terrainManager_->Update();
 
 	// 衝突処理
@@ -99,11 +104,13 @@ void GameScene::Draw()
 	desc.directionalLight = directionalLight_.get();
 	desc.pointLight = pointLight_.get();
 	desc.spotLight = spotLight_.get();
+
 	player_->Draw(desc);
+	bossEnemy_->Draw(desc);
+	enemyManager_->Draw(desc);
 
 	bulletManager_->Draw(desc);
 
-	enemyManager_->Draw(desc);
 	// 地形
 	terrainManager_->Draw(desc);
 
@@ -127,6 +134,7 @@ void GameScene::ImGuiDraw()
 #ifdef _DEBUG
 	// ゲームオブジェクト
 	player_->ImGuiDraw();
+	enemyManager_->ImGuiDraw();
 	terrainManager_->ImGuiDraw();
 	// カメラ
 	camera_.ImGuiDraw();

@@ -77,7 +77,26 @@ void LockOn::SearchTarget(ICamera* camera)
 		// 一番近いのをソート
 		target_ = targets.front().second;
 	}
+	if (boss_) {
+		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
 
-	camera;
+		Vector3 enemyViewVector = Matrix4x4::TransformVector3(boss_->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
+
+		float dot = Vector3::Dot(Vector3::Normalize(cameraToEnemy), Vector3::Normalize(cameraToPlayer));
+
+		Vector2 screenPosition = LwLib::WorldToScreen(boss_->worldTransform_.GetWorldPosition(), camera);
+
+		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ) {
+			if (!targets.empty()) {
+				if (Vector3::Length(cameraToEnemy) < targets.front().first) {
+					target_ = boss_;
+				}
+			}
+			else {
+				target_ = boss_;
+			}
+		}
+	}
 
 }
