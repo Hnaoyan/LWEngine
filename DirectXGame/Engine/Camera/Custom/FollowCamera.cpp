@@ -26,7 +26,7 @@ void FollowCamera::Update()
 		// 入力クラス
 		// 目標回転角の設定
 		destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
-		destinationAngle_.z += rightStick.y / SHRT_MAX * rStickRotateSpeed_;
+		destinationAngle_.x -= rightStick.y * rStickRotateSpeed_;
 
 		if (lockOn_->ExistTarget()) {
 			// ロックオンしたオブジェクトの座標
@@ -42,16 +42,18 @@ void FollowCamera::Update()
 			}
 			// Y軸角度
 			//transform_.rotate.x = std::atan2f(std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)), sub.y);
-			//transform_.rotate.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
-			//destinationAngle_.x = LwLib::CalculateYawFromVector({ 0,sub.y,sub.z });
+			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
 			transform_.rotate.y = destinationAngle_.y;
+			transform_.rotate.x = destinationAngle_.x;
 		}
 		else {
 			transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
+			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 		}
 
 		// 回転の速度調節
-		//transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
+		float thValue = 0.4f;
+		transform_.rotate.x = std::clamp(transform_.rotate.x, -thValue, thValue);
 
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);

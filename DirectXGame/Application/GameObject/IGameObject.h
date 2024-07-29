@@ -26,7 +26,7 @@ public:
 	std::string objectTag_;
 public:
 	// タグの取得
-	std::string GetTag() { return objectTag_; }
+	std::string GetTag() const{ return objectTag_; }
 
 public:
 	/// <summary>
@@ -57,7 +57,7 @@ public:
 	virtual void OnCollision(ColliderObject target) = 0;
 
 public: // アクセッサ
-	bool IsDead() { return isDead_; }
+	bool IsDead() const{ return isDead_; }
 
 protected:
 	// モデル
