@@ -70,8 +70,8 @@ void SampleScene::Initialize()
 	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
-	//camera_.transform_.translate.y = 5.0f;
-	//camera_.transform_.rotate.x = 0.4f;
+	camera_.transform_.translate.y = 5.0f;
+	camera_.transform_.rotate.x = 0.4f;
 	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
@@ -113,6 +113,12 @@ void SampleScene::Initialize()
 void SampleScene::Update()
 {
 #pragma region GPUUpdate
+	if (input_->TriggerKey(DIK_0)) {
+		gpuParticle_->CreateEmitter();
+	}
+	if (input_->TriggerKey(DIK_1)) {
+		gpuParticle_->DeleteEmitter();
+	}
 	gpuParticle_->Update();
 #pragma endregion
 
@@ -124,33 +130,34 @@ void SampleScene::Update()
 		sceneManager_->ChangeScene("GAME");
 	}
 
-	if (input_->TriggerKey(DIK_0)) {
-		postEffecter_ = 0;
-	}
-	if (input_->TriggerKey(DIK_1)) {
-		postEffecter_ = 1;
-	}
-	if (input_->TriggerKey(DIK_2)) {
-		postEffecter_ = 2;
-	}
-	if (input_->TriggerKey(DIK_3)) {
-		postEffecter_ = 3;
-	}
-	if (input_->TriggerKey(DIK_4)) {
-		postEffecter_ = 4;
-	}
-	if (input_->TriggerKey(DIK_5)) {
-		postEffecter_ = 5;
-	}
-	if (input_->TriggerKey(DIK_6)) {
-		postEffecter_ = 6;
-	}
-	if (input_->TriggerKey(DIK_7)) {
-		postEffecter_ = 7;
-	}
-	if (input_->TriggerKey(DIK_8)) {
-		postEffecter_ = 8;
-	}
+
+	//if (input_->TriggerKey(DIK_0)) {
+	//	postEffecter_ = 0;
+	//}
+	//if (input_->TriggerKey(DIK_1)) {
+	//	postEffecter_ = 1;
+	//}
+	//if (input_->TriggerKey(DIK_2)) {
+	//	postEffecter_ = 2;
+	//}
+	//if (input_->TriggerKey(DIK_3)) {
+	//	postEffecter_ = 3;
+	//}
+	//if (input_->TriggerKey(DIK_4)) {
+	//	postEffecter_ = 4;
+	//}
+	//if (input_->TriggerKey(DIK_5)) {
+	//	postEffecter_ = 5;
+	//}
+	//if (input_->TriggerKey(DIK_6)) {
+	//	postEffecter_ = 6;
+	//}
+	//if (input_->TriggerKey(DIK_7)) {
+	//	postEffecter_ = 7;
+	//}
+	//if (input_->TriggerKey(DIK_8)) {
+	//	postEffecter_ = 8;
+	//}
 
 
 	newSprite_->SetPosition(newSpriteData_.position_);
@@ -220,7 +227,7 @@ void SampleScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.worldTransform = &testWTF_;
 
-	//humans_[0]->Draw(desc);
+	humans_[0]->Draw(desc);
 	//humans_[1]->Draw(desc);
 	//humans_[2]->Draw(desc);
 
@@ -246,7 +253,7 @@ void SampleScene::Draw()
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
 	//cubeModel_->Draw(textureDesc);
-	//skybox_->Draw(desc);
+	skybox_->Draw(desc);
 
 	//particles_->Draw(&camera_);
 	gpuParticle_->Draw(&camera_);
