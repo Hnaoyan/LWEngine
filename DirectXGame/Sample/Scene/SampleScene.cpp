@@ -70,15 +70,15 @@ void SampleScene::Initialize()
 	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
-	camera_.transform_.translate.y = 5.0f;
+	camera_.transform_.translate.y = 3.0f;
 	camera_.transform_.rotate.x = 0.4f;
-	camera_.transform_.translate.z = -7.0f;
+	camera_.transform_.translate.z = -3.5f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
 
 	lightData_.color = { 1,1,1,1 };
 	lightData_.direction = { 0,-1,0 };
-	lightData_.intensity = 1.0f;
+	lightData_.intensity = 0.5f;
 
 	newSpriteData_.spriteTransform_ = {
 		{1.0f,1.0f,1.0f},
@@ -130,6 +130,12 @@ void SampleScene::Update()
 		sceneManager_->ChangeScene("GAME");
 	}
 
+	if (input_->TriggerKey(DIK_J)) {
+		humans_[0]->animModel_->GetMaterial()->coefficient_ = 0;
+	}
+	if (input_->TriggerKey(DIK_K)) {
+		humans_[0]->animModel_->GetMaterial()->coefficient_ = 1;
+	}
 
 	//if (input_->TriggerKey(DIK_0)) {
 	//	postEffecter_ = 0;
@@ -489,7 +495,7 @@ void SampleScene::LightingInitialize()
 	spotLight_.reset(SpotLight::CreateLight());
 
 	// 点光源データ
-	ptLightData_.intensity = 1.0f;
+	ptLightData_.intensity = 0.0f;
 	ptLightData_.position = { 0,2.0f,0 };
 	ptLightData_.color = { 1,1,1,1 };
 	ptLightData_.decay = 1.0f;
@@ -500,7 +506,7 @@ void SampleScene::LightingInitialize()
 	spLightData_.position = { 2.0f,1.25f,0.0f };
 	spLightData_.distance = 7.0f;
 	spLightData_.direction = Vector3::Normalize({ -1.0f,-1.0f,0.0f });
-	spLightData_.intensity = 4.0f;
+	spLightData_.intensity = 0.0f;
 	spLightData_.decay = 2.0f;
 	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
 }
