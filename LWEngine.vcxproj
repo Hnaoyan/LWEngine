@@ -106,6 +106,10 @@
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\ActionNode.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossBehaviorTree.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossNode.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\ActionController.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
