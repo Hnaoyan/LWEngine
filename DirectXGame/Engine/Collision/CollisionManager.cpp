@@ -55,7 +55,32 @@ void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape
 				b->GetAttribute() == kCollisionAttributeEnemy)) {
 			return;
 		}
-
+		// プレイヤーの弾のフィルター
+		else if (a->GetAttribute() == kCollisionAttributeBullet) {
+			if (b->GetAttribute() != kCollisionAttributeEnemy &&
+				b->GetAttribute() != kCollisionAttributeTerrain) {
+				return;
+			}
+		}
+		else if (b->GetAttribute() == kCollisionAttributeBullet) {
+			if (a->GetAttribute() != kCollisionAttributeEnemy &&
+				a->GetAttribute() != kCollisionAttributeTerrain) {
+				return;
+			}
+		}
+		// 敵の弾のフィルター
+		else if (a->GetAttribute() == kCollisionAttributeEnemyBullet) {
+			if (b->GetAttribute() != kCollisionAttributePlayer &&
+				b->GetAttribute() != kCollisionAttributeTerrain) {
+				return;
+			}
+		}
+		else if (b->GetAttribute() == kCollisionAttributeEnemyBullet) {
+			if (a->GetAttribute() != kCollisionAttributePlayer &&
+				a->GetAttribute() != kCollisionAttributeTerrain) {
+				return;
+			}
+		}
 		// 衝突処理
 		if (Collision::IsCollision(*a, *b)) {
 

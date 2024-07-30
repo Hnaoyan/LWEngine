@@ -11,9 +11,9 @@ void IBullet::Initialize()
 	sSerialNumber++;
 
 	InstancedUnit::Initialize();
-
+	transform_.scale *= 0.5f;
 	collider_.Initialize(transform_.scale.x, this);
-	collider_.SetAttribute(kCollisionAttributePlayer);
+	collider_.SetAttribute(kCollisionAttributeBullet);
 }
 
 void IBullet::Update()
@@ -35,6 +35,9 @@ void IBullet::OnCollision(ColliderObject object)
 		isDead_ = true;
 	}
 	if (std::holds_alternative<Boss*>(object)) {
+		isDead_ = true;
+	}
+	if (std::holds_alternative<Terrain*>(object)) {
 		isDead_ = true;
 	}
 }

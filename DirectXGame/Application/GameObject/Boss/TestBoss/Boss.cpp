@@ -23,9 +23,6 @@ void Boss::Update()
 	if (state_) {
 		state_->Update();
 	}
-	if (healthManager_.IsDead()) {
-		isDead_ = true;
-	}
 	// 座標更新
 	IGameObject::Update();
 	collider_.Update(worldTransform_.GetWorldPosition());
@@ -57,5 +54,8 @@ void Boss::OnCollision(ColliderObject target)
 {
 	if (std::holds_alternative<IBullet*>(target)) {
 		healthManager_.TakeDamage();
+		if (healthManager_.IsDead()) {
+			isDead_ = true;
+		}
 	}
 }
