@@ -8,5 +8,7 @@ class SampleEnemy;
 class Boss;
 class Terrain;
 class PlayerFootCollider;
-
-using ColliderObject = std::variant<IGameObject*, Player*, IBullet*, SampleEnemy*, Boss*, Terrain*, PlayerFootCollider*>;
+namespace BossSystemContext {
+	class NormalBullet;
+}
+using ColliderObject = std::variant<IGameObject*, Player*, IBullet*, SampleEnemy*, Boss*, Terrain*, PlayerFootCollider*, BossSystemContext::NormalBullet*>;

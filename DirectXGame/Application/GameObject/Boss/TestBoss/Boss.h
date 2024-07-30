@@ -34,12 +34,13 @@ public:
 public:
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }
-
+	FrameTimer fireTimer_;
 
 private:
 	Sphere collider_;
 	BossState::StateManager stateManager_;
 	BossSystemContext::HealthManager healthManager_;
+	std::unique_ptr<BossSystemContext::BulletManager> bulletManager_;
 
 	std::unique_ptr<BossState::IState> state_;
 public:

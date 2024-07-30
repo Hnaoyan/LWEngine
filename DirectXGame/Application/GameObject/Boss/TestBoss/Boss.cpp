@@ -8,6 +8,9 @@ void Boss::Initialize(Model* model)
 	stateManager_.Initialize(this);
 	stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 
+	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
+	bulletManager_->Initialize(model);
+
 	healthManager_.Initialize(10);
 
 	worldTransform_.transform_.translate = { 0,20.0f,50.0f };
@@ -19,7 +22,15 @@ void Boss::Initialize(Model* model)
 
 void Boss::Update()
 {
-
+	bulletManager_->Update();
+	if (!fireTimer_.IsActive()) {
+		EulerTransform pos = worldTransform_.transform_;
+		pos.scale = { 1.0f,1.0f,1.0f };
+		Vector3 moveDirect = { 0,0,-1.0f };
+		bulletManager_->GetBeginCluster()->AddBullet(pos, moveDirect);
+		fireTimer_.Start(120.0f);
+	}
+	fireTimer_.Update();
 	if (state_) {
 		state_->Update();
 	}
@@ -38,6 +49,7 @@ void Boss::Draw(ModelDrawDesc desc)
 	drawDesc.worldTransform = &worldTransform_;
 
 	model_->Draw(drawDesc);
+	bulletManager_->Draw(desc);
 }
 
 void Boss::ImGuiDraw()

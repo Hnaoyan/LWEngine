@@ -87,7 +87,7 @@ void LockOn::SearchTarget(ICamera* camera)
 
 		Vector2 screenPosition = LwLib::WorldToScreen(boss_->worldTransform_.GetWorldPosition(), camera);
 
-		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ) {
+		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ * 2.5f) {
 			if (!targets.empty()) {
 				if (Vector3::Length(cameraToEnemy) < targets.front().first) {
 					target_ = boss_;
