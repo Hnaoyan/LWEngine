@@ -34,4 +34,7 @@ void IBullet::OnCollision(ColliderObject object)
 	if (std::holds_alternative<SampleEnemy*>(object)) {
 		isDead_ = true;
 	}
+	if (std::holds_alternative<Boss*>(object)) {
+		isDead_ = true;
+	}
 }

@@ -1,5 +1,7 @@
 #pragma once
 #include "../../IGameObject.h"
+#include "../StatePattern/StateMachine.h"
+#include "../System/BossSystem.h"
 
 class Boss : public IGameObject
 {
@@ -33,7 +35,16 @@ public:
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }
 
+
 private:
 	Sphere collider_;
+	BossState::StateManager stateManager_;
+	BossSystemContext::HealthManager healthManager_;
 
+	std::unique_ptr<BossState::IState> state_;
+public:
+	BossState::IState* GetState() { return state_.get(); }
+	void ChangeState(std::unique_ptr<BossState::IState> newState) {
+		state_ = std::move(newState);
+	}
 };

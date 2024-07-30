@@ -72,7 +72,12 @@ void GameScene::Update()
 	player_->Update();
 	bulletManager_->Update();
 	enemyManager_->Update();
-	bossEnemy_->Update();
+	if (bossEnemy_) {
+		bossEnemy_->Update();
+		if (bossEnemy_->IsDead()) {
+			bossEnemy_.reset();
+		}
+	}
 	terrainManager_->Update();
 
 	// 衝突処理
@@ -106,7 +111,9 @@ void GameScene::Draw()
 	desc.spotLight = spotLight_.get();
 
 	player_->Draw(desc);
-	bossEnemy_->Draw(desc);
+	if (bossEnemy_) {
+		bossEnemy_->Draw(desc);
+	}
 	enemyManager_->Draw(desc);
 
 	bulletManager_->Draw(desc);
@@ -134,6 +141,9 @@ void GameScene::ImGuiDraw()
 #ifdef _DEBUG
 	// ゲームオブジェクト
 	player_->ImGuiDraw();
+	if (bossEnemy_) {
+		bossEnemy_->ImGuiDraw();
+	}
 	enemyManager_->ImGuiDraw();
 	terrainManager_->ImGuiDraw();
 	// カメラ
@@ -259,7 +269,9 @@ void GameScene::CollisionUpdate()
 	// 登録
 	collisionManager_->ListRegist(player_->GetCollider());
 	collisionManager_->ListRegist(player_->GetFootCollider());
-
+	if (bossEnemy_) {
+		collisionManager_->ListRegist(bossEnemy_->GetCollider());
+	}
 	enemyManager_->CollisionRegist();
 	bulletManager_->CollisionUpdate(collisionManager_.get());
 	terrainManager_->CollisionUpdate(collisionManager_.get());
