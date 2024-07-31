@@ -1,5 +1,5 @@
 #include "StateMachine.h"
-#include "../TestBoss/Boss.h"
+#include "Application/GameObject/GameObjectLists.h"
 
 void BossState::StateManager::Initialize(Boss* boss)
 {
@@ -37,7 +37,7 @@ void BossState::MissileAttackState::Update()
 	if (!fireTimer_.IsActive()) {
 		EulerTransform pos = boss_->worldTransform_.transform_;
 		pos.scale = { 1.0f,1.0f,1.0f };
-		Vector3 moveDirect = { 0,0,-1.0f };
+		Vector3 moveDirect = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, moveDirect,50.0f);
 		fireTimer_.Start(10.0f);
 	}

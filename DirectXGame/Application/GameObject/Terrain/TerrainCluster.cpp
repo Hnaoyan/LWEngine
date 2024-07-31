@@ -16,7 +16,12 @@ void TerrainCluster::Initialize(Model* model)
 	// 基底クラス初期化
 	InstancedGroup::Initialize(model);
 
-	texture_ = TextureManager::Load("Resources/default/white2x2.png");
+	if (name_ == "Object") {
+		texture_ = TextureManager::Load("Resources/default/BackGround.png");
+	}
+	else {
+		texture_ = TextureManager::Load("Resources/default/white2x2.png");
+	}
 
 }
 

@@ -241,6 +241,9 @@ void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& mi
 		break;
 	// 例外
 	case ICollider::kMultiplePoints:
+		if (worldTransform_.GetWorldPosition().y < max.y) {
+			correctPosition.y = max.y + worldTransform_.transform_.scale.y + 0.02f;
+		}
 		break;
 	case ICollider::kNone:
 		break;

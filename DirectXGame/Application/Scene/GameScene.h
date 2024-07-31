@@ -70,6 +70,7 @@ private: // アプリ
 
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
+	std::unique_ptr<Sprite> clearText_;
 
 private: // システム関係
 	// カメラ君

@@ -8,6 +8,7 @@ class TerrainCluster : public InstancedGroup
 public:
 	static uint32_t sSerialNumber;
 	uint32_t serialNumber_ = 0u;
+	std::string name_;
 
 public: // 仮想関数
 	/// <summary>

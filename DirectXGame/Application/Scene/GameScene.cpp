@@ -31,6 +31,7 @@ void GameScene::Initialize()
 
 	bossEnemy_ = std::make_unique<Boss>();
 	bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
+	bossEnemy_->SetPlayer(player_.get());
 
 	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
 	enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
@@ -159,6 +160,7 @@ void GameScene::ImGuiDraw()
 		if (!bossEnemy_) {
 			bossEnemy_ = std::make_unique<Boss>();
 			bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
+			bossEnemy_->SetPlayer(player_.get());
 			player_->SetBoss(bossEnemy_.get());
 		}
 	}
@@ -284,6 +286,7 @@ void GameScene::CollisionUpdate()
 	collisionManager_->ListRegist(player_->GetFootCollider());
 	if (bossEnemy_) {
 		collisionManager_->ListRegist(bossEnemy_->GetCollider());
+		bossEnemy_->GetBulletManager()->CollisionUpdate(collisionManager_.get());
 	}
 	enemyManager_->CollisionRegist();
 	bulletManager_->CollisionUpdate(collisionManager_.get());

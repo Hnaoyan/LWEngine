@@ -134,7 +134,7 @@ void LockOn::ChangeTarget(ICamera* camera)
 	if (!targets.empty()) {
 		targets.sort([](auto& pair1, auto& pair2) {return pair1.first < pair2.first; });
 		// 一番近いのをソート
-		if (target_ == targets.front().second) {
+		if (target_ == targets.front().second && targets.size() > 1) {
 			auto it = targets.begin();
 			++it;
 			target_ = (*it).second;

@@ -40,6 +40,8 @@ public:
 	/// </summary>
 	void LoadTexture() override;
 
+	void AddSprite(Vector2 position,uint32_t texture);
+
 private: // システム関係
 	// カメラ君
 	// デバッグカメラ
@@ -51,6 +53,8 @@ private: // システム関係
 	std::unique_ptr<LevelLoader> levelLoader_;
 	// 箱
 	std::unique_ptr<Skybox> skybox_;
+
+	std::vector<std::unique_ptr<Sprite>> uiSprites_;
 
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;

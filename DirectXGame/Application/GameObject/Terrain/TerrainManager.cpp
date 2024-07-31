@@ -52,9 +52,11 @@ void TerrainManager::AddCluster(std::string tag)
 {
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
 	if (tag == "Object") {
-		static_cast<TerrainCluster*>(instance.get())->Initialize(ModelManager::GetModel("Axis"));
+		static_cast<TerrainCluster*>(instance.get())->name_ = "Object";
+		static_cast<TerrainCluster*>(instance.get())->Initialize(ModelManager::GetModel("DefaultCube"));
 	}
 	else {
+		static_cast<TerrainCluster*>(instance.get())->name_ = "Terrain";
 		static_cast<TerrainCluster*>(instance.get())->Initialize(ModelManager::GetModel("DefaultCube"));
 	}
 	

@@ -1,5 +1,6 @@
 #include "BossSystem.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/2D/TextureManager.h"
 #include "../../../Collision/ColliderFilter.h"
 #include "../../../GameSystem/GameSystem.h"
 
@@ -23,6 +24,7 @@ void BossSystemContext::HealthManager::Heal(int32_t heal)
 void BossSystemContext::BulletCluster::Initialize(Model* model) {
 	// 基底クラス初期化
 	InstancedGroup::Initialize(model);
+	texture_ = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 }
 
 void BossSystemContext::BulletCluster::Update() {
@@ -36,7 +38,7 @@ void BossSystemContext::BulletCluster::Update() {
 
 void BossSystemContext::BulletCluster::Draw(ModelDrawDesc desc) {
 	// 描画
-	model_->InstancedDraw(desc, this->unitNum_, srvHandles_.second);
+	model_->InstancedDraw(desc, this->unitNum_, srvHandles_.second, texture_);
 }
 
 void BossSystemContext::BulletCluster::ImGuiDraw() {
@@ -77,7 +79,7 @@ void BossSystemContext::NormalBullet::Initialize()
 	InstancedUnit::Initialize();
 	transform_.scale *= 0.5f;
 	collider_.Initialize(transform_.scale.x, this);
-	collider_.SetAttribute(kCollisionAttributeBullet);
+	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
 }
 

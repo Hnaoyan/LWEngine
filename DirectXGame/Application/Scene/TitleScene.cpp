@@ -12,6 +12,9 @@ void TitleScene::Initialize()
 	levelLoader_->LoadSceneData("01_12");
 
 	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
+
+	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
+	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
 }
 
 void TitleScene::Update()
@@ -37,6 +40,8 @@ void TitleScene::Draw()
 #pragma region 背景
 	Sprite::PreDraw(commandList);
 
+	uiSprites_[0]->Draw();
+
 	Sprite::PostDraw();
 #pragma endregion
 	// 深度クリア
@@ -49,6 +54,10 @@ void TitleScene::Draw()
 #pragma region UI
 
 	Sprite::PreDraw(commandList);
+
+	for (int i = 1; i < uiSprites_.size(); ++i) {
+		uiSprites_[i]->Draw();
+	}
 
 	Sprite::PostDraw();
 
@@ -70,4 +79,11 @@ void TitleScene::LoadModel()
 
 void TitleScene::LoadTexture()
 {
+}
+
+void TitleScene::AddSprite(Vector2 position, uint32_t texture)
+{
+	std::unique_ptr<Sprite> instance;
+	instance.reset(Sprite::Create(texture, position, { 0.5f,0.5f }));
+	uiSprites_.push_back(std::move(instance));
 }
