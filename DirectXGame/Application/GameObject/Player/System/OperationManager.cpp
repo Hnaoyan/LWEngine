@@ -53,21 +53,17 @@ void OparationManager::InputUpdate()
 	if (input_->XRTrigger() && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		float speedValue = 30.0f;
+
+		if (lockOn_.ExistTarget()) {
+			speedValue *= 2.0f;
+		}
+
 		velocity *= speedValue;
 		EulerTransform transform{};
 		transform.scale = { 1.0f,1.0f,1.0f };
 		transform.translate = player_->worldTransform_.GetWorldPosition();
 		bulletManager_->GetBeginCluster()->AddBullet(transform, velocity);
 		shotTimer_.Start(30.0f);
-	}
-
-	if (input_->PressKey(DIK_G)) {
-		GameSystem::sSpeedFactor = 5.0f;
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
-	}
-	else {
-		GameSystem::sSpeedFactor = 1.0f;
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	}
 
 	// カメラの処理

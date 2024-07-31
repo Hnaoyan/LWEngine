@@ -20,7 +20,7 @@ void GameScene::Initialize()
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
-	player_->Initialize(ModelManager::GetModel("Sphere"));
+	player_->Initialize(ModelManager::GetModel("Player"));
 
 	bulletManager_ = std::make_unique<BulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -31,7 +31,7 @@ void GameScene::Initialize()
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
 	bossEnemy_ = std::make_unique<Boss>();
-	bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
+	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
 
 	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
@@ -237,6 +237,8 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Jett", "jett");
 	ModelManager::LoadNormalModel("Enemy", "enemy");
 	ModelManager::LoadNormalModel("Sphere", "sphere");
+	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
+	ModelManager::LoadNormalModel("Player", "Robotto");
 
 	terrain_ = ModelManager::GetModel("Terrain");
 

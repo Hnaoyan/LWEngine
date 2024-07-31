@@ -38,6 +38,9 @@ void FrameTimer::Update(float gameFactor)
 		// 現在の値計算
 		elapsedFrame_ += (1.0f / (gameFactor * endFrame_));
 	}
+	if (isEnd_) {
+		isEnd_ = false;
+	}
 }
 
 void FrameTimer::StartUp()

@@ -24,7 +24,7 @@ void BossSystemContext::HealthManager::Heal(int32_t heal)
 void BossSystemContext::BulletCluster::Initialize(Model* model) {
 	// 基底クラス初期化
 	InstancedGroup::Initialize(model);
-	texture_ = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
+	texture_ = TextureManager::GetInstance()->Load("Resources/default/red2x2.png");
 }
 
 void BossSystemContext::BulletCluster::Update() {
@@ -77,7 +77,7 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 void BossSystemContext::NormalBullet::Initialize()
 {
 	InstancedUnit::Initialize();
-	transform_.scale *= 0.5f;
+	transform_.scale *= 0.3f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 

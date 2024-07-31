@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "imgui.h"
+#include "Engine/3D/ModelManager.h"
 
 void Boss::Initialize(Model* model)
 {
@@ -9,9 +10,9 @@ void Boss::Initialize(Model* model)
 	stateManager_.ChangeRequest(std::make_unique<BossState::MoveState>());
 
 	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
-	bulletManager_->Initialize(model);
+	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-	healthManager_.Initialize(10);
+	healthManager_.Initialize(20);
 
 	respawnPos_ = { 0,20.0f,50.0f };
 

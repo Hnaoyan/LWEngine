@@ -84,6 +84,8 @@ private:
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
 	AABB collider_;
+	// Hp関係
+	PlayerContext::HealthManager healthManager_;
 
 
 };

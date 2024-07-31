@@ -58,6 +58,7 @@ public:
 
 public: // アクセッサ
 	bool IsDead() const{ return isDead_; }
+	void SetIsDead(bool isDead) { isDead_ = isDead; }
 
 protected:
 	// モデル

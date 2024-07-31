@@ -1,6 +1,7 @@
 #include "BulletCluster.h"
 #include "IBullet.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/2D/TextureManager.h"
 
 uint32_t BulletCluster::sSerialNumber = 0;
 
@@ -12,6 +13,8 @@ void BulletCluster::Initialize(Model* model)
 
 	// 基底クラス初期化
 	InstancedGroup::Initialize(model);
+
+	texture_ = TextureManager::GetInstance()->Load("Resources/Default/white2x2.png");
 }
 
 void BulletCluster::Update()
@@ -27,7 +30,7 @@ void BulletCluster::Update()
 void BulletCluster::Draw(ModelDrawDesc desc)
 {
 	// 描画
-	model_->InstancedDraw(desc, this->unitNum_, srvHandles_.second);
+	model_->InstancedDraw(desc, this->unitNum_, srvHandles_.second, texture_);
 }
 
 void BulletCluster::ImGuiDraw()

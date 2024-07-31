@@ -15,6 +15,7 @@ void Player::Initialize(Model* model)
 	// システム関係の初期化
 	systemManager_.Initialize(this);
 	stateManager_.Initialize(this);
+	healthManager_.Initialize(this, 20);
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
@@ -28,6 +29,7 @@ void Player::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
 	systemManager_.Update();
+	healthManager_.Update();
 	if (currentState_) {
 		// 入力処理
 		currentState_->InputHandle();
@@ -118,7 +120,11 @@ void Player::OnCollision(ColliderObject target)
 		//}
 
 	}
-	target;
+
+	else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
+		healthManager_.TakeDamage();
+	}
+	
 }
 
 void Player::UISpriteDraw()
