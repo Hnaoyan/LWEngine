@@ -26,6 +26,11 @@ public:
 	void Draw() override;
 
 	/// <summary>
+	/// UI描画
+	/// </summary>
+	void UIDraw() override;
+
+	/// <summary>
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw() override;
