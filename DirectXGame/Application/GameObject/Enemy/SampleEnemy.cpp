@@ -15,12 +15,10 @@ void SampleEnemy::Initialize(Model* model)
 void SampleEnemy::Update()
 {
 	if (isLeft_) {
-		worldTransform_.transform_.translate.x -= 0.1f;
-		worldTransform_.transform_.translate.y -= 0.1f;
+		worldTransform_.transform_.translate.y -= 0.05f;
 	}
 	else {
-		worldTransform_.transform_.translate.x += 0.1f;
-		worldTransform_.transform_.translate.y += 0.1f;
+		worldTransform_.transform_.translate.y += 0.05f;
 	}
 
 	if (timer_.IsEnd()) {
@@ -31,7 +29,7 @@ void SampleEnemy::Update()
 			isLeft_ = true;
 		}
 
-		timer_.Start(120.0f);
+		timer_.Start(150.0f);
 	}
 
 	timer_.Update(1.0f);

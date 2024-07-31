@@ -27,7 +27,7 @@ void GameScene::Initialize()
 
 
 	enemyManager_ = std::make_unique<SampleEnemyManager>();
-	enemyManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
 	bossEnemy_ = std::make_unique<Boss>();
@@ -148,6 +148,11 @@ void GameScene::Draw()
 		clearText_.clearText->Draw();
 	}
 
+	for (int i = 0; i < controlUIs_.size(); ++i) {
+		controlUIs_[i].first->SetPosition(controlUIs_[i].second.position);
+		controlUIs_[i].first->Draw();
+	}
+
 	Sprite::PostDraw();
 
 #pragma endregion
@@ -227,6 +232,16 @@ void GameScene::ImGuiDraw()
 	}
 
 	ImGui::End();
+
+	ImGui::Begin("UI");
+
+	for (int i = 0; i < controlUIs_.size(); ++i) {
+		ImGui::DragFloat2(controlUIs_[i].second.tag.c_str(), &controlUIs_[i].second.position.x, 1.0f);
+		ImGui::Text("\n");
+	}
+
+	ImGui::End();
+
 #endif // _DEBUG
 }
 
@@ -235,7 +250,7 @@ void GameScene::LoadModel()
 	// モデルのロード
 	ModelManager::LoadNormalModel("Terrain", "terrain");
 	ModelManager::LoadNormalModel("Jett", "jett");
-	ModelManager::LoadNormalModel("Enemy", "enemy");
+	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
 	ModelManager::LoadNormalModel("Sphere", "sphere");
 	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
 	ModelManager::LoadNormalModel("Player", "Robotto");
@@ -251,6 +266,28 @@ void GameScene::LoadTexture()
 	clearText_.isClear = false;
 	uint32_t clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
 	clearText_.clearText.reset(Sprite::Create(clearTexture, { 1280.0f / 2.0f,720.0f / 2.0f }, { 0.5f,0.5f }));
+
+	UIData data = {};
+	data.num = uiNumber_;
+	data.position = { 139.0f,60.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
+	data.tag = "UI" + std::to_string(uiNumber_);
+	AddUI(data);
+	data.num = uiNumber_;
+	data.position = { 138.0f,187.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
+	data.tag = "UI" + std::to_string(uiNumber_);
+	AddUI(data);
+	data.num = uiNumber_;
+	data.position = { 153.0f,263.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
+	data.tag = "UI" + std::to_string(uiNumber_);
+	AddUI(data);
+	data.num = uiNumber_;
+	data.position = { 144.0f,120.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
+	data.tag = "UI" + std::to_string(uiNumber_);
+	AddUI(data);
 
 }
 
@@ -315,4 +352,18 @@ void GameScene::CollisionUpdate()
 
 	// 衝突処理
 	collisionManager_->CheckAllCollisions();
+}
+
+void GameScene::AddUI(UIData data)
+{
+
+	std::unique_ptr<Sprite> instance;
+	instance.reset(Sprite::Create(data.texture, data.position, { 0.5f,0.5f }));
+	std::pair<std::unique_ptr<Sprite>, UIData> par;
+	par.first = std::move(instance);
+	par.second = data;
+
+	controlUIs_.push_back(std::move(par));
+
+	uiNumber_++;
 }

@@ -76,6 +76,19 @@ private: // リソース
 		std::unique_ptr<Sprite> clearText;
 		bool isClear;
 	};
+	struct UIData {
+		std::string tag;
+		uint32_t num;
+		Vector2 position;
+		Vector2 scale;
+		uint32_t texture;
+	};
+
+	std::vector<std::pair<std::unique_ptr<Sprite>, UIData>> controlUIs_;
+
+	void AddUI(UIData data);
+
+	uint32_t uiNumber_ = 0;
 
 	GameClear clearText_;
 
