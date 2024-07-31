@@ -71,11 +71,14 @@ private: // アプリ
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
 
+	// クリア関係の変数
 	struct GameClear {
 		FrameTimer transitionTimer;
 		std::unique_ptr<Sprite> clearText;
 		bool isClear;
 	};
+
+	// UI用のデータ
 	struct UIData {
 		std::string tag;
 		uint32_t num;
