@@ -40,6 +40,12 @@ public:
 	/// </summary>
 	void ToggleLockOn(ICamera* camera);
 	/// <summary>
+	/// 対象を変更
+	/// </summary>
+	/// <param name="camera"></param>
+	void ChangeLockOnTarget(ICamera* camera);
+
+	/// <summary>
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
@@ -53,6 +59,11 @@ private:
 	/// </summary>
 	/// <param name="camera"></param>
 	void SearchTarget(ICamera* camera);
+	/// <summary>
+	/// ロックオン対象を変更
+	/// </summary>
+	/// <param name="camera"></param>
+	void ChangeTarget(ICamera* camera);
 
 public:
 	// リストの設定

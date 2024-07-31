@@ -37,6 +37,13 @@ void LockOn::ToggleLockOn(ICamera* camera)
 	}
 }
 
+void LockOn::ChangeLockOnTarget(ICamera* camera)
+{
+
+	ChangeTarget(camera);
+
+}
+
 void LockOn::ImGuiDraw() {
 	ImGui::DragFloat("Threshold", &data.threshold, 0.01f);
 	ImGui::DragFloat("min", &data.minDistanceZ, 0.01f);
@@ -77,6 +84,7 @@ void LockOn::SearchTarget(ICamera* camera)
 		// 一番近いのをソート
 		target_ = targets.front().second;
 	}
+
 	if (boss_) {
 		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
 		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
@@ -99,4 +107,62 @@ void LockOn::SearchTarget(ICamera* camera)
 		}
 	}
 
+}
+
+void LockOn::ChangeTarget(ICamera* camera)
+{
+	std::list<std::pair<float, SampleEnemy*>> targets;
+
+	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_->begin();
+		it != enemys_->end(); ++it) {
+
+		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+
+		Vector3 enemyViewVector = Matrix4x4::TransformVector3((*it)->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
+
+		float dot = Vector3::Dot(Vector3::Normalize(cameraToEnemy), Vector3::Normalize(cameraToPlayer));
+
+		Vector2 screenPosition = LwLib::WorldToScreen((*it)->worldTransform_.GetWorldPosition(), camera);
+
+		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ) {
+			targets.emplace_back(std::make_pair(Vector3::Length(cameraToEnemy), (*it).get()));
+		}
+
+	}
+
+	if (!targets.empty()) {
+		targets.sort([](auto& pair1, auto& pair2) {return pair1.first < pair2.first; });
+		// 一番近いのをソート
+		if (target_ == targets.front().second) {
+			auto it = targets.begin();
+			++it;
+			target_ = (*it).second;
+		}
+		else {
+			target_ = targets.front().second;
+		}
+	}
+
+	if (boss_) {
+		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+
+		Vector3 enemyViewVector = Matrix4x4::TransformVector3(boss_->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
+
+		float dot = Vector3::Dot(Vector3::Normalize(cameraToEnemy), Vector3::Normalize(cameraToPlayer));
+
+		Vector2 screenPosition = LwLib::WorldToScreen(boss_->worldTransform_.GetWorldPosition(), camera);
+
+		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ * 2.5f) {
+			if (!targets.empty()) {
+				if (Vector3::Length(cameraToEnemy) < targets.front().first) {
+					target_ = boss_;
+				}
+			}
+			else {
+				target_ = boss_;
+			}
+		}
+	}
 }

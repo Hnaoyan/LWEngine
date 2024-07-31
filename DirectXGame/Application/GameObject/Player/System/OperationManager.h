@@ -23,10 +23,7 @@ private:
 	/// 入力更新
 	/// </summary>
 	void InputUpdate();
-	/// <summary>
-	/// 落下処理
-	/// </summary>
-	void GravityUpdate();
+
 public:
 	void SetManager(BulletManager* manager) { bulletManager_ = manager; }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }

@@ -22,8 +22,6 @@ void OparationManager::Initialize(Player* player)
 
 void OparationManager::Update()
 {
-	// 落下処理
-	GravityUpdate();
 	// 入力
 	InputUpdate();
 	// ターゲットが死んだ場合解除するための更新
@@ -42,6 +40,7 @@ void OparationManager::InputUpdate()
 	float speed = 4.0f;
 	Vector3 direct = {};
 	Vector2 sThumbL = input_->XGetLeftJoystick();
+	Vector2 sThumbR = input_->XGetRightJoystick();
 	// コントローラー操作
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };
@@ -71,8 +70,14 @@ void OparationManager::InputUpdate()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	}
 
+	// カメラの処理
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B) && !lockOnCooltime_.IsActive()) {
 		lockOn_.ToggleLockOn(player_->camera_);
+		lockOnCooltime_.Start(20.0f);
+	}
+	// スティックでロックオン対象を変更
+	if (lockOn_.ExistTarget() && (sThumbR.x != 0 || sThumbR.y != 0) && !lockOnCooltime_.IsActive()) {
+		lockOn_.ChangeLockOnTarget(player_->camera_);
 		lockOnCooltime_.Start(20.0f);
 	}
 
@@ -110,23 +115,11 @@ void OparationManager::InputUpdate()
 
 	// 入力しているかどうか
 	float slowFactor = 0.2f;
-	if (direct.x == 0)
+	if (direct.x != 0)
 	{
-		//player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
-	}
-	else {
-		if (input_->TriggerKey(DIK_LSHIFT)) {
-			player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * 100.0f);
-		}
 		player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
 	}
-	if (direct.z == 0) {
-		//player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
-	}
-	else {
-		if (input_->TriggerKey(DIK_LSHIFT)) {
-			player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * 100.0f);
-		}
+	if (direct.z != 0) {
 		player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
 	}
 	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
@@ -137,6 +130,7 @@ void OparationManager::InputUpdate()
 	if (direct.x == 0 || direct.z == 0 || speed == 20.0f) {
 		return;
 	}
+	// ダッシュ中の処理
 	if (isDash_) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 		++resetTime_;
@@ -148,7 +142,7 @@ void OparationManager::InputUpdate()
 		}
 		return;
 	}
-
+	// ダッシュの入力
 	if (direct.x != 0 || direct.z != 0) {
 		if (!isDash_ && input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
 			isDash_ = true;
@@ -157,16 +151,5 @@ void OparationManager::InputUpdate()
 			player_->velocity_.z = direct.z * dashPower;
 		}
 	}
-	
-}
-
-void OparationManager::GravityUpdate()
-{
-	//if (!player_->isGround_) {
-	//	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
-	//}
-	//else {
-	//	player_->velocity_.y = 0;
-	//}
 	
 }
