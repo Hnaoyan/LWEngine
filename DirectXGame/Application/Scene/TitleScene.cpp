@@ -54,7 +54,13 @@ void TitleScene::Draw()
 
 	Model::PostDraw();
 
+}
+
+void TitleScene::UIDraw()
+{
 #pragma region UI
+	// コマンドリストの取得
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 	Sprite::PreDraw(commandList);
 

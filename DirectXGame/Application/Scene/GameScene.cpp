@@ -144,14 +144,6 @@ void GameScene::Draw()
 	Sprite::PreDraw(commandList);
 
 	player_->UISpriteDraw();
-	if (clearText_.isClear) {
-		clearText_.clearText->Draw();
-	}
-
-	for (int i = 0; i < controlUIs_.size(); ++i) {
-		controlUIs_[i].first->SetPosition(controlUIs_[i].second.position);
-		controlUIs_[i].first->Draw();
-	}
 
 	Sprite::PostDraw();
 
@@ -165,7 +157,14 @@ void GameScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
+	if (clearText_.isClear) {
+		clearText_.clearText->Draw();
+	}
 
+	for (int i = 0; i < controlUIs_.size(); ++i) {
+		controlUIs_[i].first->SetPosition(controlUIs_[i].second.position);
+		controlUIs_[i].first->Draw();
+	}
 
 	Sprite::PostDraw();
 
