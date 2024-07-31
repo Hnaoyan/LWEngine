@@ -15,6 +15,9 @@ void TitleScene::Initialize()
 
 	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
 	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
+
+	size_ = uiSprites_[1]->GetSize();
+	uiSprites_[1]->SetSize(size_ * 2);
 }
 
 void TitleScene::Update()

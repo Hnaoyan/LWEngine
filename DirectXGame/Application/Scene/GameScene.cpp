@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "Engine/Scene/SceneManager.h"
+#include "Engine/2D/TextureManager.h"
 
 #include <imgui.h>
 
@@ -77,8 +78,20 @@ void GameScene::Update()
 		bossEnemy_->Update();
 		if (bossEnemy_->IsDead()) {
 			bossEnemy_.reset();
+			clearText_.isClear = true;
+			clearText_.transitionTimer.Start(300.0f);
 		}
 	}
+
+	if (clearText_.isClear) {
+		clearText_.transitionTimer.Update();
+
+		if (clearText_.transitionTimer.IsEnd()) {
+			sceneManager_->ChangeScene("TITLE");
+		}
+
+	}
+
 	terrainManager_->Update();
 
 	// 衝突処理
@@ -131,6 +144,9 @@ void GameScene::Draw()
 	Sprite::PreDraw(commandList);
 
 	player_->UISpriteDraw();
+	if (clearText_.isClear) {
+		clearText_.clearText->Draw();
+	}
 
 	Sprite::PostDraw();
 
@@ -230,6 +246,9 @@ void GameScene::LoadModel()
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
+	clearText_.isClear = false;
+	uint32_t clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
+	clearText_.clearText.reset(Sprite::Create(clearTexture, { 1280.0f / 2.0f,720.0f / 2.0f }, { 0.5f,0.5f }));
 
 }
 

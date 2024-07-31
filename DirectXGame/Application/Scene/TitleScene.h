@@ -55,6 +55,7 @@ private: // システム関係
 	std::unique_ptr<Skybox> skybox_;
 
 	std::vector<std::unique_ptr<Sprite>> uiSprites_;
+	Vector2 size_ = {};
 
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;

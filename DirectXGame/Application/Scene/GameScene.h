@@ -70,7 +70,14 @@ private: // アプリ
 
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
-	std::unique_ptr<Sprite> clearText_;
+
+	struct GameClear {
+		FrameTimer transitionTimer;
+		std::unique_ptr<Sprite> clearText;
+		bool isClear;
+	};
+
+	GameClear clearText_;
 
 private: // システム関係
 	// カメラ君
