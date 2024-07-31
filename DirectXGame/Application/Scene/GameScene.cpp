@@ -158,6 +158,19 @@ void GameScene::Draw()
 #pragma endregion
 }
 
+void GameScene::UIDraw()
+{
+	// コマンドリストの取得
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+
+	Sprite::PreDraw(commandList);
+
+
+
+	Sprite::PostDraw();
+
+}
+
 void GameScene::ImGuiDraw()
 {
 #ifdef _DEBUG

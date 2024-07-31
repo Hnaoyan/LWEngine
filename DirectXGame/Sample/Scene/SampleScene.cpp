@@ -264,6 +264,18 @@ void SampleScene::Draw()
 
 }
 
+void SampleScene::UIDraw()
+{
+	// コマンドリストの取得
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+
+	Sprite::PreDraw(commandList);
+
+
+
+	Sprite::PostDraw();
+}
+
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");

@@ -21,6 +21,10 @@ public: // フレーム関数
 	/// </summary>
 	virtual void Draw() = 0;
 	/// <summary>
+	/// UI描画
+	/// </summary>
+	virtual void UIDraw() = 0;
+	/// <summary>
 	/// ImGuiの処理
 	/// </summary>
 	virtual void ImGuiDraw() = 0;
