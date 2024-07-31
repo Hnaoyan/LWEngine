@@ -60,6 +60,16 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }
+void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform, const Vector3& direct,float speed) {
+	// インスタンス作成
+	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
+	instance->transform_ = transform;
+	// 速度
+	static_cast<NormalBullet*>(instance.get())->SetVelocity(direct * speed);
+	static_cast<NormalBullet*>(instance.get())->Initialize();
+	// リストにムーブ
+	units_.push_back(std::move(instance));
+}
 #pragma endregion
 
 void BossSystemContext::NormalBullet::Initialize()

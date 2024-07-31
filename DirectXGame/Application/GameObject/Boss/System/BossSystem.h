@@ -92,6 +92,7 @@ namespace BossSystemContext
 		/// <param name="position"></param>
 		/// <param name="direct"></param>
 		void AddBullet(const EulerTransform& transform, const Vector3& direct);
+		void AddBullet(const EulerTransform& transform, const Vector3& direct, float speed);
 
 	private:
 		uint32_t texture_ = 0;

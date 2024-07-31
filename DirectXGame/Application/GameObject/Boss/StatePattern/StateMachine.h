@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
+#include "Engine/LwLib/Utillity/FrameTimer.h"
 #include <memory>
 
 class Boss;
@@ -51,10 +52,27 @@ namespace BossState
 
 	class MissileAttackState : public IState 
 	{
+	public:
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
+	private:
+		// 移動に遷移するタイマー
+		FrameTimer changeTimer_;
+		FrameTimer fireTimer_;
 	};
 
+	class MoveState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+		bool isLeft_ = false;
+		// 攻撃に遷移するタイマー
+		FrameTimer changeTimer_;
+
+	};
 
 }

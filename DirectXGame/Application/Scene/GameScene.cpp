@@ -154,6 +154,19 @@ void GameScene::ImGuiDraw()
 	ImGui::ShowDemoWindow();
 
 	ImGui::Begin("SampleScene");
+
+	if (ImGui::Button("BossRes")) {
+		if (!bossEnemy_) {
+			bossEnemy_ = std::make_unique<Boss>();
+			bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
+			player_->SetBoss(bossEnemy_.get());
+		}
+	}
+	if (ImGui::Button("BossKill")) {
+		if (bossEnemy_) {
+			bossEnemy_->Dead();
+		}
+	}
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 
 	if (ImGui::TreeNode("DirectionalLight")) {
