@@ -246,7 +246,7 @@ void SampleScene::Draw()
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
 	//cubeModel_->Draw(textureDesc);
-	//skybox_->Draw(desc);
+	skybox_->Draw(desc);
 
 	//particles_->Draw(&camera_);
 	gpuParticle_->Draw(&camera_);

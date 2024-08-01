@@ -29,36 +29,18 @@ public:
 public:
 	// 最大数
 	static const uint32_t kNumInstanceMax = 256;
-	// リソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> particleResources_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> particleUAVResources_;
 
-	// 管理のリスト（えみた
-	Microsoft::WRL::ComPtr<ID3D12Resource> listIndexUAVResources_;
-	Microsoft::WRL::ComPtr<ID3D12Resource> listUAVResources_;
+	RWStructuredBufferContext<ParticleCS> particles_;
+	RWStructuredBufferContext<int32_t> freeListIndex_;
+	RWStructuredBufferContext<uint32_t> freeList_;
 
 	// Viewのリソース
 	ConstantBufferMapContext<PerView> perView_;
 	ConstantBufferMapContext<EmitterSphere> emit_;
 	ConstantBufferMapContext<PerFrame> perFrame_;
 
-	// SRV情報
-	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;
-	uint32_t srvIndex_ = 0u;
-
-	HeapAllocationData srvAllocater_;
-
-	// UAV情報
-	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> uavHandles_;
-	uint32_t uavIndex_ = 0u;
-
-	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> listIndexUAVHandles_;
-	uint32_t listIndexUAVIndex_;
-	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> listUAVHandles_;
-	uint32_t listUAVIndex_ = 0u;
 	// Unitの数
 	uint32_t unitNum_ = 0u;
-
 
 	uint32_t texture_ = 0u;
 };

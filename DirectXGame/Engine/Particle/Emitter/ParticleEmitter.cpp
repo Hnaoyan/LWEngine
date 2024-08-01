@@ -48,7 +48,7 @@ void ParticleEmitter::Update()
 	
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
 	sCommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
+	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.csRootSignature.Get());
 	sCommandList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)].Get());
 
 	BarrierUAV();
@@ -75,6 +75,8 @@ void ParticleEmitter::Update()
 	// カウンター
 	sCommandList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeListIndex), freeListIndex_.GetUAVGPU());
 	sCommandList->SetComputeRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleRegister::kUAVFreeList), freeList_.GetUAVGPU());
+	// エミッター
+	sCommandList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kEmitter), emitter_.cBuffer->GetGPUVirtualAddress());
 	// 時間
 	sCommandList->SetComputeRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleRegister::kPerTime), perFrame_.cBuffer->GetGPUVirtualAddress());
 	sCommandList->Dispatch(1, 1, 1);
@@ -157,7 +159,7 @@ void ParticleEmitter::CreateData()
 void ParticleEmitter::GPUInitialize()
 {
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
-	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.rootSignature.Get());
+	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.csRootSignature.Get());
 	sCommandList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kInitialize)].Get());
 	sCommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	// パーティクルデータ
