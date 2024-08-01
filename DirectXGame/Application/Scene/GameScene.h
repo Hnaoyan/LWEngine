@@ -1,11 +1,12 @@
 #pragma once
-#include "../../Engine/Scene/IScene.h"
-#include "../../Engine/2D/Drawer/Sprite.h"
-#include "../../Engine/3D/Drawer/3DDrawers.h"
-#include "../../Engine/3D/ModelManager.h"
-#include "../../Engine/Camera/CameraList.h"
-#include "../GameObject/GameObjectLists.h"
+#include "Engine/Scene/IScene.h"
+#include "Engine/2D/Drawer/Sprite.h"
+#include "Engine/3D/Drawer/3DDrawers.h"
+#include "Engine/3D/ModelManager.h"
+#include "Engine/Camera/CameraList.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/Particle/GPUParticleSystem.h"
+#include "../GameObject/GameObjectLists.h"
 
 class GameScene : public IScene
 {
@@ -72,6 +73,9 @@ private: // アプリ
 	
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
+
+	// GPUParticle
+	std::unique_ptr<GPUParticleSystem> gpuParticle_;
 
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;

@@ -15,6 +15,9 @@ void GameScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+	gpuParticle_ = std::make_unique<GPUParticleSystem>();
+	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
+
 	collisionManager_ = std::make_unique<CollisionManager>();
 	terrainManager_ = std::make_unique<TerrainManager>();
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -266,6 +269,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Sphere", "sphere");
 	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
 	ModelManager::LoadNormalModel("Player", "Robotto");
+	ModelManager::LoadObjModel("Plane", "plane");
 
 	terrain_ = ModelManager::GetModel("Terrain");
 
