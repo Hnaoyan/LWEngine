@@ -138,6 +138,17 @@ void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& mi
 	Vector3 correctPosition = worldTransform_.GetWorldPosition();
 	Vector3 prevToNow = prevPosition_ - worldTransform_.GetWorldPosition();
 
+	bool isXCorrect = false;
+	bool isYCorrect = false;
+	bool isZCorrect = false;
+
+	float correctValue = 0.025f;
+
+	Vector3 playerScale = worldTransform_.transform_.scale;
+	playerScale.x += correctValue + 0.025f;
+	playerScale.y += correctValue;
+	playerScale.z += correctValue;
+
 	switch (type)
 	{
 	//---点---//
@@ -167,94 +178,121 @@ void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& mi
 		break;
 	//---辺---//
 	case ICollider::kLeftBottomSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kLeftTopSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kLeftFrontSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kLeftBackSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = max.x + worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = max.x + (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kRightBottomSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kRightTopSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kRightFrontSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kRightBackSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.x = min.x - worldTransform_.transform_.scale.x;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.x = min.x - (playerScale.x);
+			isXCorrect = true;
+		//}
 		break;
 	case ICollider::kFrontBottomSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.z = max.z + worldTransform_.transform_.scale.z;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.z = max.z + (playerScale.z);
+			isZCorrect = true;
+		//}
 		break;
 	case ICollider::kFrontTopSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.z = max.z + worldTransform_.transform_.scale.z;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.z = max.z + (playerScale.z);
+			isZCorrect = true;
+		//}
 		break;
 	case ICollider::kBackBottomSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.z = min.z - worldTransform_.transform_.scale.z;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.z = min.z - (playerScale.z);
+			isZCorrect = true;
+		//}
 		break;
 	case ICollider::kBackTopSide:
-		if (prevToNow.y == 0.0f) {
-			correctPosition.z = min.z - worldTransform_.transform_.scale.z;
-		}
+		//if (prevToNow.y == 0.0f) {
+			correctPosition.z = min.z - (playerScale.z);
+			isZCorrect = true;
+		//}
 		break;
 	//---面---//
 	case ICollider::kFrontFace:
-		correctPosition.z = max.z + worldTransform_.transform_.scale.z;
+		correctPosition.z = max.z + (playerScale.z);
+		isZCorrect = true;
 		break;
 	case ICollider::kBackFace:
-		correctPosition.z = min.z - worldTransform_.transform_.scale.z;
+		correctPosition.z = min.z - (playerScale.z);
+		isZCorrect = true;
 		break;
 	case ICollider::kLeftFace:
-		correctPosition.x = max.x + worldTransform_.transform_.scale.x;
+		correctPosition.x = max.x + (playerScale.x);
+		isXCorrect = true;
 		break;
 	case ICollider::kRightFace:
-		correctPosition.x = min.x - worldTransform_.transform_.scale.x;
+		correctPosition.x = min.x - (playerScale.x);
+		isXCorrect = true;
 		break;
 	case ICollider::kTopFace:
-		correctPosition.y = min.y - worldTransform_.transform_.scale.y;
+		correctPosition.y = min.y - (playerScale.y);
+		isYCorrect = true;
 		break;
 	case ICollider::kBottomFace:
-		correctPosition.y = max.y + worldTransform_.transform_.scale.y + 0.02f;
+		correctPosition.y = max.y + (playerScale.y);
+		isYCorrect = true;
 		break;
 	// 例外
 	case ICollider::kMultiplePoints:
 		if (worldTransform_.GetWorldPosition().y < max.y) {
-			correctPosition.y = max.y + worldTransform_.transform_.scale.y + 0.02f;
+			correctPosition.y = max.y + (playerScale.y);
+			isYCorrect = true;
 		}
 		break;
 	case ICollider::kNone:
 		break;
 	}
-
+	if (isXCorrect) {
+		velocity_.x = 0;
+	}
+	if (isYCorrect) {
+		velocity_.y = 0;
+	}
+	if (isZCorrect) {
+		velocity_.z = 0;
+	}
 	worldTransform_.transform_.translate = correctPosition;
 
 }
