@@ -23,7 +23,6 @@ void DirectXCommon::Initialize(WindowAPI* winApp, int32_t bufferWidth, int32_t b
 
 	// 多用するもののポインタ
 	device_ = dxDevice_->GetDevice();
-	//commandList_ = dxCommand_->commandList_.Get();
 
 	// SwapChain:Fence
 	swapChainManager_ = std::make_unique<SwapChainManager>();
@@ -73,7 +72,7 @@ void DirectXCommon::PreDraw()
 
 void DirectXCommon::PostDraw()
 {
-	HRESULT result = S_FALSE;
+	//HRESULT result = S_FALSE;
 
 	UINT backBufferIndex = swapChainManager_->GetSwapChain()->GetCurrentBackBufferIndex();
 	// Barrier
@@ -82,43 +81,41 @@ void DirectXCommon::PostDraw()
 	// TransionBarrier
 	dxCommand_->sCommandList_->ResourceBarrier(1, &barrier);
 
-	// コマンドリストの内容を確定させる。
-	result = dxCommand_->sCommandList_->Close();
-	assert(SUCCEEDED(result));
-
-	ID3D12CommandList* commandLists[] = { DirectXCommand::sCommandList_.Get() };
-	dxCommand_->sCommandQueue_->ExecuteCommandLists(1, commandLists);
+	DirectXCommand::ExecuteCommandList(DirectXCommand::sCommandList_.Get());
 
 	// GPUとOSに画面の交換を行うように
 	swapChainManager_->GetSwapChain()->Present(1, 0);
 
-	// FenceのSignal待ち
-	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	assert(fenceEvent != nullptr);
+	//// FenceのSignal待ち
+	//HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	//assert(fenceEvent != nullptr);
 
-	// GPUがここまでたどり着いたときに
-	dxCommand_->sCommandQueue_->Signal(swapChainManager_->GetFence(), ++fenceVal_);
+	//// GPUがここまでたどり着いたときに
+	//dxCommand_->sCommandQueue_->Signal(swapChainManager_->GetFence(), ++fenceVal_);
 
-	if (swapChainManager_->GetFence()->GetCompletedValue() != fenceVal_) 
-	{
-		// 指定した
-		swapChainManager_->GetFence()->SetEventOnCompletion(fenceVal_, fenceEvent);
-		// イベント待ち
-		WaitForSingleObject(fenceEvent, INFINITE);
-		CloseHandle(fenceEvent);
-	}
-
+	//if (swapChainManager_->GetFence()->GetCompletedValue() != fenceVal_) 
+	//{
+	//	// 指定した
+	//	swapChainManager_->GetFence()->SetEventOnCompletion(fenceVal_, fenceEvent);
+	//	// イベント待ち
+	//	WaitForSingleObject(fenceEvent, INFINITE);
+	//	CloseHandle(fenceEvent);
+	//}
+	DirectXCommand::WaitForFenceComplete();
 	// FPS固定処理
 	UpdateFixFPS();
-	// 次フレーム用のコマンドリストを準備
-	result = dxCommand_->sCommandAllocator_->Reset();
-	assert(SUCCEEDED(result));
-	result = dxCommand_->sCommandList_->Reset(DirectXCommand::sCommandAllocator_.Get(), nullptr);
+
+	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandList_.Get());
 
 }
 
 void DirectXCommon::RenderPreDraw()
 {
+	// フェンスで終了の確認
+	DirectXCommand::WaitForFenceComplete();
+	// コマンドリストのリセット
+	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandList_.Get());
+
 	// Barrier
 	D3D12_RESOURCE_BARRIER barrier = DxCreateLib::ResourceLib::GetResourceBarrier(rtvHandler_->GetRenderTexture(),
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);

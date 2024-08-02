@@ -57,6 +57,8 @@ void GameScene::Initialize()
 
 void GameScene::Update()
 {
+	
+
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_LSHIFT)) {
 		sceneManager_->ChangeScene("SAMPLE");

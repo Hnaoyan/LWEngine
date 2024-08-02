@@ -12,10 +12,16 @@ public: // フレーム関数
 	/// 初期化
 	/// </summary>
 	virtual void Initialize();
+
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	virtual void Update() = 0;
+	/// <summary>
+	/// GPUの更新処理
+	/// </summary>
+	virtual void GPUUpdate() = 0;
+
 	/// <summary>
 	/// 描画処理
 	/// </summary>
@@ -33,7 +39,6 @@ public:	// ロード関数
 	/// モデル読み込み
 	/// </summary>
 	virtual void LoadModel() {};
-
 	/// <summary>
 	/// テクスチャ読み込み
 	/// </summary>

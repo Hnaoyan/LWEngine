@@ -4,7 +4,7 @@
 
 class ParticleEmitter
 {
-private:
+public:
 	// コマンドリスト
 	static ID3D12GraphicsCommandList* sCommandList;
 	// パイプライン

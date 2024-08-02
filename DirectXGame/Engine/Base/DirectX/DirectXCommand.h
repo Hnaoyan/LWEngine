@@ -12,6 +12,20 @@ public:
 	/// </summary>
 	/// <param name="device"></param>
 	static void Initialize(ID3D12Device* device);
+	/// <summary>
+	/// コマンドリストの確定と送信
+	/// </summary>
+	/// <param name="commandList"></param>
+	static void ExecuteCommandList(ID3D12GraphicsCommandList* commandList);
+	/// <summary>
+	/// コマンドリストの完了を確認
+	/// </summary>
+	static void WaitForFenceComplete();
+	/// <summary>
+	/// コマンドリストの準備
+	/// </summary>
+	/// <param name="commandList"></param>
+	static void ResetCloseCommandList(ID3D12GraphicsCommandList* commandList);
 
 public:	// メンバ変数
 	// キュー
