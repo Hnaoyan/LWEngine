@@ -55,6 +55,11 @@ void GameScene::Initialize()
 
 }
 
+void GameScene::GPUUpdate()
+{
+
+}
+
 void GameScene::Update()
 {
 	

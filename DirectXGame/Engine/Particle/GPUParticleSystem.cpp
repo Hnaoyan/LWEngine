@@ -20,10 +20,6 @@ void GPUParticleSystem::Update()
 	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
 		it->second->Update();
 	}
-	
-	DirectXCommand::ExecuteCommandList(DirectXCommand::sCommandList_.Get());
-	//DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandList_.Get());
-
 }
 
 void GPUParticleSystem::Draw(ICamera* camera)

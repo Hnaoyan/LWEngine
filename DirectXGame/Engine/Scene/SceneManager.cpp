@@ -19,6 +19,8 @@ void SceneManager::Update()
 	}
 	// シーンのGPU更新処理
 	nowScene_->GPUUpdate();
+	// コマンドリストの送り出し
+	DirectXCommand::ExecuteCommandList(DirectXCommand::sCommandList_.Get());
 	// シーンのCPU更新処理
 	nowScene_->Update();
 }

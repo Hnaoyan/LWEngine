@@ -15,6 +15,8 @@ public:
 	/// </summary>
 	void Initialize() override;
 
+	void GPUUpdate() override;
+
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
