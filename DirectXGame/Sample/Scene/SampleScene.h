@@ -22,7 +22,10 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-
+	/// <summary>
+	/// GPUの更新
+	/// </summary>
+	void GPUUpdate() override;
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>

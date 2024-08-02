@@ -514,12 +514,12 @@ void GraphicsPSO::CreateParticleCSPSO()
 	rootSignatureDesc.pStaticSamplers = samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
 
-	sParticleGPU_.rootSignature = CreateRootSignature(rootSignatureDesc);
+	sParticleGPU_.csRootSignature = CreateRootSignature(rootSignatureDesc);
 
 	HRESULT result = S_FALSE;
 	ComPtr<IDxcBlob> csBlob;
 	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
-	computePipelineStateDesc.pRootSignature = sParticleGPU_.rootSignature.Get();
+	computePipelineStateDesc.pRootSignature = sParticleGPU_.csRootSignature.Get();
 
 	// 初期化
 	csBlob = Shader::GetInstance()->Compile(L"Particle/InitializeParticleCS.hlsl", L"cs_6_0");
@@ -965,20 +965,20 @@ void GraphicsPSO::CreateSkyboxPSO()
 	descRangeSRV = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ModelRegister::kCountOfParameter)]{};
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(Pipeline::SkyBoxRegister::kCountOfParameter)]{};
 	//---共通---//
 	// テクスチャ
-	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(Pipeline::SkyBoxRegister::kTexture)] = PSOLib::InitAsDescriptorTable(1, &descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// View
-	rootparams[static_cast<int>(ModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	rootparams[static_cast<int>(Pipeline::SkyBoxRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 
 	//---VS---//
 	// WorldTransform
-	rootparams[static_cast<int>(ModelRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(Pipeline::SkyBoxRegister::kWorldTransform)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_VERTEX);
 
 	//---PS---//
 	// マテリアル
-	rootparams[static_cast<int>(ModelRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(Pipeline::SkyBoxRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	// ライト
 	//rootparams[static_cast<int>(ModelRegister::kLight)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 

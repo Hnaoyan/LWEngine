@@ -110,11 +110,16 @@ void SampleScene::Initialize()
 	//testWTF_.transform_.rotate.y = -1.85f;
 }
 
+void SampleScene::GPUUpdate()
+{
+
+	gpuParticle_->Update();
+
+
+}
+
 void SampleScene::Update()
 {
-#pragma region GPUUpdate
-	gpuParticle_->Update();
-#pragma endregion
 
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeScene("GAME");
@@ -246,7 +251,7 @@ void SampleScene::Draw()
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
 	//cubeModel_->Draw(textureDesc);
-	//skybox_->Draw(desc);
+	skybox_->Draw(desc);
 
 	//particles_->Draw(&camera_);
 	gpuParticle_->Draw(&camera_);

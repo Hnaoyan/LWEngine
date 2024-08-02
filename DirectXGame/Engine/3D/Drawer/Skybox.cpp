@@ -170,11 +170,11 @@ void Skybox::Draw(const ModelDrawDesc& desc)
 
     // ワールド行列
     Model::sCommandList_->SetGraphicsRootConstantBufferView(
-        static_cast<UINT>(Pipeline::ModelRegister::kWorldTransform),
+        static_cast<UINT>(Pipeline::SkyBoxRegister::kWorldTransform),
         worldTransform_.GetCBuffer()->GetGPUVirtualAddress());
     // ビュープロジェクション行列
     Model::sCommandList_->SetGraphicsRootConstantBufferView(
-        static_cast<UINT>(Pipeline::ModelRegister::kViewProjection),
+        static_cast<UINT>(Pipeline::SkyBoxRegister::kViewProjection),
         desc.camera->GetCBuffer()->GetGPUVirtualAddress());
 
     //---メッシュの設定---//
@@ -186,10 +186,10 @@ void Skybox::Draw(const ModelDrawDesc& desc)
     //---マテリアルの設定---//
     // SRVのセット
     TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-        Model::sCommandList_, static_cast<UINT>(Pipeline::ModelRegister::kTexture), modelData_.material.textureHandle);
+        Model::sCommandList_, static_cast<UINT>(Pipeline::SkyBoxRegister::kTexture), modelData_.material.textureHandle);
     // マテリアル
     Model::sCommandList_->SetGraphicsRootConstantBufferView(
-        static_cast<UINT>(Pipeline::ModelRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+        static_cast<UINT>(Pipeline::SkyBoxRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
 
     // ドローコール
     Model::sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);

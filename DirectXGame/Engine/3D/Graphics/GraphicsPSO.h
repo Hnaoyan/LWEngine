@@ -36,6 +36,14 @@ namespace Pipeline
 		kCountOfParameter,
 	};
 
+	enum class SkyBoxRegister : int {
+		kMaterial,
+		kTexture,
+		kViewProjection,
+		kWorldTransform,
+		kCountOfParameter,
+	};
+
 	enum class InstancedUnitRegister : int {
 		kMaterial,
 		kTexture,
@@ -126,14 +134,21 @@ namespace Pipeline
 		kPerTime,		// 時間関係のデータ
 		kCountOfParameter,	// 数
 	};
+	enum class GPUParticleCSRegister : int {
+		kUAVParticle,	// 書き込み
+		kUAVFreeListIndex,	// リストの番号
+		kUAVFreeList,		// リスト
+		kEmitter,		// エミッター
+		kPerTime,		// 時間関係のデータ
+		kCountOfParameter,	// 数
+	};
 
-	enum class GPUParticlePipeline {
+	enum class GPUParticlePipeline : int {
 		kInitialize,
 		kEmit,
 		kUpdate,
 		kCountOfProcess,
 	};
-
 }
 
 struct GeneralPipeline
@@ -147,6 +162,7 @@ struct ParticleCSPipeline
 	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
 		size_t(Pipeline::GPUParticlePipeline::kCountOfProcess)> pipelineStates;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> csRootSignature;
 };
 
 struct CSPipeline 

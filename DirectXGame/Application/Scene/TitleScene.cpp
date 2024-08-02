@@ -20,6 +20,11 @@ void TitleScene::Initialize()
 	uiSprites_[1]->SetSize(size_ * 2);
 }
 
+void TitleScene::GPUUpdate()
+{
+
+}
+
 void TitleScene::Update()
 {
 #ifdef _DEBUG

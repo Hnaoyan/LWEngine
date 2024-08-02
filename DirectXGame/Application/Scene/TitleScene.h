@@ -16,6 +16,11 @@ public:
 	void Initialize() override;
 
 	/// <summary>
+	/// GPUの更新
+	/// </summary>
+	void GPUUpdate() override;
+
+	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
 	void Update() override;
