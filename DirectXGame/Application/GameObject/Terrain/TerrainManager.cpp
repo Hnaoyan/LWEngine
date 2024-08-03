@@ -65,6 +65,20 @@ void TerrainManager::AddCluster(std::string tag)
 	clusters_.push_back(std::move(instance));
 }
 
+void TerrainManager::AddCluster(std::string filename,std::string modelTag)
+{
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<TerrainCluster>();
+
+	static_cast<TerrainCluster*>(instance.get())->Initialize(ModelManager::GetModel(modelTag));
+	LevelLoader::datas_[filename];
+
+	for (std::list<LevelData::ObjectData>::iterator it = LevelLoader::datas_[filename]->objects.begin();
+		it != LevelLoader::datas_[filename]->objects.end(); ++it) {
+		static_cast<TerrainCluster*>(instance.get())->TerrainRegister((*it).transform);
+	}
+	clusters_.push_back(std::move(instance));
+}
+
 void TerrainManager::ImGuiDraw()
 {
 	ImGui::Begin("TerrainManager");

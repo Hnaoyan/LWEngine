@@ -5,13 +5,19 @@
 #include <concepts>
 
 #include "Engine/Math/MathLib.h"
-#include "Engine/3D/Drawer/Model.h"
+#include "Engine/3D/Descriptor/SRVHandler.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 
 enum class BufferType : uint32_t{
 	kConstantBuffer,
 	kStructuredBuffer,
 	kRWStructuredBuffer,
+};
+
+struct HeapAllocationData
+{
+	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> handles;
+	uint32_t index = 0u;
 };
 
 template<typename T>

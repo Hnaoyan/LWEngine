@@ -26,6 +26,7 @@ public:
 	/// </summary>
 	void AddCluster();
 	void AddCluster(std::string tag);
+	void AddCluster(std::string filename, std::string modelTag);
 
 	/// <summary>
 	/// ImGui

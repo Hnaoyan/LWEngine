@@ -44,8 +44,3 @@ struct PerView {
 	Matrix4x4 billBoardMatrix;
 };
 
-struct HeapAllocationData
-{
-	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> handles;
-	uint32_t index = 0u;
-};
