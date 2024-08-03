@@ -4,7 +4,6 @@
 #include <type_traits>
 #include <concepts>
 
-#include "Engine/Math/MathLib.h"
 #include "Engine/3D/Descriptor/SRVHandler.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 
