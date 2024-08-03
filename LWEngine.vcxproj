@@ -162,6 +162,7 @@
     <ClInclude Include="DirectXGame\Engine\Animation\SkinCluster.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\System\AnimationPlayer.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\CBufferCommon.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />

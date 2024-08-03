@@ -8,10 +8,6 @@ const wchar_t WindowAPI::kWindowClassName[] = L"DirectXTitle";
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-//void Log(const std::string& message) {
-//	OutputDebugStringA(message.c_str());
-//}
-
 LRESULT WindowAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
 		return true;

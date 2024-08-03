@@ -524,6 +524,9 @@
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\CBufferCommon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -544,11 +547,17 @@
     <FxCompile Include="Resources\shaders\PostEffect\RadialBlurPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\RandomNoisePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\VignettePS.hlsl" />
-    <FxCompile Include="Resources\shaders\Skining3DModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxPS.hlsl" />
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\Emitter\EmitParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\InitializeParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\ParticlePS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\ParticleVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\UpdateParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
+    <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\SampleBullet.cpp" />
