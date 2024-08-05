@@ -3,121 +3,7 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "薬莢",
-            "transform": {
-                "translation": [
-                    0.0,
-                    10.0,
-                    2.0
-                ],
-                "rotation": [
-                    -89.99996948242188,
-                    111.00000762939453,
-                    -44.999969482421875
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    0.9999999403953552
-                ]
-            },
-            "file_name": "Object"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体.004",
-            "transform": {
-                "translation": [
-                    0.0,
-                    45.0,
-                    4.0
-                ],
-                "rotation": [
-                    45.000003814697266,
-                    63.000003814697266,
-                    27.000001907348633
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "Terrain",
-            "model_tag": "Cube"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体.003",
-            "transform": {
-                "translation": [
-                    -25.0,
-                    4.0,
-                    4.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "Terrain",
-            "model_tag": "Cube"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体.002",
-            "transform": {
-                "translation": [
-                    25.0,
-                    4.0,
-                    4.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "Terrain",
-            "model_tag": "Cube"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体.001",
-            "transform": {
-                "translation": [
-                    20.0,
-                    25.0,
-                    4.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    30.00000762939453
-                ],
-                "scaling": [
-                    5.0,
-                    5.0,
-                    5.0
-                ]
-            },
-            "file_name": "Terrain",
-            "model_tag": "Cube"
-        },
-        {
-            "type": "MESH",
-            "name": "立方体",
+            "name": "Floar",
             "transform": {
                 "translation": [
                     0.0,
@@ -130,25 +16,27 @@
                     0.0
                 ],
                 "scaling": [
-                    200.0,
-                    200.0,
+                    300.0,
+                    300.0,
                     1.0
                 ]
-            }
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
         },
         {
             "type": "MESH",
-            "name": "立方体.005",
+            "name": "立方体.001",
             "transform": {
                 "translation": [
-                    -20.0,
-                    25.0,
+                    -25.0,
+                    5.0,
                     4.0
                 ],
                 "rotation": [
                     0.0,
                     -0.0,
-                    30.00000762939453
+                    0.0
                 ],
                 "scaling": [
                     5.0,
@@ -157,7 +45,120 @@
                 ]
             },
             "file_name": "Terrain",
-            "model_tag": "Cube"
+            "model_tag": "DefaultCube"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.002",
+            "transform": {
+                "translation": [
+                    25.0,
+                    5.0,
+                    4.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.003",
+            "transform": {
+                "translation": [
+                    15.0,
+                    25.0,
+                    4.0
+                ],
+                "rotation": [
+                    0.0,
+                    0.0,
+                    -23.999998092651367
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    -15.0,
+                    25.0,
+                    4.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    25.000001907348633
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.005",
+            "transform": {
+                "translation": [
+                    0.0,
+                    40.0,
+                    3.4200000762939453
+                ],
+                "rotation": [
+                    8.000000953674316,
+                    -9.000001907348633,
+                    -21.000001907348633
+                ],
+                "scaling": [
+                    5.0,
+                    5.0,
+                    5.0
+                ]
+            },
+            "file_name": "Terrain",
+            "model_tag": "DefaultCube"
+        },
+        {
+            "type": "MESH",
+            "name": "薬莢",
+            "transform": {
+                "translation": [
+                    0.0,
+                    15.809999465942383,
+                    0.0
+                ],
+                "rotation": [
+                    30.999984741210938,
+                    125.0,
+                    76.9999771118164
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
         }
     ]
 }
