@@ -45,29 +45,9 @@ void SampleScene::Initialize()
 
 	// 歩くオブジェ
 	humans_[0] = std::make_unique<AnimSampleObject>();
-	humans_[0]->Initialize(this->walkModel_.get(),cubeModel_);
+	humans_[0]->Initialize(this->walkModel_.get(), cubeModel_);
 	humans_[0]->worldTransform_.transform_.translate = { 0,0,0 };
 	humans_[0]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
-
-	humans_[1] = std::make_unique<AnimSampleObject>();
-	humans_[1]->Initialize(this->walkModel_.get(), cubeModel_);
-	humans_[1]->worldTransform_.transform_.translate = { 0,0,0 };
-	humans_[1]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
-
-	humans_[2] = std::make_unique<AnimSampleObject>();
-	humans_[2]->Initialize(this->sneakWalkModel_.get(), cubeModel_);
-	humans_[2]->worldTransform_.transform_.translate = { 0,0,0 };
-	humans_[2]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
-
-	cubes_[0] = std::make_unique<AnimCubeObject>();
-	cubes_[0]->Initialize(testModel_.get());
-	//cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
-
-	cubes_[1] = std::make_unique<AnimCubeObject>();
-	cubes_[1]->Initialize(testModel_.get());
-
-	player_ = std::make_unique<PlSampleObject>();
-	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
 	camera_.transform_.translate.y = 3.0f;
@@ -122,49 +102,12 @@ void SampleScene::Update()
 	gpuParticle_->Update();
 #pragma endregion
 
-	if (input_->TriggerKey(DIK_RSHIFT)) {
-		sceneManager_->ChangeScene("GAME");
-	}
-	// コントローラー
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
-		sceneManager_->ChangeScene("GAME");
-	}
-
 	if (input_->TriggerKey(DIK_J)) {
 		humans_[0]->animModel_->GetMaterial()->coefficient_ = 0;
 	}
 	if (input_->TriggerKey(DIK_K)) {
 		humans_[0]->animModel_->GetMaterial()->coefficient_ = 1;
 	}
-
-	//if (input_->TriggerKey(DIK_0)) {
-	//	postEffecter_ = 0;
-	//}
-	//if (input_->TriggerKey(DIK_1)) {
-	//	postEffecter_ = 1;
-	//}
-	//if (input_->TriggerKey(DIK_2)) {
-	//	postEffecter_ = 2;
-	//}
-	//if (input_->TriggerKey(DIK_3)) {
-	//	postEffecter_ = 3;
-	//}
-	//if (input_->TriggerKey(DIK_4)) {
-	//	postEffecter_ = 4;
-	//}
-	//if (input_->TriggerKey(DIK_5)) {
-	//	postEffecter_ = 5;
-	//}
-	//if (input_->TriggerKey(DIK_6)) {
-	//	postEffecter_ = 6;
-	//}
-	//if (input_->TriggerKey(DIK_7)) {
-	//	postEffecter_ = 7;
-	//}
-	//if (input_->TriggerKey(DIK_8)) {
-	//	postEffecter_ = 8;
-	//}
-
 
 	newSprite_->SetPosition(newSpriteData_.position_);
 	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
@@ -173,14 +116,9 @@ void SampleScene::Update()
 	testWTF_.UpdateMatrix();
 
 	humans_[0]->Update();
-	humans_[1]->Update();
-	humans_[2]->Update();
 
 	testGroup1_->Update();
 
-	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->Update();
-	}
 
 	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
 		it != group_.end(); ++it) {
@@ -189,7 +127,6 @@ void SampleScene::Update()
 
 	plane_.worldTransform.UpdateMatrix();
 
-	player_->Update();
 	// カメラの更新
 	CameraUpdate();
 
@@ -212,7 +149,7 @@ void SampleScene::Draw()
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 #pragma region スプライト
-		
+
 	Sprite::PreDraw(commandList);
 
 
@@ -234,22 +171,8 @@ void SampleScene::Draw()
 	desc.worldTransform = &testWTF_;
 
 	humans_[0]->Draw(desc);
-	//humans_[1]->Draw(desc);
-	//humans_[2]->Draw(desc);
 
-	//testGroup1_->Draw(desc);
-	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
-		it != group_.end(); ++it) {
-		//(*it)->Draw(desc);
-	}
-
-	//player_->Draw(&camera_);
-	for (int i = 0; i < cubes_.size(); ++i) {
-		//cubes_[i]->Draw(desc);
-	}
-	
 	desc.worldTransform = &plane_.worldTransform;
-	//plane_.model->Draw(desc);
 
 	ModelDrawDesc textureDesc{};
 	textureDesc.camera = &camera_;
@@ -258,7 +181,6 @@ void SampleScene::Draw()
 	textureDesc.pointLight = pointLight_.get();
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
-	//cubeModel_->Draw(textureDesc);
 	skybox_->Draw(desc);
 
 	//particles_->Draw(&camera_);
@@ -429,14 +351,9 @@ void SampleScene::ImGuiDraw()
 		(*it)->ImGuiDraw();
 	}
 
-	player_->ImGuiDraw();
+	//player_->ImGuiDraw();
 	skybox_->ImGuiDraw();
 	humans_[0]->ImGuiDraw();
-	humans_[1]->ImGuiDraw();
-	humans_[2]->ImGuiDraw();
-	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->ImGuiDraw();
-	}
 	// Particle
 	gpuParticle_->ImGuiDraw();
 	// カメラの
@@ -452,14 +369,10 @@ void SampleScene::ImGuiDraw()
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
-	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
-	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Skydome::CreateSkydome());
 	ModelManager::LoadObjModel("Plane", "plane");
-	ModelManager::LoadObjModel("Axis", "BulletTest");
 
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
