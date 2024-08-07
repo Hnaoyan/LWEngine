@@ -29,6 +29,7 @@ void OparationManager::Update()
 	// Aimの処理
 	aimManager_.Update(player_->camera_);
 	// クールタイム
+	dashCooltime_.Update(GameSystem::GameSpeedFactor());
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 	lockOnCooltime_.Update(GameSystem::sSpeedFactor);
 	// 座標更新
@@ -77,75 +78,74 @@ void OparationManager::InputUpdate()
 		lockOnCooltime_.Start(20.0f);
 	}
 
-	// キーボード操作
-	if (input_->PressKey(DIK_A))
-	{
-		direct.x -= 1.0f;
-	}
-	else if (input_->PressKey(DIK_D)) 
-	{
-		direct.x += 1.0f;
-	}
-
-	if (input_->PressKey(DIK_W)) {
-		direct.y += 1.0f;
-	}
-	else if (input_->PressKey(DIK_S)) {
-		direct.y -= 1.0f;
-	}
-
-	if (input_->TriggerKey(DIK_SPACE) && player_->velocity_.y == 0.0f) {
-		float jumpPower = 50.0f;
-		player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
-	}
-
 	direct = Vector3::Normalize(direct);
 
 	float playerYaw = player_->camera_->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
-
-	player_->worldTransform_.transform_.rotate.y = player_->camera_->transform_.rotate.y;
-
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ direct.x,0,direct.y }, rotateY);
 	direct = rotateVector;
 
-	// 入力しているかどうか
-	float slowFactor = 0.2f;
-	if (direct.x != 0)
-	{
-		player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
+	//player_->worldTransform_.transform_.rotate.y = player_->camera_->transform_.rotate.y;
+	Vector3 sub = Vector3::Normalize({ sThumbL.x,sThumbL.y ,0 });
+	if (sub.x != 0.0f || sub.y != 0.0f) {
+		sub = Matrix4x4::TransformVector3({ sub.x,0,sub.y }, rotateY);
+		player_->worldTransform_.transform_.rotate.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 	}
-	if (direct.z != 0) {
-		player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
-	}
-	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
-	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
 
-	// 入力による移動の速度制限
-	// 左右
-	if (direct.x == 0 || direct.z == 0 || speed == 20.0f) {
-		return;
-	}
+	float slowFactor = 0.2f;
+
 	// ダッシュ中の処理
 	if (isDash_) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-		++resetTime_;
 		if (resetTime_ > 10) {
-			isDash_ = false;
-			resetTime_ = 0;
 			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 
 		}
-		return;
+		++resetTime_;
+
+
+		dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, resetTime_ / 80.0f);
+		dashVelocity_.z = LwLib::Lerp(dashVelocity_.z, 0, resetTime_ / 80.0f);
+
+		player_->velocity_.x += dashVelocity_.x * GameSystem::GameSpeedFactor();
+		player_->velocity_.z += dashVelocity_.z * GameSystem::GameSpeedFactor();
+
+		if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {
+			isDash_ = false;
+			resetTime_ = 0;
+			dashCooltime_.Start(300.0f);
+			return;
+		}
+
 	}
-	// ダッシュの入力
-	if (direct.x != 0 || direct.z != 0) {
-		if (!isDash_ && input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
-			isDash_ = true;
-			float dashPower = 100.0f * GameSystem::GameSpeedFactor();
-			player_->velocity_.x = direct.x * dashPower;
-			player_->velocity_.z = direct.z * dashPower;
+	else {
+		// 入力しているかどうか
+		if (direct.x != 0)
+		{
+			player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
+		}
+		if (direct.z != 0) {
+			player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
+		}
+
+		// ダッシュの入力
+		if (direct.x != 0 || direct.z != 0) {
+			if (!isDash_ && input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+				if (dashCooltime_.IsActive()) {
+					return;
+				}
+				isDash_ = true;
+				float dashPower = 40.0f;
+				dashVelocity_.x = direct.x * dashPower;
+				dashVelocity_.z = direct.z * dashPower;
+
+				//player_->velocity_.x = direct.x * dashPower;
+				//player_->velocity_.z = direct.z * dashPower;
+			}
 		}
 	}
-	
+
+	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
+	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
+
 }

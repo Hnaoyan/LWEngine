@@ -32,7 +32,6 @@ void AimManager::Initialize(Player* player)
 
 void AimManager::Update(ICamera* camera)
 {
-	// オフセットの座標更新
 	offSetTransform_.UpdateMatrix();
 	// ターゲットがいる場合ターゲットにAIM
 	if (player_->GetOperation()->GetLockOn()->ExistTarget()) {
@@ -41,8 +40,16 @@ void AimManager::Update(ICamera* camera)
 	}
 	// ターゲットがいない場合オフセットに
 	else {
-		screenPosition_ = LwLib::WorldToScreen(offSetTransform_.GetWorldPosition(), camera);
-		targetPosition_ = offSetTransform_.GetWorldPosition();
+		// カメラの前方向ベクトルを計算
+		float frontX = std::cosf(player_->camera_->transform_.rotate.x) * std::cosf(player_->camera_->transform_.rotate.y);
+		float frontY = std::sinf(player_->camera_->transform_.rotate.x);
+		float frontZ = std::cosf(player_->camera_->transform_.rotate.x) * std::sinf(player_->camera_->transform_.rotate.y);
+		// ピッチ角（Y軸方向）を求めるために atan2 を使用
+		float pitchAngle = std::atan2f(frontY, sqrt(frontX * frontX + frontZ * frontZ));
+		Vector3 normalPosition = { offSetTransform_.GetWorldPosition().x,pitchAngle * 50.0f,offSetTransform_.GetWorldPosition().z };
+		normalPosition.y *= -1.0f;
+		screenPosition_ = LwLib::WorldToScreen(normalPosition, camera);
+		targetPosition_ = normalPosition;
 	}
 	// クロスヘアの座標設定
 	reticleSprite_->SetPosition(screenPosition_);

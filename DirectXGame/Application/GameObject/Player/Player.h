@@ -53,6 +53,11 @@ public: // アクセッサ
 	void SetBoss(Boss* boss) { systemManager_.GetLockOn()->SetBoss(boss); }
 	// ステート
 	IPlayerState* GetState() { return currentState_.get(); }
+
+	// 縦横
+	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
+	IPlayerState* GetVerticalState() { return currentStates_.second.get(); }
+
 	void SetState(std::unique_ptr<IPlayerState> newState) {
 		currentState_ = std::move(newState);
 	}

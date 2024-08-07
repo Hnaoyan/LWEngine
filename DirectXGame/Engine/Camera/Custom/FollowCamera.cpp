@@ -25,8 +25,13 @@ void FollowCamera::Update()
 	if (target_) {
 		// 入力クラス
 		// 目標回転角の設定
-		destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
-		destinationAngle_.x -= rightStick.y * rStickRotateSpeed_;
+		if (rightStick.x != 0.0f)
+		{
+			destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
+		}
+		if (rightStick.y != 0.0f) {
+			destinationAngle_.x -= rightStick.y * rStickRotateSpeed_;
+		}
 
 		if (lockOn_->ExistTarget()) {
 			// ロックオンしたオブジェクトの座標
@@ -54,7 +59,7 @@ void FollowCamera::Update()
 
 		// 回転の速度調節
 		float thValue = 0.4f;
-		transform_.rotate.x = std::clamp(transform_.rotate.x, -thValue, thValue);
+		destinationAngle_.x = std::clamp(destinationAngle_.x, -thValue, thValue);
 
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);
@@ -72,6 +77,8 @@ void FollowCamera::ImGuiDraw()
 	ImGui::Begin("FollowCamera");
 
 	ImGui::DragFloat3("Position", &transform_.translate.x);
+	Vector3 world = GetWorldPosition();
+	ImGui::DragFloat3("WorldPosition", &world.x);
 
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 

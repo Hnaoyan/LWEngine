@@ -44,6 +44,9 @@ private: // USER
 	FrameTimer shotTimer_;
 	FrameTimer lockOnCooltime_;
 
+	Vector3 dashVelocity_{};
+	FrameTimer dashCooltime_;
+
 private: // SYSTEM
 	// ロックオンシステム
 	LockOn lockOn_;
