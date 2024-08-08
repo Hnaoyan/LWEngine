@@ -55,6 +55,8 @@ public:
 	EulerTransform transform_ = { {1.0f,1.0f,1.0f} ,{},{} };
 	// 親子ポインタ
 	const WorldTransform* parent_ = nullptr;
+	// 行列のみで渡す親
+	const Matrix4x4* parentMatrix_ = nullptr;
 	// ワールド行列
 	Matrix4x4 worldMatrix_ = {};
 	// ローカル行列

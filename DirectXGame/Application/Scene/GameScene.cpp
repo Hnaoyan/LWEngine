@@ -15,6 +15,17 @@ void GameScene::Initialize()
 	// テクスチャ関係読み込み
 	LoadTexture();
 
+#pragma region カメラ関係
+	// 初期カメラ
+	camera_.transform_.translate.y = 5.0f;
+	camera_.transform_.rotate.x = 0.4f;
+	camera_.transform_.translate.z = -7.0f;
+	debugCamera_ = std::make_unique<DebugCamera>();
+	debugCamera_->Initialize();
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
+#pragma endregion
+
 	gpuParticle_ = std::make_unique<GPUParticleSystem>();
 	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
 
@@ -23,11 +34,11 @@ void GameScene::Initialize()
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
+	player_->SetFollowCamera(followCamera_.get());
 	player_->Initialize(ModelManager::GetModel("Player"));
 
 	bulletManager_ = std::make_unique<BulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
-
 
 	enemyManager_ = std::make_unique<SampleEnemyManager>();
 	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
@@ -40,27 +51,17 @@ void GameScene::Initialize()
 	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
 	enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
 
-	player_->SetBulletManager(bulletManager_.get());
-	player_->SetBoss(bossEnemy_.get());
-
 	terrainWtf_.Initialize();
 	terrainWtf_.transform_.scale = { 20.0f,1.0f,20.0f };
 	terrainWtf_.transform_.translate.y -= 0.5f;
-#pragma region カメラ関係
-	// 初期カメラ
-	camera_.transform_.translate.y = 5.0f;
-	camera_.transform_.rotate.x = 0.4f;
-	camera_.transform_.translate.z = -7.0f;
-	debugCamera_ = std::make_unique<DebugCamera>();
-	debugCamera_->Initialize();
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Initialize();
+
+	// セッター処理
 	followCamera_->SetParent(player_->GetWorldTransform());
 	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
-	player_->SetFollowCamera(followCamera_.get());
 	player_->SetEnemyList(enemyManager_->GetEnemysList());
-#pragma endregion
+	player_->SetBulletManager(bulletManager_.get());
+	player_->SetBoss(bossEnemy_.get());
 
 }
 

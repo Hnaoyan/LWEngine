@@ -21,9 +21,13 @@ void AimManager::Initialize(Player* player)
 	// 初期化
 	offSetTransform_.Initialize();
 	// 親の設定
-	offSetTransform_.parent_ = &player_->worldTransform_;
+	//offSetTransform_.parent_ = &player_->worldTransform_;
+	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
+	offSetTransform_.parentMatrix_ = &parentMatrix_;
+	offSetTransform_.transform_.translate = { 0.0f,0.0f,50.0f };
 	// 初手の奥行き
-	offSetTransform_.transform_.translate.z = 50.0f;
+	//offsetPosition_ = { 0,0,50.0f };
+	//offSetTransform_.transform_.translate = player_->worldTransform_.GetWorldPosition() + offsetPosition_;
 	offSetTransform_.UpdateMatrix();
 
 	reset_.isReceivingInput = false;
@@ -32,6 +36,9 @@ void AimManager::Initialize(Player* player)
 
 void AimManager::Update(ICamera* camera)
 {
+	//offSetTransform_.transform_.rotate = player_->camera_->transform_.rotate;
+	//offSetTransform_.transform_.translate = player_->worldTransform_.GetWorldPosition() + offsetPosition_;
+	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.UpdateMatrix();
 	// ターゲットがいる場合ターゲットにAIM
 	if (player_->GetOperation()->GetLockOn()->ExistTarget()) {
@@ -46,8 +53,7 @@ void AimManager::Update(ICamera* camera)
 		float frontZ = std::cosf(player_->camera_->transform_.rotate.x) * std::sinf(player_->camera_->transform_.rotate.y);
 		// ピッチ角（Y軸方向）を求めるために atan2 を使用
 		float pitchAngle = std::atan2f(frontY, sqrt(frontX * frontX + frontZ * frontZ));
-		Vector3 normalPosition = { offSetTransform_.GetWorldPosition().x,pitchAngle * 50.0f,offSetTransform_.GetWorldPosition().z };
-		normalPosition.y *= -1.0f;
+		Vector3 normalPosition = { offSetTransform_.GetWorldPosition().x,offSetTransform_.GetWorldPosition().y + (pitchAngle * -1.0f),offSetTransform_.GetWorldPosition().z };
 		screenPosition_ = LwLib::WorldToScreen(normalPosition, camera);
 		targetPosition_ = normalPosition;
 	}
@@ -58,8 +64,9 @@ void AimManager::Update(ICamera* camera)
 void AimManager::ImGuiDraw()
 {
 	Vector3 world = offSetTransform_.GetWorldPosition();
-	ImGui::DragFloat3("LocalPosition", &offSetTransform_.transform_.translate.x);
-	ImGui::DragFloat3("WolrdPosition", &world.x);
+	ImGui::DragFloat3("Transform", &offSetTransform_.transform_.translate.x);
+	ImGui::DragFloat3("Local", &offsetPosition_.x, 0.01f);
+	ImGui::DragFloat3("Wolrd", &world.x);
 	ImGui::DragFloat2("ScreenPosition", &screenPosition_.x);
 }
 

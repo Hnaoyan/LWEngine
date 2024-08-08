@@ -46,6 +46,9 @@ void WorldTransform::UpdateMatrix()
 	if (parent_) {
 		worldMatrix_ = Matrix4x4::Multiply(worldMatrix_, parent_->worldMatrix_);
 	}
+	else if (parentMatrix_) {
+		worldMatrix_ = Matrix4x4::Multiply(worldMatrix_, parentMatrix_);
+	}
 
 	// ワールド行列をローカルに適応
 	worldMatrix_ = Matrix4x4::Multiply(localMatrix_, worldMatrix_);

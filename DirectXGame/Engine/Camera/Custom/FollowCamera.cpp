@@ -80,6 +80,8 @@ void FollowCamera::ImGuiDraw()
 	Vector3 world = GetWorldPosition();
 	ImGui::DragFloat3("WorldPosition", &world.x);
 
+	ImGui::DragFloat3("Offset", &defaultOffset_.x, 0.01f);
+
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 
 	ImGui::DragFloat("rStick", &rStickRotateSpeed_, 0.01f);
