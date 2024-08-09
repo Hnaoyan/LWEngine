@@ -1,4 +1,5 @@
 #include "StateMachine.h"
+#include "Engine/LwLib/LwEngineLib.h"
 #include "Application/GameObject/GameObjectLists.h"
 
 void BossState::StateManager::Initialize(Boss* boss)
@@ -116,8 +117,6 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 			boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 			MoveState* newState = static_cast<MoveState*>(boss_->GetState());
 			newState->TestProcess();
-			//MoveState** newState = std::get_if<MoveState*>(&nowState);
-			//(*newState)->TestProcess();
 		}
 	}
 	else {
@@ -130,4 +129,45 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 			boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
 		}
 	}
+}
+
+void BossState::UpDownState::Initialize()
+{
+	float offset = 15.0f;
+	if (boss_->worldTransform_.GetWorldPosition().y <= 0) {
+		startPosition_ = boss_->worldTransform_.GetWorldPosition();
+		endPosition_ = startPosition_;
+		endPosition_.y += offset;
+		isUpper_ = true;
+	}
+	else {
+		startPosition_ = boss_->worldTransform_.GetWorldPosition();
+		endPosition_ = startPosition_;
+		endPosition_.y -= offset;
+		isUpper_ = false;
+	}
+	// 変更のタイマー
+	changeTimer_.Start(120.0f);
+
+}
+
+void BossState::UpDownState::Update()
+{
+	if (isUpper_) {
+		boss_->worldTransform_.transform_.translate = Vector3::Lerp()
+	}
+
+	boss_->worldTransform_.transform_.translate = LwLib::Lerp(startPosition_,endPosition_,changeTimer_.)
+
+	changeTimer_.Update();
+	// 終了時に変更
+	if (changeTimer_.IsEnd()) {
+		boss_->GetDecider().StateDecide(this);
+		return;
+	}
+}
+
+void BossState::UpDownState::Exit()
+{
+
 }

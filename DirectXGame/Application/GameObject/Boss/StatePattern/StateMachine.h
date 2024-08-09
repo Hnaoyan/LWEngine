@@ -81,7 +81,23 @@ namespace BossState
 
 	};
 
-	using StateVariant = std::variant<MissileAttackState*, MoveState*>;
+	class UpDownState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+		// 移動に遷移するタイマー
+		FrameTimer changeTimer_;
+
+		Vector3 startPosition_{};
+		Vector3 endPosition_{};
+
+		bool isUpper_ = false;
+	};
+
+	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*>;
 
 	class StateDecider {
 	private:
