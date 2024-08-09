@@ -41,12 +41,13 @@ void BossState::MissileAttackState::Update()
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, moveDirect,50.0f);
 		fireTimer_.Start(10.0f);
 	}
+	// 射撃タイマー
 	fireTimer_.Update();
-
+	// 変更タイマー
 	changeTimer_.Update();
 	// 終了時に変更
 	if (changeTimer_.IsEnd()) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+		boss_->GetDecider().StateDecide(this);
 		return;
 	}
 }
@@ -80,11 +81,11 @@ void BossState::MoveState::Update()
 			boss_->worldTransform_.transform_.translate.x += 0.1f;
 		}
 	}
-
+	// 変更タイマー
 	changeTimer_.Update();
 	// 終了時に変更
 	if (changeTimer_.IsEnd()) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+		boss_->GetDecider().StateDecide(this);
 		return;
 	}
 }
@@ -92,4 +93,41 @@ void BossState::MoveState::Update()
 void BossState::MoveState::Exit()
 {
 	isLeft_ = false;
+}
+
+void BossState::MoveState::TestProcess()
+{
+	changeTimer_.Start(300.0f);
+	isLeft_ = true;
+}
+
+void BossState::StateDecider::Initialize(Boss* boss, Player* player)
+{
+	// ポインタの設定
+	boss_ = boss;
+	player_ = player;
+}
+
+void BossState::StateDecider::StateDecide(StateVariant nowState)
+{
+	if (boss_->GetPrevState()) {
+		// 攻撃中なら
+		if (std::holds_alternative<MissileAttackState*>(nowState)) {
+			boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+			MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+			newState->TestProcess();
+			//MoveState** newState = std::get_if<MoveState*>(&nowState);
+			//(*newState)->TestProcess();
+		}
+	}
+	else {
+		// 移動中なら
+		if (std::holds_alternative<MoveState*>(nowState)) {
+			boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+		}
+		// 攻撃中なら
+		else if (std::holds_alternative<MissileAttackState*>(nowState)) {
+			boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+		}
+	}
 }

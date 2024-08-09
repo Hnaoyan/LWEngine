@@ -2,8 +2,10 @@
 #include "Engine/Math/MathLib.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include <memory>
+#include <variant>
 
 class Boss;
+class Player;
 
 namespace BossState
 {
@@ -13,13 +15,18 @@ namespace BossState
 	class IState {
 	public:
 		virtual ~IState() = default;
-
 	public:
+		/// <summary>
+		/// 共通の初期化
+		/// </summary>
+		/// <param name="boss"></param>
 		void PreInitialize(Boss* boss);
+		// 初期化
 		virtual void Initialize() = 0;
+		// 更新
 		virtual void Update() = 0;
+		// 終了処理
 		virtual void Exit() = 0;
-
 	protected:
 		Boss* boss_ = nullptr;
 
@@ -43,12 +50,9 @@ namespace BossState
 		/// </summary>
 		/// <param name="newState"></param>
 		void ChangeRequest(std::unique_ptr<IState> newState);
-
 	private:
 		Boss* boss_ = nullptr;
-
 	};
-
 
 	class MissileAttackState : public IState 
 	{
@@ -72,6 +76,21 @@ namespace BossState
 		bool isLeft_ = false;
 		// 攻撃に遷移するタイマー
 		FrameTimer changeTimer_;
+	public:
+		void TestProcess();
+
+	};
+
+	using StateVariant = std::variant<MissileAttackState*, MoveState*>;
+
+	class StateDecider {
+	private:
+		Boss* boss_ = nullptr;
+		Player* player_ = nullptr;
+	public:
+
+		void Initialize(Boss* boss, Player* player);
+		void StateDecide(StateVariant nowState);
 
 	};
 
