@@ -55,6 +55,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Mesh.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\ModelManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\ModelRenderer.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\WorldTransform.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\Animation.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\AnimationData.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Mesh.h" />
     <ClInclude Include="DirectXGame\Engine\3D\ModelData.h" />
     <ClInclude Include="DirectXGame\Engine\3D\ModelManager.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\ModelRenderer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\WorldTransform.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\Animation.h" />
     <ClInclude Include="DirectXGame\Engine\Animation\AnimationData.h" />

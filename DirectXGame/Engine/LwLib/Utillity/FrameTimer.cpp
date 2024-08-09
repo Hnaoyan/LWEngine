@@ -1,4 +1,5 @@
 #include "FrameTimer.h"
+#include <algorithm>
 
 void FrameTimer::Start(float endFrame)
 {
@@ -37,6 +38,8 @@ void FrameTimer::Update(float gameFactor)
 		}
 		// 現在の値計算
 		elapsedFrame_ += (1.0f / (gameFactor * endFrame_));
+		// 範囲内にクランプ
+		elapsedFrame_ = std::clamp(elapsedFrame_, 0.0f, 1.0f);
 	}
 	if (isEnd_) {
 		isEnd_ = false;
