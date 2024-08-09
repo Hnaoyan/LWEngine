@@ -112,21 +112,33 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
 	if (boss_->GetPrevState()) {
-		// 攻撃中なら
-		if (std::holds_alternative<MissileAttackState*>(nowState)) {
+		// 移動状態
+		if (std::holds_alternative<MoveState*>(nowState)) {
+			boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
+		}
+		// 攻撃状態
+		else if (std::holds_alternative<MissileAttackState*>(nowState)) {
 			boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 			MoveState* newState = static_cast<MoveState*>(boss_->GetState());
 			newState->TestProcess();
 		}
-	}
-	else {
-		// 移動中なら
-		if (std::holds_alternative<MoveState*>(nowState)) {
+		// 上下状態
+		else if (std::holds_alternative<UpDownState*>(nowState)) {
 			boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
 		}
-		// 攻撃中なら
+	}
+	else {
+		// 移動状態
+		if (std::holds_alternative<MoveState*>(nowState)) {
+			boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
+		}
+		// 攻撃状態
 		else if (std::holds_alternative<MissileAttackState*>(nowState)) {
 			boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+		}
+		// 上下状態
+		else if (std::holds_alternative<UpDownState*>(nowState)) {
+			boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 		}
 	}
 }
@@ -134,17 +146,15 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 void BossState::UpDownState::Initialize()
 {
 	float offset = 15.0f;
-	if (boss_->worldTransform_.GetWorldPosition().y <= 0) {
+	if (boss_->worldTransform_.GetWorldPosition().y <= 20.0f) {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
 		endPosition_.y += offset;
-		isUpper_ = true;
 	}
 	else {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
 		endPosition_.y -= offset;
-		isUpper_ = false;
 	}
 	// 変更のタイマー
 	changeTimer_.Start(120.0f);
@@ -153,17 +163,14 @@ void BossState::UpDownState::Initialize()
 
 void BossState::UpDownState::Update()
 {
-	if (isUpper_) {
-		//boss_->worldTransform_.transform_.translate = Vector3::Lerp()
-	}
-
-	//boss_->worldTransform_.transform_.translate = LwLib::Lerp(startPosition_,endPosition_,changeTimer_.)
-
 	changeTimer_.Update();
 	// 終了時に変更
 	if (changeTimer_.IsEnd()) {
 		boss_->GetDecider().StateDecide(this);
 		return;
+	}
+	else {
+		boss_->worldTransform_.transform_.translate = Vector3::Lerp(startPosition_, endPosition_, changeTimer_.GetCurrentFrame());
 	}
 }
 

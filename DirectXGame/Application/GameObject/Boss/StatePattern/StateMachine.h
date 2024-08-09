@@ -94,7 +94,6 @@ namespace BossState
 		Vector3 startPosition_{};
 		Vector3 endPosition_{};
 
-		bool isUpper_ = false;
 	};
 
 	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*>;
