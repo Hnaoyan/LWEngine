@@ -154,10 +154,10 @@ void BossState::UpDownState::Initialize()
 void BossState::UpDownState::Update()
 {
 	if (isUpper_) {
-		boss_->worldTransform_.transform_.translate = Vector3::Lerp()
+		//boss_->worldTransform_.transform_.translate = Vector3::Lerp()
 	}
 
-	boss_->worldTransform_.transform_.translate = LwLib::Lerp(startPosition_,endPosition_,changeTimer_.)
+	//boss_->worldTransform_.transform_.translate = LwLib::Lerp(startPosition_,endPosition_,changeTimer_.)
 
 	changeTimer_.Update();
 	// 終了時に変更

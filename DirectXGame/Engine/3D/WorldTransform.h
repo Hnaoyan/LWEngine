@@ -2,6 +2,7 @@
 #include "../Math/MathLib.h"
 #include "../3D/CBuffer.h"
 #include "../Camera/Core/ICamera.h"
+#include "../Base/CBufferCommon.h"
 
 #include <wrl.h>
 #include <d3d12.h>
@@ -12,6 +13,7 @@ private:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer_;
 	CBufferWorldTransform* constMap_ = nullptr;
+	//ConstantBufferMapContext<CBufferWorldTransform> data_;
 public:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return constBuffer_; }

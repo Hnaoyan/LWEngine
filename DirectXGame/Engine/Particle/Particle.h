@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "ParticleCBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 #include "Engine/3D/Drawer/Model.h"
 

@@ -34,6 +34,7 @@ public: // アクセッサ
 	bool IsActive() { return isActive_; }
 	bool IsEnd() { return isEnd_; }
 	bool IsPause() { return isPause_ && !isEnd_; }
+	float GetCurrentFrame() { return elapsedFrame_ / endFrame_; }
 private:
 	// 経過フレーム（現在フレーム
 	float elapsedFrame_ = 0.0f;
