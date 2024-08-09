@@ -112,20 +112,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
 	if (boss_->GetPrevState()) {
-		// 移動状態
-		if (std::holds_alternative<MoveState*>(nowState)) {
-			boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
-		}
-		// 攻撃状態
-		else if (std::holds_alternative<MissileAttackState*>(nowState)) {
-			boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-			MoveState* newState = static_cast<MoveState*>(boss_->GetState());
-			newState->TestProcess();
-		}
-		// 上下状態
-		else if (std::holds_alternative<UpDownState*>(nowState)) {
-			boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
-		}
+		DefaultLoop(nowState);
 	}
 	else {
 		// 移動状態
@@ -143,10 +130,28 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	}
 }
 
+void BossState::StateDecider::DefaultLoop(StateVariant nowState)
+{
+	// 移動状態
+	if (std::holds_alternative<MoveState*>(nowState)) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
+	}
+	// 攻撃状態
+	else if (std::holds_alternative<MissileAttackState*>(nowState)) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->TestProcess();
+	}
+	// 上下状態
+	else if (std::holds_alternative<UpDownState*>(nowState)) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+	}
+}
+
 void BossState::UpDownState::Initialize()
 {
 	float offset = 15.0f;
-	if (boss_->worldTransform_.GetWorldPosition().y <= 20.0f) {
+	if (boss_->worldTransform_.GetWorldPosition().y > 20.0f) {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
 		endPosition_.y += offset;
@@ -164,13 +169,12 @@ void BossState::UpDownState::Initialize()
 void BossState::UpDownState::Update()
 {
 	changeTimer_.Update();
+	// 移動処理
+	boss_->worldTransform_.transform_.translate = Vector3::Lerp(startPosition_, endPosition_, changeTimer_.GetElapsedFrame());
 	// 終了時に変更
 	if (changeTimer_.IsEnd()) {
 		boss_->GetDecider().StateDecide(this);
 		return;
-	}
-	else {
-		boss_->worldTransform_.transform_.translate = Vector3::Lerp(startPosition_, endPosition_, changeTimer_.GetCurrentFrame());
 	}
 }
 

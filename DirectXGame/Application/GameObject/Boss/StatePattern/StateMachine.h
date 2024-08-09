@@ -107,6 +107,9 @@ namespace BossState
 		void Initialize(Boss* boss, Player* player);
 		void StateDecide(StateVariant nowState);
 
+	private:
+		void DefaultLoop(StateVariant nowState);
+
 	};
 
 }
