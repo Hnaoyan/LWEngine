@@ -54,6 +54,7 @@ namespace BossState
 		Boss* boss_ = nullptr;
 	};
 
+	// 通常射撃状態
 	class MissileAttackState : public IState 
 	{
 	public:
@@ -66,6 +67,7 @@ namespace BossState
 		FrameTimer fireTimer_;
 	};
 
+	// 移動状態
 	class MoveState : public IState
 	{
 	public:
@@ -81,6 +83,7 @@ namespace BossState
 
 	};
 
+	// 上下状態
 	class UpDownState : public IState
 	{
 	public:
@@ -93,6 +96,22 @@ namespace BossState
 
 		Vector3 startPosition_{};
 		Vector3 endPosition_{};
+
+	};
+
+	// 待機状態
+	class WaitState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+		// 移動に遷移するタイマー
+		FrameTimer changeTimer_;
+
+	private:
+
 
 	};
 
