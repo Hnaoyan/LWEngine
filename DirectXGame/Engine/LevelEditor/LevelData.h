@@ -1,5 +1,5 @@
 #pragma once
-#include "../3D/CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 
 #include <list>
 #include <string>

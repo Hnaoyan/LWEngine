@@ -1,5 +1,5 @@
 #pragma once
-#include "../Math/MathLib.h"
+#include "Engine/Math/MathLib.h"
 
 /// <summary>
 /// 全体的に使うオイラートランスフォーム構造体

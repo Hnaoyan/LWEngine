@@ -7,6 +7,10 @@
 #include "Engine/3D/Descriptor/SRVHandler.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 
+#include "ConstantBuffer/CBuffer.h"
+#include "ConstantBuffer/SpriteCBuffer.h"
+#include "ConstantBuffer/ParticleCBuffer.h"
+
 enum class BufferType : uint32_t{
 	kConstantBuffer,
 	kStructuredBuffer,

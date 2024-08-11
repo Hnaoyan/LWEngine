@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include <optional>
-#include "../3D/CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 #include "Joint.h"
 #include "Skeleton.h"
 

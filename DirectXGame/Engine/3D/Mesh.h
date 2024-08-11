@@ -2,7 +2,6 @@
 #include <wrl.h>
 #include <vector>
 #include <d3d12.h>
-#include "../3D/CBuffer.h"
 #include "../Base/CBufferCommon.h"
 #include "ModelData.h"
 

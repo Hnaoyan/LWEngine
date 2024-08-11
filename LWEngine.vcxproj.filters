@@ -326,7 +326,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\CBuffer.h">
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h">
@@ -362,7 +362,7 @@
     <ClInclude Include="DirectXGame\Engine\Light\LightData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\2D\SpriteCBuffer.h">
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Light\LightingManager.h">
@@ -515,7 +515,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Particle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\ParticleCBuffer.h">
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h">

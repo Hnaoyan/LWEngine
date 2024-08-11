@@ -1,5 +1,5 @@
 #pragma once
-#include "../../3D/CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 #include "../../WindowAPI/WindowAPI.h"
 #include <wrl.h>
 #include <d3d12.h>

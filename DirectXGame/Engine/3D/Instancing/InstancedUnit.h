@@ -1,5 +1,5 @@
 #pragma once
-#include "../CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 
 class InstancedUnit
 {

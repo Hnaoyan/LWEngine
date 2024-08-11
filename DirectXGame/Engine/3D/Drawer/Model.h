@@ -11,7 +11,6 @@
 #pragma comment(lib,"dxgi.lib")
 
 #include "../Graphics/GraphicsPSO.h"
-#include "../CBuffer.h"
 #include "../WorldTransform.h"
 #include "../Mesh.h"
 #include "../Material.h"

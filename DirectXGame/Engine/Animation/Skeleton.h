@@ -3,7 +3,6 @@
 #include <vector>
 #include <map>
 #include <optional>
-#include "../3D/CBuffer.h"
 
 class ModelNode;
 class Joint;

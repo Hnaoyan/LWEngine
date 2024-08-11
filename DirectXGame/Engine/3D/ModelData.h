@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 #include "../Animation/AnimationData.h"
 #include "../Animation/ModelNode.h"
 #include "../Animation/SkinCluster.h"

@@ -1,7 +1,6 @@
 #include "Skydome.h"
 #include "../../Base/DirectXCommon.h"
 #include "../../2D/TextureManager.h"
-#include "../../3D/CBuffer.h"
 #include "../../Base/Utility/DxCreateLib.h"
 #include "Model.h"
 

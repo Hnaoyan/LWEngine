@@ -136,9 +136,9 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
-    <ClInclude Include="DirectXGame\Engine\2D\SpriteCBuffer.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\CBuffer.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
@@ -209,7 +209,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Particle.h" />
-    <ClInclude Include="DirectXGame\Engine\Particle\ParticleCBuffer.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />

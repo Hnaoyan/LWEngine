@@ -1,5 +1,5 @@
 #pragma once
-#include "../Math/MathLib.h"
+#include "Engine/Math/MathLib.h"
 
 #pragma region Sprite
 struct SpriteVertexData
