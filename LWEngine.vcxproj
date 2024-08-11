@@ -58,6 +58,7 @@
     <ClCompile Include="DirectXGame\Engine\Animation\SkinCluster.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\System\AnimationPlayer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Audio\AudioLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
+    <ClInclude Include="DirectXGame\Engine\Audio\AudioLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h" />
