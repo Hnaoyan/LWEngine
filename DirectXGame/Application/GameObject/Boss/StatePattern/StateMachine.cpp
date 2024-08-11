@@ -111,6 +111,8 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
+	float length = Vector3::Distance(player_->worldTransform_.GetWorldPosition(), boss_->worldTransform_.GetWorldPosition());
+	// ステートが変わる部分（ここで変更先の分岐
 	if (boss_->GetPrevState()) {
 		DefaultLoop(nowState);
 	}
@@ -148,18 +150,38 @@ void BossState::StateDecider::DefaultLoop(StateVariant nowState)
 	}
 }
 
+void BossState::StateDecider::NearLoop(StateVariant nowState)
+{
+	// 移動状態
+	if (std::holds_alternative<MoveState*>(nowState)) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
+	}
+	// 攻撃状態
+	else if (std::holds_alternative<MissileAttackState*>(nowState)) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->TestProcess();
+	}
+	// 上下状態
+	else if (std::holds_alternative<UpDownState*>(nowState)) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->TestProcess();
+	}
+}
+
 void BossState::UpDownState::Initialize()
 {
 	float offset = 15.0f;
 	if (boss_->worldTransform_.GetWorldPosition().y > 20.0f) {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
-		endPosition_.y += offset;
+		endPosition_.y -= offset;
 	}
 	else {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
-		endPosition_.y -= offset;
+		endPosition_.y += offset;
 	}
 	// 変更のタイマー
 	changeTimer_.Start(120.0f);
@@ -190,7 +212,12 @@ void BossState::WaitState::Initialize()
 
 void BossState::WaitState::Update()
 {
-
+	changeTimer_.Update();
+	// 終了時に変更
+	if (changeTimer_.IsEnd()) {
+		boss_->GetDecider().StateDecide(this);
+		return;
+	}
 }
 
 void BossState::WaitState::Exit()

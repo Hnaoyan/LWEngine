@@ -112,10 +112,14 @@ namespace BossState
 
 	private:
 
+	public:
+		void SetTimer(float endFrame) {
+			changeTimer_.Start(endFrame);
+		}
 
 	};
 
-	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*>;
+	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*, WaitState*>;
 
 	class StateDecider {
 	private:
@@ -127,7 +131,11 @@ namespace BossState
 		void StateDecide(StateVariant nowState);
 
 	private:
+		// 通常
 		void DefaultLoop(StateVariant nowState);
+
+		// 近い場合
+		void NearLoop(StateVariant nowState);
 
 	};
 
