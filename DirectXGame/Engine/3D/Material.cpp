@@ -23,28 +23,26 @@ void Material::CreateMaterial()
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	// マテリアルバッファの生成
-	//materialBuff_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataMaterial) + 0xff) & ~0xff);
-	materialBuff_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataMaterial)));
+	buffer_.CreateConstantBuffer(device);
 
-	materialBuff_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 
 	// データの転送
-	materialData_->color = color_;
-	materialData_->enableLighting = enableLighting_;
-	materialData_->uvTransform = Matrix4x4::MakeIdentity4x4();
-	materialData_->shininess = shininess_;
-	materialData_->threshold = threshold_;
+	buffer_.cMap_->color = color_;
+	buffer_.cMap_->enableLighting = enableLighting_;
+	buffer_.cMap_->uvTransform = Matrix4x4::MakeIdentity4x4();
+	buffer_.cMap_->shininess = shininess_;
+	buffer_.cMap_->threshold = threshold_;
 }
 
 void Material::Update()
 {
 	// データの転送
-	materialData_->color = color_;
-	materialData_->enableLighting = enableLighting_;
-	materialData_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
-	materialData_->shininess = shininess_;
-	materialData_->coefficient = 0;
-	materialData_->threshold = threshold_;
+	buffer_.cMap_->color = color_;
+	buffer_.cMap_->enableLighting = enableLighting_;
+	buffer_.cMap_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
+	buffer_.cMap_->shininess = shininess_;
+	buffer_.cMap_->coefficient = 0;
+	buffer_.cMap_->threshold = threshold_;
 }
 
 void Material::ImGuiDraw(const std::string& objName)

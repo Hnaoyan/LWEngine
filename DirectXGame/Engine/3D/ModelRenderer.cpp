@@ -56,7 +56,7 @@ void ModelRenderer::NormalDraw(const ModelDrawDesc& desc)
 		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(ModelRegister::kMaterial), desc.material->materialBuff_->GetGPUVirtualAddress());
+		static_cast<UINT>(ModelRegister::kMaterial), desc.material->buffer_.cBuffer->GetGPUVirtualAddress());
 	
 	// ライト
 	if (desc.directionalLight) {
@@ -116,7 +116,7 @@ void ModelRenderer::SkinningAnimationDraw(const ModelDrawDesc& desc, Animation* 
 		sCommandList_, static_cast<UINT>(SkinningModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(SkinningModelRegister::kMaterial), desc.material->materialBuff_->GetGPUVirtualAddress());
+		static_cast<UINT>(SkinningModelRegister::kMaterial), desc.material->buffer_.cBuffer->GetGPUVirtualAddress());
 
 	// ライト
 	if (desc.directionalLight) {
@@ -165,7 +165,7 @@ void ModelRenderer::InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNu
 		sCommandList_, static_cast<UINT>(Pipeline::InstancedUnitRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(Pipeline::InstancedUnitRegister::kMaterial), desc.material->materialBuff_->GetGPUVirtualAddress());
+		static_cast<UINT>(Pipeline::InstancedUnitRegister::kMaterial), desc.material->buffer_.cBuffer->GetGPUVirtualAddress());
 
 	// トランスフォーム
 	sCommandList_->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::InstancedUnitRegister::kWorldTransform), handle);

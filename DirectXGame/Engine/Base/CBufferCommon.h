@@ -39,6 +39,12 @@ public:
 		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) + 0xff) & ~0xff);
 		Mapping();
 	}
+
+	void CreateConstantBuffer(ID3D12Device* device, size_t size) {
+		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) * size));
+		Mapping();
+	}
+
 private:
 	/// <summary>
 	/// マッピング
