@@ -1,7 +1,6 @@
 #pragma once
 #include "../Math/MathLib.h"
-#include "../3D/CBuffer.h"
-#include "../Light/LightData.h"
+#include "../Base/CBufferCommon.h"
 #include <wrl.h>
 #include <d3d12.h>
 #include <string>
@@ -26,10 +25,8 @@ public:
 	void ImGuiDraw(const std::string& objName);
 
 public:
-	// マテリアルリソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> materialBuff_;
 	// データ
-	CBufferDataMaterial* materialData_ = nullptr;
+	ConstantBufferMapContext<CBufferDataMaterial> buffer_;
 
 	// 色
 	Vector4 color_{ 1,1,1,1 };

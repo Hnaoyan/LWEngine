@@ -64,6 +64,7 @@
     <ClCompile Include="DirectXGame\Engine\Animation\SkinCluster.cpp" />
     <ClCompile Include="DirectXGame\Engine\Animation\System\AnimationPlayer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Audio\AudioLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.cpp" />
@@ -151,9 +152,10 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
-    <ClInclude Include="DirectXGame\Engine\2D\SpriteCBuffer.h" />
+    <ClInclude Include="DirectXGame\Engine\Audio\AudioLoader.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\CBuffer.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
@@ -206,7 +208,7 @@
     <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
-    <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\LightCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightingManager.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\ILight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\PointLight.h" />
@@ -224,7 +226,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Particle.h" />
-    <ClInclude Include="DirectXGame\Engine\Particle\ParticleCBuffer.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />

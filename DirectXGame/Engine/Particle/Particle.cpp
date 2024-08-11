@@ -164,7 +164,7 @@ void Particle::Draw(ICamera* camera) {
 	// カメラ
 	cmdList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kCamera), perView_.cBuffer->GetGPUVirtualAddress());
 	// マテリアル
-	cmdList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kMaterial), model_->GetMaterial()->materialBuff_->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kMaterial), model_->GetMaterial()->buffer_.cBuffer->GetGPUVirtualAddress());
 	// 行列
 	cmdList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::ParticleRegister::kMatrixs), particles_.GetSRVGPU());
 	

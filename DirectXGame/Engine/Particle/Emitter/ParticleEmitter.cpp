@@ -113,7 +113,7 @@ void ParticleEmitter::Draw(ICamera* camera)
 	// カメラ
 	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kCamera), perView_.cBuffer->GetGPUVirtualAddress());
 	// マテリアル
-	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kMaterial), model_->GetMaterial()->materialBuff_->GetGPUVirtualAddress());
+	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kMaterial), model_->GetMaterial()->buffer_.cBuffer->GetGPUVirtualAddress());
 	// 行列
 	sCommandList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::ParticleRegister::kMatrixs), particles_.GetSRVGPU());
 	// 描画処理

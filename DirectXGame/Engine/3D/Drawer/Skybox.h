@@ -1,5 +1,4 @@
 #pragma once
-#include "../CBuffer.h"
 #include "../ModelData.h"
 #include "../Material.h"
 #include "../Mesh.h"
@@ -53,7 +52,7 @@ public:
 	/// テクスチャ
 	/// </summary>
 	/// <returns></returns>
-	uint32_t GetTexture() { return modelData_.material.textureHandle; }
+	uint32_t GetTexture() const{ return modelData_.material.textureHandle; }
 
 private:
 	// モデルデータ

@@ -1,8 +1,7 @@
 #pragma once
 #include "../Math/MathLib.h"
-#include "../3D/CBuffer.h"
 #include "../Camera/Core/ICamera.h"
-#include "../Base/CBufferCommon.h"
+#include "Engine/Base/CBufferCommon.h"
 
 #include <wrl.h>
 #include <d3d12.h>

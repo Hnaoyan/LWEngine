@@ -7,6 +7,11 @@
 #include "Engine/3D/Descriptor/SRVHandler.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 
+#include "ConstantBuffer/CBuffer.h"
+#include "ConstantBuffer/LightCBuffer.h"
+#include "ConstantBuffer/SpriteCBuffer.h"
+#include "ConstantBuffer/ParticleCBuffer.h"
+
 enum class BufferType : uint32_t{
 	kConstantBuffer,
 	kStructuredBuffer,
@@ -39,6 +44,12 @@ public:
 		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) + 0xff) & ~0xff);
 		Mapping();
 	}
+
+	void CreateConstantBuffer(ID3D12Device* device, size_t size) {
+		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) * size));
+		Mapping();
+	}
+
 private:
 	/// <summary>
 	/// マッピング

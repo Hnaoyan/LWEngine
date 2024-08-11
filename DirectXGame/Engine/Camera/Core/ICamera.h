@@ -1,5 +1,5 @@
 #pragma once
-#include "../../3D/CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 #include "../../WindowAPI/WindowAPI.h"
 #include <wrl.h>
 #include <d3d12.h>
@@ -8,15 +8,13 @@
 class ICamera
 {
 private:
-	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
-	// マッピング用
-	CBufferDataCamera* constMap_ = nullptr;
+	// バッファ
+	ConstantBufferMapContext<CBufferDataCamera> data_;
 public: // 定数バッファのアクセッサ
 	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return constBuff_; }
+	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return data_.cBuffer; }
 	// マップ
-	CBufferDataCamera* GetView() { return constMap_; }
+	CBufferDataCamera* GetView() { return data_.cMap_; }
 
 public:	// 継承できるように
 	/// <summary>
@@ -34,14 +32,6 @@ public:	// 継承できるように
 	virtual void ImGuiDraw();
 
 protected: // 共通で使う関数
-	/// <summary>
-	/// バッファーにマッピング
-	/// </summary>
-	void Map();
-	/// <summary>
-	/// バッファー作成
-	/// </summary>
-	void CreateConstBuffer();
 	/// <summary>
 	/// 行列更新
 	/// </summary>
@@ -63,7 +53,7 @@ public:
 	Matrix4x4 projectionMatrix_ = {};
 	// 
 	EulerTransform transform_ = {};
-
+	// 正面ベクトル
 	const Vector3 kFrontVector = { 0.0f,0.0f,1.0f };
 
 	Vector3 frontVector_ = {};

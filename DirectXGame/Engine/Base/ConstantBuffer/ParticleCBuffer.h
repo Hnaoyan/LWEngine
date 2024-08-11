@@ -5,8 +5,6 @@
 #include <concepts>
 
 #include "Engine/Math/MathLib.h"
-#include "Engine/3D/Drawer/Model.h"
-#include "Engine/Base/Utility/DxCreateLib.h"
 
 struct EmitterSphere {
 	Vector3 translate;	// 位置

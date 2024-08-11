@@ -19,17 +19,17 @@ void DirectionalLight::Initialize()
 	// 生成の部分
 	ILight::Initialize();
 	// 値の初期化
-	lightDataMap_->color = { 1.0f,1.0f,1.0f,1.0f };
-	lightDataMap_->direction = { 0.0f,-1.0f,0.0f };
-	lightDataMap_->intensity = 1.0f;
+	data_.cMap_->color = { 1.0f,1.0f,1.0f,1.0f };
+	data_.cMap_->direction = { 0.0f,-1.0f,0.0f };
+	data_.cMap_->intensity = 1.0f;
 }
 
 void DirectionalLight::Update(const CBufferDataDirectionalLight& data)
 {
 	// それぞれの値を設定
-	lightDataMap_->color = data.color;
-	lightDataMap_->direction = Vector3::Normalize(data.direction);
-	lightDataMap_->intensity = std::clamp(data.intensity, 0.0f, 100.0f);
+	data_.cMap_->color = data.color;
+	data_.cMap_->direction = Vector3::Normalize(data.direction);
+	data_.cMap_->intensity = std::clamp(data.intensity, 0.0f, 100.0f);
 }
 
 void DirectionalLight::Draw(ID3D12GraphicsCommandList* cmdList, uint32_t rootParamIndex)

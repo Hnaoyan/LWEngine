@@ -2,7 +2,7 @@
 #include <wrl.h>
 #include <vector>
 #include <d3d12.h>
-#include "../3D/CBuffer.h"
+#include "../Base/CBufferCommon.h"
 #include "ModelData.h"
 
 class Mesh
@@ -18,17 +18,11 @@ public:
 
 public:
 	// 頂点バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_;
-	// 頂点バッファビュー
+	ConstantBufferMapContext<VertexData> vertex_;
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
-	// 頂点バッファマップ
-	VertexData* vertData_ = nullptr;
 
-	// インデックスバッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> ibBuff_;
-	// インデックスバッファビュー
+	// インデックス
+	ConstantBufferMapContext<uint32_t> index_;
 	D3D12_INDEX_BUFFER_VIEW ibView_{};
-	// インデックスバッファマップ
-	uint32_t* ibData_ = nullptr;
 
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "CBuffer.h"
+#include "Engine/Base/CBufferCommon.h"
 #include "../Animation/AnimationData.h"
 #include "../Animation/ModelNode.h"
 #include "../Animation/SkinCluster.h"
@@ -9,6 +9,8 @@
 #include "../Light/LightLists.h"
 
 class Model;
+class Mesh;
+class Material;
 class WorldTransform;
 class ICamera;
 
@@ -71,19 +73,30 @@ struct AnimDrawDesc
 // モデルの描画に必要な者たち
 struct ModelDrawDesc
 {
-	//ModelNode* modelNode;
+	// ワールドトランスフォーム
 	WorldTransform* worldTransform;
-	ICamera* camera;
-	//Matrix4x4 localMatrix;
+	// メッシュ
+	Mesh* mesh = nullptr;
+	// マテリアル
+	Material* material = nullptr;
+	// カメラ
+	ICamera* camera = nullptr;
 	// テクスチャ
 	uint32_t texture = 100;
+	// モデルデータ
+	ModelData* modelData;
 	// 平行光源
-	DirectionalLight* directionalLight;
+	DirectionalLight* directionalLight = nullptr;
 	// 方向光源
-	SpotLight* spotLight;
+	SpotLight* spotLight = nullptr;
 	// 点光源
-	PointLight* pointLight;
+	PointLight* pointLight = nullptr;
 
+	/// <summary>
+	/// カメラとライトの設定
+	/// </summary>
+	/// <param name="desc"></param>
+	/// <returns></returns>
 	static ModelDrawDesc SetDesc(const ModelDrawDesc& desc) {
 		ModelDrawDesc result{};
 		// カメラ

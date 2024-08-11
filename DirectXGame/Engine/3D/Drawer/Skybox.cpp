@@ -189,7 +189,7 @@ void Skybox::Draw(const ModelDrawDesc& desc)
         Model::sCommandList_, static_cast<UINT>(Pipeline::SkyBoxRegister::kTexture), modelData_.material.textureHandle);
     // マテリアル
     Model::sCommandList_->SetGraphicsRootConstantBufferView(
-        static_cast<UINT>(Pipeline::SkyBoxRegister::kMaterial), material_->materialBuff_->GetGPUVirtualAddress());
+        static_cast<UINT>(Pipeline::SkyBoxRegister::kMaterial), material_->buffer_.cBuffer->GetGPUVirtualAddress());
 
     // ドローコール
     Model::sCommandList_->DrawIndexedInstanced(UINT(modelData_.indices.size()), 1, 0, 0, 0);

@@ -1,7 +1,6 @@
 #pragma once
+#include "Engine/Base/CBufferCommon.h"
 #include "../../Math/MathLib.h"
-#include "../SpriteCBuffer.h"
-#include "../../3D/CBuffer.h"
 #include "../../3D/Graphics/GraphicsPSO.h"
 #include "../../Base/Utility/DxCreateLib.h"
 
@@ -142,7 +141,7 @@ public: // アクセッサ
 	/// </summary>
 	void SetTextureHandle(uint32_t textureHandle) { textureHandle_ = textureHandle; }
 
-	const uint32_t GetTextureHandle() { return textureHandle_; }
+	const uint32_t GetTextureHandle() const{ return textureHandle_; }
 
 	/// <summary>
 	/// 座標の設定
@@ -150,7 +149,7 @@ public: // アクセッサ
 	/// <param name="position"></param>
 	void SetPosition(const Vector2& position) { position_ = position; }
 
-	const Vector2& GetPosition() { return position_; }
+	const Vector2& GetPosition() const{ return position_; }
 
 	/// <summary>
 	/// サイズの設定
@@ -158,7 +157,7 @@ public: // アクセッサ
 	/// <param name="size"></param>
 	void SetSize(const Vector2& size) { size_ = size; }
 
-	const Vector2& GetSize() { return size_; }
+	const Vector2& GetSize() const{ return size_; }
 
 	/// <summary>
 	/// 角度の設定
@@ -166,7 +165,7 @@ public: // アクセッサ
 	/// <param name="rotation"></param>
 	void SetRotation(float rotation) { rotation_ = rotation; }
 
-	const float GetRotation() { return rotation_; }
+	const float GetRotation() const{ return rotation_; }
 
 	/// <summary>
 	/// アンカーポイントの設定
@@ -174,7 +173,7 @@ public: // アクセッサ
 	/// <param name="anchorPoint"></param>
 	void SetAnchorPoint(const Vector2& anchorPoint) { anchorPoint_ = anchorPoint; }
 
-	const Vector2 GetAnchorPoint() { return anchorPoint_; }
+	const Vector2 GetAnchorPoint() const{ return anchorPoint_; }
 
 	/// <summary>
 	/// 色の設定
@@ -182,7 +181,7 @@ public: // アクセッサ
 	/// <param name="color"></param>
 	void SetColor(const Vector4& color) { color_ = color;	}
 
-	const Vector4 GetColor() { return color_; }
+	const Vector4 GetColor() const{ return color_; }
 
 	/// <summary>
 	/// ブレンドの設定
@@ -210,7 +209,7 @@ public: // アクセッサ
 		uvTransform_ = transform;
 	}
 
-	EulerTransform GetUVTransform() {
+	EulerTransform GetUVTransform() const{
 		return uvTransform_;
 	}
 };
