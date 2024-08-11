@@ -359,7 +359,7 @@
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Light\LightData.h">
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\LightCBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h">

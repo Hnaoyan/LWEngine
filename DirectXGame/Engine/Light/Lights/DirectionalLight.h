@@ -1,5 +1,4 @@
 #pragma once
-#include "../LightData.h"
 #include "ILight.h"
 
 class DirectionalLight : public ILight<CBufferDataDirectionalLight>

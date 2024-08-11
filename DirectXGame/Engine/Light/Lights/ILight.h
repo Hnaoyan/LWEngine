@@ -8,6 +8,7 @@
 #pragma comment(lib,"dxgi.lib")
 
 #include "../../Base/DirectXCommon.h"
+#include "Engine/Base/CBufferCommon.h"
 
 template<typename T>
 class ILight
@@ -34,22 +35,16 @@ public:
 	virtual void Draw(ID3D12GraphicsCommandList* cmdList, uint32_t rootParamIndex);
 
 public:
-	Microsoft::WRL::ComPtr<ID3D12Resource> lightBuff_;
-	T* lightDataMap_ = nullptr;
-
+	ConstantBufferMapContext<T> data_;
 };
 
 template<typename T>
 inline void ILight<T>::Initialize()
 {
+	// デバイス
 	device = DirectXCommon::GetInstance()->GetDevice();
-
-	// 平行光源リソースを作る
-	lightBuff_ = DxCreateLib::ResourceLib::CreateBufferResource(device, sizeof(T));
-
-	// 書き込むためのアドレスを取得
-	lightBuff_->Map(0, nullptr, reinterpret_cast<void**>(&lightDataMap_));
-
+	// バッファ作成
+	data_.CreateConstantBuffer(device);
 }
 
 template<typename T>
@@ -60,7 +55,7 @@ inline void ILight<T>::Draw(ID3D12GraphicsCommandList* cmdList, uint32_t rootPar
 	// コマンドリストの登録
 	sCommandList = cmdList;
 	// CBufferの設定
-	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(rootParamIndex), lightBuff_->GetGPUVirtualAddress());
+	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(rootParamIndex), data_.cBuffer->GetGPUVirtualAddress());
 	// コマンドリストの解除
 	sCommandList = nullptr;
 }

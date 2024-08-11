@@ -8,6 +8,7 @@
 #include "Engine/Base/Utility/DxCreateLib.h"
 
 #include "ConstantBuffer/CBuffer.h"
+#include "ConstantBuffer/LightCBuffer.h"
 #include "ConstantBuffer/SpriteCBuffer.h"
 #include "ConstantBuffer/ParticleCBuffer.h"
 

@@ -1,6 +1,5 @@
 #pragma once
 #include "../Math/MathLib.h"
-#include "../Light/LightData.h"
 #include "../Base/CBufferCommon.h"
 #include <wrl.h>
 #include <d3d12.h>

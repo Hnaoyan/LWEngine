@@ -25,7 +25,6 @@ void Material::CreateMaterial()
 	// マテリアルバッファの生成
 	buffer_.CreateConstantBuffer(device);
 
-
 	// データの転送
 	buffer_.cMap_->color = color_;
 	buffer_.cMap_->enableLighting = enableLighting_;

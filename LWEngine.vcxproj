@@ -191,7 +191,7 @@
     <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
-    <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\LightCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightingManager.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\ILight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\PointLight.h" />
