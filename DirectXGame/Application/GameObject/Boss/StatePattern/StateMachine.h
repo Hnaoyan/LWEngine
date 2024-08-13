@@ -108,6 +108,10 @@ namespace BossState
 		void Exit() override;
 	private:
 		bool isLeft_ = false;
+
+		// X,Z平面の最大の値
+		const float x_zMaxPoint = 200.0f;
+
 	public:
 		void TestProcess();
 

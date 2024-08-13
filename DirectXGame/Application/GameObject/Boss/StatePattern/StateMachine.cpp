@@ -30,8 +30,11 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
 	float distance = Vector3::Distance(boss_->worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
 
-	if (distance >= 300.0f) {
+	if (distance >= 100.0f) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->TestProcess();
+		return;
 	}
 
 	// ステートが変わる部分（ここで変更先の分岐
@@ -139,7 +142,7 @@ void BossState::MissileAttackState::Exit()
 
 void BossState::MoveState::Initialize()
 {
-	changeTimer_.Start(300.0f);
+	changeTimer_.Start(150.0f);
 }
 
 void BossState::MoveState::Update()
@@ -171,7 +174,7 @@ void BossState::MoveState::Exit()
 
 void BossState::MoveState::TestProcess()
 {
-	changeTimer_.Start(300.0f);
+	//changeTimer_.Start(300.0f);
 	isLeft_ = true;
 }
 
