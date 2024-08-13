@@ -7,8 +7,18 @@
 class Boss;
 class Player;
 
+namespace BossState {
+	class MissileAttackState;
+	class MoveState;
+	class UpDownState;
+	class WaitState;
+}
+
 namespace BossState
 {
+	// クラスのリスト
+	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*, WaitState*>;
+
 	/// <summary>
 	/// 基のステートクラス
 	/// </summary>
@@ -28,8 +38,12 @@ namespace BossState
 		// 終了処理
 		virtual void Exit() = 0;
 	protected:
-		Boss* boss_ = nullptr;
+		// タイマーの処理
+		void TimerUpdate(StateVariant state);
 
+		Boss* boss_ = nullptr;
+		// 変更のフレームタイマー
+		FrameTimer changeTimer_;
 	};
 
 	/// <summary>
@@ -53,74 +67,9 @@ namespace BossState
 	private:
 		Boss* boss_ = nullptr;
 	};
-
-	// 通常射撃状態
-	class MissileAttackState : public IState 
-	{
-	public:
-		void Initialize() override;
-		void Update() override;
-		void Exit() override;
-	private:
-		// 移動に遷移するタイマー
-		FrameTimer changeTimer_;
-		FrameTimer fireTimer_;
-	};
-
-	// 移動状態
-	class MoveState : public IState
-	{
-	public:
-		void Initialize() override;
-		void Update() override;
-		void Exit() override;
-	private:
-		bool isLeft_ = false;
-		// 攻撃に遷移するタイマー
-		FrameTimer changeTimer_;
-	public:
-		void TestProcess();
-
-	};
-
-	// 上下状態
-	class UpDownState : public IState
-	{
-	public:
-		void Initialize() override;
-		void Update() override;
-		void Exit() override;
-	private:
-		// 移動に遷移するタイマー
-		FrameTimer changeTimer_;
-
-		Vector3 startPosition_{};
-		Vector3 endPosition_{};
-
-	};
-
-	// 待機状態
-	class WaitState : public IState
-	{
-	public:
-		void Initialize() override;
-		void Update() override;
-		void Exit() override;
-	private:
-		// 移動に遷移するタイマー
-		FrameTimer changeTimer_;
-
-	private:
-
-	public:
-		void SetTimer(float endFrame) {
-			changeTimer_.Start(endFrame);
-		}
-
-	};
-
-	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*, WaitState*>;
-
+	/// <summary>
+	/// ステート変更管理クラス
+	/// </summary>
 	class StateDecider {
 	private:
 		Boss* boss_ = nullptr;
@@ -136,6 +85,60 @@ namespace BossState
 
 		// 近い場合
 		void NearLoop(StateVariant nowState);
+
+	};
+
+	// 通常射撃状態
+	class MissileAttackState : public IState 
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+		FrameTimer fireTimer_;
+	};
+
+	// 移動状態
+	class MoveState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+		bool isLeft_ = false;
+	public:
+		void TestProcess();
+
+	};
+
+	// 上下状態
+	class UpDownState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+		Vector3 startPosition_{};
+		Vector3 endPosition_{};
+
+	};
+
+	// 待機状態
+	class WaitState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+	private:
+
+	public:
+		void SetTimer(float endFrame) {
+			changeTimer_.Start(endFrame);
+		}
 
 	};
 

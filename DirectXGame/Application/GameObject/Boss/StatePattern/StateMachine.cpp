@@ -19,89 +19,6 @@ void BossState::StateManager::ChangeRequest(std::unique_ptr<IState> newState)
 
 	boss_->ChangeState(std::move(newState));
 }
-
-void BossState::IState::PreInitialize(Boss* boss)
-{
-	// ポインタ設定
-	boss_ = boss;
-
-}
-
-void BossState::MissileAttackState::Initialize()
-{
-	changeTimer_.Start(90.0f);
-	fireTimer_.Start(10.0f);
-}
-
-void BossState::MissileAttackState::Update()
-{
-	if (!fireTimer_.IsActive()) {
-		EulerTransform pos = boss_->worldTransform_.transform_;
-		pos.scale = { 1.0f,1.0f,1.0f };
-		Vector3 moveDirect = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
-		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, moveDirect,50.0f);
-		fireTimer_.Start(10.0f);
-	}
-	// 射撃タイマー
-	fireTimer_.Update();
-	// 変更タイマー
-	changeTimer_.Update();
-	// 終了時に変更
-	if (changeTimer_.IsEnd()) {
-		boss_->GetDecider().StateDecide(this);
-		return;
-	}
-}
-
-void BossState::MissileAttackState::Exit()
-{
-
-}
-
-void BossState::MoveState::Initialize()
-{
-	changeTimer_.Start(300.0f);
-}
-
-void BossState::MoveState::Update()
-{
-	// とりあえずの左右移動
-	if (isLeft_) {
-		if (boss_->respawnPos_.x - 50.0f > boss_->worldTransform_.GetWorldPosition().x) {
-			isLeft_ = false;
-		}
-		else {
-			boss_->worldTransform_.transform_.translate.x -= 0.1f;
-		}
-	}
-	else {
-		if (boss_->respawnPos_.x + 50.0f < boss_->worldTransform_.GetWorldPosition().x) {
-			isLeft_ = true;
-		}
-		else {
-			boss_->worldTransform_.transform_.translate.x += 0.1f;
-		}
-	}
-	// 変更タイマー
-	changeTimer_.Update();
-	// 終了時に変更
-	if (changeTimer_.IsEnd()) {
-		boss_->GetDecider().StateDecide(this);
-		return;
-	}
-}
-
-void BossState::MoveState::Exit()
-{
-	isLeft_ = false;
-}
-
-void BossState::MoveState::TestProcess()
-{
-	changeTimer_.Start(300.0f);
-	isLeft_ = true;
-}
-
 void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 {
 	// ポインタの設定
@@ -111,7 +28,8 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
-	float length = Vector3::Distance(player_->worldTransform_.GetWorldPosition(), boss_->worldTransform_.GetWorldPosition());
+	//float length = Vector3::Distance(player_->worldTransform_.GetWorldPosition(), boss_->worldTransform_.GetWorldPosition());
+
 	// ステートが変わる部分（ここで変更先の分岐
 	if (boss_->GetPrevState()) {
 		DefaultLoop(nowState);
@@ -170,6 +88,89 @@ void BossState::StateDecider::NearLoop(StateVariant nowState)
 	}
 }
 
+void BossState::IState::PreInitialize(Boss* boss)
+{
+	// ポインタ設定
+	boss_ = boss;
+
+}
+
+void BossState::IState::TimerUpdate(StateVariant state)
+{
+	// 変更タイマー
+	changeTimer_.Update();
+	// 終了時に変更
+	if (changeTimer_.IsEnd()) {
+		boss_->GetDecider().StateDecide(state);
+		return;
+	}
+}
+
+void BossState::MissileAttackState::Initialize()
+{
+	changeTimer_.Start(90.0f);
+	fireTimer_.Start(10.0f);
+}
+
+void BossState::MissileAttackState::Update()
+{
+	if (!fireTimer_.IsActive()) {
+		EulerTransform pos = boss_->worldTransform_.transform_;
+		float scale = 0.4f;
+		pos.scale = { scale,scale,scale };
+		Vector3 moveDirect = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
+		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, moveDirect,50.0f);
+		fireTimer_.Start(10.0f);
+	}
+	// 射撃タイマー
+	fireTimer_.Update();
+
+	TimerUpdate(this);
+}
+
+void BossState::MissileAttackState::Exit()
+{
+
+}
+
+void BossState::MoveState::Initialize()
+{
+	changeTimer_.Start(300.0f);
+}
+
+void BossState::MoveState::Update()
+{
+	// とりあえずの左右移動
+	if (isLeft_) {
+		if (boss_->respawnPos_.x - 50.0f > boss_->worldTransform_.GetWorldPosition().x) {
+			isLeft_ = false;
+		}
+		else {
+			boss_->worldTransform_.transform_.translate.x -= 0.1f;
+		}
+	}
+	else {
+		if (boss_->respawnPos_.x + 50.0f < boss_->worldTransform_.GetWorldPosition().x) {
+			isLeft_ = true;
+		}
+		else {
+			boss_->worldTransform_.transform_.translate.x += 0.1f;
+		}
+	}
+	TimerUpdate(this);
+}
+
+void BossState::MoveState::Exit()
+{
+	isLeft_ = false;
+}
+
+void BossState::MoveState::TestProcess()
+{
+	changeTimer_.Start(300.0f);
+	isLeft_ = true;
+}
+
 void BossState::UpDownState::Initialize()
 {
 	float offset = 15.0f;
@@ -190,14 +191,9 @@ void BossState::UpDownState::Initialize()
 
 void BossState::UpDownState::Update()
 {
-	changeTimer_.Update();
 	// 移動処理
 	boss_->worldTransform_.transform_.translate = Vector3::Lerp(startPosition_, endPosition_, changeTimer_.GetElapsedFrame());
-	// 終了時に変更
-	if (changeTimer_.IsEnd()) {
-		boss_->GetDecider().StateDecide(this);
-		return;
-	}
+	TimerUpdate(this);
 }
 
 void BossState::UpDownState::Exit()
@@ -212,12 +208,7 @@ void BossState::WaitState::Initialize()
 
 void BossState::WaitState::Update()
 {
-	changeTimer_.Update();
-	// 終了時に変更
-	if (changeTimer_.IsEnd()) {
-		boss_->GetDecider().StateDecide(this);
-		return;
-	}
+	TimerUpdate(this);
 }
 
 void BossState::WaitState::Exit()

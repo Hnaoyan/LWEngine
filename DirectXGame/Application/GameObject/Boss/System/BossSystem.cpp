@@ -55,20 +55,22 @@ void BossSystemContext::BulletCluster::CollisionUpdate(CollisionManager* manager
 void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform, const Vector3& direct) {
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
-	instance->transform_ = transform;
 	// 速度
 	static_cast<NormalBullet*>(instance.get())->SetVelocity(direct * 5.0f);
 	static_cast<NormalBullet*>(instance.get())->Initialize();
+	instance->transform_ = transform;
+	instance->Update();
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }
 void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform, const Vector3& direct,float speed) {
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
-	instance->transform_ = transform;
 	// 速度
 	static_cast<NormalBullet*>(instance.get())->SetVelocity(direct * speed);
 	static_cast<NormalBullet*>(instance.get())->Initialize();
+	instance->transform_ = transform;
+	instance->Update();
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }
@@ -77,6 +79,7 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 void BossSystemContext::NormalBullet::Initialize()
 {
 	InstancedUnit::Initialize();
+	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
 	transform_.scale *= 0.3f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
