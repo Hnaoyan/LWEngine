@@ -123,7 +123,7 @@ public: // 複合演算子
 	/// <returns></returns>
 	inline static float Distance(const Vector3& v1, const Vector3& v2) {
 		Vector3 distance = v1 - v2;
-		return float(sqrtf(powf(distance.x, 2) + powf(distance.y, 2)));
+		return float(sqrtf(powf(distance.x, 2) + powf(distance.y, 2) + powf(distance.z, 2)));
 	}
 
 	/// <summary>
