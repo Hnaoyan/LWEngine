@@ -112,7 +112,7 @@ public: // 複合演算子
 	/// <param name="v1"></param>
 	/// <returns></returns>
 	inline static float Length(const Vector3& v1) {
-		return float(sqrt(powf(v1.x, 2) + powf(v1.y, 2) + powf(v1.z, 2)));
+		return float(std::sqrtf(std::powf(v1.x, 2) + std::powf(v1.y, 2) + std::powf(v1.z, 2)));
 	}
 
 	/// <summary>
@@ -123,7 +123,7 @@ public: // 複合演算子
 	/// <returns></returns>
 	inline static float Distance(const Vector3& v1, const Vector3& v2) {
 		Vector3 distance = v1 - v2;
-		return float(sqrtf(powf(distance.x, 2) + powf(distance.y, 2) + powf(distance.z, 2)));
+		return float(std::sqrtf(std::powf(distance.x, 2) + std::powf(distance.y, 2) + std::powf(distance.z, 2)));
 	}
 
 	/// <summary>
