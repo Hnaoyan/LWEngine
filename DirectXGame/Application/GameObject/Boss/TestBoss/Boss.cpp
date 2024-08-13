@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "imgui.h"
+#include "Application/GameObject/GameObjectLists.h"
 #include "Engine/3D/ModelManager.h"
 
 void Boss::Initialize(Model* model)
@@ -54,6 +55,9 @@ void Boss::ImGuiDraw()
 	ImGui::Begin("Boss");
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 	collider_.radius_ = worldTransform_.transform_.scale.x;
+	float distance = Vector3::Distance(worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
+	ImGui::DragFloat("PlayerDistance", &distance);
+
 	ImGui::End();
 
 }

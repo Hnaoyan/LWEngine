@@ -28,7 +28,11 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
-	//float length = Vector3::Distance(player_->worldTransform_.GetWorldPosition(), boss_->worldTransform_.GetWorldPosition());
+	float distance = Vector3::Distance(boss_->worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
+
+	if (distance >= 300.0f) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+	}
 
 	// ステートが変わる部分（ここで変更先の分岐
 	if (boss_->GetPrevState()) {

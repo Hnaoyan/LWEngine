@@ -25,7 +25,7 @@ namespace BossSystemContext
 		int32_t currentHealth_;
 		bool isDead_ = false;
 	};
-
+	
 	class NormalBullet : public InstancedUnit {
 	public:
 		/// <summary>
