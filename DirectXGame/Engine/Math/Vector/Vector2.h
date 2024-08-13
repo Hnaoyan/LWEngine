@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 class Vector2 final
 {
@@ -78,12 +79,12 @@ public:
 	}
 
 	inline static float Length(const Vector2& v1) {
-		return float(sqrt(powf(v1.x, 2) + powf(v1.y, 2)));
+		return float(std::sqrtf(std::powf(v1.x, 2) + std::powf(v1.y, 2)));
 	}
 
 	inline static float Distance(const Vector2& v1, const Vector2& v2) {
 		Vector2 distance = v1 - v2;
-		return float(sqrtf(powf(distance.x, 2) + powf(distance.y, 2)));
+		return float(std::sqrtf(std::powf(distance.x, 2) + std::powf(distance.y, 2)));
 	}
 
 	inline static Vector2 Normalize(const Vector2& v) {
