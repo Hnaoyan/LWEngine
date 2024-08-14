@@ -113,6 +113,7 @@ namespace BossState
 		const float x_zMaxPoint = 200.0f;
 
 	public:
+		void MoveSelect(const Vector3& playerPosition);
 		void TestProcess();
 
 	};

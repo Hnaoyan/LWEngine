@@ -33,6 +33,7 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	if (distance >= 100.0f) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
 		newState->TestProcess();
 		return;
 	}
@@ -67,6 +68,7 @@ void BossState::StateDecider::DefaultLoop(StateVariant nowState)
 	else if (std::holds_alternative<MissileAttackState*>(nowState)) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
 		newState->TestProcess();
 	}
 	// 上下状態
@@ -85,12 +87,14 @@ void BossState::StateDecider::NearLoop(StateVariant nowState)
 	else if (std::holds_alternative<MissileAttackState*>(nowState)) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
 		newState->TestProcess();
 	}
 	// 上下状態
 	else if (std::holds_alternative<UpDownState*>(nowState)) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
 		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
+		newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
 		newState->TestProcess();
 	}
 }
@@ -170,6 +174,26 @@ void BossState::MoveState::Update()
 void BossState::MoveState::Exit()
 {
 	isLeft_ = false;
+}
+
+void BossState::MoveState::MoveSelect(const Vector3& playerPosition)
+{
+	// 右前
+	if (playerPosition.x > 0 && playerPosition.z > 0) {
+
+	}
+	// 左前
+	else if(playerPosition.x <= 0 && playerPosition.z > 0){
+
+	}
+	// 右後ろ
+	else if (playerPosition.x > 0 && playerPosition.z <= 0) {
+
+	}
+	// 左後ろ
+	else if (playerPosition.x <= 0 && playerPosition.z <= 0) {
+
+	}
 }
 
 void BossState::MoveState::TestProcess()
