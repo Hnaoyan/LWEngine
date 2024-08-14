@@ -8,16 +8,17 @@ class Boss;
 class Player;
 
 namespace BossState {
-	class MissileAttackState;
+	class AttackState;
 	class MoveState;
 	class UpDownState;
 	class WaitState;
+	class TeleportState;
 }
 
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<MissileAttackState*, MoveState*, UpDownState*, WaitState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*>;
 
 	/// <summary>
 	/// 基のステートクラス
@@ -89,14 +90,27 @@ namespace BossState
 	};
 
 	// 通常射撃状態
-	class MissileAttackState : public IState 
+	class AttackState : public IState 
 	{
 	public:
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
+	public:
+		// 生成時の設定関数
+		void SimpleAttack(const Vector3& position);
+
+	private: 
+		// 追尾攻撃の処理
+		void LockAttack();
+
 	private:
 		FrameTimer fireTimer_;
+
+		Vector3 bulletDirect_ = {};
+		float bulletSpeed_ = 0.0f;
+		float bulletScale_ = 0.5f;
+
 	};
 
 	// 移動状態
@@ -110,11 +124,36 @@ namespace BossState
 		bool isLeft_ = false;
 
 		// X,Z平面の最大の値
-		const float x_zMaxPoint = 200.0f;
+		const float kMaxPoint = 200.0f;
+
+		Vector3 startPosition_{};
+		Vector3 endPosition_{};
 
 	public:
 		void MoveSelect(const Vector3& playerPosition);
 		void TestProcess();
+
+	};
+
+	// 瞬間移動状態
+	class TeleportState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+
+	public:
+		void SelectTeleportPoint(const Vector3& position);
+
+	private:
+		// X,Z平面の最大の値
+		const float kMaxPoint = 60.0f;
+
+		Vector3 startPosition_{};
+		Vector3 endPosition_{};
+
+		bool isCross_ = false;
 
 	};
 

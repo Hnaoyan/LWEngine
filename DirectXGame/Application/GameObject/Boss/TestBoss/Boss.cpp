@@ -8,14 +8,14 @@ void Boss::Initialize(Model* model)
 	IGameObject::Initialize(model);
 	// ステートマネージャー
 	stateManager_.Initialize(this);
-	stateManager_.ChangeRequest(std::make_unique<BossState::MoveState>());
+	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
 
 	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	healthManager_.Initialize(20);
 
-	respawnPos_ = { 0,20.0f,50.0f };
+	respawnPos_ = { 0,8.5f,50.0f };
 
 	worldTransform_.transform_.translate = respawnPos_;
 	worldTransform_.transform_.scale = { 7.5f,7.5f,7.5f };
@@ -30,6 +30,10 @@ void Boss::Update()
 
 	if (state_) {
 		state_->Update();
+		Vector3 normalize = player_->worldTransform_.GetWorldPosition() - worldTransform_.GetWorldPosition();
+		normalize = Vector3::Normalize(normalize);
+		normalize *= -1.0f;
+		worldTransform_.transform_.rotate.y = std::atan2f(normalize.x, normalize.z);
 	}
 	// 座標更新
 	IGameObject::Update();

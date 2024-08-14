@@ -36,6 +36,10 @@ public:
 
 	void Dead() { isDead_ = true; }
 
+	void SetPrevVariantState(BossState::StateVariant variant) {
+		prevVariantState_ = variant;
+	}
+
 public:
 	// ステート関係
 	BossState::IState* GetState() { return state_.get(); }
@@ -55,6 +59,7 @@ public:
 	}
 
 	Vector3 respawnPos_ = {};
+	BossState::StateVariant prevVariantState_;
 
 private:
 	// コライダー
