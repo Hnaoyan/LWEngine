@@ -26,7 +26,7 @@ public:
 	}
 
 	//
-	inline static Matrix3x3 MakeTranslateMatrix(Vector2 translate) {
+	inline static Matrix3x3 MakeTranslateMatrix(const Vector2& translate) {
 		Matrix3x3 MakeTranslateMatrix;
 		MakeTranslateMatrix.m[0][0] = 1, MakeTranslateMatrix.m[0][1] = 0, MakeTranslateMatrix.m[0][2] = 0;
 		MakeTranslateMatrix.m[1][0] = 0, MakeTranslateMatrix.m[1][1] = 1, MakeTranslateMatrix.m[1][2] = 0;
@@ -38,7 +38,7 @@ public:
 	}
 
 	//行列の積
-	inline static Matrix3x3 Multiply(Matrix3x3 matrix1, Matrix3x3 matrix2) {
+	inline static Matrix3x3 Multiply(const Matrix3x3& matrix1, const Matrix3x3& matrix2) {
 		Matrix3x3 Multiply;
 		Multiply.m[0][0] = matrix1.m[0][0] * matrix2.m[0][0];
 		Multiply.m[0][1] = matrix1.m[0][1] * matrix2.m[0][0];
@@ -54,7 +54,7 @@ public:
 
 	}
 
-	inline static Vector2 Transform(Vector2 vector, Matrix3x3 matrix) {
+	inline static Vector2 Transform(const Vector2& vector, const Matrix3x3& matrix) {
 		Vector2 result;
 		result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + 1.0f * matrix.m[2][0];
 		result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + 1.0f * matrix.m[2][1];
