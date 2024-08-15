@@ -48,8 +48,8 @@ void GameScene::Initialize()
 	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
 
-	enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
-	enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
+	//enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
+	//enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
 
 	terrainWtf_.Initialize();
 	terrainWtf_.transform_.scale = { 20.0f,1.0f,20.0f };

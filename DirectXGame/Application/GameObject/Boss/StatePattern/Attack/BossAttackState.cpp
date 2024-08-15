@@ -7,6 +7,8 @@ void BossState::AttackState::Initialize()
 	fireTimer_.Start(10.0f);
 
 	pattern_ = ShotPattern::kSpread;
+	// 角度
+	rotateAngle_ = 0.01f;
 
 	//---弾の情報---//
 	// 速さ
@@ -65,15 +67,40 @@ void BossState::AttackState::SpreadAttack()
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 
 	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
-	float rotValue = 0.2f;
+	float rotValue = 0.1f;
 	Matrix3x3 leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
 	Matrix3x3 rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
-
+	// 1
 	// 左回転
 	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
 	Vector3 newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+	// 右回転
+	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
+	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 
+	// 2
+	rotValue += 0.1f;
+	leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
+	rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
+	// 左回転
+	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
+	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+	// 右回転
+	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
+	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+
+	// 3
+	rotValue += 0.1f;
+	leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
+	rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
+	// 左回転
+	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
+	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	// 右回転
 	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
 	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
