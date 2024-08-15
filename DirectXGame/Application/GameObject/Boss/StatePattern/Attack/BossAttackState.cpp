@@ -1,5 +1,6 @@
 #include "../StateMachine.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Engine/LwLib/LwEngineLib.h"
 
 void BossState::AttackState::Initialize()
 {
@@ -67,7 +68,7 @@ void BossState::AttackState::SpreadAttack()
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 
 	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
-	float rotValue = 0.1f;
+	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
 	Matrix3x3 leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
 	Matrix3x3 rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 	// 1
