@@ -74,8 +74,24 @@ public:
 
 #pragma endregion
 
+	/// <summary>
+	/// 内積
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v2"></param>
+	/// <returns></returns>
 	inline static float Dot(const Vector2& v1, const Vector2& v2) {
 		return float((v1.x * v2.x) + (v1.y * v2.y));
+	}
+
+	/// <summary>
+	/// 外積
+	/// </summary>
+	/// <param name="v1"></param>
+	/// <param name="v2"></param>
+	/// <returns></returns>
+	inline static float Cross(const Vector2& v1, const Vector2& v2) {
+		return float(v1.x * v2.y - v1.y * v2.x);
 	}
 
 	inline static float Length(const Vector2& v1) {
