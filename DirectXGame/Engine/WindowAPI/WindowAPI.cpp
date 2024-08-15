@@ -1,4 +1,5 @@
 #include "WindowAPI.h"
+#include "../LwLib/LwEngineLib.h"
 
 const wchar_t WindowAPI::kWindowClassName[] = L"DirectXTitle";
 
@@ -65,6 +66,7 @@ void WindowAPI::CreateGameWindow(const wchar_t* title, UINT windowStyle, int32_t
 	// ウィンドウを表示する
 	ShowWindow(hwnd_, SW_SHOW);
 
+	LwLib::CreateRandomEngine();
 }
 
 bool WindowAPI::ProcessMessage() {
