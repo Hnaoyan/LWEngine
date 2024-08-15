@@ -93,6 +93,15 @@ namespace BossState
 	class AttackState : public IState 
 	{
 	public:
+		enum class ShotPattern : uint32_t
+		{
+			kPredictive,
+			kStraight,
+			kSpread,
+		};
+
+
+	public:
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
@@ -101,8 +110,15 @@ namespace BossState
 		void SimpleAttack(const Vector3& position);
 
 	private: 
-		// 追尾攻撃の処理
+		// プレイヤーに向けた射撃
 		void LockAttack();
+		// 生成場所に応じた直線射撃
+		void StraightAttack();
+		// 拡散
+		void SpreadAttack();
+
+		// 弾の生成部分の大枠
+		void GenerateProcess();
 
 	private:
 		FrameTimer fireTimer_;
@@ -110,6 +126,8 @@ namespace BossState
 		Vector3 bulletDirect_ = {};
 		float bulletSpeed_ = 0.0f;
 		float bulletScale_ = 0.5f;
+
+		ShotPattern pattern_;
 
 	};
 
