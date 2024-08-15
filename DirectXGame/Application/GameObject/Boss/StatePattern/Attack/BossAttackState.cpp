@@ -6,7 +6,7 @@ void BossState::AttackState::Initialize()
 	changeTimer_.Start(90.0f);
 	fireTimer_.Start(10.0f);
 
-	pattern_ = ShotPattern::kPredictive;
+	pattern_ = ShotPattern::kSpread;
 
 	//---弾の情報---//
 	// 速さ
@@ -64,9 +64,21 @@ void BossState::AttackState::SpreadAttack()
 	// 直線
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 
-	//Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
-	//float rotValue = 0.2f;
-	//Matrix3x3 leftRotateMat;
+	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
+	float rotValue = 0.2f;
+	Matrix3x3 leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
+	Matrix3x3 rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
+
+	// 左回転
+	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
+	Vector3 newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+
+	// 右回転
+	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
+	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+
 }
 
 void BossState::AttackState::GenerateProcess()
