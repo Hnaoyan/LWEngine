@@ -6,9 +6,30 @@
 #include "../Camera/CameraList.h"
 
 #include <algorithm>
+#include <random>
 
 namespace LwLib
 {
+	// ランダムエンジン
+	static std::mt19937 sRandomEngine;
+	/// <summary>
+	/// 乱数用の初期化
+	/// </summary>
+	static void CreateRandomEngine() {
+		std::random_device seedGenerator;
+		sRandomEngine = std::mt19937(seedGenerator());
+	}
+	/// <summary>
+	/// float型の乱数
+	/// </summary>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	inline static float GetRandomValue(float min, float max) {
+		std::uniform_real_distribution<float> distribution(min, max);
+		return distribution(sRandomEngine);
+	}
+
 	/// <summary>
 	/// ワールドからスクリーン
 	/// </summary>
