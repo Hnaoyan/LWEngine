@@ -45,7 +45,7 @@ public:
 	BossState::IState* GetState() { return state_.get(); }
 	BossState::IState* GetPrevState() { return prevState_.get(); }
 	BossState::StateManager* StateManager() { return &stateManager_; }
-	BossState::StateDecider GetDecider() { return stateDecider_; }
+	BossState::StateDecider* GetDecider() { return &stateDecider_; }
 	// 弾発射までの間隔
 	FrameTimer fireTimer_;
 	BossSystemContext::BulletManager* GetBulletManager() { return bulletManager_.get(); }
@@ -55,7 +55,10 @@ public:
 	Player* GetPlayer() { return player_; }
 	void SetPlayer(Player* player) { 
 		player_ = player; 
+		//if (!stateDecider_) {
+			//stateDecider_ = std::make_unique<BossState::StateDecider>();
 		stateDecider_.Initialize(this, player);
+		//}
 	}
 
 	Vector3 respawnPos_ = {};
@@ -67,6 +70,7 @@ private:
 	// ステート管理
 	BossState::StateManager stateManager_;
 	BossState::StateDecider stateDecider_;
+	//std::unique_ptr<BossState::StateDecider> stateDecider_;
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;
 	// 弾の管理

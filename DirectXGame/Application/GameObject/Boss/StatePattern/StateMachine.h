@@ -3,6 +3,9 @@
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include <memory>
 #include <variant>
+#include <map>
+#include <vector>
+#include <string>
 
 class Boss;
 class Player;
@@ -72,6 +75,20 @@ namespace BossState
 	/// ステート変更管理クラス
 	/// </summary>
 	class StateDecider {
+	public:
+		enum class StatePattern : uint32_t{
+			kAttack,
+			kMove,
+			kUpdown,
+			kWait,
+			kTeleport,
+			kMax,
+		};
+		struct StateObject {
+			std::vector<StateDecider::StatePattern> patterns;
+			uint32_t number;
+			uint32_t maxStep;
+		};
 	private:
 		Boss* boss_ = nullptr;
 		Player* player_ = nullptr;
@@ -93,9 +110,16 @@ namespace BossState
 
 		// 近い場合
 		void NearLoop(StateVariant nowState);
+		// ステートの変更処理
+		void StateSelect(StatePattern number);
+
 	private:
 		// テーブル中か
-		bool IsInActionSequence_ = false;
+		bool IsInActionSequence_;
+		uint32_t randomValue_ = 0;
+		// テーブル内の位置
+		uint32_t currentStep_;
+		std::map<std::string, StateObject> tables_;
 	};
 
 	// 通常射撃状態
