@@ -56,6 +56,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 
 	currentStep_ = 0;
 	IsInActionSequence_ = false;
+	isCooltime_ = false;
 }
 
 void BossState::StateDecider::StateDecide(StateVariant nowState)
@@ -70,9 +71,18 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	//	return;
 	//}
 	nowState;
-	if (!this->IsInActionSequence_) {
-		randomValue_ = LwLib::GetRandomValue(0, 2);
+	if (isCooltime_) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
+		WaitState* newState = static_cast<WaitState*>(boss_->GetState());
+		newState->SetTimer(240.0f);
+		isCooltime_ = false;
+		return;
+	}
 
+	if (!this->IsInActionSequence_) {
+		randomValue_ = LwLib::GetRandomValue(0, 6);
+		float rand = LwLib::GetRandomValue(0.0f, 6.0f);
+		rand;
 		RandomTable(randomValue_);
 
 		IsInActionSequence_ = true;
@@ -82,6 +92,7 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	}
 	else {
 		if (currentStep_ > tables_[tableTag_].maxStep) {
+			isCooltime_ = true;
 			IsInActionSequence_ = false;
 			currentStep_ = 0;
 			return;

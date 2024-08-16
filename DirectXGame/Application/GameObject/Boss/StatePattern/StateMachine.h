@@ -124,6 +124,7 @@ namespace BossState
 	private:
 		// テーブル中か
 		bool IsInActionSequence_;
+		bool isCooltime_ = false;
 		uint32_t randomValue_ = 0;
 		// テーブル内の位置
 		uint32_t currentStep_;
