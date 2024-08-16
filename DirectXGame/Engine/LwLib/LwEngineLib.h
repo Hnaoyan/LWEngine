@@ -19,16 +19,24 @@ namespace LwLib
 		std::random_device seedGenerator;
 		sRandomEngine = std::mt19937(seedGenerator());
 	}
-	/// <summary>
-	/// float型の乱数
-	/// </summary>
-	/// <param name="min"></param>
-	/// <param name="max"></param>
-	/// <returns></returns>
+
+#pragma region 乱数
+	inline static int GetRandomValue(int min, int max) {
+		std::uniform_real_distribution<int> distribution(min, max);
+		return distribution(sRandomEngine);
+	}
 	inline static float GetRandomValue(float min, float max) {
 		std::uniform_real_distribution<float> distribution(min, max);
 		return distribution(sRandomEngine);
 	}
+	inline static Vector2 GetRandomValue(const Vector2& min, const Vector2& max) {
+		return Vector2(GetRandomValue(min.x, max.x), GetRandomValue(min.y, max.y));
+	}
+
+	inline static Vector3 GetRandomValue(const Vector3& min, const Vector3& max) {
+		return Vector3(GetRandomValue(min.x, max.x), GetRandomValue(min.y, max.y), GetRandomValue(min.z, max.z));
+	}
+#pragma endregion
 
 	/// <summary>
 	/// ワールドからスクリーン
