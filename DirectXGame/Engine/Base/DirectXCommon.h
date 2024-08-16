@@ -50,6 +50,8 @@ public:
 		dsvHandler_->ClearDepthBuffer(DirectXCommand::sCommandList_.Get());
 	}
 
+	void Finalize();
+
 private:
 	/// <summary>
 	/// フレームレート用処理の初期化
