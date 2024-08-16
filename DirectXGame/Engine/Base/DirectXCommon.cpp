@@ -128,6 +128,14 @@ void DirectXCommon::RenderPostDraw()
 	DirectXCommand::sCommandList_->ResourceBarrier(1, &barrier);
 }
 
+void DirectXCommon::Finalize()
+{
+	// フェンスで終了の確認
+	DirectXCommand::WaitForFenceComplete();
+	// コマンドリストのリセット
+	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandList_.Get());
+}
+
 void DirectXCommon::InitializeFixFPS()
 {
 	// 現在時間を記録する

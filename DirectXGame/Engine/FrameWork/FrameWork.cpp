@@ -69,7 +69,7 @@ void Framework::Initialize()
 
 void Framework::Finalize()
 {
-
+	dxCommon_->Finalize();
 	imGuiManager_->Finalize();
 	CoUninitialize();
 }
