@@ -22,10 +22,12 @@ namespace LwLib
 
 #pragma region 乱数
 	inline static int GetRandomValue(int min, int max) {
+		CreateRandomEngine();
 		std::uniform_int_distribution<int> distribution(min, max);
 		return distribution(sRandomEngine);
 	}
 	inline static float GetRandomValue(float min, float max) {
+		CreateRandomEngine();
 		std::uniform_real_distribution<float> distribution(min, max);
 		return distribution(sRandomEngine);
 	}
