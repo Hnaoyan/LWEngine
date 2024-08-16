@@ -113,4 +113,12 @@ public:
 		}
 		return Vector2(result);
 	}
+
+	inline static Vector2 MakeRotateVector(const Vector2& vector,float radian) {
+		// 角度による回転行列
+		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(radian);
+		// 元のベクトルを回転させたもの
+		return Vector2(Matrix3x3::Transform(vector, rotateMatrix));
+
+	}
 };
