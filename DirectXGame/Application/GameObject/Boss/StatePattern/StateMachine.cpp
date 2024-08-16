@@ -24,12 +24,36 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	// ポインタの設定
 	boss_ = boss;
 	player_ = player;
-	tables_["First"] = {};
-	tables_["First"].patterns.push_back(StatePattern::kMove);
-	tables_["First"].patterns.push_back(StatePattern::kUpdown);
-	tables_["First"].patterns.push_back(StatePattern::kAttack);
-	tables_["First"].patterns.push_back(StatePattern::kWait);
-	tables_["First"].maxStep = (uint32_t)tables_["First"].patterns.size();
+
+	tableTag_ = "Default";
+
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
+	tableTag_ = "MoveType";
+
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
+	tableTag_ = "AttackType";
+
+	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
 	currentStep_ = 0;
 	IsInActionSequence_ = false;
 }
@@ -47,20 +71,22 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	//}
 	nowState;
 	if (!this->IsInActionSequence_) {
-		randomValue_ = LwLib::GetRandomValue(0, 10);
+		randomValue_ = LwLib::GetRandomValue(0, 2);
+
+		RandomTable(randomValue_);
 
 		IsInActionSequence_ = true;
-		StateSelect(tables_["First"].patterns[currentStep_]);
+		StateSelect(tables_[tableTag_].patterns[currentStep_]);
 		currentStep_++;
 		return;
 	}
 	else {
-		if (currentStep_ >= tables_["First"].maxStep) {
+		if (currentStep_ > tables_[tableTag_].maxStep) {
 			IsInActionSequence_ = false;
 			currentStep_ = 0;
 			return;
 		}
-		StateSelect(tables_["First"].patterns[currentStep_]);
+		StateSelect(tables_[tableTag_].patterns[currentStep_]);
 		currentStep_++;
 		return;
 	}

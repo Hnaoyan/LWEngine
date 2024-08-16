@@ -93,11 +93,19 @@ namespace BossState
 		Boss* boss_ = nullptr;
 		Player* player_ = nullptr;
 
-		enum class ActionTable : uint32_t
-		{
-			kDefault,
-			kMaxSize,
-		};
+		std::string tableTag_;
+
+		void RandomTable(uint32_t random) {
+			if (random == 0) {
+				tableTag_ = "Default";
+			}
+			else if (random == 1) {
+				tableTag_ = "MoveType";
+			}
+			else {
+				tableTag_ = "AttackType";
+			}
+		}
 
 	public:
 
