@@ -75,6 +75,13 @@ namespace BossState
 	private:
 		Boss* boss_ = nullptr;
 		Player* player_ = nullptr;
+
+		enum class ActionTable : uint32_t
+		{
+			kDefault,
+			kMaxSize,
+		};
+
 	public:
 
 		void Initialize(Boss* boss, Player* player);
@@ -86,7 +93,9 @@ namespace BossState
 
 		// 近い場合
 		void NearLoop(StateVariant nowState);
-
+	private:
+		// テーブル中か
+		bool IsInActionSequence_ = false;
 	};
 
 	// 通常射撃状態

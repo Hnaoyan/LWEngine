@@ -37,6 +37,11 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	//	newState->TestProcess();
 	//	return;
 	//}
+	if (!this->IsInActionSequence_) {
+		IsInActionSequence_ = true;
+		int random = LwLib::GetRandomValue(0, static_cast<uint32_t>(ActionTable::kMaxSize));
+		random;
+	}
 
 	// ステートが変わる部分（ここで変更先の分岐
 	if (boss_->GetPrevState()) {
