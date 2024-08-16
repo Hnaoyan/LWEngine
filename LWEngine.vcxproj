@@ -91,6 +91,7 @@
     <ClCompile Include="DirectXGame\Engine\Light\Lights\SpotLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\LwLib\Ease\Ease.cpp" />
     <ClCompile Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.cpp" />
