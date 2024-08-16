@@ -225,6 +225,9 @@
     <ClCompile Include="DirectXGame\Engine\Audio\AudioLoader.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -677,9 +680,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
-    <ClInclude Include="DirectXGame\Engine\2D\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\CBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
@@ -729,7 +730,6 @@
     <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightLists.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h" />
-    <ClInclude Include="DirectXGame\Engine\Light\LightData.h" />
     <ClInclude Include="DirectXGame\Engine\Light\LightingManager.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\ILight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\PointLight.h" />
