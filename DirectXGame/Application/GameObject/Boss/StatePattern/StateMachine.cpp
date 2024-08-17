@@ -26,7 +26,6 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	player_ = player;
 
 	tableTag_ = "Default";
-
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
@@ -35,20 +34,14 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "MoveType";
-
-	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
-	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "AttackType";
-
-	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
-	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
@@ -206,6 +199,9 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 		break;
 	case BossState::StateDecider::StatePattern::kTeleport:
 		boss_->StateManager()->ChangeRequest(std::make_unique<TeleportState>());
+		break;
+	case BossState::StateDecider::StatePattern::kMissile:
+		boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;

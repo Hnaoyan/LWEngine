@@ -5,6 +5,13 @@
 #include "Engine/Collision/Collider/ColliderLists.h"
 
 class CollisionManager;
+namespace BossSystemContext {
+	class NormalBullet;
+	class TrackingBullet;
+
+	class BulletCluster;
+	class MissileCluster;
+}
 
 namespace BossSystemContext
 {
@@ -26,41 +33,53 @@ namespace BossSystemContext
 		bool isDead_ = false;
 	};
 	
-	class NormalBullet : public InstancedUnit {
+	/// <summary>
+	/// クラスターを管理するクラス
+	/// </summary>
+	class BulletManager {
 	public:
 		/// <summary>
 		/// 初期化
 		/// </summary>
-		/// <param name="model"></param>
-		void Initialize() override;
+		/// <param name="models"></param>
+		void Initialize(Model* model);
 		/// <summary>
 		/// 更新
 		/// </summary>
-		void Update() override;
+		void Update();
 		/// <summary>
-		/// ImGui描画
+		/// 描画
 		/// </summary>
-		/// <param name="name"></param>
-		void ImGuiDraw();
+		/// <param name="desc"></param>
+		void Draw(ModelDrawDesc desc);
 		/// <summary>
-		/// コールバック関数
+		/// 衝突更新
 		/// </summary>
-		/// <param name="object"></param>
-		void OnCollision(ColliderObject object);
+		/// <param name="manager"></param>
+		void CollisionUpdate(CollisionManager* manager);
+	public: // USER
+		/// <summary>
+		/// クラスター作成
+		/// </summary>
+		void AddCluster();
 	public: // アクセッサ
-		Sphere* GetCollider() { return &collider_; }
-		EulerTransform GetTransform() { return transform_; }
-		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+		BulletCluster* GetBeginCluster();
+		BulletCluster* GetMissileCluster();
+		void SetPlayer(Player* player) {
+			player_ = player;
+		}
+
 	private:
-		// コライダー
-		Sphere collider_;
-		// 速度
-		Vector3 velocity_ = {};
+		// モデルのリスト
+		std::vector<Model*> models_;
+		Model* model_ = nullptr;
+		// プレイヤーのポインタ
+		Player* player_ = nullptr;
+		// 弾のリスト
+		std::vector<std::unique_ptr<InstancedGroup>> bulletClusters_;
 	};
 
 	class BulletCluster : public InstancedGroup {
-	private:
-		using NormalBullet = BossSystemContext::NormalBullet;
 	public: // 仮想関数
 		/// <summary>
 		/// 初期化
@@ -94,51 +113,81 @@ namespace BossSystemContext
 		void AddBullet(const EulerTransform& transform, const Vector3& direct);
 		void AddBullet(const EulerTransform& transform, const Vector3& direct, float speed);
 
+		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player);
+
 	private:
 		uint32_t texture_ = 0;
 	};
 
-	/// <summary>
-	/// クラスターを管理するクラス
-	/// </summary>
-	class BulletManager {
-	private:
-		using Cluster = BossSystemContext::BulletCluster;
+	class TrackingBullet : public InstancedUnit {
 	public:
 		/// <summary>
 		/// 初期化
 		/// </summary>
-		/// <param name="models"></param>
-		void Initialize(Model* model);
+		/// <param name="model"></param>
+		void Initialize() override;
 		/// <summary>
 		/// 更新
 		/// </summary>
-		void Update();
+		void Update() override;
 		/// <summary>
-		/// 描画
+		/// ImGui描画
 		/// </summary>
-		/// <param name="desc"></param>
-		void Draw(ModelDrawDesc desc);
+		/// <param name="name"></param>
+		void ImGuiDraw();
 		/// <summary>
-		/// 衝突更新
+		/// コールバック関数
 		/// </summary>
-		/// <param name="manager"></param>
-		void CollisionUpdate(CollisionManager* manager);
-	public: // USER
-		/// <summary>
-		/// クラスター作成
-		/// </summary>
-		void AddCluster();
+		/// <param name="object"></param>
+		void OnCollision(ColliderObject object);
 	public: // アクセッサ
-		Cluster* GetBeginCluster() {
-			return static_cast<Cluster*>((*bulletClusters_.begin()).get());
-		}
+		Sphere* GetCollider() { return &collider_; }
+		EulerTransform GetTransform() { return transform_; }
+		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+		void SetPlayer(Player* player) { player_ = player; }
 	private:
-		// モデルのリスト
-		std::vector<Model*> models_;
-		Model* model_ = nullptr;
-		// 弾のリスト
-		std::vector<std::unique_ptr<InstancedGroup>> bulletClusters_;
+		// コライダー
+		Sphere collider_;
+		// 速度
+		Vector3 velocity_ = {};
+
+		// 追跡している時間
+		FrameTimer trackTimer_;
+		// プレイヤーのポインタ
+		Player* player_ = nullptr;
 	};
+
+	class NormalBullet : public InstancedUnit {
+	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="model"></param>
+		void Initialize() override;
+		/// <summary>
+		/// 更新
+		/// </summary>
+		void Update() override;
+		/// <summary>
+		/// ImGui描画
+		/// </summary>
+		/// <param name="name"></param>
+		void ImGuiDraw();
+		/// <summary>
+		/// コールバック関数
+		/// </summary>
+		/// <param name="object"></param>
+		void OnCollision(ColliderObject object);
+	public: // アクセッサ
+		Sphere* GetCollider() { return &collider_; }
+		EulerTransform GetTransform() { return transform_; }
+		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+	private:
+		// コライダー
+		Sphere collider_;
+		// 速度
+		Vector3 velocity_ = {};
+	};
+
 
 }

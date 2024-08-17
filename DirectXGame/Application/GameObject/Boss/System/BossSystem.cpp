@@ -74,46 +74,27 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }
+void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player)
+{
+	// インスタンス作成
+	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
+	// 速度
+	static_cast<TrackingBullet*>(instance.get())->SetVelocity(direct * speed);
+	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
+	static_cast<TrackingBullet*>(instance.get())->Initialize();
+	instance->transform_ = transform;
+	instance->Update();
+	// リストにムーブ
+	units_.push_back(std::move(instance));
+}
 #pragma endregion
-
-void BossSystemContext::NormalBullet::Initialize()
-{
-	InstancedUnit::Initialize();
-	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
-	transform_.scale *= 0.3f;
-	collider_.Initialize(transform_.scale.x, this);
-	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
-
-}
-
-void BossSystemContext::NormalBullet::Update()
-{
-	// 移動
-	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
-
-	InstancedUnit::Update();
-	collider_.Update(transform_.translate);
-}
-
-void BossSystemContext::NormalBullet::ImGuiDraw()
-{
-
-}
-
-void BossSystemContext::NormalBullet::OnCollision(ColliderObject object)
-{
-	if (std::holds_alternative<Terrain*>(object)) {
-		isDead_ = true;
-	}
-	if (std::holds_alternative<Player*>(object)) {
-		isDead_ = true;
-	}
-}
 
 void BossSystemContext::BulletManager::Initialize(Model* model) {
 	model_ = model;
+	// 弾用
 	AddCluster();
-
+	// ミサイル用
+	AddCluster();
 }
 
 void BossSystemContext::BulletManager::Update() {
@@ -133,14 +114,24 @@ void BossSystemContext::BulletManager::Draw(ModelDrawDesc desc) {
 void BossSystemContext::BulletManager::CollisionUpdate(CollisionManager* manager) {
 	for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = bulletClusters_.begin();
 		it != bulletClusters_.end(); ++it) {
-		Cluster* obj = static_cast<Cluster*>((*it).get());
+		BulletCluster* obj = static_cast<BulletCluster*>((*it).get());
 		obj->CollisionUpdate(manager);
 	}
 }
 
 void BossSystemContext::BulletManager::AddCluster() {
-	std::unique_ptr<InstancedGroup> instance = std::make_unique<Cluster>();
-	static_cast<Cluster*>(instance.get())->Initialize(model_);
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
+	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
 	bulletClusters_.push_back(std::move(instance));
 }
 
+BossSystemContext::BulletCluster* BossSystemContext::BulletManager::GetBeginCluster() {
+	return static_cast<BulletCluster*>((*bulletClusters_.begin()).get());
+}
+
+BossSystemContext::BulletCluster* BossSystemContext::BulletManager::GetMissileCluster()
+{
+	std::vector<std::unique_ptr<InstancedGroup>>::iterator it = bulletClusters_.begin();
+	it++;
+	return static_cast<BulletCluster*>((*it).get());
+}

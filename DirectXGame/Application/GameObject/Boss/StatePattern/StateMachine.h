@@ -7,21 +7,27 @@
 #include <vector>
 #include <string>
 
+/// <summary>
+/// 前方宣言
+/// </summary>
 class Boss;
 class Player;
-
 namespace BossState {
 	class AttackState;
 	class MoveState;
 	class UpDownState;
 	class WaitState;
 	class TeleportState;
+	class MissileAttackState;
 }
 
+/// <summary>
+/// ボスのステート関係
+/// </summary>
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*>;
 
 	/// <summary>
 	/// 基のステートクラス
@@ -82,6 +88,7 @@ namespace BossState
 			kUpdown,
 			kWait,
 			kTeleport,
+			kMissile,
 			kMax,
 		};
 		struct StateObject {
@@ -129,6 +136,14 @@ namespace BossState
 		// テーブル内の位置
 		uint32_t currentStep_;
 		std::map<std::string, StateObject> tables_;
+	};
+
+	class MissileAttackState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
 	};
 
 	// 通常射撃状態

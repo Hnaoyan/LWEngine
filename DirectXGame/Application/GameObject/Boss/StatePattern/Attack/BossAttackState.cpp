@@ -7,7 +7,18 @@ void BossState::AttackState::Initialize()
 	changeTimer_.Start(90.0f);
 	fireTimer_.Start(10.0f);
 
-	pattern_ = ShotPattern::kSpread;
+	// 攻撃パターンのランダム
+	uint32_t randM = LwLib::GetRandomValue(0, 2);
+	if (randM == 0) {
+		pattern_ = ShotPattern::kPredictive;
+	}
+	else if (randM == 1) {
+		pattern_ = ShotPattern::kStraight;
+	}
+	else {
+		pattern_ = ShotPattern::kSpread;
+	}
+
 	// 角度
 	rotateAngle_ = 0.01f;
 

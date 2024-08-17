@@ -58,6 +58,7 @@ public:
 		//if (!stateDecider_) {
 			//stateDecider_ = std::make_unique<BossState::StateDecider>();
 		stateDecider_.Initialize(this, player);
+		bulletManager_->SetPlayer(player);
 		//}
 	}
 
