@@ -16,6 +16,11 @@ void BossSystemContext::TrackingBullet::Initialize()
 
 void BossSystemContext::TrackingBullet::Update()
 {
+
+	if (trackTimer_.IsActive()) {
+
+	}
+
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 
@@ -29,5 +34,10 @@ void BossSystemContext::TrackingBullet::ImGuiDraw()
 
 void BossSystemContext::TrackingBullet::OnCollision(ColliderObject object)
 {
-	object;
+	if (std::holds_alternative<Terrain*>(object)) {
+		isDead_ = true;
+	}
+	if (std::holds_alternative<Player*>(object)) {
+		isDead_ = true;
+	}
 }

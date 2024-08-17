@@ -144,12 +144,21 @@ namespace BossState
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
+	private:
+		void MissileAttack();
+	private:
+		Vector3 bulletDirect_ = {};
+		float bulletSpeed_ = 0.0f;
+		float bulletScale_ = 0.5f;
 	};
 
 	// 通常射撃状態
 	class AttackState : public IState 
 	{
 	public:
+		/// <summary>
+		/// 射撃のパターン
+		/// </summary>
 		enum class ShotPattern : uint32_t
 		{
 			kPredictive,
@@ -157,8 +166,7 @@ namespace BossState
 			kSpread,
 		};
 
-
-	public:
+	public: // 継承
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
@@ -176,7 +184,6 @@ namespace BossState
 
 		// 弾の生成部分の大枠
 		void GenerateProcess();
-
 	private:
 		FrameTimer fireTimer_;
 

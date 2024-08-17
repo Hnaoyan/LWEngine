@@ -42,7 +42,8 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "AttackType";
-	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
+	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
@@ -54,15 +55,6 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
-	//float distance = Vector3::Distance(boss_->worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
-
-	//if (distance >= 100.0f) {
-	//	boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-	//	MoveState* newState = static_cast<MoveState*>(boss_->GetState());
-	//	newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
-	//	newState->TestProcess();
-	//	return;
-	//}
 	nowState;
 	if (isCooltime_) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
