@@ -104,10 +104,10 @@ namespace BossState
 
 		void RandomTable(uint32_t random) {
 			if (random == 0) {
-				tableTag_ = "Default";
+				tableTag_ = "AttackType";
 			}
 			else if (random == 1) {
-				tableTag_ = "MoveType";
+				tableTag_ = "AttackType";
 			}
 			else {
 				tableTag_ = "AttackType";

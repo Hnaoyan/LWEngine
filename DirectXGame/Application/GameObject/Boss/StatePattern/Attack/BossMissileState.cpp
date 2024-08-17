@@ -33,4 +33,7 @@ void BossState::MissileAttackState::MissileAttack()
 	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, {0.0f,1.0f,0.0f}, bulletSpeed_, boss_->GetPlayer());
 	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { 1.0f,0.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
 	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { -1.0f,0.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
+	//boss_->GetBulletManager()->GetMissileCluster()->AddBullet(pos, { 0.0f,1.0f,0.0f }, bulletSpeed_);
+	//boss_->GetBulletManager()->GetMissileCluster()->AddBullet(pos, { 1.0f,0.0f,0.0f }, bulletSpeed_);
+	//boss_->GetBulletManager()->GetMissileCluster()->AddBullet(pos, { -1.0f,0.0f,0.0f }, bulletSpeed_);
 }

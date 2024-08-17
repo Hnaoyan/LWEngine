@@ -45,7 +45,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
-	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	currentStep_ = 0;

@@ -119,7 +119,28 @@ namespace BossSystemContext
 		uint32_t texture_ = 0;
 	};
 
-	class TrackingBullet : public InstancedUnit {
+	class IBullet : public InstancedUnit {
+	public:
+		/// <summary>
+		/// ImGui描画
+		/// </summary>
+		/// <param name="name"></param>
+		virtual void ImGuiDraw() {};
+		/// <summary>
+		/// コールバック関数
+		/// </summary>
+		/// <param name="object"></param>
+		virtual void OnCollision(ColliderObject object) = 0;
+	public: // アクセッサ
+		Sphere* GetCollider() { return &collider_; }
+	protected:
+		// コライダー
+		Sphere collider_;
+		// 速度
+		Vector3 velocity_ = {};
+	};
+
+	class TrackingBullet : public IBullet {
 	public:
 		/// <summary>
 		/// 初期化
@@ -134,30 +155,24 @@ namespace BossSystemContext
 		/// ImGui描画
 		/// </summary>
 		/// <param name="name"></param>
-		void ImGuiDraw();
+		void ImGuiDraw() override;
 		/// <summary>
 		/// コールバック関数
 		/// </summary>
 		/// <param name="object"></param>
-		void OnCollision(ColliderObject object);
+		void OnCollision(ColliderObject object) override;
 	public: // アクセッサ
-		Sphere* GetCollider() { return &collider_; }
 		EulerTransform GetTransform() { return transform_; }
 		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 		void SetPlayer(Player* player) { player_ = player; }
 	private:
-		// コライダー
-		Sphere collider_;
-		// 速度
-		Vector3 velocity_ = {};
-
 		// 追跡している時間
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
 	};
 
-	class NormalBullet : public InstancedUnit {
+	class NormalBullet : public IBullet {
 	public:
 		/// <summary>
 		/// 初期化
@@ -172,21 +187,15 @@ namespace BossSystemContext
 		/// ImGui描画
 		/// </summary>
 		/// <param name="name"></param>
-		void ImGuiDraw();
+		void ImGuiDraw() override;
 		/// <summary>
 		/// コールバック関数
 		/// </summary>
 		/// <param name="object"></param>
-		void OnCollision(ColliderObject object);
+		void OnCollision(ColliderObject object) override;
 	public: // アクセッサ
-		Sphere* GetCollider() { return &collider_; }
 		EulerTransform GetTransform() { return transform_; }
 		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
-	private:
-		// コライダー
-		Sphere collider_;
-		// 速度
-		Vector3 velocity_ = {};
 	};
 
 

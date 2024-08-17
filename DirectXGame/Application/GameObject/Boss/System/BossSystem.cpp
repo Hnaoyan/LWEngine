@@ -48,7 +48,7 @@ void BossSystemContext::BulletCluster::ImGuiDraw() {
 void BossSystemContext::BulletCluster::CollisionUpdate(CollisionManager* manager) {
 	for (std::vector<std::unique_ptr<InstancedUnit>>::iterator it = units_.begin();
 		it != units_.end(); ++it) {
-		manager->ListRegist(static_cast<NormalBullet*>((*it).get())->GetCollider());
+		manager->ListRegist(static_cast<IBullet*>((*it).get())->GetCollider());
 	}
 }
 
@@ -77,7 +77,7 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player)
 {
 	// インスタンス作成
-	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
+	std::unique_ptr<InstancedUnit> instance = std::make_unique<TrackingBullet>();
 	// 速度
 	static_cast<TrackingBullet*>(instance.get())->SetVelocity(direct * speed);
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
