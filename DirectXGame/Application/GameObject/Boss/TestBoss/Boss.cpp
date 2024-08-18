@@ -63,6 +63,10 @@ void Boss::ImGuiDraw()
 	float distance = Vector3::Distance(worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
 	ImGui::DragFloat("PlayerDistance", &distance);
 
+	ImGui::DragFloat("BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
+	ImGui::DragFloat("Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
+	ImGui::DragFloat("LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
+
 	ImGui::End();
 
 }

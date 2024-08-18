@@ -170,6 +170,12 @@ namespace BossSystemContext
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
+
+	public:
+		static float sDamping;
+		static float sLerpRadius;
+		static float sBulletSpeed;
+
 	};
 
 	class NormalBullet : public IBullet {

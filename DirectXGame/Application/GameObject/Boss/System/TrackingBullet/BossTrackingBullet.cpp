@@ -1,6 +1,12 @@
 #include "../BossSystem.h"
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Application/GameObject/GameObjectLists.h"
+
+float BossSystemContext::TrackingBullet::sDamping = 0.1f;
+float BossSystemContext::TrackingBullet::sBulletSpeed = 50.0f;
+float BossSystemContext::TrackingBullet::sLerpRadius = 5.0f;
+
 
 void BossSystemContext::TrackingBullet::Initialize()
 {
@@ -10,14 +16,37 @@ void BossSystemContext::TrackingBullet::Initialize()
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
-	trackTimer_.Start(300.0f);
+	trackTimer_.Start(60.0f);
 
 }
 
 void BossSystemContext::TrackingBullet::Update()
 {
 
+	trackTimer_.Update();
+
 	if (trackTimer_.IsActive()) {
+		Vector3 toTarget = player_->worldTransform_.GetWorldPosition() - GetWorldPosition();
+		Vector3 nowDirect = Vector3::Normalize(velocity_);
+		float dot = Vector3::Dot(toTarget, nowDirect);
+
+		Vector3 centripetalAccel = toTarget - (nowDirect * dot);
+		float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
+
+		if (centripetalAccelMagnitude > 1.0f) {
+			centripetalAccel /= centripetalAccelMagnitude;
+		}
+
+		float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / TrackingBullet::sLerpRadius;
+
+		Vector3 force = centripetalAccel * maxCentripetalAccel;
+
+		float propulsion = TrackingBullet::sBulletSpeed * TrackingBullet::sDamping;
+
+		force += nowDirect * propulsion;
+		force -= velocity_ * TrackingBullet::sDamping;
+
+		velocity_ += force * GameSystem::GameSpeedFactor();
 
 	}
 
