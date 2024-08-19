@@ -26,7 +26,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	player_ = player;
 
 	tableTag_ = "Default";
-	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
+	//tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
@@ -35,7 +35,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "MoveType";
-	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
+	//tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
@@ -123,6 +123,14 @@ void BossState::IState::PreInitialize(Boss* boss)
 	// ポインタ設定
 	boss_ = boss;
 
+}
+
+void BossState::IState::RotateUpdate()
+{
+	Vector3 normalize = boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition();
+	normalize = Vector3::Normalize(normalize);
+	normalize *= -1.0f;
+	boss_->worldTransform_.transform_.rotate.y = std::atan2f(normalize.x, normalize.z);
 }
 
 void BossState::IState::TimerUpdate(StateVariant state)

@@ -15,6 +15,7 @@ class Player;
 namespace BossState {
 	class AttackState;
 	class MoveState;
+	class OrbitMoveState;
 	class UpDownState;
 	class WaitState;
 	class TeleportState;
@@ -27,7 +28,7 @@ namespace BossState {
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*>;
 
 	/// <summary>
 	/// 基のステートクラス
@@ -48,6 +49,9 @@ namespace BossState
 		// 終了処理
 		virtual void Exit() = 0;
 	protected:
+		// ボス本体の向きの処理
+		void RotateUpdate();
+
 		// タイマーの処理
 		void TimerUpdate(StateVariant state);
 
@@ -89,6 +93,7 @@ namespace BossState
 			kWait,
 			kTeleport,
 			kMissile,
+			kOrbitMove,
 			kMax,
 		};
 		struct StateObject {
@@ -133,6 +138,7 @@ namespace BossState
 		std::map<std::string, StateObject> tables_;
 	};
 
+#pragma region State達
 	class MissileAttackState : public IState
 	{
 	public:
@@ -148,7 +154,7 @@ namespace BossState
 	};
 
 	// 通常射撃状態
-	class AttackState : public IState 
+	class AttackState : public IState
 	{
 	public:
 		/// <summary>
@@ -169,7 +175,7 @@ namespace BossState
 		// 生成時の設定関数
 		void SimpleAttack(const Vector3& position);
 
-	private: 
+	private:
 		// プレイヤーに向けた射撃
 		void LockAttack();
 		// 生成場所に応じた直線射撃
@@ -211,6 +217,37 @@ namespace BossState
 	public:
 		void MoveSelect(const Vector3& playerPosition);
 		void TestProcess();
+
+	};
+
+	class OrbitMoveState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+
+	public:
+		enum class QuaterRotationPattern : uint32_t {
+			kFirst,
+			kSecond,
+			kThird,
+			kFourth,
+		};
+		/// <summary>
+		/// 生成時に呼ぶ関数
+		/// </summary>
+		void GenerateMovePoint(float length, QuaterRotationPattern pattern);
+
+	private:
+		struct FourPoint
+		{
+			Vector2 LFront, LBack, RFront, RBack;
+		};
+		// 制御点
+		FourPoint controlPoint;
+		// 回転のパターン
+		QuaterRotationPattern quaterPattern_;
 
 	};
 
@@ -264,5 +301,7 @@ namespace BossState
 		}
 
 	};
+
+#pragma endregion
 
 }

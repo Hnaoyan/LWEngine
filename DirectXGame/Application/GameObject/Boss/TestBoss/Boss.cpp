@@ -30,11 +30,7 @@ void Boss::Update()
 	bulletManager_->Update();
 	curveTime_.Update();
 	if (state_) {
-		//state_->Update();
-		Vector3 normalize = player_->worldTransform_.GetWorldPosition() - worldTransform_.GetWorldPosition();
-		normalize = Vector3::Normalize(normalize);
-		normalize *= -1.0f;
-		worldTransform_.transform_.rotate.y = std::atan2f(normalize.x, normalize.z);
+		state_->Update();
 		//Vector3 Lfront = { -50.0f,8.5f,-50.0f };
 		//Vector3 Lback = { -50.0f,8.5f,50.0f };
 		//Vector3 Rfront{ 50.0f,8.5f,-50.0f };

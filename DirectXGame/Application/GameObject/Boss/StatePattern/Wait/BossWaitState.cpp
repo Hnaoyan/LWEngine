@@ -8,6 +8,8 @@ void BossState::WaitState::Initialize()
 
 void BossState::WaitState::Update()
 {
+	RotateUpdate();
+
 	TimerUpdate(this);
 }
 

@@ -14,6 +14,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossAttackState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossMoveState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Teleport\BossTeleportState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\UpDown\BossUpDownState.cpp" />
