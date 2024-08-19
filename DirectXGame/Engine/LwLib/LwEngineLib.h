@@ -40,6 +40,25 @@ namespace LwLib
 	}
 #pragma endregion
 
+	class Curve {
+	public:
+		/// <summary>
+		/// ベジェ曲線
+		/// </summary>
+		/// <param name="p0"></param>
+		/// <param name="p1"></param>
+		/// <param name="p2"></param>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		inline static Vector2 BezierCurve(const Vector2& p0, const Vector2& p1, const Vector2& p2, float t) {
+			Vector2 p0p1 = Vector2::Lerp(p0, p1, t);
+			Vector2 p1p2 = Vector2::Lerp(p1, p2, t);
+			return Vector2(Vector2::Lerp(p0p1, p1p2, t));
+		}
+
+
+	};
+
 	/// <summary>
 	/// ワールドからスクリーン
 	/// </summary>

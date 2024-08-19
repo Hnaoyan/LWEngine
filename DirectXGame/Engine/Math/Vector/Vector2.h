@@ -114,6 +114,14 @@ public:
 		}
 		return Vector2(result);
 	}
+	inline static Vector2 Lerp(const Vector2& start, const Vector2& end, float t) {
+		Vector2 result{};
+
+		result.x = (1.0f - t) * start.x + t * end.x;
+		result.y = (1.0f - t) * start.y + t * end.y;
+
+		return Vector2(result);
+	}
 
 	inline static Vector2 MakeRotateVector(const Vector2& vector,float radian) {
 		// 角度による回転行列
