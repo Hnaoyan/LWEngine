@@ -67,10 +67,9 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	}
 
 	if (!this->IsInActionSequence_) {
+		// テーブルの選択（乱数
 		randomValue_ = LwLib::GetRandomValue(0, 6);
-		float rand = LwLib::GetRandomValue(0.0f, 6.0f);
-		rand;
-		RandomTable(2);
+		RandomTable(randomValue_);
 
 		IsInActionSequence_ = true;
 		StateSelect(tables_[tableTag_].patterns[currentStep_]);
@@ -87,91 +86,6 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 		StateSelect(tables_[tableTag_].patterns[currentStep_]);
 		currentStep_++;
 		return;
-	}
-
-	//// ステートが変わる部分（ここで変更先の分岐
-	//if (boss_->GetPrevState()) {
-	//	DefaultLoop(nowState);
-	//}
-	//else {
-	//	// 移動状態
-	//	if (std::holds_alternative<MoveState*>(nowState)) {
-	//		boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
-	//	}
-	//	// 攻撃状態
-	//	else if (std::holds_alternative<AttackState*>(nowState)) {
-	//		boss_->StateManager()->ChangeRequest(std::make_unique<AttackState>());
-	//	}
-	//	// 上下状態
-	//	else if (std::holds_alternative<UpDownState*>(nowState)) {
-	//		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-	//	}
-	//	else {
-	//		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
-	//	}
-	//}
-}
-
-void BossState::StateDecider::DefaultLoop(StateVariant nowState)
-{
-	// 移動状態
-	if (std::holds_alternative<MoveState*>(nowState)) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<TeleportState>());
-		TeleportState* newState = static_cast<TeleportState*>(boss_->GetState());
-		newState->SelectTeleportPoint(player_->worldTransform_.GetWorldPosition());
-	}
-	// 攻撃状態
-	else if (std::holds_alternative<AttackState*>(nowState)) {
-		if (std::holds_alternative<TeleportState*>(boss_->prevVariantState_)) {
-			boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
-		}
-		else {
-			boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-			MoveState* newState = static_cast<MoveState*>(boss_->GetState());
-			//newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
-			newState->TestProcess();
-		}
-	}
-	// 上下状態
-	else if (std::holds_alternative<UpDownState*>(nowState)) {
-		if (std::holds_alternative<AttackState*>(boss_->prevVariantState_)) {
-			boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
-			return;
-		}
-		boss_->StateManager()->ChangeRequest(std::make_unique<AttackState>());
-	}
-	// 待機状態
-	else if (std::holds_alternative<WaitState*>(nowState)) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
-		//newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
-		newState->TestProcess();
-	}
-	// 瞬間移動状態
-	else if (std::holds_alternative<TeleportState*>(nowState)) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<AttackState>());
-	}
-}
-
-void BossState::StateDecider::NearLoop(StateVariant nowState)
-{
-	// 移動状態
-	if (std::holds_alternative<MoveState*>(nowState)) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
-	}
-	// 攻撃状態
-	else if (std::holds_alternative<AttackState*>(nowState)) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
-		newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
-		newState->TestProcess();
-	}
-	// 上下状態
-	else if (std::holds_alternative<UpDownState*>(nowState)) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
-		MoveState* newState = static_cast<MoveState*>(boss_->GetState());
-		newState->MoveSelect(player_->worldTransform_.GetWorldPosition());
-		newState->TestProcess();
 	}
 }
 

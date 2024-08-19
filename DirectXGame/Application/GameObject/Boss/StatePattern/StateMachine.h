@@ -120,11 +120,6 @@ namespace BossState
 		void StateDecide(StateVariant nowState);
 
 	private:
-		// 通常
-		void DefaultLoop(StateVariant nowState);
-
-		// 近い場合
-		void NearLoop(StateVariant nowState);
 		// ステートの変更処理
 		void StateSelect(StatePattern number);
 
