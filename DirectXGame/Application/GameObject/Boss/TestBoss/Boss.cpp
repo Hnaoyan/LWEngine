@@ -58,11 +58,13 @@ void Boss::ImGuiDraw()
 	
 	ImGui::Begin("Boss");
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
+	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 	collider_.radius_ = worldTransform_.transform_.scale.x;
 	float distance = Vector3::Distance(worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
 	ImGui::DragFloat("PlayerDistance", &distance);
 
+	ImGui::DragFloat("TrackingFrame", &BossSystemContext::TrackingBullet::sTrackingFrame, 0.01f);
 	ImGui::DragFloat("BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
 	ImGui::DragFloat("Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
 	ImGui::DragFloat("LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);

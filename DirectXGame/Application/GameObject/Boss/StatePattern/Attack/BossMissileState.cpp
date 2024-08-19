@@ -30,10 +30,39 @@ void BossState::MissileAttackState::MissileAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	// 上
 	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, {0.0f,1.0f,0.0f}, bulletSpeed_, boss_->GetPlayer());
-	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { 1.0f,0.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
-	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { -1.0f,0.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
-	//boss_->GetBulletManager()->GetMissileCluster()->AddBullet(pos, { 0.0f,1.0f,0.0f }, bulletSpeed_);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddBullet(pos, { 1.0f,0.0f,0.0f }, bulletSpeed_);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddBullet(pos, { -1.0f,0.0f,0.0f }, bulletSpeed_);
+	
+	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
+	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
+	Vector3 rotateVector = Matrix4x4::TransformVector3({ 1.0f,1.0f,0.0f }, rotateMatrix);
+	//---斜め---//
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+	rotateVector = Matrix4x4::TransformVector3({ -1.0f,1.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+	// X強め
+	rotateVector = Matrix4x4::TransformVector3({ 2.0f,1.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+	rotateVector = Matrix4x4::TransformVector3({ -2.0f,1.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+
+	rotateVector = Matrix4x4::TransformVector3({ 3.0f,1.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+	rotateVector = Matrix4x4::TransformVector3({ -3.0f,1.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+
+	// Y強め
+	rotateVector = Matrix4x4::TransformVector3({ 1.0f,2.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+	rotateVector = Matrix4x4::TransformVector3({ -1.0f,2.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+
+	rotateVector = Matrix4x4::TransformVector3({ 1.0f,3.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+	rotateVector = Matrix4x4::TransformVector3({ -1.0f,3.0f,0.0f }, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer());
+
+	// 左右
+	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { 1.0f,0.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
+	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { -1.0f,0.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
 }

@@ -26,6 +26,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	player_ = player;
 
 	tableTag_ = "Default";
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
@@ -34,6 +35,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "MoveType";
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
@@ -45,7 +47,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
-	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	currentStep_ = 0;
@@ -68,7 +70,7 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 		randomValue_ = LwLib::GetRandomValue(0, 6);
 		float rand = LwLib::GetRandomValue(0.0f, 6.0f);
 		rand;
-		RandomTable(randomValue_);
+		RandomTable(2);
 
 		IsInActionSequence_ = true;
 		StateSelect(tables_[tableTag_].patterns[currentStep_]);

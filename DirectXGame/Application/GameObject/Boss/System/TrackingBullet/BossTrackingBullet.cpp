@@ -3,9 +3,10 @@
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/GameObjectLists.h"
 
+float BossSystemContext::TrackingBullet::sTrackingFrame = 60.0f;
 float BossSystemContext::TrackingBullet::sDamping = 0.1f;
 float BossSystemContext::TrackingBullet::sBulletSpeed = 50.0f;
-float BossSystemContext::TrackingBullet::sLerpRadius = 5.0f;
+float BossSystemContext::TrackingBullet::sLerpRadius = 25.0f;
 
 
 void BossSystemContext::TrackingBullet::Initialize()
@@ -16,7 +17,7 @@ void BossSystemContext::TrackingBullet::Initialize()
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
-	trackTimer_.Start(60.0f);
+	trackTimer_.Start(TrackingBullet::sTrackingFrame);
 
 }
 

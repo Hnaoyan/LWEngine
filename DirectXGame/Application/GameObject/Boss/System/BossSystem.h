@@ -172,6 +172,7 @@ namespace BossSystemContext
 		Player* player_ = nullptr;
 
 	public:
+		static float sTrackingFrame;
 		static float sDamping;
 		static float sLerpRadius;
 		static float sBulletSpeed;
