@@ -81,6 +81,10 @@ private:
 	std::unique_ptr<BossState::IState> state_;
 	// プレイヤー
 	Player* player_ = nullptr;
+
+	FrameTimer curveTime_;
+	bool isHalf_ = false;
+
 public: // 内部でのみ呼び出す関数
 	/// <summary>
 	/// ステート変更関数
