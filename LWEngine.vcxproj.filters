@@ -669,6 +669,7 @@
     <FxCompile Include="Resources\shaders\Particle\UpdateParticleCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle\User\PlayerEffect.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />

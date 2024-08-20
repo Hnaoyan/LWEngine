@@ -49,6 +49,7 @@ struct EmitterSphere
     float32_t frequency;
     float32_t frequencyTime;
     uint32_t emit;
+    uint32_t emitPattern;
 };
 
 struct PerFrame
