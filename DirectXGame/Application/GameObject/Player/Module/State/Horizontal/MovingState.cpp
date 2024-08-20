@@ -2,6 +2,7 @@
 
 void MovingState::Initialize()
 {
+	nowState_ = this;
 }
 
 void MovingState::Update()

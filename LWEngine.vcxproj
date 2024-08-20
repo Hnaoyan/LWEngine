@@ -40,6 +40,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\HealthManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AimManager.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IHorizontalState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IVerticalState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\HealthManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.h" />

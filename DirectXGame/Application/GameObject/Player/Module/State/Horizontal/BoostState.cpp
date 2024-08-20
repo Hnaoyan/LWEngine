@@ -5,6 +5,7 @@
 
 void BoostState::Initialize()
 {
+	nowState_ = this;
 
 }
 

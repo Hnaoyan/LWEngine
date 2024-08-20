@@ -92,10 +92,10 @@ private: // リソース
 	// UI用のデータ
 	struct UIData {
 		std::string tag;
-		uint32_t num;
-		Vector2 position;
-		Vector2 scale;
-		uint32_t texture;
+		uint32_t num = 0;
+		Vector2 position{};
+		Vector2 scale{};
+		uint32_t texture = 0;
 	};
 
 	std::vector<std::pair<std::unique_ptr<Sprite>, UIData>> controlUIs_;

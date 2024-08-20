@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Input/Input.h"
+#include "PlayerStateList.h"
 
 class Player;
 class StateManager;
@@ -33,6 +34,19 @@ public:
 	/// 入力による処理
 	/// </summary>
 	virtual void InputHandle();
+
+	/// <summary>
+	/// 今のステート
+	/// </summary>
+	/// <returns></returns>
+	PlayerState GetNowState() {
+		return nowState_;
+	}
+
+protected:
+
+	PlayerState nowState_;
+
 protected:
 	// プレイヤー
 	Player* player_ = nullptr;

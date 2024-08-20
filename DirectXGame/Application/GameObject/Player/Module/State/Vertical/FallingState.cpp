@@ -4,6 +4,7 @@
 
 void FallingState::Initialize()
 {
+	nowState_ = this;
 }
 
 void FallingState::Update()

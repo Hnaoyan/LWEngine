@@ -27,9 +27,9 @@ namespace BossSystemContext
 		bool IsDead() { return isDead_; }
 	private:
 		// マックスHP
-		int32_t maxHealth_;
+		int32_t maxHealth_ = 0;
 		// 現在のHP
-		int32_t currentHealth_;
+		int32_t currentHealth_ = 0;
 		bool isDead_ = false;
 	};
 	

@@ -3,7 +3,7 @@
 
 void IdleState::Initialize()
 {
-
+	nowState_ = this;
 }
 
 void IdleState::Update()

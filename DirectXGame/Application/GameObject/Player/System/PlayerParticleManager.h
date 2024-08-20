@@ -2,20 +2,17 @@
 #include <vector>
 #include <memory>
 #include "../../Particle/User/PlayerParticle.h"
-//#include "../Player.h"
+
 class Player;
 class GPUParticleSystem;
 
 class PlayerParticleManager
 {
 public:
-
-	std::vector<std::unique_ptr<PlayerParticle::MoveParticle>> moveEffects_;
+	void Initialize(Player* player);
+	void Update();
 
 public: // アクセッサ
-	void SetPlayer(Player* player) {
-		player_ = player;
-	}
 	void SetGPUParticleSystem(GPUParticleSystem* ptr) {
 		gpuParticle_ = ptr;
 	}
