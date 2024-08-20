@@ -25,7 +25,7 @@ public:
 	/// </summary>
 	/// <param name="camera"></param>
 	virtual void Draw(ICamera* camera);
-protected:
+public:
 	/// <summary>
 	/// エミッターの設定
 	/// </summary>
