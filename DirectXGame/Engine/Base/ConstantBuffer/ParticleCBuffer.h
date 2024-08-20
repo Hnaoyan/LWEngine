@@ -14,6 +14,7 @@ struct EmitterSphere {
 	float frequency;	// 間隔
 	float frequencyTime; // 間隔時間
 	uint32_t emit;	// 許可フラグ
+	uint32_t emitPattern;	// 生成のパターン
 };
 
 struct PerFrame {

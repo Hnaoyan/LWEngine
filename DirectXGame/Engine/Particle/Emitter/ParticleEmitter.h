@@ -30,7 +30,6 @@ public:
 	/// </summary>
 	/// <param name="data"></param>
 	virtual void UpdateEmitter(const EmitterSphere& data);
-
 private:
 	/// <summary>
 	/// データ作成
