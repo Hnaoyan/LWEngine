@@ -15,28 +15,27 @@ public:
 	/// </summary>
 	/// <param name="model"></param>
 	/// <param name="textureHandle"></param>
-	void Initialize(Model* model,uint32_t textureHandle = 0);
+	virtual void Initialize(Model* model,uint32_t textureHandle = 0);
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	virtual void Update();
 	/// <summary>
 	/// 描画
 	/// </summary>
 	/// <param name="camera"></param>
-	void Draw(ICamera* camera);
+	virtual void Draw(ICamera* camera);
 	/// <summary>
 	/// エミッターの設定
 	/// </summary>
 	/// <param name="data"></param>
-	void UpdateEmitter(const EmitterSphere& data);
+	virtual void UpdateEmitter(const EmitterSphere& data);
 
 private:
 	/// <summary>
 	/// データ作成
 	/// </summary>
 	void CreateData();
-
 	void GPUInitialize();
 	void BarrierUAV();
 
@@ -51,6 +50,7 @@ private:
 	ConstantBufferMapContext<PerView> perView_;
 	ConstantBufferMapContext<PerFrame> perFrame_;
 
+protected:
 	// パーティクルで使うオブジェクト
 	Model* model_ = nullptr;
 	// テクスチャ

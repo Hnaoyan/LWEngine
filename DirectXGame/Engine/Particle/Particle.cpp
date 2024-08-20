@@ -20,25 +20,20 @@ void Particle::CreateCBuffer()
 {
 	// デバイス取得
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-
+	// CBufferの作成
 	perFrame_.CreateConstantBuffer(device);
-	//perFrame_.Mapping();
-
 	emit_.CreateConstantBuffer(device);
-	//emit_.Mapping();
-
 	perView_.CreateConstantBuffer(device);
-	//perView_.Mapping();
 
 }
 
 void Particle::Initialize(Model* model)
 {
 	model_ = model;
-
+	// データ作成
 	CreateData();
 	CreateCBuffer();
-
+	// GPUの初期化
 	GPUInitialize();
 
 	perFrame_.cMap_->deltaTime = kDeltaTime;

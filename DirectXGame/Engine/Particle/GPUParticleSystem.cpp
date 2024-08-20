@@ -76,6 +76,19 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 	emitters_.emplace(tag, std::move(instance));
 }
 
+void GPUParticleSystem::CreateEmitter(std::unique_ptr<ParticleEmitter> instance, std::string tag)
+{
+	// タグの要素検索
+	auto it = emitters_.find(tag);
+	// ある場合上書き
+	if (it != emitters_.end()) {
+		emitters_.insert_or_assign(tag, std::move(instance));
+		return;
+	}
+	// 追加
+	emitters_.emplace(tag, std::move(instance));
+}
+
 void GPUParticleSystem::DeleteEmitter(std::string tag)
 {
 	// タグの要素検索
