@@ -143,6 +143,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IHorizontalState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IVerticalState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\HealthManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.h" />

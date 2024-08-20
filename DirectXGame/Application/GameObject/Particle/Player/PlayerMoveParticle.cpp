@@ -4,7 +4,7 @@ void PlayerParticle::MoveParticle::Initialize(Model* model, uint32_t textureHand
 {
 	ParticleEmitter::Initialize(model, textureHandle);
 
-
+	UpdateEmitter(data_);
 
 }
 
@@ -20,10 +20,5 @@ void PlayerParticle::MoveParticle::Draw(ICamera* camera)
 
 	ParticleEmitter::Draw(camera);
 
-}
-
-void PlayerParticle::MoveParticle::UpdateEmitter(const EmitterSphere& data)
-{
-	UpdateEmitter(data);
 }
 
