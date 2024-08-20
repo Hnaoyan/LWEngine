@@ -98,3 +98,14 @@ void GPUParticleSystem::DeleteEmitter(std::string tag)
 		emitters_.erase(tag);
 	}
 }
+
+ParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
+{
+	// 検索
+	auto it = emitters_.find(tag);
+	// ある場合
+	if (it != emitters_.end()) {
+		return it->second.get();
+	}
+	return nullptr;
+}
