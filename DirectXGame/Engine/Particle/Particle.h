@@ -13,16 +13,17 @@ private:
 	// パイプライン
 	static GeneralPipeline sPipeline_;
 public:
-	///
-	/// UAVとSRVの作成
-	/// 
-	void CreateData();
-	void CreateCBuffer();
 	void Initialize(Model* model);
 	void Update();
 	void GPUInitialize();
 	void Draw(ICamera* camera);
 
+protected:
+	///
+	/// UAVとSRVの作成
+	/// 
+	void CreateData();
+	void CreateCBuffer();
 
 	// この場合板ポリ
 	Model* model_ = nullptr;

@@ -35,6 +35,16 @@ public: // メンバ関数
 	/// エミッターの作成
 	/// </summary>
 	void CreateEmitter(std::string tag);
+	/// <summary>
+	/// エミッター作成（インスタンスをそのまま引数で
+	/// </summary>
+	/// <param name="instance"></param>
+	/// <param name="tag"></param>
+	void CreateEmitter(std::unique_ptr<ParticleEmitter> instance, std::string tag);
+	/// <summary>
+	/// エミッターの削除
+	/// </summary>
+	/// <param name="tag"></param>
 	void DeleteEmitter(std::string tag);
 
 private:
