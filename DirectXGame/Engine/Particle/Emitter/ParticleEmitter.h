@@ -25,11 +25,12 @@ public:
 	/// </summary>
 	/// <param name="camera"></param>
 	virtual void Draw(ICamera* camera);
+protected:
 	/// <summary>
 	/// エミッターの設定
 	/// </summary>
 	/// <param name="data"></param>
-	virtual void UpdateEmitter(const EmitterSphere& data);
+	void UpdateEmitter(const EmitterSphere& data);
 private:
 	/// <summary>
 	/// データ作成
