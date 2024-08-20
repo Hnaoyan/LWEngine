@@ -46,7 +46,12 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="tag"></param>
 	void DeleteEmitter(std::string tag);
-
+	/// <summary>
+	/// リストからポインタの検索
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	ParticleEmitter* FindEmitter(std::string tag);
 private:
 	std::string addEmitterName_;
 	int nameNum_ = 0;
