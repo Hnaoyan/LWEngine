@@ -137,6 +137,7 @@ void ParticleEmitter::UpdateEmitter(const EmitterSphere& data)
 	emitter_.cMap_->translate = data.translate;
 	emitter_.cMap_->radius = data.radius;
 	emitter_.cMap_->emit = data.emit;
+	emitter_.cMap_->emitPattern = data.emitPattern;
 }
 
 void ParticleEmitter::CreateData()
