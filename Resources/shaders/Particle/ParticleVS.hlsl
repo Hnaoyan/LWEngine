@@ -16,8 +16,6 @@ struct VertexShaderInput
     float32_t2 texcoord : TEXCOORD0;
 };
 
-//ConstantBuffer<
-
 VertexShaderOutput main(VertexShaderInput input, uint32_t instanceId : SV_InstanceID)
 {
     VertexShaderOutput output;

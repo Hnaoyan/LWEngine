@@ -483,9 +483,10 @@ Matrix4x4 Matrix4x4::MakeBillBoardMatrix(const Vector3& target, const Vector3& e
 	result.m[1][0] = yAxis.x;
 	result.m[1][1] = yAxis.y;
 	result.m[1][2] = yAxis.z;
-	result.m[1][0] = zAxis.x;
-	result.m[1][1] = zAxis.y;
-	result.m[1][2] = zAxis.z;
+	result.m[2][0] = zAxis.x;
+	result.m[2][1] = zAxis.y;
+	result.m[2][2] = zAxis.z;
+	result.m[3][3] = 1.0f;
 
 	return result;
 }
