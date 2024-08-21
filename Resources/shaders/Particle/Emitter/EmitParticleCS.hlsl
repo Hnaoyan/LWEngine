@@ -35,7 +35,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
                 }
                 else if(gEmitter.emitPattern == 1)
                 {
-                    gParticle[particleIndex] = UnNormal(generator, gEmitter.translate);
+                    gParticle[particleIndex] = PlayerMove(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();                   
                 }
                 else if(gEmitter.emitPattern == 2)

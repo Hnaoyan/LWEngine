@@ -1,5 +1,6 @@
 #include "../BossParticle.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Engine/LwLib/DeltaTime.h"
 
 void BossParticle::DamageEffect::Initialize(Model* model, uint32_t textureHandle)
 {
@@ -23,6 +24,7 @@ void BossParticle::DamageEffect::Update()
 	if (boss_) {
 		emitter_.cMap_->translate = boss_->worldTransform_.GetWorldPosition();
 		if (boss_->GetParticleManager()->IsDamage()) {
+			perFrame_.cMap_->time += kDeltaTime;
 			emitter_.cMap_->emit = 1;
 		}
 	}
