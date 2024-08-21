@@ -23,7 +23,7 @@ void BossState::MissileAttackState::Update()
 
 void BossState::MissileAttackState::Exit()
 {
-
+	boss_->SetPrevVariantState(this);
 }
 
 void BossState::MissileAttackState::MissileAttack()

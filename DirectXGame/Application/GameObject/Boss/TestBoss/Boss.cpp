@@ -31,6 +31,7 @@ void Boss::Initialize(Model* model)
 void Boss::Update()
 {
 	bulletManager_->Update();
+	particleManager_.Update();
 	curveTime_.Update();
 	if (state_) {
 		state_->Update();
@@ -95,6 +96,7 @@ void Boss::OnCollision(ColliderObject target)
 {
 	if (std::holds_alternative<IBullet*>(target)) {
 		healthManager_.TakeDamage();
+		particleManager_.OnBulletHit();
 		if (healthManager_.IsDead()) {
 			isDead_ = true;
 		}

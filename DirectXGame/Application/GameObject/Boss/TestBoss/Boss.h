@@ -34,12 +34,6 @@ public:
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
 
-	void Dead() { isDead_ = true; }
-
-	void SetPrevVariantState(BossState::StateVariant variant) {
-		prevVariantState_ = variant;
-	}
-
 public:
 	// ステート関係
 	BossState::IState* GetState() { return state_.get(); }
@@ -49,34 +43,34 @@ public:
 	// 弾発射までの間隔
 	FrameTimer fireTimer_;
 	BossSystemContext::BulletManager* GetBulletManager() { return bulletManager_.get(); }
+	BossSystemContext::ParticleManager* GetParticleManager() { return &particleManager_; }
 
+	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }
 	Player* GetPlayer() { return player_; }
 	void SetPlayer(Player* player) { 
 		player_ = player; 
-		//if (!stateDecider_) {
-			//stateDecider_ = std::make_unique<BossState::StateDecider>();
 		stateDecider_.Initialize(this, player);
 		bulletManager_->SetPlayer(player);
-		//}
 	}
+	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
+	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
 	Vector3 respawnPos_ = {};
-	BossState::StateVariant prevVariantState_;
-	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
-	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
-private:
-	// コライダー
-	Sphere collider_;
+private: // サブシステム
 	// ステート管理
 	BossState::StateManager stateManager_;
 	BossState::StateDecider stateDecider_;
-	//std::unique_ptr<BossState::StateDecider> stateDecider_;
-	GPUParticleSystem* gpuParticle_ = nullptr;
+	BossState::StateVariant prevVariantState_;
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;
 	BossSystemContext::ParticleManager particleManager_;
+
+private:
+	// コライダー
+	Sphere collider_;
+
 	// 弾の管理
 	std::unique_ptr<BossSystemContext::BulletManager> bulletManager_;
 	// ステート
@@ -84,6 +78,8 @@ private:
 	std::unique_ptr<BossState::IState> state_;
 	// プレイヤー
 	Player* player_ = nullptr;
+	GPUParticleSystem* gpuParticle_ = nullptr;
+
 	FrameTimer curveTime_;
 	bool isHalf_ = false;
 

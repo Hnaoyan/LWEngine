@@ -297,6 +297,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBulletEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossDamageEffect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">

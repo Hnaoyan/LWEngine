@@ -216,7 +216,7 @@ void GameScene::ImGuiDraw()
 	}
 	if (ImGui::Button("BossKill")) {
 		if (bossEnemy_) {
-			bossEnemy_->Dead();
+			bossEnemy_->IsDead();
 		}
 	}
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);

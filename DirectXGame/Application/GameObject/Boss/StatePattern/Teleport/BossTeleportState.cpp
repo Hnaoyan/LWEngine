@@ -27,7 +27,7 @@ void BossState::TeleportState::Update()
 
 void BossState::TeleportState::Exit()
 {
-	boss_->prevVariantState_ = this;
+	boss_->SetPrevVariantState(this);
 }
 
 void BossState::TeleportState::SelectTeleportPoint(const Vector3& position)

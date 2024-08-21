@@ -16,5 +16,4 @@ void BossState::WaitState::Update()
 void BossState::WaitState::Exit()
 {
 	boss_->SetPrevVariantState(this);
-	//boss_->prevVariantState_ = this;
 }

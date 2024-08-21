@@ -6,6 +6,7 @@
 #include "Application/GameObject/Particle/User/BossParticle.h"
 #include "../../../Collision/ColliderFilter.h"
 #include "../../../GameSystem/GameSystem.h"
+#include "../TestBoss/Boss.h"
 
 uint32_t BossSystemContext::IBullet::sSerialNumber = 0;
 
@@ -29,10 +30,19 @@ void BossSystemContext::HealthManager::Heal(int32_t heal)
 void BossSystemContext::ParticleManager::Initialize(Boss* boss)
 {
 	boss_ = boss;
+	SetGPUParticleSystem(boss_->GetGPUParticle());
+	std::unique_ptr<ParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();
+	instance->Initialize(ModelManager::GetModel("Plane"));
+	BossParticle::DamageEffect* damage = static_cast<BossParticle::DamageEffect*>(instance.get());
+	damage->SetBoss(boss);
+	gpuParticle_->CreateEmitter(std::move(instance), "BossDamage");
+
 }
 void BossSystemContext::ParticleManager::Update()
 {
-
+	if (isDamage_) {
+		isDamage_ = false;
+	}
 }
 
 #pragma region Cluster

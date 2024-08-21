@@ -45,10 +45,13 @@ namespace BossSystemContext
 
 	public: // アクセッサ
 		void SetGPUParticleSystem(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
-
+		void OnBulletHit() { isDamage_ = true; }
+		bool IsDamage() { return isDamage_; }
 	private: // ポインタ関係
 		GPUParticleSystem* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
+
+		bool isDamage_ = false;
 
 	};
 	
