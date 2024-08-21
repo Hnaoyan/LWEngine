@@ -39,29 +39,27 @@ public:
 	/// </summary>
 	void UISpriteDraw();
 
-public: // アクセッサ
+public: // ゲッター
 	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	OparationManager* GetOperation() { return &systemManager_; }
+	StateManager* GetStateManager() { return &stateManager_; }
+	// ステート
+	IPlayerState* GetState() { return currentState_.get(); }
+	// 縦横
+	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
+	IPlayerState* GetVerticalState() { return currentStates_.second.get(); }
 
+public: // セッター
 	// ポインタ関係
 	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
 	void SetBulletManager(BulletManager* manager) { systemManager_.SetManager(manager); }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { systemManager_.SetEnemyList(lists); }
 	void SetBoss(Boss* boss) { systemManager_.GetLockOn()->SetBoss(boss); }
-	// ステート
-	IPlayerState* GetState() { return currentState_.get(); }
-
-	// 縦横
-	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
-	IPlayerState* GetVerticalState() { return currentStates_.second.get(); }
-
-	void SetState(std::unique_ptr<IPlayerState> newState) {
-		currentState_ = std::move(newState);
-	}
-	StateManager* GetStateManager() { return &stateManager_; }
+	void SetGPUParticleSystem(GPUParticleSystem* ptr) { particleManager_.SetGPUParticleSystem(ptr); }
+	void SetState(std::unique_ptr<IPlayerState> newState) { currentState_ = std::move(newState); }
 
 private: // USER
 
@@ -91,6 +89,7 @@ private:
 	AABB collider_;
 	// Hp関係
 	PlayerContext::HealthManager healthManager_;
-
+	// パーティクル
+	PlayerContext::ParticleManager particleManager_;
 
 };

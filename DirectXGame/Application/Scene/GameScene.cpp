@@ -35,6 +35,7 @@ void GameScene::Initialize()
 
 	player_ = std::make_unique<Player>();
 	player_->SetFollowCamera(followCamera_.get());
+	player_->SetGPUParticleSystem(gpuParticle_.get());
 	player_->Initialize(ModelManager::GetModel("Player"));
 
 	bulletManager_ = std::make_unique<BulletManager>();
@@ -59,6 +60,7 @@ void GameScene::Initialize()
 	followCamera_->SetParent(player_->GetWorldTransform());
 	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
+	// プレイヤーにセットする
 	player_->SetEnemyList(enemyManager_->GetEnemysList());
 	player_->SetBulletManager(bulletManager_.get());
 	player_->SetBoss(bossEnemy_.get());
@@ -67,7 +69,7 @@ void GameScene::Initialize()
 
 void GameScene::GPUUpdate()
 {
-
+	gpuParticle_->Update();
 }
 
 void GameScene::Update()
@@ -148,6 +150,9 @@ void GameScene::Draw()
 
 	desc.worldTransform = &terrainWtf_;
 	//terrain_->Draw(desc);
+
+	gpuParticle_->Draw(&camera_);
+
 	Model::PostDraw();
 
 #pragma region UI

@@ -4,3 +4,4 @@
 #include "AimManager.h"
 #include "LockOn.h"
 #include "HealthManager.h"
+#include "PlayerParticleManager.h"

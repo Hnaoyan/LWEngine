@@ -5,7 +5,7 @@ class Player;
 
 namespace PlayerParticle
 {
-	class MoveParticle : public ParticleEmitter
+	class MoveEffect : public ParticleEmitter
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);

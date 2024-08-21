@@ -16,6 +16,8 @@ void Player::Initialize(Model* model)
 	systemManager_.Initialize(this);
 	stateManager_.Initialize(this);
 	healthManager_.Initialize(this, 20);
+	particleManager_.Initialize(this);
+
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
