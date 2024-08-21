@@ -16,8 +16,6 @@ struct VertexShaderInput
     float32_t2 texcoord : TEXCOORD0;
 };
 
-//ConstantBuffer<
-
 VertexShaderOutput main(VertexShaderInput input, uint32_t instanceId : SV_InstanceID)
 {
     VertexShaderOutput output;
@@ -31,14 +29,9 @@ VertexShaderOutput main(VertexShaderInput input, uint32_t instanceId : SV_Instan
     worldMatrix[3].xyz = particle.translate;
     worldMatrix[3].w = 1.0f;
     output.position = mul(input.position, mul(worldMatrix, viewProjection));
-    //output.normal = input.normal;
+
     output.normal = -normalize(mul(input.normal, (float32_t3x3)worldMatrix));
-    //output.normal = float32_t3(0, 0, -1.0f);
     output.texcoord = input.texcoord;
     output.color = particle.color;
-    //output.position = mul(input.position, gParticle[instanceId].World);
-    //output.texcoord = input.texcoord;
-    //output.normal = normalize(mul(input.normal, (float32_t3x3) gParticle[instanceId].World));
-    //output.color = gParticle[instanceId].Color;
     return output;
 }
