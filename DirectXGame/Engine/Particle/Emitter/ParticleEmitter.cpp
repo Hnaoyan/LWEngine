@@ -36,16 +36,6 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 
 void ParticleEmitter::Update()
 {
-	emitter_.cMap_->frequencyTime += kDeltaTime;
-	perFrame_.cMap_->time += kDeltaTime;
-	if (emitter_.cMap_->frequency <= emitter_.cMap_->frequencyTime) {
-		emitter_.cMap_->frequencyTime -= emitter_.cMap_->frequency;
-		// フラグ
-		emitter_.cMap_->emit = 1;
-	}
-	else {
-		emitter_.cMap_->emit = 0;
-	}
 	
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
 	sCommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
@@ -128,7 +118,7 @@ void ParticleEmitter::Draw(ICamera* camera)
 
 }
 
-void ParticleEmitter::UpdateEmitter(const EmitterSphere& data)
+void ParticleEmitter::RefreshData(const EmitterSphere& data)
 {
 	// エミッターの設定
 	emitter_.cMap_->count = data.count;
@@ -138,6 +128,20 @@ void ParticleEmitter::UpdateEmitter(const EmitterSphere& data)
 	emitter_.cMap_->radius = data.radius;
 	emitter_.cMap_->emit = data.emit;
 	emitter_.cMap_->emitPattern = data.emitPattern;
+}
+
+void ParticleEmitter::UpdataEmitterFlags()
+{
+	emitter_.cMap_->frequencyTime += kDeltaTime;
+	perFrame_.cMap_->time += kDeltaTime;
+	if (emitter_.cMap_->frequency <= emitter_.cMap_->frequencyTime) {
+		emitter_.cMap_->frequencyTime -= emitter_.cMap_->frequency;
+		// フラグ
+		emitter_.cMap_->emit = 1;
+	}
+	else {
+		emitter_.cMap_->emit = 0;
+	}
 }
 
 void ParticleEmitter::CreateData()

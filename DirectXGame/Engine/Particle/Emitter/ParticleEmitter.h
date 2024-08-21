@@ -27,10 +27,12 @@ public:
 	virtual void Draw(ICamera* camera);
 public:
 	/// <summary>
-	/// エミッターの設定
+	/// データの更新
 	/// </summary>
 	/// <param name="data"></param>
-	void UpdateEmitter(const EmitterSphere& data);
+	void RefreshData(const EmitterSphere& data);
+
+	void UpdataEmitterFlags();
 private:
 	/// <summary>
 	/// データ作成
