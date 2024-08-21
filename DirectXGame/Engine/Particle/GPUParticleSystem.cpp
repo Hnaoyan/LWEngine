@@ -64,7 +64,7 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 	if (it != emitters_.end()) {
 		std::unique_ptr<ParticleEmitter> instance = std::make_unique<ParticleEmitter>();
 		instance->Initialize(model_);
-		instance->UpdateEmitter(createData_);
+		instance->RefreshData(createData_);
 
 		emitters_.insert_or_assign(tag, std::move(instance));
 		return;
@@ -72,7 +72,7 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 
 	std::unique_ptr<ParticleEmitter> instance = std::make_unique<ParticleEmitter>();
 	instance->Initialize(model_);
-	instance->UpdateEmitter(createData_);
+	instance->RefreshData(createData_);
 	emitters_.emplace(tag, std::move(instance));
 }
 
