@@ -202,7 +202,7 @@ void GameScene::ImGuiDraw()
 	followCamera_->ImGuiDraw();
 	enemyManager_->ImGuiDraw();
 	ImGui::ShowDemoWindow();
-
+	gpuParticle_->ImGuiDraw();
 	ImGui::Begin("SampleScene");
 
 	if (ImGui::Button("BossRes")) {
@@ -334,6 +334,7 @@ void GameScene::CameraUpdate()
 		followCamera_->Update();
 		camera_.viewMatrix_ = followCamera_->viewMatrix_;
 		camera_.projectionMatrix_ = followCamera_->projectionMatrix_;
+		camera_.transform_ = followCamera_->transform_;
 		camera_.TransferMatrix();
 		// 基底更新
 		//IScene::CameraUpdate();
