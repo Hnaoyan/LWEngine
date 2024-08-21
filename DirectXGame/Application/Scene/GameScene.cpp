@@ -46,6 +46,7 @@ void GameScene::Initialize()
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
 	bossEnemy_ = std::make_unique<Boss>();
+	bossEnemy_->SetGPUParticle(gpuParticle_.get());
 	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
 

@@ -4,7 +4,12 @@
 #include "Engine/3D/Instancing/InstancedGroup.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
 
+#include <memory>
+
 class CollisionManager;
+class GPUParticleSystem;
+class ParticleEmitter;
+
 namespace BossSystemContext {
 	class NormalBullet;
 	class TrackingBullet;
@@ -31,6 +36,20 @@ namespace BossSystemContext
 		// 現在のHP
 		int32_t currentHealth_ = 0;
 		bool isDead_ = false;
+	};
+
+	class ParticleManager {
+	public:
+		void Initialize(Boss* boss);
+		void Update();
+
+	public: // アクセッサ
+		void SetGPUParticleSystem(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+
+	private: // ポインタ関係
+		GPUParticleSystem* gpuParticle_ = nullptr;
+		Boss* boss_ = nullptr;
+
 	};
 	
 	/// <summary>
@@ -65,10 +84,8 @@ namespace BossSystemContext
 	public: // アクセッサ
 		BulletCluster* GetBeginCluster();
 		BulletCluster* GetMissileCluster();
-		void SetPlayer(Player* player) {
-			player_ = player;
-		}
-
+		void SetPlayer(Player* player) { player_ = player; }
+		void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 	private:
 		// モデルのリスト
 		std::vector<Model*> models_;
@@ -77,6 +94,11 @@ namespace BossSystemContext
 		Player* player_ = nullptr;
 		// 弾のリスト
 		std::vector<std::unique_ptr<InstancedGroup>> bulletClusters_;
+
+	private:
+		// 
+		GPUParticleSystem* gpuParticle_ = nullptr;
+
 	};
 
 	class BulletCluster : public InstancedGroup {
@@ -114,12 +136,24 @@ namespace BossSystemContext
 		void AddBullet(const EulerTransform& transform, const Vector3& direct, float speed);
 
 		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player);
+		// GPUParticle
+		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
 	private:
 		uint32_t texture_ = 0;
+
+		GPUParticleSystem* gpuParticle_ = nullptr;
 	};
 
 	class IBullet : public InstancedUnit {
+	public: // シリアル番号
+		static uint32_t sSerialNumber;
+		uint32_t serialNumber_ = 0;
+		
+		std::string GetTag() { return tag_; }
+	protected: // タグ
+		std::string tag_;
+
 	public:
 		/// <summary>
 		/// ImGui描画

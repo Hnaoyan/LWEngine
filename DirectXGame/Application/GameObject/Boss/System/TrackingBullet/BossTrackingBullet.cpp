@@ -11,6 +11,11 @@ float BossSystemContext::TrackingBullet::sLerpRadius = 25.0f;
 
 void BossSystemContext::TrackingBullet::Initialize()
 {
+	serialNumber_ = sSerialNumber;
+	sSerialNumber++;
+
+	tag_ = "BossBullet" + std::to_string(serialNumber_);
+
 	InstancedUnit::Initialize();
 	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
 	transform_.scale *= 0.3f;

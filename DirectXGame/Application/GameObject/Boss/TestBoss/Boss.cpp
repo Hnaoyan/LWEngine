@@ -12,9 +12,12 @@ void Boss::Initialize(Model* model)
 	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
 
 	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
+	bulletManager_->SetGPUParticle(gpuParticle_);
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	healthManager_.Initialize(20);
+
+	particleManager_.Initialize(this);
 
 	respawnPos_ = { 0,8.5f,50.0f };
 

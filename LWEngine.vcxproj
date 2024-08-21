@@ -30,7 +30,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\Player\PlayerMoveParticle.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBulletEffect.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerMoveParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.cpp" />
@@ -139,6 +141,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IHorizontalState.h" />

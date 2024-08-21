@@ -64,7 +64,8 @@ public:
 
 	Vector3 respawnPos_ = {};
 	BossState::StateVariant prevVariantState_;
-
+	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
 private:
 	// コライダー
 	Sphere collider_;
@@ -72,8 +73,10 @@ private:
 	BossState::StateManager stateManager_;
 	BossState::StateDecider stateDecider_;
 	//std::unique_ptr<BossState::StateDecider> stateDecider_;
+	GPUParticleSystem* gpuParticle_ = nullptr;
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;
+	BossSystemContext::ParticleManager particleManager_;
 	// 弾の管理
 	std::unique_ptr<BossSystemContext::BulletManager> bulletManager_;
 	// ステート
@@ -81,7 +84,6 @@ private:
 	std::unique_ptr<BossState::IState> state_;
 	// プレイヤー
 	Player* player_ = nullptr;
-
 	FrameTimer curveTime_;
 	bool isHalf_ = false;
 
