@@ -46,6 +46,7 @@ private:
 	RWStructuredBufferContext<int32_t> freeListIndex_;
 	RWStructuredBufferContext<uint32_t> freeList_;
 
+protected:
 	// エミッターの種類（今後の変更する可能性あり
 	ConstantBufferMapContext<EmitterSphere> emitter_;
 	// 共通のバッファー
