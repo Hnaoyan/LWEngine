@@ -40,5 +40,8 @@ void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 		player_->SetIsDead(true);
 		hitPoint_.currentHealth = 0;
 	}
+	else {
+		player_->camera_->ExecuteShake(15.0f, 2.0f);
+	}
 
 }
