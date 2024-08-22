@@ -100,9 +100,10 @@ inline void RWStructuredBufferContext<T>::CreateBuffer(ID3D12Device* device, int
 	srvDesc.Buffer.NumElements = maxNum;
 	srvDesc.Buffer.StructureByteStride = sizeof(T);
 	// Heap
-	srvHeapData.handles.first = SRVHandler::GetSrvHandleCPU();
-	srvHeapData.handles.second = SRVHandler::GetSrvHandleGPU();
-	srvHeapData.index = SRVHandler::AllocateDescriptor();
+	srvHeapData.index = SRVHandler::CheckAllocater();
+	srvHeapData.handles.first = SRVHandler::GetSrvHandleCPU(srvHeapData.index);
+	srvHeapData.handles.second = SRVHandler::GetSrvHandleGPU(srvHeapData.index);
+	//srvHeapData.index = SRVHandler::AllocateDescriptor();
 #pragma endregion
 
 #pragma region UAV
@@ -116,9 +117,9 @@ inline void RWStructuredBufferContext<T>::CreateBuffer(ID3D12Device* device, int
 	uavDesc.Buffer.NumElements = maxNum;
 	uavDesc.Buffer.StructureByteStride = sizeof(T);
 	// Heap
-	uavHeapData.handles.first = SRVHandler::GetSrvHandleCPU();
-	uavHeapData.handles.second = SRVHandler::GetSrvHandleGPU();
-	uavHeapData.index = SRVHandler::AllocateDescriptor();
+	uavHeapData.index = SRVHandler::CheckAllocater();
+	uavHeapData.handles.first = SRVHandler::GetSrvHandleCPU(uavHeapData.index);
+	uavHeapData.handles.second = SRVHandler::GetSrvHandleGPU(uavHeapData.index);
 #pragma endregion
 	// Resource作成
 	cBuffer = DxCreateLib::ResourceLib::CreateResourceUAV(device, sizeof(T) * maxNum);

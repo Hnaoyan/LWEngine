@@ -36,8 +36,9 @@ struct WellForGPU {
 class SkinCluster
 {
 public:
-	static SkinCluster Create(ID3D12Device* device, const Skeleton& skeleton, const ModelData& modelData);
+	static SkinCluster Create(ID3D12Device* device, const Skeleton& skeleton, const ModelData& modelData, uint32_t srvIndex);
 
+	~SkinCluster();
 public:
 
 	std::vector<Matrix4x4> inverseBindPoseMatrices;

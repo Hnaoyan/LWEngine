@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-SkinCluster SkinCluster::Create(ID3D12Device* device, const Skeleton& skeleton, const ModelData& modelData)
+SkinCluster SkinCluster::Create(ID3D12Device* device, const Skeleton& skeleton, const ModelData& modelData, uint32_t srvIndex)
 {
     SkinCluster skinCluster;
     // palette用のResourceを確保
@@ -15,10 +15,11 @@ SkinCluster SkinCluster::Create(ID3D12Device* device, const Skeleton& skeleton, 
 
     skinCluster.paletteResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedPalette));
     skinCluster.mappedPalette = { mappedPalette,skeleton.joints.size() };
-    skinCluster.paletteSrvHandle.first = SRVHandler::GetSrvHandleCPU();
-    skinCluster.paletteSrvHandle.second = SRVHandler::GetSrvHandleGPU();
     // SRVを次に進める
-    skinCluster.srvHandleIndex = SRVHandler::AllocateDescriptor();
+    srvIndex = SRVHandler::CheckAllocater();
+    skinCluster.srvHandleIndex = srvIndex;
+    skinCluster.paletteSrvHandle.first = SRVHandler::GetSrvHandleCPU(skinCluster.srvHandleIndex);
+    skinCluster.paletteSrvHandle.second = SRVHandler::GetSrvHandleGPU(skinCluster.srvHandleIndex);
 
     // palette用のsrvを作成
     D3D12_SHADER_RESOURCE_VIEW_DESC paletteSrvDesc{};
@@ -73,4 +74,10 @@ SkinCluster SkinCluster::Create(ID3D12Device* device, const Skeleton& skeleton, 
     }
 
     return SkinCluster(skinCluster);
+}
+
+SkinCluster::~SkinCluster()
+{
+    // パーティクル関係
+    SRVHandler::ReleaseHeapIndex(srvHandleIndex);
 }

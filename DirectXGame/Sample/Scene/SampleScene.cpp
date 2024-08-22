@@ -448,8 +448,8 @@ void SampleScene::ImGuiDraw()
 	debugCamera_->ImGuiDraw();
 
 	ImGui::Begin("Scene");
-	int srvIndex = dxCommon_->GetSrvHandler()->sNextDescriptorNum_;
-	ImGui::InputInt("srvIndex", &srvIndex);
+	//int srvIndex = dxCommon_->GetSrvHandler()->sNextDescriptorNum_;
+	//ImGui::InputInt("srvIndex", &srvIndex);
 	ImGui::End();
 
 }
