@@ -20,7 +20,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\UpDown\BossUpDownState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Wait\BossWaitState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossMissileCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\NormalBullet\BossNormalBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\TrackingBullet\BossTrackingBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.cpp" />

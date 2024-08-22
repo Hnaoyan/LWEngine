@@ -276,9 +276,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossMissileCluster.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

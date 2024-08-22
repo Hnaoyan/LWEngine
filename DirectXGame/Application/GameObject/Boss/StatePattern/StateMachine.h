@@ -169,6 +169,7 @@ namespace BossState
 			kPredictive,
 			kStraight,
 			kSpread,
+			kRadialFire,
 		};
 
 	public: // 継承
@@ -186,10 +187,13 @@ namespace BossState
 		void StraightAttack();
 		// 拡散
 		void SpreadAttack();
+		// 全方位弾
+		void RadialFireAttack();
 
 		// 弾の生成部分の大枠
 		void GenerateProcess();
 	private:
+		float fireCooltime_ = 0.0f;
 		FrameTimer fireTimer_;
 
 		Vector3 bulletDirect_ = {};
