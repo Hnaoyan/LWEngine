@@ -30,7 +30,7 @@ void TitleScene::Update()
 #ifdef _DEBUG
 
 	if (input_->TriggerKey(DIK_LSHIFT)) {
-		sceneManager_->ChangeScene("GAME");
+		sceneManager_->ChangeScene("SAMPLE");
 	}
 
 #endif // _DEBUG

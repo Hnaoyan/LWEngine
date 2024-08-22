@@ -17,7 +17,7 @@ void MyGame::Initialize()
 	// シーンの初期化
 	sceneFactory_ = std::make_unique<SceneFactory>();
 	sceneManager_->SetSceneFactory(sceneFactory_.get());
-	sceneManager_->ChangeScene("SAMPLE");
+	sceneManager_->ChangeScene("TITLE");
 }
 
 void MyGame::Finalize()
