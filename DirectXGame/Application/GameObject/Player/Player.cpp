@@ -125,8 +125,13 @@ void Player::OnCollision(ColliderObject target)
 
 	else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
 		healthManager_.TakeDamage();
+		camera_->ExecuteShake(15.0f, 5.0f);
 	}
-	
+	else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
+		healthManager_.TakeDamage();
+		camera_->ExecuteShake(15.0f, 5.0f);
+	}
+
 }
 
 void Player::UISpriteDraw()
