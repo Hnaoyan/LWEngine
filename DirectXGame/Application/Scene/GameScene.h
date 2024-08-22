@@ -1,11 +1,12 @@
 #pragma once
-#include "../../Engine/Scene/IScene.h"
-#include "../../Engine/2D/Drawer/Sprite.h"
-#include "../../Engine/3D/Drawer/3DDrawers.h"
-#include "../../Engine/3D/ModelManager.h"
-#include "../../Engine/Camera/CameraList.h"
-#include "../GameObject/GameObjectLists.h"
+#include "Engine/Scene/IScene.h"
+#include "Engine/2D/Drawer/Sprite.h"
+#include "Engine/3D/Drawer/3DDrawers.h"
+#include "Engine/3D/ModelManager.h"
+#include "Engine/Camera/CameraList.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/Particle/GPUParticleSystem.h"
+#include "../GameObject/GameObjectLists.h"
 
 class GameScene : public IScene
 {
@@ -65,16 +66,45 @@ private:
 private: // アプリ
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<SampleEnemyManager> enemyManager_;
-	std::unique_ptr<SampleBulletManager> bulletManager_;
+	std::unique_ptr<Boss> bossEnemy_;
 
 	// 地形マネ
 	std::unique_ptr<TerrainManager> terrainManager_;
+	// 弾のマネージャー
+	std::unique_ptr<BulletManager> bulletManager_;
 	
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
 
+	// GPUParticle
+	std::unique_ptr<GPUParticleSystem> gpuParticle_;
+
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
+
+	// クリア関係の変数
+	struct GameClear {
+		FrameTimer transitionTimer;
+		std::unique_ptr<Sprite> clearText;
+		bool isClear;
+	};
+
+	// UI用のデータ
+	struct UIData {
+		std::string tag;
+		uint32_t num = 0;
+		Vector2 position{};
+		Vector2 scale{};
+		uint32_t texture = 0;
+	};
+
+	std::vector<std::pair<std::unique_ptr<Sprite>, UIData>> controlUIs_;
+
+	void AddUI(UIData data);
+
+	uint32_t uiNumber_ = 0;
+
+	GameClear clearText_;
 
 private: // システム関係
 	// カメラ君

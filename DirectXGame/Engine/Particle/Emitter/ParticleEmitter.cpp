@@ -31,7 +31,7 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 	emitter_.cMap_->emit = 0;
 	emitter_.cMap_->emitPattern = 0;
 
-	texture_ = TextureManager::GetInstance()->Load("Resources/circle.png");
+	texture_ = TextureManager::GetInstance()->Load("Resources/effect.png");
 }
 
 void ParticleEmitter::Update()
