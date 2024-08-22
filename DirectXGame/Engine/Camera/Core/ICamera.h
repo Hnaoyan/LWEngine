@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Base/CBufferCommon.h"
+#include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "../../WindowAPI/WindowAPI.h"
 #include <wrl.h>
 #include <d3d12.h>
@@ -24,7 +25,7 @@ public:	// 継承できるように
 	/// <summary>
 	/// 更新
 	/// </summary>
-	virtual void Update() { UpdateMatrix(); };
+	virtual void Update();
 
 	/// <summary>
 	/// ImGui
@@ -36,6 +37,14 @@ protected: // 共通で使う関数
 	/// 行列更新
 	/// </summary>
 	void UpdateMatrix();
+
+	void ShakeUpdate();
+	//void ZoomUpdate();
+public:
+	void ExecuteShake(float frame, float maxValue);
+	//void ExecuteZoomIn();
+	//void ExecuteZoomOut();
+
 public:
 	/// <summary>
 	/// マップに送る処理
@@ -45,6 +54,32 @@ public:
 protected:
 	// 視野角の値
 	float fov_ = 45.0f;
+	/// <summary>
+	/// シェイクの情報
+	/// </summary>
+	struct ShakeParameter {
+		FrameTimer timer;
+		Vector2 startValue;
+		float randomValue;
+		bool isShake;
+	};
+
+	enum class ZoomType {
+		kZoomOut,
+		kZoomIn,
+		kSize,
+	};
+
+	/// <summary>
+	/// ズームの情報
+	/// </summary>
+	struct ZoomParameter {
+		FrameTimer timer;
+
+	};
+
+	// シェイク用
+	ShakeParameter shakeConfig_;
 
 public:
 	// ビュー行列

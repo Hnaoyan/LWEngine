@@ -94,6 +94,10 @@ void FollowCamera::ImGuiDraw()
 
 	ImGui::Checkbox("AtanCheck", &isAtan_);
 
+	if (ImGui::Button("Shake")) {
+		ExecuteShake(15.0f, 5.0f);
+	}
+
 	ImGui::End();
 }
 

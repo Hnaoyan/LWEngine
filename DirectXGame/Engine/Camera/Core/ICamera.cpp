@@ -1,6 +1,8 @@
 #include "ICamera.h"
 #include "../../Base/DirectXCommon.h"
 #include "../../Base/Utility/DxCreateLib.h"
+#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/Ease/Ease.h"
 #include "imgui.h"
 
 #include <cassert>
@@ -14,6 +16,18 @@ void ICamera::Initialize()
 	data_.CreateConstantBuffer(device);
 	// 行列の更新
 	this->UpdateMatrix();
+}
+
+void ICamera::Update()
+{
+
+	if (shakeConfig_.isShake) {
+		shakeConfig_.timer.Update();
+		Shake();
+	}
+
+	// 行列の更新
+	UpdateMatrix();
 }
 
 void ICamera::UpdateMatrix()
@@ -55,7 +69,37 @@ void ICamera::ImGuiDraw()
 
 	ImGui::DragFloat3("Position", &transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
+	if (ImGui::Button("Shake")) {
+		ExecuteShake(15.0f, 5.0f);
+	}
 
 	ImGui::End();
+
+}
+
+void ICamera::ExecuteShake(float frame, float maxValue)
+{
+	shakeConfig_.isShake = true;
+	shakeConfig_.timer.Start(frame);
+	shakeConfig_.randomValue = maxValue;
+	shakeConfig_.startValue = { transform_.translate.x,transform_.translate.y };
+}
+
+void ICamera::ShakeUpdate()
+{
+	float value = Ease::Easing(shakeConfig_.randomValue, 0.0f, shakeConfig_.timer.GetElapsedFrame());
+	Vector2 min = { -value ,-value };
+	Vector2 max = { value ,value };
+	Vector2 rand = LwLib::GetRandomValue(min, max);
+
+	if (!shakeConfig_.timer.IsActive()) {
+		transform_.translate.x = shakeConfig_.startValue.x;
+		transform_.translate.y = shakeConfig_.startValue.y;
+		shakeConfig_.isShake = false;
+	}
+	else {
+		transform_.translate.x = shakeConfig_.startValue.x + rand.x;
+		transform_.translate.y = shakeConfig_.startValue.y + rand.y;
+	}
 
 }
