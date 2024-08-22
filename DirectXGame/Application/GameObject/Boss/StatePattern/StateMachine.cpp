@@ -44,11 +44,32 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "AttackType";
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
-	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
-	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
+	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
+	tableTag_ = "MoveAttack";
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
+	tableTag_ = "UpDownMove";
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
+	section_.push_back("AttackType");
+	section_.push_back("MoveAttack");
+	section_.push_back("UpDownMove");
 
 	currentStep_ = 0;
 	IsInActionSequence_ = false;
@@ -68,22 +89,32 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 
 	if (!this->IsInActionSequence_) {
 		// テーブルの選択（乱数
-		randomValue_ = LwLib::GetRandomValue(0, 6);
-		RandomTable(randomValue_);
+		//randomValue_ = LwLib::GetRandomValue(0, 6);
+		//RandomTable(randomValue_);
+		
+		if (sectionIndex_ < section_.size()) {
+			std::string tag = section_[sectionIndex_];
+			StateSelect(tables_[tag].patterns[currentStep_]);
+		}
+		else {
+			sectionIndex_ = 0;
+			StateSelect(tables_[section_[sectionIndex_]].patterns[currentStep_]);
+		}
 
 		IsInActionSequence_ = true;
-		StateSelect(tables_[tableTag_].patterns[currentStep_]);
+		//StateSelect(tables_[tableTag_].patterns[currentStep_]);
 		currentStep_++;
 		return;
 	}
 	else {
-		if (currentStep_ > tables_[tableTag_].maxStep) {
+		if (currentStep_ > tables_[section_[sectionIndex_]].maxStep) {
+			sectionIndex_++;
 			isCooltime_ = true;
 			IsInActionSequence_ = false;
 			currentStep_ = 0;
 			return;
 		}
-		StateSelect(tables_[tableTag_].patterns[currentStep_]);
+		StateSelect(tables_[section_[sectionIndex_]].patterns[currentStep_]);
 		currentStep_++;
 		return;
 	}
@@ -110,6 +141,11 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 		break;
 	case BossState::StateDecider::StatePattern::kMissile:
 		boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+		break;
+	case BossState::StateDecider::StatePattern::kOrbitMove:
+		boss_->StateManager()->ChangeRequest(std::make_unique<OrbitMoveState>());
+		//OrbitMoveState* instance = static_cast<OrbitMoveState*>(boss_->GetState());
+		//instance->GenerateMovePoint(50.0f, OrbitMoveState::QuaterRotationPattern::kFirst);
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;

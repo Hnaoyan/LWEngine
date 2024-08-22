@@ -136,9 +136,13 @@ namespace BossState
 		// テーブル内の位置
 		uint32_t currentStep_ = 0;
 		std::map<std::string, StateObject> tables_;
+
+		std::vector<std::string> section_;
+		uint32_t sectionIndex_ = 0;
 	};
 
 #pragma region State達
+	// ミサイルの攻撃
 	class MissileAttackState : public IState
 	{
 	public:
@@ -249,6 +253,11 @@ namespace BossState
 		// 回転のパターン
 		QuaterRotationPattern quaterPattern_;
 
+		bool isEnd_ = false;
+		FrameTimer curveTimer_;
+		Vector3 startPosition_{};
+		Vector3 controlPosition_{};
+		Vector3 endPosition_{};
 	};
 
 	// 瞬間移動状態

@@ -91,13 +91,15 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	static_cast<NormalBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
 	instance->Update();
-	//// 移動のパーティクル
-	//std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
-	//emitter->Initialize(ModelManager::GetModel("Plane"));
-	//BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
-	//pre->SetBullet(instance.get());
 
-	//gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	// 移動のパーティクル
+	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	emitter->Initialize(ModelManager::GetModel("Plane"));
+	emitter->Update();
+	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	pre->SetBullet(instance.get());
+	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }
@@ -110,13 +112,15 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	static_cast<NormalBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
 	instance->Update();
-	//// 移動のパーティクル
-	//std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
-	//emitter->Initialize(ModelManager::GetModel("Plane"));
-	//BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
-	//pre->SetBullet(instance.get());
 
-	//gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	// 移動のパーティクル
+	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	emitter->Initialize(ModelManager::GetModel("Plane"));
+	emitter->Update();
+	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	pre->SetBullet(instance.get());
+	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }

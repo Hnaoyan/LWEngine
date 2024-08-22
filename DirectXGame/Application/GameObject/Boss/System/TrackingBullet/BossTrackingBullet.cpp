@@ -3,10 +3,10 @@
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/GameObjectLists.h"
 
-float BossSystemContext::TrackingBullet::sTrackingFrame = 60.0f;
+float BossSystemContext::TrackingBullet::sTrackingFrame = 95.0f;
 float BossSystemContext::TrackingBullet::sDamping = 0.1f;
-float BossSystemContext::TrackingBullet::sBulletSpeed = 50.0f;
-float BossSystemContext::TrackingBullet::sLerpRadius = 25.0f;
+float BossSystemContext::TrackingBullet::sBulletSpeed = 90.0f;
+float BossSystemContext::TrackingBullet::sLerpRadius = 50.0f;
 
 
 void BossSystemContext::TrackingBullet::Initialize()
