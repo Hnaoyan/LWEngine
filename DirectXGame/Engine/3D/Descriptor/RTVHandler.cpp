@@ -116,9 +116,9 @@ void RTVHandler::CreateRenderTexture()
 	renderTextureSrvDesc.Texture2D.MipLevels = 1;
 
 
-	postRender->renderTextureHandle_.first = SRVHandler::GetSrvHandleCPU();
-	postRender->renderTextureHandle_.second = SRVHandler::GetSrvHandleGPU();
-	postRender->srvIndex_ = SRVHandler::AllocateDescriptor();
+	postRender->srvIndex_ = SRVHandler::CheckAllocater();
+	postRender->renderTextureHandle_.first = SRVHandler::GetSrvHandleCPU(postRender->srvIndex_);
+	postRender->renderTextureHandle_.second = SRVHandler::GetSrvHandleGPU(postRender->srvIndex_);
 
 	device->CreateShaderResourceView(renderTextureResource_.Get(), &renderTextureSrvDesc, postRender->renderTextureHandle_.first);
 

@@ -5,6 +5,12 @@
 #include <cassert>
 #include <imgui.h>
 
+InstancedGroup::~InstancedGroup()
+{
+	// パーティクル関係
+	SRVHandler::ReleaseHeapIndex(srvIndex);
+}
+
 void InstancedGroup::Initialize(Model* model)
 {
 	// モデルの設定
@@ -85,9 +91,9 @@ void InstancedGroup::CreateData()
 		unitDataMap_[i].instancedNum = i;
 	}
 	// SRVの設定
-	srvHandles_.first = SRVHandler::GetSrvHandleCPU();
-	srvHandles_.second = SRVHandler::GetSrvHandleGPU();
-	srvIndex = SRVHandler::AllocateDescriptor();
+	srvIndex = SRVHandler::CheckAllocater();
+	srvHandles_.first = SRVHandler::GetSrvHandleCPU(srvIndex);
+	srvHandles_.second = SRVHandler::GetSrvHandleGPU(srvIndex);
 	// SRV作成
 	device->CreateShaderResourceView(groupResources.Get(), &instancingSrvDesc, srvHandles_.first);
 

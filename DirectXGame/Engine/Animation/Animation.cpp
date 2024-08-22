@@ -10,7 +10,7 @@ void Animation::Initialize(ModelData& modelData)
 	animData_ = modelData_.animData;
 	skeleton_ = Skeleton::Create(modelData_.rootNode);
 	UpdateSkelton();
-	skinCluster_ = SkinCluster::Create(DirectXCommon::GetInstance()->GetDevice(), skeleton_, modelData_);
+	skinCluster_ = SkinCluster::Create(DirectXCommon::GetInstance()->GetDevice(), skeleton_, modelData_,skinCluster_.srvHandleIndex);
 	animationTime_ = 0;
 }
 

@@ -129,9 +129,9 @@ uint32_t TextureManager::LoadInternal(const std::string fileName)
     }
 
     // SRVのインデックスのインクリメント
-    texture.cpuDescriptorHandle = SRVHandler::GetSrvHandleCPU();
-    texture.gpuDescriptorHandle = SRVHandler::GetSrvHandleGPU();
-    texture.descriptorNumIndex = SRVHandler::AllocateDescriptor();
+    texture.descriptorNumIndex = SRVHandler::CheckAllocater();
+    texture.cpuDescriptorHandle = SRVHandler::GetSrvHandleCPU(texture.descriptorNumIndex);
+    texture.gpuDescriptorHandle = SRVHandler::GetSrvHandleGPU(texture.descriptorNumIndex);
 
     // テクスチャ管理インデックスのインクリメント
     descriptorIndex_++;

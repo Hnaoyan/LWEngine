@@ -9,6 +9,18 @@ public:
 	static ID3D12GraphicsCommandList* sCommandList;
 	// パイプライン
 	static GeneralPipeline sPipeline_;
+
+	virtual ~ParticleEmitter() {
+		// パーティクル関係
+		SRVHandler::ReleaseHeapIndex(particles_.srvHeapData.index);
+		SRVHandler::ReleaseHeapIndex(particles_.uavHeapData.index);
+		// インデックス関係
+		SRVHandler::ReleaseHeapIndex(freeListIndex_.srvHeapData.index);
+		SRVHandler::ReleaseHeapIndex(freeListIndex_.uavHeapData.index);
+		SRVHandler::ReleaseHeapIndex(freeList_.srvHeapData.index);
+		SRVHandler::ReleaseHeapIndex(freeList_.uavHeapData.index);
+	}
+
 public:
 	/// <summary>
 	/// 初期化
