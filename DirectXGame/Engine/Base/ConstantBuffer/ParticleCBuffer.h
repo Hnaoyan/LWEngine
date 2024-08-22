@@ -30,6 +30,7 @@ struct ParticleCS {
 	Vector3 velocity;
 	float currentTime;
 	Vector4 color;
+	uint32_t isScaleDecrement;
 };
 
 struct ParticleGPU {

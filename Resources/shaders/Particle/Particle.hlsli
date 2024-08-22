@@ -32,6 +32,7 @@ struct Particle
     float32_t3 velocity;
     float32_t currentTime;
     float32_t4 color;
+    uint32_t isScaleDecr;
 };
 
 struct PerView

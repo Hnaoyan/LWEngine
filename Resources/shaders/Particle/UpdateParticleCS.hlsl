@@ -35,7 +35,24 @@ void main( uint3 DTid : SV_DispatchThreadID )
         {
             gParticle[particleIndex].translate += gParticle[particleIndex].velocity;
             gParticle[particleIndex].currentTime += gPerFrame.deltaTime;
-            
+            if (gParticle[particleIndex].isScaleDecr == 1)
+            {
+                gParticle[particleIndex].scale.x -= (0.1f);
+                gParticle[particleIndex].scale.y -= (0.1f);
+                if (gParticle[particleIndex].scale.x < 0)
+                {
+                    gParticle[particleIndex].scale.x = 0.0f;
+                }
+                if (gParticle[particleIndex].scale.y < 0)
+                {
+                    gParticle[particleIndex].scale.y = 0.0f;
+                }
+                if (gParticle[particleIndex].scale.z < 0)
+                {
+                    gParticle[particleIndex].scale.z = 0.0f;
+                }
+            }
+
             float32_t alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             gParticle[particleIndex].color.a = saturate(alpha);
         }
