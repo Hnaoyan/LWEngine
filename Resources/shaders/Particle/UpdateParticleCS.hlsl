@@ -35,7 +35,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
         {
             gParticle[particleIndex].translate += gParticle[particleIndex].velocity;
             gParticle[particleIndex].currentTime += gPerFrame.deltaTime;
-            if (gParticle[particleIndex].isScaleDecr == 1)
+            if (gParticle[particleIndex].isScaleDecrement != 0)
             {
                 gParticle[particleIndex].scale.x -= (0.1f);
                 gParticle[particleIndex].scale.y -= (0.1f);
