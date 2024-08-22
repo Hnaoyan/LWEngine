@@ -23,7 +23,7 @@ void ICamera::Update()
 
 	if (shakeConfig_.isShake) {
 		shakeConfig_.timer.Update();
-		Shake();
+		ShakeUpdate();
 	}
 
 	// 行列の更新
