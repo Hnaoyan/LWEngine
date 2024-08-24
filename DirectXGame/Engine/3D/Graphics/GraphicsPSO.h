@@ -15,6 +15,7 @@ namespace Pipeline
 	enum class Order : int {
 		kSkybox,
 		kSpirte,
+		kLine,
 		kModel,
 		kSkinningModel,
 		kParticle,
@@ -41,6 +42,12 @@ namespace Pipeline
 		kTexture,
 		kViewProjection,
 		kWorldTransform,
+		kCountOfParameter,
+	};
+
+	enum class LineRegister :int {
+		kViewProjection,
+		kLineData,
 		kCountOfParameter,
 	};
 
@@ -220,6 +227,9 @@ private:
 	/// 2DSprite作成
 	/// </summary>
 	static void CreateSpritePSO();
+
+	static void CreateLinePSO();
+
 	/// <summary>
 	/// 3DModel作成
 	/// </summary>

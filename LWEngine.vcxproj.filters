@@ -904,5 +904,6 @@
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\Utillity\Random.hlsli" />
+    <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
   </ItemGroup>
 </Project>

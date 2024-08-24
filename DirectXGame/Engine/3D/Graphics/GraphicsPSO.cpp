@@ -207,6 +207,10 @@ void GraphicsPSO::CreateSpritePSO()
 
 }
 
+void GraphicsPSO::CreateLinePSO()
+{
+}
+
 void GraphicsPSO::CreateModelPSO()
 {
 	GeneralPipeline resultPipeline;

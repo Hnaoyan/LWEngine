@@ -34,6 +34,12 @@ struct VertexData
 	Vector2 texcoord;	// テクすコード
 };
 
+struct VertexLineData
+{
+	Vector4 position;
+	Vector4 color;
+};
+
 #pragma endregion
 
 // カメラ用

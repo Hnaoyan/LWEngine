@@ -70,6 +70,11 @@ struct AnimDrawDesc
 	ICamera* camera;
 };
 
+struct LineDrawDesc {
+	ICamera* camera = nullptr;
+
+};
+
 // モデルの描画に必要な者たち
 struct ModelDrawDesc
 {
