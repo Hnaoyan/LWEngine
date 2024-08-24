@@ -201,9 +201,9 @@ namespace BossState
 		float bulletSpeed_ = 0.0f;
 		float bulletScale_ = 0.5f;
 
-		float rotateAngle_ = 0.0f;
-
 		ShotPattern pattern_;
+
+		float startRotate_ = 0.0f;
 
 	};
 

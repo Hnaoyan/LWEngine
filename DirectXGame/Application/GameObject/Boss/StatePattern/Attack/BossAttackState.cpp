@@ -21,8 +21,8 @@ void BossState::AttackState::Initialize()
 		pattern_ = ShotPattern::kSpread;
 	}
 	pattern_ = ShotPattern::kRadialFire;
-	// 角度
-	rotateAngle_ = 0.01f;
+	// 初期の角度
+	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
 
 	//---弾の情報---//
 	// 速さ
@@ -42,13 +42,17 @@ void BossState::AttackState::Update()
 	// 射撃タイマー
 	fireTimer_.Update();
 
+	if (pattern_ == ShotPattern::kRadialFire) {
+		boss_->worldTransform_.transform_.rotate.y = LwLib::Lerp(startRotate_, startRotate_ + 6.14f, changeTimer_.GetElapsedFrame());
+	}
+
 	TimerUpdate(this);
 }
 
 void BossState::AttackState::Exit()
 {
 	boss_->SetPrevVariantState(this);
-
+	boss_->worldTransform_.transform_.rotate.y = startRotate_;
 }
 
 void BossState::AttackState::SimpleAttack(const Vector3& position)
@@ -81,17 +85,22 @@ void BossState::AttackState::SpreadAttack()
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 
 	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
+
+	Matrix4x4 yawMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
+
+	Vector3 direct = Matrix4x4::TransformVector3(bulletDirect_, yawMatrix);
+
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
 	Matrix3x3 leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
 	Matrix3x3 rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 	// 1
 	// 左回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
-	Vector3 newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, leftRotateMat);
+	Vector3 newDirect = { bulletDirect.x,direct.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	// 右回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, rightRotateMat);
+	newDirect = { bulletDirect.x,direct.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 
 	// 2
@@ -99,12 +108,12 @@ void BossState::AttackState::SpreadAttack()
 	leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
 	rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 	// 左回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, leftRotateMat);
+	newDirect = { bulletDirect.x,direct.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	// 右回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, rightRotateMat);
+	newDirect = { bulletDirect.x,direct.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 
 	// 3
@@ -112,12 +121,12 @@ void BossState::AttackState::SpreadAttack()
 	leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
 	rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 	// 左回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, leftRotateMat);
+	newDirect = { bulletDirect.x,direct.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	// 右回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
+	bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, rightRotateMat);
+	newDirect = { bulletDirect.x,direct.y,bulletDirect.y };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 
 }
@@ -130,6 +139,9 @@ void BossState::AttackState::RadialFireAttack()
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 
 	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
+	Matrix4x4 yawMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
+	Vector3 direct = Matrix4x4::TransformVector3(bulletDirect_, yawMatrix);
+
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
 	rotValue = 0.5f;
 	float addValue = 1.0f;
@@ -141,11 +153,11 @@ void BossState::AttackState::RadialFireAttack()
 		leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
 		rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 		// 左回転
-		bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
+		bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, leftRotateMat);
 		Vector3 newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 		// 右回転
-		bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
+		bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, rightRotateMat);
 		newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	}
