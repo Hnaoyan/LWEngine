@@ -38,6 +38,7 @@ public:
 	// ステート関係
 	BossState::IState* GetState() { return state_.get(); }
 	BossState::IState* GetPrevState() { return prevState_.get(); }
+	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
 	// 弾発射までの間隔
@@ -54,6 +55,7 @@ public:
 		stateDecider_.Initialize(this, player);
 		bulletManager_->SetPlayer(player);
 	}
+	void SetNowVariantState(BossState::StateVariant variant) { nowVariantState_ = variant; }
 	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
@@ -62,6 +64,7 @@ private: // サブシステム
 	// ステート管理
 	BossState::StateManager stateManager_;
 	BossState::StateDecider stateDecider_;
+	BossState::StateVariant nowVariantState_;
 	BossState::StateVariant prevVariantState_;
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;

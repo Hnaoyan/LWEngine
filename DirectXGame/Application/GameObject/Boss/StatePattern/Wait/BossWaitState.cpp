@@ -3,6 +3,8 @@
 
 void BossState::WaitState::Initialize()
 {
+	boss_->SetNowVariantState(this);
+
 	changeTimer_.Start(60.0f);
 }
 

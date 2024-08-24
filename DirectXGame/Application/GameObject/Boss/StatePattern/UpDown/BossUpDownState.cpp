@@ -3,6 +3,8 @@
 
 void BossState::UpDownState::Initialize()
 {
+	boss_->SetNowVariantState(this);
+
 	float minY = 8.5f;
 	float maxY = 20.0f;
 	if (boss_->worldTransform_.GetWorldPosition().y > 8.5f) {

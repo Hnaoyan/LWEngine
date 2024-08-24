@@ -55,7 +55,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
-	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kOrbitMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
@@ -144,14 +144,15 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 		break;
 	case BossState::StateDecider::StatePattern::kOrbitMove:
 		boss_->StateManager()->ChangeRequest(std::make_unique<OrbitMoveState>());
-		//OrbitMoveState* instance = static_cast<OrbitMoveState*>(boss_->GetState());
-		//instance->GenerateMovePoint(50.0f, OrbitMoveState::QuaterRotationPattern::kFirst);
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;
-	default:
-		break;
 	}
+
+	if (dynamic_cast<AttackState*>(boss_->GetState())) {
+		static_cast<AttackState*>(boss_->GetState())->SimpleAttack({ 0,0,0 });
+	}
+
 }
 
 void BossState::IState::PreInitialize(Boss* boss)

@@ -4,6 +4,8 @@
 
 void BossState::AttackState::Initialize()
 {
+	boss_->SetNowVariantState(this);
+
 	fireCooltime_ = 15.0f;
 	changeTimer_.Start(90.0f);
 	fireTimer_.Start(fireCooltime_);

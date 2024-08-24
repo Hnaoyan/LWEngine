@@ -3,14 +3,20 @@
 #include <vector>
 #include <memory>
 
-namespace BossBehaviorTree
+/// <summary>
+/// BossのBehaviorTree
+/// </summary>
+namespace BossBT
 {
-	enum class Condition : uint32_t
+	// 実行状態
+	enum class NodeCondition : uint32_t
 	{
 		kIdol,		// 待機
 		kFinished,	// 終了
 		kRunning,	// 更新
 	};
+
+	// 実行結果
 	enum class NodeStatus : uint32_t 
 	{
 		kSuccess,	// 成功
@@ -23,21 +29,24 @@ namespace BossBehaviorTree
 	/// </summary>
 	class INode {
 	public:
+		// コンストラクタ
+		INode() { condition_ = NodeCondition::kIdol; }
 		// デストラクタ
 		virtual ~INode() = default;
 		/// <summary>
-		/// 状態の返し
+		/// 実行
 		/// </summary>
 		/// <returns></returns>
 		virtual NodeStatus Execute() = 0;
 	protected:
 		// ノードの状態
-		NodeStatus status_;
+		NodeCondition condition_;
 	};
+
 	/// <summary>
 	/// 複数ノードを管理するノード
 	/// </summary>
-	class CompositeNode : public INode {
+	class Composite : public INode {
 	protected:
 		// ノードツリー
 		std::vector<std::unique_ptr<INode>> childrens_;
@@ -50,18 +59,20 @@ namespace BossBehaviorTree
 		}
 
 	};
+
 	/// <summary>
 	/// 単一のノードを持つノード
 	/// </summary>
-	class DecoratorNode : public INode {
+	class Decorator : public INode {
 	protected:
 		INode* child_ = nullptr;
 
 	};
+
 	/// <summary>
 	/// アクションノードなど終端になるノード
 	/// </summary>
-	class LeafNode : public INode {
+	class Leaf : public INode {
 	public:
 		/// <summary>
 		/// 更新
@@ -71,7 +82,7 @@ namespace BossBehaviorTree
 
 	};
 
-	class RootNode : public CompositeNode
+	class RootNode : public Composite
 	{
 	private:
 		std::unique_ptr<INode> root_;
@@ -86,7 +97,7 @@ namespace BossBehaviorTree
 		}
 	};
 
-	class SelectorNode : public CompositeNode 
+	class SelectorNode : public Composite 
 	{
 	public:
 		NodeStatus Execute() override {
@@ -125,7 +136,7 @@ namespace BossBehaviorTree
 
 	};
 
-	class SequenceNode : public CompositeNode
+	class SequenceNode : public Composite
 	{
 
 	};

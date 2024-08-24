@@ -3,6 +3,8 @@
 
 void BossState::MoveState::Initialize()
 {
+	boss_->SetNowVariantState(this);
+
 	changeTimer_.Start(150.0f);
 	if (boss_->worldTransform_.GetWorldPosition().x > 0) {
 		isLeft_ = true;
@@ -10,7 +12,12 @@ void BossState::MoveState::Initialize()
 	else {
 		isLeft_ = false;
 	}
-	boss_->worldTransform_.transform_.rotate.y = 0.0f;
+	if (boss_->worldTransform_.GetWorldPosition().z > 0) {
+		boss_->worldTransform_.transform_.rotate.y = 0.0f;
+	}
+	else {
+		boss_->worldTransform_.transform_.rotate.y = 3.14f;
+	}
 	boss_->worldTransform_.UpdateMatrix();
 }
 

@@ -4,6 +4,8 @@
 
 void BossState::MissileAttackState::Initialize()
 {
+	boss_->SetNowVariantState(this);
+	RotateUpdate();
 	//---弾の情報---//
 	// 速さ
 	bulletSpeed_ = 50.0f;

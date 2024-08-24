@@ -58,6 +58,7 @@ namespace BossState
 		Boss* boss_ = nullptr;
 		// 変更のフレームタイマー
 		FrameTimer changeTimer_;
+
 	};
 
 	/// <summary>

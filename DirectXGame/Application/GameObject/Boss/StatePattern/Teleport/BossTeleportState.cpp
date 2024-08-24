@@ -3,6 +3,7 @@
 
 void BossState::TeleportState::Initialize()
 {
+	boss_->SetNowVariantState(this);
 	//boss_->worldTransform_.transform_.translate.y = 20.0f;
 	boss_->worldTransform_.UpdateMatrix();
 
