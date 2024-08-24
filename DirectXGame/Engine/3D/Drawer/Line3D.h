@@ -5,23 +5,19 @@ namespace Line3D
 {
 	class LVertex {
 	public:
-		ConstantBufferMapContext<VertexLineData> vertex_;
-
-
-	};
-
-	class LMaterial {
-	public:
-
+		ConstantBufferMapContext<VertexLineData> cBuffer_;
 
 
 	};
 
 	class Line {
 	public:
-		static Line* Create();
+		//static Line* Create();
 		void Initialize();
 		void Update();
+
+	private:
+		LVertex vertex_;
 
 	};
 

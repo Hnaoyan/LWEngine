@@ -188,7 +188,8 @@ void ModelRenderer::InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNu
 void ModelRenderer::LineDraw(const LineDrawDesc& desc)
 {
 	// プリミティブ形状の設定
-	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+	
 	// パイプラインの設定
 	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
 

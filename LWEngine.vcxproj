@@ -61,6 +61,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Line3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />

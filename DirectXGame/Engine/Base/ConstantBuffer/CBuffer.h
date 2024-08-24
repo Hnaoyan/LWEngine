@@ -36,8 +36,8 @@ struct VertexData
 
 struct VertexLineData
 {
-	Vector4 position;
-	Vector4 color;
+	Vector3 position[2];
+	Vector4 color[2];
 };
 
 #pragma endregion
