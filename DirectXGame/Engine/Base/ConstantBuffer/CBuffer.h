@@ -34,7 +34,7 @@ struct VertexData
 	Vector2 texcoord;	// テクすコード
 };
 
-struct VertexLineData
+struct LineGPUData
 {
 	Vector3 position[2];
 	Vector4 color[2];

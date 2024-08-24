@@ -5,7 +5,7 @@ namespace Line3D
 {
 	class LVertex {
 	public:
-		ConstantBufferMapContext<VertexLineData> cBuffer_;
+		ConstantBufferMapContext<LineGPUData> cBuffer_;
 
 
 	};

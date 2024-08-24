@@ -697,6 +697,8 @@
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\User\PlayerEffect.hlsl" />
+    <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl" />
+    <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
