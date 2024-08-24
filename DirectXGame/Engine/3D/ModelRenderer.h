@@ -50,6 +50,6 @@ public:
 	/// <param name="handle"></param>
 	static void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 
-	static void LineDraw();
+	static void LineDraw(const LineDrawDesc& desc);
 
 };

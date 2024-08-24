@@ -173,6 +173,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />

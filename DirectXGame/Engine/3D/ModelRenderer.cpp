@@ -184,3 +184,34 @@ void ModelRenderer::InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNu
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(desc.modelData->indices.size()), instanceNum, 0, 0, 0);
 }
+
+void ModelRenderer::LineDraw(const LineDrawDesc& desc)
+{
+	// プリミティブ形状の設定
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// パイプラインの設定
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
+
+	// ルートシグネチャの設定
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	// パイプラインステートの設定
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	// ビュープロジェクション行列
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(Pipeline::ModelRegister::kViewProjection),
+		desc.camera->GetCBuffer()->GetGPUVirtualAddress());
+
+	//---メッシュの設定---//
+	// 頂点バッファの設定
+	sCommandList_->IASetVertexBuffers(0, 1, &desc.mesh->vbView_);
+
+	//---マテリアルの設定---//
+	// マテリアル
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(ModelRegister::kMaterial), desc.material->buffer_.cBuffer->GetGPUVirtualAddress());
+
+
+	// ドローコール
+	sCommandList_->DrawIndexedInstanced(UINT(desc.modelData->indices.size()), 1, 0, 0, 0);
+}
