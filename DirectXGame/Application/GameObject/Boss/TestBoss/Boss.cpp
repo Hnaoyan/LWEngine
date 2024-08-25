@@ -83,10 +83,24 @@ void Boss::ImGuiDraw()
 	float distance = Vector3::Distance(worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
 	ImGui::DragFloat("PlayerDistance", &distance);
 
-	ImGui::DragFloat("TrackingFrame", &BossSystemContext::TrackingBullet::sTrackingFrame, 0.01f);
-	ImGui::DragFloat("BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
-	ImGui::DragFloat("Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
-	ImGui::DragFloat("LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
+	// システムのタブ
+	if (ImGui::BeginTabBar("BulletInfo"))
+	{
+		if (ImGui::BeginTabItem("Normal")) {
+
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Tracking")) {
+			ImGui::DragFloat("TrackingFrame", &BossSystemContext::TrackingBullet::sTrackingFrame, 0.01f);
+			ImGui::DragFloat("BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
+			ImGui::DragFloat("InitSpeed", &BossSystemContext::TrackingBullet::sInitSpeed, 0.01f);
+			ImGui::DragFloat("Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
+			ImGui::DragFloat("LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+
 
 	ImGui::End();
 

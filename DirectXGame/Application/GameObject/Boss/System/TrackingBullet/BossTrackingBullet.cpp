@@ -6,6 +6,7 @@
 float BossSystemContext::TrackingBullet::sTrackingFrame = 95.0f;
 float BossSystemContext::TrackingBullet::sDamping = 0.1f;
 float BossSystemContext::TrackingBullet::sBulletSpeed = 90.0f;
+float BossSystemContext::TrackingBullet::sInitSpeed = 70.0f;
 float BossSystemContext::TrackingBullet::sLerpRadius = 50.0f;
 
 
@@ -18,7 +19,7 @@ void BossSystemContext::TrackingBullet::Initialize()
 
 	InstancedUnit::Initialize();
 	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
-	transform_.scale *= 0.3f;
+	//transform_.scale *= 3.5f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 

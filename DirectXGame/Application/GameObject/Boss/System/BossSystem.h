@@ -208,11 +208,14 @@ namespace BossSystemContext
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
 
-	public:
+	public: // 共通
 		static float sTrackingFrame;
 		static float sDamping;
 		static float sLerpRadius;
 		static float sBulletSpeed;
+		static float sInitSpeed;
+
+		//static float s
 
 	};
 
@@ -240,6 +243,12 @@ namespace BossSystemContext
 	public: // アクセッサ
 		EulerTransform GetTransform() { return transform_; }
 		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+
+	private:
+		Vector3 moveDirect_{};
+	public: // 共通
+		static float sAcceleration;
+
 	};
 
 

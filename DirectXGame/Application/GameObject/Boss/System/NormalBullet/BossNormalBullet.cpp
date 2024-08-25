@@ -2,6 +2,8 @@
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
 
+float BossSystemContext::NormalBullet::sAcceleration = 0.1f;
+
 void BossSystemContext::NormalBullet::Initialize()
 {
 	serialNumber_ = sSerialNumber;
@@ -11,14 +13,19 @@ void BossSystemContext::NormalBullet::Initialize()
 	
 	InstancedUnit::Initialize();
 	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
-	transform_.scale *= 0.3f;
+	//transform_.scale *= 0.5f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
+	moveDirect_ = Vector3::Normalize(velocity_);
 }
 
 void BossSystemContext::NormalBullet::Update()
 {
+	//velocity_.x += moveDirect_.x * 2.0f;
+	//velocity_.z += moveDirect_.z * 2.0f;
+
+	velocity_ += moveDirect_ * sAcceleration;
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 

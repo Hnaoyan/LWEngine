@@ -152,6 +152,9 @@ namespace BossState
 		void Exit() override;
 	private:
 		void MissileAttack();
+
+		void DefaultMissile();
+
 	private:
 		Vector3 bulletDirect_ = {};
 		float bulletSpeed_ = 0.0f;
@@ -181,6 +184,8 @@ namespace BossState
 		// 生成時の設定関数
 		void SimpleAttack(const Vector3& position);
 
+		void Setting(float stateTimer, ShotPattern pattern);
+
 	private:
 		// プレイヤーに向けた射撃
 		void LockAttack();
@@ -190,7 +195,6 @@ namespace BossState
 		void SpreadAttack();
 		// 全方位弾
 		void RadialFireAttack();
-
 		// 弾の生成部分の大枠
 		void GenerateProcess();
 	private:
