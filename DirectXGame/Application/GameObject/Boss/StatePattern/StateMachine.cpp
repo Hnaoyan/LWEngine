@@ -79,21 +79,14 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
 	nowState;
-	if (isCooltime_) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
-		WaitState* newState = static_cast<WaitState*>(boss_->GetState());
-		newState->SetTimer(240.0f);
-		isCooltime_ = false;
-		return;
-	}
-
-	if (!this->IsInActionSequence_) {
+	if (!IsInActionSequence_) {
 		// テーブルの選択（乱数
 		//randomValue_ = LwLib::GetRandomValue(0, 6);
 		//RandomTable(randomValue_);
 		
 		if (sectionIndex_ < section_.size()) {
 			std::string tag = section_[sectionIndex_];
+			currentTabletag_ = tag;
 			StateSelect(tables_[tag].patterns[currentStep_]);
 		}
 		else {
@@ -101,23 +94,47 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 			StateSelect(tables_[section_[sectionIndex_]].patterns[currentStep_]);
 		}
 
+		float x_zLength = Vector2::Length(Vector2(boss_->worldTransform_.GetWorldPosition().x, boss_->worldTransform_.GetWorldPosition().z) -
+			Vector2(player_->worldTransform_.GetWorldPosition().x, player_->worldTransform_.GetWorldPosition().z));
+		if (x_zLength > 75.0f)
+		{
+
+		}
+
 		IsInActionSequence_ = true;
-		//StateSelect(tables_[tableTag_].patterns[currentStep_]);
 		currentStep_++;
 		return;
 	}
 	else {
+		// パターンテーブルの最大まで通っている場合
 		if (currentStep_ > tables_[section_[sectionIndex_]].maxStep) {
 			sectionIndex_++;
 			isCooltime_ = true;
 			IsInActionSequence_ = false;
 			currentStep_ = 0;
+		}
+		else {
+			// 次のパターン
+			StateSelect(tables_[section_[sectionIndex_]].patterns[currentStep_]);
+			currentStep_++;
 			return;
 		}
-		StateSelect(tables_[section_[sectionIndex_]].patterns[currentStep_]);
-		currentStep_++;
+	}
+	if (isCooltime_) {
+		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
+		WaitState* newState = static_cast<WaitState*>(boss_->GetState());
+		newState->SetTimer(240.0f);
+		isCooltime_ = false;
 		return;
 	}
+}
+
+void BossState::StateDecider::TableSelect(std::string tableTag) {
+	currentTabletag_ = tableTag;
+	StateSelect(tables_[currentTabletag_].patterns[0]);
+	IsInActionSequence_ = true;
+	currentStep_ = 0;
+	currentStep_++;
 }
 
 void BossState::StateDecider::StateSelect(StatePattern number)
@@ -148,11 +165,6 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 	case BossState::StateDecider::StatePattern::kMax:
 		break;
 	}
-
-	if (dynamic_cast<AttackState*>(boss_->GetState())) {
-		static_cast<AttackState*>(boss_->GetState())->SimpleAttack({ 0,0,0 });
-	}
-
 }
 
 void BossState::IState::PreInitialize(Boss* boss)

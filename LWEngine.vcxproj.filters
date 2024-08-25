@@ -614,7 +614,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\ActionController.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\ActionNode.h">

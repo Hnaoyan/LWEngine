@@ -121,13 +121,14 @@ namespace BossState
 		}
 
 	public:
-
 		void Initialize(Boss* boss, Player* player);
 		void StateDecide(StateVariant nowState);
 
 	private:
 		// ステートの変更処理
 		void StateSelect(StatePattern number);
+		// テーブルの決定
+		void TableSelect(std::string tableTag);
 
 	private:
 		// テーブル中か
@@ -137,6 +138,8 @@ namespace BossState
 		// テーブル内の位置
 		uint32_t currentStep_ = 0;
 		std::map<std::string, StateObject> tables_;
+
+		std::string currentTabletag_;
 
 		std::vector<std::string> section_;
 		uint32_t sectionIndex_ = 0;
