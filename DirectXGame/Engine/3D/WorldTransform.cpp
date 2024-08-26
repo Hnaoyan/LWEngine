@@ -13,6 +13,7 @@ void WorldTransform::Initialize()
 	// 単位行列
 	worldMatrix_ = Matrix4x4::MakeIdentity4x4();
 	localMatrix_ = Matrix4x4::MakeIdentity4x4();
+	rotateQuaternion_ = {};
 	// 行列の送信
 	this->TransferMatrix();
 	this->UpdateMatrix();
@@ -36,6 +37,17 @@ void WorldTransform::UpdateMatrix()
 
 			worldMatrix_ = Matrix4x4::Multiply(scaleMat, Matrix4x4::Multiply(rotateMat, translateMat));
 
+		}
+		else if (isQuaternion_) {
+
+			axis_ = Vector3::Normalize(axis_);
+			rotVector_ = Vector3::Normalize(rotVector_);
+
+			Vector3 rotAxis = Vector3::Cross(axis_, rotVector_);
+			float angle = std::acosf(Vector3::Dot(axis_, rotVector_));
+
+			rotateQuaternion_ = Quaternion::MakeRotateAxisAngleQuaternion(rotAxis, angle);
+			worldMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, rotateQuaternion_, transform_.translate);
 		}
 		else {
 			worldMatrix_ = Matrix4x4::MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);

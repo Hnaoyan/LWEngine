@@ -110,8 +110,8 @@ Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, float 
 {
     Quaternion result = {};
     result.w = std::cosf(angle / 2.0f);
-    result.x = /*std::cosf(angle / 2.0f) + */std::sinf(angle / 2.0f) * axis.x;
-    result.y = /*std::cosf(angle / 2.0f) + */std::sinf(angle / 2.0f) * axis.y;
-    result.z = /*std::cosf(angle / 2.0f) + */std::sinf(angle / 2.0f) * axis.z;
+    result.x = std::sinf(angle / 2.0f) * axis.x;
+    result.y = std::sinf(angle / 2.0f) * axis.y;
+    result.z = std::sinf(angle / 2.0f) * axis.z;
     return result;
 }

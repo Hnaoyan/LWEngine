@@ -106,6 +106,7 @@
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Math\Vector\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\GPUParticleSystem.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp" />
