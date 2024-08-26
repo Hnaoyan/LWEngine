@@ -8,6 +8,9 @@
 
 #pragma comment(lib,"xaudio2.lib")
 
+/// <summary>
+/// シーン内の音源管理
+/// </summary>
 class Audio : public Singleton<Audio>
 {
 public:
