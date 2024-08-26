@@ -102,6 +102,7 @@
     <ClCompile Include="DirectXGame\Engine\Light\Lights\PointLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\Light\Lights\SpotLight.cpp" />
     <ClCompile Include="DirectXGame\Engine\LwLib\Ease\Ease.cpp" />
+    <ClCompile Include="DirectXGame\Engine\LwLib\TimeCall\TimeCall.cpp" />
     <ClCompile Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="DirectXGame\Engine\Light\Lights\SpotLight.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Ease\Ease.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
+    <ClInclude Include="DirectXGame\Engine\LwLib\TimeCall\TimeCall.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\DebounceTimer.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
