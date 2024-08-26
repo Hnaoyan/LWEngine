@@ -63,6 +63,8 @@ private: // UserMethod
 	float rStickRotateSpeed_ = 0;
 	float rStickLerpRate_ = 0;
 
+	float xSpinLimit_ = 0.0f;
+
 	bool isAtan_ = false;
 
 };

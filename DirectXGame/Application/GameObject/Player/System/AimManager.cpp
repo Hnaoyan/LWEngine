@@ -21,7 +21,6 @@ void AimManager::Initialize(Player* player)
 	// 初期化
 	offSetTransform_.Initialize();
 	// 親の設定
-	//offSetTransform_.parent_ = &player_->worldTransform_;
 	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.parentMatrix_ = &parentMatrix_;
 	offSetTransform_.transform_.translate = { 0.0f,0.0f,50.0f };
@@ -36,8 +35,6 @@ void AimManager::Initialize(Player* player)
 
 void AimManager::Update(ICamera* camera)
 {
-	//offSetTransform_.transform_.rotate = player_->camera_->transform_.rotate;
-	//offSetTransform_.transform_.translate = player_->worldTransform_.GetWorldPosition() + offsetPosition_;
 	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.UpdateMatrix();
 	// ターゲットがいる場合ターゲットにAIM

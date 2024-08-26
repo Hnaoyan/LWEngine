@@ -38,6 +38,8 @@ void GameSystem::KeyConfigUpdate()
 
 void GameSystem::Update()
 {
+    // バインドの更新
     KeyBindUpdate();
+    // 入力の更新
     KeyConfigUpdate();
 }

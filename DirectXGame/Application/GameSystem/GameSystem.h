@@ -6,8 +6,12 @@ class Input;
 class GameSystem
 {
 public:
+	// ゲームの速さ
 	static float sSpeedFactor;
-
+	/// <summary>
+	/// ゲームの速さとデルタタイムでの値計算
+	/// </summary>
+	/// <returns></returns>
 	static float GameSpeedFactor();
 
 private:
@@ -27,13 +31,25 @@ private:
 	};
 
 public:
+	// プレイヤーのキー
 	static PlayerKeyConfig sPlayerKey;
-
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Initialize();
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
 
 private:
+	/// <summary>
+	/// キーバインドの更新
+	/// </summary>
 	void KeyBindUpdate();
+	/// <summary>
+	/// キーコンフィグの状態更新
+	/// </summary>
 	void KeyConfigUpdate();
 
 	Input* input_ = nullptr;

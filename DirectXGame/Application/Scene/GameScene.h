@@ -75,12 +75,10 @@ private: // アプリ
 	std::unique_ptr<TerrainManager> terrainManager_;
 	// 弾のマネージャー
 	std::unique_ptr<BulletManager> bulletManager_;
-	
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
-
 	// GPUParticle
-	std::unique_ptr<GPUParticleSystem> gpuParticle_;
+	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
 
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;

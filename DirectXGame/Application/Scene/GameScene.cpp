@@ -27,23 +27,24 @@ void GameScene::Initialize()
 #pragma endregion
 
 #pragma region システム
-	gpuParticle_ = std::make_unique<GPUParticleSystem>();
-	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
-
+	// パーティクル
+	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
+	gpuParticleManager_->Initialize(ModelManager::GetModel("Plane"));
+	// ゲームシステム
 	gameSystem_ = std::make_unique<GameSystem>();
 	gameSystem_->Initialize();
-
+	// コライダー
+	collisionManager_ = std::make_unique<CollisionManager>();
 #pragma endregion
 
 
 
-	collisionManager_ = std::make_unique<CollisionManager>();
 	terrainManager_ = std::make_unique<TerrainManager>();
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
 	player_->SetFollowCamera(followCamera_.get());
-	player_->SetGPUParticleSystem(gpuParticle_.get());
+	player_->SetGPUParticleSystem(gpuParticleManager_.get());
 	player_->Initialize(ModelManager::GetModel("Player"));
 
 	bulletManager_ = std::make_unique<BulletManager>();
@@ -54,7 +55,7 @@ void GameScene::Initialize()
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
 	bossEnemy_ = std::make_unique<Boss>();
-	bossEnemy_->SetGPUParticle(gpuParticle_.get());
+	bossEnemy_->SetGPUParticle(gpuParticleManager_.get());
 	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
 
@@ -78,7 +79,7 @@ void GameScene::Initialize()
 
 void GameScene::GPUUpdate()
 {
-	gpuParticle_->Update();
+	gpuParticleManager_->Update();
 }
 
 void GameScene::Update()
@@ -90,9 +91,10 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("SAMPLE");
 	}
 #endif // _DEBUG
-
+	// ゲームのシステム更新
 	gameSystem_->Update();
 
+	// ゲームのオブジェクト更新
 	terrainWtf_.UpdateMatrix();
 	player_->Update();
 	bulletManager_->Update();
@@ -161,7 +163,7 @@ void GameScene::Draw()
 	desc.worldTransform = &terrainWtf_;
 	//terrain_->Draw(desc);
 
-	gpuParticle_->Draw(&camera_);
+	gpuParticleManager_->Draw(&camera_);
 
 	Model::PostDraw();
 
@@ -212,7 +214,7 @@ void GameScene::ImGuiDraw()
 	followCamera_->ImGuiDraw();
 	enemyManager_->ImGuiDraw();
 	ImGui::ShowDemoWindow();
-	gpuParticle_->ImGuiDraw();
+	gpuParticleManager_->ImGuiDraw();
 	ImGui::Begin("SampleScene");
 
 	if (ImGui::Button("BossRes")) {

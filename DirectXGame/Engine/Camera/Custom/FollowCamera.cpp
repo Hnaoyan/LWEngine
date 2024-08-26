@@ -14,6 +14,7 @@ void FollowCamera::Initialize()
 	rStickRotateSpeed_ = 0.1f;
 	rStickLerpRate_ = 0.1f;
 	delayRate_ = 0.1f;
+	xSpinLimit_ = 0.3f;
 }
 
 void FollowCamera::Update()
@@ -46,10 +47,8 @@ void FollowCamera::Update()
 				destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 			}
 			// Y軸角度
-			//transform_.rotate.x = std::atan2f(std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)), sub.y);
 			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
 			transform_.rotate.y = destinationAngle_.y;
-			//transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
 			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 		}
 		else {
@@ -58,8 +57,7 @@ void FollowCamera::Update()
 		}
 
 		// 回転の速度調節
-		float thValue = 0.4f;
-		destinationAngle_.x = std::clamp(destinationAngle_.x, -thValue, thValue);
+		destinationAngle_.x = std::clamp(destinationAngle_.x, -xSpinLimit_, xSpinLimit_);
 
 		// 遅延追尾時の座標
 		interTarget_ = Vector3::Lerp(interTarget_, target_->GetWorldPosition(), delayRate_);
@@ -87,6 +85,8 @@ void FollowCamera::ImGuiDraw()
 	ImGui::DragFloat("rStick", &rStickRotateSpeed_, 0.01f);
 
 	ImGui::DragFloat("rStickRate", &rStickLerpRate_, 0.01f);
+
+	ImGui::DragFloat("xSpinLimit", &xSpinLimit_, 0.01f);
 
 	ImGui::DragFloat("DeleyRate", &delayRate_, 0.01f);
 
