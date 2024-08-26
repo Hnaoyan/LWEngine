@@ -60,6 +60,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Line3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
@@ -286,6 +288,18 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\3DModelVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -460,6 +474,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DModel.hlsli" />
+    <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />

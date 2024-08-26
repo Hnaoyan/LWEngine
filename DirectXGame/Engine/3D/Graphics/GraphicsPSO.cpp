@@ -207,6 +207,134 @@ void GraphicsPSO::CreateSpritePSO()
 
 }
 
+void GraphicsPSO::CreateLinePSO()
+{
+	BlendPipeline resultPipeline;
+
+	ComPtr<IDxcBlob> vsBlob;
+	ComPtr<IDxcBlob> psBlob;
+
+	// 頂点シェーダの読み込みとコンパイル
+	vsBlob = Shader::GetInstance()->Compile(L"Sprite_VS.hlsl", L"vs_6_0");
+	assert(vsBlob != nullptr);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"Sprite_PS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+
+	// InputLayout
+	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
+		{	// 座標
+			"POSITION",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+		{	// 座標
+			"POSITION",1,DXGI_FORMAT_R32G32B32A32_FLOAT,0,D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+		{	// 色
+			"COLOR",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+		{	// 色
+			"COLOR",1,DXGI_FORMAT_R32G32B32A32_FLOAT,0,D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+		},
+	};
+
+	// パイプライン
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};
+	gPipeline.VS = Shader::ShaderByteCode(vsBlob.Get());		// VertexShader
+	gPipeline.PS = Shader::ShaderByteCode(psBlob.Get());		// PixelShader
+
+	// サンプルマスクの設定
+	gPipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+
+	// ラスタライザステートの設定
+	D3D12_RASTERIZER_DESC rasterizerDesc{};
+	rasterizerDesc = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_NONE);
+	rasterizerDesc.DepthClipEnable = true;
+
+	// デプスステンシルステートの設定
+	D3D12_DEPTH_STENCIL_DESC dsDesc{};
+	dsDesc.DepthEnable = true;
+	dsDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	dsDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+	dsDesc.StencilReadMask = D3D12_DEFAULT_STENCIL_READ_MASK;
+	dsDesc.StencilWriteMask = D3D12_DEFAULT_STENCIL_WRITE_MASK;
+
+	//---パイプラインに設定---//
+	// ラスタライザの設定
+	gPipeline.RasterizerState = rasterizerDesc;
+	// デプスステンシルの設定
+	gPipeline.DepthStencilState = dsDesc;
+
+	// 深度バッファのフォーマット
+	gPipeline.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+	// 頂点レイアウトの設定
+	gPipeline.InputLayout.pInputElementDescs = inputLayout;
+	gPipeline.InputLayout.NumElements = _countof(inputLayout);
+
+	// 利用するトポロジ（形状）のタイプ。三角形
+	gPipeline.PrimitiveTopologyType =
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	// 書き込むRTVの情報
+	gPipeline.NumRenderTargets = 1;
+	gPipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	gPipeline.SampleDesc.Count = 1;
+
+	// デスクリプタレンジの作成
+	D3D12_DESCRIPTOR_RANGE descRangeSRV[1] = {};
+	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);	// t0レジスタ
+
+	// ルートパラメータの作成。複数設定できるので配列。
+	D3D12_ROOT_PARAMETER rootParameters[2] = {};
+	// 行列など
+	rootParameters[0] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	// テクスチャ
+	rootParameters[1] = PSOLib::InitAsDescriptorTable(1, descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);
+
+	/// スタティックサンプラーの設定
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+
+	// RootSignature作成
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	descriptionRootSignature.pParameters = rootParameters;	// ルートパラメータ配列へのポインタ
+	descriptionRootSignature.NumParameters = _countof(rootParameters);
+
+
+	descriptionRootSignature.pStaticSamplers = staticSamplers;
+	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
+
+	resultPipeline.rootSignature = CreateRootSignature(descriptionRootSignature);
+	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ
+
+	//CreateRootSignature(rootParameters, static_cast<size_t>(rootParameters),staticSamplers);
+
+#pragma region ブレンド
+	// ブレンドなし
+	D3D12_BLEND_DESC blenddesc{};
+	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	blenddesc.RenderTarget[0].BlendEnable = false;
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kNone)] = CreatePipelineState(gPipeline);
+	// αブレンド
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kNormal)] = CreatePipelineState(gPipeline);
+
+#pragma endregion
+
+	sPipelines_[size_t(Pipeline::Order::kLine)] = std::move(resultPipeline);
+}
+
 void GraphicsPSO::CreateModelPSO()
 {
 	GeneralPipeline resultPipeline;

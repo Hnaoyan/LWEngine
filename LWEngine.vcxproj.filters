@@ -297,6 +297,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossDamageEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Line3D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -656,6 +659,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -688,6 +694,8 @@
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelCS.hlsl" />
     <FxCompile Include="Resources\shaders\Skinning\Skinning3DModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle\User\PlayerEffect.hlsl" />
+    <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl" />
+    <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -901,5 +909,6 @@
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\Utillity\Random.hlsli" />
+    <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
   </ItemGroup>
 </Project>
