@@ -26,8 +26,16 @@ void GameScene::Initialize()
 	followCamera_->Initialize();
 #pragma endregion
 
+#pragma region システム
 	gpuParticle_ = std::make_unique<GPUParticleSystem>();
 	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
+
+	gameSystem_ = std::make_unique<GameSystem>();
+	gameSystem_->Initialize();
+
+#pragma endregion
+
+
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 	terrainManager_ = std::make_unique<TerrainManager>();
@@ -83,6 +91,7 @@ void GameScene::Update()
 	}
 #endif // _DEBUG
 
+	gameSystem_->Update();
 
 	terrainWtf_.UpdateMatrix();
 	player_->Update();

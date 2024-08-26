@@ -2,6 +2,7 @@
 #include "../../../GameSystem/GameSystem.h"
 #include "../Player.h"
 #include "../../Bullet/BulletManager.h"
+#include "Application/GameSystem/GameSystem.h"
 
 #include "Engine/Input/Input.h"
 #include "Engine/LwLib/LwEngineLib.h"
@@ -46,12 +47,12 @@ void OparationManager::InputUpdate()
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };
 	// ジャンプ入力
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_A) && player_->velocity_.y == 0.0f)
+	if (GameSystem::sPlayerKey.keyConfigs_.jump && player_->velocity_.y == 0.0f)
 	{
 		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
 	}
 	// 射撃入力
-	if (input_->XRTrigger() && !shotTimer_.IsActive()) {
+	if (GameSystem::sPlayerKey.keyConfigs_.shot && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		float speedValue = 30.0f;
 
@@ -68,7 +69,7 @@ void OparationManager::InputUpdate()
 	}
 
 	// カメラの処理
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B) && !lockOnCooltime_.IsActive()) {
+	if (GameSystem::sPlayerKey.keyConfigs_.lockon && !lockOnCooltime_.IsActive()) {
 		lockOn_.ToggleLockOn(player_->camera_);
 		lockOnCooltime_.Start(20.0f);
 	}
@@ -130,7 +131,7 @@ void OparationManager::InputUpdate()
 
 		// ダッシュの入力
 		if (direct.x != 0 || direct.z != 0) {
-			if (!isDash_ && input_->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+			if (!isDash_ && GameSystem::sPlayerKey.keyConfigs_.dash) {
 				if (dashCooltime_.IsActive()) {
 					return;
 				}

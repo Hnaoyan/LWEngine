@@ -7,6 +7,7 @@
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "../GameObject/GameObjectLists.h"
+#include "Application/GameSystem/GameSystem.h"
 
 class GameScene : public IScene
 {
@@ -67,6 +68,8 @@ private: // アプリ
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<SampleEnemyManager> enemyManager_;
 	std::unique_ptr<Boss> bossEnemy_;
+	// ゲームのシステム関係	
+	std::unique_ptr<GameSystem> gameSystem_;
 
 	// 地形マネ
 	std::unique_ptr<TerrainManager> terrainManager_;
