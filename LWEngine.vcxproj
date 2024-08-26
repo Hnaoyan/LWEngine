@@ -57,6 +57,7 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
+    <ClCompile Include="DirectXGame\Engine\2D\SpriteManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
+    <ClInclude Include="DirectXGame\Engine\2D\SpriteManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\AudioLoader.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
