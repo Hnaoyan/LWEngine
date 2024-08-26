@@ -10,7 +10,7 @@ class GlobalVariables : public Singleton<GlobalVariables>
 {
 private:
 	// 項目の型
-	using Item = std::variant<int32_t, float, Vector2, Vector3, std::string>;
+	using Item = std::variant<int32_t, bool, float, Vector2, Vector3, std::string>;
 	// グループ
 	using Group = std::map<std::string, Item>;
 	// 全データ
