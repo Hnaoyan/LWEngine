@@ -44,6 +44,7 @@ void WorldTransform::UpdateMatrix()
 			rotVector_ = Vector3::Normalize(rotVector_);
 
 			Vector3 rotAxis = Vector3::Cross(axis_, rotVector_);
+			rotAxis = Vector3::Normalize(rotAxis);
 			float angle = std::acosf(Vector3::Dot(axis_, rotVector_));
 
 			rotateQuaternion_ = Quaternion::MakeRotateAxisAngleQuaternion(rotAxis, angle);
