@@ -41,6 +41,10 @@ void GlobalVariables::Update()
 				int32_t* ptr = std::get_if<int32_t>(&item);
 				ImGui::DragInt(itemName.c_str(), ptr, 0.1f, -fabsValue_i, fabsValue_i);
 			}
+			else if (std::holds_alternative<bool>(item)) {
+				bool* ptr = std::get_if<bool>(&item);
+				ImGui::Checkbox(itemName.c_str(), ptr);
+			}
 			else if (std::holds_alternative<float>(item)) {
 				float* ptr = std::get_if<float>(&item);
 				ImGui::DragFloat(itemName.c_str(), ptr, 0.01f, -fabsValue_f, fabsValue_f);
@@ -108,6 +112,10 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 		if (std::holds_alternative<int32_t>(item)) {
 			// int32_t型の値を登録
 			root[groupName][itemName] = std::get<int32_t>(item);
+		}
+		else if (std::holds_alternative<bool>(item)) {
+			// bool型の値を登録
+			root[groupName][itemName] = std::get<bool>(item);
 		}
 		else if (std::holds_alternative<float>(item)) {
 			// float型の値を登録
@@ -216,9 +224,15 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			int32_t value = itItem->get<int32_t>();
 			SetValue(groupName, itemName, value);
 		}
+		// bool型
+		else if (itItem->is_number_unsigned()) {
+			// bool型の値を登録
+			bool value = itItem->get<bool>();
+			SetValue(groupName, itemName, static_cast<bool>(value));
+		}
 		// float型
 		else if (itItem->is_number_float()) {
-			// int型の値を登録
+			// float型の値を登録
 			double value = itItem->get<double>();
 			SetValue(groupName, itemName, static_cast<float>(value));
 		}
