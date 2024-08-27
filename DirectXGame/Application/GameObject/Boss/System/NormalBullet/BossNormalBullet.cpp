@@ -6,6 +6,9 @@ float BossSystemContext::NormalBullet::sAcceleration = 0.1f;
 
 void BossSystemContext::NormalBullet::Initialize()
 {
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	sAcceleration = instance->GetValue<float>("BossNormalBullet", "Acceleration");
+
 	serialNumber_ = sSerialNumber;
 	sSerialNumber++;
 

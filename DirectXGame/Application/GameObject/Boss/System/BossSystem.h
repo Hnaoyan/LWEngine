@@ -3,6 +3,7 @@
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 #include <memory>
 

@@ -3,9 +3,14 @@
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Engine/3D/ModelManager.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 void Boss::Initialize(Model* model)
 {
+#ifdef _DEBUG
+	GlobalValueInitialize();
+#endif // _DEBUG
+
 	IGameObject::Initialize(model);
 	// ステートマネージャー
 	stateManager_.Initialize(this);
@@ -86,16 +91,18 @@ void Boss::ImGuiDraw()
 	// システムのタブ
 	if (ImGui::BeginTabBar("BulletInfo"))
 	{
+		// 通常弾
 		if (ImGui::BeginTabItem("Normal")) {
-
+			ImGui::DragFloat("N_Acceleration", &BossSystemContext::NormalBullet::sAcceleration, 0.01f);
 			ImGui::EndTabItem();
 		}
+		// 追尾弾
 		if (ImGui::BeginTabItem("Tracking")) {
-			ImGui::DragFloat("TrackingFrame", &BossSystemContext::TrackingBullet::sTrackingFrame, 0.01f);
-			ImGui::DragFloat("BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
-			ImGui::DragFloat("InitSpeed", &BossSystemContext::TrackingBullet::sInitSpeed, 0.01f);
-			ImGui::DragFloat("Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
-			ImGui::DragFloat("LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
+			ImGui::DragFloat("T_TrackingFrame", &BossSystemContext::TrackingBullet::sTrackingFrame, 0.01f);
+			ImGui::DragFloat("T_BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
+			ImGui::DragFloat("T_InitSpeed", &BossSystemContext::TrackingBullet::sInitSpeed, 0.01f);
+			ImGui::DragFloat("T_Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
+			ImGui::DragFloat("T_LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();
@@ -115,4 +122,17 @@ void Boss::OnCollision(ColliderObject target)
 			isDead_ = true;
 		}
 	}
+}
+
+void Boss::GlobalValueInitialize()
+{
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	instance->CreateGroup("BossNormalBullet");
+	instance->AddValue("BossNormalBullet", "Acceleration", BossSystemContext::NormalBullet::sAcceleration);
+	instance->CreateGroup("BossTrackingBullet");
+	instance->AddValue("BossTrackingBullet", "TrackFrame", BossSystemContext::TrackingBullet::sTrackingFrame);
+	instance->AddValue("BossTrackingBullet", "Damping", BossSystemContext::TrackingBullet::sDamping);
+	instance->AddValue("BossTrackingBullet", "Speed", BossSystemContext::TrackingBullet::sBulletSpeed);
+	instance->AddValue("BossTrackingBullet", "InitSpeed", BossSystemContext::TrackingBullet::sInitSpeed);
+	instance->AddValue("BossTrackingBullet", "LerpRadius", BossSystemContext::TrackingBullet::sLerpRadius);
 }

@@ -12,6 +12,13 @@ float BossSystemContext::TrackingBullet::sLerpRadius = 50.0f;
 
 void BossSystemContext::TrackingBullet::Initialize()
 {
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
+	sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
+	sBulletSpeed = instance->GetValue<float>("BossTrackingBullet", "Speed");
+	sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
+	sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+
 	serialNumber_ = sSerialNumber;
 	sSerialNumber++;
 

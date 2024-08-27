@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Scene/IScene.h"
 #include "Engine/2D/Drawer/Sprite.h"
+#include "Engine/2D/SpriteManager.h"
 #include "Engine/3D/Drawer/3DDrawers.h"
 #include "Engine/3D/ModelManager.h"
 #include "Engine/Camera/CameraList.h"

@@ -33,6 +33,9 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
+private:
+
+	void GlobalValueInitialize();
 
 public:
 	// ステート関係
