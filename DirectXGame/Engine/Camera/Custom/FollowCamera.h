@@ -62,6 +62,7 @@ private: // UserMethod
 	// 右スティックのカメラ操作関係
 	float rStickRotateSpeed_ = 0;
 	float rStickLerpRate_ = 0;
+	Vector2 rRotateSpeed_{};
 
 	float xSpinLimit_ = 0.0f;
 

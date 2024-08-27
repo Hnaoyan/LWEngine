@@ -4,21 +4,35 @@
 #include "../../LwLib/LwEngineLib.h"
 #include "Application/GameObject/Player/System/LockOn.h"
 #include "Application/GameObject/Enemy/SampleEnemy.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 void FollowCamera::Initialize()
 {
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	instance->CreateGroup("Camera");
+	instance->AddValue("Camera", "RotateSpeed", rRotateSpeed_);
+	instance->AddValue("Camera", "LerpRate", rStickLerpRate_);
+	instance->AddValue("Camera", "DelayRate", delayRate_);
+	instance->AddValue("Camera", "XSpinLimit", xSpinLimit_);
+
 	// 初期化
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,2.0f,-10.0f };
 
-	rStickRotateSpeed_ = 0.1f;
-	rStickLerpRate_ = 0.1f;
-	delayRate_ = 0.1f;
-	xSpinLimit_ = 0.3f;
+	rRotateSpeed_ = instance->GetValue<Vector2>("Camera","RotateSpeed");
+	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
+	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
+	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
 }
 
 void FollowCamera::Update()
 {
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	rRotateSpeed_ = instance->GetValue<Vector2>("Camera", "RotateSpeed");
+	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
+	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
+	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
+
 	// コントローラー
 	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick();
 
@@ -28,10 +42,10 @@ void FollowCamera::Update()
 		// 目標回転角の設定
 		if (rightStick.x != 0.0f)
 		{
-			destinationAngle_.y += rightStick.x * rStickRotateSpeed_;
+			destinationAngle_.y += rightStick.x * rRotateSpeed_.x;
 		}
 		if (rightStick.y != 0.0f) {
-			destinationAngle_.x -= rightStick.y * rStickRotateSpeed_;
+			destinationAngle_.x -= rightStick.y * rRotateSpeed_.y;
 		}
 
 		if (lockOn_->ExistTarget()) {
