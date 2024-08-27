@@ -71,4 +71,12 @@ public:
 	// ベクトルでの回転行列の作成
 	bool isVectorRotate_ = false;
 
+	bool isQuaternion_ = false;
+
+	Quaternion rotateQuaternion_;
+
+	Vector3 axis_{ 0.0f,0.0f,1.0f };
+	Vector3 rotVector_{ 0.0f,0.0f,0.0f };
+	float angle_ = 0.0f;
+
 };

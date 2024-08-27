@@ -1,6 +1,8 @@
 #pragma once
 #include <cmath>
 
+class Quaternion;
+
 class Vector3 final
 {
 public:
@@ -159,6 +161,14 @@ public: // 複合演算子
 
 		return Vector3(result);
 	}
+
+	/// <summary>
+	/// クォータニオンでベクトルを回転させる
+	/// </summary>
+	/// <param name="vector"></param>
+	/// <param name="quaternion"></param>
+	/// <returns></returns>
+	static Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 
 };
 

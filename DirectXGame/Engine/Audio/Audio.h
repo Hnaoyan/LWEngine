@@ -3,11 +3,22 @@
 #include <array>
 #include <set>
 #include <string>
-#include <xaudio2.h>
+
 #include "../Utility/Singleton.h"
 
+// XAudio
+#include <xaudio2.h>
 #pragma comment(lib,"xaudio2.lib")
 
+// MediaFoundation
+#include <mfapi.h>
+#include <mfidl.h>
+#include <mfreadwrite.h>
+
+
+/// <summary>
+/// シーン内の音源管理
+/// </summary>
 class Audio : public Singleton<Audio>
 {
 public:
@@ -68,6 +79,13 @@ public:
 	uint32_t LoadWave(const std::string& fileName);
 
 	/// <summary>
+	/// MP3
+	/// </summary>
+	/// <param name="fileName"></param>
+	/// <returns></returns>
+	uint32_t LoadMP3(const std::string& fileName);
+
+	/// <summary>
 	/// サウンドデータの解放
 	/// </summary>
 	/// <param name="soundData"></param>
@@ -108,10 +126,10 @@ public:
 	void Finalize();
 
 private:
-	Audio() = default;
-	~Audio() = default;
-	Audio(const Audio&) = delete;
-	const Audio& operator=(const Audio&&) = delete;
+	//Audio() = default;
+	//~Audio() = default;
+	//Audio(const Audio&) = delete;
+	//const Audio& operator=(const Audio&&) = delete;
 
 	// XAudio2のインスタンス
 	Microsoft::WRL::ComPtr<IXAudio2> xAudio2_;
