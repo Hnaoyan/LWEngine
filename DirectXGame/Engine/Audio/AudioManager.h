@@ -11,11 +11,16 @@ class AudioManager : public Singleton<AudioManager>
 {
 public:
 	/// <summary>
-	/// 読み込み
+	/// WAVEでの読み込み
 	/// </summary>
 	/// <param name="tag"></param>
 	/// <param name="filePath"></param>
 	void LoadAudio(const std::string& tag, const std::string& filePath);
+	/// <summary>
+	/// MP3での読み込み
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <param name="filePath"></param>
 	void LoadMP3(const std::string& tag, const std::string& filePath);
 	/// <summary>
 	/// 再生

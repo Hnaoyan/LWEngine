@@ -72,6 +72,7 @@ void Framework::Initialize()
 
 void Framework::Finalize()
 {
+	Audio::GetInstance()->Finalize();
 	dxCommon_->Finalize();
 	imGuiManager_->Finalize();
 	CoUninitialize();
