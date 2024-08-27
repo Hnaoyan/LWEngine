@@ -60,7 +60,7 @@ public:	// 設定系関数
 
 #pragma region 取得
 	template<typename T>
-	void GetValue(const std::string& groupName, const std::string& key) {
+	T GetValue(const std::string& groupName, const std::string& key) {
 		// 指定グループが存在するか
 		assert(datas_.find(groupName) != datas_.end());
 		//  グループの参照を取得
