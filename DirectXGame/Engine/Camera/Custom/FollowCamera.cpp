@@ -93,6 +93,12 @@ void FollowCamera::ImGuiDraw()
 	ImGui::DragFloat3("WorldPosition", &world.x);
 
 	ImGui::DragFloat3("Offset", &defaultOffset_.x, 0.01f);
+	float value = (transform_.rotate.x * (-10.0f) - 2.0f);
+	//float rate = (0.3f - transform_.rotate.y);
+	value = std::clamp(value, 0.0f, 1.0f);
+	float z = LwLib::Lerp(-9.8f, -6.5f, value);
+	ImGui::DragFloat("Rate", &value);
+	ImGui::DragFloat("Z", &z);
 
 	ImGui::DragFloat3("Rotate", &transform_.rotate.x, 0.01f);
 
@@ -134,8 +140,16 @@ void FollowCamera::Reset()
 
 Vector3 FollowCamera::CreateOffset() const
 {
+	// y(-0.2~-0.3f)
+	// offsetZ(-6.9~-9.8)
+	float z = defaultOffset_.z;
+	if (transform_.rotate.x <= -0.2f) {
+		float value = (transform_.rotate.x * (-10.0f) - 2.0f);
+		z = LwLib::Lerp(-9.8f, -6.5f, value);
+	}
+
 	// カメラまでのオフセット
-	Vector3 offset = defaultOffset_;
+	Vector3 offset = { defaultOffset_.x,defaultOffset_.y,z };
 
 	// 回転行列の合成
 	Matrix4x4 rotateMatrix = Matrix4x4::Multiply(
