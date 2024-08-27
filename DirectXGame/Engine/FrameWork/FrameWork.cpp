@@ -1,4 +1,5 @@
 #include "FrameWork.h"
+#include "Engine/Audio/Audio.h"
 #include "../3D/Graphics/Shader.h"
 #include "../3D/Graphics/GraphicsPSO.h"
 #include "../2D/Drawer/Sprite.h"
@@ -61,6 +62,8 @@ void Framework::Initialize()
 	modelManager_->LoadNormalModel("DefaultCube", "cube");
 
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
+
+	Audio::GetInstance()->Initialize();
 
 	// シーンマネージャーの生成
 	sceneManager_ = std::make_unique<SceneManager>();

@@ -83,6 +83,7 @@
     <ClCompile Include="DirectXGame\Engine\Animation\System\AnimationPlayer.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\Audio.cpp" />
     <ClCompile Include="DirectXGame\Engine\Audio\AudioLoader.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.cpp" />
