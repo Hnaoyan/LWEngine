@@ -12,17 +12,6 @@ void StateManager::Initialize(Player* player)
 
 }
 
-void StateManager::ChangeRequest(std::unique_ptr<IPlayerState> newState)
-{
-	newState;
-	//if (player_->GetState()) {
-	//	player_->GetState()->Exit();
-	//}
-	//newState->PreInitialize(player_);
-	//newState->Initialize();
-	//player_->SetState(std::move(newState));
-}
-
 void StateManager::ChangeRequest(StateList request, StateType type)
 {
 	std::unique_ptr<IPlayerState> newState;

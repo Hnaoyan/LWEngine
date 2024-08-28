@@ -34,7 +34,6 @@ public:
 	/// 変更リクエスト
 	/// </summary>
 	/// <param name="newState"></param>
-	void ChangeRequest(std::unique_ptr<IPlayerState> newState);
 	void ChangeRequest(StateList request, StateType type);
 
 private:
