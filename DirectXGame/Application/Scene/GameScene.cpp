@@ -345,7 +345,8 @@ void GameScene::LoadTexture()
 
 	//SpriteManager::LoadSprite
 	gageTexture_ = TextureManager::GetInstance()->Load("Resources/default/gage.png");
-	
+	uint32_t reticle = TextureManager::Load("Resources/crossHair.png");
+	SpriteManager::LoadSprite("CrossHair", reticle);
 	SpriteManager::LoadSprite("Gage", gageTexture_);
 	gage_ = SpriteManager::GetSprite("Gage");
 

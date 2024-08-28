@@ -55,7 +55,7 @@ private: // User
 	// エイムのスクリーン上座標
 	Vector2 screenPosition_ = {};
 	// スプライト
-	std::unique_ptr<Sprite> reticleSprite_;
+	Sprite* reticleSprite_;
 	// 
 	ResetValue reset_{};
 };

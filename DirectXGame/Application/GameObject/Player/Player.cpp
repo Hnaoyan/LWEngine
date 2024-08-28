@@ -99,8 +99,8 @@ void Player::ImGuiDraw()
 			footCollider_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
-		if (ImGui::BeginTabItem("S3")) {
-
+		if (ImGui::BeginTabItem("Energy")) {
+			ImGui::DragFloat("Energy", &energyManager_.energy_.currentEnergy);
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();

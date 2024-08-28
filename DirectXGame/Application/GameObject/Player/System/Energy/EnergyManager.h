@@ -27,7 +27,7 @@ namespace PlayerContext
 
 	private:
 		Player* player_ = nullptr;
-
+	public:
 		// エネルギー情報
 		EnergyData energy_;
 	};

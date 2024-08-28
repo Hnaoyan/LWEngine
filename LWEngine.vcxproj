@@ -53,6 +53,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\OperationManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />

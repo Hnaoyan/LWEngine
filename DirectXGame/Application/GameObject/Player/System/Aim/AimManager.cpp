@@ -4,6 +4,7 @@
 #include "Engine/Camera/CameraList.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/2D/SpriteManager.h"
 #include "imgui.h"
 
 void AimManager::Initialize(Player* player)
@@ -13,11 +14,11 @@ void AimManager::Initialize(Player* player)
 	// 入力クラス
 	input_ = Input::GetInstance();
 
-	if (reticleSprite_ == nullptr) {
-		uint32_t texture = TextureManager::Load("Resources/crossHair.png");
-		reticleSprite_.reset(Sprite::Create(texture, { 0,0 }, { 0.5f,0.5f }));
-	}
-	
+	//if (reticleSprite_ == nullptr) {
+	//	uint32_t texture = TextureManager::Load("Resources/crossHair.png");
+	//	reticleSprite_.reset(Sprite::Create(texture, { 0,0 }, { 0.5f,0.5f }));
+	//}
+	reticleSprite_ = SpriteManager::GetSprite("CrossHair");
 	// 初期化
 	offSetTransform_.Initialize();
 	// 親の設定
