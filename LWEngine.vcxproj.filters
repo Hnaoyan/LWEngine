@@ -240,7 +240,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\HealthManager.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\3D\ModelRenderer.cpp">
@@ -307,6 +307,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Audio\AudioManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Assending\AssendingManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -644,7 +650,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\HealthManager.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\CBufferCommon.h">
@@ -672,6 +678,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\2D\SpriteManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Assending\AssendingManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -714,7 +726,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AimManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
@@ -784,7 +796,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\LockOn.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp" />
@@ -802,8 +814,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Player.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AimManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\LockOn.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\OperationManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />

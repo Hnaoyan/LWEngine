@@ -14,8 +14,8 @@ void FallingState::Update()
 		stateManager_->ChangeRequest(StateManager::kIdle);
 		return;
 	}
-	
-	player_->velocity_.y += (-4.5f) * GameSystem::GameSpeedFactor();
+	float gravity = -4.5f;
+	player_->velocity_.y += gravity * GameSystem::GameSpeedFactor();
 }
 
 void FallingState::Exit()
