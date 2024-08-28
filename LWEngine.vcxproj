@@ -36,10 +36,12 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Assending\AssendingManager.cpp" />
@@ -150,10 +152,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IHorizontalState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IVerticalState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Assending\AssendingManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.h" />

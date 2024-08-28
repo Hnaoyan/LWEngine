@@ -47,20 +47,20 @@ void OparationManager::InputUpdate()
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };
 	// ジャンプ入力
-	bool isIdle = std::holds_alternative<IdleState*>(player_->GetState()->GetNowState());
-	//bool isJumping = std::holds_alternative<JumpingState*>(player_->GetState()->GetNowState());
-	//bool isFalling = std::holds_alternative<FallingState*>(player_->GetState()->GetNowState());
-	bool isAssending = std::holds_alternative<AssendingState*>(player_->GetState()->GetNowState());
-	// ジャンプキー
-	if (GameSystem::sPlayerKey.keyConfigs_.jump && isIdle)
-	{
-		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
-	}
-	// 空中浮遊キー
-	else if (GameSystem::sPlayerKey.keyConfigs_.pressJump && (!isAssending && !isIdle))
-	{
-		player_->GetStateManager()->ChangeRequest(StateManager::kAssending);
-	}
+	//bool isIdle = std::holds_alternative<IdleState*>(player_->GetVerticalState()->GetNowState());
+	////bool isJumping = std::holds_alternative<JumpingState*>(player_->GetState()->GetNowState());
+	////bool isFalling = std::holds_alternative<FallingState*>(player_->GetState()->GetNowState());
+	//bool isAssending = std::holds_alternative<AssendingState*>(player_->GetVerticalState()->GetNowState());
+	//// ジャンプキー
+	//if (GameSystem::sPlayerKey.keyConfigs_.jump && isIdle)
+	//{
+	//	player_->GetStateManager()->ChangeRequest(StateManager::kJump, StateManager::kVertical);
+	//}
+	//// 空中浮遊キー
+	//else if (GameSystem::sPlayerKey.keyConfigs_.pressJump && (!isAssending && !isIdle))
+	//{
+	//	player_->GetStateManager()->ChangeRequest(StateManager::kAssending, StateManager::kVertical);
+	//}
 	// 射撃入力
 	if (GameSystem::sPlayerKey.keyConfigs_.shot && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());

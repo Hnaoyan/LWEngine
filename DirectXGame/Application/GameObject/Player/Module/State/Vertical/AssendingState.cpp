@@ -10,10 +10,6 @@ void AssendingState::Initialize()
 void AssendingState::Update()
 {
 
-	if (!(GameSystem::sPlayerKey.keyConfigs_.pressJump)) {
-		stateManager_->ChangeRequest(StateManager::kFall);
-		return;
-	}
 	float assendPower = 3.0f;
 	float gravity = -2.5f;
 	player_->velocity_.y += assendPower * GameSystem::GameSpeedFactor();
@@ -27,5 +23,8 @@ void AssendingState::Exit()
 
 void AssendingState::InputHandle()
 {
-
+	if (!(GameSystem::sPlayerKey.keyConfigs_.pressJump)) {
+		stateManager_->ChangeRequest(StateManager::kFall, StateManager::kVertical);
+		return;
+	}
 }

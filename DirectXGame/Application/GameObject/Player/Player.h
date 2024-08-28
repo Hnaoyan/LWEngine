@@ -47,7 +47,7 @@ public: // ゲッター
 	OparationManager* GetOperation() { return &systemManager_; }
 	StateManager* GetStateManager() { return &stateManager_; }
 	// ステート
-	IPlayerState* GetState() { return currentState_.get(); }
+	//IPlayerState* GetState() { return currentState_.get(); }
 	// 縦横
 	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
 	IPlayerState* GetVerticalState() { return currentStates_.second.get(); }
@@ -59,7 +59,10 @@ public: // セッター
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { systemManager_.SetEnemyList(lists); }
 	void SetBoss(Boss* boss) { systemManager_.GetLockOn()->SetBoss(boss); }
 	void SetGPUParticleSystem(GPUParticleSystem* ptr) { particleManager_.SetGPUParticleSystem(ptr); }
-	void SetState(std::unique_ptr<IPlayerState> newState) { currentState_ = std::move(newState); }
+	
+	void SetHorizontalState(std::unique_ptr<IPlayerState> newState) { currentStates_.first = std::move(newState); }
+	void SetVerticalState(std::unique_ptr<IPlayerState> newState) { currentStates_.second = std::move(newState); }
+	//void SetState(std::unique_ptr<IPlayerState> newState) { currentState_ = std::move(newState); }
 
 private: // USER
 
@@ -78,7 +81,7 @@ public:
 private:
 	// ステート
 	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
-	std::unique_ptr<IPlayerState> currentState_;
+	//std::unique_ptr<IPlayerState> currentState_;
 	// 操作関係
 	OparationManager systemManager_;
 	// ステートのマネージャー

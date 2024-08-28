@@ -21,7 +21,7 @@ void Player::Initialize(Model* model)
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
-	stateManager_.ChangeRequest(StateManager::kIdle);
+	//stateManager_.ChangeRequest(StateManager::kIdle);
 
 }
 
@@ -32,11 +32,20 @@ void Player::Update()
 	// システム関係の更新
 	systemManager_.Update();
 	healthManager_.Update();
-	if (currentState_) {
-		// 入力処理
-		currentState_->InputHandle();
-		// ステートの更新
-		currentState_->Update();
+	//if (currentState_) {
+	//	// 入力処理
+	//	currentState_->InputHandle();
+	//	// ステートの更新
+	//	currentState_->Update();
+	//}
+
+	if (currentStates_.first) {
+		currentStates_.first->InputHandle();
+		currentStates_.first->Update();
+	}
+	if (currentStates_.second) {
+		currentStates_.second->InputHandle();
+		currentStates_.second->Update();
 	}
 
 	// 基底クラスの更新

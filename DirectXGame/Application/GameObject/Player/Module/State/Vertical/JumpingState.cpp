@@ -1,6 +1,7 @@
 #include "JumpingState.h"
 #include "../../../Player.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Application/GameSystem/GameSystem.h"
 
 void JumpingState::Initialize()
 {
@@ -17,7 +18,7 @@ void JumpingState::Update()
 {
 	// ステート変更
 	if (player_->velocity_.y < 0) {
-		stateManager_->ChangeRequest(StateManager::kFall);
+		stateManager_->ChangeRequest(StateManager::kFall, StateManager::kVertical);
 		return;
 	}
 	float gravity = -4.5f;
@@ -30,4 +31,8 @@ void JumpingState::Exit()
 
 void JumpingState::InputHandle()
 {
+	if (GameSystem::sPlayerKey.keyConfigs_.pressJump)
+	{
+		player_->GetStateManager()->ChangeRequest(StateManager::kAssending, StateManager::kVertical);
+	}
 }

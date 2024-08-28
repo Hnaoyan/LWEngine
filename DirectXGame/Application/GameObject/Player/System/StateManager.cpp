@@ -6,25 +6,36 @@ void StateManager::Initialize(Player* player)
 {
 	assert(player);
 	player_ = player;
+
+	ChangeRequest(kIdleHorizontal, kHorizontal);
+	ChangeRequest(kIdleVertical, kVertical);
+
 }
 
 void StateManager::ChangeRequest(std::unique_ptr<IPlayerState> newState)
 {
-	if (player_->GetState()) {
-		player_->GetState()->Exit();
-	}
-	newState->PreInitialize(player_);
-	newState->Initialize();
-	player_->SetState(std::move(newState));
+	newState;
+	//if (player_->GetState()) {
+	//	player_->GetState()->Exit();
+	//}
+	//newState->PreInitialize(player_);
+	//newState->Initialize();
+	//player_->SetState(std::move(newState));
 }
 
-void StateManager::ChangeRequest(StateList request)
+void StateManager::ChangeRequest(StateList request, StateType type)
 {
 	std::unique_ptr<IPlayerState> newState;
 	switch (request)
 	{
 	case StateManager::kIdle:
 		newState = std::make_unique<IdleState>();
+		break;
+	case StateManager::kIdleVertical:
+		newState = std::make_unique<IdleVertical>();
+		break;
+	case StateManager::kIdleHorizontal:
+		newState = std::make_unique<IdleHorizontal>();
 		break;
 	case StateManager::kMove:
 		newState = std::make_unique<MovingState>();
@@ -43,11 +54,30 @@ void StateManager::ChangeRequest(StateList request)
 		break;
 	}
 
-	if (player_->GetState()) {
-		player_->GetState()->Exit();
+	switch (type)
+	{
+	case StateManager::kVertical:
+		if (player_->GetVerticalState()) {
+			player_->GetVerticalState()->Exit();
+		}
+		newState->PreInitialize(player_);
+		newState->Initialize();
+		player_->SetVerticalState(std::move(newState));
+		break;
+	case StateManager::kHorizontal:
+		if (player_->GetHorizontalState()) {
+			player_->GetHorizontalState()->Exit();
+		}
+		newState->PreInitialize(player_);
+		newState->Initialize();
+		player_->SetHorizontalState(std::move(newState));
+		break;
 	}
-	newState->PreInitialize(player_);
-	newState->Initialize();
-	player_->SetState(std::move(newState));
+	//if (player_->GetState()) {
+	//	player_->GetState()->Exit();
+	//}
+	//newState->PreInitialize(player_);
+	//newState->Initialize();
+	//player_->SetState(std::move(newState));
 
 }

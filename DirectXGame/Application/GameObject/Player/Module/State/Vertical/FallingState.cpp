@@ -1,6 +1,7 @@
 #include "FallingState.h"
 #include "../../../Player.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Application/GameSystem/GameSystem.h"
 
 void FallingState::Initialize()
 {
@@ -11,7 +12,7 @@ void FallingState::Update()
 {
 	// ステート変更
 	if (player_->isGround_) {
-		stateManager_->ChangeRequest(StateManager::kIdle);
+		stateManager_->ChangeRequest(StateManager::kIdleVertical, StateManager::kVertical);
 		return;
 	}
 	float gravity = -4.5f;
@@ -25,4 +26,8 @@ void FallingState::Exit()
 
 void FallingState::InputHandle()
 {
+	if (GameSystem::sPlayerKey.keyConfigs_.pressJump)
+	{
+		player_->GetStateManager()->ChangeRequest(StateManager::kAssending, StateManager::kVertical);
+	}
 }
