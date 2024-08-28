@@ -43,8 +43,9 @@ void GameScene::Initialize()
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
-	player_->SetFollowCamera(followCamera_.get());
-	player_->SetGPUParticleSystem(gpuParticleManager_.get());
+	//player_->SetFollowCamera(followCamera_.get());
+	//player_->SetGPUParticleSystem(gpuParticleManager_.get());
+	player_->PreInitialize(followCamera_.get(), gpuParticleManager_.get());
 	player_->Initialize(ModelManager::GetModel("Player"));
 
 	bulletManager_ = std::make_unique<BulletManager>();
@@ -71,9 +72,7 @@ void GameScene::Initialize()
 	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
 	// プレイヤーにセットする
-	player_->SetEnemyList(enemyManager_->GetEnemysList());
-	player_->SetBulletManager(bulletManager_.get());
-	player_->SetBoss(bossEnemy_.get());
+	player_->PointerInitialize(bulletManager_.get(), bossEnemy_.get(), enemyManager_->GetEnemysList());
 
 }
 
@@ -171,7 +170,6 @@ void GameScene::Draw()
 
 	Sprite::PreDraw(commandList);
 
-	player_->UISpriteDraw();
 
 	Sprite::PostDraw();
 
@@ -185,9 +183,14 @@ void GameScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
+	player_->UISpriteDraw();
+
 	if (clearText_.isClear) {
 		clearText_.clearText->Draw();
 	}
+	gage_->SetSpriteRect({ 0,0 }, gageSize_);
+	//gage_->SetSize(gageSize_);
+	gage_->Draw();
 
 	for (int i = 0; i < controlUIs_.size(); ++i) {
 		controlUIs_[i].first->SetPosition(controlUIs_[i].second.position);
@@ -216,6 +219,16 @@ void GameScene::ImGuiDraw()
 	ImGui::ShowDemoWindow();
 	gpuParticleManager_->ImGuiDraw();
 	ImGui::Begin("SampleScene");
+
+	EulerTransform test = gage_->GetUVTransform();
+	Vector2 pos = gage_->GetPosition();
+	ImGui::DragFloat2("GagePosition2D", &pos.x, 1.0f);
+	ImGui::DragFloat2("GageRectScale", &gageSize_.x, 0.1f);
+	gage_->SetPosition(pos);
+	ImGui::DragFloat3("Gagepos", &test.translate.x, 1.0f);
+	ImGui::DragFloat3("Gagerot", &test.rotate.x, 1.0f);
+	ImGui::DragFloat3("GageSca", &test.scale.x, 0.01f);
+	gage_->SetUVTransform(test);
 
 	if (ImGui::Button("BossRes")) {
 		if (!bossEnemy_) {
@@ -329,6 +342,20 @@ void GameScene::LoadTexture()
 	data.texture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
+
+	//SpriteManager::LoadSprite
+	gageTexture_ = TextureManager::GetInstance()->Load("Resources/default/gage.png");
+	
+	SpriteManager::LoadSprite("Gage", gageTexture_);
+	gage_ = SpriteManager::GetSprite("Gage");
+
+	gagePosition_ = { 1280.0f / 2.0f,100.0f };
+	//gage_->SetSize({ 200.0f,50.0f });
+	gageSize_ = gage_->GetSize();
+	gageSize_ /= 2.0f;
+	gage_->SetPosition(gagePosition_);
+	gage_->SetSize(gageSize_);
+	gage_->SetAnchorPoint({ 0.5f,0.5f });
 
 }
 

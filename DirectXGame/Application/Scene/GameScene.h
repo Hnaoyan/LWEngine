@@ -108,6 +108,14 @@ private: // リソース
 
 	GameClear clearText_;
 
+	//std::unique_ptr<Sprite> gage_;
+	Sprite* gage_ = nullptr;
+	uint32_t gageTexture_ = 0;
+
+	Vector2 gagePosition_{};
+	Vector2 gageSize_{};
+
+
 private: // システム関係
 	// カメラ君
 	// デバッグカメラ
