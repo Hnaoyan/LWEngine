@@ -188,10 +188,10 @@ void GameScene::UIDraw()
 	if (clearText_.isClear) {
 		clearText_.clearText->Draw();
 	}
-	gage_->SetSpriteRect({ 0,0 }, gageSize_);
+	//gage_->SetSpriteRect({ 0,0 }, gageSize_);
 	//gage_->SetSize(gageSize_);
 	gage_->Draw();
-
+	backGage_->Draw();
 	for (int i = 0; i < controlUIs_.size(); ++i) {
 		controlUIs_[i].first->SetPosition(controlUIs_[i].second.position);
 		controlUIs_[i].first->Draw();
@@ -228,7 +228,10 @@ void GameScene::ImGuiDraw()
 	ImGui::DragFloat3("Gagepos", &test.translate.x, 1.0f);
 	ImGui::DragFloat3("Gagerot", &test.rotate.x, 1.0f);
 	ImGui::DragFloat3("GageSca", &test.scale.x, 0.01f);
+	ImGui::ColorEdit4("GageColor", &gageColor_.x);
 	gage_->SetUVTransform(test);
+	gage_->SetSize(gageSize_);
+	backGage_->SetColor(gageColor_);
 
 	if (ImGui::Button("BossRes")) {
 		if (!bossEnemy_) {
@@ -348,16 +351,19 @@ void GameScene::LoadTexture()
 	uint32_t reticle = TextureManager::Load("Resources/crossHair.png");
 	SpriteManager::LoadSprite("CrossHair", reticle);
 	SpriteManager::LoadSprite("Gage", gageTexture_);
+	SpriteManager::LoadSprite("GageBack", gageTexture_);
 	gage_ = SpriteManager::GetSprite("Gage");
-
+	backGage_ = SpriteManager::GetSprite("GageBack");
 	gagePosition_ = { 1280.0f / 2.0f,100.0f };
 	//gage_->SetSize({ 200.0f,50.0f });
+	gageColor_ = gage_->GetColor();
 	gageSize_ = gage_->GetSize();
 	gageSize_ /= 2.0f;
 	gage_->SetPosition(gagePosition_);
 	gage_->SetSize(gageSize_);
-	gage_->SetAnchorPoint({ 0.5f,0.5f });
-
+	backGage_->SetPosition(gagePosition_);
+	backGage_->SetSize(gageSize_);
+	backGage_->SetColor({ 0,0,0,1.0f });
 }
 
 void GameScene::CameraUpdate()

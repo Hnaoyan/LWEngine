@@ -110,10 +110,12 @@ private: // リソース
 
 	//std::unique_ptr<Sprite> gage_;
 	Sprite* gage_ = nullptr;
+	Sprite* backGage_ = nullptr;
 	uint32_t gageTexture_ = 0;
 
 	Vector2 gagePosition_{};
 	Vector2 gageSize_{};
+	Vector4 gageColor_{};
 
 
 private: // システム関係

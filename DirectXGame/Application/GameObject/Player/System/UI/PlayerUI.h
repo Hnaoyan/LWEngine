@@ -1,6 +1,7 @@
 #pragma once
 
 class Player;
+class Sprite;
 
 namespace PlayerContext
 {
@@ -11,6 +12,9 @@ namespace PlayerContext
 		void Draw();
 	private:
 		Player* player_ = nullptr;
+
+		Sprite* reticle_ = nullptr;
+		Sprite* health_ = nullptr;
 
 	};
 

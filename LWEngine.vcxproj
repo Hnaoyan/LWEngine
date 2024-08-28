@@ -143,6 +143,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateController.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
