@@ -22,18 +22,24 @@ void GameSystem::Initialize()
 
 void GameSystem::KeyBindUpdate()
 {
-    sPlayerKey.keybinds_.dash = XINPUT_GAMEPAD_LEFT_SHOULDER;
+    sPlayerKey.keybinds_.quickBoost = XINPUT_GAMEPAD_LEFT_SHOULDER;
+    sPlayerKey.keybinds_.shot = XINPUT_GAMEPAD_RIGHT_SHOULDER;
     sPlayerKey.keybinds_.jump = XINPUT_GAMEPAD_A;
     sPlayerKey.keybinds_.lockon = XINPUT_GAMEPAD_B;
-    sPlayerKey.keybinds_.shot = XINPUT_GAMEPAD_RIGHT_SHOULDER;
+    sPlayerKey.keybinds_.boost = XINPUT_GAMEPAD_X;
+
+    sPlayerKey.keybinds_.pressJump = input_->XRTrigger();
 }
 
 void GameSystem::KeyConfigUpdate()
 {
-    sPlayerKey.keyConfigs_.dash = input_->XTriggerJoystick(sPlayerKey.keybinds_.dash);
+    sPlayerKey.keyConfigs_.quickBoost = input_->XTriggerJoystick(sPlayerKey.keybinds_.quickBoost);
     sPlayerKey.keyConfigs_.jump = input_->XTriggerJoystick(sPlayerKey.keybinds_.jump);
     sPlayerKey.keyConfigs_.lockon = input_->XTriggerJoystick(sPlayerKey.keybinds_.lockon);
     sPlayerKey.keyConfigs_.shot = input_->XTriggerJoystick(sPlayerKey.keybinds_.shot);
+    sPlayerKey.keyConfigs_.boost = input_->XTriggerJoystick(sPlayerKey.keybinds_.boost);
+
+    sPlayerKey.keyConfigs_.pressJump = input_->XRTrigger();
 }
 
 void GameSystem::Update()

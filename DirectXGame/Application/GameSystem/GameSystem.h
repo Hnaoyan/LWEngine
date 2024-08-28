@@ -21,7 +21,9 @@ private:
 		T lockon;
 		T jump;
 		T shot;
-		T dash;
+		T quickBoost;
+		T boost;
+		T pressJump;
 	};
 
 	struct PlayerKeyConfig
