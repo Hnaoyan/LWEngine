@@ -10,6 +10,16 @@ class Player : public IGameObject
 {
 public:
 	/// <summary>
+	/// 初期化前処理
+	/// </summary>
+	/// <param name="camera"></param>
+	/// <param name="gpuParticle"></param>
+	void PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle) {
+		camera_ = camera;
+		particleManager_.SetGPUParticleSystem(gpuParticle);
+	}
+
+	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="model"></param>
@@ -46,23 +56,21 @@ public: // ゲッター
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	OparationManager* GetOperation() { return &systemManager_; }
 	StateManager* GetStateManager() { return &stateManager_; }
-	// ステート
-	//IPlayerState* GetState() { return currentState_.get(); }
-	// 縦横
+	PlayerContext::EnergyManager* GetEnergyManager() { return &energyManager_; }
+public: // ステート
 	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
 	IPlayerState* GetVerticalState() { return currentStates_.second.get(); }
+	void SetHorizontalState(std::unique_ptr<IPlayerState> newState) { currentStates_.first = std::move(newState); }
+	void SetVerticalState(std::unique_ptr<IPlayerState> newState) { currentStates_.second = std::move(newState); }
 
 public: // セッター
 	// ポインタ関係
-	void SetFollowCamera(ICamera* camera) { camera_ = camera; }
-	void SetBulletManager(BulletManager* manager) { systemManager_.SetManager(manager); }
-	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { systemManager_.SetEnemyList(lists); }
+	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
+		systemManager_.GetLockOn()->SetBoss(boss); 
+		systemManager_.SetManager(manager);
+		systemManager_.SetEnemyList(lists);
+	}
 	void SetBoss(Boss* boss) { systemManager_.GetLockOn()->SetBoss(boss); }
-	void SetGPUParticleSystem(GPUParticleSystem* ptr) { particleManager_.SetGPUParticleSystem(ptr); }
-	
-	void SetHorizontalState(std::unique_ptr<IPlayerState> newState) { currentStates_.first = std::move(newState); }
-	void SetVerticalState(std::unique_ptr<IPlayerState> newState) { currentStates_.second = std::move(newState); }
-	//void SetState(std::unique_ptr<IPlayerState> newState) { currentState_ = std::move(newState); }
 
 private: // USER
 
@@ -81,7 +89,6 @@ public:
 private:
 	// ステート
 	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
-	//std::unique_ptr<IPlayerState> currentState_;
 	// 操作関係
 	OparationManager systemManager_;
 	// ステートのマネージャー
@@ -94,5 +101,7 @@ private:
 	PlayerContext::HealthManager healthManager_;
 	// パーティクル
 	PlayerContext::ParticleManager particleManager_;
+	// エネルギー
+	PlayerContext::EnergyManager energyManager_;
 
 };

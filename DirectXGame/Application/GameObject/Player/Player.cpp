@@ -17,6 +17,7 @@ void Player::Initialize(Model* model)
 	stateManager_.Initialize(this);
 	healthManager_.Initialize(this, 20);
 	particleManager_.Initialize(this);
+	energyManager_.Initialize(this);
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
@@ -32,6 +33,7 @@ void Player::Update()
 	// システム関係の更新
 	systemManager_.Update();
 	healthManager_.Update();
+	energyManager_.Update();
 	//if (currentState_) {
 	//	// 入力処理
 	//	currentState_->InputHandle();
