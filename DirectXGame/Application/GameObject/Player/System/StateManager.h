@@ -13,6 +13,7 @@ public:
 		kJump,
 		kFall,
 		kBoost,
+		kAssending,
 	};
 public:
 	/// <summary>

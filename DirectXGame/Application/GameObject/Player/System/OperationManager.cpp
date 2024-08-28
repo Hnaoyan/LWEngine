@@ -47,9 +47,19 @@ void OparationManager::InputUpdate()
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };
 	// ジャンプ入力
-	if (GameSystem::sPlayerKey.keyConfigs_.jump && player_->velocity_.y == 0.0f)
+	bool isIdle = std::holds_alternative<IdleState*>(player_->GetState()->GetNowState());
+	//bool isJumping = std::holds_alternative<JumpingState*>(player_->GetState()->GetNowState());
+	//bool isFalling = std::holds_alternative<FallingState*>(player_->GetState()->GetNowState());
+	bool isAssending = std::holds_alternative<AssendingState*>(player_->GetState()->GetNowState());
+	// ジャンプキー
+	if (GameSystem::sPlayerKey.keyConfigs_.jump && isIdle)
 	{
 		player_->GetStateManager()->ChangeRequest(StateManager::kJump);
+	}
+	// 空中浮遊キー
+	else if (GameSystem::sPlayerKey.keyConfigs_.pressJump && (!isAssending && !isIdle))
+	{
+		player_->GetStateManager()->ChangeRequest(StateManager::kAssending);
 	}
 	// 射撃入力
 	if (GameSystem::sPlayerKey.keyConfigs_.shot && !shotTimer_.IsActive()) {
@@ -131,7 +141,7 @@ void OparationManager::InputUpdate()
 
 		// ダッシュの入力
 		if (direct.x != 0 || direct.z != 0) {
-			if (!isDash_ && GameSystem::sPlayerKey.keyConfigs_.dash) {
+			if (!isDash_ && GameSystem::sPlayerKey.keyConfigs_.quickBoost) {
 				if (dashCooltime_.IsActive()) {
 					return;
 				}

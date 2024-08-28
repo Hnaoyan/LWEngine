@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/LwLib/Utillity/FrameTimer.h"
-#include "LockOn.h"
-#include "AimManager.h"
+#include "Aim/LockOn.h"
+#include "Aim/AimManager.h"
 
 class Player;
 class Input;

@@ -1,7 +1,7 @@
 #pragma once
-#include "../../../../Engine/3D/WorldTransform.h"
-#include "../../../../Engine/Input/Input.h"
-#include "../../../../Engine/2D/Drawer/Sprite.h"
+#include "Engine/3D/WorldTransform.h"
+#include "Engine/Input/Input.h"
+#include "Engine/2D/Drawer/Sprite.h"
 
 class Player;
 class ICamera;

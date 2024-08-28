@@ -38,6 +38,9 @@ void StateManager::ChangeRequest(StateList request)
 	case StateManager::kBoost:
 		newState = std::make_unique<BoostState>();
 		break;
+	case StateManager::kAssending:
+		newState = std::make_unique<AssendingState>();
+		break;
 	}
 
 	if (player_->GetState()) {
