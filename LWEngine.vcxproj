@@ -44,8 +44,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Assending\AssendingManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
@@ -153,11 +154,13 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Assending\AssendingManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h" />
