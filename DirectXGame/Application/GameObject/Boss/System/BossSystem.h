@@ -183,6 +183,13 @@ namespace BossSystemContext
 
 	class TrackingBullet : public IBullet {
 	public:
+		enum class TrackType
+		{
+			kStandard,
+			kInferior,
+			kSuperior,
+		};
+	public:
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -206,11 +213,23 @@ namespace BossSystemContext
 		EulerTransform GetTransform() { return transform_; }
 		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 		void SetPlayer(Player* player) { player_ = player; }
+		void SetTrackType(TrackType type) { trackType_ = type; }
+
 	private:
 		// 追跡している時間
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
+
+		TrackType trackType_;
+
+	private:
+		// 通常
+		void CalcStandardMissile();
+		// 劣等
+		void CalcInferiorMissile();
+		// 優等
+		void CalcSuperiorMissile();
 
 	public: // 共通
 		static float sTrackingFrame;
