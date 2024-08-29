@@ -18,12 +18,10 @@ void Player::Initialize(Model* model)
 	healthManager_.Initialize(this, 20);
 	particleManager_.Initialize(this);
 	energyManager_.Initialize(this);
+	uiManager_.Initialize(this);
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
-
-	//stateManager_.ChangeRequest(StateManager::kIdle);
-
 }
 
 void Player::Update()
@@ -34,12 +32,6 @@ void Player::Update()
 	systemManager_.Update();
 	healthManager_.Update();
 	energyManager_.Update();
-	//if (currentState_) {
-	//	// 入力処理
-	//	currentState_->InputHandle();
-	//	// ステートの更新
-	//	currentState_->Update();
-	//}
 
 	if (currentStates_.first) {
 		currentStates_.first->InputHandle();
@@ -145,7 +137,7 @@ void Player::OnCollision(ColliderObject target)
 
 void Player::UISpriteDraw()
 {
-	systemManager_.GetAimManager()->Draw();
+	uiManager_.Draw();
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)

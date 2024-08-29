@@ -9,6 +9,7 @@
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "../GameObject/GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Application/GameSystem/UI/GameUIManager.h"
 
 class GameScene : public IScene
 {
@@ -80,7 +81,8 @@ private: // アプリ
 	std::unique_ptr<CollisionManager> collisionManager_;
 	// GPUParticle
 	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
-
+	// UI
+	std::unique_ptr<GameUI::UIManager> uiManager_;
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
 
@@ -107,16 +109,6 @@ private: // リソース
 	uint32_t uiNumber_ = 0;
 
 	GameClear clearText_;
-
-	//std::unique_ptr<Sprite> gage_;
-	Sprite* gage_ = nullptr;
-	Sprite* backGage_ = nullptr;
-	uint32_t gageTexture_ = 0;
-
-	Vector2 gagePosition_{};
-	Vector2 gageSize_{};
-	Vector4 gageColor_{};
-
 
 private: // システム関係
 	// カメラ君

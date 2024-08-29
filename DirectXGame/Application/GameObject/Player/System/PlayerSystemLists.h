@@ -4,7 +4,8 @@
 #include "PlayerParticleManager.h"
 
 //#include "Assending/AssendingManager.h"
-#include "Energy/EnergyManager.h"
 #include "Aim/AimManager.h"
 #include "Aim/LockOn.h"
+#include "Energy/EnergyManager.h"
 #include "Health/HealthManager.h"
+#include "UI/PlayerUI.h"

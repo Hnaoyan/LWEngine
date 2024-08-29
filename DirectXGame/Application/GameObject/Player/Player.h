@@ -103,5 +103,6 @@ private:
 	PlayerContext::ParticleManager particleManager_;
 	// エネルギー
 	PlayerContext::EnergyManager energyManager_;
-
+	// UI
+	PlayerContext::UIManager uiManager_;
 };

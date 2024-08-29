@@ -13,12 +13,6 @@ void AimManager::Initialize(Player* player)
 	player_ = player;
 	// 入力クラス
 	input_ = Input::GetInstance();
-
-	//if (reticleSprite_ == nullptr) {
-	//	uint32_t texture = TextureManager::Load("Resources/crossHair.png");
-	//	reticleSprite_.reset(Sprite::Create(texture, { 0,0 }, { 0.5f,0.5f }));
-	//}
-	reticleSprite_ = SpriteManager::GetSprite("CrossHair");
 	// 初期化
 	offSetTransform_.Initialize();
 	// 親の設定
@@ -55,8 +49,6 @@ void AimManager::Update(ICamera* camera)
 		screenPosition_ = LwLib::WorldToScreen(normalPosition, camera);
 		targetPosition_ = normalPosition;
 	}
-	// クロスヘアの座標設定
-	reticleSprite_->SetPosition(screenPosition_);
 }
 
 void AimManager::ImGuiDraw()
@@ -66,9 +58,4 @@ void AimManager::ImGuiDraw()
 	ImGui::DragFloat3("Local", &offsetPosition_.x, 0.01f);
 	ImGui::DragFloat3("Wolrd", &world.x);
 	ImGui::DragFloat2("ScreenPosition", &screenPosition_.x);
-}
-
-void AimManager::Draw()
-{
-	reticleSprite_->Draw();
 }

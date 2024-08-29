@@ -28,10 +28,8 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
-	/// <summary>
-	/// レティクルの描画
-	/// </summary>
-	void Draw();
+
+	Vector2 GetReticlePosition() { return screenPosition_; }
 
 private: // ユーザー
 
@@ -54,8 +52,6 @@ private: // User
 	Vector3 targetPosition_{};
 	// エイムのスクリーン上座標
 	Vector2 screenPosition_ = {};
-	// スプライト
-	Sprite* reticleSprite_;
 	// 
 	ResetValue reset_{};
 };

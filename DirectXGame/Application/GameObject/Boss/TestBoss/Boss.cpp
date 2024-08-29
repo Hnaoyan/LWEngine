@@ -24,6 +24,8 @@ void Boss::Initialize(Model* model)
 
 	particleManager_.Initialize(this);
 
+	uiManager_.Initialize(this);
+
 	respawnPos_ = { 0,8.5f,50.0f };
 
 	worldTransform_.transform_.translate = respawnPos_;
@@ -122,6 +124,11 @@ void Boss::OnCollision(ColliderObject target)
 			isDead_ = true;
 		}
 	}
+}
+
+void Boss::UIDraw()
+{
+	this->uiManager_.Draw();
 }
 
 void Boss::GlobalValueInitialize()

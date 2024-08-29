@@ -2,6 +2,7 @@
 #include "../../IGameObject.h"
 #include "../StatePattern/StateMachine.h"
 #include "../System/BossSystem.h"
+#include "../System/UI/BossUI.h"
 
 class Player;
 
@@ -33,6 +34,11 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
+	/// <summary>
+	/// UI描画
+	/// </summary>
+	void UIDraw();
+
 private:
 
 	void GlobalValueInitialize();
@@ -72,6 +78,7 @@ private: // サブシステム
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;
 	BossSystemContext::ParticleManager particleManager_;
+	BossSystemContext::UIManager uiManager_;
 
 private:
 	// コライダー

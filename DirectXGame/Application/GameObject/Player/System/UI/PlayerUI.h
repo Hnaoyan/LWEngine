@@ -1,4 +1,5 @@
 #pragma once
+#include "Application/GameSystem/UI/GameUIManager.h"
 
 class Player;
 class Sprite;
@@ -14,7 +15,9 @@ namespace PlayerContext
 		Player* player_ = nullptr;
 
 		Sprite* reticle_ = nullptr;
-		Sprite* health_ = nullptr;
+
+		// HPのUI
+		GameUI::BarRenderInfo hpUI_;
 
 	};
 

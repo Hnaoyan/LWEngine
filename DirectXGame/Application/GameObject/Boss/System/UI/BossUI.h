@@ -1,6 +1,8 @@
 #pragma once
+#include "Application/GameSystem/UI/GameUIManager.h"
 
 class Boss;
+class Sprite;
 
 namespace BossSystemContext
 {
@@ -12,6 +14,8 @@ namespace BossSystemContext
 
 	private:
 		Boss* boss_ = nullptr;
+		// HPのUI
+		GameUI::BarRenderInfo hpUI_;
 
 	};
 
