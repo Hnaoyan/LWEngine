@@ -11,6 +11,7 @@ namespace BossSystemContext
 	public:
 		void Initialize(Boss* boss);
 		void Draw();
+		void ImGuiDraw();
 
 	private:
 		Boss* boss_ = nullptr;

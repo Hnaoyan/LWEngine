@@ -31,6 +31,9 @@ namespace BossSystemContext
 		void TakeDamage(int32_t damage = 1);
 		void Heal(int32_t heal = 1);
 		bool IsDead() { return isDead_; }
+
+		float GetHPRatio() { return (float)currentHealth_ / (float)maxHealth_; }
+
 	private:
 		// マックスHP
 		int32_t maxHealth_ = 0;

@@ -3,6 +3,7 @@
 #include <string>
 
 class Sprite;
+class Boss;
 
 namespace GameUI
 {
@@ -13,6 +14,7 @@ namespace GameUI
 		void Initialize(std::string spriteTag);
 		// 更新
 		void Update();
+		void Draw();
 	};
 
 	struct BarRenderInfo {
@@ -35,6 +37,11 @@ namespace GameUI
 	public:
 		void Initialize();
 		void Draw();
+
+		// 操作説明系
+		void HelpUIInitialize();
+		void HelpUIDraw();
+
 
 	};
 

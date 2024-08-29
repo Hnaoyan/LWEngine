@@ -39,8 +39,9 @@ public:
 	/// </summary>
 	void UIDraw();
 
-private:
+	void Reset() { uiManager_.Initialize(this); }
 
+private:
 	void GlobalValueInitialize();
 
 public:
@@ -50,6 +51,7 @@ public:
 	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
+	BossSystemContext::HealthManager* GetHealth() { return &healthManager_; }
 	// 弾発射までの間隔
 	FrameTimer fireTimer_;
 	BossSystemContext::BulletManager* GetBulletManager() { return bulletManager_.get(); }

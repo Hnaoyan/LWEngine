@@ -110,6 +110,21 @@ void Boss::ImGuiDraw()
 		ImGui::EndTabBar();
 	}
 
+	if (ImGui::BeginTabBar("System"))
+	{
+		// 通常弾
+		if (ImGui::BeginTabItem("UI")) {
+			uiManager_.ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		// 追尾弾
+		if (ImGui::BeginTabItem("Test")) {
+
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+
 
 	ImGui::End();
 

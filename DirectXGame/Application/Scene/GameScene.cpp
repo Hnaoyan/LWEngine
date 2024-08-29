@@ -26,6 +26,16 @@ void GameScene::Initialize()
 	followCamera_->Initialize();
 #pragma endregion
 
+#pragma region インスタンス化
+	terrainManager_ = std::make_unique<TerrainManager>();
+	bulletManager_ = std::make_unique<BulletManager>();
+	enemyManager_ = std::make_unique<SampleEnemyManager>();
+	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+
+	player_ = std::make_unique<Player>();
+	bossEnemy_ = std::make_unique<Boss>();
+#pragma endregion
+
 #pragma region システム
 	// パーティクル
 	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
@@ -41,24 +51,14 @@ void GameScene::Initialize()
 #pragma endregion
 
 
-
-	terrainManager_ = std::make_unique<TerrainManager>();
-	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
-
-	player_ = std::make_unique<Player>();
-	//player_->SetFollowCamera(followCamera_.get());
-	//player_->SetGPUParticleSystem(gpuParticleManager_.get());
 	player_->PreInitialize(followCamera_.get(), gpuParticleManager_.get());
 	player_->Initialize(ModelManager::GetModel("Player"));
 
-	bulletManager_ = std::make_unique<BulletManager>();
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-	enemyManager_ = std::make_unique<SampleEnemyManager>();
 	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
 	enemyManager_->SetCollisionManager(collisionManager_.get());
 
-	bossEnemy_ = std::make_unique<Boss>();
 	bossEnemy_->SetGPUParticle(gpuParticleManager_.get());
 	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
@@ -187,7 +187,9 @@ void GameScene::UIDraw()
 	Sprite::PreDraw(commandList);
 
 	player_->UISpriteDraw();
-	bossEnemy_->UIDraw();
+	if (bossEnemy_) {
+		bossEnemy_->UIDraw();
+	}
 
 	uiManager_->Draw();
 
@@ -341,6 +343,8 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("CrossHair", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 	SpriteManager::LoadSprite("Gage", reticle);
+	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
+	SpriteManager::LoadSprite("HPBackUI", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
 	SpriteManager::LoadSprite("GageBack", reticle);
 }
