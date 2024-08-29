@@ -39,28 +39,13 @@ void OparationManager::Update()
 
 void OparationManager::InputUpdate()
 {
-	float speed = 4.0f;
+	//float speed = 4.0f;
 	Vector3 direct = {};
 	Vector2 sThumbL = input_->XGetLeftJoystick();
 	Vector2 sThumbR = input_->XGetRightJoystick();
 	// コントローラー操作
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };
-	// ジャンプ入力
-	//bool isIdle = std::holds_alternative<IdleState*>(player_->GetVerticalState()->GetNowState());
-	////bool isJumping = std::holds_alternative<JumpingState*>(player_->GetState()->GetNowState());
-	////bool isFalling = std::holds_alternative<FallingState*>(player_->GetState()->GetNowState());
-	//bool isAssending = std::holds_alternative<AssendingState*>(player_->GetVerticalState()->GetNowState());
-	//// ジャンプキー
-	//if (GameSystem::sPlayerKey.keyConfigs_.jump && isIdle)
-	//{
-	//	player_->GetStateManager()->ChangeRequest(StateManager::kJump, StateManager::kVertical);
-	//}
-	//// 空中浮遊キー
-	//else if (GameSystem::sPlayerKey.keyConfigs_.pressJump && (!isAssending && !isIdle))
-	//{
-	//	player_->GetStateManager()->ChangeRequest(StateManager::kAssending, StateManager::kVertical);
-	//}
 	// 射撃入力
 	if (GameSystem::sPlayerKey.keyConfigs_.shot && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
@@ -91,19 +76,12 @@ void OparationManager::InputUpdate()
 
 	direct = Vector3::Normalize(direct);
 
-	float playerYaw = player_->camera_->transform_.rotate.y;
-	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
-	Vector3 rotateVector = Matrix4x4::TransformVector3({ direct.x,0,direct.y }, rotateY);
-	direct = rotateVector;
-
-	//player_->worldTransform_.transform_.rotate.y = player_->camera_->transform_.rotate.y;
-	Vector3 sub = Vector3::Normalize({ sThumbL.x,sThumbL.y ,0 });
-	if (sub.x != 0.0f || sub.y != 0.0f) {
-		sub = Matrix4x4::TransformVector3({ sub.x,0,sub.y }, rotateY);
-		player_->worldTransform_.transform_.rotate.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
-	}
-
 	float slowFactor = 0.2f;
+	bool isQucikBoost = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());
+	if (!isQucikBoost && GameSystem::sPlayerKey.keyConfigs_.quickBoost) {
+		player_->GetStateManager()->ChangeRequest(StateManager::kQuickBoost, StateManager::kHorizontal);
+		return;
+	}
 
 	// ダッシュ中の処理
 	if (isDash_) {
@@ -128,32 +106,6 @@ void OparationManager::InputUpdate()
 			return;
 		}
 
-	}
-	else {
-		// 入力しているかどうか
-		if (direct.x != 0)
-		{
-			player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
-		}
-		if (direct.z != 0) {
-			player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
-		}
-
-		// ダッシュの入力
-		if (direct.x != 0 || direct.z != 0) {
-			if (!isDash_ && GameSystem::sPlayerKey.keyConfigs_.quickBoost) {
-				if (dashCooltime_.IsActive()) {
-					return;
-				}
-				isDash_ = true;
-				float dashPower = 40.0f;
-				dashVelocity_.x = direct.x * dashPower;
-				dashVelocity_.z = direct.z * dashPower;
-
-				//player_->velocity_.x = direct.x * dashPower;
-				//player_->velocity_.z = direct.z * dashPower;
-			}
-		}
 	}
 
 	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);

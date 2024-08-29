@@ -3,6 +3,7 @@
 #include "IdleState.h"
 // 水平
 #include "Horizontal/IdleHorizontal.h"
+#include "Horizontal/QuickBoostState.h"
 #include "Horizontal/BoostState.h"
 #include "Horizontal/MovingState.h"
 // 垂直

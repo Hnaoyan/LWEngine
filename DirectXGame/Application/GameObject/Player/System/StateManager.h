@@ -15,6 +15,7 @@ public:
 		kJump, // ジャンプ
 		kFall, // 落下
 		kBoost, // 早い移動
+		kQuickBoost, // ダッシュ
 		kAssending, // 上昇
 	};
 

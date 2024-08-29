@@ -7,9 +7,11 @@ class IdleHorizontal;
 class IdleVertical;
 class MovingState;
 class BoostState;
+class QuickBoostState;
 class JumpingState;
 class FallingState;
 class AssendingState;
 
 using PlayerState = std::variant<IPlayerState*, IdleState*, MovingState*, BoostState*,
-	JumpingState*, FallingState*, AssendingState*, IdleHorizontal*, IdleHorizontal*>;
+	JumpingState*, FallingState*, AssendingState*, IdleVertical*, IdleHorizontal*,
+	QuickBoostState*>;

@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "imgui.h"
 #include "../GameObjectLists.h"
-#include "../../GameSystem/GameSystem.h"
+#include "Application/GameSystem/GameSystem.h"
 
 #include "Engine/PostEffect/PostEffectRender.h"
 

@@ -54,7 +54,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tableTag_ = "MoveAttack";
 	tables_[tableTag_].patterns.push_back(StatePattern::kMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
-	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	//tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kOrbitMove);
 	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
@@ -123,7 +123,7 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	if (isCooltime_) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
 		WaitState* newState = static_cast<WaitState*>(boss_->GetState());
-		newState->SetTimer(240.0f);
+		newState->SetTimer(150.0f);
 		isCooltime_ = false;
 		return;
 	}

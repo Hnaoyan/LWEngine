@@ -38,6 +38,9 @@ void StateManager::ChangeRequest(StateList request, StateType type)
 	case StateManager::kBoost:
 		newState = std::make_unique<BoostState>();
 		break;
+	case StateManager::kQuickBoost:
+		newState = std::make_unique<QuickBoostState>();
+		break;
 	case StateManager::kAssending:
 		newState = std::make_unique<AssendingState>();
 		break;

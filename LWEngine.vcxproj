@@ -38,6 +38,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.cpp" />
