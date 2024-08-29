@@ -22,6 +22,11 @@ void PlayerContext::HealthManager::Update()
 	if (hitPoint_.invincibility.IsEnd()) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	}
+
+	if (hitPoint_.currentHealth <= 0) {
+		player_->SetIsDead(true);
+	}
+
 }
 
 void PlayerContext::HealthManager::TakeDamage(uint32_t damage)

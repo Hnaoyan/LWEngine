@@ -270,6 +270,19 @@ namespace BossState
 		Vector3 startPosition_{};
 		Vector3 controlPosition_{};
 		Vector3 endPosition_{};
+
+	private: // 攻撃
+		// 攻撃処理
+		void LockOnAttack();
+
+		FrameTimer fireTimer_;
+
+		Vector3 bulletDirect_ = {};
+		float bulletSpeed_ = 0.0f;
+		float bulletScale_ = 0.5f;
+
+		bool isAttack_ = false;
+
 	};
 
 	// 瞬間移動状態

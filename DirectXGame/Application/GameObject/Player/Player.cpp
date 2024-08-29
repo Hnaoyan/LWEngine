@@ -10,12 +10,15 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
+	worldTransform_.transform_.translate.z = -15.0f;
+	worldTransform_.UpdateMatrix();
+
 	collider_.Initialize(worldTransform_.transform_.scale, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
 	systemManager_.Initialize(this);
 	stateManager_.Initialize(this);
-	healthManager_.Initialize(this, 20);
+	healthManager_.Initialize(this, 10);
 	particleManager_.Initialize(this);
 	energyManager_.Initialize(this);
 	uiManager_.Initialize(this);

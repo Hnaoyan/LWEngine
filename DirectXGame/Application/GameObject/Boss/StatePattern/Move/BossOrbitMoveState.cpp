@@ -8,11 +8,34 @@ void BossState::OrbitMoveState::Initialize()
 	boss_->SetNowVariantState(this);
 	startPosition_ = boss_->worldTransform_.GetWorldPosition();
 	changeTimer_.Start(150.0f);
+
+	if (boss_->GetHealth()->GetHPRatio() < 0.75f) {
+		isAttack_ = true;
+		fireTimer_.Start(5.0f);
+	}
+	else {
+		isAttack_ = false;
+	}
+
+	//---弾の情報---//
+	// 速さ
+	bulletSpeed_ = 50.0f;
+	// サイズ
+	bulletScale_ = 0.4f;
+	// 進む方向
+	bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 }
 
 void BossState::OrbitMoveState::Update()
 {
+	if (isAttack_) {
+		fireTimer_.Update();
+		if (!fireTimer_.IsActive()) {
+			fireTimer_.Start(5.0f);
+			LockOnAttack();
+		}
 
+	}
 	changeTimer_.Update();
 	RotateUpdate();
 	GenerateMovePoint(100.0f, OrbitMoveState::QuaterRotationPattern::kFirst);
@@ -81,4 +104,16 @@ void BossState::OrbitMoveState::GenerateMovePoint(float length, QuaterRotationPa
 	default:
 		break;
 	}
+}
+
+void BossState::OrbitMoveState::LockOnAttack()
+{
+	EulerTransform pos = boss_->worldTransform_.transform_;
+	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	// 弾の方向設定
+	Vector3 playerPos = boss_->GetPlayer()->worldTransform_.GetWorldPosition();
+	playerPos.y += 0.5f;
+	bulletDirect_ = Vector3::Normalize(playerPos - boss_->worldTransform_.GetWorldPosition());
+	
+	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 }

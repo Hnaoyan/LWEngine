@@ -70,6 +70,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	section_.push_back("AttackType");
 	section_.push_back("MoveAttack");
 	section_.push_back("UpDownMove");
+	section_.push_back("MoveAttack");
 
 	currentStep_ = 0;
 	IsInActionSequence_ = false;

@@ -74,7 +74,6 @@ void BossState::AttackState::LockAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
-	bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 }
 
@@ -169,6 +168,11 @@ void BossState::AttackState::RadialFireAttack()
 
 void BossState::AttackState::GenerateProcess()
 {
+	// 弾の方向ベクトル設定
+	Vector3 playerPos = boss_->GetPlayer()->worldTransform_.GetWorldPosition();
+	playerPos.y += 0.5f;
+	bulletDirect_ = Vector3::Normalize(playerPos - boss_->worldTransform_.GetWorldPosition());
+
 	switch (pattern_)
 	{
 	case BossState::AttackState::ShotPattern::kPredictive:
