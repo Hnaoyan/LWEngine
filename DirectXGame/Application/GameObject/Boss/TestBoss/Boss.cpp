@@ -133,7 +133,15 @@ void Boss::ImGuiDraw()
 void Boss::OnCollision(ColliderObject target)
 {
 	if (std::holds_alternative<IBullet*>(target)) {
-		healthManager_.TakeDamage();
+		IBullet** bullet = std::get_if<IBullet*>(&target);
+		float lifeTime = (*bullet)->GetLifeTime();
+		if (lifeTime >= 1.0f) {
+			healthManager_.TakeDamage(1.0f * 0.5f);
+		}
+		else {
+			healthManager_.TakeDamage();
+		}
+
 		particleManager_.OnBulletHit();
 		if (healthManager_.IsDead()) {
 			isDead_ = true;
