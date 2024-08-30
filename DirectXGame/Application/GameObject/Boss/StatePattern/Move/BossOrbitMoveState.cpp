@@ -11,7 +11,7 @@ void BossState::OrbitMoveState::Initialize()
 
 	if (boss_->GetHealth()->GetHPRatio() < 0.75f) {
 		isAttack_ = true;
-		fireTimer_.Start(5.0f);
+		fireTimer_.Start(2.5f);
 	}
 	else {
 		isAttack_ = false;
@@ -31,7 +31,7 @@ void BossState::OrbitMoveState::Update()
 	if (isAttack_) {
 		fireTimer_.Update();
 		if (!fireTimer_.IsActive()) {
-			fireTimer_.Start(5.0f);
+			fireTimer_.Start(2.5f);
 			LockOnAttack();
 		}
 

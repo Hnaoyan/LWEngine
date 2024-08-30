@@ -23,22 +23,22 @@ namespace BossSystemContext
 {
 	class HealthManager {
 	public:
-		void Initialize(int32_t maxHealth) 
+		void Initialize(float maxHealth)
 		{
 			maxHealth_ = maxHealth;
 			currentHealth_ = maxHealth_;
 		}
-		void TakeDamage(int32_t damage = 1);
-		void Heal(int32_t heal = 1);
+		void TakeDamage(float damage = 1.0f);
+		void Heal(float heal = 1.0f);
 		bool IsDead() { return isDead_; }
 
 		float GetHPRatio() { return (float)currentHealth_ / (float)maxHealth_; }
 
 	private:
 		// マックスHP
-		int32_t maxHealth_ = 0;
+		float maxHealth_ = 0;
 		// 現在のHP
-		int32_t currentHealth_ = 0;
+		float currentHealth_ = 0;
 		bool isDead_ = false;
 	};
 

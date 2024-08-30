@@ -18,6 +18,8 @@ void IBullet::Initialize()
 
 void IBullet::Update()
 {
+	// 生存時間
+	lifeTime_ += GameSystem::GameSpeedFactor();
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 

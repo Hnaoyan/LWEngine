@@ -28,14 +28,19 @@ public:
 	/// </summary>
 	/// <param name="object"></param>
 	void OnCollision(ColliderObject object);
-public: // アクセッサ
-	Sphere* GetCollider() { return &collider_; }
-	EulerTransform GetTransform() { return transform_; }
-	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+
 private:
 	// コライダー
 	Sphere collider_;
 	// 速度
 	Vector3 velocity_ = {};
+	// 生存時間（ダメージに変更を加える場合
+	float lifeTime_ = 0.0f;
+
+public: // アクセッサ
+	Sphere* GetCollider() { return &collider_; }
+	EulerTransform GetTransform() { return transform_; }
+	float GetLifeTime() { return lifeTime_; }
+	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 
 };

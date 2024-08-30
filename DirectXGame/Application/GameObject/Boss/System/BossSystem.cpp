@@ -10,7 +10,7 @@
 
 uint32_t BossSystemContext::IBullet::sSerialNumber = 0;
 
-void BossSystemContext::HealthManager::TakeDamage(int32_t damage)
+void BossSystemContext::HealthManager::TakeDamage(float damage)
 {
 	currentHealth_ -= damage;
 	// 死亡処理
@@ -20,7 +20,7 @@ void BossSystemContext::HealthManager::TakeDamage(int32_t damage)
 	}
 }
 
-void BossSystemContext::HealthManager::Heal(int32_t heal)
+void BossSystemContext::HealthManager::Heal(float heal)
 {
 	if (currentHealth_ < maxHealth_) {
 		currentHealth_ += heal;

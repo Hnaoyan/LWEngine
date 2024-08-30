@@ -124,7 +124,14 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	if (isCooltime_) {
 		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
 		WaitState* newState = static_cast<WaitState*>(boss_->GetState());
-		newState->SetTimer(150.0f);
+		// 体力少ない場合
+		if (boss_->GetHealth()->GetHPRatio() <= 0.5f) {
+			newState->SetTimer(30.0f);
+		}
+		// 通常状態
+		else {
+			newState->SetTimer(150.0f);
+		}
 		isCooltime_ = false;
 		return;
 	}

@@ -6,25 +6,28 @@ void BossState::AttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
 
-	fireCooltime_ = 15.0f;
 	changeTimer_.Start(90.0f);
-	fireTimer_.Start(fireCooltime_);
 	// 攻撃パターンのランダム
 	uint32_t randM = LwLib::GetRandomValue(0, 3);
 	if (randM == 0) {
 		pattern_ = ShotPattern::kPredictive;
+		fireCooltime_ = 10.0f;
 	}
 	else if (randM == 1) {
 		pattern_ = ShotPattern::kStraight;
+		fireCooltime_ = 15.0f;
 	}
 	else if(randM == 2){
 		pattern_ = ShotPattern::kSpread;
+		fireCooltime_ = 20.0f;
 	}
 	else {
 		pattern_ = ShotPattern::kRadialFire;
+		fireCooltime_ = 20.0f;
 	}
 	// 初期の角度
 	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
+	fireTimer_.Start(fireCooltime_);
 
 	//---弾の情報---//
 	// 速さ
