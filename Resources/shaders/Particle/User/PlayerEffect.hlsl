@@ -29,7 +29,8 @@ Particle PlayerMove(RandomGenerator generator,float32_t3 emitterPosition)
     float32_t3 max = { 1.0f, 1.0f, 1.0f };
     particle.scale = generator.GenerateRange3D(min, max);
     particle.translate = emitterPosition;
-    particle.color.rgb = float32_t3(1.0f, 0.0f, 0.0f);
+    particle.translate.y -= 0.2f;
+    particle.color.rgb = float32_t3(0.1f, 0.1f, 0.1f);
     particle.color.a = 1.0f;
     particle.lifetime = 1.0f;
     particle.currentTime = 0.0f;
@@ -53,7 +54,9 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
 Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
 {
     Particle particle = (Particle) 0;
-    particle.scale = generator.GenerateRange3D(float32_t3(4.0f, 4.0f, 4.0f), float32_t3(8.0f, 8.0f, 8.0f));
+    float32_t maxSize = 7.0f;
+    float32_t minSize = 5.75f;
+    particle.scale = generator.GenerateRange3D(float32_t3(minSize, minSize, minSize), float32_t3(maxSize, maxSize, maxSize));
     particle.scale.z = 1.0f;
     float32_t value = 3.0f;
     float32_t3 min = { -value, -value, -value };
@@ -68,7 +71,7 @@ Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
    
     particle.translate *= 3.0f;
     particle.translate += emitterPosition;
-    particle.color.rgb = generator.Generate3D();
+    particle.color.rgb = generator.GenerateRange3D(float32_t3(0.85f, 0.0f, 0.0f), float32_t3(1.0f, 0.05f, 0.05f));
     particle.color.a = 1.0f;
     particle.lifetime = 1.0f;
     particle.currentTime = 0.0f;

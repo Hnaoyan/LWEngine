@@ -37,8 +37,8 @@ void main( uint3 DTid : SV_DispatchThreadID )
             gParticle[particleIndex].currentTime += gPerFrame.deltaTime;
             if (gParticle[particleIndex].isScaleDecrement != 0)
             {
-                gParticle[particleIndex].scale.x -= (0.1f);
-                gParticle[particleIndex].scale.y -= (0.1f);
+                gParticle[particleIndex].scale.x -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+                gParticle[particleIndex].scale.y -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
                 if (gParticle[particleIndex].scale.x < 0)
                 {
                     gParticle[particleIndex].scale.x = 0.0f;
