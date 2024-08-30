@@ -147,6 +147,29 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	// リストにムーブ
 	units_.push_back(std::move(instance));
 }
+void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player, TrackType type)
+{
+	// インスタンス作成
+	std::unique_ptr<InstancedUnit> instance = std::make_unique<TrackingBullet>();
+	// 速度
+	static_cast<TrackingBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
+	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
+	static_cast<TrackingBullet*>(instance.get())->Initialize();
+	static_cast<TrackingBullet*>(instance.get())->SetTrackType(type);
+	instance->transform_ = transform;
+	instance->Update();
+
+	// 移動のパーティクル
+	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	pre->SetBullet(instance.get());
+	emitter->Initialize(ModelManager::GetModel("Plane"));
+	emitter->Update();
+	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+
+	// リストにムーブ
+	units_.push_back(std::move(instance));
+}
 #pragma endregion
 
 void BossSystemContext::BulletManager::Initialize(Model* model) {

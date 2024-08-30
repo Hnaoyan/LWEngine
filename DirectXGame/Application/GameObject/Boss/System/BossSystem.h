@@ -21,6 +21,14 @@ namespace BossSystemContext {
 
 namespace BossSystemContext
 {
+
+	enum class TrackType
+	{
+		kStandard,
+		kInferior,
+		kSuperior,
+	};
+
 	class HealthManager {
 	public:
 		void Initialize(float maxHealth)
@@ -143,6 +151,7 @@ namespace BossSystemContext
 		void AddBullet(const EulerTransform& transform, const Vector3& direct, float speed);
 
 		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player);
+		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player, TrackType type);
 		// GPUParticle
 		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
@@ -183,13 +192,6 @@ namespace BossSystemContext
 
 	class TrackingBullet : public IBullet {
 	public:
-		enum class TrackType
-		{
-			kStandard,
-			kInferior,
-			kSuperior,
-		};
-	public:
 		/// <summary>
 		/// 初期化
 		/// </summary>
@@ -211,6 +213,7 @@ namespace BossSystemContext
 		void OnCollision(ColliderObject object) override;
 	public: // アクセッサ
 		EulerTransform GetTransform() { return transform_; }
+		Vector3 GetVelocity() { return velocity_; }
 		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 		void SetPlayer(Player* player) { player_ = player; }
 		void SetTrackType(TrackType type) { trackType_ = type; }
