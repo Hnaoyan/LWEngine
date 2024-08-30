@@ -78,7 +78,7 @@ void OparationManager::InputUpdate()
 
 	float slowFactor = 0.2f;
 	bool isQucikBoost = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());
-	if (!isQucikBoost && GameSystem::sPlayerKey.keyConfigs_.quickBoost) {
+	if (!isQucikBoost && GameSystem::sPlayerKey.keyConfigs_.quickBoost && !player_->quickBoostCoolTime_.IsActive()) {
 		player_->GetStateManager()->ChangeRequest(StateManager::kQuickBoost, StateManager::kHorizontal);
 		return;
 	}

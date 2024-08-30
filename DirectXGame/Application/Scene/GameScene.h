@@ -93,6 +93,9 @@ private: // リソース
 		bool isClear;
 	};
 
+	FrameTimer backTitleTimer_;
+	bool isGameOver_ = false;
+
 	// UI用のデータ
 	struct UIData {
 		std::string tag;

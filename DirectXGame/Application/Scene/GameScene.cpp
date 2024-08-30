@@ -14,6 +14,8 @@ void GameScene::Initialize()
 	LoadModel();
 	// テクスチャ関係読み込み
 	LoadTexture();
+	// ゲームオーバーフラグ
+	isGameOver_ = false;
 
 #pragma region カメラ関係
 	// 初期カメラ
@@ -93,6 +95,26 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("SAMPLE");
 	}
 #endif // _DEBUG
+	if (player_->IsDead() && !isGameOver_) {
+		backTitleTimer_.Start(120.0f);
+		isGameOver_ = true;
+	}
+
+	if (isGameOver_) {
+		backTitleTimer_.Update();
+		if (!backTitleTimer_.IsActive()) {
+			sceneManager_->ChangeScene("TITLE");
+		}
+		return;
+	}
+	if (clearText_.isClear) {
+		clearText_.transitionTimer.Update();
+
+		if (clearText_.transitionTimer.IsEnd()) {
+			sceneManager_->ChangeScene("TITLE");
+		}
+	}
+
 	// ゲームのシステム更新
 	gameSystem_->Update();
 
@@ -110,14 +132,6 @@ void GameScene::Update()
 		}
 	}
 
-	if (clearText_.isClear) {
-		clearText_.transitionTimer.Update();
-
-		if (clearText_.transitionTimer.IsEnd()) {
-			sceneManager_->ChangeScene("TITLE");
-		}
-
-	}
 
 	terrainManager_->Update();
 
@@ -196,7 +210,10 @@ void GameScene::UIDraw()
 	if (clearText_.isClear) {
 		clearText_.clearText->Draw();
 	}
-
+	if (isGameOver_) {
+		SpriteManager::GetSprite("GameOverUI")->SetPosition({ 1280.0f / 2.0f,720.0f / 2.0f });
+		SpriteManager::GetSprite("GameOverUI")->Draw();
+	}
 	for (int i = 0; i < controlUIs_.size(); ++i) {
 		controlUIs_[i].first->SetPosition(controlUIs_[i].second.position);
 		controlUIs_[i].first->Draw();
@@ -349,6 +366,9 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("PlayerHPBackUI", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
 	SpriteManager::LoadSprite("GageBack", reticle);
+	reticle = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
+	SpriteManager::LoadSprite("GameOverUI", reticle);
+
 }
 
 void GameScene::CameraUpdate()

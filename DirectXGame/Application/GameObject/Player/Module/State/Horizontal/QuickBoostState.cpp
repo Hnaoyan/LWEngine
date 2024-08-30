@@ -19,7 +19,7 @@ void QuickBoostState::Initialize()
 	float dashPower = 40.0f;
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
-	changeTimer_.Start(25.0f);
+	changeTimer_.Start(40.0f);
 }
 
 void QuickBoostState::Update()
@@ -47,6 +47,7 @@ void QuickBoostState::Update()
 void QuickBoostState::Exit()
 {
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+	player_->quickBoostCoolTime_.Start(45.0f);
 }
 	
 void QuickBoostState::InputHandle()

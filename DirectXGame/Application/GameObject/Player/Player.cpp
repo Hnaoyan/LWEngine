@@ -35,6 +35,7 @@ void Player::Update()
 	systemManager_.Update();
 	healthManager_.Update();
 	energyManager_.Update();
+	quickBoostCoolTime_.Update();
 
 	if (currentStates_.first) {
 		currentStates_.first->InputHandle();

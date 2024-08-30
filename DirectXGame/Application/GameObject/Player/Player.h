@@ -88,6 +88,8 @@ public:
 	// 落下フラグ
 	bool isGround_ = false;
 
+	FrameTimer quickBoostCoolTime_;
+
 private:
 	// ステート
 	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
