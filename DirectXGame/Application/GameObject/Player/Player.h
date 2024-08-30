@@ -57,6 +57,7 @@ public: // ゲッター
 	OparationManager* GetOperation() { return &systemManager_; }
 	StateManager* GetStateManager() { return &stateManager_; }
 	PlayerContext::EnergyManager* GetEnergyManager() { return &energyManager_; }
+	PlayerContext::HealthManager* GetHPManager() { return &healthManager_; }
 	Vector3 GetVelocity() { return velocity_; }
 public: // ステート
 	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }

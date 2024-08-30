@@ -343,8 +343,10 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("CrossHair", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 	SpriteManager::LoadSprite("Gage", reticle);
+	SpriteManager::LoadSprite("PlayerGage", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 	SpriteManager::LoadSprite("HPBackUI", reticle);
+	SpriteManager::LoadSprite("PlayerHPBackUI", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
 	SpriteManager::LoadSprite("GageBack", reticle);
 }

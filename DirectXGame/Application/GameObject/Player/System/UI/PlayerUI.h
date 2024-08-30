@@ -11,6 +11,9 @@ namespace PlayerContext
 	public:
 		void Initialize(Player* player);
 		void Draw();
+		void ImGuiDraw();
+	private:
+		void HPUI();
 	private:
 		Player* player_ = nullptr;
 
@@ -18,7 +21,7 @@ namespace PlayerContext
 
 		// HPのUI
 		GameUI::BarRenderInfo hpUI_;
-
+		Vector2 backUI_{};
 	};
 
 

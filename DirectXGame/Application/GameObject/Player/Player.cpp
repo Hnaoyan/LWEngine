@@ -98,6 +98,11 @@ void Player::ImGuiDraw()
 			ImGui::DragFloat("Energy", &energyManager_.energy_.currentEnergy);
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("UI")) {
+			uiManager_.ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+
 		ImGui::EndTabBar();
 	}
 

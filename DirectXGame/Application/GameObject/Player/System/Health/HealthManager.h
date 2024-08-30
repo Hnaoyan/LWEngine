@@ -25,6 +25,7 @@ namespace PlayerContext
 		/// <param name="damage"></param>
 		void TakeDamage(uint32_t damage = 1);
 
+		float GetHPRatio() { return (float)hitPoint_.currentHealth / (float)hitPoint_.maxHealth; }
 	private:
 
 		struct HealthData {
