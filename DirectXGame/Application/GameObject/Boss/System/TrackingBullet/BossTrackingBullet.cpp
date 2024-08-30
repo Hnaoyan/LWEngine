@@ -160,10 +160,10 @@ void BossSystemContext::TrackingBullet::CalcSuperiorMissile()
 	float predictionTime = 5.5f; // ミサイルが向かう予測時間（調整可能）
 
 	if (playerVelocity.x == 0.0f && playerVelocity.y == 0.0f && playerVelocity.z == 0.0f) {
-		predictedPosition = playerPosition + (playerVelocity * predictionTime);
+		predictedPosition = playerPosition;
 	}
 	else {
-		predictedPosition = playerPosition;
+		predictedPosition = playerPosition + (playerVelocity * predictionTime);
 	}
 	predictedPosition = playerPosition + (playerVelocity * predictionTime);
 

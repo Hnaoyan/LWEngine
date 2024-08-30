@@ -108,11 +108,24 @@ void BossState::OrbitMoveState::GenerateMovePoint(float length, QuaterRotationPa
 
 void BossState::OrbitMoveState::LockOnAttack()
 {
+	Player* player = boss_->GetPlayer();
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	// 弾の方向設定
-	Vector3 playerPos = boss_->GetPlayer()->worldTransform_.GetWorldPosition();
-	playerPos.y += 0.5f;
+	Vector3 playerPos = player->worldTransform_.GetWorldPosition();
+	Vector3 playerMove = player->prevPosition_ - player->worldTransform_.GetWorldPosition();
+	// 予測位置を計算
+	float predictionTime = 10.0f; // ミサイルが向かう予測時間（調整可能）
+
+	if (playerMove.x == 0.0f && playerMove.y == 0.0f && playerMove.z == 0.0f) {
+		playerPos = playerPos;
+	}
+	else {
+		playerPos = playerPos + (playerMove * predictionTime);
+	}
+	if (playerPos.y < 4.0f) {
+		playerPos.y += 0.5f;
+	}
 	bulletDirect_ = Vector3::Normalize(playerPos - boss_->worldTransform_.GetWorldPosition());
 	
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);

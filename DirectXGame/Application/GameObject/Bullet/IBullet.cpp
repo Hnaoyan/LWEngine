@@ -14,6 +14,8 @@ void IBullet::Initialize()
 	transform_.scale *= 0.5f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeBullet);
+	// 生成座標
+	generatePosition_ = transform_.translate;
 }
 
 void IBullet::Update()

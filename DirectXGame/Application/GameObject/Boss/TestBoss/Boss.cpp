@@ -134,12 +134,29 @@ void Boss::OnCollision(ColliderObject target)
 {
 	if (std::holds_alternative<IBullet*>(target)) {
 		IBullet** bullet = std::get_if<IBullet*>(&target);
-		float lifeTime = (*bullet)->GetLifeTime();
-		if (lifeTime >= 1.0f) {
+		//float lifeTime = (*bullet)->GetLifeTime();
+		//if (lifeTime >= 1.0f) {
+		//	healthManager_.TakeDamage(1.0f * 0.5f);
+		//}
+		//else {
+		//	healthManager_.TakeDamage();
+		//}
+
+		Vector2 xzBullet = { (*bullet)->GetGeneratePosition().x,(*bullet)->GetGeneratePosition().z };
+		Vector2 xzBoss = { worldTransform_.GetWorldPosition().x ,worldTransform_.GetWorldPosition().z };
+		float distance = Vector2::Distance(xzBoss, xzBullet);
+
+		if (distance >= 150.0f) {
+			healthManager_.TakeDamage(1.0f * 0.25f);
+		}
+		if (distance >= 100.0f) {
+			healthManager_.TakeDamage(1.0f * 0.4f);
+		}
+		else if (distance >= 75.0f) {
 			healthManager_.TakeDamage(1.0f * 0.5f);
 		}
 		else {
-			healthManager_.TakeDamage();
+			healthManager_.TakeDamage(1.0f);
 		}
 
 		particleManager_.OnBulletHit();
