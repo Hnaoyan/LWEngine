@@ -31,6 +31,8 @@ void BossSystemContext::NormalBullet::Update()
 	velocity_ += moveDirect_ * sAcceleration;
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
+	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
+	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
 
 	InstancedUnit::Update();
 	collider_.Update(transform_.translate);
