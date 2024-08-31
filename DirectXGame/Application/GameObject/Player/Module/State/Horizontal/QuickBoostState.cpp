@@ -20,6 +20,9 @@ void QuickBoostState::Initialize()
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
 	changeTimer_.Start(40.0f);
+
+	player_->GetEnergyManager()->QuickBoostDecre();
+
 }
 
 void QuickBoostState::Update()

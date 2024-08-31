@@ -361,9 +361,11 @@ void GameScene::LoadTexture()
 	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 	SpriteManager::LoadSprite("Gage", reticle);
 	SpriteManager::LoadSprite("PlayerGage", reticle);
+	SpriteManager::LoadSprite("PlayerEnergyGage", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 	SpriteManager::LoadSprite("HPBackUI", reticle);
 	SpriteManager::LoadSprite("PlayerHPBackUI", reticle);
+	SpriteManager::LoadSprite("PlayerEnergyBackUI", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
 	SpriteManager::LoadSprite("GageBack", reticle);
 	reticle = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");

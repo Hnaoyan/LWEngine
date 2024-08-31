@@ -9,7 +9,10 @@ void AssendingState::Initialize()
 
 void AssendingState::Update()
 {
-
+	if (player_->GetEnergyManager()->GetNowEnergy() <= 0.0f) {
+		stateManager_->ChangeRequest(StateManager::kFall, StateManager::kVertical);
+		return;
+	}
 	float assendPower = 3.0f;
 	float gravity = -2.5f;
 	player_->velocity_.y += assendPower * GameSystem::GameSpeedFactor();

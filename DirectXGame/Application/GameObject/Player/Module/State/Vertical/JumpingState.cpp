@@ -31,7 +31,7 @@ void JumpingState::Exit()
 
 void JumpingState::InputHandle()
 {
-	if (GameSystem::sPlayerKey.keyConfigs_.pressJump)
+	if (GameSystem::sPlayerKey.keyConfigs_.pressJump && player_->GetEnergyManager()->GetEnergyRatio() >= 0.5f)
 	{
 		player_->GetStateManager()->ChangeRequest(StateManager::kAssending, StateManager::kVertical);
 	}

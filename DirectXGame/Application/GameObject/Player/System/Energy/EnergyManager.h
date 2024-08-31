@@ -22,11 +22,16 @@ namespace PlayerContext
 	public:
 		void Initialize(Player* player);
 		void Update();
-		//void DashInit();
-		//void JumpInit();
+		float GetEnergyRatio() { return energy_.currentEnergy / energy_.maxEnergy; }
+		float GetNowEnergy() { return energy_.currentEnergy; }
+		void QuickBoostDecre();
+		// ダッシュが出来るか
+		bool CheckQuickBoost() { return energy_.currentEnergy > (energy_.maxEnergy / 5.0f) ? true : false; }
+		//void JumpDecre();
 
 	private:
 		Player* player_ = nullptr;
+		FrameTimer quickBoostRecoveryTime_;
 	public:
 		// エネルギー情報
 		EnergyData energy_;

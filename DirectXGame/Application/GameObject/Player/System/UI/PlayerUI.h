@@ -14,6 +14,7 @@ namespace PlayerContext
 		void ImGuiDraw();
 	private:
 		void HPUI();
+		void EnergyUI();
 	private:
 		Player* player_ = nullptr;
 
@@ -21,7 +22,8 @@ namespace PlayerContext
 
 		// HPのUI
 		GameUI::BarRenderInfo hpUI_;
-		Vector2 backUI_{};
+		// EnergyのUI
+		GameUI::BarRenderInfo energyUI_;
 	};
 
 
