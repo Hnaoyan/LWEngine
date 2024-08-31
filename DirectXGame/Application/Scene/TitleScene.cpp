@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/2D/SpriteManager.h"
 
 void TitleScene::Initialize()
 {
@@ -15,6 +16,16 @@ void TitleScene::Initialize()
 
 	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
 	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
+
+	SpriteManager::LoadSprite("BackGroundImage", TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
+	SpriteManager::LoadSprite("TitleButtonText", TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
+	SpriteManager::LoadSprite("TitleText", TextureManager::GetInstance()->Load("Resources/UI/TitleText.png"));
+
+	SpriteManager::GetSprite("BackGroundImage")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	SpriteManager::GetSprite("TitleButtonText")->SetPosition(Vector2(1280.0f / 2.0f, 500.0f));
+	Vector2 GetScale = SpriteManager::GetSprite("TitleButtonText")->GetSize();
+	SpriteManager::GetSprite("TitleButtonText")->SetSize(GetScale * 1.5f);
+	SpriteManager::GetSprite("TitleText")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 3.0f));
 
 	size_ = uiSprites_[1]->GetSize();
 	uiSprites_[1]->SetSize(size_ * 2);
@@ -48,7 +59,7 @@ void TitleScene::Draw()
 #pragma region 背景
 	Sprite::PreDraw(commandList);
 
-	uiSprites_[0]->Draw();
+	//uiSprites_[0]->Draw();
 
 	Sprite::PostDraw();
 #pragma endregion
@@ -69,9 +80,9 @@ void TitleScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
-	for (int i = 1; i < uiSprites_.size(); ++i) {
-		uiSprites_[i]->Draw();
-	}
+	SpriteManager::GetSprite("TitleButtonText")->Draw();
+	SpriteManager::GetSprite("TitleText")->Draw();
+	SpriteManager::GetSprite("BackGroundImage")->Draw();
 
 	Sprite::PostDraw();
 

@@ -14,6 +14,7 @@ void PlayerContext::EnergyManager::Initialize(Player* player)
 void PlayerContext::EnergyManager::Update()
 {
 	// 上昇中か
+	quickBoostRecoveryTime_.Update();
 	energy_.isAssending = std::holds_alternative<AssendingState*>(player_->GetVerticalState()->GetNowState());
 	if (energy_.isAssending) {
 		energy_.currentEnergy -= 75.0f * GameSystem::GameSpeedFactor();
