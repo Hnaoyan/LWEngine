@@ -226,6 +226,8 @@ namespace BossSystemContext
 
 		TrackType trackType_;
 
+		float acceleration_ = 0.2f;
+
 	private:
 		// 通常
 		void CalcStandardMissile();
@@ -272,6 +274,9 @@ namespace BossSystemContext
 
 	private:
 		Vector3 moveDirect_{};
+
+		float acceleration_ = 0.0f;
+
 	public: // 共通
 		static float sAcceleration;
 

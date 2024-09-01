@@ -113,9 +113,9 @@ void BossState::OrbitMoveState::LockOnAttack()
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	// 弾の方向設定
 	Vector3 playerPos = player->worldTransform_.GetWorldPosition();
-	Vector3 playerMove = player->prevPosition_ - player->worldTransform_.GetWorldPosition();
+	Vector3 playerMove = player->worldTransform_.GetWorldPosition() - player->prevPosition_;
 	// 予測位置を計算
-	float predictionTime = 10.0f; // ミサイルが向かう予測時間（調整可能）
+	float predictionTime = 50.0f; // ミサイルが向かう予測時間（調整可能）
 
 	if (playerMove.x == 0.0f && playerMove.y == 0.0f && playerMove.z == 0.0f) {
 		playerPos = playerPos;

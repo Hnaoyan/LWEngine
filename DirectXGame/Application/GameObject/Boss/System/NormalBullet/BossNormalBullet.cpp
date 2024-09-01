@@ -8,6 +8,7 @@ void BossSystemContext::NormalBullet::Initialize()
 {
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	sAcceleration = instance->GetValue<float>("BossNormalBullet", "Acceleration");
+	acceleration_ = 0.0f;
 
 	serialNumber_ = sSerialNumber;
 	sSerialNumber++;
@@ -27,8 +28,9 @@ void BossSystemContext::NormalBullet::Update()
 {
 	//velocity_.x += moveDirect_.x * 2.0f;
 	//velocity_.z += moveDirect_.z * 2.0f;
-
-	velocity_ += moveDirect_ * sAcceleration;
+	
+	acceleration_ += sAcceleration * GameSystem::GameSpeedFactor();
+	velocity_ += moveDirect_ * acceleration_;
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;

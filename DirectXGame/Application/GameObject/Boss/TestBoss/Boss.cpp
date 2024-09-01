@@ -87,7 +87,9 @@ void Boss::ImGuiDraw()
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 	collider_.radius_ = worldTransform_.transform_.scale.x;
-	float distance = Vector3::Distance(worldTransform_.GetWorldPosition(), player_->worldTransform_.GetWorldPosition());
+	Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
+	Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
+	float distance = Vector2::Distance(boss, player);
 	ImGui::DragFloat("PlayerDistance", &distance);
 
 	// システムのタブ

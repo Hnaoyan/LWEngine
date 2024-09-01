@@ -60,7 +60,10 @@ void BossSystemContext::TrackingBullet::Update()
 	}
 
 	// 移動
-	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
+	acceleration_ += 0.5f * GameSystem::GameSpeedFactor();
+	Vector3 direct = Vector3::Normalize(velocity_) * acceleration_;
+	velocity_ += direct;
+	transform_.translate += (velocity_) * GameSystem::GameSpeedFactor();
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
 	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
 
@@ -98,7 +101,8 @@ void BossSystemContext::TrackingBullet::CalcStandardMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / TrackingBullet::sLerpRadius;
+	float lerpRadius = TrackingBullet::sLerpRadius;
+	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius;
 	
 	// 力の向き
 	Vector3 force = centripetalAccel * maxCentripetalAccel;
@@ -132,7 +136,8 @@ void BossSystemContext::TrackingBullet::CalcInferiorMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / TrackingBullet::sLerpRadius;
+	float lerpRadius = TrackingBullet::sLerpRadius;
+	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius;
 	// ずらすオフセット作成
 	float offsetValue = 1.5f;
 	Vector3 offset = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue });
@@ -156,7 +161,7 @@ void BossSystemContext::TrackingBullet::CalcSuperiorMissile()
 	// プレイヤーの現在の位置と速度
 	Vector3 playerPosition = player_->worldTransform_.GetWorldPosition();
 	//Vector3 playerVelocity = player_->GetVelocity(); // プレイヤーの速度を取得
-	Vector3 playerVelocity = player_->prevPosition_ - player_->worldTransform_.GetWorldPosition();
+	Vector3 playerVelocity = player_->worldTransform_.GetWorldPosition() - player_->prevPosition_;
 	Vector3 predictedPosition{};
 	// 予測位置を計算
 	float predictionTime = 5.5f; // ミサイルが向かう予測時間（調整可能）
@@ -180,7 +185,8 @@ void BossSystemContext::TrackingBullet::CalcSuperiorMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / TrackingBullet::sLerpRadius;
+	float lerpRadius = TrackingBullet::sLerpRadius;
+	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius;
 
 	Vector3 force = centripetalAccel * maxCentripetalAccel;
 
