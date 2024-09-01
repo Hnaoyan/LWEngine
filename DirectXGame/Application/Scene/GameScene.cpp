@@ -238,9 +238,9 @@ void GameScene::ImGuiDraw()
 	debugCamera_->ImGuiDraw();
 	followCamera_->ImGuiDraw();
 	enemyManager_->ImGuiDraw();
-	ImGui::ShowDemoWindow();
 	gpuParticleManager_->ImGuiDraw();
-	ImGui::Begin("SampleScene");
+
+	ImGui::Begin("GameScene");
 
 	if (ImGui::Button("BossRes")) {
 		if (!bossEnemy_) {
@@ -416,6 +416,10 @@ void GameScene::LightingInitialize()
 	spLightData_.intensity = 4.0f;
 	spLightData_.decay = 2.0f;
 	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
+}
+
+void GameScene::LightingUpdate()
+{
 }
 
 void GameScene::CollisionUpdate()

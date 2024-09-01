@@ -7,7 +7,7 @@ void JumpingState::Initialize()
 {
 	nowState_ = this;
 
-	float jumpPower = 75.0f;
+	float jumpPower = 65.0f;
 	player_->velocity_.y += jumpPower * GameSystem::GameSpeedFactor();
 	// 座標更新
 	player_->worldTransform_.transform_.translate += player_->velocity_;

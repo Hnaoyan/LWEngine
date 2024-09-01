@@ -60,6 +60,10 @@ public:
 	/// ライト初期化
 	/// </summary>
 	void LightingInitialize() override;
+	/// <summary>
+	/// ライトの更新
+	/// </summary>
+	void LightingUpdate();
 private:
 	/// <summary>
 	/// 衝突処理

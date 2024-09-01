@@ -14,9 +14,6 @@ void TitleScene::Initialize()
 
 	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
 
-	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
-	AddSprite(Vector2(1280.0f / 2.0f, 720.0f / 2.0f), TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
-
 	SpriteManager::LoadSprite("BackGroundImage", TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
 	SpriteManager::LoadSprite("TitleButtonText", TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
 	SpriteManager::LoadSprite("TitleText", TextureManager::GetInstance()->Load("Resources/UI/TitleText.png"));
@@ -27,8 +24,6 @@ void TitleScene::Initialize()
 	SpriteManager::GetSprite("TitleButtonText")->SetSize(GetScale * 1.5f);
 	SpriteManager::GetSprite("TitleText")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 3.0f));
 
-	size_ = uiSprites_[1]->GetSize();
-	uiSprites_[1]->SetSize(size_ * 2);
 }
 
 void TitleScene::GPUUpdate()
@@ -104,11 +99,4 @@ void TitleScene::LoadModel()
 
 void TitleScene::LoadTexture()
 {
-}
-
-void TitleScene::AddSprite(Vector2 position, uint32_t texture)
-{
-	std::unique_ptr<Sprite> instance;
-	instance.reset(Sprite::Create(texture, position, { 0.5f,0.5f }));
-	uiSprites_.push_back(std::move(instance));
 }
