@@ -10,7 +10,7 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
-	worldTransform_.transform_.translate.z = -15.0f;
+	worldTransform_.transform_.translate.z = -35.0f;
 	worldTransform_.UpdateMatrix();
 
 	collider_.Initialize(worldTransform_.transform_.scale, this);
