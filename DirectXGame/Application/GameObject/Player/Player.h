@@ -77,7 +77,17 @@ public: // セッター
 private: // USER
 
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
-	
+	// モデル用のワールドトランスフォーム
+	WorldTransform modelTransform_;
+	// 浮遊ギミックの媒介変数
+	float floatingParameter_ = 0.0f;
+
+	/// 浮遊の振幅<m>
+	float floatingWidth = 0.25f;
+
+	/// 浮遊移動のサイクル<frame>
+	int period = 60;
+
 public:
 	// 前フレームの位置
 	Vector3 prevPosition_ = {};

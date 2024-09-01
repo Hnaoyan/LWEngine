@@ -165,6 +165,14 @@ void ParticleEmitter::CreateData()
 void ParticleEmitter::GPUInitialize()
 {
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
+	//// 初期化が後なので
+	//D3D12_RESOURCE_BARRIER barrierParticleUAV = DxCreateLib::ResourceLib::TransformToUAV(particles_.cBuffer.Get());
+	//sCommandList->ResourceBarrier(1, &barrierParticleUAV);
+	//barrierParticleUAV = DxCreateLib::ResourceLib::TransformToUAV(freeListIndex_.cBuffer.Get());
+	//sCommandList->ResourceBarrier(1, &barrierParticleUAV);
+	//barrierParticleUAV = DxCreateLib::ResourceLib::TransformToUAV(freeList_.cBuffer.Get());
+	//sCommandList->ResourceBarrier(1, &barrierParticleUAV);
+
 	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.csRootSignature.Get());
 	sCommandList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kInitialize)].Get());
 	sCommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);

@@ -25,6 +25,9 @@ void Player::Initialize(Model* model)
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
+
+	modelTransform_.Initialize();
+	modelTransform_.parent_ = &worldTransform_;
 }
 
 void Player::Update()
@@ -48,6 +51,17 @@ void Player::Update()
 
 	// 基底クラスの更新
 	IGameObject::Update();
+	// 1フレームでのパラメータ加算値
+	const float step = 2.0f * float(3.14f) / period;
+
+	// パラメータを1ステップ分加算
+	floatingParameter_ += step;
+	// 2πを超えたら0に戻す
+	floatingParameter_ = std::fmod(floatingParameter_, 2.0f * float(3.14f));
+	// 浮遊を座標に反映
+	modelTransform_.transform_.translate.y = std::sin(floatingParameter_) * floatingWidth;
+
+	modelTransform_.UpdateMatrix();
 	// コライダー更新
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// 足場コライダー
@@ -58,7 +72,7 @@ void Player::Draw(ModelDrawDesc desc)
 {
 	ModelDrawDesc drawDesc{};
 	// クラスの値設定
-	drawDesc.worldTransform = &worldTransform_;
+	drawDesc.worldTransform = &modelTransform_;
 	// 引数の値設定
 	drawDesc.camera = desc.camera;
 	drawDesc.directionalLight = desc.directionalLight;

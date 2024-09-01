@@ -99,6 +99,28 @@ namespace DxCreateLib
 			return barrier;
 		}
 
+		inline static D3D12_RESOURCE_BARRIER TransformToUAV(ID3D12Resource* buffer) {
+			D3D12_RESOURCE_BARRIER barrier{};
+			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+			barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+			barrier.Transition.pResource = buffer;
+			barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_COMMON;
+			barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+			barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+			return barrier;
+		}
+
+		inline static D3D12_RESOURCE_BARRIER TransformFromUAV(ID3D12Resource* buffer) {
+			D3D12_RESOURCE_BARRIER barrier{};
+			barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+			barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+			barrier.Transition.pResource = buffer;
+			barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_UNORDERED_ACCESS;
+			barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_COMMON;
+			barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+			return barrier;
+		}
+
 		inline static ID3D12Resource* CreateBufferResource(ID3D12Device* device, const size_t& sizeInBytes) {
 			ID3D12Resource* resultResource = nullptr;
 
@@ -194,7 +216,7 @@ namespace DxCreateLib
 			HRESULT hr = S_FALSE;
 
 			hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE,
-				&resourceDesc, D3D12_RESOURCE_STATE_UNORDERED_ACCESS, nullptr,
+				&resourceDesc, D3D12_RESOURCE_STATE_COMMON, nullptr,
 				IID_PPV_ARGS(&resultResource));
 			assert(SUCCEEDED(hr));
 

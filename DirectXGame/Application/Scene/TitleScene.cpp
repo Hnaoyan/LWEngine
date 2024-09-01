@@ -20,8 +20,7 @@ void TitleScene::Initialize()
 
 	SpriteManager::GetSprite("BackGroundImage")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 	SpriteManager::GetSprite("TitleButtonText")->SetPosition(Vector2(1280.0f / 2.0f, 500.0f));
-	Vector2 GetScale = SpriteManager::GetSprite("TitleButtonText")->GetSize();
-	SpriteManager::GetSprite("TitleButtonText")->SetSize(GetScale * 1.5f);
+	SpriteManager::GetSprite("TitleButtonText")->SetSize(Vector2(240.0f, 120.0f) * 1.5f);
 	SpriteManager::GetSprite("TitleText")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 3.0f));
 
 }
