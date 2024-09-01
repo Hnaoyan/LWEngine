@@ -8,7 +8,7 @@
 InstancedGroup::~InstancedGroup()
 {
 	// パーティクル関係
-	SRVHandler::ReleaseHeapIndex(srvIndex);
+	SRVHandler::ReleaseHeapIndex(buffer_.data_.index);
 }
 
 void InstancedGroup::Initialize(Model* model)
@@ -29,9 +29,9 @@ void InstancedGroup::Update()
 
 		(*it)->Update();
 		// 行列の処理
-		unitDataMap_[unitNum_].worldMatrix = (*it)->GetWorldMatrix();
-		unitDataMap_[unitNum_].worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse((*it)->GetWorldMatrix()));
-		unitDataMap_[unitNum_].instancedNum = unitNum_;
+		buffer_.cMap_[unitNum_].worldMatrix = (*it)->GetWorldMatrix();
+		buffer_.cMap_[unitNum_].worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse((*it)->GetWorldMatrix()));
+		buffer_.cMap_[unitNum_].instancedNum = unitNum_;
 		// イテレート
 		unitNum_++;
 	}
@@ -41,7 +41,7 @@ void InstancedGroup::Update()
 void InstancedGroup::Draw(ModelDrawDesc desc)
 {
 	// 描画
-	model_->InstancedDraw(desc, unitNum_, srvHandles_.second);
+	model_->InstancedDraw(desc, unitNum_, buffer_.GetSRVGPU());
 }
 
 void InstancedGroup::UnitRegist(const Vector3& position)
@@ -67,34 +67,21 @@ void InstancedGroup::ImGuiDraw()
 	ImGui::End();
 }
 
+void InstancedGroup::DeleteUnit()
+{
+	// 死亡処理
+	units_.erase(std::remove_if(units_.begin(), units_.end(), [](const std::unique_ptr<InstancedUnit>& obj) {
+		return obj->IsDead();
+		}), units_.end());
+}
+
 void InstancedGroup::CreateData()
 {
-	// デバイス取得
-	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
-	// インスタンシング用
-	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
-	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
-	instancingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	instancingSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
-	instancingSrvDesc.Buffer.FirstElement = 0;
-	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
-	instancingSrvDesc.Buffer.NumElements = kNumInstanceMax;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(CBufferInstancedUnit);
+	buffer_.CreateBuffer(DirectXCommon::GetInstance()->GetDevice(), kNumInstanceMax);
 
-	// リソース作成
-	groupResources = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferInstancedUnit) * kNumInstanceMax));
-	// 書き込み
-	groupResources->Map(0, nullptr, reinterpret_cast<void**>(&unitDataMap_));
 	for (uint32_t i = 0; i < kNumInstanceMax; ++i) {
-		unitDataMap_[i].worldMatrix = Matrix4x4::MakeIdentity4x4();
-		unitDataMap_[i].worldInverseTranspose = Matrix4x4::MakeIdentity4x4();
-		unitDataMap_[i].instancedNum = i;
+		buffer_.cMap_[i].worldMatrix = Matrix4x4::MakeIdentity4x4();
+		buffer_.cMap_[i].worldInverseTranspose = Matrix4x4::MakeIdentity4x4();
+		buffer_.cMap_[i].instancedNum = i;
 	}
-	// SRVの設定
-	srvIndex = SRVHandler::CheckAllocater();
-	srvHandles_.first = SRVHandler::GetSrvHandleCPU(srvIndex);
-	srvHandles_.second = SRVHandler::GetSrvHandleGPU(srvIndex);
-	// SRV作成
-	device->CreateShaderResourceView(groupResources.Get(), &instancingSrvDesc, srvHandles_.first);
-
 }

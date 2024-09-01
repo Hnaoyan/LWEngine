@@ -5,6 +5,7 @@
 #include "InstancedUnit.h"
 #include "../Drawer/Model.h"
 #include "../../Base/Utility/DxCreateLib.h"
+#include "Engine/Base/CBufferCommon.h"
 
 class InstancedGroup
 {
@@ -14,11 +15,7 @@ public:
 	virtual ~InstancedGroup();
 protected:
 	// リソース
-	Microsoft::WRL::ComPtr<ID3D12Resource> groupResources;
-	CBufferInstancedUnit* unitDataMap_ = nullptr;
-
-	// SRV情報
-	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandles_;
+	StructuredBufferContext<CBufferInstancedUnit> buffer_;
 	uint32_t srvIndex;
 
 	// Unitの数
@@ -48,6 +45,10 @@ public:
 	/// ImGui
 	/// </summary>
 	virtual void ImGuiDraw();
+	/// <summary>
+	/// 削除関数
+	/// </summary>
+	void DeleteUnit();
 public: // アクセッサ
 
 	// ユニットリスト取得
