@@ -42,6 +42,10 @@ namespace BossState
 		/// </summary>
 		/// <param name="boss"></param>
 		void PreInitialize(Boss* boss);
+
+		// 先行の予備動作
+		virtual void PreAction() {};
+
 		// 初期化
 		virtual void Initialize() = 0;
 		// 更新
@@ -58,6 +62,8 @@ namespace BossState
 		Boss* boss_ = nullptr;
 		// 変更のフレームタイマー
 		FrameTimer changeTimer_;
+		// 予備動作の時間
+		FrameTimer preActionTimer_;
 
 	};
 
