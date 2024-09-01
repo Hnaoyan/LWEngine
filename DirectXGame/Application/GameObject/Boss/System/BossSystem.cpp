@@ -132,6 +132,7 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	// 速度
 	static_cast<TrackingBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
+	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
 	static_cast<TrackingBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
 	instance->Update();
@@ -154,6 +155,7 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	// 速度
 	static_cast<TrackingBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
+	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
 	static_cast<TrackingBullet*>(instance.get())->Initialize();
 	static_cast<TrackingBullet*>(instance.get())->SetTrackType(type);
 	instance->transform_ = transform;
@@ -172,8 +174,9 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 }
 #pragma endregion
 
-void BossSystemContext::BulletManager::Initialize(Model* model) {
+void BossSystemContext::BulletManager::Initialize(Model* model, Boss* boss) {
 	model_ = model;
+	boss_ = boss;
 	// 弾用
 	AddCluster();
 	// ミサイル用
@@ -204,8 +207,11 @@ void BossSystemContext::BulletManager::CollisionUpdate(CollisionManager* manager
 
 void BossSystemContext::BulletManager::AddCluster() {
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
-	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
+	// セッター処理
+	static_cast<BulletCluster*>(instance.get())->SetBossPtr(boss_);
 	static_cast<BulletCluster*>(instance.get())->SetGPU(gpuParticle_);
+	// 初期化
+	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
 	bulletClusters_.push_back(std::move(instance));
 }
 

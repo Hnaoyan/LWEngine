@@ -18,7 +18,7 @@ void Boss::Initialize(Model* model)
 
 	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
 	bulletManager_->SetGPUParticle(gpuParticle_);
-	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"), this);
 
 	healthManager_.Initialize(20);
 

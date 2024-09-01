@@ -76,7 +76,7 @@ namespace BossSystemContext
 		/// 初期化
 		/// </summary>
 		/// <param name="models"></param>
-		void Initialize(Model* model);
+		void Initialize(Model* model, Boss* boss);
 		/// <summary>
 		/// 更新
 		/// </summary>
@@ -107,6 +107,7 @@ namespace BossSystemContext
 		Model* model_ = nullptr;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
+		Boss* boss_ = nullptr;
 		// 弾のリスト
 		std::vector<std::unique_ptr<InstancedGroup>> bulletClusters_;
 
@@ -155,10 +156,12 @@ namespace BossSystemContext
 		// GPUParticle
 		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
+		void SetBossPtr(Boss* boss) { boss_ = boss; }
 	private:
 		uint32_t texture_ = 0;
 
 		GPUParticleSystem* gpuParticle_ = nullptr;
+		Boss* boss_ = nullptr;
 	};
 
 	class IBullet : public InstancedUnit {
@@ -211,6 +214,9 @@ namespace BossSystemContext
 		/// </summary>
 		/// <param name="object"></param>
 		void OnCollision(ColliderObject object) override;
+
+		void SetBossPtr(Boss* boss) { boss_ = boss; }
+
 	public: // アクセッサ
 		EulerTransform GetTransform() { return transform_; }
 		Vector3 GetVelocity() { return velocity_; }
@@ -223,10 +229,13 @@ namespace BossSystemContext
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
+		Boss* boss_ = nullptr;
 
 		TrackType trackType_;
 
 		float acceleration_ = 0.2f;
+
+		float lerpRadius_ = 0.0f;
 
 	private:
 		// 通常
