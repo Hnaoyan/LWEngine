@@ -10,6 +10,7 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
+	worldTransform_.transform_.translate.y = -1.95f;
 	worldTransform_.transform_.translate.z = -35.0f;
 	worldTransform_.UpdateMatrix();
 
@@ -28,6 +29,7 @@ void Player::Initialize(Model* model)
 
 	modelTransform_.Initialize();
 	modelTransform_.parent_ = &worldTransform_;
+	modelTransform_.UpdateMatrix();
 }
 
 void Player::Update()
