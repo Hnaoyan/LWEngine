@@ -69,7 +69,7 @@ void BossSystemContext::BulletCluster::Update() {
 
 void BossSystemContext::BulletCluster::Draw(ModelDrawDesc desc) {
 	// 描画
-	model_->InstancedDraw(desc, this->unitNum_, srvHandles_.second, texture_);
+	model_->InstancedDraw(desc, this->unitNum_, buffer_.GetSRVGPU(), texture_);
 }
 
 void BossSystemContext::BulletCluster::ImGuiDraw() {

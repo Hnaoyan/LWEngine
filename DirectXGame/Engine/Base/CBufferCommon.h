@@ -63,6 +63,41 @@ private:
 };
 
 template<typename T>
+struct StructuredBufferContext
+{
+	// Buffer
+	Microsoft::WRL::ComPtr<ID3D12Resource> cBuffer;
+	// Map
+	T* cMap_ = nullptr;
+
+	HeapAllocationData data_;
+	D3D12_CPU_DESCRIPTOR_HANDLE GetSRVCPU() const { return data_.handles.first; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVGPU() const { return data_.handles.second; }
+
+	void CreateBuffer(ID3D12Device* device, int32_t maxNum) {
+		// リソース作成
+		cBuffer = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(T) * maxNum));
+		cBuffer->Map(0, nullptr, reinterpret_cast<void**>(&cMap_));
+		// インスタンシング用
+		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+		srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+		srvDesc.Buffer.FirstElement = 0;
+		srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+		srvDesc.Buffer.NumElements = maxNum;
+		srvDesc.Buffer.StructureByteStride = sizeof(T);
+		// Heap
+		data_.index = SRVHandler::CheckAllocater();
+		data_.handles.first = SRVHandler::GetSrvHandleCPU(data_.index);
+		data_.handles.second = SRVHandler::GetSrvHandleGPU(data_.index);
+		// SRV
+		device->CreateShaderResourceView(cBuffer.Get(), &srvDesc, data_.handles.first);
+	}
+
+};
+
+template<typename T>
 struct RWStructuredBufferContext
 {
 	// Buffer
