@@ -160,11 +160,11 @@ void BossState::AttackState::RadialFireAttack()
 		rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 		// 左回転
 		bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, leftRotateMat);
-		Vector3 newDirect = { bulletDirect.x,boss_->worldTransform_.GetWorldPosition().y,bulletDirect.y};
+		Vector3 newDirect = { bulletDirect.x, 0.0f,bulletDirect.y};
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 		// 右回転
 		bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, rightRotateMat);
-		newDirect = { bulletDirect.x,boss_->worldTransform_.GetWorldPosition().y,bulletDirect.y };
+		newDirect = { bulletDirect.x, 0.0f,bulletDirect.y };
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	}
 }
