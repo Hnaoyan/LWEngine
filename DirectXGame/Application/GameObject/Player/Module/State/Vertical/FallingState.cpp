@@ -26,7 +26,8 @@ void FallingState::Exit()
 
 void FallingState::InputHandle()
 {
-	if (GameSystem::sPlayerKey.keyConfigs_.pressJump && player_->GetEnergyManager()->GetEnergyRatio() >= 0.5f)
+	float energyRatio = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
+	if (GameSystem::sPlayerKey.keyConfigs_.pressJump && energyRatio >= 0.5f)
 	{
 		player_->GetStateManager()->ChangeRequest(StateManager::kAssending, StateManager::kVertical);
 	}

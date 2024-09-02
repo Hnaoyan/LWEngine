@@ -5,6 +5,13 @@
 
 #include "Engine/PostEffect/PostEffectRender.h"
 
+void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
+{
+	camera_ = camera;
+	facadeSystem_ = std::make_unique<PlayerFacade>();
+	facadeSystem_->GetParticle()->SetGPUParticleSystem(gpuParticle);
+}
+
 void Player::Initialize(Model* model)
 {
 	// 基底クラスの初期化
@@ -19,12 +26,8 @@ void Player::Initialize(Model* model)
 	// システム関係の初期化
 	systemManager_.Initialize(this);
 	stateManager_.Initialize(this);
-	healthManager_.Initialize(this, 10);
-	particleManager_.Initialize(this);
-	energyManager_.Initialize(this);
-	uiManager_.Initialize(this);
-	//
-	animationManager_.Initialize(this);
+	// ファサード初期化
+	facadeSystem_->Initialize(this);
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
@@ -36,9 +39,10 @@ void Player::Update()
 	// 前フレの位置
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
+	facadeSystem_->Update();
+
+
 	systemManager_.Update();
-	healthManager_.Update();
-	energyManager_.Update();
 	quickBoostCoolTime_.Update();
 
 	if (currentStates_.first) {
@@ -53,7 +57,6 @@ void Player::Update()
 	// 基底クラスの更新
 	IGameObject::Update();
 
-	animationManager_.Update();
 	// コライダー更新
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// 足場コライダー
@@ -64,7 +67,7 @@ void Player::Draw(ModelDrawDesc desc)
 {
 	ModelDrawDesc drawDesc{};
 	// クラスの値設定
-	drawDesc.worldTransform = &animationManager_.bodyTransform_;
+	drawDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
 	// 引数の値設定
 	drawDesc.camera = desc.camera;
 	drawDesc.directionalLight = desc.directionalLight;
@@ -102,11 +105,11 @@ void Player::ImGuiDraw()
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Energy")) {
-			ImGui::DragFloat("Energy", &energyManager_.energy_.currentEnergy);
+			//ImGui::DragFloat("Energy", &energyManager_.energy_.currentEnergy);
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("UI")) {
-			uiManager_.ImGuiDraw();
+			facadeSystem_->GetUI()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 
@@ -142,17 +145,17 @@ void Player::OnCollision(ColliderObject target)
 	}
 
 	else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
-		healthManager_.TakeDamage();
+		facadeSystem_->GetHealth()->TakeDamage();
 	}
 	else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
-		healthManager_.TakeDamage();
+		facadeSystem_->GetHealth()->TakeDamage();
 	}
 
 }
 
 void Player::UISpriteDraw()
 {
-	uiManager_.Draw();
+	facadeSystem_->GetUI()->Draw();
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)

@@ -21,7 +21,7 @@ void QuickBoostState::Initialize()
 	dashVelocity_.z = direct.z * dashPower;
 	changeTimer_.Start(40.0f);
 
-	player_->GetEnergyManager()->QuickBoostDecre();
+	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 
 }
 
@@ -52,7 +52,7 @@ void QuickBoostState::Exit()
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	player_->quickBoostCoolTime_.Start(45.0f);
 
-	player_->GetAnimationManager()->Reset();
+	player_->GetSystemFacede()->GetAnimation()->Reset();
 }
 	
 void QuickBoostState::InputHandle()

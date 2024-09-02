@@ -3,6 +3,7 @@
 #include "System/PlayerSystemLists.h"
 #include "Module/PlayerFootCollider.h"
 #include "Module/State/IPlayerState.h"
+#include "System/PlayerFacade.h"
 
 class SampleBulletManager;
 
@@ -14,10 +15,7 @@ public:
 	/// </summary>
 	/// <param name="camera"></param>
 	/// <param name="gpuParticle"></param>
-	void PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle) {
-		camera_ = camera;
-		particleManager_.SetGPUParticleSystem(gpuParticle);
-	}
+	void PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle);
 
 	/// <summary>
 	/// 初期化
@@ -56,9 +54,7 @@ public: // ゲッター
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	OparationManager* GetOperation() { return &systemManager_; }
 	StateManager* GetStateManager() { return &stateManager_; }
-	PlayerContext::EnergyManager* GetEnergyManager() { return &energyManager_; }
-	PlayerContext::HealthManager* GetHPManager() { return &healthManager_; }
-	PlayerContext::AnimationManager* GetAnimationManager() {return &animationManager_;}
+	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
 	Vector3 GetVelocity() { return velocity_; }
 public: // ステート
 	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
@@ -94,6 +90,9 @@ public:
 private:
 	// ステート
 	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
+	// システムファサードクラス
+	std::unique_ptr<PlayerFacade> facadeSystem_;
+
 	// 操作関係
 	OparationManager systemManager_;
 	// ステートのマネージャー
@@ -102,14 +101,4 @@ private:
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
 	AABB collider_;
-	// Hp関係
-	PlayerContext::HealthManager healthManager_;
-	// パーティクル
-	PlayerContext::ParticleManager particleManager_;
-	// エネルギー
-	PlayerContext::EnergyManager energyManager_;
-	// UI
-	PlayerContext::UIManager uiManager_;
-	// Animation
-	PlayerContext::AnimationManager animationManager_;
 };

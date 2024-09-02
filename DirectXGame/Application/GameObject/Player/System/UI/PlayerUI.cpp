@@ -58,7 +58,8 @@ void PlayerContext::UIManager::HPUI()
 {
 	Vector2 scale = { 380.0f,48.0f };
 	// 現在値
-	hpUI_.currentScale = Vector2::Lerp({ 0.0f,hpUI_.maxScale.y }, hpUI_.maxScale, player_->GetHPManager()->GetHPRatio());
+	float t = player_->GetSystemFacede()->GetHealth()->GetHPRatio();
+	hpUI_.currentScale = Vector2::Lerp({ 0.0f,hpUI_.maxScale.y }, hpUI_.maxScale,t);
 	hpUI_.currentHP.sprite->SetSize(hpUI_.currentScale);
 	hpUI_.currentHP.Draw();
 	// 背景
@@ -71,7 +72,8 @@ void PlayerContext::UIManager::EnergyUI()
 {
 	Vector2 scale = { 24.0f,280.0f };
 	// 現在値
-	energyUI_.currentScale = Vector2::Lerp({ energyUI_.maxScale.x, 0.0f }, energyUI_.maxScale, player_->GetEnergyManager()->GetEnergyRatio());
+	float t = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
+	energyUI_.currentScale = Vector2::Lerp({ energyUI_.maxScale.x, 0.0f }, energyUI_.maxScale, t);
 	energyUI_.currentHP.sprite->SetSize(energyUI_.currentScale);
 	energyUI_.currentHP.Draw();
 	// 背景
