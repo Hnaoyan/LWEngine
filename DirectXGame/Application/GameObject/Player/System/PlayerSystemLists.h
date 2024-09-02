@@ -6,6 +6,8 @@
 //#include "Assending/AssendingManager.h"
 #include "Aim/AimManager.h"
 #include "Aim/LockOn.h"
+#include "Animation/PlayerAnimation.h"
+
 #include "Energy/EnergyManager.h"
 #include "Health/HealthManager.h"
 #include "UI/PlayerUI.h"

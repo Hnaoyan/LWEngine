@@ -43,6 +43,7 @@ void MovingState::Update()
 
 void MovingState::Exit()
 {
+	player_->GetAnimationManager()->Reset();
 }
 
 void MovingState::InputHandle()

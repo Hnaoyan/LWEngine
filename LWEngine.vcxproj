@@ -46,6 +46,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h" />

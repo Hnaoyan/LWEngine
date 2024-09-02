@@ -16,7 +16,7 @@ void BoostState::Update()
 
 void BoostState::Exit()
 {
-
+	player_->GetAnimationManager()->Reset();
 }
 
 void BoostState::InputHandle()

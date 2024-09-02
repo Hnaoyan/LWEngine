@@ -51,6 +51,8 @@ void QuickBoostState::Exit()
 {
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
 	player_->quickBoostCoolTime_.Start(45.0f);
+
+	player_->GetAnimationManager()->Reset();
 }
 	
 void QuickBoostState::InputHandle()
