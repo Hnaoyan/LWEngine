@@ -319,13 +319,8 @@ void GameScene::LoadModel()
 	//ModelManager::LoadNormalModel("Sphere", "sphere");
 	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
 	ModelManager::LoadNormalModel("Player", "Robotto");
-	ModelManager::LoadObjModel("Plane", "plane");
-
-	ModelManager::LoadNormalModel("Sphere", "SphereCollider");
-	ModelManager::LoadNormalModel("Box", "BoxCollider");
 
 	terrain_ = ModelManager::GetModel("Terrain");
-
 
 }
 

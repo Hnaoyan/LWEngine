@@ -60,6 +60,9 @@ void Framework::Initialize()
 	// モデルマネージャの初期化
 	modelManager_ = std::make_unique<ModelManager>();
 	modelManager_->LoadNormalModel("DefaultCube", "cube");
+	modelManager_->LoadNormalModel("Sphere", "SphereCollider");
+	modelManager_->LoadNormalModel("Box", "BoxCollider");
+	modelManager_->LoadObjModel("Plane", "plane");
 
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
 
