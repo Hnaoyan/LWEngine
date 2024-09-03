@@ -27,8 +27,8 @@ private:
 public:
 	void SetManager(BulletManager* manager) { bulletManager_ = manager; }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
-	AimManager* GetAimManager() { return &aimManager_; }
-	LockOn* GetLockOn() { return &lockOn_; }
+	PlayerContext::AimManager* GetAimManager() { return &aimManager_; }
+	PlayerContext::LockOn* GetLockOn() { return &lockOn_; }
 private: // POINTER
 	// 親
 	Player* player_ = nullptr;
@@ -49,8 +49,8 @@ private: // USER
 
 private: // SYSTEM
 	// ロックオンシステム
-	LockOn lockOn_;
+	PlayerContext::LockOn lockOn_;
 	// エイム関係
-	AimManager aimManager_;
+	PlayerContext::AimManager aimManager_;
 
 };

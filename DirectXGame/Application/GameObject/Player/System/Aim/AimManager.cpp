@@ -7,7 +7,7 @@
 #include "Engine/2D/SpriteManager.h"
 #include "imgui.h"
 
-void AimManager::Initialize(Player* player)
+void PlayerContext::AimManager::Initialize(Player* player)
 {
 	// プレイヤー
 	player_ = player;
@@ -28,7 +28,7 @@ void AimManager::Initialize(Player* player)
 	reset_.rate = 0.03f;
 }
 
-void AimManager::Update(ICamera* camera)
+void PlayerContext::AimManager::Update(ICamera* camera)
 {
 	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.UpdateMatrix();
@@ -51,7 +51,7 @@ void AimManager::Update(ICamera* camera)
 	}
 }
 
-void AimManager::ImGuiDraw()
+void PlayerContext::AimManager::ImGuiDraw()
 {
 	Vector3 world = offSetTransform_.GetWorldPosition();
 	ImGui::DragFloat3("Transform", &offSetTransform_.transform_.translate.x);

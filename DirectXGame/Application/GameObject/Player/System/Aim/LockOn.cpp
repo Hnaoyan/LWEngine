@@ -5,7 +5,7 @@
 #include <cassert>
 #include <imgui.h>
 
-void LockOn::Initialize(Player* player)
+void PlayerContext::LockOn::Initialize(Player* player)
 {
 	assert(player);
 	player_ = player;
@@ -16,7 +16,7 @@ void LockOn::Initialize(Player* player)
 
 }
 
-void LockOn::Update()
+void PlayerContext::LockOn::Update()
 {
 	if (ExistTarget()) {
 		if (target_->IsDead()) {
@@ -25,7 +25,7 @@ void LockOn::Update()
 	}
 }
 
-void LockOn::ToggleLockOn(ICamera* camera)
+void PlayerContext::LockOn::ToggleLockOn(ICamera* camera)
 {
 	// ターゲット処理
 	if (target_ == nullptr) {
@@ -37,26 +37,26 @@ void LockOn::ToggleLockOn(ICamera* camera)
 	}
 }
 
-void LockOn::ChangeLockOnTarget(ICamera* camera)
+void PlayerContext::LockOn::ChangeLockOnTarget(ICamera* camera)
 {
 
 	ChangeTarget(camera);
 
 }
 
-void LockOn::ImGuiDraw() {
+void PlayerContext::LockOn::ImGuiDraw() {
 	ImGui::DragFloat("Threshold", &data.threshold, 0.01f);
 	ImGui::DragFloat("min", &data.minDistanceZ, 0.01f);
 	ImGui::DragFloat("max", &data.maxDistanceZ, 0.01f);
 }
 
-void LockOn::TargetRelease()
+void PlayerContext::LockOn::TargetRelease()
 {
 	// 対象をnullに
 	target_ = nullptr;
 }
 
-void LockOn::SearchTarget(ICamera* camera)
+void PlayerContext::LockOn::SearchTarget(ICamera* camera)
 {
 	std::list<std::pair<float, SampleEnemy*>> targets;
 
@@ -109,7 +109,7 @@ void LockOn::SearchTarget(ICamera* camera)
 
 }
 
-void LockOn::ChangeTarget(ICamera* camera)
+void PlayerContext::LockOn::ChangeTarget(ICamera* camera)
 {
 	std::list<std::pair<float, SampleEnemy*>> targets;
 
