@@ -25,6 +25,9 @@ void BossState::AttackState::Initialize()
 		pattern_ = ShotPattern::kRadialFire;
 		fireCooltime_ = 20.0f;
 	}
+
+	//pattern_ = ShotPattern::kRadialFire;
+
 	// 初期の角度
 	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
 	fireTimer_.Start(fireCooltime_);
@@ -141,6 +144,7 @@ void BossState::AttackState::RadialFireAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	pos.scale *= 3.5f;
 	// 直線
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 
