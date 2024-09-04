@@ -282,7 +282,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.cpp">
@@ -686,7 +686,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h">

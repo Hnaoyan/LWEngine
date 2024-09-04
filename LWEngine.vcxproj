@@ -50,7 +50,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.cpp" />
@@ -168,7 +168,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerParticleManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.h" />
