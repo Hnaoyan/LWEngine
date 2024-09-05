@@ -37,6 +37,9 @@ void TitleScene::Update()
 	if (input_->TriggerKey(DIK_LSHIFT)) {
 		sceneManager_->ChangeScene("SAMPLE");
 	}
+	if (input_->TriggerKey(DIK_RSHIFT)) {
+		sceneManager_->ChangeScene("GAME");
+	}
 
 #endif // _DEBUG
 
