@@ -3,9 +3,18 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/2D/SpriteManager.h"
 
+#include <thread>
+#include <functional>
+#include <mutex>
+
 void TitleScene::Initialize()
 {
 	IScene::Initialize();
+	//std::mutex resourceMutex;
+	//std::thread loaderThread([this, &resourceMutex]() {
+	//	std::lock_guard<std::mutex> lock(resourceMutex);  // リソースへのアクセスをロック
+	//	this->LoadModel();
+	//	});	LoadModel();
 	LoadModel();
 	LoadTexture();
 
@@ -23,6 +32,7 @@ void TitleScene::Initialize()
 	SpriteManager::GetSprite("TitleButtonText")->SetSize(Vector2(240.0f, 120.0f) * 1.5f);
 	SpriteManager::GetSprite("TitleText")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 3.0f));
 
+	//loaderThread.join();  // スレッドの完了を待つ
 }
 
 void TitleScene::GPUUpdate()
@@ -92,10 +102,17 @@ void TitleScene::LoadModel()
 {
 	ModelManager::LoadObjModel("Plane", "plane");
 	ModelManager::LoadObjModel("Axis", "BulletTest");
+	// モデルのロード
+	ModelManager::LoadNormalModel("Terrain", "terrain");
+	ModelManager::LoadNormalModel("Jett", "jett");
+	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
+	//ModelManager::LoadNormalModel("Sphere", "sphere");
+	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
+	ModelManager::LoadNormalModel("Player", "Robotto");
 
-	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
 
 void TitleScene::LoadTexture()
 {
+	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
