@@ -305,7 +305,7 @@ void SampleScene::ImGuiDraw()
 	switch (postEffecter_)
 	{
 	case 0:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 		break;
 	case 1:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
@@ -335,7 +335,7 @@ void SampleScene::ImGuiDraw()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kLuminanceOutline;
 		break;
 	default:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 		break;
 	}
 

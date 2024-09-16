@@ -30,7 +30,7 @@ enum class LoadExtension : uint16_t
 /// </summary>
 enum class ModelType : uint32_t
 {
-	kNormal,
+	kAlpha,
 	kSkinning,
 };
 

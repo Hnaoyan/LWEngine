@@ -49,7 +49,7 @@ void QuickBoostState::Update()
 
 void QuickBoostState::Exit()
 {
-	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 	player_->quickBoostCoolTime_.Start(45.0f);
 
 	player_->GetSystemFacede()->GetAnimation()->Reset();

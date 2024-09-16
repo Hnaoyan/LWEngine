@@ -35,7 +35,7 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 	texture_ = modelData_.material.textureHandle;
 
 	// ブレンドモード設定
-	blendMode_ = Pipeline::BlendMode::kNormal;
+	blendMode_ = Pipeline::BlendMode::kAlpha;
 }
 
 void Model::Initialize(const std::string& modelName)
@@ -58,7 +58,7 @@ void Model::Initialize(const std::string& modelName)
 	texture_ = modelData_.material.textureHandle;
 
 	// ブレンドモード設定
-	blendMode_ = Pipeline::BlendMode::kNormal;
+	blendMode_ = Pipeline::BlendMode::kAlpha;
 }
 
 Model* Model::Create(const std::string& modelName, LoadExtension ex)

@@ -4,7 +4,7 @@
 #include "Engine/2D/TextureManager.h"
 #include <cassert>
 
-Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 uint32_t PostEffectRender::sDissolveTexture = 0u;
 
 void PostEffectRender::StaticInitialize()

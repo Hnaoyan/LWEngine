@@ -90,7 +90,7 @@ void OparationManager::InputUpdate()
 	if (isDash_) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 		if (resetTime_ > 10) {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 
 		}
 		++resetTime_;

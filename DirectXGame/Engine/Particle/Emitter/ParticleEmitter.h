@@ -8,7 +8,7 @@ public:
 	// コマンドリスト
 	static ID3D12GraphicsCommandList* sCommandList;
 	// パイプライン
-	static GeneralPipeline sPipeline_;
+	static BlendPipeline sPipeline_;
 
 	virtual ~ParticleEmitter() {
 		// パーティクル関係
@@ -20,6 +20,8 @@ public:
 		SRVHandler::ReleaseHeapIndex(freeList_.srvHeapData.index);
 		SRVHandler::ReleaseHeapIndex(freeList_.uavHeapData.index);
 	}
+
+	using BlendMode = Pipeline::BlendMode;
 
 public:
 	/// <summary>
@@ -70,4 +72,6 @@ protected:
 	Model* model_ = nullptr;
 	// テクスチャ
 	uint32_t texture_ = 0u;
+	// ブレンドモード
+	BlendMode blendMode_ = BlendMode::kAlpha;
 };
