@@ -1,4 +1,4 @@
-#include "../Utillity/Random.hlsli"
+#include "../Utility/Random.hlsli"
 
 struct VertexShaderOutput
 {

@@ -774,6 +774,7 @@
     <FxCompile Include="Resources\shaders\Particle\User\PlayerEffect.hlsl" />
     <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl" />
     <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\BloomPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -984,7 +985,8 @@
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
-    <None Include="Resources\shaders\Utillity\Random.hlsli" />
+    <None Include="Resources\shaders\Utility\Random.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
+    <None Include="Resources\shaders\Utility\HSV_RGB.hlsli" />
   </ItemGroup>
 </Project>
