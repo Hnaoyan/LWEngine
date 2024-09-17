@@ -993,12 +993,12 @@ void GraphicsPSO::CreatePostEffectPSO()
 
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BoxFilterPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BloomPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
-	resultPipeline.pipelineStates[size_t(PostEffect::kSmoothing)] = CreatePipelineState(graphicsPipelineStateDesc);
+	resultPipeline.pipelineStates[size_t(PostEffect::kAlpha)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
 	psBlob = Shader::GetInstance()->Compile(L"PostEffect/GaussianFilterPS.hlsl", L"ps_6_0");

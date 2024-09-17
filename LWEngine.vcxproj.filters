@@ -988,5 +988,6 @@
     <None Include="Resources\shaders\Utility\Random.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
     <None Include="Resources\shaders\Utility\HSV_RGB.hlsli" />
+    <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
   </ItemGroup>
 </Project>

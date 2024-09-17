@@ -12,7 +12,7 @@ void BossParticle::DamageEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.radius = 1.0f;
 	data_.emit = 0;
 	data_.emitPattern = 3;
-
+	blendMode_ = BlendMode::kAdd;
 	RefreshData(data_);
 }
 
