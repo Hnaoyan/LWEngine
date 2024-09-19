@@ -1,9 +1,12 @@
 #pragma once
-#include<memory>
+#include <memory>
+#include <thread>
+#include <functional>
+#include <mutex>
 
 #include "IScene.h"
 #include "SceneFactory/AbstractSceneFactory.h"
-#include "../Utility/Singleton.h"
+#include "Engine/Utility/Singleton.h"
 
 class SceneManager : public Singleton<SceneManager>
 {
@@ -24,7 +27,8 @@ private:
 	IScene* nextScene_ = nullptr;
 	// 名前
 	std::string nextSceneName_{};
-
+	// 次シーンの初期化
+	std::thread nextInitialize_;
 public:
 	/// <summary>
 	/// シーン生成クラス設定
@@ -52,6 +56,6 @@ public:
 	/// </summary>
 	/// <param name="sceneName"></param>
 	void ChangeScene(const std::string& sceneName);
-
+	void ChangeThreadScene(const std::string& sceneName);
 
 };

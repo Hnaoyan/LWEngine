@@ -83,12 +83,15 @@ public: // 取得・設定
 	/// <param name="sceneM"></param>
 	void SetSceneManager(SceneManager* sceneM) { sceneManager_ = sceneM; }
 
+	bool GetSceneReady() { return isSceneReady_; }
 protected:
 	/// <summary>
 	/// シーン番号
 	/// </summary>
 	static int sceneNum;
 
+	// シーンの初期化を完了したかを確認する
+	bool isSceneReady_;
 	// シーンマネージャー
 	SceneManager* sceneManager_ = nullptr;
 	// DxCommon

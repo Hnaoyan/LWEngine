@@ -79,6 +79,8 @@ void GameScene::Initialize()
 	// プレイヤーにセットする
 	player_->PointerInitialize(bulletManager_.get(), bossEnemy_.get(), enemyManager_->GetEnemysList());
 
+	// 準備完了
+	isSceneReady_ = true;
 }
 
 void GameScene::GPUUpdate()

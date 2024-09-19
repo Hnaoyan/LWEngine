@@ -34,6 +34,8 @@ public:	// メンバ変数
 	static Microsoft::WRL::ComPtr<ID3D12CommandAllocator> sCommandAllocator_;
 	// リスト
 	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> sCommandList_;
+	// ロード用のリスト
+	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> sCommandLoadList_;
 
 private: // 
 

@@ -743,6 +743,9 @@
     <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\ISceneTransition.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\SceneTransitionManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
