@@ -998,7 +998,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
-	resultPipeline.pipelineStates[size_t(PostEffect::kAlpha)] = CreatePipelineState(graphicsPipelineStateDesc);
+	resultPipeline.pipelineStates[size_t(PostEffect::kSmoothing)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
 	psBlob = Shader::GetInstance()->Compile(L"PostEffect/GaussianFilterPS.hlsl", L"ps_6_0");

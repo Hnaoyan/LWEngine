@@ -92,7 +92,7 @@ void GameScene::Update()
 
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_LSHIFT)) {
-		sceneManager_->ChangeScene("SAMPLE");
+		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
 	if (player_->IsDead() && !isGameOver_) {

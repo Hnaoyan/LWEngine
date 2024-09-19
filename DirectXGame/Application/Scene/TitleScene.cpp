@@ -43,11 +43,12 @@ void TitleScene::GPUUpdate()
 void TitleScene::Update()
 {
 #ifdef _DEBUG
-
 	if (input_->TriggerKey(DIK_LSHIFT)) {
 		sceneManager_->ChangeScene("SAMPLE");
 	}
-
+	if (input_->TriggerKey(DIK_RSHIFT)) {
+		sceneManager_->ChangeScene("GAME");
+	}
 #endif // _DEBUG
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
