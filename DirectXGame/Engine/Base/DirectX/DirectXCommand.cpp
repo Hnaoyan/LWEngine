@@ -9,6 +9,8 @@ Microsoft::WRL::ComPtr<ID3D12CommandAllocator> DirectXCommand::sCommandAllocator
 Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> DirectXCommand::sCommandList_;
 Microsoft::WRL::ComPtr<ID3D12CommandAllocator> DirectXCommand::sCommandLoadAllocator_;
 Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> DirectXCommand::sCommandLoadList_;
+Microsoft::WRL::ComPtr<ID3D12CommandAllocator> DirectXCommand::sCommandGPUAllocator_;
+Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> DirectXCommand::sCommandGPUList_;
 
 void DirectXCommand::Initialize(ID3D12Device* device)
 {
@@ -37,6 +39,15 @@ void DirectXCommand::Initialize(ID3D12Device* device)
 	assert(SUCCEEDED(result));
 	// コマンドリストを生成する
 	result = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, sCommandLoadAllocator_.Get(), nullptr, IID_PPV_ARGS(&sCommandLoadList_));
+	// コマンドリストの生成がうまくいかなかったので起動できない
+	assert(SUCCEEDED(result));
+
+	// コマンドアロケータを生成する
+	result = device_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&sCommandGPUAllocator_));
+	// コマンドアロケータの生成がうまくいかなかったので起動できない
+	assert(SUCCEEDED(result));
+	// コマンドリストを生成する
+	result = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, sCommandGPUAllocator_.Get(), nullptr, IID_PPV_ARGS(&sCommandGPUList_));
 	// コマンドリストの生成がうまくいかなかったので起動できない
 	assert(SUCCEEDED(result));
 }
@@ -84,4 +95,13 @@ void DirectXCommand::ResetCloseCommandList(ID3D12GraphicsCommandList* commandLis
 	result = sCommandAllocator_->Reset();
 	assert(SUCCEEDED(result));
 	result = commandList->Reset(sCommandAllocator_.Get(), nullptr);
+}
+
+void DirectXCommand::ResetCloseCommandList(ID3D12GraphicsCommandList* commandList, ID3D12CommandAllocator* allocator)
+{
+	// 描画用にコマンドリストリセット
+	HRESULT result = S_FALSE;
+	result = allocator->Reset();
+	assert(SUCCEEDED(result));
+	result = commandList->Reset(allocator, nullptr);
 }

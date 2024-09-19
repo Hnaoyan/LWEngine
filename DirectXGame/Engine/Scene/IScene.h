@@ -44,6 +44,12 @@ public:	// ロード関数
 	/// </summary>
 	virtual void LoadTexture() {};
 
+	void LoadResource() {
+		LoadModel();
+		LoadTexture();
+		isSceneReady_ = true;
+	}
+
 public:	// 初期化
 	/// <summary>
 	/// アプリ関係の初期化

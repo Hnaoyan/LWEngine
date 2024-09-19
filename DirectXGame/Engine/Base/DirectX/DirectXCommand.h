@@ -26,6 +26,7 @@ public:
 	/// </summary>
 	/// <param name="commandList"></param>
 	static void ResetCloseCommandList(ID3D12GraphicsCommandList* commandList);
+	static void ResetCloseCommandList(ID3D12GraphicsCommandList* commandList, ID3D12CommandAllocator* allocator);
 
 public:	// メンバ変数
 	// キュー
@@ -37,6 +38,9 @@ public:	// メンバ変数
 	// ロード用のリスト
 	static Microsoft::WRL::ComPtr<ID3D12CommandAllocator> sCommandLoadAllocator_;
 	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> sCommandLoadList_;
+	// GPU
+	static Microsoft::WRL::ComPtr<ID3D12CommandAllocator> sCommandGPUAllocator_;
+	static Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> sCommandGPUList_;
 
 private: // 
 

@@ -5,9 +5,15 @@ void SceneManager::Update()
 {
 	// 切り替え
 	if (nextScene_ && nextScene_->GetSceneReady()) {
+		//nextInitialize_.detach();
 		if (nowScene_) {
 			delete nowScene_;
 		}
+		if (isThread_) {
+			nextInitialize_.join();
+			nextScene_->Initialize();
+		}
+		isThread_ = false;
 		// シーン切り替え
 		nowScene_ = nextScene_;
 		nextScene_ = nullptr;
@@ -84,7 +90,8 @@ void SceneManager::ChangeThreadScene(const std::string& sceneName)
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
 	// 初期化
-	nextInitialize_ = std::thread(&IScene::Initialize, nextScene_);
-
+	//nextInitialize_ = std::thread(&IScene::Initialize, nextScene_);
+	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
+	isThread_ = true;
 	nextSceneName_ = sceneName;
 }

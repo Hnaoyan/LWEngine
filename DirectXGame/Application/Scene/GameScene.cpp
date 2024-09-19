@@ -10,10 +10,6 @@ void GameScene::Initialize()
 	IScene::Initialize();
 	// ライト初期化
 	LightingInitialize();
-	// モデル読み込み
-	LoadModel();
-	// テクスチャ関係読み込み
-	LoadTexture();
 	// ゲームオーバーフラグ
 	isGameOver_ = false;
 

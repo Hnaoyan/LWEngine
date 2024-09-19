@@ -49,7 +49,7 @@ void TitleScene::Update()
 		sceneManager_->ChangeScene("SAMPLE");
 	}
 	if (input_->TriggerKey(DIK_RSHIFT)) {
-		sceneManager_->ChangeScene("GAME");
+		sceneManager_->ChangeThreadScene("GAME");
 	}
 #endif // _DEBUG
 

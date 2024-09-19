@@ -29,6 +29,8 @@ private:
 	std::string nextSceneName_{};
 	// 次シーンの初期化
 	std::thread nextInitialize_;
+
+	bool isThread_ = false;
 public:
 	/// <summary>
 	/// シーン生成クラス設定
