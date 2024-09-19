@@ -86,31 +86,6 @@ void OparationManager::InputUpdate()
 		return;
 	}
 
-	// ダッシュ中の処理
-	if (isDash_) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-		if (resetTime_ > 10) {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-
-		}
-		++resetTime_;
-
-
-		dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, resetTime_ / 80.0f);
-		dashVelocity_.z = LwLib::Lerp(dashVelocity_.z, 0, resetTime_ / 80.0f);
-
-		player_->velocity_.x += dashVelocity_.x * GameSystem::GameSpeedFactor();
-		player_->velocity_.z += dashVelocity_.z * GameSystem::GameSpeedFactor();
-
-		if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {
-			isDash_ = false;
-			resetTime_ = 0;
-			dashCooltime_.Start(300.0f);
-			return;
-		}
-
-	}
-
 	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
 	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
 

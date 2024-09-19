@@ -4,6 +4,7 @@
 
 float GameSystem::sSpeedFactor = 1.0f;
 GameSystem::PlayerKeyConfig GameSystem::sPlayerKey;
+GameSystem::DashBlur GameSystem::sBlurEffect;
 
 float GameSystem::GameSpeedFactor()
 {
@@ -48,4 +49,10 @@ void GameSystem::Update()
     KeyBindUpdate();
     // 入力の更新
     KeyConfigUpdate();
+
+    PostEffectRender::PostEffectDesc desc{};
+    desc.blur = sBlurEffect.data;
+
+    PostEffectRender::GetInstance()->Update(desc);
+
 }

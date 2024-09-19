@@ -23,11 +23,11 @@ void QuickBoostState::Initialize()
 
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 
+	GameSystem::sBlurEffect.Initialize();
 }
 
 void QuickBoostState::Update()
 {
-	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 	changeTimer_.Update();
 
 	dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, changeTimer_.GetElapsedFrame());
@@ -49,7 +49,8 @@ void QuickBoostState::Update()
 
 void QuickBoostState::Exit()
 {
-	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+	GameSystem::sBlurEffect.Finalize();
+
 	player_->quickBoostCoolTime_.Start(45.0f);
 
 	player_->GetSystemFacede()->GetAnimation()->Reset();

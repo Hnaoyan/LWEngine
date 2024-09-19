@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include "Engine/PostEffect/PostEffectRender.h"
 
 class Input;
 
@@ -32,9 +33,23 @@ private:
 		PlayerKey<int32_t> keybinds_;
 	};
 
+	struct DashBlur
+	{
+		// ブラーの詳細情報
+		CBufferDataBlur data;
+
+		void Initialize() {
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+		}
+		void Finalize() {
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+		}
+	};
+
 public:
 	// プレイヤーのキー
 	static PlayerKeyConfig sPlayerKey;
+	static DashBlur sBlurEffect;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -43,6 +58,8 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+
+	//void
 
 private:
 	/// <summary>
