@@ -10,10 +10,6 @@ void GameScene::Initialize()
 	IScene::Initialize();
 	// ライト初期化
 	LightingInitialize();
-	// モデル読み込み
-	LoadModel();
-	// テクスチャ関係読み込み
-	LoadTexture();
 	// ゲームオーバーフラグ
 	isGameOver_ = false;
 
@@ -79,6 +75,8 @@ void GameScene::Initialize()
 	// プレイヤーにセットする
 	player_->PointerInitialize(bulletManager_.get(), bossEnemy_.get(), enemyManager_->GetEnemysList());
 
+	// 準備完了
+	isSceneReady_ = true;
 }
 
 void GameScene::GPUUpdate()

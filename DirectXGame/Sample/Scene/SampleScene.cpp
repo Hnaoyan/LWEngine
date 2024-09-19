@@ -104,8 +104,8 @@ void SampleScene::Initialize()
 	hsvData_ = {};
 
 #pragma endregion
-
-
+	// 準備完了
+	isSceneReady_ = true;
 	//testWTF_.transform_.translate = { 0,-3.5f,7.0f };
 	//testWTF_.transform_.rotate.y = -1.85f;
 }

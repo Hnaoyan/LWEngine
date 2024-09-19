@@ -275,11 +275,13 @@
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\ISceneTransition.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\SceneTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h" />
@@ -511,7 +513,7 @@
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
-    <None Include="Resources\shaders\Utility\HSV_RGB.hlsli" />
+    <None Include="Resources\shaders\Utility\PostCalc.hlsli" />
     <None Include="Resources\shaders\Utility\Random.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

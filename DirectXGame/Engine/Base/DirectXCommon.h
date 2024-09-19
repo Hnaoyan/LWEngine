@@ -96,6 +96,7 @@ public: // Fence関係
 public: // アクセッサ
 	ID3D12Device* GetDevice() { return dxDevice_->GetDevice(); }
 	ID3D12GraphicsCommandList* GetCommandList() { return DirectXCommand::sCommandList_.Get(); }
+	ID3D12GraphicsCommandList* GetLoadCommandList() { return DirectXCommand::sCommandLoadList_.Get(); }
 	SwapChainManager* GetSwapChainManager() { return swapChainManager_.get(); }
 
 	// HeapHandlerのゲッター

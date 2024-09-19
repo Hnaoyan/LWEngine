@@ -740,6 +740,12 @@
     <ClInclude Include="DirectXGame\Engine\LevelEditor\CSV\CSVLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\ISceneTransition.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\SceneTransitionManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -987,7 +993,7 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\Utility\Random.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
-    <None Include="Resources\shaders\Utility\HSV_RGB.hlsli" />
+    <None Include="Resources\shaders\Utility\PostCalc.hlsli" />
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
   </ItemGroup>
 </Project>

@@ -4,10 +4,16 @@
 void SceneManager::Update()
 {
 	// 切り替え
-	if (nextScene_) {
+	if (nextScene_ && nextScene_->GetSceneReady()) {
+		//nextInitialize_.detach();
 		if (nowScene_) {
 			delete nowScene_;
 		}
+		if (isThread_) {
+			nextInitialize_.join();
+			nextScene_->Initialize();
+		}
+		isThread_ = false;
 		// シーン切り替え
 		nowScene_ = nextScene_;
 		nextScene_ = nullptr;
@@ -17,27 +23,39 @@ void SceneManager::Update()
 		// 次のシーンの初期化
 		nowScene_->Initialize();
 	}
-	// シーンのGPU更新処理
-	nowScene_->GPUUpdate();
-	// シーンのCPU更新処理
-	nowScene_->Update();
+	// 現在のシーンがあれば
+	if (nowScene_) {
+		// シーンのGPU更新処理
+		nowScene_->GPUUpdate();
+		// シーンのCPU更新処理
+		nowScene_->Update();
+	}
 	// コマンドリストの送り出し
 	DirectXCommand::ExecuteCommandList(DirectXCommand::sCommandList_.Get());
 }
 
 void SceneManager::Draw()
 {
-	nowScene_->Draw();
+	// 現在のシーンがあれば
+	if (nowScene_) {
+		nowScene_->Draw();
+	}
 }
 
 void SceneManager::UIDraw()
 {
-	nowScene_->UIDraw();
+	// 現在のシーンがあれば
+	if (nowScene_) {
+		nowScene_->UIDraw();
+	}
 }
 
 void SceneManager::ImGuiDraw()
 {
-	nowScene_->ImGuiDraw();
+	// 現在のシーンがあれば
+	if (nowScene_) {
+		nowScene_->ImGuiDraw();
+	}
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)
@@ -52,5 +70,28 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
+	// 初期化
+	nextInitialize_ = std::thread(&IScene::Initialize, nextScene_);
+	nextInitialize_.join();
+
+	nextSceneName_ = sceneName;
+}
+
+void SceneManager::ChangeThreadScene(const std::string& sceneName)
+{
+	assert(sceneFactory_);
+	assert(nextScene_ == nullptr);
+
+	//if (nowScene_ == nullptr) {
+	//	nextScene_ = sceneFactory_->CreateScene(sceneName);
+	//	return;
+	//}
+
+	// 次のシーン生成
+	nextScene_ = sceneFactory_->CreateScene(sceneName);
+	// 初期化
+	//nextInitialize_ = std::thread(&IScene::Initialize, nextScene_);
+	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
+	isThread_ = true;
 	nextSceneName_ = sceneName;
 }
