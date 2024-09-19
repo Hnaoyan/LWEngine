@@ -78,13 +78,13 @@ uint32_t TextureManager::LoadInternal(const std::string fileName)
     DirectX::TexMetadata metadata = mipImages.GetMetadata();
     texture.resource = CreateTextureResource(metadata);
 
-    Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = UploadTextureData(texture.resource, mipImages, dxCommon_->GetCommandList());
+    Microsoft::WRL::ComPtr<ID3D12Resource> intermediateResource = UploadTextureData(texture.resource, mipImages, dxCommon_->GetLoadCommandList());
   
     // コマンドリスト関係の処理
-    HRESULT hr = dxCommon_->GetCommandList()->Close();
+    HRESULT hr = dxCommon_->GetLoadCommandList()->Close();
     assert(SUCCEEDED(hr));
 
-    ID3D12CommandList* cmdLists[] = { dxCommon_->GetCommandList() };
+    ID3D12CommandList* cmdLists[] = { dxCommon_->GetLoadCommandList() };
     DirectXCommand::sCommandQueue_->ExecuteCommandLists(1, cmdLists);
     
     // 実行待ち
@@ -104,9 +104,9 @@ uint32_t TextureManager::LoadInternal(const std::string fileName)
     }
 
     // 実行が完了したのでアロケータとコマンドリストをリセット
-    hr = DirectXCommand::sCommandAllocator_->Reset();
+    hr = DirectXCommand::sCommandLoadAllocator_->Reset();
     assert(SUCCEEDED(hr));
-    hr = DirectXCommand::sCommandList_->Reset(DirectXCommand::sCommandAllocator_.Get(), nullptr);
+    hr = DirectXCommand::sCommandLoadList_->Reset(DirectXCommand::sCommandLoadAllocator_.Get(), nullptr);
     assert(SUCCEEDED(hr));
 
     // metaDataを基にSRVの設定
