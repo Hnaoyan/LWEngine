@@ -121,6 +121,9 @@ void SampleScene::GPUUpdate()
 void SampleScene::Update()
 {
 
+	if (input_->TriggerKey(DIK_LSHIFT)) {
+		sceneManager_->ChangeScene("TITLE");
+	}
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeScene("GAME");
 	}
@@ -225,9 +228,9 @@ void SampleScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.worldTransform = &testWTF_;
 
-	//humans_[0]->Draw(desc);
-	//humans_[1]->Draw(desc);
-	//humans_[2]->Draw(desc);
+	humans_[0]->Draw(desc);
+	humans_[1]->Draw(desc);
+	humans_[2]->Draw(desc);
 
 	//testGroup1_->Draw(desc);
 	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
@@ -237,7 +240,7 @@ void SampleScene::Draw()
 
 	//player_->Draw(&camera_);
 	for (int i = 0; i < cubes_.size(); ++i) {
-		//cubes_[i]->Draw(desc);
+		cubes_[i]->Draw(desc);
 	}
 	
 	desc.worldTransform = &plane_.worldTransform;
@@ -251,7 +254,7 @@ void SampleScene::Draw()
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
 	//cubeModel_->Draw(textureDesc);
-	//skybox_->Draw(desc);
+	skybox_->Draw(desc);
 
 	//particles_->Draw(&camera_);
 	gpuParticle_->Draw(&camera_);
@@ -302,7 +305,7 @@ void SampleScene::ImGuiDraw()
 	switch (postEffecter_)
 	{
 	case 0:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 		break;
 	case 1:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
@@ -332,7 +335,7 @@ void SampleScene::ImGuiDraw()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kLuminanceOutline;
 		break;
 	default:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 		break;
 	}
 

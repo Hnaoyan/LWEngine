@@ -339,6 +339,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\LevelEditor\CSV\CSVLoader.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -734,6 +737,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\LevelEditor\CSV\CSVLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
@@ -768,6 +774,7 @@
     <FxCompile Include="Resources\shaders\Particle\User\PlayerEffect.hlsl" />
     <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl" />
     <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\BloomPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -978,7 +985,9 @@
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
-    <None Include="Resources\shaders\Utillity\Random.hlsli" />
+    <None Include="Resources\shaders\Utility\Random.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
+    <None Include="Resources\shaders\Utility\HSV_RGB.hlsli" />
+    <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
   </ItemGroup>
 </Project>

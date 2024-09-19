@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-GeneralPipeline ParticleEmitter::sPipeline_;
+BlendPipeline ParticleEmitter::sPipeline_;
 ID3D12GraphicsCommandList* ParticleEmitter::sCommandList = nullptr;
 
 void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
@@ -31,7 +31,9 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 	emitter_.cMap_->emit = 0;
 	emitter_.cMap_->emitPattern = 0;
 
-	texture_ = TextureManager::GetInstance()->Load("Resources/effect.png");
+	blendMode_ = BlendMode::kAlpha;
+
+	texture_ = TextureManager::GetInstance()->Load("Resources/Effect/effect.png");
 }
 
 void ParticleEmitter::Update()
@@ -88,10 +90,10 @@ void ParticleEmitter::Draw(ICamera* camera)
 	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
 
 #pragma region 描画
-	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kParticle)]);
+	sPipeline_ = std::get<BlendPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kParticle)]);
 	// パイプラインの設定
 	sCommandList->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
-	sCommandList->SetPipelineState(sPipeline_.pipelineState.Get());
+	sCommandList->SetPipelineState(sPipeline_.pipelineStates[size_t(blendMode_)].Get());
 
 	//---メッシュの設定---//
 	// 頂点バッファの設定

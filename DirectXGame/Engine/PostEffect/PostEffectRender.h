@@ -2,6 +2,7 @@
 #include "../Utility/Singleton.h"
 #include "../3D/Graphics/GraphicsPSO.h"
 #include "PostEffectData.h"
+#include "Engine/Base/CBufferCommon.h"
 
 #include <wrl.h>
 #include <d3d12.h>
@@ -15,20 +16,15 @@ private:
 	using EffectRegister = Pipeline::PostEffectRegister;
 
 public:	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> vignetteCBuffer_;
-	CBufferDataVignette* vignetteMap_ = nullptr;
+	ConstantBufferMapContext<CBufferDataVignette> vignette_;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> blurCBuffer_;
-	CBufferDataBlur* blurMap_ = nullptr;
+	ConstantBufferMapContext<CBufferDataBlur> blur_;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> dissolveCBuffer_;
-	CBufferDataDissolve* dissolveMap_ = nullptr;
+	ConstantBufferMapContext<CBufferDataDissolve> dissolve_;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> noiseCBuffer_;
-	CBufferDataNoise* noiseMap_ = nullptr;
+	ConstantBufferMapContext<CBufferDataNoise> noise_;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> hsvCBuffer_;
-	CBufferDataHSV* hsvMap_ = nullptr;
+	ConstantBufferMapContext<CBufferDataHSV> hsv_;
 	/// <summary>
 	/// 初期化
 	/// </summary>

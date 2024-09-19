@@ -141,7 +141,7 @@ bool Sprite::Initialize()
 
 	}
 	// ブレンドモードの初期化
-	blendMode_ = BlendMode::kNormal;
+	blendMode_ = BlendMode::kAlpha;
 
 	return true;
 }

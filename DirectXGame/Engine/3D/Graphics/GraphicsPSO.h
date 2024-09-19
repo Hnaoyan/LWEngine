@@ -102,7 +102,7 @@ namespace Pipeline
 
 	enum class BlendMode : int {
 		kNone,
-		kNormal,
+		kAlpha,
 		kAdd,
 		kSubtract,
 		kMultiply,
@@ -120,7 +120,7 @@ namespace Pipeline
 	};
 
 	enum class PostEffectType : int {
-		kNormal,			// 通常
+		kAlpha,			// 通常
 		kGrayScale,			// グレースケール
 		kVignette,			// ビネット
 		kGrayscaleVignette,	// グレースケールとビネット

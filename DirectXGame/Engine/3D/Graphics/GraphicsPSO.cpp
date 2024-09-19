@@ -175,7 +175,7 @@ void GraphicsPSO::CreateSpritePSO()
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	resultPipeline.pipelineStates[size_t(BlendMode::kNormal)] = CreatePipelineState(gPipeline);
+	resultPipeline.pipelineStates[size_t(BlendMode::kAlpha)] = CreatePipelineState(gPipeline);
 
 	// 加算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
@@ -328,7 +328,7 @@ void GraphicsPSO::CreateLinePSO()
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	resultPipeline.pipelineStates[size_t(BlendMode::kNormal)] = CreatePipelineState(gPipeline);
+	resultPipeline.pipelineStates[size_t(BlendMode::kAlpha)] = CreatePipelineState(gPipeline);
 
 #pragma endregion
 
@@ -487,7 +487,7 @@ void GraphicsPSO::CreateModelPSO()
 
 void GraphicsPSO::CreateParticlePSO()
 {
-	GeneralPipeline resultPipeline;
+	BlendPipeline resultPipeline;
 
 	ComPtr<IDxcBlob> vsBlob;
 	ComPtr<IDxcBlob> psBlob;
@@ -582,23 +582,31 @@ void GraphicsPSO::CreateParticlePSO()
 #pragma region ブレンド
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
-	//// αブレンド
+	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
-	//gPipeline.BlendState = blenddesc;
-	// 加算合成
-	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
-	//// 減算合成
-	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
-	//gPipeline.BlendState = blenddesc;
-	//// 乗算合成
-	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
-	//gPipeline.BlendState = blenddesc;
-	//// スクリーン合成
-	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
-	//gPipeline.BlendState = blenddesc;
 	// PSO作成
-	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
+	resultPipeline.pipelineStates[size_t(BlendMode::kAlpha)] = CreatePipelineState(gPipeline);
+	// 加算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kAdd)] = CreatePipelineState(gPipeline);
+	// 減算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kSubtract)] = CreatePipelineState(gPipeline);
+	// 乗算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kMultiply)] = CreatePipelineState(gPipeline);
+	// スクリーン合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kScreen)] = CreatePipelineState(gPipeline);
 
 	sPipelines_[size_t(Pipeline::Order::kParticle)] = std::move(resultPipeline);
 
@@ -957,7 +965,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
-	resultPipeline.pipelineStates[size_t(PostEffect::kNormal)] = CreatePipelineState(graphicsPipelineStateDesc);
+	resultPipeline.pipelineStates[size_t(PostEffect::kAlpha)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
 	psBlob = Shader::GetInstance()->Compile(L"PostEffect/GrayscalePS.hlsl", L"ps_6_0");
@@ -985,7 +993,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BoxFilterPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BloomPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader

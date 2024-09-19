@@ -20,7 +20,7 @@ void PlayerContext::HealthManager::Update()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
 	}
 	if (hitPoint_.invincibility.IsEnd()) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 	}
 
 	if (hitPoint_.currentHealth <= 0) {

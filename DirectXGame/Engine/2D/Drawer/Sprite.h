@@ -126,7 +126,7 @@ private: // メンバ変数
 	EulerTransform uvTransform_ = {};
 
 	// ブレンドモード
-	BlendMode blendMode_ = BlendMode::kNormal;
+	BlendMode blendMode_ = BlendMode::kAlpha;
 
 	bool isFlipX_ = false;
 	bool isFlipY_ = false;

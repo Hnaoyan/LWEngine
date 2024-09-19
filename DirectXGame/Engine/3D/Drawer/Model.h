@@ -93,6 +93,6 @@ private:
 	// テクスチャ
 	uint32_t texture_ = 0u;
 private:
-	BlendMode blendMode_ = BlendMode::kNormal;
+	BlendMode blendMode_ = BlendMode::kAlpha;
 
 };

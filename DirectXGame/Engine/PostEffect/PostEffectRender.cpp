@@ -4,7 +4,7 @@
 #include "Engine/2D/TextureManager.h"
 #include <cassert>
 
-Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNormal;
+Pipeline::PostEffectType PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 uint32_t PostEffectRender::sDissolveTexture = 0u;
 
 void PostEffectRender::StaticInitialize()
@@ -16,74 +16,60 @@ void PostEffectRender::StaticInitialize()
 	sDissolveTexture = TextureManager::Load("Resources/Dissolve/noise1.png");
 
 	// リソース作成
-	vignetteCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataVignette) + 0xff) & ~0xff);
-	blurCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataBlur) + 0xff) & ~0xff);
-	dissolveCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataDissolve) + 0xff) & ~0xff);
-	noiseCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataNoise) + 0xff) & ~0xff);
-	hsvCBuffer_ = DxCreateLib::ResourceLib::CreateBufferResource(device, (sizeof(CBufferDataHSV) + 0xff) & ~0xff);
+	vignette_.CreateConstantBuffer(device);
+	blur_.CreateConstantBuffer(device);
+	dissolve_.CreateConstantBuffer(device);
+	noise_.CreateConstantBuffer(device);
+	hsv_.CreateConstantBuffer(device);
 
-#pragma region マッピング
-	HRESULT result = S_FALSE;
-	result = vignetteCBuffer_->Map(0, nullptr, (void**)&vignetteMap_);
-	assert(SUCCEEDED(result));
-	result = blurCBuffer_->Map(0, nullptr, (void**)&blurMap_);
-	assert(SUCCEEDED(result));
-	result = dissolveCBuffer_->Map(0, nullptr, (void**)&dissolveMap_);
-	assert(SUCCEEDED(result));
-	result = noiseCBuffer_->Map(0, nullptr, (void**)&noiseMap_);
-	assert(SUCCEEDED(result));
-	result = hsvCBuffer_->Map(0, nullptr, (void**)&hsvMap_);
-	assert(SUCCEEDED(result));
-#pragma endregion
+	vignette_.cMap_->scale = 16.0f;
+	vignette_.cMap_->powValue = 0.8f;
+	vignette_.cMap_->color = { 1.0f,0.0f,0.0f };
 
-	vignetteMap_->scale = 16.0f;
-	vignetteMap_->powValue = 0.8f;
-	vignetteMap_->color = { 1.0f,0.0f,0.0f };
+	blur_.cMap_->centerPoint = { 0.5f,0.5f };
+	blur_.cMap_->samplesNum = 5;
+	blur_.cMap_->blurWidth = 0.01f;
 
-	blurMap_->centerPoint = { 0.5f,0.5f };
-	blurMap_->samplesNum = 5;
-	blurMap_->blurWidth = 0.01f;
+	dissolve_.cMap_->color = {};
+	dissolve_.cMap_->threshold = 0;
 
-	dissolveMap_->color = {};
-	dissolveMap_->threshold = 0;
+	noise_.cMap_->time = 0;
+	noise_.cMap_->enableScreen = 0;
 
-	noiseMap_->time = 0;
-	noiseMap_->enableScreen = 0;
-
-	hsvMap_->hue = 0.0f;
-	hsvMap_->saturation = 0.0f;
-	hsvMap_->value = 0.0f;
+	hsv_.cMap_->hue = 0.0f;
+	hsv_.cMap_->saturation = 0.0f;
+	hsv_.cMap_->value = 0.0f;
 
 }
 
 void PostEffectRender::Update(const PostEffectDesc& desc)
 {
 	// Vignette
-	vignetteMap_->color = desc.vignette.color;
-	vignetteMap_->powValue = desc.vignette.powValue;
-	vignetteMap_->scale = desc.vignette.scale;
+	vignette_.cMap_->color = desc.vignette.color;
+	vignette_.cMap_->powValue = desc.vignette.powValue;
+	vignette_.cMap_->scale = desc.vignette.scale;
 
 	// Blur
-	blurMap_->blurWidth = desc.blur.blurWidth;
-	blurMap_->centerPoint = desc.blur.centerPoint;
-	blurMap_->samplesNum = desc.blur.samplesNum;
+	blur_.cMap_->blurWidth = desc.blur.blurWidth;
+	blur_.cMap_->centerPoint = desc.blur.centerPoint;
+	blur_.cMap_->samplesNum = desc.blur.samplesNum;
 
 	// Dissolve
-	dissolveMap_->color = desc.dissolve.color;
-	dissolveMap_->threshold = desc.dissolve.threshold;
+	dissolve_.cMap_->color = desc.dissolve.color;
+	dissolve_.cMap_->threshold = desc.dissolve.threshold;
 
 	// HSV
-	hsvMap_->hue = desc.hsv.hue;
-	hsvMap_->saturation = desc.hsv.saturation;
-	hsvMap_->value = desc.hsv.value;
+	hsv_.cMap_->hue = desc.hsv.hue;
+	hsv_.cMap_->saturation = desc.hsv.saturation;
+	hsv_.cMap_->value = desc.hsv.value;
 
 	// ノイズでの処理時のみ
 	if (sPostEffect != Pipeline::PostEffectType::kNoise) {
-		noiseMap_->time = 0;
+		noise_.cMap_->time = 0;
 		return;
 	}
-	noiseMap_->time++;
-	noiseMap_->enableScreen = desc.noise.enableScreen;
+	noise_.cMap_->time++;
+	noise_.cMap_->enableScreen = desc.noise.enableScreen;
 }
 
 void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -105,11 +91,11 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		commandList_, static_cast<UINT>(EffectRegister::kDissolveTexture), sDissolveTexture);
 
-	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kVignette), vignetteCBuffer_->GetGPUVirtualAddress());
-	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBlur), blurCBuffer_->GetGPUVirtualAddress());
-	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kDissolve), dissolveCBuffer_->GetGPUVirtualAddress());
-	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kNoise), noiseCBuffer_->GetGPUVirtualAddress());
-	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kHSV), hsvCBuffer_->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kVignette), vignette_.cBuffer->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBlur), blur_.cBuffer->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kDissolve), dissolve_.cBuffer->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kNoise), noise_.cBuffer->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kHSV), hsv_.cBuffer->GetGPUVirtualAddress());
 	// 描画
 	commandList_->DrawInstanced(3, 1, 0, 0);
 
