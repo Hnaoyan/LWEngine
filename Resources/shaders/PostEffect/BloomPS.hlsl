@@ -1,5 +1,5 @@
 #include "FullScreen.hlsli"
-#include "../Utility/HSV_RGB.hlsli"
+#include "../Utility/PostCalc.hlsli"
 #include "../Utility/Gaussian.hlsli"
 
 Texture2D<float32_t4> gTexture : register(t0);
@@ -11,11 +11,6 @@ struct PixelShaderOutput
 {
     float32_t4 color : SV_TARGET0;
 };
-
-float32_t Luminance(float32_t3 color)
-{
-    return dot(color, float32_t3(0.299, 0.587, 0.114));
-}
 
 float32_t3 ExtractBrightParts(float32_t3 color)
 {  

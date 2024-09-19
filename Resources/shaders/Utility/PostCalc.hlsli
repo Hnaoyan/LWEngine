@@ -1,4 +1,12 @@
 ///
+/// Luminance
+///
+float32_t Luminance(float32_t3 color)
+{
+    return dot(color, float32_t3(0.2126f, 0.7152f, 0.0722f));
+}
+
+///
 /// Wrap
 ///
 float32_t WrapValue(float32_t value, float32_t minRange, float32_t maxRange)
