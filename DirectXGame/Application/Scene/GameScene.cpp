@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelRenderer.h"
 
 #include <imgui.h>
 
@@ -156,8 +157,15 @@ void GameScene::Draw()
 	dxCommon_->ClearDepthBuffer();
 
 	Model::PreDraw(commandList);
+	ModelRenderer::PreDraw(commandList);
 
 	ModelDrawDesc desc{};
+
+	DrawDesc::LightDesc lightDesc{};
+	lightDesc.directionalLight = directionalLight_.get();
+	lightDesc.pointLight = pointLight_.get();
+	lightDesc.spotLight = spotLight_.get();
+
 	desc.camera = &camera_;
 	desc.directionalLight = directionalLight_.get();
 	desc.pointLight = pointLight_.get();
@@ -179,6 +187,7 @@ void GameScene::Draw()
 
 	gpuParticleManager_->Draw(&camera_);
 
+	ModelRenderer::PostDraw();
 	Model::PostDraw();
 
 #pragma region UI

@@ -3,6 +3,7 @@
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Engine/3D/ModelManager.h"
+#include "Engine/3D/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 void Boss::Initialize(Model* model)
@@ -68,14 +69,20 @@ void Boss::Update()
 
 void Boss::Draw(ModelDrawDesc desc)
 {
-	ModelDrawDesc drawDesc{};
-	drawDesc.camera = desc.camera;
-	drawDesc.directionalLight = desc.directionalLight;
-	drawDesc.pointLight = desc.pointLight;
-	drawDesc.spotLight = desc.spotLight;
-	drawDesc.worldTransform = &worldTransform_;
+	model_->GetMaterial()->Update();
 
-	model_->Draw(drawDesc);
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+
+	modelDesc.SetDesc(model_);
+	modelDesc.worldTransform = &worldTransform_;
+
+	// プレイヤーの描画
+	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 	bulletManager_->Draw(desc);
 }
 

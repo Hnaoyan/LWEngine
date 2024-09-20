@@ -4,6 +4,7 @@
 #include "Application/GameSystem/GameSystem.h"
 
 #include "Engine/PostEffect/PostEffectRender.h"
+#include "Engine/3D/ModelRenderer.h"
 
 void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
 {
@@ -65,16 +66,20 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
-	ModelDrawDesc drawDesc{};
-	// クラスの値設定
-	drawDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
-	// 引数の値設定
-	drawDesc.camera = desc.camera;
-	drawDesc.directionalLight = desc.directionalLight;
-	drawDesc.pointLight = desc.pointLight;
-	drawDesc.spotLight = desc.spotLight;
+	model_->GetMaterial()->Update();
+
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+
+	modelDesc.SetDesc(model_);
+	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
+	
 	// プレイヤーの描画
-	model_->Draw(drawDesc);
+	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
 
 void Player::ImGuiDraw()

@@ -37,6 +37,7 @@ public:
 	/// </summary>
 	/// <param name="desc"></param>
 	static void NormalDraw(const ModelDrawDesc& desc);
+	static void NormalDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc);
 	/// <summary>
 	/// アニメーションあり描画
 	/// </summary>
@@ -49,6 +50,7 @@ public:
 	/// <param name="instanceNum"></param>
 	/// <param name="handle"></param>
 	static void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
+	static void InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 
 	static void LineDraw(const LineDrawDesc& desc);
 

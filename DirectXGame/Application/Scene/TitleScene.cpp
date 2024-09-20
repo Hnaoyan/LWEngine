@@ -46,7 +46,7 @@ void TitleScene::Update()
 {
 #ifdef _DEBUG
 	if (input_->TriggerKey(DIK_LSHIFT)) {
-		sceneManager_->ChangeScene("SAMPLE");
+		sceneManager_->ChangeThreadScene("SAMPLE");
 	}
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeThreadScene("GAME");
@@ -54,7 +54,7 @@ void TitleScene::Update()
 #endif // _DEBUG
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
-		sceneManager_->ChangeScene("GAME");
+		sceneManager_->ChangeThreadScene("GAME");
 	}
 
 }
