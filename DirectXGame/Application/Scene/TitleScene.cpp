@@ -112,6 +112,7 @@ void TitleScene::LoadModel()
 	//ModelManager::LoadNormalModel("Sphere", "sphere");
 	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
 	ModelManager::LoadNormalModel("Player", "Robotto");
+	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 
 }
 

@@ -322,7 +322,6 @@ void GameScene::ImGuiDraw()
 
 void GameScene::LoadModel()
 {
-	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 

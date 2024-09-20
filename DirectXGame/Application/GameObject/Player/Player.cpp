@@ -18,6 +18,11 @@ void Player::Initialize(Model* model)
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
+	material_ = std::make_unique<Material>();
+	material_->CreateMaterial();
+	//material_->color_.w = 0.5f;
+	//material_->Update();
+
 	worldTransform_.transform_.translate.y = -1.95f;
 	worldTransform_.transform_.translate.z = -35.0f;
 	worldTransform_.UpdateMatrix();
@@ -75,7 +80,9 @@ void Player::Draw(ModelDrawDesc desc)
 	lightDesc.pointLight = desc.pointLight;
 	lightDesc.spotLight = desc.spotLight;
 	modelDesc.SetDesc(model_);
-	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;	
+	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
+	material_->Update();
+	modelDesc.material = material_.get();
 	// プレイヤーの描画
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
@@ -88,6 +95,7 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
 
 	collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);

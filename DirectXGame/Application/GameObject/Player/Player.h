@@ -92,7 +92,7 @@ private:
 	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
 	// システムファサードクラス
 	std::unique_ptr<PlayerFacade> facadeSystem_;
-
+	std::unique_ptr<Material> material_;
 	// 操作関係
 	OparationManager systemManager_;
 	// ステートのマネージャー
