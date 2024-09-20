@@ -3,6 +3,7 @@
 #include "../StatePattern/StateMachine.h"
 #include "../System/BossSystem.h"
 #include "../System/UI/BossUI.h"
+#include "../System/BossFacade.h"
 
 class Player;
 
@@ -39,7 +40,7 @@ public:
 	/// </summary>
 	void UIDraw();
 
-	void Reset() { uiManager_.Initialize(this); }
+	void Reset() { systemManager_->uiManager_.Initialize(this); }
 
 private:
 	void GlobalValueInitialize();
@@ -51,11 +52,11 @@ public:
 	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
-	BossSystemContext::HealthManager* GetHealth() { return &healthManager_; }
+	BossSystemContext::HealthManager* GetHealth() { return &systemManager_->healthManager_; }
 	// 弾発射までの間隔
 	FrameTimer fireTimer_;
 	BossSystemContext::BulletManager* GetBulletManager() { return bulletManager_.get(); }
-	BossSystemContext::ParticleManager* GetParticleManager() { return &particleManager_; }
+	BossSystemContext::ParticleManager* GetParticleManager() { return &systemManager_->particleManager_; }
 
 	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
@@ -77,10 +78,8 @@ private: // サブシステム
 	BossState::StateDecider stateDecider_;
 	BossState::StateVariant nowVariantState_;
 	BossState::StateVariant prevVariantState_;
-	// HPの管理
-	BossSystemContext::HealthManager healthManager_;
-	BossSystemContext::ParticleManager particleManager_;
-	BossSystemContext::UIManager uiManager_;
+	// システムの窓口
+	std::unique_ptr<BossFacade> systemManager_;
 
 private:
 	// コライダー
