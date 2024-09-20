@@ -69,19 +69,17 @@ void Boss::Update()
 
 void Boss::Draw(ModelDrawDesc desc)
 {
+	// マテリアル更新
 	model_->GetMaterial()->Update();
-
+	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
 	DrawDesc::ModelDesc modelDesc{};
-
 	lightDesc.directionalLight = desc.directionalLight;
 	lightDesc.pointLight = desc.pointLight;
 	lightDesc.spotLight = desc.spotLight;
-
 	modelDesc.SetDesc(model_);
 	modelDesc.worldTransform = &worldTransform_;
-
-	// プレイヤーの描画
+	// 描画
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 	bulletManager_->Draw(desc);
 }

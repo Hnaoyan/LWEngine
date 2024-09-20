@@ -29,13 +29,15 @@ void GameScene::Initialize()
 	terrainManager_ = std::make_unique<TerrainManager>();
 	bulletManager_ = std::make_unique<BulletManager>();
 	enemyManager_ = std::make_unique<SampleEnemyManager>();
-	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	player_ = std::make_unique<Player>();
 	bossEnemy_ = std::make_unique<Boss>();
+	skydome_ = std::make_unique<SkyDomeObject>();
 #pragma endregion
 
 #pragma region システム
+	// 地形
+	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	// パーティクル
 	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
 	gpuParticleManager_->Initialize(ModelManager::GetModel("Plane"));
@@ -49,7 +51,7 @@ void GameScene::Initialize()
 	collisionManager_ = std::make_unique<CollisionManager>();
 #pragma endregion
 
-
+	skydome_->Initialize(ModelManager::GetModel("SkyDome"));
 	player_->PreInitialize(followCamera_.get(), gpuParticleManager_.get());
 	player_->Initialize(ModelManager::GetModel("Player"));
 
@@ -118,6 +120,7 @@ void GameScene::Update()
 	gameSystem_->Update();
 
 	// ゲームのオブジェクト更新
+	skydome_->Update();
 	terrainWtf_.UpdateMatrix();
 	player_->Update();
 	bulletManager_->Update();
@@ -158,7 +161,6 @@ void GameScene::Draw()
 
 	Model::PreDraw(commandList);
 	ModelRenderer::PreDraw(commandList);
-
 	ModelDrawDesc desc{};
 
 	DrawDesc::LightDesc lightDesc{};
@@ -170,8 +172,11 @@ void GameScene::Draw()
 	desc.directionalLight = directionalLight_.get();
 	desc.pointLight = pointLight_.get();
 	desc.spotLight = spotLight_.get();
-
+	// 球体
+	skydome_->Draw(desc);
+	// プレイヤー
 	player_->Draw(desc);
+	// ボス
 	if (bossEnemy_) {
 		bossEnemy_->Draw(desc);
 	}
@@ -181,9 +186,6 @@ void GameScene::Draw()
 
 	// 地形
 	terrainManager_->Draw(desc);
-
-	desc.worldTransform = &terrainWtf_;
-	//terrain_->Draw(desc);
 
 	gpuParticleManager_->Draw(&camera_);
 
@@ -234,6 +236,7 @@ void GameScene::ImGuiDraw()
 {
 #ifdef _DEBUG
 	// ゲームオブジェクト
+	skydome_->ImGuiDraw();
 	player_->ImGuiDraw();
 	if (bossEnemy_) {
 		bossEnemy_->ImGuiDraw();
@@ -319,7 +322,7 @@ void GameScene::ImGuiDraw()
 
 void GameScene::LoadModel()
 {
-
+	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 

@@ -66,18 +66,16 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
+	// マテリアル更新
 	model_->GetMaterial()->Update();
-
+	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
 	DrawDesc::ModelDesc modelDesc{};
-
 	lightDesc.directionalLight = desc.directionalLight;
 	lightDesc.pointLight = desc.pointLight;
 	lightDesc.spotLight = desc.spotLight;
-
 	modelDesc.SetDesc(model_);
-	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
-	
+	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;	
 	// プレイヤーの描画
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
