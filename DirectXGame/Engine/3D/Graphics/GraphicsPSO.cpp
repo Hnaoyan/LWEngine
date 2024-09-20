@@ -442,7 +442,7 @@ void GraphicsPSO::CreateModelPSO()
 	//blenddesc.RenderTarget[0].BlendEnable = false;
 
 	// αブレンド
-	//blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);

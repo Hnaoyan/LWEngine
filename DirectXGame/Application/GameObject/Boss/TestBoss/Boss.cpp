@@ -3,6 +3,7 @@
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Engine/3D/ModelManager.h"
+#include "Engine/3D/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 void Boss::Initialize(Model* model)
@@ -12,6 +13,10 @@ void Boss::Initialize(Model* model)
 #endif // _DEBUG
 
 	IGameObject::Initialize(model);
+	// システム
+	systemManager_ = std::make_unique<BossFacade>();
+	systemManager_->Initialize(this);
+
 	// ステートマネージャー
 	stateManager_.Initialize(this);
 	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
@@ -19,12 +24,6 @@ void Boss::Initialize(Model* model)
 	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
 	bulletManager_->SetGPUParticle(gpuParticle_);
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"), this);
-
-	healthManager_.Initialize(20);
-
-	particleManager_.Initialize(this);
-
-	uiManager_.Initialize(this);
 
 	respawnPos_ = { 0,8.5f,50.0f };
 
@@ -37,28 +36,12 @@ void Boss::Initialize(Model* model)
 
 void Boss::Update()
 {
+	systemManager_->Update();
+
 	bulletManager_->Update();
-	particleManager_.Update();
 	curveTime_.Update();
 	if (state_) {
 		state_->Update();
-		//Vector3 Lfront = { -50.0f,8.5f,-50.0f };
-		//Vector3 Lback = { -50.0f,8.5f,50.0f };
-		//Vector3 Rfront{ 50.0f,8.5f,-50.0f };
-		//Vector3 Rback{ 50.0f,8.5f,50.0f };
-		//Vector2 xtoz{};
-		//if (!isHalf_) {
-		//	xtoz = LwLib::Curve::BezierCurve({ 0.0f,50.0f }, { Rback.x,Rback.z }, { 50.0f,0.0f }, curveTime_.GetElapsedFrame());
-		//}
-		//else {
-		//	xtoz = LwLib::Curve::BezierCurve({ 50.0f,0.0f }, { Rfront.x,Rfront.z }, { 0.0f,-50.0f }, curveTime_.GetElapsedFrame());
-		//}
-		//if (curveTime_.IsEnd() && !isHalf_) {
-		//	isHalf_ = true;
-		//	curveTime_.Start(150.0f);
-		//}
-		//worldTransform_.transform_.translate.x = xtoz.x;
-		//worldTransform_.transform_.translate.z = xtoz.y;
 
 	}
 	// 座標更新
@@ -68,14 +51,18 @@ void Boss::Update()
 
 void Boss::Draw(ModelDrawDesc desc)
 {
-	ModelDrawDesc drawDesc{};
-	drawDesc.camera = desc.camera;
-	drawDesc.directionalLight = desc.directionalLight;
-	drawDesc.pointLight = desc.pointLight;
-	drawDesc.spotLight = desc.spotLight;
-	drawDesc.worldTransform = &worldTransform_;
-
-	model_->Draw(drawDesc);
+	// マテリアル更新
+	model_->GetMaterial()->Update();
+	// デスクの設定
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(model_);
+	modelDesc.worldTransform = &worldTransform_;
+	// 描画
+	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 	bulletManager_->Draw(desc);
 }
 
@@ -116,7 +103,7 @@ void Boss::ImGuiDraw()
 	{
 		// 通常弾
 		if (ImGui::BeginTabItem("UI")) {
-			uiManager_.ImGuiDraw();
+			systemManager_->uiManager_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		// 追尾弾
@@ -149,20 +136,20 @@ void Boss::OnCollision(ColliderObject target)
 		float distance = Vector2::Distance(xzBoss, xzBullet);
 
 		if (distance >= 150.0f) {
-			healthManager_.TakeDamage(1.0f * 0.25f);
+			systemManager_->healthManager_.TakeDamage(1.0f * 0.25f);
 		}
 		if (distance >= 100.0f) {
-			healthManager_.TakeDamage(1.0f * 0.4f);
+			systemManager_->healthManager_.TakeDamage(1.0f * 0.4f);
 		}
 		else if (distance >= 75.0f) {
-			healthManager_.TakeDamage(1.0f * 0.5f);
+			systemManager_->healthManager_.TakeDamage(1.0f * 0.5f);
 		}
 		else {
-			healthManager_.TakeDamage(1.0f);
+			systemManager_->healthManager_.TakeDamage(1.0f);
 		}
 
-		particleManager_.OnBulletHit();
-		if (healthManager_.IsDead()) {
+		systemManager_->particleManager_.OnBulletHit();
+		if (systemManager_->healthManager_.IsDead()) {
 			isDead_ = true;
 		}
 	}
@@ -170,7 +157,7 @@ void Boss::OnCollision(ColliderObject target)
 
 void Boss::UIDraw()
 {
-	this->uiManager_.Draw();
+	systemManager_->uiManager_.Draw();
 }
 
 void Boss::GlobalValueInitialize()

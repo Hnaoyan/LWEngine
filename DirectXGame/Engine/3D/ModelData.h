@@ -75,6 +75,42 @@ struct LineDrawDesc {
 
 };
 
+namespace DrawDesc
+{
+	/// <summary>
+	/// モデルのデスク
+	/// </summary>
+	struct ModelDesc {
+		// ワールドトランスフォーム
+		WorldTransform* worldTransform;
+		// メッシュ
+		Mesh* mesh = nullptr;
+		// マテリアル
+		Material* material = nullptr;
+		// テクスチャ
+		uint32_t texture = 100;
+		// モデルデータ
+		ModelData* modelData;
+		// モデルポインタから設定する関数
+		void SetDesc(Model* model);
+	};
+
+	/// <summary>
+	/// ライティングのデスク
+	/// </summary>
+	struct LightDesc {
+		// 平行光源
+		DirectionalLight* directionalLight = nullptr;
+		// 方向光源
+		SpotLight* spotLight = nullptr;
+		// 点光源
+		PointLight* pointLight = nullptr;
+
+		// 描画
+		void Draw(ID3D12GraphicsCommandList* cmdList);
+	};
+}
+
 // モデルの描画に必要な者たち
 struct ModelDrawDesc
 {

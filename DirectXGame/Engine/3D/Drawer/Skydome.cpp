@@ -3,6 +3,7 @@
 #include "../../2D/TextureManager.h"
 #include "../../Base/Utility/DxCreateLib.h"
 #include "Model.h"
+#include "SkyDome.h"
 
 Skydome* Skydome::CreateSkydome()
 {

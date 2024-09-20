@@ -13,3 +13,4 @@
 #include "Boss/TestBoss/Boss.h"
 #include "Terrain/Terrain.h"
 #include "Terrain/TerrainManager.h"
+#include "SkyDome/SkyDomeObject.h"

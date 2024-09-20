@@ -4,6 +4,7 @@
 #include "Application/GameSystem/GameSystem.h"
 
 #include "Engine/PostEffect/PostEffectRender.h"
+#include "Engine/3D/ModelRenderer.h"
 
 void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
 {
@@ -16,6 +17,11 @@ void Player::Initialize(Model* model)
 {
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
+
+	material_ = std::make_unique<Material>();
+	material_->CreateMaterial();
+	//material_->color_.w = 0.5f;
+	//material_->Update();
 
 	worldTransform_.transform_.translate.y = -1.95f;
 	worldTransform_.transform_.translate.z = -35.0f;
@@ -65,16 +71,20 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
-	ModelDrawDesc drawDesc{};
-	// クラスの値設定
-	drawDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
-	// 引数の値設定
-	drawDesc.camera = desc.camera;
-	drawDesc.directionalLight = desc.directionalLight;
-	drawDesc.pointLight = desc.pointLight;
-	drawDesc.spotLight = desc.spotLight;
+	// マテリアル更新
+	model_->GetMaterial()->Update();
+	// デスクの設定
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(model_);
+	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
+	material_->Update();
+	modelDesc.material = material_.get();
 	// プレイヤーの描画
-	model_->Draw(drawDesc);
+	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
 
 void Player::ImGuiDraw()
@@ -85,6 +95,7 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
 
 	collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);

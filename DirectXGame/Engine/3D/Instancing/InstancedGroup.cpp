@@ -1,6 +1,7 @@
 #include "InstancedGroup.h"
 #include "../Descriptor/SRVHandler.h"
-#include "../../2D/TextureManager.h"
+#include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelRenderer.h"
 
 #include <cassert>
 #include <imgui.h>
@@ -40,8 +41,17 @@ void InstancedGroup::Update()
 
 void InstancedGroup::Draw(ModelDrawDesc desc)
 {
+	// マテリアル更新
+	model_->GetMaterial()->Update();
+	// デスクの設定
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(model_);
 	// 描画
-	model_->InstancedDraw(desc, unitNum_, buffer_.GetSRVGPU());
+	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, unitNum_, buffer_.GetSRVGPU());
 }
 
 void InstancedGroup::UnitRegist(const Vector3& position)

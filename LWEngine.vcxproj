@@ -19,6 +19,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\UpDown\BossUpDownState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Wait\BossWaitState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\NormalBullet\BossNormalBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\TrackingBullet\BossTrackingBullet.cpp" />
@@ -57,6 +58,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\SkyDome\SkyDomeObject.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
@@ -78,6 +80,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\Shader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Instancing\InstancedGroup.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Instancing\InstancedUnit.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\ModelData.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\ModelLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Material.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Mesh.cpp" />
@@ -147,6 +150,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossNode.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateController.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.h" />
@@ -184,6 +189,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\OperationManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\SkyDome\SkyDomeObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />
