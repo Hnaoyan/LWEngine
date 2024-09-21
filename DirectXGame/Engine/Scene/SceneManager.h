@@ -31,6 +31,7 @@ private:
 	std::thread nextInitialize_;
 
 	bool isThread_ = false;
+	bool isChangeActive_ = false;
 public:
 	/// <summary>
 	/// シーン生成クラス設定

@@ -281,6 +281,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
+    <ClInclude Include="DirectXGame\Engine\PostEffect\User\IPostEffect.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\ISceneTransition.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />

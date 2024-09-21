@@ -73,8 +73,10 @@ void DirectXCommand::WaitForFenceComplete()
 	assert(fenceEvent != nullptr);
 
 	// GPUがここまでたどり着いたときに
+	// 新しい値を設定
+	dxCommon->SetFenceVal(dxCommon->GetFenceVal() + 1);
 	UINT value = dxCommon->GetFenceVal();
-	sCommandQueue_->Signal(dxCommon->GetSwapChainManager()->GetFence(), ++value);
+	sCommandQueue_->Signal(dxCommon->GetSwapChainManager()->GetFence(), value);
 	// チェック
 	if (dxCommon->GetSwapChainManager()->GetFence()->GetCompletedValue() != value)
 	{
@@ -84,8 +86,6 @@ void DirectXCommand::WaitForFenceComplete()
 		WaitForSingleObject(fenceEvent, INFINITE);
 		CloseHandle(fenceEvent);
 	}
-	// 新しい値を設定
-	dxCommon->SetFenceVal(value);
 }
 
 void DirectXCommand::ResetCloseCommandList(ID3D12GraphicsCommandList* commandList)

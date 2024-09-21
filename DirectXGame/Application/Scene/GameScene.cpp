@@ -322,11 +322,30 @@ void GameScene::ImGuiDraw()
 
 void GameScene::LoadModel()
 {
+	// モデルのロード
+	ModelManager::LoadNormalModel("Terrain", "terrain");
+	ModelManager::LoadNormalModel("Jett", "jett");
+	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
+	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
+	ModelManager::LoadNormalModel("Player", "Robotto");
+	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 
 void GameScene::LoadTexture()
 {
+	// テクスチャのロード
+	int loadTex = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
+
+	loadTex = TextureManager::GetInstance()->Load("Resources/crossHair.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
+	loadTex = TextureManager::Load("Resources/default/BackGround.png");
+
 	// テクスチャのロード
 	clearText_.isClear = false;
 	uint32_t clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
