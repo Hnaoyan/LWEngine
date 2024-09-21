@@ -335,6 +335,18 @@ void GameScene::LoadModel()
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
+	int loadTex = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
+
+	loadTex = TextureManager::GetInstance()->Load("Resources/crossHair.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
+	loadTex = TextureManager::Load("Resources/default/BackGround.png");
+
+	// テクスチャのロード
 	clearText_.isClear = false;
 	uint32_t clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
 	clearText_.clearText.reset(Sprite::Create(clearTexture, { 1280.0f / 2.0f,720.0f / 2.0f }, { 0.5f,0.5f }));

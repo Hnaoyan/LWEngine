@@ -111,15 +111,5 @@ void TitleScene::LoadModel()
 void TitleScene::LoadTexture()
 {
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
-	int clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
-	clearTexture = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
-	clearTexture = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
-	clearTexture = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
-	clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
-
-	clearTexture = TextureManager::GetInstance()->Load("Resources/crossHair.png");
-	clearTexture = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
-	clearTexture = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
-	clearTexture = TextureManager::Load("Resources/default/BackGround.png");
 	//clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
 }
