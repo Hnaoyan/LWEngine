@@ -322,6 +322,13 @@ void GameScene::ImGuiDraw()
 
 void GameScene::LoadModel()
 {
+	// モデルのロード
+	ModelManager::LoadNormalModel("Terrain", "terrain");
+	ModelManager::LoadNormalModel("Jett", "jett");
+	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
+	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
+	ModelManager::LoadNormalModel("Player", "Robotto");
+	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 

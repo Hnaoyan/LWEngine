@@ -105,14 +105,6 @@ void TitleScene::LoadModel()
 {
 	ModelManager::LoadObjModel("Plane", "plane");
 	ModelManager::LoadObjModel("Axis", "BulletTest");
-	// モデルのロード
-	ModelManager::LoadNormalModel("Terrain", "terrain");
-	ModelManager::LoadNormalModel("Jett", "jett");
-	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
-	//ModelManager::LoadNormalModel("Sphere", "sphere");
-	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
-	ModelManager::LoadNormalModel("Player", "Robotto");
-	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 
 }
 

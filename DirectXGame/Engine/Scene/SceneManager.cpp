@@ -17,6 +17,7 @@ void SceneManager::Update()
 		// シーン切り替え
 		nowScene_ = nextScene_;
 		nextScene_ = nullptr;
+		isChangeActive_ = false;
 
 		// シーンマネージャー設定
 		nowScene_->SetSceneManager(this);
@@ -60,13 +61,11 @@ void SceneManager::ImGuiDraw()
 
 void SceneManager::ChangeScene(const std::string& sceneName)
 {
+	if (isChangeActive_) {
+		return;
+	}
 	assert(sceneFactory_);
 	assert(nextScene_ == nullptr);
-
-	//if (nowScene_ == nullptr) {
-	//	nextScene_ = sceneFactory_->CreateScene(sceneName);
-	//	return;
-	//}
 
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
@@ -75,17 +74,16 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 	nextInitialize_.join();
 
 	nextSceneName_ = sceneName;
+	isChangeActive_ = true;
 }
 
 void SceneManager::ChangeThreadScene(const std::string& sceneName)
 {
+	if (isChangeActive_) {
+		return;
+	}
 	assert(sceneFactory_);
 	assert(nextScene_ == nullptr);
-
-	//if (nowScene_ == nullptr) {
-	//	nextScene_ = sceneFactory_->CreateScene(sceneName);
-	//	return;
-	//}
 
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
@@ -94,4 +92,6 @@ void SceneManager::ChangeThreadScene(const std::string& sceneName)
 	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
 	isThread_ = true;
 	nextSceneName_ = sceneName;
+
+	isChangeActive_ = true;
 }
