@@ -174,6 +174,9 @@ void GameScene::Draw()
 	desc.spotLight = spotLight_.get();
 	// 球体
 	skydome_->Draw(desc);
+	// 地形
+	terrainManager_->Draw(desc);
+
 	// プレイヤー
 	player_->Draw(desc);
 	// ボス
@@ -183,10 +186,6 @@ void GameScene::Draw()
 	enemyManager_->Draw(desc);
 
 	bulletManager_->Draw(desc);
-
-	// 地形
-	terrainManager_->Draw(desc);
-
 	gpuParticleManager_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
@@ -329,6 +328,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
 	ModelManager::LoadNormalModel("Player", "Robotto");
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
+	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 

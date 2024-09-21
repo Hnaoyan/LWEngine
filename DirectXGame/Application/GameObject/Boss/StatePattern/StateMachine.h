@@ -152,6 +152,16 @@ namespace BossState
 	};
 
 #pragma region State達
+
+	class SystemDownState : public IState
+	{
+	public:
+		void Initialize() override;
+		void Update() override;
+		void Exit() override;
+
+	};
+
 	// ミサイルの攻撃
 	class MissileAttackState : public IState
 	{

@@ -53,6 +53,6 @@ void GameSystem::Update()
     PostEffectRender::PostEffectDesc desc{};
     desc.blur = sBlurEffect.data;
 
-    PostEffectRender::GetInstance()->Update(desc);
+    //PostEffectRender::GetInstance()->Update(desc);
 
 }

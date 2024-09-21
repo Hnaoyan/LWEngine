@@ -13,12 +13,14 @@
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossAttackState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Down\BossDownState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossMoveState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Teleport\BossTeleportState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\UpDown\BossUpDownState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Wait\BossWaitState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\NormalBullet\BossNormalBullet.cpp" />

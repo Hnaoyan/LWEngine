@@ -46,6 +46,12 @@ void Boss::Update()
 	}
 	// 座標更新
 	IGameObject::Update();
+	if (systemManager_->barrierManager_.IsActive()) {
+		collider_.radius_ = worldTransform_.transform_.scale.x * 2.0f;
+	}
+	else {
+		collider_.radius_ = worldTransform_.transform_.scale.x;
+	}
 	collider_.Update(worldTransform_.GetWorldPosition());
 }
 
@@ -63,6 +69,8 @@ void Boss::Draw(ModelDrawDesc desc)
 	modelDesc.worldTransform = &worldTransform_;
 	// 描画
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+	systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
+
 	bulletManager_->Draw(desc);
 }
 
@@ -134,23 +142,28 @@ void Boss::OnCollision(ColliderObject target)
 		Vector2 xzBullet = { (*bullet)->GetGeneratePosition().x,(*bullet)->GetGeneratePosition().z };
 		Vector2 xzBoss = { worldTransform_.GetWorldPosition().x ,worldTransform_.GetWorldPosition().z };
 		float distance = Vector2::Distance(xzBoss, xzBullet);
+		if (systemManager_->barrierManager_.IsActive()) {
 
-		if (distance >= 150.0f) {
-			systemManager_->healthManager_.TakeDamage(1.0f * 0.25f);
-		}
-		if (distance >= 100.0f) {
-			systemManager_->healthManager_.TakeDamage(1.0f * 0.4f);
-		}
-		else if (distance >= 75.0f) {
-			systemManager_->healthManager_.TakeDamage(1.0f * 0.5f);
 		}
 		else {
-			systemManager_->healthManager_.TakeDamage(1.0f);
-		}
+			// 距離に応じて
+			if (distance >= 150.0f) {
+				systemManager_->healthManager_.TakeDamage(1.0f * 0.25f);
+			}
+			if (distance >= 100.0f) {
+				systemManager_->healthManager_.TakeDamage(1.0f * 0.4f);
+			}
+			else if (distance >= 75.0f) {
+				systemManager_->healthManager_.TakeDamage(1.0f * 0.5f);
+			}
+			else {
+				systemManager_->healthManager_.TakeDamage(1.0f);
+			}
 
-		systemManager_->particleManager_.OnBulletHit();
-		if (systemManager_->healthManager_.IsDead()) {
-			isDead_ = true;
+			systemManager_->particleManager_.OnBulletHit();
+			if (systemManager_->healthManager_.IsDead()) {
+				isDead_ = true;
+			}
 		}
 	}
 }
