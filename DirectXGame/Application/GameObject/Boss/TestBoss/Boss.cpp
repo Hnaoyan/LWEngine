@@ -142,9 +142,15 @@ void Boss::OnCollision(ColliderObject target)
 		Vector2 xzBullet = { (*bullet)->GetGeneratePosition().x,(*bullet)->GetGeneratePosition().z };
 		Vector2 xzBoss = { worldTransform_.GetWorldPosition().x ,worldTransform_.GetWorldPosition().z };
 		float distance = Vector2::Distance(xzBoss, xzBullet);
+		// バリアとの衝突処理
 		if (systemManager_->barrierManager_.IsActive()) {
-
+			systemManager_->barrierManager_.DamageProcess(-1.0f);
+			// バリアが割れる瞬間の処理
+			if (systemManager_->barrierManager_.IsShattered()) {
+				systemManager_->barrierManager_.BarrierBreak();
+			}
 		}
+		// 本体との衝突処理
 		else {
 			// 距離に応じて
 			if (distance >= 150.0f) {
@@ -160,6 +166,7 @@ void Boss::OnCollision(ColliderObject target)
 				systemManager_->healthManager_.TakeDamage(1.0f);
 			}
 
+			// オンヒットエフェクト
 			systemManager_->particleManager_.OnBulletHit();
 			if (systemManager_->healthManager_.IsDead()) {
 				isDead_ = true;

@@ -45,7 +45,6 @@ namespace BossState
 
 		// 先行の予備動作
 		virtual void PreAction() {};
-
 		// 初期化
 		virtual void Initialize() = 0;
 		// 更新
@@ -55,7 +54,6 @@ namespace BossState
 	protected:
 		// ボス本体の向きの処理
 		void RotateUpdate();
-
 		// タイマーの処理
 		void TimerUpdate(StateVariant state);
 
@@ -153,6 +151,7 @@ namespace BossState
 
 #pragma region State達
 
+	// バリア割れの硬直
 	class SystemDownState : public IState
 	{
 	public:
@@ -252,6 +251,7 @@ namespace BossState
 
 	};
 
+	// 円形移動
 	class OrbitMoveState : public IState
 	{
 	public:

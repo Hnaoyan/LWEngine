@@ -21,15 +21,16 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 	material_->CreateMaterial();
 	material_->color_.w = 0.75f;
 	// バリアの生成
-	Create(20);
+	Create(15);
 }
 
 void BossSystemContext::BarrierManager::Update()
 {
-	if (param.isActive) {
-		if (param.currentHP == 0) {
-			param.isActive = false;
-		}
+	// クールタイムの処理
+	recoveryTime_.Update();
+	// 生成
+	if (recoveryTime_.IsEnd()) {
+		Create(15);
 	}
 	// マテリアル
 	material_->Update();
@@ -51,9 +52,28 @@ void BossSystemContext::BarrierManager::Draw(ICamera* camera, const DrawDesc::Li
 	}
 }
 
-void BossSystemContext::BarrierManager::Create(uint32_t generateValue)
+void BossSystemContext::BarrierManager::Create(float generateValue)
 {
 	param.isActive = true;
 	param.currentHP = generateValue;
 	param.maxHP = generateValue;
+}
+
+void BossSystemContext::BarrierManager::DamageProcess(float damage)
+{
+	if (param.currentHP + damage >= 0.0f) {
+		param.currentHP += damage;
+	}
+	// 割れる処理
+	else {
+		param.currentHP = 0.0f;
+		param.isShattered = true;
+	}
+}
+
+void BossSystemContext::BarrierManager::BarrierBreak()
+{
+	param.isActive = false;
+	param.isShattered = false;
+	recoveryTime_.Start(600.0f);
 }
