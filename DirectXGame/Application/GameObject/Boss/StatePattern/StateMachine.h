@@ -20,6 +20,7 @@ namespace BossState {
 	class WaitState;
 	class TeleportState;
 	class MissileAttackState;
+	class SystemDownState;
 }
 
 /// <summary>
@@ -28,7 +29,7 @@ namespace BossState {
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*, SystemDownState*>;
 
 	/// <summary>
 	/// 基のステートクラス

@@ -148,6 +148,7 @@ void Boss::OnCollision(ColliderObject target)
 			// バリアが割れる瞬間の処理
 			if (systemManager_->barrierManager_.IsShattered()) {
 				systemManager_->barrierManager_.BarrierBreak();
+				stateManager_.ChangeRequest(std::make_unique<BossState::SystemDownState>());
 			}
 		}
 		// 本体との衝突処理
