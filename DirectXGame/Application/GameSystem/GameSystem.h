@@ -60,6 +60,7 @@ public:
 	void Update();
 
 	//void
+	CBufferDataHSV bloomData_{};
 
 private:
 	/// <summary>

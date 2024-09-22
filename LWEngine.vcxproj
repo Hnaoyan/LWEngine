@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossAttackState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Down\BossDownState.cpp" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\ActionNode.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossBehaviorTree.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossNode.h" />

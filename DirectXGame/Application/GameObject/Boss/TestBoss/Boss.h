@@ -4,6 +4,7 @@
 #include "../System/BossSystem.h"
 #include "../System/UI/BossUI.h"
 #include "../System/BossFacade.h"
+#include "../Animation/BossAnimationManager.h"
 
 class Player;
 
@@ -80,6 +81,8 @@ private: // サブシステム
 	BossState::StateVariant prevVariantState_;
 	// システムの窓口
 	std::unique_ptr<BossFacade> systemManager_;
+	// アニメーション用のやつ
+	std::unique_ptr<BossAnimationManager> animationManager_;
 
 private:
 	// コライダー

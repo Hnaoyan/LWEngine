@@ -250,7 +250,13 @@ void GameScene::ImGuiDraw()
 	gpuParticleManager_->ImGuiDraw();
 
 	ImGui::Begin("GameScene");
-
+	if (ImGui::Button("PostDefault")) {
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+	}
+	if (ImGui::Button("PostBloom")) {
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
+	}
+	ImGui::DragFloat3("BloomData", &gameSystem_->bloomData_.hue, 0.01f);
 	if (ImGui::Button("BossRes")) {
 		if (!bossEnemy_) {
 			bossEnemy_ = std::make_unique<Boss>();

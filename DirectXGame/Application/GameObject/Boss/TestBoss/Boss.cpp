@@ -17,6 +17,10 @@ void Boss::Initialize(Model* model)
 	systemManager_ = std::make_unique<BossFacade>();
 	systemManager_->Initialize(this);
 
+	// アニメーション
+	animationManager_ = std::make_unique<BossAnimationManager>();
+	animationManager_->Initialize(this);
+
 	// ステートマネージャー
 	stateManager_.Initialize(this);
 	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
@@ -36,22 +40,29 @@ void Boss::Initialize(Model* model)
 
 void Boss::Update()
 {
+	// システム
 	systemManager_->Update();
-
+	// アニメ
+	animationManager_->Update();
+	// 弾
 	bulletManager_->Update();
+	// カーブ
 	curveTime_.Update();
+	// ステート
 	if (state_) {
 		state_->Update();
 
 	}
 	// 座標更新
 	IGameObject::Update();
+	// バリア時の当たり判定
 	if (systemManager_->barrierManager_.IsActive()) {
 		collider_.radius_ = worldTransform_.transform_.scale.x * 2.0f;
 	}
 	else {
 		collider_.radius_ = worldTransform_.transform_.scale.x;
 	}
+	// コライダーの更新
 	collider_.Update(worldTransform_.GetWorldPosition());
 }
 
@@ -68,9 +79,12 @@ void Boss::Draw(ModelDrawDesc desc)
 	modelDesc.SetDesc(model_);
 	modelDesc.worldTransform = &worldTransform_;
 	// 描画
-	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+	//ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+	// アニメーション
+	animationManager_->Draw(desc.camera, lightDesc);
+	// バリア
 	systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
-
+	// 弾
 	bulletManager_->Draw(desc);
 }
 
