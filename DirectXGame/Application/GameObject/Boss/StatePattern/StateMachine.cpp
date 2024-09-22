@@ -195,7 +195,7 @@ void BossState::IState::TimerUpdate(StateVariant state)
 	// 変更タイマー
 	changeTimer_.Update();
 	// 終了時に変更
-	if (changeTimer_.IsEnd() || !changeTimer_.IsActive()) {
+	if (changeTimer_.IsEnd()/* || !changeTimer_.IsActive()*/) {
 		boss_->GetDecider()->StateDecide(state);
 		return;
 	}

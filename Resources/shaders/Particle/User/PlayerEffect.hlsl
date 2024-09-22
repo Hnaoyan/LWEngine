@@ -76,6 +76,7 @@ Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
     particle.lifetime = 1.0f;
     particle.currentTime = 0.0f;
     particle.isScaleDecrement = 1;
+    particle.isGravity = 1;
     
     return particle;
 }

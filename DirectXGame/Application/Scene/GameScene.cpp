@@ -325,7 +325,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Terrain", "terrain");
 	ModelManager::LoadNormalModel("Jett", "jett");
 	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
-	ModelManager::LoadNormalModel("BossEnemy", "BossEnemy");
+	ModelManager::LoadNormalModel("BossEnemy", "Prizm");
 	ModelManager::LoadNormalModel("Player", "Robotto");
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");

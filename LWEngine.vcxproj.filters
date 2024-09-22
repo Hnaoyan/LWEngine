@@ -1022,5 +1022,6 @@
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
     <None Include="Resources\shaders\Utility\PostCalc.hlsli" />
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
+    <None Include="Resources\shaders\Particle\ParticleCalc.hlsli" />
   </ItemGroup>
 </Project>

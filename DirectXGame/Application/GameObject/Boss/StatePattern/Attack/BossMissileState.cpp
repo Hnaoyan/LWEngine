@@ -5,21 +5,24 @@
 void BossState::MissileAttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
-	RotateUpdate();
-	//---弾の情報---//
-	// 速さ
-	bulletSpeed_ = BossSystemContext::TrackingBullet::sInitSpeed;
-	// サイズ
-	bulletScale_ = 0.75f;
-	// 進む方向
-	bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
-	MissileAttack();
-	changeTimer_.Start(120.0f);
+	preActionTimer_.Start(60.0f);
 }
 
 void BossState::MissileAttackState::Update()
 {
-
+	preActionTimer_.Update();
+	if (preActionTimer_.IsEnd()) {
+		changeTimer_.Start(120.0f);
+		RotateUpdate();
+		//---弾の情報---//
+		// 速さ
+		bulletSpeed_ = BossSystemContext::TrackingBullet::sInitSpeed;
+		// サイズ
+		bulletScale_ = 0.75f;
+		// 進む方向
+		bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
+		MissileAttack();
+	}
 	TimerUpdate(this);
 }
 

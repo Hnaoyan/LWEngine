@@ -518,6 +518,7 @@
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\Particle\Particle.hlsli" />
+    <None Include="Resources\shaders\Particle\ParticleCalc.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />

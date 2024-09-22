@@ -24,16 +24,17 @@ struct PerFrame {
 };
 
 struct ParticleCS {
-	Vector3 translate;
-	Vector3 scale;
-	float lifetime;
-	Vector3 velocity;
-	float currentTime;
-	Vector4 color;
-	uint32_t isScaleDecrement;
+	Vector3 translate;	// 位置
+	Vector3 scale;	// サイズ
+	float lifetime;		// 生存時間
+	Vector3 velocity;	// 速度
+	float currentTime;	// 経過時間
+	Vector4 color;	// 色
+	uint32_t isScaleDecrement;	// スケール変更フラグ
+	uint32_t isGravity;	// 重力フラグ
 };
 
-struct ParticleGPU {
+	struct ParticleGPU {
 	Matrix4x4 worldMatrix;
 	Vector4 color;
 };

@@ -27,22 +27,26 @@ void main( uint3 DTid : SV_DispatchThreadID )
                 uint32_t particleIndex = gFreeList[freeListIndex];
                 // 初期化処理
                 float32_t value = 0.0f;
+                // デフォルト
                 if (gEmitter.emitPattern == 0)
                 {
                     //DefaultPop(generator, particleIndex);
                     gParticle[particleIndex] = DefaultPop(generator);
                     float32_t3 test = generator.Generate3D();
                 }
+                // プレイヤーの移動
                 else if(gEmitter.emitPattern == 1)
                 {
                     gParticle[particleIndex] = PlayerMove(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();                   
                 }
+                // ボスの弾
                 else if(gEmitter.emitPattern == 2)
                 {
                     gParticle[particleIndex] = BossBullet(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();
                 }
+                // ボスのヒットエフェクト
                 else if (gEmitter.emitPattern == 3)
                 {
                     gParticle[particleIndex] = BossDamage(generator, gEmitter.translate);

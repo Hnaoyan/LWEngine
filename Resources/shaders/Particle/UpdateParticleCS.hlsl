@@ -1,4 +1,5 @@
 #include "Particle.hlsli"
+#include "ParticleCalc.hlsli"
 
 static const uint32_t kMaxParticle = 1024;
 
@@ -21,7 +22,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
             gParticle[particleIndex].scale = float32_t3(0.0f, 0.0f, 0.0f);
             int32_t freeListIndex;
             InterlockedAdd(gFreeListIndex[0], 1, freeListIndex);
-            
+            // Index管理
             if ((freeListIndex + 1) < kMaxParticle)
             {
                 gFreeList[freeListIndex + 1] = particleIndex;
@@ -31,30 +32,40 @@ void main( uint3 DTid : SV_DispatchThreadID )
                 InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
             }
         }
+        // 処理
         else
         {
-            gParticle[particleIndex].translate += gParticle[particleIndex].velocity;
-            gParticle[particleIndex].currentTime += gPerFrame.deltaTime;
-            if (gParticle[particleIndex].isScaleDecrement != 0)
+            //---特有の処理---//
+            // スケールの拡縮の処理
+            if (gParticle[particleIndex].isScaleDecrement == 1)
             {
                 gParticle[particleIndex].scale.x -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
                 gParticle[particleIndex].scale.y -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
-                if (gParticle[particleIndex].scale.x < 0)
-                {
-                    gParticle[particleIndex].scale.x = 0.0f;
-                }
-                if (gParticle[particleIndex].scale.y < 0)
-                {
-                    gParticle[particleIndex].scale.y = 0.0f;
-                }
-                if (gParticle[particleIndex].scale.z < 0)
-                {
-                    gParticle[particleIndex].scale.z = 0.0f;
-                }
+            
             }
+            else if (gParticle[particleIndex].isScaleDecrement == 2)
+            {
+                
+            }
+            // 重力を速度に計算するか
+            if(gParticle[particleIndex].isGravity == 1)
+            {
+                float gravity = -3.5f;
+                gParticle[particleIndex].velocity.y += (gravity) * gPerFrame.deltaTime;
 
+            }
+            
+            //---共通の処理---//
+            // 座標の処理
+            gParticle[particleIndex].translate += gParticle[particleIndex].velocity;
+            // 経過時間
+            gParticle[particleIndex].currentTime += gPerFrame.deltaTime;
+            // スケールの棄却処理
+            gParticle[particleIndex].scale = ScaleCheck(gParticle[particleIndex].scale);
+            // アルファ値の計算
             float32_t alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             gParticle[particleIndex].color.a = saturate(alpha);
+    
         }
     }
     

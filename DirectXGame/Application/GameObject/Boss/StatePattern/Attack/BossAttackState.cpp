@@ -6,7 +6,7 @@ void BossState::AttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
 
-	changeTimer_.Start(90.0f);
+	preActionTimer_.Start(60.0f);
 	// 攻撃パターンのランダム
 	uint32_t randM = LwLib::GetRandomValue(0, 3);
 	if (randM == 0) {
@@ -30,7 +30,6 @@ void BossState::AttackState::Initialize()
 
 	// 初期の角度
 	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
-	fireTimer_.Start(fireCooltime_);
 
 	//---弾の情報---//
 	// 速さ
@@ -43,16 +42,27 @@ void BossState::AttackState::Initialize()
 
 void BossState::AttackState::Update()
 {
-	if (!fireTimer_.IsActive()) {
+	// 前の待機
+	preActionTimer_.Update();
+	// 待機終了タイミング
+	if (preActionTimer_.IsEnd()) {
+		fireTimer_.Start(fireCooltime_);
+		changeTimer_.Start(90.0f);
+	}
+
+	// クールタイム
+	if (fireTimer_.IsEnd()) {
 		GenerateProcess();
 		fireTimer_.Start(fireCooltime_);
 	}
+	// 射撃の処理中
+	if (fireTimer_.IsActive()) {
+		if (pattern_ == ShotPattern::kRadialFire) {
+			boss_->worldTransform_.transform_.rotate.y = LwLib::Lerp(startRotate_, startRotate_ + 6.14f, changeTimer_.GetElapsedFrame());
+		}
+	}
 	// 射撃タイマー
 	fireTimer_.Update();
-
-	if (pattern_ == ShotPattern::kRadialFire) {
-		boss_->worldTransform_.transform_.rotate.y = LwLib::Lerp(startRotate_, startRotate_ + 6.14f, changeTimer_.GetElapsedFrame());
-	}
 
 	TimerUpdate(this);
 }
