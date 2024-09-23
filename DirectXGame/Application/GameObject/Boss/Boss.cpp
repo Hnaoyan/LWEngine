@@ -18,7 +18,7 @@ void Boss::Initialize(Model* model)
 	systemManager_->Initialize(this);
 
 	// アニメーション
-	animationManager_ = std::make_unique<BossAnimationManager>();
+	animationManager_ = std::make_unique<BossSystemContext::AnimationManager>();
 	animationManager_->Initialize(this);
 
 	// ステートマネージャー
@@ -33,7 +33,6 @@ void Boss::Initialize(Model* model)
 
 	worldTransform_.transform_.translate = respawnPos_;
 	worldTransform_.transform_.scale = { 7.5f,7.5f,7.5f };
-	curveTime_.Start(300.0f);
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
 }
@@ -46,8 +45,6 @@ void Boss::Update()
 	animationManager_->Update();
 	// 弾
 	bulletManager_->Update();
-	// カーブ
-	curveTime_.Update();
 	// ステート
 	if (state_) {
 		state_->Update();
@@ -135,10 +132,10 @@ void Boss::ImGuiDraw()
 		}
 		if (ImGui::BeginTabItem("Anim")) {
 			if (ImGui::Button("Open")) {
-				animationManager_->AnimationExecute(BossAnimationManager::AnimType::kOpen, 60.0f);
+				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kOpen, 60.0f);
 			}
 			if (ImGui::Button("Close")) {
-				animationManager_->AnimationExecute(BossAnimationManager::AnimType::kClose, 60.0f);
+				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kClose, 60.0f);
 			}
 			ImGui::EndTabItem();
 		}

@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
+#include "Application/GameObject/Boss/Animation/BossAnimationManager.h"
 #include <memory>
 #include <variant>
 #include <map>
@@ -37,6 +38,9 @@ namespace BossState
 	class IState {
 	public:
 		virtual ~IState() = default;
+
+		using AnimType = BossSystemContext::AnimationManager::AnimType;
+
 	public:
 		/// <summary>
 		/// 共通の初期化

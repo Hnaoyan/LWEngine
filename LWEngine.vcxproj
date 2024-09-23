@@ -27,7 +27,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\NormalBullet\BossNormalBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\TrackingBullet\BossTrackingBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\Boss.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBullet.cpp" />
@@ -159,7 +159,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\TestBoss\Boss.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />

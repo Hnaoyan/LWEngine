@@ -10,7 +10,7 @@
 #include "Bullet/BulletManager.h"
 #include "Bullet/IBullet.h"
 #include "Enemy/SampleEnemyManager.h"
-#include "Boss/TestBoss/Boss.h"
+#include "Boss/Boss.h"
 #include "Terrain/Terrain.h"
 #include "Terrain/TerrainManager.h"
 #include "SkyDome/SkyDomeObject.h"

@@ -4,7 +4,7 @@
 #include "Engine/3D/ModelRenderer.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
-void BossAnimationManager::Initialize(Boss* boss)
+void BossSystemContext::AnimationManager::Initialize(Boss* boss)
 {
 	// 設定
 	boss_ = boss;
@@ -15,7 +15,7 @@ void BossAnimationManager::Initialize(Boss* boss)
 	AnimationExecute(AnimType::kClose);
 }
 
-void BossAnimationManager::Update()
+void BossSystemContext::AnimationManager::Update()
 {
 	// アニメーション用のタイマー
 	animTimer_.Update();
@@ -33,7 +33,7 @@ void BossAnimationManager::Update()
 	}
 }
 
-void BossAnimationManager::Draw(ICamera* camera, DrawDesc::LightDesc lightDesc)
+void BossSystemContext::AnimationManager::Draw(ICamera* camera, DrawDesc::LightDesc lightDesc)
 {
 	DrawDesc::ModelDesc modelDesc{};
 	for (std::unordered_map<std::string, Hierarchy>::iterator it = hierarchys_.begin(); it != hierarchys_.end(); ++it) {
@@ -43,16 +43,16 @@ void BossAnimationManager::Draw(ICamera* camera, DrawDesc::LightDesc lightDesc)
 	}
 }
 
-void BossAnimationManager::AnimationExecute(AnimType type)
+void BossSystemContext::AnimationManager::AnimationExecute(AnimType type)
 {
 
 	switch (type)
 	{
-	case BossAnimationManager::AnimType::kOpen:
+	case BossSystemContext::AnimationManager::AnimType::kOpen:
 		hierarchys_["Head"].worldTransform.transform_.translate.y = 1.5f;
 		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -1.5f;
 		break;
-	case BossAnimationManager::AnimType::kClose:
+	case BossSystemContext::AnimationManager::AnimType::kClose:
 		hierarchys_["Head"].worldTransform.transform_.translate.y = 1.0f;
 		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -1.0f;
 		break;
@@ -62,15 +62,15 @@ void BossAnimationManager::AnimationExecute(AnimType type)
 
 }
 
-void BossAnimationManager::AnimationExecute(AnimType type, float easeFrame)
+void BossSystemContext::AnimationManager::AnimationExecute(AnimType type, float easeFrame)
 {
 	switch (type)
 	{
-	case BossAnimationManager::AnimType::kOpen:
+	case BossSystemContext::AnimationManager::AnimType::kOpen:
 		hierarchys_["Head"].easePoint = { Vector3(0.0f,1.0f,0.0f),Vector3(0.0f,1.5f,0.0f) };
 		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,-1.0f,0.0f),Vector3(0.0f,-1.5f,0.0f) };
 		break;
-	case BossAnimationManager::AnimType::kClose:
+	case BossSystemContext::AnimationManager::AnimType::kClose:
 		hierarchys_["Head"].easePoint = { Vector3(0.0f,1.5f,0.0f),Vector3(0.0f,1.0f,0.0f) };
 		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,-1.5f,0.0f),Vector3(0.0f,-1.0f,0.0f) };
 		break;
@@ -82,7 +82,7 @@ void BossAnimationManager::AnimationExecute(AnimType type, float easeFrame)
 	animState_ = AnimState::kRun;
 }
 
-void BossAnimationManager::CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform)
+void BossSystemContext::AnimationManager::CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform)
 {
 	Hierarchy instance{};
 	instance.model = ModelManager::GetModel(modelTag);

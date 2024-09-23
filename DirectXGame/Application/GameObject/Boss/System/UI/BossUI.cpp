@@ -1,7 +1,7 @@
 #include "BossUI.h"
 #include "imgui.h"
 
-#include "Application/GameObject/Boss/TestBoss/Boss.h"
+#include "Application/GameObject/Boss/Boss.h"
 
 #include "Engine/2D/SpriteManager.h"
 #include "Engine/2D/TextureManager.h"
