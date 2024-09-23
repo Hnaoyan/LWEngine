@@ -51,7 +51,9 @@ void TitleScene::Update()
 	if (input_->TriggerKey(DIK_RSHIFT)) {
 		sceneManager_->ChangeThreadScene("GAME");
 	}
-
+	if (input_->TriggerKey(DIK_H)) {
+		sceneManager_->ChangeThreadScene("GAMEEDIT");
+	}
 #endif // _DEBUG
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {

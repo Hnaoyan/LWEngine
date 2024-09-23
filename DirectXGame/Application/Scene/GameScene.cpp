@@ -254,9 +254,11 @@ void GameScene::ImGuiDraw()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 	}
 	if (ImGui::Button("PostBloom")) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 	}
-	ImGui::DragFloat3("BloomData", &gameSystem_->bloomData_.hue, 0.01f);
+	ImGui::DragFloat("BloomThreshold", &gameSystem_->bloomData_.threshold, 0.01f);
+	ImGui::DragFloat("BloomSigma", &gameSystem_->bloomData_.sigma, 0.01f);
+	//ImGui::DragFloat3("BloomData", &gameSystem_->bloomData_, 0.01f);
 	if (ImGui::Button("BossRes")) {
 		if (!bossEnemy_) {
 			bossEnemy_ = std::make_unique<Boss>();

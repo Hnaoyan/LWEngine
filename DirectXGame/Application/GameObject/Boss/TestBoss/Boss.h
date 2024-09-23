@@ -53,12 +53,14 @@ public:
 	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
+	BossAnimationManager* GetAnimManager() { return animationManager_.get(); }
 	BossSystemContext::HealthManager* GetHealth() { return &systemManager_->healthManager_; }
 	// 弾発射までの間隔
 	FrameTimer fireTimer_;
 	BossSystemContext::BulletManager* GetBulletManager() { return bulletManager_.get(); }
 	BossSystemContext::ParticleManager* GetParticleManager() { return &systemManager_->particleManager_; }
 
+	// 外部
 	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }

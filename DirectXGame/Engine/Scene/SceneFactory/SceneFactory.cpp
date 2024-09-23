@@ -25,5 +25,8 @@ IScene* SceneFactory::CreateScene(const std::string& sceneName)
 		newScene = new SampleScene();
 	}
 
+	else if (sceneName == "GAMEEDIT") {
+		newScene = new GameEditScene();
+	}
 	return newScene;
 }

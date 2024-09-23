@@ -19,7 +19,7 @@ void GameSystem::Initialize()
     input_ = Input::GetInstance();
     // バインドの設定
     KeyBindUpdate();
-    bloomData_ = { 0.15f,1.0f,0.0f };
+    bloomData_ = { 0.75f,1.5f };
 }
 
 void GameSystem::KeyBindUpdate()
@@ -53,9 +53,8 @@ void GameSystem::Update()
 
     PostEffectRender::PostEffectDesc desc{};
     desc.blur = sBlurEffect.data;
-    PostEffectRender::GetInstance()->hsv_.cMap_->hue = bloomData_.hue;
-    PostEffectRender::GetInstance()->hsv_.cMap_->saturation = bloomData_.saturation;
-    PostEffectRender::GetInstance()->hsv_.cMap_->value = bloomData_.value;
+    PostEffectRender::GetInstance()->bloom_.cMap_->threshold = bloomData_.threshold;
+    PostEffectRender::GetInstance()->bloom_.cMap_->sigma = bloomData_.sigma;
     //PostEffectRender::GetInstance()->Update(desc);
 
 }

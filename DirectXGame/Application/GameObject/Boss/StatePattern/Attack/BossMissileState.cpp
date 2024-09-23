@@ -6,6 +6,7 @@ void BossState::MissileAttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
 	preActionTimer_.Start(60.0f);
+	boss_->GetAnimManager()->AnimationExecute(BossAnimationManager::AnimType::kOpen, 55.0f);
 }
 
 void BossState::MissileAttackState::Update()
@@ -29,6 +30,7 @@ void BossState::MissileAttackState::Update()
 void BossState::MissileAttackState::Exit()
 {
 	boss_->SetPrevVariantState(this);
+	boss_->GetAnimManager()->AnimationExecute(BossAnimationManager::AnimType::kClose, 30.0f);
 }
 
 void BossState::MissileAttackState::MissileAttack()

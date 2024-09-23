@@ -68,6 +68,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\GameUIManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\GameEditScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\GamePostEffectManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\GameUIManager.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\GameEditScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />

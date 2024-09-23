@@ -41,5 +41,5 @@ template<typename T>
 inline T Ease::Easing(const T& start, const T& end, float t, EaseType type)
 {
 	float easeT = EaseT(type, t);
-	return T(((1.0f - easeT) * start) + (easeT * end));
+	return T((start * (1.0f - easeT)) + (end * easeT));
 }

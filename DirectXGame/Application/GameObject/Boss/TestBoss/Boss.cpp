@@ -133,6 +133,15 @@ void Boss::ImGuiDraw()
 
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("Anim")) {
+			if (ImGui::Button("Open")) {
+				animationManager_->AnimationExecute(BossAnimationManager::AnimType::kOpen, 60.0f);
+			}
+			if (ImGui::Button("Close")) {
+				animationManager_->AnimationExecute(BossAnimationManager::AnimType::kClose, 60.0f);
+			}
+			ImGui::EndTabItem();
+		}
 		ImGui::EndTabBar();
 	}
 

@@ -5,8 +5,9 @@
 void BossState::AttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
-
 	preActionTimer_.Start(60.0f);
+	boss_->GetAnimManager()->AnimationExecute(BossAnimationManager::AnimType::kOpen, 55.0f);
+
 	// 攻撃パターンのランダム
 	uint32_t randM = LwLib::GetRandomValue(0, 3);
 	if (randM == 0) {
@@ -71,6 +72,7 @@ void BossState::AttackState::Exit()
 {
 	boss_->SetPrevVariantState(this);
 	boss_->worldTransform_.transform_.rotate.y = startRotate_;
+	boss_->GetAnimManager()->AnimationExecute(BossAnimationManager::AnimType::kClose, 30.0f);
 }
 
 void BossState::AttackState::SimpleAttack(const Vector3& position)
