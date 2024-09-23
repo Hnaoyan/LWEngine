@@ -175,7 +175,7 @@ void GameScene::Draw()
 	// 球体
 	skydome_->Draw(desc);
 	// 地形
-	terrainManager_->Draw(desc);
+	//terrainManager_->Draw(desc);
 
 	// プレイヤー
 	player_->Draw(desc);

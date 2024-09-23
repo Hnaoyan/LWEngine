@@ -17,14 +17,11 @@ private:
 
 public:	// 定数バッファ
 	ConstantBufferMapContext<CBufferDataVignette> vignette_;
-
 	ConstantBufferMapContext<CBufferDataBlur> blur_;
-
 	ConstantBufferMapContext<CBufferDataDissolve> dissolve_;
-
 	ConstantBufferMapContext<CBufferDataNoise> noise_;
-
 	ConstantBufferMapContext<CBufferDataHSV> hsv_;
+	ConstantBufferMapContext<CBufferDataBloom> bloom_;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -38,6 +35,7 @@ public:
 		CBufferDataDissolve dissolve;
 		CBufferDataNoise noise;
 		CBufferDataHSV hsv;
+		CBufferDataBloom bloom;
 	};
 	/// <summary>
 	/// 更新処理

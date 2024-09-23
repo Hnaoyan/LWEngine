@@ -36,3 +36,9 @@ struct HSVData
     float32_t saturation;
     float32_t value;
 };
+
+struct BloomData
+{
+    float32_t threshold;
+    float32_t gaussSigma;
+};

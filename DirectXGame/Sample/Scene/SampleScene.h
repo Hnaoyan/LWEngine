@@ -116,6 +116,7 @@ private:
 	CBufferDataDissolve dissolveData_;
 	CBufferDataNoise noiseData_;
 	CBufferDataHSV hsvData_;
+	CBufferDataBloom bloomData_;
 
 	int postEffecter_ = 0;
 

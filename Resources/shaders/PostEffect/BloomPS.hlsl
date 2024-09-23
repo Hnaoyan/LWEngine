@@ -5,18 +5,17 @@
 Texture2D<float32_t4> gTexture : register(t0);
 SamplerState gSampler : register(s0);
 
-ConstantBuffer<HSVData> gHSV : register(b5);
+ConstantBuffer<BloomData> gBloom : register(b6);
 
 struct PixelShaderOutput
 {
     float32_t4 color : SV_TARGET0;
 };
 
-float32_t3 ExtractBrightParts(float32_t3 color)
+float32_t3 ExtractBrightParts(float32_t3 color,float32_t threshold)
 {  
     float luminance = dot(color.rgb, float32_t3(0.2126, 0.7152, 0.0722));
-    //float32_t brightnessThreshold = 0.0001f; // 明るさの閾値を設定
-    if (luminance > gHSV.hue)
+    if (luminance > threshold)
     {
         return color; // 輝度が閾値より高い場合は色をそのまま返す
     }
@@ -36,9 +35,6 @@ PixelShaderOutput main(VertexShaderOutput input)
     output.color.a = 1.0f;
     
     float32_t3 sceneColor = gTexture.Sample(gSampler, input.texcoord).rgb;
-    float32_t3 brightColor = ExtractBrightParts(sceneColor.rgb);
-
-    //float32_t brightnessThreshold = 0.01f; // 明るさの閾値を設定
     
     float32_t weight = 0.0f;
     float32_t kernel5x5[9][9];
@@ -47,7 +43,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         for (int32_t y = 0; y < kernelSize; ++y)
         {
-            kernel5x5[x][y] = Gauss(kIndex9x9[x][y].x, kIndex9x9[x][y].y, gHSV.saturation);
+            kernel5x5[x][y] = Gauss(kIndex9x9[x][y].x, kIndex9x9[x][y].y, gBloom.gaussSigma);
             weight += kernel5x5[x][y];
         }
     }
@@ -62,15 +58,14 @@ PixelShaderOutput main(VertexShaderOutput input)
             float32_t3 fetchColor = gTexture.Sample(gSampler, texcoord).rgb;
             
             // 計算
-            //if (Luminance(sceneColor) > brightnessThreshold)
-            //{
-                output.color.rgb += fetchColor * kernel5x5[x2][y2];
-            //}
+            float32_t3 brightFetchColor = ExtractBrightParts(fetchColor, gBloom.threshold);
+            output.color.rgb += brightFetchColor * kernel5x5[x2][y2];
         }
     }
     
     output.color.rgb *= rcp(weight);
-    output.color.rgb += brightColor;
-
+    output.color.rgb += sceneColor;
+    //float32_t3 brightColor = ExtractBrightParts(sceneColor);
+    //output.color.rgb = brightColor;
     return output;
 }

@@ -31,3 +31,9 @@ struct CBufferDataHSV
 	float saturation;	// S
 	float value;		// V
 };
+
+struct CBufferDataBloom
+{
+	float threshold;
+	float sigma;
+};

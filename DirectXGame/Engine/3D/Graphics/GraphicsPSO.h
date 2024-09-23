@@ -97,6 +97,7 @@ namespace Pipeline
 		kDissolve,
 		kNoise,
 		kHSV,
+		kBloom,
 		kCountOfParameter,
 	};
 
@@ -130,6 +131,7 @@ namespace Pipeline
 		kDissolve,			// Dissolve
 		kNoise,				// ランダムノイズ
 		kLuminanceOutline,	// 簡易アウトライン
+		kBloom,
 		kCountOfType,		
 	};
 

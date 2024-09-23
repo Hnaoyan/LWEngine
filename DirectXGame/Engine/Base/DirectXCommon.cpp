@@ -135,7 +135,7 @@ void DirectXCommon::Finalize()
 	// コマンドリストのリセット
 	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandList_.Get());
 	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandLoadList_.Get());
-	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandGPUList_.Get());
+	//DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandGPUList_.Get());
 }
 
 void DirectXCommon::InitializeFixFPS()

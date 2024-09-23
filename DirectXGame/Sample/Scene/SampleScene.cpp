@@ -103,6 +103,8 @@ void SampleScene::Initialize()
 
 	hsvData_ = {};
 
+	bloomData_ = { 0.5f,2.0f };
+
 #pragma endregion
 	// 準備完了
 	isSceneReady_ = true;
@@ -159,6 +161,9 @@ void SampleScene::Update()
 	if (input_->TriggerKey(DIK_8)) {
 		postEffecter_ = 8;
 	}
+	if (input_->TriggerKey(DIK_9)) {
+		postEffecter_ = 9;
+	}
 
 
 	newSprite_->SetPosition(newSpriteData_.position_);
@@ -198,6 +203,7 @@ void SampleScene::Update()
 	desc.noise = noiseData_;
 	desc.dissolve = dissolveData_;
 	desc.hsv = hsvData_;
+	desc.bloom = bloomData_;
 	PostEffectRender::GetInstance()->Update(desc);
 
 }
@@ -332,7 +338,7 @@ void SampleScene::ImGuiDraw()
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
 		break;
 	case 9:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kLuminanceOutline;
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 		break;
 	default:
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;

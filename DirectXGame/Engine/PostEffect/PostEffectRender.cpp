@@ -21,6 +21,7 @@ void PostEffectRender::StaticInitialize()
 	dissolve_.CreateConstantBuffer(device);
 	noise_.CreateConstantBuffer(device);
 	hsv_.CreateConstantBuffer(device);
+	bloom_.CreateConstantBuffer(device);
 
 	vignette_.cMap_->scale = 16.0f;
 	vignette_.cMap_->powValue = 0.8f;
@@ -40,6 +41,8 @@ void PostEffectRender::StaticInitialize()
 	hsv_.cMap_->saturation = 0.0f;
 	hsv_.cMap_->value = 0.0f;
 
+	bloom_.cMap_->threshold = 0.1f;
+	bloom_.cMap_->sigma = 2.0f;
 }
 
 void PostEffectRender::Update(const PostEffectDesc& desc)
@@ -62,6 +65,10 @@ void PostEffectRender::Update(const PostEffectDesc& desc)
 	hsv_.cMap_->hue = desc.hsv.hue;
 	hsv_.cMap_->saturation = desc.hsv.saturation;
 	hsv_.cMap_->value = desc.hsv.value;
+
+	// Bloom
+	bloom_.cMap_->threshold = desc.bloom.threshold;
+	bloom_.cMap_->sigma = desc.bloom.sigma;
 
 	// ノイズでの処理時のみ
 	if (sPostEffect != Pipeline::PostEffectType::kNoise) {
@@ -90,13 +97,14 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList_->SetGraphicsRootDescriptorTable(static_cast<UINT>(EffectRegister::kTexture), this->renderTextureHandle_.second);
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		commandList_, static_cast<UINT>(EffectRegister::kDissolveTexture), sDissolveTexture);
-
+	// バッファーの設定
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kVignette), vignette_.cBuffer->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBlur), blur_.cBuffer->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kDissolve), dissolve_.cBuffer->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kNoise), noise_.cBuffer->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kHSV), hsv_.cBuffer->GetGPUVirtualAddress());
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBloom), bloom_.cBuffer->GetGPUVirtualAddress());
+
 	// 描画
 	commandList_->DrawInstanced(3, 1, 0, 0);
-
 }

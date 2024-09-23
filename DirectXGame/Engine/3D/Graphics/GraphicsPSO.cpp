@@ -897,6 +897,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	rootParameters[static_cast<int>(PostEffectRegister::kDissolve)] = PSOLib::InitAsConstantBufferView(3, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootParameters[static_cast<int>(PostEffectRegister::kNoise)] = PSOLib::InitAsConstantBufferView(4, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 	rootParameters[static_cast<int>(PostEffectRegister::kHSV)] = PSOLib::InitAsConstantBufferView(5, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootParameters[static_cast<int>(PostEffectRegister::kBloom)] = PSOLib::InitAsConstantBufferView(6, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	descriptionRootSignature.pParameters = rootParameters;	// ルートパラメータ配列へのポインタ
 	descriptionRootSignature.NumParameters = _countof(rootParameters);	// 配列の長さ
@@ -993,7 +994,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BloomPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BoxFilterPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
@@ -1039,6 +1040,14 @@ void GraphicsPSO::CreatePostEffectPSO()
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
 	// パイプラインステート作成
 	resultPipeline.pipelineStates[size_t(PostEffect::kLuminanceOutline)] = CreatePipelineState(graphicsPipelineStateDesc);
+
+	// ピクセルシェーダの読み込みとコンパイル
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BloomPS.hlsl", L"ps_6_0");
+	assert(psBlob != nullptr);
+	// シェーダの設定
+	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader
+	// パイプラインステート作成
+	resultPipeline.pipelineStates[size_t(PostEffect::kBloom)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// 登録
 	sPipelines_[size_t(Pipeline::Order::kPostEffect)] = std::move(resultPipeline);
