@@ -10,12 +10,14 @@ namespace PlayerContext
 	private:
 		struct EnergyData
 		{
-			float maxEnergy;
-			float currentEnergy;
-
-			float defaultDecr;
-			bool isAssending;
-
+			// 量
+			float maxEnergy = 0.0f;
+			float currentEnergy = 0.0f;
+			// 減少
+			float defaultDecr = 0.0f;
+			// 
+			bool isAssending = false;
+			// リチャージ時間
 			FrameTimer rechargeTimer_;
 		};
 
@@ -34,7 +36,7 @@ namespace PlayerContext
 		FrameTimer quickBoostRecoveryTime_;
 	public:
 		// エネルギー情報
-		EnergyData energy_;
+		EnergyData energy_{};
 	};
 
 }

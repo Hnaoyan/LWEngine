@@ -47,10 +47,11 @@ void Player::Update()
 	// システム関係の更新
 	facadeSystem_->Update();
 
-
+	// 
 	systemManager_.Update();
 	quickBoostCoolTime_.Update();
 
+	// それぞれのステート
 	if (currentStates_.first) {
 		currentStates_.first->InputHandle();
 		currentStates_.first->Update();

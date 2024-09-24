@@ -29,8 +29,8 @@ namespace PlayerContext
 	private:
 
 		struct HealthData {
-			uint32_t maxHealth;
-			uint32_t currentHealth;
+			uint32_t maxHealth = 0;
+			uint32_t currentHealth = 0;
 			FrameTimer invincibility;
 			FrameTimer damageEffectDuration;
 		};

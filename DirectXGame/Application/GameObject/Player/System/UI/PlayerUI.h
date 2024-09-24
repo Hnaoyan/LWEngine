@@ -21,9 +21,9 @@ namespace PlayerContext
 		Sprite* reticle_ = nullptr;
 
 		// HPのUI
-		GameUI::BarRenderInfo hpUI_;
+		GameUI::BarRenderInfo hpUI_{};
 		// EnergyのUI
-		GameUI::BarRenderInfo energyUI_;
+		GameUI::BarRenderInfo energyUI_{};
 	};
 
 

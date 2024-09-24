@@ -99,7 +99,6 @@ public:
 	ICamera* camera_ = nullptr;
 	// 落下フラグ
 	bool isGround_ = false;
-
+	// 
 	FrameTimer quickBoostCoolTime_;
-
 };
