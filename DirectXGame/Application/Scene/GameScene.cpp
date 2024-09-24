@@ -341,6 +341,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Player", "Robotto");
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
+	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 

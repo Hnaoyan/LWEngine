@@ -56,8 +56,8 @@ Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
     Particle particle = (Particle) 0;
     float32_t maxSize = 7.0f;
     float32_t minSize = 5.75f;
-    particle.scale = generator.GenerateRange3D(float32_t3(minSize, minSize, minSize), float32_t3(maxSize, maxSize, maxSize));
-    particle.scale.z = 1.0f;
+    float32_t randScale = generator.GenerateRange1D(minSize, maxSize);
+    particle.scale = float32_t3(randScale, randScale, randScale);
     float32_t value = 3.0f;
     float32_t3 min = { -value, -value, -value };
     float32_t3 max = { value, value, value };

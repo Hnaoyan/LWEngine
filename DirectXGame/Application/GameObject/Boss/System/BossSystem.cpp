@@ -32,7 +32,7 @@ void BossSystemContext::ParticleManager::Initialize(Boss* boss)
 	boss_ = boss;
 	SetGPUParticleSystem(boss_->GetGPUParticle());
 	std::unique_ptr<ParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();
-	instance->Initialize(ModelManager::GetModel("Plane"));
+	instance->Initialize(ModelManager::GetModel("ParticleCube"));
 	BossParticle::DamageEffect* damage = static_cast<BossParticle::DamageEffect*>(instance.get());
 	damage->SetBoss(boss);
 	gpuParticle_->CreateEmitter(std::move(instance), "BossDamage");
