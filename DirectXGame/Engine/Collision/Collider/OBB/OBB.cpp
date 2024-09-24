@@ -14,10 +14,24 @@ float OBB::LengthSeparateAxis(const Vector3& separate, const Vector3& v1, const 
 
 void OBB::Initialize(const Vector3& radius, ColliderObject object)
 {
-	radius, object;
+	//
+	objectRegistry_ = object;
+	//
+	length_ = radius;
+	//
+	worldTransform_.Initialize();
+
+	// Axis
+	arbitraryAxis[0] = { 1.0f,0.0f,0.0f };
+	arbitraryAxis[1] = { 0.0f,1.0f,0.0f };
+	arbitraryAxis[2] = { 0.0f,0.0f,1.0f };
 }
 
 void OBB::Update(const Vector3& worldPosition)
 {
-	worldPosition;
+	// 基底
+	ICollider::Update(worldPosition);
+
+	// 
+	position_ = worldPosition;
 }
