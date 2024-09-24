@@ -127,6 +127,11 @@ void Player::ImGuiDraw()
 			facadeSystem_->GetUI()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("Material")) {
+			ImGui::DragFloat("MaterialShininess", &material_->shininess_, 0.01f);
+
+			ImGui::EndTabItem();
+		}
 
 		ImGui::EndTabBar();
 	}

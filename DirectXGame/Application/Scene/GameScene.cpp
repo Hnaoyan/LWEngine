@@ -134,6 +134,10 @@ void GameScene::Update()
 		}
 	}
 
+	// ライトの更新
+	directionalLight_->Update(lightData_);
+	spotLight_->Update(spLightData_);
+	pointLight_->Update(ptLightData_);
 
 	terrainManager_->Update();
 
@@ -427,21 +431,28 @@ void GameScene::LightingInitialize()
 	pointLight_.reset(PointLight::CreateLight());
 	spotLight_.reset(SpotLight::CreateLight());
 
+	// 平行光源データ
+	lightData_.color = { 1.0f,1.0f,1.0f,1.0f };
+	lightData_.direction = { 0.0f,1.0f,0.0f };
+	lightData_.intensity = 1.5f;
+
 	// 点光源データ
-	ptLightData_.intensity = 1.0f;
-	ptLightData_.position = { 0,2.0f,0 };
+	ptLightData_.intensity = 5.0f;
+	ptLightData_.position = { 0,50.0f,0 };
 	ptLightData_.color = { 1,1,1,1 };
-	ptLightData_.decay = 1.0f;
-	ptLightData_.radius = 2.0f;
+	ptLightData_.decay = 10.0f;
+	ptLightData_.radius = 300.0f;
 
 	// 照光源データ
 	spLightData_.color = { 1,1,1,1 };
-	spLightData_.position = { 2.0f,1.25f,0.0f };
-	spLightData_.distance = 7.0f;
-	spLightData_.direction = Vector3::Normalize({ -1.0f,-1.0f,0.0f });
-	spLightData_.intensity = 4.0f;
-	spLightData_.decay = 2.0f;
-	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
+	spLightData_.position = { 2.0f,200.0f,0.0f };
+	spLightData_.distance = 300.0f;
+	spLightData_.direction = Vector3(-0.707f, -0.707f, 0.0f);
+	spLightData_.intensity = 10.0f;
+	spLightData_.decay = 3.0f;
+	//spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
+	spLightData_.cosAngle = 0.3f;
+	spLightData_.cosFalloffStart = 0.5f;
 }
 
 void GameScene::LightingUpdate()

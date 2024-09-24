@@ -48,6 +48,9 @@ private:
 	void GlobalValueInitialize();
 	// グローバル変数関係の更新
 	//void GlobalValueUpdate();
+
+	bool isAction_ = false;
+
 private: // サブシステム
 	// ステート管理
 	BossState::StateManager stateManager_;

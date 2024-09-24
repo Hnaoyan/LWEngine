@@ -45,8 +45,8 @@ void Boss::Update()
 	// 弾
 	bulletManager_->Update();
 	// ステート
-	if (state_) {
-		//state_->Update();
+	if (state_ && isAction_) {
+		state_->Update();
 
 	}
 	// 座標更新
@@ -89,6 +89,7 @@ void Boss::ImGuiDraw()
 {
 	
 	ImGui::Begin("Boss");
+	ImGui::Checkbox("IsAction", &isAction_);
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
