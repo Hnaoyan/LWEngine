@@ -27,6 +27,9 @@ void TerrainManager::Update()
 
 void TerrainManager::Draw(ModelDrawDesc desc)
 {
+	if (isInvisible_) {
+		return;
+	}
 	for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = clusters_.begin();
 		it != clusters_.end(); ++it) {
 		(*it)->Draw(desc);
@@ -84,6 +87,7 @@ void TerrainManager::AddCluster(std::string filename,std::string modelTag)
 void TerrainManager::ImGuiDraw()
 {
 	ImGui::Begin("TerrainManager");
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	std::string name = "Cluster";
 	if (ImGui::BeginTabBar(name.c_str()))
 	{

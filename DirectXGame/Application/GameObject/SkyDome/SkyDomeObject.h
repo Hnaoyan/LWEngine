@@ -23,5 +23,6 @@ private:
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	std::unique_ptr<Material> material_;
+	bool isInvisible_ = false;
 };
 

@@ -32,6 +32,7 @@ void SkyDomeObject::Update()
 void SkyDomeObject::ImGuiDraw()
 {
 	ImGui::Begin("SkyDomeObject");
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	float scale = worldTransform_.transform_.scale.x;
 	ImGui::DragFloat("Scale", &scale, 0.1f);
 	worldTransform_.transform_.scale = { scale,scale,scale };
@@ -42,6 +43,9 @@ void SkyDomeObject::ImGuiDraw()
 
 void SkyDomeObject::Draw(ModelDrawDesc desc)
 {
+	if (isInvisible_) {
+		return;
+	}
 	// マテリアル更新
 	model_->GetMaterial()->Update();
 	// デスクの設定

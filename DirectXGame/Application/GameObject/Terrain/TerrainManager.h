@@ -44,4 +44,7 @@ private:
 	Model* model_ = nullptr;
 	// グループのリスト
 	std::vector<std::unique_ptr<InstancedGroup>> clusters_;
+	// 隠すフラグ
+	bool isInvisible_ = false;
+
 };
