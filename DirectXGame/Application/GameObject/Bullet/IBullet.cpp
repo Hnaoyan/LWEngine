@@ -24,8 +24,10 @@ void IBullet::Update()
 	lifeTime_ += GameSystem::GameSpeedFactor();
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
-
+	// ユニットの基底
 	InstancedUnit::Update();
+	// サイズの設定
+	collider_.radius_ = transform_.scale.x;
 	collider_.Update(transform_.translate);
 }
 

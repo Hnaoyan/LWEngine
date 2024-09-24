@@ -1,5 +1,6 @@
 #include "BossAnimationManager.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/3D/ModelManager.h"
 #include "Engine/3D/ModelRenderer.h"
 #include "Engine/LwLib/Ease/Ease.h"
@@ -8,9 +9,9 @@ void BossSystemContext::AnimationManager::Initialize(Boss* boss)
 {
 	// 設定
 	boss_ = boss;
-
-	CreateHierarchy("Head", "BossEnemy", {{1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,1.5f,0.0f}});
-	CreateHierarchy("Bottom", "BossEnemy", {{1.0f,1.0f,1.0f},{3.14f,0.0f,0.0f},{0.0f,-1.5f,0.0f}});
+	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
+	CreateHierarchy("Head", "BossEnemy", { scale,{0.0f,0.0f,0.0f},{0.0f,scale.x,0.0f}});
+	CreateHierarchy("Bottom", "BossEnemy", { scale,{3.14f,0.0f,0.0f},{0.0f,-scale.x,0.0f}});
 
 	AnimationExecute(AnimType::kClose);
 }
@@ -45,16 +46,17 @@ void BossSystemContext::AnimationManager::Draw(ICamera* camera, DrawDesc::LightD
 
 void BossSystemContext::AnimationManager::AnimationExecute(AnimType type)
 {
+	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
 
 	switch (type)
 	{
 	case BossSystemContext::AnimationManager::AnimType::kOpen:
-		hierarchys_["Head"].worldTransform.transform_.translate.y = 1.5f;
-		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -1.5f;
+		hierarchys_["Head"].worldTransform.transform_.translate.y = (scale.x * 1.5f);
+		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -(scale.x * 1.5f);
 		break;
 	case BossSystemContext::AnimationManager::AnimType::kClose:
-		hierarchys_["Head"].worldTransform.transform_.translate.y = 1.0f;
-		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -1.0f;
+		hierarchys_["Head"].worldTransform.transform_.translate.y = scale.x;
+		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -scale.x;
 		break;
 	default:
 		break;
@@ -64,15 +66,18 @@ void BossSystemContext::AnimationManager::AnimationExecute(AnimType type)
 
 void BossSystemContext::AnimationManager::AnimationExecute(AnimType type, float easeFrame)
 {
+	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
+	float BottomY = -scale.x;
+	float HeadY = scale.x;
 	switch (type)
 	{
 	case BossSystemContext::AnimationManager::AnimType::kOpen:
-		hierarchys_["Head"].easePoint = { Vector3(0.0f,1.0f,0.0f),Vector3(0.0f,1.5f,0.0f) };
-		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,-1.0f,0.0f),Vector3(0.0f,-1.5f,0.0f) };
+		hierarchys_["Head"].easePoint = { Vector3(0.0f,HeadY,0.0f),Vector3(0.0f,HeadY * 1.5f,0.0f) };
+		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,BottomY,0.0f),Vector3(0.0f, BottomY * 1.5f,0.0f) };
 		break;
 	case BossSystemContext::AnimationManager::AnimType::kClose:
-		hierarchys_["Head"].easePoint = { Vector3(0.0f,1.5f,0.0f),Vector3(0.0f,1.0f,0.0f) };
-		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,-1.5f,0.0f),Vector3(0.0f,-1.0f,0.0f) };
+		hierarchys_["Head"].easePoint = { Vector3(0.0f,HeadY * 1.5f,0.0f),Vector3(0.0f,HeadY,0.0f) };
+		hierarchys_["Bottom"].easePoint = { Vector3(0.0f, BottomY * 1.5f,0.0f),Vector3(0.0f,BottomY,0.0f) };
 		break;
 	default:
 		break;

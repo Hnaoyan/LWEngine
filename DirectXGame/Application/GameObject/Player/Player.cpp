@@ -85,7 +85,9 @@ void Player::Draw(ModelDrawDesc desc)
 	material_->Update();
 	modelDesc.material = material_.get();
 	// プレイヤーの描画
-	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+	if (!isInvisible_) {
+		ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+	}
 }
 
 void Player::ImGuiDraw()
@@ -93,6 +95,7 @@ void Player::ImGuiDraw()
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
 	ImGui::Text("IsGround:%d", this->isGround_);
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);

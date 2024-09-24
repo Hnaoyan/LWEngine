@@ -32,7 +32,6 @@ void Boss::Initialize(Model* model)
 	respawnPos_ = { 0,8.5f,50.0f };
 
 	worldTransform_.transform_.translate = respawnPos_;
-	worldTransform_.transform_.scale = { 7.5f,7.5f,7.5f };
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
 }
@@ -47,7 +46,7 @@ void Boss::Update()
 	bulletManager_->Update();
 	// ステート
 	if (state_) {
-		state_->Update();
+		//state_->Update();
 
 	}
 	// 座標更新
@@ -75,12 +74,13 @@ void Boss::Draw(ModelDrawDesc desc)
 	lightDesc.spotLight = desc.spotLight;
 	modelDesc.SetDesc(model_);
 	modelDesc.worldTransform = &worldTransform_;
-	// 描画
-	//ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
-	// アニメーション
-	animationManager_->Draw(desc.camera, lightDesc);
-	// バリア
-	systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
+	//---描画---//
+	if (!isInvisible_) {
+		// アニメーション
+		animationManager_->Draw(desc.camera, lightDesc);
+		// バリア
+		systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
+	}
 	// 弾
 	bulletManager_->Draw(desc);
 }
@@ -89,6 +89,7 @@ void Boss::ImGuiDraw()
 {
 	
 	ImGui::Begin("Boss");
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);

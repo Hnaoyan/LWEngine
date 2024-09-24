@@ -65,6 +65,8 @@ protected:
 	Model* model_ = nullptr;
 	// 死亡フラグ
 	bool isDead_ = false;
+	// デバッグ用の非表示フラグ
+	bool isInvisible_ = false;
 
 public:
 	// ワールドトランスフォーム
