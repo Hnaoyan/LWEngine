@@ -1,5 +1,6 @@
 #include "BossBarrier.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/3D/ModelManager.h"
 #include "Engine/3D/ModelRenderer.h"
 #include "Engine/2D/TextureManager.h"
@@ -14,8 +15,6 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 
 	worldTransform_.Initialize();
 	worldTransform_.parent_ = &boss_->worldTransform_;
-	worldTransform_.transform_.scale = boss_->worldTransform_.transform_.scale;
-	worldTransform_.transform_.scale *= 2.0f;
 
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
@@ -54,9 +53,13 @@ void BossSystemContext::BarrierManager::Draw(ICamera* camera, const DrawDesc::Li
 
 void BossSystemContext::BarrierManager::Create(float generateValue)
 {
+	// パラメータ
 	param.isActive = true;
 	param.currentHP = generateValue;
 	param.maxHP = generateValue;
+	// サイズの設定
+	worldTransform_.transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale");
+	worldTransform_.UpdateMatrix();
 }
 
 void BossSystemContext::BarrierManager::DamageProcess(float damage)

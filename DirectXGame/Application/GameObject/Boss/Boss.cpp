@@ -54,10 +54,10 @@ void Boss::Update()
 	IGameObject::Update();
 	// バリア時の当たり判定
 	if (systemManager_->barrierManager_.IsActive()) {
-		collider_.radius_ = worldTransform_.transform_.scale.x * 2.0f;
+		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale").x;
 	}
 	else {
-		collider_.radius_ = worldTransform_.transform_.scale.x;
+		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale").x;
 	}
 	// コライダーの更新
 	collider_.Update(worldTransform_.GetWorldPosition());
@@ -204,12 +204,23 @@ void Boss::UIDraw()
 void Boss::GlobalValueInitialize()
 {
 	GlobalVariables* instance = GlobalVariables::GetInstance();
-	instance->CreateGroup("BossNormalBullet");
-	instance->AddValue("BossNormalBullet", "Acceleration", BossSystemContext::NormalBullet::sAcceleration);
-	instance->CreateGroup("BossTrackingBullet");
-	instance->AddValue("BossTrackingBullet", "TrackFrame", BossSystemContext::TrackingBullet::sTrackingFrame);
-	instance->AddValue("BossTrackingBullet", "Damping", BossSystemContext::TrackingBullet::sDamping);
-	instance->AddValue("BossTrackingBullet", "Speed", BossSystemContext::TrackingBullet::sBulletSpeed);
-	instance->AddValue("BossTrackingBullet", "InitSpeed", BossSystemContext::TrackingBullet::sInitSpeed);
-	instance->AddValue("BossTrackingBullet", "LerpRadius", BossSystemContext::TrackingBullet::sLerpRadius);
+	std::string groupName = "Boss";
+	//---ボスの共通---//
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "NormalScale", worldTransform_.transform_.scale);
+	instance->AddValue(groupName, "BarrierScale", worldTransform_.transform_.scale * 2.0f);
+
+	//---通常弾---//
+	groupName = "BossNormalBullet";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "Acceleration", BossSystemContext::NormalBullet::sAcceleration);
+	
+	//---追尾弾---//
+	groupName = "BossTrackingBullet";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "TrackFrame", BossSystemContext::TrackingBullet::sTrackingFrame);
+	instance->AddValue(groupName, "Damping", BossSystemContext::TrackingBullet::sDamping);
+	instance->AddValue(groupName, "Speed", BossSystemContext::TrackingBullet::sBulletSpeed);
+	instance->AddValue(groupName, "InitSpeed", BossSystemContext::TrackingBullet::sInitSpeed);
+	instance->AddValue(groupName, "LerpRadius", BossSystemContext::TrackingBullet::sLerpRadius);
 }

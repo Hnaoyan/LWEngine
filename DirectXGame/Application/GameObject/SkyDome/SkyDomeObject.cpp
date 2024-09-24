@@ -1,6 +1,8 @@
 #include "SkyDomeObject.h"
-#include "Engine/3D/ModelRenderer.h"
 #include "imgui.h"
+
+#include "Engine/3D/ModelRenderer.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 void SkyDomeObject::Initialize(Model* model)
 {
@@ -10,10 +12,18 @@ void SkyDomeObject::Initialize(Model* model)
 	worldTransform_.UpdateMatrix();
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
+
+	// 外部書き出しの初期化
+	GlobalValueInitialize();
 }
 
 void SkyDomeObject::Update()
 {
+#ifdef _DEBUG
+	GlobalValueUpdate();
+#endif // _DEBUG
+
+	// マテリアル
 	material_->Update();
 	// 行列更新
 	worldTransform_.UpdateMatrix();
@@ -26,7 +36,7 @@ void SkyDomeObject::ImGuiDraw()
 	ImGui::DragFloat("Scale", &scale, 0.1f);
 	worldTransform_.transform_.scale = { scale,scale,scale };
 	worldTransform_.UpdateMatrix();
-	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
+	ImGui::ColorEdit4("Color", &material_->color_.x);
 	ImGui::End();
 }
 
@@ -46,4 +56,27 @@ void SkyDomeObject::Draw(ModelDrawDesc desc)
 	// プレイヤーの描画
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 
+}
+
+void SkyDomeObject::GlobalValueInitialize()
+{
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	std::string groupName = "Skydome";
+	// 生成
+	global->CreateGroup(groupName);
+	global->AddValue(groupName, "Translate", worldTransform_.transform_.translate);
+	global->AddValue(groupName, "Scale", worldTransform_.transform_.scale);
+	global->AddValue(groupName, "MaterialColor", material_->color_);
+	// 更新
+	GlobalValueUpdate();
+}
+
+void SkyDomeObject::GlobalValueUpdate()
+{
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	std::string groupName = "Skydome";
+	
+	worldTransform_.transform_.translate = global->GetValue<Vector3>(groupName, "Translate");
+	worldTransform_.transform_.scale = global->GetValue<Vector3>(groupName, "Scale");
+	material_->color_ = global->GetValue<Vector4>(groupName, "MaterialColor");
 }

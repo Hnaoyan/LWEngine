@@ -44,8 +44,10 @@ public:
 	void Reset() { systemManager_->uiManager_.Initialize(this); }
 
 private:
+	// グローバル変数関係の初期化
 	void GlobalValueInitialize();
-
+	// グローバル変数関係の更新
+	//void GlobalValueUpdate();
 private: // サブシステム
 	// ステート管理
 	BossState::StateManager stateManager_;
