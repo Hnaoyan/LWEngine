@@ -6,7 +6,7 @@
 #include "Application/GameObject/Particle/User/BossParticle.h"
 #include "../../../Collision/ColliderFilter.h"
 #include "../../../GameSystem/GameSystem.h"
-#include "../TestBoss/Boss.h"
+#include "../Boss.h"
 
 uint32_t BossSystemContext::IBullet::sSerialNumber = 0;
 
