@@ -1,4 +1,4 @@
-#include "../PlayerParticle.h"
+#include "PlayerParticle.h"
 #include "Application/GameObject/GameObjectLists.h"
 
 void PlayerParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle)

@@ -26,9 +26,13 @@ void GameScene::Initialize()
 #pragma endregion
 
 #pragma region インスタンス化
+	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
+	uiManager_ = std::make_unique<GameUI::UIManager>();
 	terrainManager_ = std::make_unique<TerrainManager>();
 	bulletManager_ = std::make_unique<BulletManager>();
 	enemyManager_ = std::make_unique<SampleEnemyManager>();
+	collisionManager_ = std::make_unique<CollisionManager>();
+	gameSystem_ = std::make_unique<GameSystem>();
 
 	player_ = std::make_unique<Player>();
 	bossEnemy_ = std::make_unique<Boss>();
@@ -39,16 +43,12 @@ void GameScene::Initialize()
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	// パーティクル
-	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
 	gpuParticleManager_->Initialize(ModelManager::GetModel("Plane"));
 	// ゲームシステム
-	gameSystem_ = std::make_unique<GameSystem>();
 	gameSystem_->Initialize();
 	// UI
-	uiManager_ = std::make_unique<GameUI::UIManager>();
 	uiManager_->Initialize();
 	// コライダー
-	collisionManager_ = std::make_unique<CollisionManager>();
 #pragma endregion
 
 	skydome_->Initialize(ModelManager::GetModel("SkyDome"));

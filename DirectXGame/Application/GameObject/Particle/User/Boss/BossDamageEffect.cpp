@@ -1,4 +1,4 @@
-#include "../BossParticle.h"
+#include "BossParticle.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/DeltaTime.h"
 

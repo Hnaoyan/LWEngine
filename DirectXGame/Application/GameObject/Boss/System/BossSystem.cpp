@@ -3,7 +3,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "Engine/3D/ModelManager.h"
-#include "Application/GameObject/Particle/User/BossParticle.h"
+#include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "../../../Collision/ColliderFilter.h"
 #include "../../../GameSystem/GameSystem.h"
 #include "../Boss.h"

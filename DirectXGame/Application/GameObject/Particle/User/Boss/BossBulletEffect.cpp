@@ -1,4 +1,4 @@
-#include "../BossParticle.h"
+#include "BossParticle.h"
 
 void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle)
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "../../../Particle/User/PlayerParticle.h"
+#include "Application/GameObject/Particle/User/ParticleLists.h"
 
 class Player;
 class GPUParticleSystem;

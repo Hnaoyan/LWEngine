@@ -279,13 +279,13 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerMoveParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBulletEffect.cpp">
@@ -707,7 +707,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\ModelRenderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\PlayerParticle.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.h">
@@ -716,7 +716,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\BossParticle.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h">
@@ -783,6 +783,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\GameEditScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
