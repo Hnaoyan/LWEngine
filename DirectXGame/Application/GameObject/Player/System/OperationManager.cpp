@@ -39,7 +39,6 @@ void OparationManager::Update()
 
 void OparationManager::InputUpdate()
 {
-	//float speed = 4.0f;
 	Vector3 direct = {};
 	Vector2 sThumbL = input_->XGetLeftJoystick();
 	Vector2 sThumbR = input_->XGetRightJoystick();

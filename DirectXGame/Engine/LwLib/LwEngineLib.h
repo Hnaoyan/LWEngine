@@ -149,12 +149,8 @@ namespace LwLib
 		return result;
 	}
 
-	/// <summary>
-	/// XZ平面に回転
-	/// </summary>
-	/// <param name="direct"></param>
-	/// <param name="yaw"></param>
-	/// <returns></returns>
+#pragma region 2軸回転
+	// XZ平面回転
 	inline static Vector3 RotateXZVector(const Vector3& direct, float theta)
 	{
 		Vector3 normalizeVector = Vector3::Normalize(direct);
@@ -162,4 +158,19 @@ namespace LwLib
 		Vector2 newDirect = Matrix3x3::Transform({ normalizeVector.x,normalizeVector.z }, rotateMatrix);
 		return Vector3(newDirect.x, normalizeVector.y, newDirect.y);
 	}
+	// XY平面回転
+	inline static Vector3 RotateXYVector(const Vector3& direct, float theta) {
+		Vector3 normalizeVector = Vector3::Normalize(direct);
+		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(theta);
+		Vector2 newDirect = Matrix3x3::Transform({ normalizeVector.x,normalizeVector.y }, rotateMatrix);
+		return Vector3(newDirect.x, newDirect.y, normalizeVector.z);
+	}
+	// YZ平面回転
+	inline static Vector3 RotateYZVector(const Vector3& direct, float theta) {
+		Vector3 normalizeVector = Vector3::Normalize(direct);
+		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(theta);
+		Vector2 newDirect = Matrix3x3::Transform({ normalizeVector.y,normalizeVector.z }, rotateMatrix);
+		return Vector3(normalizeVector.x, newDirect.x, newDirect.y);
+	}
+#pragma endregion
 }
