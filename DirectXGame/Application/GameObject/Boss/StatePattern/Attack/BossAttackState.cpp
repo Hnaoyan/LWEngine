@@ -27,7 +27,7 @@ void BossState::AttackState::Initialize()
 		fireCooltime_ = 20.0f;
 	}
 
-	//pattern_ = ShotPattern::kRadialFire;
+	//pattern_ = ShotPattern::kSpread;
 
 	// 初期の角度
 	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
@@ -108,47 +108,19 @@ void BossState::AttackState::SpreadAttack()
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	// 直線
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
-
-	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
-
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
-	Matrix3x3 leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
-	Matrix3x3 rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
+	Vector3 newDirect{};
 	// 1
-	// 左回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
-	Vector3 newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
-	// 右回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
-
-	// 2
-	rotValue += 0.1f;
-	leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
-	rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
-	// 左回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
-	// 右回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
-
-	// 3
-	rotValue += 0.1f;
-	leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
-	rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
-	// 左回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, leftRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
-	// 右回転
-	bulletDirect = Matrix3x3::Transform({ bulletDirect_.x,bulletDirect_.z }, rightRotateMat);
-	newDirect = { bulletDirect.x,bulletDirect_.y,bulletDirect.y };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+	for (int i = 0; i < 3; ++i) {
+		// 2
+		rotValue += 0.1f;
+		// 左回転
+		newDirect = LwLib::RotateXZVector(bulletDirect_, -rotValue);
+		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+		// 右回転
+		newDirect = LwLib::RotateXZVector(bulletDirect_, rotValue);
+		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+	}
 
 }
 
@@ -167,20 +139,14 @@ void BossState::AttackState::RadialFireAttack()
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
 	rotValue = 0.5f;
 	float addValue = 1.0f;
-	Matrix3x3 leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
-	Matrix3x3 rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 	int max = 7;
 	for (int i = 0; i < max; ++i) {
 		rotValue += addValue;
-		leftRotateMat = Matrix3x3::MakeRotateMatrix(-rotValue);
-		rightRotateMat = Matrix3x3::MakeRotateMatrix(rotValue);
 		// 左回転
-		bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, leftRotateMat);
-		Vector3 newDirect = { bulletDirect.x, 0.0f,bulletDirect.y};
+		Vector3 newDirect = LwLib::RotateXZVector({ direct.x, 0.0f,direct.z }, -rotValue);
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 		// 右回転
-		bulletDirect = Matrix3x3::Transform({ direct.x,direct.z }, rightRotateMat);
-		newDirect = { bulletDirect.x, 0.0f,bulletDirect.y };
+		newDirect = LwLib::RotateXZVector({ direct.x, 0.0f,direct.z }, rotValue);
 		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
 	}
 }

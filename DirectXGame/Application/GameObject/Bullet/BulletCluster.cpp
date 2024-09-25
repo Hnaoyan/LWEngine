@@ -53,7 +53,7 @@ void BulletCluster::AddBullet(const EulerTransform& transform, const Vector3& di
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<IBullet>();
 	instance->transform_ = transform;
 	// 速度
-	static_cast<IBullet*>(instance.get())->SetVelocity(direct * 5.0f);
+	static_cast<IBullet*>(instance.get())->SetVelocity(direct);
 	static_cast<IBullet*>(instance.get())->Initialize();
 	// リストにムーブ
 	units_.push_back(std::move(instance));
