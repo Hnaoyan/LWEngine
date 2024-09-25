@@ -54,8 +54,8 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
 Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
 {
     Particle particle = (Particle) 0;
-    float32_t maxSize = 7.0f;
-    float32_t minSize = 5.75f;
+    float32_t maxSize = 3.0f;
+    float32_t minSize = 1.5f;
     float32_t randScale = generator.GenerateRange1D(minSize, maxSize);
     particle.scale = float32_t3(randScale, randScale, randScale);
     float32_t value = 3.0f;
@@ -71,11 +71,11 @@ Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
    
     particle.translate *= 3.0f;
     particle.translate += emitterPosition;
-    particle.color.rgb = generator.GenerateRange3D(float32_t3(0.85f, 0.0f, 0.0f), float32_t3(1.0f, 0.05f, 0.05f));
-    particle.color.a = 1.0f;
-    particle.lifetime = 1.0f;
+    particle.color.rgb = generator.GenerateRange3D(float32_t3(0.0f, 0.95f, 0.95f), float32_t3(0.05f, 1.0f, 1.0f));
+    particle.color.a = generator.GenerateRange1D(float32_t(0.65f), float32_t(0.85f));
+    particle.lifetime = 6.0f;
     particle.currentTime = 0.0f;
-    particle.isScaleDecrement = 1;
+    particle.isScaleDecrement = 2;
     particle.isGravity = 1;
     
     return particle;

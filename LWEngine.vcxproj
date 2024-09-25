@@ -37,6 +37,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBulletEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossDamageEffect.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerBulletEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerMoveParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />

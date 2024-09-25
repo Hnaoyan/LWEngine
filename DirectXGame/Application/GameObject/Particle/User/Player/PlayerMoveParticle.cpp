@@ -20,15 +20,17 @@ void PlayerParticle::MoveEffect::Update()
 {
 	// 座標更新
 	if (player_) {
-		emitter_.cMap_->translate = player_->worldTransform_.GetWorldPosition();
-		emitter_.cMap_->translate.y = player_->GetFootCollider()->worldTransform_.transform_.translate.y;
 		// 生成の制御
-		if (std::fabsf(player_->velocity_.x) >= 0.1f || std::fabsf(player_->velocity_.z) >= 0.1f) {
+		if (player_->GetSystemFacede()->GetParticleManager()->IsMove()) {
 			UpdataEmitterFlags();
+			emitter_.cMap_->emit = 1;
 		}
 		else {
 			emitter_.cMap_->frequencyTime = 0.0f;
+			emitter_.cMap_->emit = 0;
 		}
+		emitter_.cMap_->translate = player_->worldTransform_.GetWorldPosition();
+		emitter_.cMap_->translate.y = player_->GetFootCollider()->worldTransform_.transform_.translate.y;
 	}
 
 	// バッファーに送るなどの処理

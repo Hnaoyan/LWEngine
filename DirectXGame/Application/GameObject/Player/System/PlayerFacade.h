@@ -21,7 +21,7 @@ public: // アクセッサ
 	// Hp関係
 	PlayerContext::HealthManager* GetHealth() { return &healthManager_; }
 	// パーティクル
-	PlayerContext::ParticleManager* GetParticle() { return &particleManager_; }
+	PlayerContext::ParticleManager* GetParticleManager() { return &particleManager_; }
 	// エネルギー
 	PlayerContext::EnergyManager* GetEnergy() { return &energyManager_; }
 	// UI

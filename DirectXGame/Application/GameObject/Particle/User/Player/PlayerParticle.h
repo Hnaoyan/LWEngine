@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Particle/Emitter/ParticleEmitter.h"
+#include "Engine/3D/Instancing/InstancedUnit.h"
 
 class Player;
 
@@ -13,20 +14,27 @@ namespace PlayerParticle
 		Player* player_ = nullptr;
 	};
 
-	class MoveEffect : public ParticleEmitter
+	class MoveEffect : public ParticleEmitter, public EmitterComponent
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);
 		virtual void Update();
 		virtual void Draw(ICamera* camera);
-	public:
-		void SetPlayer(Player* player) { player_ = player; }
 
 	private:
-		// 追尾用のポインタ
-		Player* player_ = nullptr;
 
 	};
 
+	class BulletEffect : public ParticleEmitter, public EmitterComponent
+	{
+	public:
+		virtual void Initialize(Model* model, uint32_t textureHandle = 0);
+		virtual void Update();
+		virtual void Draw(ICamera* camera);
+
+	private:
+		// 
+		InstancedUnit* instance_ = nullptr;
+	};
 
 }

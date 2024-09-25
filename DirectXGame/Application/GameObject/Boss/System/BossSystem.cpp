@@ -52,7 +52,7 @@ void BossSystemContext::ParticleManager::Update()
 void BossSystemContext::ParticleManager::CreateDamageEmitter()
 {
 
-	damage_.activeFrame = 10.0f;
+	damage_.activeFrame = 3.0f;
 	damage_.isActive = false;
 
 	std::unique_ptr<ParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();

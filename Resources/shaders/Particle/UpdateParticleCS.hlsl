@@ -54,7 +54,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
             if(gParticle[particleIndex].isGravity == 1)
             {
                 float gravity = -3.5f;
-                gParticle[particleIndex].velocity.y += (gravity) * gPerFrame.deltaTime;
+                gParticle[particleIndex].velocity.y += (gravity) * (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
 
             }
             
@@ -66,7 +66,8 @@ void main( uint3 DTid : SV_DispatchThreadID )
             // スケールの棄却処理
             gParticle[particleIndex].scale = ScaleCheck(gParticle[particleIndex].scale);
             // アルファ値の計算
-            float32_t alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+            //float32_t alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+            float32_t alpha = gParticle[particleIndex].color.a - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             gParticle[particleIndex].color.a = saturate(alpha);    
         }
     }    

@@ -10,7 +10,7 @@ void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
 {
 	camera_ = camera;
 	facadeSystem_ = std::make_unique<PlayerFacade>();
-	facadeSystem_->GetParticle()->SetGPUParticleSystem(gpuParticle);
+	facadeSystem_->GetParticleManager()->SetGPUParticleSystem(gpuParticle);
 }
 
 void Player::Initialize(Model* model)

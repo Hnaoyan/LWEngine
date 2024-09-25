@@ -6,6 +6,15 @@ class Boss;
 
 namespace BossParticle
 {
+	class EmitterComponent
+	{
+	public:
+		void SetBoss(Boss* boss) { boss_ = boss; }
+	protected:
+		Boss* boss_ = nullptr;
+	};
+
+
 	/// <summary>
 	/// 弾のエフェクト
 	/// </summary>
@@ -19,29 +28,18 @@ namespace BossParticle
 		void SetBullet(InstancedUnit* bullet) { instance_ = bullet; }
 
 	private:
-		// エミッターのデータ
-		EmitterSphere data_;
-		// 
 		InstancedUnit* instance_ = nullptr;
 
 	};
 	/// <summary>
 	/// ダメージを受けたときのエフェクト
 	/// </summary>
-	class DamageEffect : public ParticleEmitter
+	class DamageEffect : public ParticleEmitter, public EmitterComponent
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);
 		virtual void Update();
 		virtual void Draw(ICamera* camera);
-	public:
-		void SetBoss(Boss* boss) { boss_ = boss; }
-
-	private:
-		// エミッターのデータ
-		EmitterSphere data_;
-		// 
-		Boss* boss_ = nullptr;
 
 	};
 

@@ -5,8 +5,11 @@
 #include "Engine/3D/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
 
+#include <cassert>
+
 void PlayerContext::ParticleManager::Initialize(Player* player)
 {
+	assert(player);
 	player_ = player;
 
 	// 移動のエミッター作成
@@ -15,12 +18,22 @@ void PlayerContext::ParticleManager::Initialize(Player* player)
 
 void PlayerContext::ParticleManager::Update()
 {
+	// 移動パーティクル
+	MoveParticleUpdate();
 
-	if (!std::holds_alternative<IdleState*>(player_->GetVerticalState()->GetNowState())) {
+}
 
+void PlayerContext::ParticleManager::MoveParticleUpdate()
+{
+	// 生成の制御
+	bool moveCheck = std::fabsf(player_->velocity_.x) >= 0.1f || std::fabsf(player_->velocity_.z) >= 0.1f;
+	bool isState = std::holds_alternative<IdleVertical*>(player_->GetVerticalState()->GetNowState());
+	if (moveCheck && isState) {
+		moveParams_.isActive = true;
 	}
-
-
+	else {
+		moveParams_.isActive = false;
+	}
 }
 
 void PlayerContext::ParticleManager::CreateMoveEmitter()

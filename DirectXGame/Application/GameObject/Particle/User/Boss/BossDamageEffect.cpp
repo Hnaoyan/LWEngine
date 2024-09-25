@@ -14,6 +14,7 @@ void BossParticle::DamageEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emitPattern = 3;
 	blendMode_ = BlendMode::kAdd;
 	RefreshData(data_);
+	isBillBoard_ = false;
 }
 
 void BossParticle::DamageEffect::Update()
