@@ -22,7 +22,7 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 	CreateData();
 	// GPUでの初期化
 	GPUInitialize();
-
+	// エミッター
 	emitter_.cMap_->count = 24;
 	emitter_.cMap_->frequency = 0.5f;
 	emitter_.cMap_->frequencyTime = 0.0f;
@@ -30,9 +30,11 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 	emitter_.cMap_->radius = 1.0f;
 	emitter_.cMap_->emit = 0;
 	emitter_.cMap_->emitPattern = 0;
-
+	// ビルボード
+	isBillBoard_ = true;
+	// ブレンドモード
 	blendMode_ = BlendMode::kAlpha;
-
+	// テクスチャ
 	texture_ = TextureManager::GetInstance()->Load("Resources/Effect/effect.png");
 }
 
@@ -43,8 +45,6 @@ void ParticleEmitter::Update()
 	sCommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	sCommandList->SetComputeRootSignature(GraphicsPSO::sParticleGPU_.csRootSignature.Get());
 	sCommandList->SetPipelineState(GraphicsPSO::sParticleGPU_.pipelineStates[static_cast<int>(Pipeline::GPUParticlePipeline::kEmit)].Get());
-
-	BarrierUAV();
 
 #pragma region Emitter更新
 	// パーティクルデータ
@@ -87,7 +87,13 @@ void ParticleEmitter::Draw(ICamera* camera)
 	// ビューの設定
 	perView_.cMap_->viewMatrix = camera->viewMatrix_;
 	perView_.cMap_->projectionMatrix = camera->projectionMatrix_;
-	perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
+	// ビルボード行列
+	if (isBillBoard_) {
+		perView_.cMap_->billBoardMatrix = Matrix4x4::MakeRotateXYZMatrix(camera->transform_.rotate);
+	}
+	else {
+		perView_.cMap_->billBoardMatrix = Matrix4x4::MakeIdentity4x4();
+	}
 
 #pragma region 描画
 	sPipeline_ = std::get<BlendPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kParticle)]);

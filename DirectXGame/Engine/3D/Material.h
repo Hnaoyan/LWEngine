@@ -36,8 +36,12 @@ public:
 	float shininess_ = 100.0f;
 	// 環境マップの係数
 	float coefficient_ = 1.0f;
+	// 
+	Vector3 dissolveColor_ = { 1.0f,1.0f,1.0f };
 	// 閾値
 	float threshold_ = 0.0f;
+	// ディゾルブ用のテクスチャ
+	uint32_t dissolveTexture_ = 0u;
 
 	// UVトランスフォーム
 	EulerTransform uvTransform_ = {

@@ -1,4 +1,22 @@
 ///
+/// Dissolve
+///
+float32_t3 Dissolve(float32_t3 color, float32_t mask)
+{
+    float32_t edge = 1.0f - smoothstep(0.5f, -0.53f, mask);
+    float32_t3 output = edge * color;
+    return output;
+}
+
+void ProcessMask(float32_t mask, float32_t threshold)
+{
+    if (mask <= threshold)
+    {
+        discard;
+    }
+}
+
+///
 /// Luminance
 ///
 float32_t Luminance(float32_t3 color)

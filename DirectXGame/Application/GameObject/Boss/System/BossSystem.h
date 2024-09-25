@@ -5,6 +5,8 @@
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
+#include "BossSystemStructs.h"
+
 #include <memory>
 
 class CollisionManager;
@@ -52,18 +54,29 @@ namespace BossSystemContext
 
 	class ParticleManager {
 	public:
+		// 初期化
 		void Initialize(Boss* boss);
+		// 更新
 		void Update();
+		// オンヒット
+		void OnBulletHit() {
+			damage_.isActive = true;
+			damage_.activeTimer.Start(damage_.activeFrame);
+		}
 
 	public: // アクセッサ
 		void SetGPUParticleSystem(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
-		void OnBulletHit() { isDamage_ = true; }
-		bool IsDamage() { return isDamage_; }
+		bool IsDamage() { return damage_.isActive; }
+	
+	private: // ダメージ
+		// 生成
+		void CreateDamageEmitter();
+		// ダメージ関係のパラメータ
+		DamageParams damage_;
+
 	private: // ポインタ関係
 		GPUParticleSystem* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
-
-		bool isDamage_ = false;
 
 	};
 	

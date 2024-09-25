@@ -28,6 +28,7 @@ namespace Pipeline
 		kMaterial,
 		kTexture,
 		kMapTexture,
+		//kDissolveTexture,
 		kWorldTransform,
 		kViewProjection,
 		kDirectionalLight,

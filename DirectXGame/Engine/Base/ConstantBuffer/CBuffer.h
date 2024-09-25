@@ -56,8 +56,10 @@ struct CBufferDataMaterial {
 	int32_t enableLighting;	// ライティングのswitch
 	float shininess;	// 輝度
 	float coefficient;	// 環境マップの係数
-	float threshold;	// Dissolveの閾値
 
+	// Dissolve用
+	Vector3 dissolveColor;	// エッジの色
+	float dissolveThreshold;	// Dissolveの閾値
 };
 
 // インスタンシング用

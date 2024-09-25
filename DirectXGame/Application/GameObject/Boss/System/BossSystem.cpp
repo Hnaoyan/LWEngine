@@ -31,18 +31,36 @@ void BossSystemContext::ParticleManager::Initialize(Boss* boss)
 {
 	boss_ = boss;
 	SetGPUParticleSystem(boss_->GetGPUParticle());
-	std::unique_ptr<ParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();
-	instance->Initialize(ModelManager::GetModel("ParticleCube"));
-	BossParticle::DamageEffect* damage = static_cast<BossParticle::DamageEffect*>(instance.get());
-	damage->SetBoss(boss);
-	gpuParticle_->CreateEmitter(std::move(instance), "BossDamage");
+	// ダメージのエミッタ作成
+	CreateDamageEmitter();
+
 
 }
 void BossSystemContext::ParticleManager::Update()
 {
-	if (isDamage_) {
-		isDamage_ = false;
+	//if (isDamage_) {
+	//	isDamage_ = false;
+	//}
+
+	damage_.activeTimer.Update();
+	if (damage_.activeTimer.IsEnd()) {
+		damage_.isActive = false;
 	}
+
+}
+
+void BossSystemContext::ParticleManager::CreateDamageEmitter()
+{
+
+	damage_.activeFrame = 10.0f;
+	damage_.isActive = false;
+
+	std::unique_ptr<ParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();
+	instance->Initialize(ModelManager::GetModel("ParticleCube"));
+	BossParticle::DamageEffect* damage = static_cast<BossParticle::DamageEffect*>(instance.get());
+	damage->SetTextureHandle(TextureManager::Load("Resources/default/white2x2.png"));
+	damage->SetBoss(boss_);
+	gpuParticle_->CreateEmitter(std::move(instance), "BossDamage");
 }
 
 #pragma region Cluster

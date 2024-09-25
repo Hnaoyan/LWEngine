@@ -37,15 +37,18 @@ void main( uint3 DTid : SV_DispatchThreadID )
         {
             //---特有の処理---//
             // スケールの拡縮の処理
+            // 2軸
             if (gParticle[particleIndex].isScaleDecrement == 1)
             {
                 gParticle[particleIndex].scale.x -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
-                gParticle[particleIndex].scale.y -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
-            
+                gParticle[particleIndex].scale.y -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);           
             }
+            // 3軸
             else if (gParticle[particleIndex].isScaleDecrement == 2)
             {
-                
+                gParticle[particleIndex].scale.x -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+                gParticle[particleIndex].scale.y -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+                gParticle[particleIndex].scale.z -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             }
             // 重力を速度に計算するか
             if(gParticle[particleIndex].isGravity == 1)
@@ -64,9 +67,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
             gParticle[particleIndex].scale = ScaleCheck(gParticle[particleIndex].scale);
             // アルファ値の計算
             float32_t alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
-            gParticle[particleIndex].color.a = saturate(alpha);
-    
+            gParticle[particleIndex].color.a = saturate(alpha);    
         }
-    }
-    
+    }    
 }

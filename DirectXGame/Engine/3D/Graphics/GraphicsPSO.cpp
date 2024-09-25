@@ -392,6 +392,8 @@ void GraphicsPSO::CreateModelPSO()
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 	D3D12_DESCRIPTOR_RANGE descRangeCubeSRV[1]{};
 	descRangeCubeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 1);
+	D3D12_DESCRIPTOR_RANGE descriptorRangeDissolve[1] = {};
+	descriptorRangeDissolve[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 2);
 
 	// ルートパラメータ
 	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ModelRegister::kCountOfParameter)]{};
@@ -400,6 +402,8 @@ void GraphicsPSO::CreateModelPSO()
 	rootparams[static_cast<int>(ModelRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// 環境マップ
 	rootparams[static_cast<int>(ModelRegister::kMapTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeCubeSRV), descRangeCubeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	//// ディゾルブ
+	//rootparams[static_cast<int>(ModelRegister::kDissolveTexture)] = PSOLib::InitAsDescriptorTable(_countof(descriptorRangeDissolve), descriptorRangeDissolve, D3D12_SHADER_VISIBILITY_PIXEL);
 	// View
 	rootparams[static_cast<int>(ModelRegister::kViewProjection)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
 
@@ -419,6 +423,16 @@ void GraphicsPSO::CreateModelPSO()
 	// スタティックサンプラー
 	D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
 	samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
+	//D3D12_STATIC_SAMPLER_DESC samplerDesc[1] = {};
+	//samplerDesc[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;	// バイリニアフィルタ
+	//samplerDesc[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;	// 0~1の範囲r外をリピート
+	//samplerDesc[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+	//samplerDesc[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	//samplerDesc[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;	// 比較しない
+
+	//samplerDesc[0].MaxLOD = D3D12_FLOAT32_MAX;	// ありったけのMipmapを使う
+	//samplerDesc[0].ShaderRegister = 0;	// レジスタ番号0を使う
+	//samplerDesc[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	// PixelShaderで使う
 
 	// ルートシグネチャの設定
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};

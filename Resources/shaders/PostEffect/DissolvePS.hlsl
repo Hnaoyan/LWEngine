@@ -1,4 +1,5 @@
 #include "FullScreen.hlsli"
+#include "../Utility/PostCalc.hlsli"
 
 Texture2D<float32_t4> gTexture : register(t0);
 Texture2D<float32_t> gMaskTexture : register(t1);
@@ -14,21 +15,16 @@ struct PixelShaderOutput
 PixelShaderOutput main(VertexShaderOutput input)
 {
     PixelShaderOutput output;
-    //float32_t3 edgeColor = { 1.0f, 0.4f, 0.3f };
-    //float32_t threshold = 0.5f;
     
+    // マスクの処理
     float32_t mask = gMaskTexture.Sample(gSampler, input.texcoord);
-    // maskの値が閾値以下はdiscard
-    if (mask <= gDissolve.threshold)
-    {
-        discard;
-    }
+    ProcessMask(mask, gDissolve.threshold);
+    
     // 色描画
     output.color = gTexture.Sample(gSampler, input.texcoord);
     
-    // Edgeっぽさを算出
-    float32_t edge = 1.0f - smoothstep(0.5f, -0.53f, mask);
     // Edgeっぽいほど指定した色を加算
-    output.color.rgb += edge * gDissolve.color;
+    float32_t3 addColor = Dissolve(gDissolve.color, mask);
+    output.color.rgb += addColor;
     return output;
 }

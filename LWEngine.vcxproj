@@ -158,6 +158,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemStructs.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />

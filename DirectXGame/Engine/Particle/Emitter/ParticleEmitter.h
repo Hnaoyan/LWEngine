@@ -22,6 +22,26 @@ public:
 	}
 
 	using BlendMode = Pipeline::BlendMode;
+private: // リソース
+	// データ作成
+	void CreateData();
+	// GPUの初期化
+	void GPUInitialize();
+	// UAV用のバリア張り
+	void BarrierUAV();
+
+	// パーティクルのリソース
+	RWStructuredBufferContext<ParticleCS> particles_;
+	RWStructuredBufferContext<int32_t> freeListIndex_;
+	RWStructuredBufferContext<uint32_t> freeList_;
+protected:
+	// エミッターの種類（今後の変更する可能性あり
+	ConstantBufferMapContext<EmitterSphere> emitter_;
+	// 共通のバッファー
+	ConstantBufferMapContext<PerView> perView_;
+	ConstantBufferMapContext<PerFrame> perFrame_;
+	// エミッターのデータ
+	EmitterSphere data_;
 
 public:
 	/// <summary>
@@ -45,33 +65,22 @@ public:
 	/// </summary>
 	/// <param name="data"></param>
 	void RefreshData(const EmitterSphere& data);
-
-	void UpdataEmitterFlags();
-private:
 	/// <summary>
-	/// データ作成
+	/// エミッターの更新
 	/// </summary>
-	void CreateData();
-	void GPUInitialize();
-	void BarrierUAV();
+	void UpdataEmitterFlags();
 
-	// パーティクルのリソース
-	RWStructuredBufferContext<ParticleCS> particles_;
-	RWStructuredBufferContext<int32_t> freeListIndex_;
-	RWStructuredBufferContext<uint32_t> freeList_;
-
-protected:
-	// エミッターの種類（今後の変更する可能性あり
-	ConstantBufferMapContext<EmitterSphere> emitter_;
-	// 共通のバッファー
-	ConstantBufferMapContext<PerView> perView_;
-	ConstantBufferMapContext<PerFrame> perFrame_;
-
-protected:
+protected: // USER
 	// パーティクルで使うオブジェクト
 	Model* model_ = nullptr;
 	// テクスチャ
 	uint32_t texture_ = 0u;
 	// ブレンドモード
 	BlendMode blendMode_ = BlendMode::kAlpha;
+	// ビルボードの切り替え
+	bool isBillBoard_ = false;
+
+public: // アクセッサ
+	// テクスチャを外部設定
+	void SetTextureHandle(uint32_t texture) { texture_ = texture; }
 };

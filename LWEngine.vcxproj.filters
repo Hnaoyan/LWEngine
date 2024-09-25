@@ -788,6 +788,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemStructs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />

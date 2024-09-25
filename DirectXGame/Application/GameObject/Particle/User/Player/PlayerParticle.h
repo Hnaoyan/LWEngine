@@ -5,6 +5,14 @@ class Player;
 
 namespace PlayerParticle
 {
+	class EmitterComponent
+	{
+	public:
+		void SetPlayer(Player* player) { player_ = player; }
+	protected:
+		Player* player_ = nullptr;
+	};
+
 	class MoveEffect : public ParticleEmitter
 	{
 	public:
@@ -12,13 +20,9 @@ namespace PlayerParticle
 		virtual void Update();
 		virtual void Draw(ICamera* camera);
 	public:
-		void SetPlayer(Player* player) {
-			player_ = player;
-		}
+		void SetPlayer(Player* player) { player_ = player; }
 
 	private:
-		// エミッターのデータ
-		EmitterSphere data_;
 		// 追尾用のポインタ
 		Player* player_ = nullptr;
 

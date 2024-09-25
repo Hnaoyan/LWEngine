@@ -54,6 +54,10 @@ void ModelRenderer::NormalDraw(const ModelDrawDesc& drawDesc)
 	// 環境マップ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
+	//// Dissolve
+	//TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+	//	sCommandList_, static_cast<UINT>(ModelRegister::kDissolveTexture), drawDesc.material->dissolveTexture_);
+
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kMaterial), drawDesc.material->buffer_.cBuffer->GetGPUVirtualAddress());
@@ -108,6 +112,10 @@ void ModelRenderer::NormalDraw(ICamera* camera, const DrawDesc::ModelDesc& model
 	// 環境マップ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
+	//// Dissolve
+	//TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+	//	sCommandList_, static_cast<UINT>(ModelRegister::kDissolveTexture), modelDesc.material->dissolveTexture_);
+
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
 		static_cast<UINT>(ModelRegister::kMaterial), modelDesc.material->buffer_.cBuffer->GetGPUVirtualAddress());

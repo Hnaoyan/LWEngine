@@ -130,12 +130,15 @@ void Model::Draw(const ModelDrawDesc& desc) {
 		TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 			sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
 	}
+	//// Dissolve
+	//TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+	//	sCommandList_, static_cast<UINT>(ModelRegister::kDissolveTexture), material_->dissolveTexture_);
 	// 環境マップ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
 	// マテリアル
 	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(ModelRegister::kMaterial), material_->buffer_.cBuffer->GetGPUVirtualAddress());
+		static_cast<UINT>(ModelRegister::kMaterial), desc.material->buffer_.cBuffer->GetGPUVirtualAddress());
 
 
 	// ライト

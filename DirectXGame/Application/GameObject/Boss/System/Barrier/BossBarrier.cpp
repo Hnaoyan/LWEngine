@@ -20,7 +20,7 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 	material_->CreateMaterial();
 	material_->color_.w = 0.75f;
 	// バリアの生成
-	Create(15);
+	//Create(15);
 }
 
 void BossSystemContext::BarrierManager::Update()

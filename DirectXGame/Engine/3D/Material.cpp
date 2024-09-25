@@ -1,6 +1,7 @@
 #include "Material.h"
 #include "../Base/DirectXCommon.h"
 #include "../Base/Utility/DxCreateLib.h"
+#include "Engine/2D/TextureManager.h"
 #include "imgui.h"
 
 void Material::CreateMaterial()
@@ -18,6 +19,10 @@ void Material::CreateMaterial()
 		{0.0f,0.0f,0.0f},
 	};
 
+	threshold_ = 0.0f;
+	dissolveColor_ = {};
+	dissolveTexture_ = TextureManager::Load("Resources/Dissolve/noise0.png");
+
 	// リソース作成
 	// デバイス
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
@@ -30,7 +35,8 @@ void Material::CreateMaterial()
 	buffer_.cMap_->enableLighting = enableLighting_;
 	buffer_.cMap_->uvTransform = Matrix4x4::MakeIdentity4x4();
 	buffer_.cMap_->shininess = shininess_;
-	buffer_.cMap_->threshold = threshold_;
+	buffer_.cMap_->dissolveColor = { 0.0f,0.0f,0.0f };
+	buffer_.cMap_->dissolveThreshold = threshold_;
 }
 
 void Material::Update()
@@ -41,7 +47,7 @@ void Material::Update()
 	buffer_.cMap_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
 	buffer_.cMap_->shininess = shininess_;
 	buffer_.cMap_->coefficient = 0;
-	buffer_.cMap_->threshold = threshold_;
+	buffer_.cMap_->dissolveThreshold = threshold_;
 }
 
 void Material::ImGuiDraw(const std::string& objName)

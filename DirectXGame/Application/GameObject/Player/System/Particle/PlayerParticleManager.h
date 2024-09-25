@@ -16,6 +16,9 @@ namespace PlayerContext {
 	public: // アクセッサ
 		void SetGPUParticleSystem(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
+	private:
+		void CreateMoveEmitter();
+
 	private: // ポインタ関係
 		GPUParticleSystem* gpuParticle_ = nullptr;
 		Player* player_ = nullptr;

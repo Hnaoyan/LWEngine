@@ -110,6 +110,9 @@ void SampleScene::Initialize()
 	isSceneReady_ = true;
 	//testWTF_.transform_.translate = { 0,-3.5f,7.0f };
 	//testWTF_.transform_.rotate.y = -1.85f;
+
+	cubeMaterial_ = std::make_unique<Material>();
+	cubeMaterial_->CreateMaterial();
 }
 
 void SampleScene::GPUUpdate()
@@ -234,20 +237,20 @@ void SampleScene::Draw()
 	desc.pointLight = pointLight_.get();
 	desc.worldTransform = &testWTF_;
 
-	humans_[0]->Draw(desc);
-	humans_[1]->Draw(desc);
-	humans_[2]->Draw(desc);
+	//humans_[0]->Draw(desc);
+	//humans_[1]->Draw(desc);
+	//humans_[2]->Draw(desc);
 
 	//testGroup1_->Draw(desc);
-	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
-		it != group_.end(); ++it) {
-		//(*it)->Draw(desc);
-	}
+	//for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
+	//	it != group_.end(); ++it) {
+	//	//(*it)->Draw(desc);
+	//}
 
-	//player_->Draw(&camera_);
-	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->Draw(desc);
-	}
+	////player_->Draw(&camera_);
+	//for (int i = 0; i < cubes_.size(); ++i) {
+	//	cubes_[i]->Draw(desc);
+	//}
 	
 	desc.worldTransform = &plane_.worldTransform;
 	//plane_.model->Draw(desc);
@@ -259,7 +262,9 @@ void SampleScene::Draw()
 	textureDesc.pointLight = pointLight_.get();
 	textureDesc.texture = newSpriteData_.uvTexture_;
 	textureDesc.worldTransform = &testWTF_;
-	//cubeModel_->Draw(textureDesc);
+	cubeMaterial_->Update();
+	textureDesc.material = cubeMaterial_.get();
+	cubeModel_->Draw(textureDesc);
 	skybox_->Draw(desc);
 
 	//particles_->Draw(&camera_);
@@ -293,6 +298,7 @@ void SampleScene::UIDraw()
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
+	ImGui::DragFloat("dis", &cubeMaterial_->threshold_, 0.01f);
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
 	ImGui::DragFloat3("PlanePos", &plane_.worldTransform.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("PlaneRot", &plane_.worldTransform.transform_.rotate.x, 0.01f);
@@ -469,7 +475,8 @@ void SampleScene::LoadModel()
 	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
 	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 	//cubeModel_.reset(Model::CreateDefault("terrain"));
-	cubeModel_ = ModelManager::GetModel("DefaultCube");
+	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
+	cubeModel_ = ModelManager::GetModel("BarrierSphere");
 	sphere_.reset(Skydome::CreateSkydome());
 	ModelManager::LoadObjModel("Plane", "plane");
 	ModelManager::LoadObjModel("Axis", "BulletTest");

@@ -93,6 +93,7 @@ private:
 	Vector3 generatePosition_ = {};
 
 	std::unique_ptr<Skydome> sphere_;
+	std::unique_ptr<Material> cubeMaterial_;
 
 	WorldTransform testWTF_;
 
