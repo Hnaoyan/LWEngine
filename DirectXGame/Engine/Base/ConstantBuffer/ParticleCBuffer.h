@@ -32,6 +32,7 @@ struct ParticleCS {
 	Vector4 color;	// 色
 	uint32_t isScaleDecrement;	// スケール変更フラグ
 	uint32_t isGravity;	// 重力フラグ
+	uint32_t alphaDecrement;	// アルファ値の減少タイプ
 };
 
 	struct ParticleGPU {

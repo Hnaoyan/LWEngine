@@ -66,8 +66,16 @@ void main( uint3 DTid : SV_DispatchThreadID )
             // スケールの棄却処理
             gParticle[particleIndex].scale = ScaleCheck(gParticle[particleIndex].scale);
             // アルファ値の計算
-            //float32_t alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
-            float32_t alpha = gParticle[particleIndex].color.a - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+            float32_t alpha = 0.0f;
+            if (gParticle[particleIndex].isAlpha == 1)
+            {
+                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+            }
+            else
+            {
+                alpha = gParticle[particleIndex].color.a - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+            }
+            
             gParticle[particleIndex].color.a = saturate(alpha);    
         }
     }    

@@ -59,7 +59,7 @@ void OparationManager::InputUpdate()
 		EulerTransform transform{};
 		transform.scale = { 1.0f,1.0f,1.0f };
 		transform.translate = player_->worldTransform_.GetWorldPosition();
-		bulletManager_->GetBeginCluster()->AddBullet(transform, velocity);
+		bulletManager_->FindCluster("NormalBullet")->AddBullet(transform, velocity);
 		shotTimer_.Start(30.0f);
 	}
 

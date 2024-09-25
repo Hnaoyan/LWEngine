@@ -34,6 +34,7 @@ Particle PlayerMove(RandomGenerator generator,float32_t3 emitterPosition)
     particle.color.a = 1.0f;
     particle.lifetime = 1.0f;
     particle.currentTime = 0.0f;
+    particle.isAlpha = 1;
     return particle;
 }
 

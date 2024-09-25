@@ -2,6 +2,7 @@
 #include "Engine/3D/Drawer/Model.h"
 #include "BulletCluster.h"
 #include <vector>
+#include <unordered_map>
 
 class BulletManager
 {
@@ -29,17 +30,13 @@ public: // USER
 	/// <summary>
 	/// クラスター作成
 	/// </summary>
-	void AddCluster();
+	void AddCluster(std::string tag);
 public: // アクセッサ
-	//std::vector<std::unique_ptr<InstancedGroup>> GetClusters() { return bulletClusters_; }
-	BulletCluster* GetBeginCluster() {
-		return static_cast<BulletCluster*>((*bulletClusters_.begin()).get());
-	}
+	BulletCluster* FindCluster(std::string tag);
 private:
 	// モデルのリスト
 	std::vector<Model*> models_;
 	Model* model_ = nullptr;
 	// 弾のリスト
-	std::vector<std::unique_ptr<InstancedGroup>> bulletClusters_;
-
+	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>> clusters_;
 };
