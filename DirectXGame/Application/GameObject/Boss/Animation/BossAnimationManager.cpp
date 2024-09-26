@@ -3,6 +3,7 @@
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/3D/ModelManager.h"
 #include "Engine/3D/ModelRenderer.h"
+#include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
 void BossSystemContext::AnimationManager::Initialize(Boss* boss)
@@ -12,7 +13,7 @@ void BossSystemContext::AnimationManager::Initialize(Boss* boss)
 	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
 	CreateHierarchy("Head", "BossEnemy", { scale,{0.0f,0.0f,0.0f},{0.0f,scale.x,0.0f}});
 	CreateHierarchy("Bottom", "BossEnemy", { scale,{3.14f,0.0f,0.0f},{0.0f,-scale.x,0.0f}});
-
+	CreateHierarchy("Core", "BarrierSphere", { scale / 1.5f,{},{} }, TextureManager::Load("Resources/Dissolve/noise0.png"));
 	AnimationExecute(AnimType::kClose);
 }
 
@@ -40,6 +41,7 @@ void BossSystemContext::AnimationManager::Draw(ICamera* camera, DrawDesc::LightD
 	for (std::unordered_map<std::string, Hierarchy>::iterator it = hierarchys_.begin(); it != hierarchys_.end(); ++it) {
 		modelDesc.SetDesc((*it).second.model);
 		modelDesc.worldTransform = &(*it).second.worldTransform;
+		modelDesc.texture = (*it).second.texture;
 		ModelRenderer::NormalDraw(camera, modelDesc, lightDesc);
 	}
 }
@@ -61,6 +63,7 @@ void BossSystemContext::AnimationManager::AnimationExecute(AnimType type)
 	default:
 		break;
 	}
+	animType_ = type;
 
 }
 
@@ -85,6 +88,7 @@ void BossSystemContext::AnimationManager::AnimationExecute(AnimType type, float 
 
 	animTimer_.Start(easeFrame);
 	animState_ = AnimState::kRun;
+	animType_ = type;
 }
 
 void BossSystemContext::AnimationManager::CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform)
@@ -94,5 +98,17 @@ void BossSystemContext::AnimationManager::CreateHierarchy(std::string hierarchyN
 	instance.worldTransform.Initialize();
 	instance.worldTransform.parent_ = &boss_->worldTransform_;
 	instance.worldTransform.transform_ = transform;
+	instance.texture = instance.model->GetModelData()->material.textureHandle;
+	hierarchys_.emplace(hierarchyName, instance);
+}
+
+void BossSystemContext::AnimationManager::CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform, uint32_t texture)
+{
+	Hierarchy instance{};
+	instance.model = ModelManager::GetModel(modelTag);
+	instance.worldTransform.Initialize();
+	instance.worldTransform.parent_ = &boss_->worldTransform_;
+	instance.worldTransform.transform_ = transform;
+	instance.texture = texture;
 	hierarchys_.emplace(hierarchyName, instance);
 }

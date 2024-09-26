@@ -16,6 +16,8 @@ namespace BossSystemContext
 		{
 			// モデル
 			Model* model = nullptr;
+			// テクスチャ
+			uint32_t texture = 0u;
 			// 座標などの情報
 			WorldTransform worldTransform;
 			// イージングの始点終点
@@ -44,6 +46,7 @@ namespace BossSystemContext
 		void AnimationExecute(AnimType type, float easeFrame);
 	private:
 		void CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform);
+		void CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform, uint32_t texture);
 		//void OpenAnim();
 		//void CloseAnim();
 	private:
@@ -55,5 +58,7 @@ namespace BossSystemContext
 		FrameTimer animTimer_;
 		// アニメーション中か
 		AnimState animState_;
+		// どのアニメーション状態か
+		AnimType animType_;
 	};
 }
