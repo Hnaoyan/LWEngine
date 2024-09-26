@@ -47,6 +47,7 @@ void Material::Update()
 	buffer_.cMap_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
 	buffer_.cMap_->shininess = shininess_;
 	buffer_.cMap_->coefficient = 0;
+	buffer_.cMap_->dissolveColor = dissolveColor_;
 	buffer_.cMap_->dissolveThreshold = threshold_;
 }
 

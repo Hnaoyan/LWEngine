@@ -298,6 +298,8 @@ void SampleScene::UIDraw()
 void SampleScene::ImGuiDraw()
 {
 	ImGui::Begin("SampleScene");
+	ImGui::ColorEdit3("DisColor", &cubeMaterial_->dissolveColor_.x);
+	ImGui::DragFloat3("DisColor", &cubeMaterial_->dissolveColor_.x, 0.01f);
 	ImGui::DragFloat("dis", &cubeMaterial_->threshold_, 0.01f);
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
 	ImGui::DragFloat3("PlanePos", &plane_.worldTransform.transform_.translate.x, 0.01f);
@@ -476,7 +478,7 @@ void SampleScene::LoadModel()
 	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
 	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
-	cubeModel_ = ModelManager::GetModel("BarrierSphere");
+	cubeModel_ = ModelManager::GetModel("DefaultCube");
 	sphere_.reset(Skydome::CreateSkydome());
 	ModelManager::LoadObjModel("Plane", "plane");
 	ModelManager::LoadObjModel("Axis", "BulletTest");
@@ -486,7 +488,7 @@ void SampleScene::LoadModel()
 
 void SampleScene::LoadTexture()
 {
-	newSpriteData_.uvTexture_ = TextureManager::Load("Resources/default/white2x2.png");
+	newSpriteData_.uvTexture_ = TextureManager::Load("Resources/default/uvChecker.png");
 	newSprite_.reset(Sprite::Create(newSpriteData_.uvTexture_, { 300.0f,0.0f }, { 0,0 }));
 }
 

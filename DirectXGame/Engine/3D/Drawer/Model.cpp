@@ -130,9 +130,9 @@ void Model::Draw(const ModelDrawDesc& desc) {
 		TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 			sCommandList_, static_cast<UINT>(ModelRegister::kTexture), modelData_.material.textureHandle);
 	}
-	//// Dissolve
-	//TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-	//	sCommandList_, static_cast<UINT>(ModelRegister::kDissolveTexture), material_->dissolveTexture_);
+	// Dissolve
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(ModelRegister::kDissolveTexture), material_->dissolveTexture_);
 	// 環境マップ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
 		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);

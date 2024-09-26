@@ -10,7 +10,7 @@ float32_t3 Dissolve(float32_t3 color, float32_t mask)
 
 void ProcessMask(float32_t mask, float32_t threshold)
 {
-    if (mask <= threshold)
+    if (mask < threshold)
     {
         discard;
     }

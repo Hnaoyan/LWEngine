@@ -18,7 +18,6 @@ struct Material
     int32_t enableLighting;
     float32_t shininess;
     float32_t coefficient;
-    
     float32_t3 dissolveColor;
     float32_t dissolveThreshold;
 };

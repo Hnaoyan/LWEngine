@@ -146,7 +146,7 @@ void Player::ImGuiDraw()
 		}
 		if (ImGui::BeginTabItem("Material")) {
 			ImGui::DragFloat("MaterialShininess", &material_->shininess_, 0.01f);
-
+			ImGui::DragFloat("Threshold", &material_->threshold_, 0.01f, 0.0f, 1.0f);
 			ImGui::EndTabItem();
 		}
 
