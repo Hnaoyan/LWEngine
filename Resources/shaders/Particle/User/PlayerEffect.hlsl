@@ -46,9 +46,10 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
     particle.scale = generator.GenerateRange3D(min, max);
     particle.translate = emitterPosition;
     particle.color.rgb = float32_t3(1.0f, 1.0f, 1.0f);
-    particle.color.a = 1.0f;
-    particle.lifetime = 0.5f;
+    particle.color.a = 0.85f;
+    particle.lifetime = 1.5f;
     particle.currentTime = 0.0f;
+    particle.isAlpha = 1;
     return particle;
 }
 

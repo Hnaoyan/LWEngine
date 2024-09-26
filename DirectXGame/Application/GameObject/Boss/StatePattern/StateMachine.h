@@ -24,6 +24,10 @@ namespace BossState {
 	class SystemDownState;
 }
 
+namespace BossSystemContext {
+	class BulletCluster;
+}
+
 /// <summary>
 /// ボスのステート関係
 /// </summary>
@@ -182,6 +186,8 @@ namespace BossState
 		Vector3 bulletDirect_ = {};
 		float bulletSpeed_ = 0.0f;
 		float bulletScale_ = 0.5f;
+
+		BossSystemContext::BulletCluster* cluster_ = nullptr;
 	};
 
 	// 通常射撃状態

@@ -34,9 +34,27 @@ namespace LwLib
 	inline static Vector2 GetRandomValue(const Vector2& min, const Vector2& max) {
 		return Vector2(GetRandomValue(min.x, max.x), GetRandomValue(min.y, max.y));
 	}
-
 	inline static Vector3 GetRandomValue(const Vector3& min, const Vector3& max) {
 		return Vector3(GetRandomValue(min.x, max.x), GetRandomValue(min.y, max.y), GetRandomValue(min.z, max.z));
+	}
+
+	inline static float GetRandomValue(float min, float max, float limit) {
+		CreateRandomEngine();
+		std::uniform_real_distribution<float> distribution(min, max);
+		float value = distribution(sRandomEngine);
+		if (value >= 0) {
+			value = std::clamp(value, limit, max);
+		}
+		else {
+			value = std::clamp(value, -max, -limit);
+		}
+		return value;
+	}
+	inline static Vector2 GetRandomValue(const Vector2& min, const Vector2& max, float limit) {
+		return Vector2(GetRandomValue(min.x, max.x, limit), GetRandomValue(min.y, max.y, limit));
+	}
+	inline static Vector3 GetRandomValue(const Vector3& min, const Vector3& max, float limit) {
+		return Vector3(GetRandomValue(min.x, max.x, limit), GetRandomValue(min.y, max.y, limit), GetRandomValue(min.z, max.z, limit));
 	}
 #pragma endregion
 
