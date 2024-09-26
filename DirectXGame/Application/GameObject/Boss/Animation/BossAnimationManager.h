@@ -60,5 +60,9 @@ namespace BossSystemContext
 		AnimState animState_;
 		// どのアニメーション状態か
 		AnimType animType_;
+	public:
+		bool IsOpen() {
+			return animType_ == AnimType::kOpen && !animTimer_.IsActive();
+		}
 	};
 }

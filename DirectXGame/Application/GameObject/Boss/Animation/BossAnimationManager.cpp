@@ -4,6 +4,7 @@
 #include "Engine/3D/ModelManager.h"
 #include "Engine/3D/ModelRenderer.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/LwLib/DeltaTime.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
 void BossSystemContext::AnimationManager::Initialize(Boss* boss)
@@ -30,7 +31,9 @@ void BossSystemContext::AnimationManager::Update()
 		if (animState_ == AnimState::kRun) {
 			(*it).second.worldTransform.transform_.translate = Ease::Easing((*it).second.easePoint.first, (*it).second.easePoint.second, animTimer_.GetElapsedFrame());
 		}
-
+		if ((*it).first == "Core" && IsOpen()) {
+			(*it).second.worldTransform.transform_.rotate.y += 1.0f * kDeltaTime;
+		}
 		(*it).second.worldTransform.UpdateMatrix();
 	}
 }

@@ -175,18 +175,22 @@ void Boss::OnCollision(ColliderObject target)
 		}
 		// 本体との衝突処理
 		else {
+			float damageRatio = 1.0f;
+			if (animationManager_->IsOpen()) {
+				damageRatio *= 2.5f;
+			}
 			// 距離に応じて
 			if (distance >= 150.0f) {
-				systemManager_->healthManager_.TakeDamage(1.0f * 0.25f);
+				systemManager_->healthManager_.TakeDamage(damageRatio * 0.25f);
 			}
 			if (distance >= 100.0f) {
-				systemManager_->healthManager_.TakeDamage(1.0f * 0.4f);
+				systemManager_->healthManager_.TakeDamage(damageRatio * 0.4f);
 			}
 			else if (distance >= 75.0f) {
-				systemManager_->healthManager_.TakeDamage(1.0f * 0.5f);
+				systemManager_->healthManager_.TakeDamage(damageRatio * 0.5f);
 			}
 			else {
-				systemManager_->healthManager_.TakeDamage(1.0f);
+				systemManager_->healthManager_.TakeDamage(damageRatio);
 			}
 
 			// オンヒットエフェクト
