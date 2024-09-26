@@ -131,11 +131,11 @@ void DirectXCommon::RenderPostDraw()
 void DirectXCommon::Finalize()
 {
 	// フェンスで終了の確認
+	DirectXCommand::ExecuteCommandList(DirectXCommand::sCommandLoadList_.Get());
 	DirectXCommand::WaitForFenceComplete();
 	// コマンドリストのリセット
 	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandList_.Get());
-	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandLoadList_.Get());
-	//DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandGPUList_.Get());
+	DirectXCommand::ResetCloseCommandList(DirectXCommand::sCommandLoadList_.Get(),DirectXCommand::sCommandLoadAllocator_.Get());
 }
 
 void DirectXCommon::InitializeFixFPS()
