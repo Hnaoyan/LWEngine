@@ -48,11 +48,7 @@ void OparationManager::InputUpdate()
 	// 射撃入力
 	if (GameSystem::sPlayerKey.keyConfigs_.shot && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
-
-		EulerTransform transform{};
-		transform.scale = { 1.0f,1.0f,1.0f };
-		transform.translate = player_->worldTransform_.GetWorldPosition();
-		bulletManager_->FindCluster("NormalBullet")->AddBullet(transform, velocity * 60.0f);
+		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(30.0f);
 	}
 

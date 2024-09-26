@@ -28,10 +28,7 @@ public: // アクセッサ
 	PlayerContext::UIManager* GetUI() { return &uiManager_; }
 	// Animation
 	PlayerContext::AnimationManager* GetAnimation() { return &animationManager_; }
-	//// Aim
-	//PlayerContext::AimManager* GetAim() { return &aimManager_; }
-	//// LockOn
-	//PlayerContext::LockOn* GetLockOn() { return &lockOn_; }
+	PlayerContext::ShootingManager* GetShootingManager() { return &shootingManager_; }
 #pragma endregion
 
 private:
@@ -45,6 +42,8 @@ private:
 	PlayerContext::UIManager uiManager_;
 	// Animation
 	PlayerContext::AnimationManager animationManager_;
+	// 射撃関係のマネージャー
+	PlayerContext::ShootingManager shootingManager_;
 	//// Aim
 	//PlayerContext::AimManager aimManager_;
 	//// LockOn

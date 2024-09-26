@@ -25,7 +25,6 @@ private:
 	void InputUpdate();
 
 public:
-	void SetManager(BulletManager* manager) { bulletManager_ = manager; }
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
 	PlayerContext::AimManager* GetAimManager() { return &aimManager_; }
 	PlayerContext::LockOn* GetLockOn() { return &lockOn_; }
@@ -34,8 +33,6 @@ private: // POINTER
 	Player* player_ = nullptr;
 	// 入力クラス
 	Input* input_ = nullptr;
-	// 弾の管理クラス
-	BulletManager* bulletManager_ = nullptr;
 
 private: // USER
 	bool isDash_ = false;

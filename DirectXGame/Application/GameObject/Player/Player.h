@@ -80,8 +80,8 @@ public: // セッター
 	Vector3 GetVelocity() { return velocity_; }
 	// ポインタ関係
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
+		facadeSystem_->GetShootingManager()->SetManager(manager);
 		systemManager_.GetLockOn()->SetBoss(boss); 
-		systemManager_.SetManager(manager);
 		systemManager_.SetEnemyList(lists);
 	}
 	void SetBoss(Boss* boss) { systemManager_.GetLockOn()->SetBoss(boss); }

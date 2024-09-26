@@ -7,6 +7,8 @@ void PlayerFacade::Initialize(Player* player)
 	energyManager_.Initialize(player);
 	uiManager_.Initialize(player);
 	animationManager_.Initialize(player);
+	// 射撃の管理
+	shootingManager_.Initialize(player);
 }
 
 void PlayerFacade::Update()
@@ -18,4 +20,5 @@ void PlayerFacade::Update()
 	uiManager_;
 	animationManager_.Update();
 
+	shootingManager_.Update();
 }
