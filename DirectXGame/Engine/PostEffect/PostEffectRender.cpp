@@ -13,7 +13,7 @@ void PostEffectRender::StaticInitialize()
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 
 	// テクスチャ
-	sDissolveTexture = TextureManager::Load("Resources/Dissolve/noise1.png");
+	sDissolveTexture = TextureManager::Load("Resources/Dissolve/noise0.png");
 
 	// リソース作成
 	vignette_.CreateConstantBuffer(device);

@@ -23,7 +23,7 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 	material_->CreateMaterial();
 	material_->color_.w = 0.75f;
 	// バリアの生成
-	Create(5);
+	Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }
 
 void BossSystemContext::BarrierManager::Update()
@@ -32,7 +32,7 @@ void BossSystemContext::BarrierManager::Update()
 	recoveryTime_.Update();
 	// 生成
 	if (recoveryTime_.IsEnd()) {
-		Create(5);
+		Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 	}
 
 	// アニメーションの処理

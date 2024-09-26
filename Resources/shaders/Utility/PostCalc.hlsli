@@ -1,9 +1,9 @@
 ///
 /// Dissolve
 ///
-float32_t3 Dissolve(float32_t3 color, float32_t mask)
+float32_t3 Dissolve(float32_t3 color, float32_t threshold, float32_t mask)
 {
-    float32_t edge = 1.0f - smoothstep(0.5f, -0.53f, mask);
+    float32_t edge = 1.0f - smoothstep(threshold, threshold + 0.03f, mask);
     float32_t3 output = edge * color;
     return output;
 }

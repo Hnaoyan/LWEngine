@@ -216,6 +216,9 @@ void Boss::GlobalValueInitialize()
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "NormalScale", worldTransform_.transform_.scale);
 	instance->AddValue(groupName, "BarrierScale", worldTransform_.transform_.scale * 2.0f);
+	instance->AddValue(groupName, "BarrierHP", 4.0f);
+	instance->AddValue(groupName, "BarrierVanishFrame", 45.0f);
+	instance->AddValue(groupName, "BarrierReappearFrame", 30.0f);
 
 	//---通常弾---//
 	groupName = "BossNormalBullet";

@@ -24,7 +24,7 @@ PixelShaderOutput main(VertexShaderOutput input)
     output.color = gTexture.Sample(gSampler, input.texcoord);
     
     // Edgeっぽいほど指定した色を加算
-    float32_t3 addColor = Dissolve(gDissolve.color, mask);
+    float32_t3 addColor = Dissolve(gDissolve.color, gDissolve.threshold, mask);
     output.color.rgb += addColor;
     return output;
 }

@@ -1,10 +1,13 @@
 {
     "Boss": {
+        "BarrierHP": 4.0,
+        "BarrierReappearFrame": 30.0,
         "BarrierScale": [
             18.0,
             18.0,
             18.0
         ],
+        "BarrierVanishFrame": 45.0,
         "NormalScale": [
             6.0,
             6.0,

@@ -121,7 +121,7 @@ PixelShaderOutput main(VSOutput input)
     ProcessMask(mask, gMaterial.dissolveThreshold);
 
     // Edgeっぽいほど指定した色を加算
-    float32_t3 addColor = Dissolve(gMaterial.dissolveColor, mask);
+    float32_t3 addColor = Dissolve(gMaterial.dissolveColor, gMaterial.dissolveThreshold, mask);
     textureColor.rgb += addColor;
     
     //output.color.rgb += addColor;
