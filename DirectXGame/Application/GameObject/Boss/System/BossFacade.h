@@ -8,6 +8,7 @@ class BossFacade
 public:
 	void Initialize(Boss* boss);
 	void Update();
+	void ImGuiDraw();
 
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;

@@ -144,6 +144,7 @@ void Boss::ImGuiDraw()
 		ImGui::EndTabBar();
 	}
 
+	systemManager_->ImGuiDraw();
 
 	ImGui::End();
 

@@ -17,6 +17,6 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	EulerTransform transform{};
 	transform.scale = { 1.0f,1.0f,1.0f };
 	transform.translate = player_->worldTransform_.GetWorldPosition();
-	float speed = 60.0f;
+	float speed = 300.0f;
 	bulletManager_->FindCluster("NormalBullet")->AddBullet(transform, direct * speed);
 }

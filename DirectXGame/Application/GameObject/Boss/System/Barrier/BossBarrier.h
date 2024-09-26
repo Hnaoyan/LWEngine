@@ -10,6 +10,20 @@ namespace BossSystemContext
 {
 	class BarrierManager
 	{
+	private:
+		// データ用
+		struct Parameter {
+			float currentHP = 0;
+			float maxHP = 0;
+			bool isActive = false;
+			bool isShattered = false;
+		};
+		// アニメーション用
+		struct AnimParameter {
+			FrameTimer vanishTimer;	 // 破壊演出用タイマー
+			FrameTimer reappearTimer; // 修復演出用タイマー
+		};
+
 	public:
 		// 初期化
 		void Initialize(Boss* boss);
@@ -17,6 +31,9 @@ namespace BossSystemContext
 		void Update();
 		// 描画
 		void Draw(ICamera* camera, const DrawDesc::LightDesc& lightDesc);
+		// ImGui
+		void ImGuiDraw();
+	public:
 		// 生成
 		void Create(float generateValue);
 		// ダメージ
@@ -24,19 +41,11 @@ namespace BossSystemContext
 		// 壊れる
 		void BarrierBreak();
 		
-	public: // アクセッサ
-		bool IsActive() { return param.isActive; }
-		bool IsShattered() { return param.isShattered; }
-		void SetIsShattered(bool isShatter) { param.isShattered = isShatter; }
 	private:
-		struct Parameter {
-			float currentHP = 0;
-			float maxHP = 0;
-			bool isActive = false;
-			bool isShattered = false;
-		};
-
+		//
 		Parameter param{};
+		//
+		AnimParameter animParam{};
 		// 復活するまでの時間
 		FrameTimer recoveryTime_;
 	private: // ポインタなどのオブジェクトとしての情報
@@ -45,6 +54,11 @@ namespace BossSystemContext
 		uint32_t textureHandle_ = 0u;
 		Model* model_ = nullptr;
 		std::unique_ptr<Material> material_;
+
+	public: // アクセッサ
+		bool IsActive() { return param.isActive; }
+		bool IsShattered() { return param.isShattered; }
+		void SetIsShattered(bool isShatter) { param.isShattered = isShatter; }
 
 	};
 }
