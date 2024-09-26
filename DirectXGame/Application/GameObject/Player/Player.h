@@ -101,4 +101,6 @@ public:
 	bool isGround_ = false;
 	// 
 	FrameTimer quickBoostCoolTime_;
+
+	bool isKnock_ = false;
 };

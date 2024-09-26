@@ -121,8 +121,12 @@ void ModelRenderer::NormalDraw(ICamera* camera, const DrawDesc::ModelDesc& model
 		static_cast<UINT>(ModelRegister::kMaterial), modelDesc.material->buffer_.cBuffer->GetGPUVirtualAddress());
 
 	// ライト
-	DrawDesc::LightDesc& nonConstLightDesc = const_cast<DrawDesc::LightDesc&>(lightDesc);
-	nonConstLightDesc.Draw(sCommandList_);
+	// 平行光源
+	lightDesc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::ModelRegister::kDirectionalLight));
+	// 方向光源
+	lightDesc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::ModelRegister::kSpotLight));
+	// 点光源
+	lightDesc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::ModelRegister::kPointLight));
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelDesc.modelData->indices.size()), 1, 0, 0, 0);
@@ -277,8 +281,12 @@ void ModelRenderer::InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& mo
 	sCommandList_->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::InstancedUnitRegister::kWorldTransform), handle);
 
 	// ライト
-	DrawDesc::LightDesc& nonConstLightDesc = const_cast<DrawDesc::LightDesc&>(lightDesc);
-	nonConstLightDesc.Draw(sCommandList_);
+	// 平行光源
+	lightDesc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kDirectionalLight));
+	// 方向光源
+	lightDesc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kSpotLight));
+	// 点光源
+	lightDesc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kPointLight));
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelDesc.modelData->indices.size()), instanceNum, 0, 0, 0);

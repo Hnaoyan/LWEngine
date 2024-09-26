@@ -5,6 +5,7 @@
 
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelRenderer.h"
+#include "Engine/LwLib/Ease/Ease.h"
 
 void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
 {
@@ -52,13 +53,19 @@ void Player::Update()
 	quickBoostCoolTime_.Update();
 
 	// それぞれのステート
-	if (currentStates_.first) {
-		currentStates_.first->InputHandle();
-		currentStates_.first->Update();
+	if (isKnock_) {
+		velocity_ = Ease::Easing(velocity_, Vector3(0.0f, 0.0f, 0.0f), 0.1f);
+		//worldTransform_.transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	}
-	if (currentStates_.second) {
-		currentStates_.second->InputHandle();
-		currentStates_.second->Update();
+	else {
+		if (currentStates_.first) {
+			currentStates_.first->InputHandle();
+			currentStates_.first->Update();
+		}
+		if (currentStates_.second) {
+			currentStates_.second->InputHandle();
+			currentStates_.second->Update();
+		}
 	}
 
 	// 基底クラスの更新
@@ -104,6 +111,16 @@ void Player::ImGuiDraw()
 	collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 
+	if (ImGui::Button("KnockBack")) {
+		isKnock_ = true;
+		Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
+		direct = Vector3::Normalize(direct);
+		direct *= 10.0f;
+		velocity_ = { direct.x,0.0f,direct.z };
+	}
+	if (ImGui::Button("KnockReset")) {
+		isKnock_ = false;
+	}
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{

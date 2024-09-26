@@ -14,9 +14,9 @@ void DrawDesc::LightDesc::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	assert(cmdList);
 	// 平行光源
-	directionalLight->Draw(cmdList, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kDirectionalLight));
+	directionalLight->Draw(cmdList, static_cast<uint32_t>(Pipeline::ModelRegister::kDirectionalLight));
 	// 方向光源
-	spotLight->Draw(cmdList, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kSpotLight));
+	spotLight->Draw(cmdList, static_cast<uint32_t>(Pipeline::ModelRegister::kSpotLight));
 	// 点光源
-	pointLight->Draw(cmdList, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kPointLight));
+	pointLight->Draw(cmdList, static_cast<uint32_t>(Pipeline::ModelRegister::kPointLight));
 }
