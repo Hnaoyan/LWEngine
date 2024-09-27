@@ -1,6 +1,8 @@
 #include "GameSystem.h"
 #include "Engine/Input/Input.h"
 #include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/Ease/Ease.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 float GameSystem::sSpeedFactor = 1.0f;
 GameSystem::PlayerKeyConfig GameSystem::sPlayerKey;
@@ -20,6 +22,9 @@ void GameSystem::Initialize()
     // バインドの設定
     KeyBindUpdate();
     bloomData_ = { 0.75f,1.5f };
+    // bura-
+    sBlurEffect.data.centerPoint = { 0.5f,0.5f };
+    sBlurEffect.data.samplesNum = 4;
 }
 
 void GameSystem::KeyBindUpdate()
@@ -51,10 +56,15 @@ void GameSystem::Update()
     // 入力の更新
     KeyConfigUpdate();
 
+    if (sBlurEffect.isActive) {
+        sBlurEffect.timer.Update();
+        sBlurEffect.data.blurWidth = Ease::Easing(sBlurEffect.maxWidth, 0.0f, sBlurEffect.timer.GetElapsedFrame());
+    }
+
     PostEffectRender::PostEffectDesc desc{};
     desc.blur = sBlurEffect.data;
     PostEffectRender::GetInstance()->bloom_.cMap_->threshold = bloomData_.threshold;
     PostEffectRender::GetInstance()->bloom_.cMap_->sigma = bloomData_.sigma;
-    //PostEffectRender::GetInstance()->Update(desc);
+    PostEffectRender::GetInstance()->Update(desc);
 
 }

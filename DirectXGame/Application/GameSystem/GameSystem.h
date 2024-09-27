@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include "Engine/PostEffect/PostEffectRender.h"
+#include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class Input;
 
@@ -37,12 +38,18 @@ private:
 	{
 		// ブラーの詳細情報
 		CBufferDataBlur data;
-
+		bool isActive = false;
+		float maxWidth = 0.03f;
+		FrameTimer timer;
 		void Initialize() {
 			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+			data.blurWidth = maxWidth;
+			timer.Start(35.0f);
+			isActive = true;
 		}
 		void Finalize() {
 			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+			isActive = false;
 		}
 	};
 

@@ -30,7 +30,8 @@ void PlayerParticle::MoveEffect::Update()
 			emitter_.cMap_->emit = 0;
 		}
 		emitter_.cMap_->translate = player_->worldTransform_.GetWorldPosition();
-		emitter_.cMap_->translate.y = player_->GetFootCollider()->worldTransform_.transform_.translate.y;
+		float offset = -0.75f;
+		emitter_.cMap_->translate.y = player_->GetFootCollider()->worldTransform_.transform_.translate.y + offset;
 	}
 
 	// バッファーに送るなどの処理

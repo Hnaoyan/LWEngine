@@ -171,15 +171,15 @@ namespace LwLib
 	// currrent:現在
 	// end:終了
 	// decay:減衰値
-	float ExponentialInterpolate(const float& current, const float& end, float decay, float deltaTime) {
+	inline static float ExponentialInterpolate(const float& current, const float& end, float decay, float deltaTime) {
 		float factor = 1.0f - std::exp(-decay * deltaTime);
 		return current + (end - current) * factor;
 	}
-	Vector2 ExponentialInterpolate(const Vector2& current, const Vector2& end, float decay, float deltaTime) {
+	inline static Vector2 ExponentialInterpolate(const Vector2& current, const Vector2& end, float decay, float deltaTime) {
 		float factor = 1.0f - std::exp(-decay * deltaTime);
 		return current + (end - current) * factor;
 	}
-	Vector3 ExponentialInterpolate(const Vector3& current, const Vector3& end, float decay, float deltaTime) {
+	inline static Vector3 ExponentialInterpolate(const Vector3& current, const Vector3& end, float decay, float deltaTime) {
 		float factor = 1.0f - std::exp(-decay * deltaTime);
 		return current + (end - current) * factor;
 	}

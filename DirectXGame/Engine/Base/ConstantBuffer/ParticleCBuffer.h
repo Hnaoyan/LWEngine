@@ -10,7 +10,7 @@ struct EmitterSphere {
 	Vector3 translate;	// 位置
 	// 射出関係
 	float radius;		// 半径
-	uint32_t count;		// 数
+	uint32_t count;		// 生成数
 	float frequency;	// 間隔
 	float frequencyTime; // 間隔時間
 	uint32_t emit;	// 許可フラグ

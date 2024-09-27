@@ -89,6 +89,9 @@ void Boss::ImGuiDraw()
 {
 	
 	ImGui::Begin("Boss");
+	if (ImGui::Button("MissileState")) {
+		stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
+	}
 	ImGui::Checkbox("IsAction", &isAction_);
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
