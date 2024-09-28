@@ -49,6 +49,8 @@ void Player::Update()
 	facadeSystem_->Update();
 
 	// 
+	stateManager_.Update();
+	//
 	systemManager_.Update();
 	quickBoostCoolTime_.Update();
 

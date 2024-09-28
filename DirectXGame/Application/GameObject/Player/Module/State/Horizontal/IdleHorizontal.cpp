@@ -12,7 +12,7 @@ void IdleHorizontal::Update()
 	//player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
 
 	if (isLeftStickActive_) {
-		stateManager_->ChangeRequest(StateManager::kMove, StateManager::kHorizontal);
+		stateManager_->ChangeRequest(StateManager::kMove);
 		return;
 	}
 }

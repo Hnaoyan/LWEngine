@@ -36,7 +36,7 @@ void MovingState::Update()
 	}
 
 	if (!isLeftStickActive_) {
-		stateManager_->ChangeRequest(StateManager::kIdleHorizontal, StateManager::kHorizontal);
+		stateManager_->ChangeRequest(StateManager::kIdleHorizontal);
 		return;
 	}
 }

@@ -7,13 +7,52 @@ void StateManager::Initialize(Player* player)
 	assert(player);
 	player_ = player;
 
-	ChangeRequest(kIdleHorizontal, kHorizontal);
-	ChangeRequest(kIdleVertical, kVertical);
+	ChangeRequest(kIdleHorizontal);
+	ChangeRequest(kIdleVertical);
 
 }
 
-void StateManager::ChangeRequest(StateList request, StateType type)
+void StateManager::Update()
 {
+
+	if (request_) {
+
+		std::unique_ptr<IPlayerState> newState = std::move(tmpState_);
+		
+		bool isVertical = false;
+		bool isHorizontal = false;
+
+		isVertical = (request_.value() == kIdleVertical) || (request_.value() == kAssending) ||
+			(request_.value() == kFall) || (request_.value() == kJump);
+		isHorizontal = (request_.value() == kIdleHorizontal) || (request_.value() == kMove) ||
+			(request_.value() == kQuickBoost) || (request_.value() == kBoost);
+		if (isVertical) {
+			if (player_->GetVerticalState()) {
+				player_->GetVerticalState()->Exit();
+			}
+			newState->PreInitialize(player_);
+			newState->Initialize();
+			player_->SetVerticalState(std::move(newState));
+		}
+		else if (isHorizontal) {
+			if (player_->GetHorizontalState()) {
+				player_->GetHorizontalState()->Exit();
+			}
+			newState->PreInitialize(player_);
+			newState->Initialize();
+			player_->SetHorizontalState(std::move(newState));
+		}
+
+		request_ = std::nullopt;
+	}
+
+}
+
+void StateManager::ChangeRequest(StateList request)
+{
+
+	request_ = request;
+
 	std::unique_ptr<IPlayerState> newState;
 	switch (request)
 	{
@@ -46,30 +85,23 @@ void StateManager::ChangeRequest(StateList request, StateType type)
 		break;
 	}
 
-	switch (type)
-	{
-	case StateManager::kVertical:
-		if (player_->GetVerticalState()) {
-			player_->GetVerticalState()->Exit();
-		}
-		newState->PreInitialize(player_);
-		newState->Initialize();
-		player_->SetVerticalState(std::move(newState));
-		break;
-	case StateManager::kHorizontal:
-		if (player_->GetHorizontalState()) {
-			player_->GetHorizontalState()->Exit();
-		}
-		newState->PreInitialize(player_);
-		newState->Initialize();
-		player_->SetHorizontalState(std::move(newState));
-		break;
-	}
-	//if (player_->GetState()) {
-	//	player_->GetState()->Exit();
+	//switch (type)
+	//{
+	//case StateManager::kVertical:
+	//	if (player_->GetVerticalState()) {
+	//		player_->GetVerticalState()->Exit();
+	//	}
+	//	newState->PreInitialize(player_);
+	//	newState->Initialize();
+	//	player_->SetVerticalState(std::move(newState));
+	//	break;
+	//case StateManager::kHorizontal:
+	//	if (player_->GetHorizontalState()) {
+	//		player_->GetHorizontalState()->Exit();
+	//	}
+	//	newState->PreInitialize(player_);
+	//	newState->Initialize();
+	//	player_->SetHorizontalState(std::move(newState));
+	//	break;
 	//}
-	//newState->PreInitialize(player_);
-	//newState->Initialize();
-	//player_->SetState(std::move(newState));
-
 }

@@ -71,7 +71,7 @@ void OparationManager::InputUpdate()
 		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
 			return;
 		}
-		player_->GetStateManager()->ChangeRequest(StateManager::kQuickBoost, StateManager::kHorizontal);
+		player_->GetStateManager()->ChangeRequest(StateManager::kQuickBoost);
 		return;
 	}
 

@@ -35,16 +35,20 @@ public:
 	/// <summary>
 	/// 更新処理
 	/// </summary>
-	//void Update();
+	void Update();
 	/// <summary>
 	/// 変更リクエスト
 	/// </summary>
 	/// <param name="newState"></param>
-	void ChangeRequest(StateList request, StateType type);
+	void ChangeRequest(StateList request);
 
 private:
 	// 自機
 	Player* player_ = nullptr;
 	// 切り替えリクエスト
 	std::optional<StateList> request_;
+	// ステートのインスタンス置き場
+	std::unique_ptr<IPlayerState> tmpState_;
+
+	std::unique_ptr<IPlayerState> currentState_;
 };

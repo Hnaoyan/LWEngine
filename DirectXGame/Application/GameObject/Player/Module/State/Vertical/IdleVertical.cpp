@@ -11,7 +11,7 @@ void IdleVertical::Update()
 {
 	// ステート変更
 	if (!player_->isGround_) {
-		stateManager_->ChangeRequest(StateManager::kFall, StateManager::kVertical);
+		stateManager_->ChangeRequest(StateManager::kFall);
 		return;
 	}
 
@@ -26,6 +26,6 @@ void IdleVertical::InputHandle()
 	// ジャンプキー
 	if (GameSystem::sPlayerKey.keyConfigs_.jump)
 	{
-		stateManager_->ChangeRequest(StateManager::kJump, StateManager::kVertical);
+		stateManager_->ChangeRequest(StateManager::kJump);
 	}
 }
