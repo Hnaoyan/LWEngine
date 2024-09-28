@@ -12,16 +12,6 @@ struct PixelShaderOutput
     float32_t4 color : SV_TARGET0;
 };
 
-float32_t3 ExtractBrightParts(float32_t3 color,float32_t threshold)
-{  
-    float luminance = dot(color.rgb, float32_t3(0.2126, 0.7152, 0.0722));
-    if (luminance > threshold)
-    {
-        return color; // 輝度が閾値より高い場合は色をそのまま返す
-    }
-    return float32_t3(0, 0, 0); // 輝度が閾値以下の場合は透明にする
-}
-
 PixelShaderOutput main(VertexShaderOutput input)
 {
     uint32_t width, height; // uvStepSizeの算出
@@ -54,12 +44,19 @@ PixelShaderOutput main(VertexShaderOutput input)
         {
             // 3. 現在のtexcoordを算出
             float32_t2 texcoord = input.texcoord + kIndex9x9[x2][y2] * uvStepSize;
+            
             // 4. 色に1/9掛けて足す
             float32_t3 fetchColor = gTexture.Sample(gSampler, texcoord).rgb;
             
-            // 計算
-            float32_t3 brightFetchColor = ExtractBrightParts(fetchColor, gBloom.threshold);
-            output.color.rgb += brightFetchColor * kernel5x5[x2][y2];
+            // 5. 輝度に基づくスケーリング処理
+            float32_t3 scaledColor = ScaleByLuminance(fetchColor, gBloom.threshold);
+            
+            // 6. スケールされた色にガウスカーネルを適用
+            output.color.rgb += scaledColor * kernel5x5[x2][y2];
+           //// 計算
+            //float32_t3 brightFetchColor = ExtractBrightParts(fetchColor, gBloom.threshold);
+            //output.color.rgb += brightFetchColor * kernel5x5[x2][y2];
+            
         }
     }
     

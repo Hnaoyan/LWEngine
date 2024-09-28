@@ -1,4 +1,24 @@
 ///
+/// BloomBrightCheck
+///
+float32_t3 ExtractBrightParts(float32_t3 color, float32_t threshold)
+{
+    float luminance = dot(color.rgb, float32_t3(0.2126, 0.7152, 0.0722));
+    if (luminance > threshold)
+    {
+        return color;
+    }
+    return float32_t3(0, 0, 0);
+}
+///
+/// BloomScaling
+///
+float32_t3 ScaleByLuminance(float32_t3 color, float32_t threshold)
+{
+    float luminance = dot(color.rgb, float32_t3(0.2126, 0.7152, 0.0722));
+    return color * saturate(luminance / threshold);
+}
+///
 /// Dissolve
 ///
 float32_t3 Dissolve(float32_t3 color, float32_t threshold, float32_t mask)

@@ -1,6 +1,7 @@
 #pragma once
 #include "../Module/State/PlayerStates.h"
 #include <memory>
+#include <optional>
 
 class Player;
 
@@ -32,6 +33,10 @@ public:
 	/// <param name="player"></param>
 	void Initialize(Player* player);
 	/// <summary>
+	/// 更新処理
+	/// </summary>
+	//void Update();
+	/// <summary>
 	/// 変更リクエスト
 	/// </summary>
 	/// <param name="newState"></param>
@@ -40,5 +45,6 @@ public:
 private:
 	// 自機
 	Player* player_ = nullptr;
-
+	// 切り替えリクエスト
+	std::optional<StateList> request_;
 };

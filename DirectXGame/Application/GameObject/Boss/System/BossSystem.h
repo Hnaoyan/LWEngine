@@ -1,9 +1,9 @@
 #pragma once
+#include "Engine/Collision/Collider/ColliderLists.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
-#include "Engine/Collision/Collider/ColliderLists.h"
-#include "Engine/GlobalVariables/GlobalVariables.h"
 
 #include "BossSystemStructs.h"
 
@@ -173,6 +173,7 @@ namespace BossSystemContext
 	private:
 		uint32_t texture_ = 0;
 
+		GlobalVariables* globalVariables_ = nullptr;
 		GPUParticleSystem* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
 	};

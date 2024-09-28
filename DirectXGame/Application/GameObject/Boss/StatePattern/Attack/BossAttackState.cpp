@@ -36,7 +36,7 @@ void BossState::AttackState::Initialize()
 	// 速さ
 	bulletSpeed_ = 50.0f;
 	// サイズ
-	bulletScale_ = 0.4f;
+	bulletScale_ = 1.0f;
 	// 進む方向
 	bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 }
@@ -91,21 +91,21 @@ void BossState::AttackState::Setting(float stateTimer, ShotPattern pattern)
 void BossState::AttackState::LockAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
-	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 }
 
 void BossState::AttackState::StraightAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
-	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 }
 
 void BossState::AttackState::SpreadAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
-	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	// 直線
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
@@ -127,8 +127,8 @@ void BossState::AttackState::SpreadAttack()
 void BossState::AttackState::RadialFireAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
-	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
-	pos.scale *= 3.5f;
+	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
+	//pos.scale *= 3.5f;
 	// 直線
 	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
 

@@ -1,4 +1,5 @@
 #include "BossParticle.h"
+#include "Engine/2D/TextureManager.h"
 
 void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle)
 {
@@ -11,7 +12,9 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
+	blendMode_ = BlendMode::kSubtract;
 	RefreshData(data_);
+	texture_ = TextureManager::Load("Resources/circle.png");
 }
 
 void BossParticle::BulletEffect::Update()

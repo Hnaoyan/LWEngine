@@ -227,7 +227,8 @@ void Boss::GlobalValueInitialize()
 	groupName = "BossNormalBullet";
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "Acceleration", BossSystemContext::NormalBullet::sAcceleration);
-	
+	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
+
 	//---追尾弾---//
 	groupName = "BossTrackingBullet";
 	instance->CreateGroup(groupName);
@@ -236,4 +237,5 @@ void Boss::GlobalValueInitialize()
 	instance->AddValue(groupName, "Speed", BossSystemContext::TrackingBullet::sBulletSpeed);
 	instance->AddValue(groupName, "InitSpeed", BossSystemContext::TrackingBullet::sInitSpeed);
 	instance->AddValue(groupName, "LerpRadius", BossSystemContext::TrackingBullet::sLerpRadius);
+	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 }

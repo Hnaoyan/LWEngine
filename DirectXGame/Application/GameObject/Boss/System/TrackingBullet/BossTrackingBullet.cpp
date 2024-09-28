@@ -79,6 +79,7 @@ void BossSystemContext::TrackingBullet::Update()
 	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
 
 	InstancedUnit::Update();
+	collider_.radius_ = transform_.scale.x;
 	collider_.Update(transform_.translate);
 }
 

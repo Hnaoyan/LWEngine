@@ -156,7 +156,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossBehaviorTree.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossNode.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateController.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h" />
@@ -175,6 +174,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerStateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />

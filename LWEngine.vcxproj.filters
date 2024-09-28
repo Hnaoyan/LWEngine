@@ -686,9 +686,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateController.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\ActionNode.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -801,6 +798,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerStateManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -63,8 +63,7 @@ void GameSystem::Update()
 
     PostEffectRender::PostEffectDesc desc{};
     desc.blur = sBlurEffect.data;
-    PostEffectRender::GetInstance()->bloom_.cMap_->threshold = bloomData_.threshold;
-    PostEffectRender::GetInstance()->bloom_.cMap_->sigma = bloomData_.sigma;
+    desc.bloom = bloomData_;
     PostEffectRender::GetInstance()->Update(desc);
 
 }

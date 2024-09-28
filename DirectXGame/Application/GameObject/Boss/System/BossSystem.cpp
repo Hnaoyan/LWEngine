@@ -1,8 +1,8 @@
 #include "BossSystem.h"
 #include "Engine/Collision/CollisionManager.h"
-#include "Engine/2D/TextureManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "Engine/3D/ModelManager.h"
+#include "Engine/2D/TextureManager.h"
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "../../../Collision/ColliderFilter.h"
 #include "../../../GameSystem/GameSystem.h"
@@ -67,6 +67,7 @@ void BossSystemContext::ParticleManager::CreateDamageEmitter()
 void BossSystemContext::BulletCluster::Initialize(Model* model) {
 	// 基底クラス初期化
 	InstancedGroup::Initialize(model);
+	globalVariables_ = GlobalVariables::GetInstance();
 	texture_ = TextureManager::GetInstance()->Load("Resources/default/red2x2.png");
 }
 
@@ -108,6 +109,7 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	static_cast<NormalBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * 5.0f);
 	static_cast<NormalBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
+	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossNormalBullet", "Scale");
 	instance->Update();
 
 	// 移動のパーティクル
@@ -129,6 +131,7 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	static_cast<NormalBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<NormalBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
+	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossNormalBullet", "Scale");
 	instance->Update();
 
 	// 移動のパーティクル
@@ -153,6 +156,7 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
 	static_cast<TrackingBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
+	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossTrackingBullet", "Scale");
 	instance->Update();
 
 	// 移動のパーティクル
@@ -177,6 +181,7 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	static_cast<TrackingBullet*>(instance.get())->Initialize();
 	static_cast<TrackingBullet*>(instance.get())->SetTrackType(type);
 	instance->transform_ = transform;
+	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossTrackingBullet", "Scale");
 	instance->Update();
 
 	// 移動のパーティクル
