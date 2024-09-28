@@ -128,6 +128,7 @@ void GameScene::Update()
 	if (bossEnemy_) {
 		bossEnemy_->Update();
 		if (bossEnemy_->IsDead()) {
+			bossEnemy_->Finalize();
 			bossEnemy_.reset();
 			clearText_.isClear = true;
 			clearText_.transitionTimer.Start(300.0f);

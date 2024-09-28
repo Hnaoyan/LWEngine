@@ -5,6 +5,7 @@
 #include "Engine/3D/ModelManager.h"
 #include "Engine/3D/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
+#include "Engine/Particle/GPUParticleSystem.h"
 
 void Boss::Initialize(Model* model)
 {
@@ -34,6 +35,7 @@ void Boss::Initialize(Model* model)
 	worldTransform_.transform_.translate = respawnPos_;
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
+	isAction_ = true;
 }
 
 void Boss::Update()
@@ -209,6 +211,11 @@ void Boss::OnCollision(ColliderObject target)
 void Boss::UIDraw()
 {
 	systemManager_->uiManager_.Draw();
+}
+
+void Boss::Finalize()
+{
+	gpuParticle_->DeleteEmitter("BossDamage");
 }
 
 void Boss::GlobalValueInitialize()

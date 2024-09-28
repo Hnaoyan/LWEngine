@@ -65,5 +65,6 @@ void GameSystem::Update()
     desc.blur = sBlurEffect.data;
     desc.bloom = bloomData_;
     PostEffectRender::GetInstance()->Update(desc);
+    //PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 
 }
