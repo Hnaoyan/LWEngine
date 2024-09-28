@@ -42,6 +42,7 @@ public:
 	void UIDraw();
 
 	void Reset() { systemManager_->uiManager_.Initialize(this); }
+	void Finalize();
 
 private:
 	// グローバル変数関係の初期化
