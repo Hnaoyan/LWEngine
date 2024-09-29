@@ -20,12 +20,6 @@ public:
 		kAssending, // 上昇
 	};
 
-	enum StateType
-	{
-		kVertical, // Y軸
-		kHorizontal, // X軸
-	};
-
 public:
 	/// <summary>
 	/// 初期化
@@ -42,6 +36,8 @@ public:
 	/// <param name="newState"></param>
 	void ChangeRequest(StateList request);
 
+	IPlayerState* GetState() { return currentState_.get(); }
+	PlayerState GetVariant() { return currentState_->GetNowState(); }
 private:
 	// 自機
 	Player* player_ = nullptr;
@@ -49,6 +45,5 @@ private:
 	std::optional<StateList> request_;
 	// ステートのインスタンス置き場
 	std::unique_ptr<IPlayerState> tmpState_;
-
 	std::unique_ptr<IPlayerState> currentState_;
 };

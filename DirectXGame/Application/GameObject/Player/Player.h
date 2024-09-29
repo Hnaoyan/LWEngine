@@ -49,27 +49,25 @@ public:
 
 #pragma region 内部システム関係
 private:
-	// ステート
-	std::pair<std::unique_ptr<IPlayerState>, std::unique_ptr<IPlayerState>> currentStates_;
 	// システムファサードクラス
 	std::unique_ptr<PlayerFacade> facadeSystem_;
 	std::unique_ptr<Material> material_;
 	// 操作関係
 	OparationManager systemManager_;
-	// ステートのマネージャー
-	StateManager stateManager_;
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
 	AABB collider_;
+
+	// ステート
+	std::unique_ptr<StateManager> horizontalState_;
+	std::unique_ptr<StateManager> verticalState_;
+
 public:
-	IPlayerState* GetHorizontalState() { return currentStates_.first.get(); }
-	IPlayerState* GetVerticalState() { return currentStates_.second.get(); }
-	void SetHorizontalState(std::unique_ptr<IPlayerState> newState) { currentStates_.first = std::move(newState); }
-	void SetVerticalState(std::unique_ptr<IPlayerState> newState) { currentStates_.second = std::move(newState); }
 	OparationManager* GetOperation() { return &systemManager_; }
-	StateManager* GetStateManager() { return &stateManager_; }
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
+	StateManager* HorizontalManager() { return horizontalState_.get(); }
+	StateManager* VerticalManager() { return verticalState_.get(); }
 #pragma endregion
 
 public: // セッター

@@ -29,6 +29,6 @@ void FallingState::InputHandle()
 	float energyRatio = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
 	if (GameSystem::sPlayerKey.keyConfigs_.pressJump && energyRatio >= 0.5f)
 	{
-		player_->GetStateManager()->ChangeRequest(StateManager::kAssending);
+		player_->VerticalManager()->ChangeRequest(StateManager::kAssending);
 	}
 }

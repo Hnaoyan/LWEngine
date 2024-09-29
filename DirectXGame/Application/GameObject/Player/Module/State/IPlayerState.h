@@ -16,7 +16,7 @@ public:
 	/// 前初期化
 	/// </summary>
 	/// <param name="player"></param>
-	void PreInitialize(Player* player);
+	void PreInitialize(Player* player, StateManager* stateManager);
 	/// <summary>
 	/// 初期化
 	/// </summary>

@@ -66,12 +66,12 @@ void OparationManager::InputUpdate()
 	direct = Vector3::Normalize(direct);
 
 	float slowFactor = 0.2f;
-	bool isQucikBoost = std::holds_alternative<QuickBoostState*>(player_->GetHorizontalState()->GetNowState());
+	bool isQucikBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalManager()->GetVariant());
 	if (!isQucikBoost && GameSystem::sPlayerKey.keyConfigs_.quickBoost && !player_->quickBoostCoolTime_.IsActive()) {
 		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
 			return;
 		}
-		player_->GetStateManager()->ChangeRequest(StateManager::kQuickBoost);
+		player_->HorizontalManager()->ChangeRequest(StateManager::kQuickBoost);
 		return;
 	}
 

@@ -27,7 +27,7 @@ void PlayerContext::ParticleManager::MoveParticleUpdate()
 {
 	// 生成の制御
 	bool moveCheck = std::fabsf(player_->velocity_.x) >= 0.1f || std::fabsf(player_->velocity_.z) >= 0.1f;
-	bool isState = std::holds_alternative<IdleVertical*>(player_->GetVerticalState()->GetNowState());
+	bool isState = std::holds_alternative<IdleVertical*>(player_->VerticalManager()->GetVariant());
 	if (moveCheck && isState) {
 		moveParams_.isActive = true;
 	}

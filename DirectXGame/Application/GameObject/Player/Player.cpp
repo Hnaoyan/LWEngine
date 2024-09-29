@@ -32,13 +32,21 @@ void Player::Initialize(Model* model)
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
 	systemManager_.Initialize(this);
-	stateManager_.Initialize(this);
 	// ファサード初期化
 	facadeSystem_->Initialize(this);
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
+	verticalState_ = std::make_unique<StateManager>();
+	verticalState_->Initialize(this);
+	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
+	verticalState_->Update();
+
+	horizontalState_ = std::make_unique<StateManager>();
+	horizontalState_->Initialize(this);
+	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
+	horizontalState_->Update();
 }
 
 void Player::Update()
@@ -48,8 +56,6 @@ void Player::Update()
 	// システム関係の更新
 	facadeSystem_->Update();
 
-	// 
-	stateManager_.Update();
 	//
 	systemManager_.Update();
 	quickBoostCoolTime_.Update();
@@ -60,14 +66,16 @@ void Player::Update()
 		//worldTransform_.transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	}
 	else {
-		if (currentStates_.first) {
-			currentStates_.first->InputHandle();
-			currentStates_.first->Update();
-		}
-		if (currentStates_.second) {
-			currentStates_.second->InputHandle();
-			currentStates_.second->Update();
-		}
+		verticalState_->Update();
+		horizontalState_->Update();
+		//if (currentStates_.first) {
+		//	currentStates_.first->InputHandle();
+		//	currentStates_.first->Update();
+		//}
+		//if (currentStates_.second) {
+		//	currentStates_.second->InputHandle();
+		//	currentStates_.second->Update();
+		//}
 	}
 
 	// 基底クラスの更新
