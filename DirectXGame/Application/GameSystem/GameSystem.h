@@ -68,6 +68,7 @@ public:
 
 	//void
 	CBufferDataBloom bloomData_{};
+	CBufferDataVignette vignetteData_;
 
 private:
 	/// <summary>

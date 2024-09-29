@@ -22,9 +22,13 @@ void GameSystem::Initialize()
     // バインドの設定
     KeyBindUpdate();
     bloomData_ = { 0.75f,1.5f };
-    // bura-
+    // ブラー
     sBlurEffect.data.centerPoint = { 0.5f,0.5f };
     sBlurEffect.data.samplesNum = 4;
+    // ビネット
+    vignetteData_.scale = 16.0f;
+    vignetteData_.powValue = 0.8f;
+    vignetteData_.color = { 1.0f,0.0f,0.0f };
 }
 
 void GameSystem::KeyBindUpdate()

@@ -369,6 +369,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -801,6 +804,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerStateManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

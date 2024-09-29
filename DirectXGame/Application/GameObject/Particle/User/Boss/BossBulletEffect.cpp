@@ -12,7 +12,7 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
-	blendMode_ = BlendMode::kSubtract;
+	blendMode_ = BlendMode::kScreen;
 	RefreshData(data_);
 	texture_ = TextureManager::Load("Resources/circle.png");
 }

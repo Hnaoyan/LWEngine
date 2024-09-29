@@ -127,6 +127,7 @@ PixelShaderOutput main(VSOutput input)
     resultColor.rgb += environmentColor.rgb * gMaterial.coefficient;
     
     output.color = resultColor;
+    output.color.a = gMaterial.color.a;
     
     return output;
 

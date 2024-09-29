@@ -21,7 +21,7 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
-	material_->color_.w = 0.75f;
+	material_->color_.w = 0.85f;
 	// バリアの生成
 	Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }
@@ -44,10 +44,12 @@ void BossSystemContext::BarrierManager::Update()
 		material_->threshold_ = Ease::Easing(0.0f, 1.0f, animParam.vanishTimer.GetElapsedFrame());
 	}
 	else if (animParam.reappearTimer.IsActive()) {
+		material_->color_.w = 0.85f;
 		material_->threshold_ = Ease::Easing(1.0f, 0.0f, animParam.reappearTimer.GetElapsedFrame());
 	}
 
 	// マテリアル
+	material_->color_.w = std::clamp((param.currentHP + 1.0f) / param.maxHP, 0.35f, 0.85f);
 	material_->Update();
 	// モデル用の情報
 	worldTransform_.UpdateMatrix();

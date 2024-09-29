@@ -20,6 +20,9 @@ void InstancedGroup::Initialize(Model* model)
 
 	// データの作成
 	CreateData();
+
+	material_ = std::make_unique<Material>();
+	material_->CreateMaterial();
 }
 
 void InstancedGroup::Update()
@@ -36,7 +39,7 @@ void InstancedGroup::Update()
 		// イテレート
 		unitNum_++;
 	}
-
+	material_->Update();
 }
 
 void InstancedGroup::Draw(ModelDrawDesc desc)
@@ -50,6 +53,8 @@ void InstancedGroup::Draw(ModelDrawDesc desc)
 	lightDesc.pointLight = desc.pointLight;
 	lightDesc.spotLight = desc.spotLight;
 	modelDesc.SetDesc(model_);
+	modelDesc.material = material_.get();
+	modelDesc.texture = texture_;
 	// 描画
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, unitNum_, buffer_.GetSRVGPU());
 }

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossAttackState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileState.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.h" />
