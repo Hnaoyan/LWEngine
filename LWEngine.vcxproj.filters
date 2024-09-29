@@ -844,6 +844,7 @@
     <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl" />
     <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\BloomPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\BloomBlurPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />

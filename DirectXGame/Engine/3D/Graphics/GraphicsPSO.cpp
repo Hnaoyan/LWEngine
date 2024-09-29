@@ -1025,7 +1025,7 @@ void GraphicsPSO::CreatePostEffectPSO()
 	resultPipeline.pipelineStates[size_t(PostEffect::kGaussian)] = CreatePipelineState(graphicsPipelineStateDesc);
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"PostEffect/RadialBlurPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"PostEffect/BloomBlurPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 	// シェーダの設定
 	graphicsPipelineStateDesc.PS = { psBlob->GetBufferPointer(),psBlob->GetBufferSize() };	// PixelShader

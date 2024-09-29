@@ -40,7 +40,7 @@ void BossSystemContext::TrackingBullet::Initialize()
 	float distance = Vector2::Distance(player, boss);
 
 	if (distance <= 75.0f) {
-		lerpRadius_ = sLerpRadius * 0.25f;
+		lerpRadius_ = TrackingBullet::sLerpRadius;
 	}
 	else {
 		lerpRadius_ = TrackingBullet::sLerpRadius;

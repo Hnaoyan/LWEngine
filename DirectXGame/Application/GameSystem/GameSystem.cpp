@@ -29,6 +29,7 @@ void GameSystem::Initialize()
     vignetteData_.scale = 16.0f;
     vignetteData_.powValue = 0.8f;
     vignetteData_.color = { 1.0f,0.0f,0.0f };
+    PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 }
 
 void GameSystem::KeyBindUpdate()
