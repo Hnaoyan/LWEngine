@@ -39,15 +39,8 @@ void PlayerContext::AimManager::Update(ICamera* camera)
 	}
 	// ターゲットがいない場合オフセットに
 	else {
-		// カメラの前方向ベクトルを計算
-		float frontX = std::cosf(player_->camera_->transform_.rotate.x) * std::cosf(player_->camera_->transform_.rotate.y);
-		float frontY = std::sinf(player_->camera_->transform_.rotate.x);
-		float frontZ = std::cosf(player_->camera_->transform_.rotate.x) * std::sinf(player_->camera_->transform_.rotate.y);
-		// ピッチ角（Y軸方向）を求めるために atan2 を使用
-		float pitchAngle = std::atan2f(frontY, sqrt(frontX * frontX + frontZ * frontZ));
-		Vector3 normalPosition = { offSetTransform_.GetWorldPosition().x,offSetTransform_.GetWorldPosition().y + (pitchAngle * -1.0f),offSetTransform_.GetWorldPosition().z };
-		screenPosition_ = LwLib::WorldToScreen(normalPosition, camera);
-		targetPosition_ = normalPosition;
+		screenPosition_ = LwLib::WorldToScreen(offSetTransform_.GetWorldPosition(), camera);
+		targetPosition_ = offSetTransform_.GetWorldPosition();
 	}
 }
 
