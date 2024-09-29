@@ -353,7 +353,7 @@ void GameScene::LoadTexture()
 	loadTex = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
 	loadTex = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
 	loadTex = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
+	loadTex = TextureManager::GetInstance()->Load("Resources/UI/ShotUIt.png");
 
 	loadTex = TextureManager::GetInstance()->Load("Resources/crossHair.png");
 	loadTex = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
@@ -372,18 +372,18 @@ void GameScene::LoadTexture()
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
-	data.position = { 138.0f,187.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
+	data.position = { 139.0f,180.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/JumpUItt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
-	data.position = { 153.0f,263.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
+	data.position = { 139.0f,240.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/LockonUIt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
-	data.position = { 144.0f,120.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
+	data.position = { 139.0f,120.0f };
+	data.texture = TextureManager::GetInstance()->Load("Resources/UI/ShotUIt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 
