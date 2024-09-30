@@ -47,8 +47,6 @@ namespace PlayerContext {
 		// プレイヤーからのオフセット
 		WorldTransform offSetTransform_;
 		Matrix4x4 parentMatrix_{};
-		// オフセットの位置
-		Vector3 offsetPosition_;
 		// エイムの位置
 		Vector3 targetPosition_{};
 		// エイムのスクリーン上座標

@@ -62,7 +62,9 @@ void OparationManager::InputUpdate()
 		lockOn_.ChangeLockOnTarget(player_->camera_);
 		lockOnCooltime_.Start(20.0f);
 	}
+	if (lockOn_.ExistTarget()) {
 
+	}
 	direct = Vector3::Normalize(direct);
 
 	float slowFactor = 0.2f;

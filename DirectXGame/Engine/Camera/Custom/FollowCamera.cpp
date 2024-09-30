@@ -17,7 +17,7 @@ void FollowCamera::Initialize()
 
 	// 初期化
 	ICamera::Initialize();
-	defaultOffset_ = { 0.0f,2.0f,-10.0f };
+	defaultOffset_ = { 0.0f,3.0f,-10.0f };
 
 	rRotateSpeed_ = instance->GetValue<Vector2>("Camera","RotateSpeed");
 	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
