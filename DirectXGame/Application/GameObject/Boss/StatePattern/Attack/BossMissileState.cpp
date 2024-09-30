@@ -53,7 +53,7 @@ void BossState::MissileAttackState::DefaultMissile()
 
 #pragma region ランダム生成パターン
 	Vector3 bossPosition = boss_->worldTransform_.GetWorldPosition();
-	for (int i = 0; i < 8; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		float value = 5.0f;
 		float limitValue = 1.5f;
 		//---通常---//
@@ -78,44 +78,4 @@ void BossState::MissileAttackState::DefaultMissile()
 	}
 #pragma endregion
 
-	//// 上
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, { 0.0f,1.0f,0.0f }, bulletSpeed_, boss_->GetPlayer());
-
-	////---斜め---//
-	//Vector3 rotateVector = Matrix4x4::TransformVector3({ 1.0f,1.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-	//rotateVector = Matrix4x4::TransformVector3({ -1.0f,1.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-
-	//// X強め
-	//rotateVector = Matrix4x4::TransformVector3({ 2.0f,1.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
-	//rotateVector = Matrix4x4::TransformVector3({ -2.0f,1.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
-
-	//rotateVector = Matrix4x4::TransformVector3({ 3.0f,1.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-	//rotateVector = Matrix4x4::TransformVector3({ -3.0f,1.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kSuperior);
-
-	//// Y強め
-	//rotateVector = Matrix4x4::TransformVector3({ 1.0f,2.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
-	//rotateVector = Matrix4x4::TransformVector3({ -1.0f,2.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
-
-	//rotateVector = Matrix4x4::TransformVector3({ 1.0f,3.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-	//rotateVector = Matrix4x4::TransformVector3({ -1.0f,3.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kSuperior);
-
-	//rotateVector = Matrix4x4::TransformVector3({ 1.0f,4.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-	//rotateVector = Matrix4x4::TransformVector3({ -1.0f,4.0f,0.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-
-	//rotateVector = Matrix4x4::TransformVector3({ 1.0f,5.0f,2.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
-	//rotateVector = Matrix4x4::TransformVector3({ -1.0f,5.0f,2.0f }, rotateMatrix);
-	//boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, rotateVector, bulletSpeed_, boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
 }

@@ -26,9 +26,9 @@ namespace BossSystemContext
 
 	enum class TrackType
 	{
-		kStandard,
-		kInferior,
-		kSuperior,
+		kStandard,	// 盆栽
+		kInferior,	// 劣等
+		kSuperior,	// 優等
 	};
 
 	class HealthManager {
