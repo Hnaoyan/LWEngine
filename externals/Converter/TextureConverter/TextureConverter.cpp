@@ -21,7 +21,7 @@ void TextureConverter::LoadWICTextureFromFile(const std::string& filePath)
 
 	// WICのロード
 	HRESULT result = S_FALSE;
-	result = DirectX::LoadFromWICFile(wFilePath.c_str(), DirectX::WIC_FLAGS_NONE, &metaData_, scratchImage_);
+	result = DirectX::LoadFromWICFile(wFilePath.c_str(), WIC_FLAGS_NONE, &metaData_, scratchImage_);
 	assert(SUCCEEDED(result));
 
 	// フォルダパスとファイル名を分離する
@@ -89,15 +89,35 @@ void TextureConverter::SeparateFilePath(const std::wstring& filePath)
 
 void TextureConverter::SaveDDSTextureToFile()
 {
+	HRESULT result = S_FALSE;
+	DirectX::ScratchImage mipChain;
+	// ミップマップ生成
+	result = DirectX::GenerateMipMaps(
+		scratchImage_.GetImages(), scratchImage_.GetImageCount(), scratchImage_.GetMetadata(),
+		TEX_FILTER_DEFAULT, 0, mipChain);
+
+	if (SUCCEEDED(result)) {
+		// イメージとメタデータを、ミップマップ版で置き換える
+		scratchImage_ = std::move(mipChain);
+		metaData_ = scratchImage_.GetMetadata();
+	}
+
+	// 圧縮形式に変換
+	ScratchImage converted;
+	result = Compress(scratchImage_.GetImages(), scratchImage_.GetImageCount(), metaData_,
+		DXGI_FORMAT_BC7_UNORM_SRGB, TEX_COMPRESS_BC7_QUICK | TEX_COMPRESS_SRGB_OUT | TEX_COMPRESS_PARALLEL, 1.0f, converted);
+	if (SUCCEEDED(result)) {
+		scratchImage_ = std::move(converted);
+		metaData_ = scratchImage_.GetMetadata();
+	}
+
 	// 読み込んだテクスチャをSRGBとして扱う
 	metaData_.format = DirectX::MakeSRGB(metaData_.format);
 
-
-	HRESULT result = S_FALSE;
 	// 出力ファイル名を設定する
 	std::wstring filePath = directoryPath_ + fileName_ + L".dds";
 	// DDSファイル書き出し
-	result = DirectX::SaveToDDSFile(scratchImage_.GetImages(), scratchImage_.GetImageCount(), metaData_, DirectX::DDS_FLAGS_NONE, filePath.c_str());
+	result = DirectX::SaveToDDSFile(scratchImage_.GetImages(), scratchImage_.GetImageCount(), metaData_, DDS_FLAGS_NONE, filePath.c_str());
 	// チェック
 	assert(SUCCEEDED(result));
 }

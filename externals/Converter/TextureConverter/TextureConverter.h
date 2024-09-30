@@ -2,6 +2,8 @@
 #include <string>
 #include "../../DirectXTex/DirectXTex.h"
 
+using namespace DirectX;
+
 class TextureConverter
 {
 public:
