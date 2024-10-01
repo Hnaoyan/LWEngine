@@ -162,13 +162,8 @@ void GameScene::Draw()
 	dxCommon_->ClearDepthBuffer();
 
 	ModelRenderer::PreDraw(commandList);
+
 	ModelDrawDesc desc{};
-
-	DrawDesc::LightDesc lightDesc{};
-	lightDesc.directionalLight = directionalLight_.get();
-	lightDesc.pointLight = pointLight_.get();
-	lightDesc.spotLight = spotLight_.get();
-
 	desc.camera = &camera_;
 	desc.directionalLight = directionalLight_.get();
 	desc.pointLight = pointLight_.get();
