@@ -343,6 +343,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");
+	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");
 	terrain_ = ModelManager::GetModel("Terrain");
 }
 

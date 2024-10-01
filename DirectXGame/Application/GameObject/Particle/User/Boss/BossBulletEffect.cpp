@@ -14,7 +14,7 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 
 	blendMode_ = BlendMode::kScreen;
 	RefreshData(data_);
-	texture_ = TextureManager::Load("Resources/circle.png");
+	texture_ = TextureManager::Load("Resources/default/white2x2.png");
 }
 
 void BossParticle::BulletEffect::Update()
@@ -22,8 +22,10 @@ void BossParticle::BulletEffect::Update()
 	// インスタンスがあるときにのみ
 	if (instance_) {
 		emitter_.cMap_->translate = instance_->GetWorldPosition();
-		UpdataEmitterFlags();
 	}
+
+	// 更新処理
+	UpdataEmitterFlags();
 	ParticleEmitter::Update();
 }
 

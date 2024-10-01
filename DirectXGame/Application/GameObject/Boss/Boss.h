@@ -5,6 +5,7 @@
 #include "System/UI/BossUI.h"
 #include "System/BossFacade.h"
 #include "Animation/BossAnimationManager.h"
+#include "System/BossSystemLists.h"
 
 class Player;
 
