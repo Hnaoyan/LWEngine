@@ -1,6 +1,6 @@
 #include "Skybox.h"
-#include "../../2D/TextureManager.h"
-#include "../ModelLoader.h"
+#include "Engine/2D/TextureManager.h"
+#include "../ModelUtility/ModelLoader.h"
 #include "imgui.h"
 
 GeneralPipeline Skybox::sPipeline_;

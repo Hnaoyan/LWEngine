@@ -1,5 +1,5 @@
 #pragma once
-#include "../ModelData.h"
+#include "../ModelUtility/ModelData.h"
 #include "../Material.h"
 #include "../Mesh.h"
 #include "../Graphics/GraphicsPSO.h"

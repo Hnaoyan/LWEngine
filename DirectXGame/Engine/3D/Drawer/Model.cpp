@@ -1,8 +1,8 @@
 #include "Model.h"
-#include "../ModelLoader.h"
-#include "../../2D/TextureManager.h"
+#include "../ModelUtility/ModelLoader.h"
+#include "Engine/2D/TextureManager.h"
 #include <cassert>
-#include "../../Animation/Animation.h"
+#include "Engine/Animation/Animation.h"
 
 ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 std::string Model::sDirectoryPath = "Resources";

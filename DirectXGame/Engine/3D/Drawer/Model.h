@@ -14,8 +14,8 @@
 #include "../WorldTransform.h"
 #include "../Mesh.h"
 #include "../Material.h"
-#include "../ModelData.h"
-#include "../ModelLoader.h"
+#include "../ModelUtility/ModelData.h"
+#include "../ModelUtility/ModelLoader.h"
 #include "../../Camera/Core/ICamera.h"
 
 class Animation;

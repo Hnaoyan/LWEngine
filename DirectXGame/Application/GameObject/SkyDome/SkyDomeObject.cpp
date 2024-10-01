@@ -1,7 +1,7 @@
 #include "SkyDomeObject.h"
 #include "imgui.h"
 
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 void SkyDomeObject::Initialize(Model* model)

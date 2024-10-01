@@ -3,7 +3,7 @@
 #include <vector>
 #include <d3d12.h>
 #include "../Base/CBufferCommon.h"
-#include "ModelData.h"
+#include "ModelUtility/ModelData.h"
 
 class Mesh
 {

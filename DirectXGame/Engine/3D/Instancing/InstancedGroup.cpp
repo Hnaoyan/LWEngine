@@ -1,7 +1,7 @@
 #include "InstancedGroup.h"
 #include "../Descriptor/SRVHandler.h"
 #include "Engine/2D/TextureManager.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 
 #include <cassert>
 #include <imgui.h>

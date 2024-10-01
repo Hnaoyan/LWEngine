@@ -1,7 +1,7 @@
 #include "TerrainCluster.h"
 #include "Terrain.h"
 #include "Engine/2D/TextureManager.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/Collision/CollisionManager.h"
 
 #include "imgui.h"

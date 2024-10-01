@@ -1,6 +1,6 @@
 #include "TerrainManager.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
-#include "Engine/3D/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/LevelEditor/LevelLoader.h"
 
 #include "Terrain.h"

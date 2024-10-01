@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Engine/Base/CBufferCommon.h"
-#include "../Animation/AnimationData.h"
-#include "../Animation/ModelNode.h"
-#include "../Animation/SkinCluster.h"
 
-#include "../Light/LightLists.h"
+#include "Engine/Base/CBufferCommon.h"
+#include "Engine/Animation/AnimationData.h"
+#include "Engine/Animation/ModelNode.h"
+#include "Engine/Animation/SkinCluster.h"
+#include "Engine/Light/LightLists.h"
 
 class Model;
 class Mesh;

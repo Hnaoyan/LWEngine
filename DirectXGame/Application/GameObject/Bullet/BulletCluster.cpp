@@ -2,7 +2,7 @@
 #include "IBullet.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/2D/TextureManager.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 
 uint32_t BulletCluster::sSerialNumber = 0;
 

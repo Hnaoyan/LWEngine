@@ -1,9 +1,9 @@
 #pragma once
-#include "../3D/ModelData.h"
+#include "../3D/ModelUtility/ModelData.h"
 #include "AnimationData.h"
+#include "Engine/Math/MathLib.h"
+#include "Engine/Animation/System/AnimationPlayer.h"
 #include <cassert>
-#include "../Math/MathLib.h"
-#include "../Animation/System/AnimationPlayer.h"
 
 class Animation
 {

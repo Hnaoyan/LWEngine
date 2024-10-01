@@ -2,8 +2,8 @@
 #include "imgui.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
-#include "Engine/3D/ModelManager.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 

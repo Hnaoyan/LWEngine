@@ -1,7 +1,7 @@
 #include "BossSystem.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
-#include "Engine/3D/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "../Boss.h"

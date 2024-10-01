@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "../../Engine/2D/TextureManager.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/3D/ModelManager.h"
+#include "../../Engine/3D/ModelUtility/ModelManager.h"
 #include "../../Engine/PostEffect/PostEffectRender.h"
 
 void SampleScene::Initialize()

@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Base/CBufferCommon.h"
-#include "../ModelData.h"
+#include "../ModelUtility/ModelData.h"
 #include "../WorldTransform.h"
 
 class Skydome

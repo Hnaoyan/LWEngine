@@ -6,7 +6,7 @@
 #include "../Base/ImGui/ImGuiManager.h"
 #include "../Scene/SceneManager.h"
 #include "../Audio/AudioManager.h"
-#include "../3D/ModelManager.h"
+#include "../3D/ModelUtility/ModelManager.h"
 #include "../2D/TextureManager.h"
 #include "../2D/SpriteManager.h"
 

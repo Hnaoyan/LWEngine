@@ -1,7 +1,7 @@
 #include "ModelRenderer.h"
-#include "../2D/TextureManager.h"
-#include "Material.h"
-#include "Mesh.h"
+#include "Engine/2D/TextureManager.h"
+#include "../Material.h"
+#include "../Mesh.h"
 #include <cassert>
 
 ID3D12GraphicsCommandList* ModelRenderer::sCommandList_ = nullptr;

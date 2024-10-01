@@ -4,7 +4,7 @@
 #include "Application/GameSystem/GameSystem.h"
 
 #include "Engine/PostEffect/PostEffectRender.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
 void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)

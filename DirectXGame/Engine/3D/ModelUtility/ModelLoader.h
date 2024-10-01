@@ -1,7 +1,7 @@
 #pragma once
-#include "Drawer/Model.h"
-#include "../Animation/AnimationData.h"
-#include "../Utility/Singleton.h"
+#include "../Drawer/Model.h"
+#include "../../Animation/AnimationData.h"
+#include "../../Utility/Singleton.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

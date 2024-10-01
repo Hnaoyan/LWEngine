@@ -1,8 +1,8 @@
 #include "BossBarrier.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
-#include "Engine/3D/ModelManager.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/Ease/Ease.h"
 

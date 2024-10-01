@@ -1,7 +1,7 @@
 #include "GameEditScene.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/2D/TextureManager.h"
-#include "Engine/3D/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 
 #include <imgui.h>
 

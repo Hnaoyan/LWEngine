@@ -1,8 +1,8 @@
 #pragma once
 #include <d3d12.h>
-#include "../Animation/Animation.h"
+#include "Engine/Animation/Animation.h"
 #include "ModelData.h"
-#include "Graphics/GraphicsPSO.h"
+#include "../Graphics/GraphicsPSO.h"
 
 class ModelRenderer
 {
