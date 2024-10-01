@@ -48,7 +48,7 @@ private:
 			isActive = true;
 		}
 		void Finalize() {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 			isActive = false;
 		}
 	};

@@ -5,16 +5,22 @@
 void BossState::MissileAttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
-	preActionTimer_.Start(60.0f);
+	// 開くアニメーションの受付
 	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, 55.0f);
 
+	// アクション前の待機タイマー
+	preActionTimer_.Start(60.0f);
+	// クラスター
 	cluster_ = boss_->GetBulletManager()->GetMissileCluster();
 }
 
 void BossState::MissileAttackState::Update()
 {
+	// 
 	preActionTimer_.Update();
+	// 待機時間終了時
 	if (preActionTimer_.IsEnd()) {
+		// 変更までの時間
 		changeTimer_.Start(120.0f);
 		RotateUpdate();
 		//---弾の情報---//

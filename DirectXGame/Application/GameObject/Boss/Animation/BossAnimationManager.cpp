@@ -12,9 +12,11 @@ void BossSystemContext::AnimationManager::Initialize(Boss* boss)
 	// 設定
 	boss_ = boss;
 	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
+	// 部位作成処理
 	CreateHierarchy("Head", "BossEnemy", { scale,{0.0f,0.0f,0.0f},{0.0f,scale.x,0.0f}});
 	CreateHierarchy("Bottom", "BossEnemy", { scale,{3.14f,0.0f,0.0f},{0.0f,-scale.x,0.0f}});
 	CreateHierarchy("Core", "BarrierSphere", { scale / 1.5f,{},{} }, TextureManager::Load("Resources/Dissolve/noise0.png"));
+	// 閉じる処理
 	AnimationExecute(AnimType::kClose);
 }
 
@@ -26,6 +28,7 @@ void BossSystemContext::AnimationManager::Update()
 		animState_ = AnimState::kIdle;
 	}
 
+	// ヒエラルキーの更新
 	for (std::unordered_map<std::string, Hierarchy>::iterator it = hierarchys_.begin(); it != hierarchys_.end(); ++it) {
 		// アニメーション中なら座標間の移動（仮置き
 		if (animState_ == AnimState::kRun) {
@@ -52,12 +55,13 @@ void BossSystemContext::AnimationManager::Draw(ICamera* camera, DrawDesc::LightD
 void BossSystemContext::AnimationManager::AnimationExecute(AnimType type)
 {
 	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
+	float openValue = 1.5f;
 
 	switch (type)
 	{
 	case BossSystemContext::AnimationManager::AnimType::kOpen:
-		hierarchys_["Head"].worldTransform.transform_.translate.y = (scale.x * 1.5f);
-		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -(scale.x * 1.5f);
+		hierarchys_["Head"].worldTransform.transform_.translate.y = (scale.x * openValue);
+		hierarchys_["Bottom"].worldTransform.transform_.translate.y = -(scale.x * openValue);
 		break;
 	case BossSystemContext::AnimationManager::AnimType::kClose:
 		hierarchys_["Head"].worldTransform.transform_.translate.y = scale.x;
@@ -75,20 +79,23 @@ void BossSystemContext::AnimationManager::AnimationExecute(AnimType type, float 
 	Vector3 scale = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale");
 	float BottomY = -scale.x;
 	float HeadY = scale.x;
+	float openValue = 1.5f;
+
 	switch (type)
 	{
 	case BossSystemContext::AnimationManager::AnimType::kOpen:
-		hierarchys_["Head"].easePoint = { Vector3(0.0f,HeadY,0.0f),Vector3(0.0f,HeadY * 1.5f,0.0f) };
-		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,BottomY,0.0f),Vector3(0.0f, BottomY * 1.5f,0.0f) };
+		hierarchys_["Head"].easePoint = { Vector3(0.0f,HeadY,0.0f),Vector3(0.0f,HeadY * openValue,0.0f) };
+		hierarchys_["Bottom"].easePoint = { Vector3(0.0f,BottomY,0.0f),Vector3(0.0f, BottomY * openValue,0.0f) };
 		break;
 	case BossSystemContext::AnimationManager::AnimType::kClose:
-		hierarchys_["Head"].easePoint = { Vector3(0.0f,HeadY * 1.5f,0.0f),Vector3(0.0f,HeadY,0.0f) };
-		hierarchys_["Bottom"].easePoint = { Vector3(0.0f, BottomY * 1.5f,0.0f),Vector3(0.0f,BottomY,0.0f) };
+		hierarchys_["Head"].easePoint = { Vector3(0.0f,HeadY * openValue,0.0f),Vector3(0.0f,HeadY,0.0f) };
+		hierarchys_["Bottom"].easePoint = { Vector3(0.0f, BottomY * openValue,0.0f),Vector3(0.0f,BottomY,0.0f) };
 		break;
 	default:
 		break;
 	}
 
+	// アニメーション関係
 	animTimer_.Start(easeFrame);
 	animState_ = AnimState::kRun;
 	animType_ = type;

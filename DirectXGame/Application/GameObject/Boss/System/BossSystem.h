@@ -19,6 +19,7 @@ namespace BossSystemContext {
 
 	class BulletCluster;
 	class MissileCluster;
+
 }
 
 namespace BossSystemContext
@@ -38,12 +39,14 @@ namespace BossSystemContext
 			maxHealth_ = maxHealth;
 			currentHealth_ = maxHealth_;
 		}
+		// ダメージ
 		void TakeDamage(float damage = 1.0f);
+		// 回復
 		void Heal(float heal = 1.0f);
+		// 死亡
 		bool IsDead() { return isDead_; }
-
+		// HPレート
 		float GetHPRatio() { return (float)currentHealth_ / (float)maxHealth_; }
-
 	private:
 		// マックスHP
 		float maxHealth_ = 0;
@@ -109,11 +112,12 @@ namespace BossSystemContext
 		/// クラスター作成
 		/// </summary>
 		void AddCluster();
-	public: // アクセッサ
+	public: // アクッサ
 		BulletCluster* GetBeginCluster();
 		BulletCluster* GetMissileCluster();
 		void SetPlayer(Player* player) { player_ = player; }
 		void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+
 	private:
 		// モデルのリスト
 		std::vector<Model*> models_;
@@ -130,6 +134,39 @@ namespace BossSystemContext
 
 	};
 
+	class IBullet : public InstancedUnit {
+	public: // シリアル番号
+		static uint32_t sSerialNumber;
+		uint32_t serialNumber_ = 0;
+
+		std::string GetTag() { return tag_; }
+		std::vector<Vector3> posBuffer_;
+	protected: // タグ
+		std::string tag_;
+
+	public:
+		/// <summary>
+		/// ImGui描画
+		/// </summary>
+		/// <param name="name"></param>
+		virtual void ImGuiDraw() {};
+		/// <summary>
+		/// コールバック関数
+		/// </summary>
+		/// <param name="object"></param>
+		virtual void OnCollision(ColliderObject object) = 0;
+	public: // アクセッサ
+		Sphere* GetCollider() { return &collider_; }
+	protected:
+		// コライダー
+		Sphere collider_;
+		// 速度
+		Vector3 velocity_ = {};
+
+		void BufferUpdate();
+
+
+	};
 	class BulletCluster : public InstancedGroup {
 	public: // 仮想関数
 		/// <summary>
@@ -156,20 +193,23 @@ namespace BossSystemContext
 		/// </summary>
 		/// <param name="manager"></param>
 		void CollisionUpdate(CollisionManager* manager);
-		/// <summary>
-		/// 弾の追加
-		/// </summary>
-		/// <param name="position"></param>
-		/// <param name="direct"></param>
+		// 通常弾の追加
 		void AddBullet(const EulerTransform& transform, const Vector3& direct);
 		void AddBullet(const EulerTransform& transform, const Vector3& direct, float speed);
-
+		// 誘導弾の追加
 		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player);
 		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player, TrackType type);
-		// GPUParticle
-		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
+	public: // アクセッサ
+		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 		void SetBossPtr(Boss* boss) { boss_ = boss; }
+		int BeginBulletPosBuffer() {
+			if (units_.size() != 0) {
+				IBullet* bullet = static_cast<IBullet*>(units_.begin()->get());
+				return (int)bullet->posBuffer_.size();
+			}
+			return 0;
+		}
 	private:
 		uint32_t texture_ = 0;
 
@@ -178,34 +218,6 @@ namespace BossSystemContext
 		Boss* boss_ = nullptr;
 	};
 
-	class IBullet : public InstancedUnit {
-	public: // シリアル番号
-		static uint32_t sSerialNumber;
-		uint32_t serialNumber_ = 0;
-		
-		std::string GetTag() { return tag_; }
-	protected: // タグ
-		std::string tag_;
-
-	public:
-		/// <summary>
-		/// ImGui描画
-		/// </summary>
-		/// <param name="name"></param>
-		virtual void ImGuiDraw() {};
-		/// <summary>
-		/// コールバック関数
-		/// </summary>
-		/// <param name="object"></param>
-		virtual void OnCollision(ColliderObject object) = 0;
-	public: // アクセッサ
-		Sphere* GetCollider() { return &collider_; }
-	protected:
-		// コライダー
-		Sphere collider_;
-		// 速度
-		Vector3 velocity_ = {};
-	};
 
 	class TrackingBullet : public IBullet {
 	public:

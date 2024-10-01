@@ -155,9 +155,13 @@ namespace LwLib
 
 	inline static float CalculateYawFromVector(const Vector3& direction)
 	{
+		// 任意軸との内積
 		float dot = Vector3::Dot(direction, Vector3(0, 0, 1.0f));
+		// 方向ベクトルの長さ
 		float fromLength = Vector3::Length(direction);
+		// 任意軸ベクトルの長さ
 		float toLength = Vector3::Length(Vector3(0, 0, 1.0f));
+		// 上記を使ってacosで
 		float result = std::acosf(dot / (fromLength * toLength));
 
 		if (direction.x < 0) {

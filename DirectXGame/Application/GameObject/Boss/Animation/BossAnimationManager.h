@@ -8,6 +8,9 @@ class Boss;
 
 namespace BossSystemContext 
 {
+	/// <summary>
+	/// アニメーションマネージャ
+	/// </summary>
 	class AnimationManager
 	{
 	public:
@@ -28,8 +31,9 @@ namespace BossSystemContext
 		{
 			kOpen,
 			kClose,
+			kNone,
 		};
-
+		// アニメーションの状態
 		enum class AnimState : uint32_t
 		{
 			kIdle,
@@ -38,17 +42,20 @@ namespace BossSystemContext
 		};
 
 	public:
+		// 初期化
 		void Initialize(Boss* boss);
+		// 更新
 		void Update();
+		// 描画
 		void Draw(ICamera* camera, DrawDesc::LightDesc lightDesc);
 	public:
+		// 受付
 		void AnimationExecute(AnimType type);
 		void AnimationExecute(AnimType type, float easeFrame);
 	private:
+		// ヒエラルキー作成
 		void CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform);
 		void CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform, uint32_t texture);
-		//void OpenAnim();
-		//void CloseAnim();
 	private:
 		// ボス本体
 		Boss* boss_ = nullptr;
@@ -61,8 +68,7 @@ namespace BossSystemContext
 		// どのアニメーション状態か
 		AnimType animType_;
 	public:
-		bool IsOpen() {
-			return animType_ == AnimType::kOpen && !animTimer_.IsActive();
-		}
+		// オープン状態
+		bool IsOpen() { return animType_ == AnimType::kOpen && !animTimer_.IsActive(); }
 	};
 }
