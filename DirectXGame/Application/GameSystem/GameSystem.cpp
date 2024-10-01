@@ -10,8 +10,8 @@ GameSystem::DashBlur GameSystem::sBlurEffect;
 
 float GameSystem::GameSpeedFactor()
 {
-    if (sSpeedFactor <= 1.0f) {
-        sSpeedFactor = 1.0f;
+    if (sSpeedFactor <= sDefaultGameSpeed) {
+        sSpeedFactor = sDefaultGameSpeed;
     }
     return (1.0f / sSpeedFactor) * kDeltaTime;
 }

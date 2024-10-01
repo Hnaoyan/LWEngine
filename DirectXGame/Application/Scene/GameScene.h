@@ -125,10 +125,6 @@ private: // システム関係
 	// 追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
 	bool isDebugCamera_ = false;
-
-	Model* terrain_ = nullptr;
-	WorldTransform terrainWtf_ = {};
-
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
 	CBufferDataDirectionalLight lightData_;

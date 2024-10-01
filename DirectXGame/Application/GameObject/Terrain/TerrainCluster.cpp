@@ -1,6 +1,7 @@
 #include "TerrainCluster.h"
 #include "Terrain.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelRenderer.h"
 #include "Engine/Collision/CollisionManager.h"
 
 #include "imgui.h"
@@ -33,8 +34,18 @@ void TerrainCluster::Update()
 
 void TerrainCluster::Draw(ModelDrawDesc desc)
 {
+	// デスクの設定
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(model_);
+	material_->Update();
+	modelDesc.material = material_.get();
+	modelDesc.texture = texture_;
 	// 描画
-	model_->InstancedDraw(desc, this->unitNum_, buffer_.GetSRVGPU(), texture_);
+	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
 
 }
 

@@ -11,6 +11,7 @@ void BossSystemContext::BulletManager::Initialize(Model* model, Boss* boss) {
 }
 
 void BossSystemContext::BulletManager::Update() {
+	// クラスターの更新
 	for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = bulletClusters_.begin();
 		it != bulletClusters_.end(); ++it) {
 		(*it)->Update();
@@ -18,6 +19,7 @@ void BossSystemContext::BulletManager::Update() {
 }
 
 void BossSystemContext::BulletManager::Draw(ModelDrawDesc desc) {
+	// クラスターの描画
 	for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = bulletClusters_.begin();
 		it != bulletClusters_.end(); ++it) {
 		(*it)->Draw(desc);
@@ -25,9 +27,11 @@ void BossSystemContext::BulletManager::Draw(ModelDrawDesc desc) {
 }
 
 void BossSystemContext::BulletManager::CollisionUpdate(CollisionManager* manager) {
+	// コライダーの登録処理
 	for (std::vector<std::unique_ptr<InstancedGroup>>::iterator it = bulletClusters_.begin();
 		it != bulletClusters_.end(); ++it) {
 		BulletCluster* obj = static_cast<BulletCluster*>((*it).get());
+		// クラスター内の更新処理
 		obj->CollisionUpdate(manager);
 	}
 }

@@ -17,6 +17,7 @@ void GPUParticleSystem::Initialize(Model* model)
 
 void GPUParticleSystem::Update()
 {
+	// エミッターの更新
 	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
 		it->second->Update();
 	}
@@ -24,6 +25,7 @@ void GPUParticleSystem::Update()
 
 void GPUParticleSystem::Draw(ICamera* camera)
 {
+	// パーティクルの描画
 	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
 		it->second->Draw(camera);
 	}
@@ -69,7 +71,7 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 		emitters_.insert_or_assign(tag, std::move(instance));
 		return;
 	}
-
+	// なかった場合インスタンス生成・登録
 	std::unique_ptr<ParticleEmitter> instance = std::make_unique<ParticleEmitter>();
 	instance->Initialize(model_);
 	instance->RefreshData(createData_);

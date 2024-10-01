@@ -378,6 +378,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -803,9 +806,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemStructs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\HighSpeed\HighBulletCluster.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -831,6 +831,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CPUParticleSystem.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Particle\CPUParticleSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -940,7 +946,6 @@
     <ClCompile Include="DirectXGame\Sample\Object\AnimSampleObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Object\PlSampleObject.cpp" />
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
@@ -1057,8 +1062,6 @@
     <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h" />
     <ClInclude Include="DirectXGame\Sample\Object\PlSampleObject.h" />
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h" />

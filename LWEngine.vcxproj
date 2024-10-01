@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.cpp" />
@@ -67,7 +68,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\SkyDome\SkyDomeObject.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp" />
@@ -152,6 +152,7 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.h" />
@@ -171,7 +172,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\HighSpeed\HighBulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
@@ -208,8 +208,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\SkyDome\SkyDomeObject.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\Ground.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Ground\GroundCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h" />
@@ -297,6 +295,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector2.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\CPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Particle.h" />

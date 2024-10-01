@@ -8,6 +8,7 @@
 
 void BossSystemContext::HealthManager::TakeDamage(float damage)
 {
+	// 減少処理
 	currentHealth_ -= damage;
 	// 死亡処理
 	if (currentHealth_ <= 0) {
@@ -18,6 +19,7 @@ void BossSystemContext::HealthManager::TakeDamage(float damage)
 
 void BossSystemContext::HealthManager::Heal(float heal)
 {
+	// 回復処理
 	if (currentHealth_ < maxHealth_) {
 		currentHealth_ += heal;
 	}
@@ -25,6 +27,7 @@ void BossSystemContext::HealthManager::Heal(float heal)
 
 void BossSystemContext::ParticleManager::Initialize(Boss* boss)
 {
+	// ポインタの設定
 	boss_ = boss;
 	SetGPUParticleSystem(boss_->GetGPUParticle());
 	// ダメージのエミッタ作成

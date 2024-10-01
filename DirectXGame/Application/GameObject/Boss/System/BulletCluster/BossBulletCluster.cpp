@@ -1,8 +1,9 @@
 #include "BossBulletCluster.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
-#include "Engine/3D/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelManager.h"
+#include "Engine/3D/ModelRenderer.h"
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Application/GameObject/Boss/System/Bullet/BossBullet.h"
@@ -30,8 +31,18 @@ void BossSystemContext::BulletCluster::Update() {
 }
 
 void BossSystemContext::BulletCluster::Draw(ModelDrawDesc desc) {
+	// デスクの設定
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(model_);
+	material_->Update();
+	modelDesc.material = material_.get();
+	modelDesc.texture = texture_;
 	// 描画
-	model_->InstancedDraw(desc, this->unitNum_, buffer_.GetSRVGPU(), texture_);
+	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
 }
 
 void BossSystemContext::BulletCluster::ImGuiDraw() {

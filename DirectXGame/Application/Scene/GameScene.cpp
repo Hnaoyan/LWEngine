@@ -67,9 +67,6 @@ void GameScene::Initialize()
 	//enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
 	//enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
 
-	terrainWtf_.Initialize();
-	terrainWtf_.transform_.scale = { 20.0f,1.0f,20.0f };
-	terrainWtf_.transform_.translate.y -= 0.5f;
 
 	// セッター処理
 	followCamera_->SetParent(player_->GetWorldTransform());
@@ -96,11 +93,13 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
+	// 死亡チェック
 	if (player_->IsDead() && !isGameOver_) {
 		backTitleTimer_.Start(120.0f);
 		isGameOver_ = true;
 	}
 
+	// シーン変更の処理
 	if (isGameOver_) {
 		backTitleTimer_.Update();
 		if (!backTitleTimer_.IsActive()) {
@@ -116,15 +115,20 @@ void GameScene::Update()
 		}
 	}
 
-	// ゲームのシステム更新
+	//---ゲームのシステム更新---//
+	LightingUpdate();
 	gameSystem_->Update();
-
-	// ゲームのオブジェクト更新
 	skydome_->Update();
-	terrainWtf_.UpdateMatrix();
+	terrainManager_->Update();
+
+	//---ゲームのオブジェクト更新---//
+	//プレイヤー
 	player_->Update();
+	// 弾
 	bulletManager_->Update();
+	// 敵
 	enemyManager_->Update();
+	// ボス
 	if (bossEnemy_) {
 		bossEnemy_->Update();
 		if (bossEnemy_->IsDead()) {
@@ -134,13 +138,6 @@ void GameScene::Update()
 			clearText_.transitionTimer.Start(300.0f);
 		}
 	}
-
-	// ライトの更新
-	directionalLight_->Update(lightData_);
-	spotLight_->Update(spLightData_);
-	pointLight_->Update(ptLightData_);
-
-	terrainManager_->Update();
 
 	// 衝突処理
 	CollisionUpdate();
@@ -164,7 +161,6 @@ void GameScene::Draw()
 	// 深度クリア
 	dxCommon_->ClearDepthBuffer();
 
-	Model::PreDraw(commandList);
 	ModelRenderer::PreDraw(commandList);
 	ModelDrawDesc desc{};
 
@@ -194,7 +190,6 @@ void GameScene::Draw()
 	gpuParticleManager_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
-	Model::PostDraw();
 
 #pragma region UI
 
@@ -344,7 +339,6 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");
-	terrain_ = ModelManager::GetModel("Terrain");
 }
 
 void GameScene::LoadTexture()
@@ -460,6 +454,10 @@ void GameScene::LightingInitialize()
 
 void GameScene::LightingUpdate()
 {
+	// ライトの更新
+	directionalLight_->Update(lightData_);
+	spotLight_->Update(spLightData_);
+	pointLight_->Update(ptLightData_);
 }
 
 void GameScene::CollisionUpdate()

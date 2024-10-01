@@ -22,6 +22,10 @@ void BossParticle::BulletEffect::Update()
 	// インスタンスがあるときにのみ
 	if (instance_) {
 		emitter_.cMap_->translate = instance_->GetWorldPosition();
+		emitter_.cMap_->emit = 1;
+	}
+	else {
+		emitter_.cMap_->emit = 0;
 	}
 
 	// 更新処理

@@ -10,13 +10,14 @@ class GameSystem
 public:
 	// ゲームの速さ
 	static float sSpeedFactor;
+	inline static constexpr float sDefaultGameSpeed = 1.0f;
 	/// <summary>
 	/// ゲームの速さとデルタタイムでの値計算
 	/// </summary>
 	/// <returns></returns>
 	static float GameSpeedFactor();
 
-private:
+private: // 入力系の設定
 	template<typename T>
 	struct PlayerKey
 	{
@@ -33,7 +34,7 @@ private:
 		PlayerKey<bool> keyConfigs_;
 		PlayerKey<int32_t> keybinds_;
 	};
-
+private: // ポストエフェクト用	
 	struct DashBlur
 	{
 		// ブラーの詳細情報

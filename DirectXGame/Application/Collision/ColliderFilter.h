@@ -11,5 +11,5 @@ inline static constexpr uint32_t kCollisionAttributeEnemy = 0b1 << 2;
 inline static constexpr uint32_t kCollisionAttributeFootCollider = 0b1 << 3;
 // 弾
 inline static constexpr uint32_t kCollisionAttributeBullet = 0b1 << 4;
-
+// 敵の弾
 inline static constexpr uint32_t kCollisionAttributeEnemyBullet = 0b1 << 5;
