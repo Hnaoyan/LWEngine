@@ -17,10 +17,20 @@ void GPUParticleSystem::Initialize(Model* model)
 
 void GPUParticleSystem::Update()
 {
+	// エミッターの削除
+	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end();) {
+		if (it->second->IsDead()) {
+			it = emitters_.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
 	// エミッターの更新
 	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
 		it->second->Update();
 	}
+
 }
 
 void GPUParticleSystem::Draw(ICamera* camera)

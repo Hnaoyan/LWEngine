@@ -2,6 +2,8 @@
 #include "Engine/Base/CBufferCommon.h"
 #include "Engine/3D/Drawer/Model.h"
 
+class GPUParticleSystem;
+
 class ParticleEmitter
 {
 public:
@@ -43,6 +45,9 @@ protected:
 	// エミッターのデータ
 	EmitterSphere data_;
 
+	// 
+	GPUParticleSystem* gpuParticleManager_ = nullptr;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -69,6 +74,10 @@ public:
 	/// エミッターの更新
 	/// </summary>
 	void UpdataEmitterFlags();
+	
+	bool IsDead() { return isDead_; }
+	void SetIsDead(bool isDead) { isDead_ = isDead; }
+	void SetGPUParticleSystem(GPUParticleSystem* system) { gpuParticleManager_ = system; }
 
 protected: // USER
 	// パーティクルで使うオブジェクト
@@ -79,6 +88,8 @@ protected: // USER
 	BlendMode blendMode_ = BlendMode::kAlpha;
 	// ビルボードの切り替え
 	bool isBillBoard_ = false;
+	// 消すフラグ
+	bool isDead_ = false;
 
 public: // アクセッサ
 	// テクスチャを外部設定

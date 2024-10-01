@@ -32,6 +32,7 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 	emitter_.cMap_->emitPattern = 0;
 	// ビルボード
 	isBillBoard_ = true;
+	isDead_ = false;
 	// ブレンドモード
 	blendMode_ = BlendMode::kAlpha;
 	// テクスチャ

@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Particle/Emitter/ParticleEmitter.h"
+#include "Engine/LwLib/LwLibLists.h"
 #include "Application/GameObject/Boss/System/BossSystem.h"
 
 class Boss;
@@ -26,9 +27,11 @@ namespace BossParticle
 		virtual void Draw(ICamera* camera);
 	public:
 		void SetBullet(InstancedUnit* bullet) { instance_ = bullet; }
-
+		void StartTimer(float frame) { deleteTimer_.Start(frame); }
 	private:
 		InstancedUnit* instance_ = nullptr;
+		// 削除用タイマー
+		FrameTimer deleteTimer_;
 
 	};
 	/// <summary>

@@ -1,5 +1,6 @@
 #include "BossParticle.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/Particle/GPUParticleSystem.h"
 
 void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle)
 {
@@ -12,6 +13,7 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
+	isBillBoard_ = true;
 	blendMode_ = BlendMode::kScreen;
 	RefreshData(data_);
 	texture_ = TextureManager::Load("Resources/default/white2x2.png");
@@ -19,15 +21,16 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 
 void BossParticle::BulletEffect::Update()
 {
+	deleteTimer_.Update();
+	if (deleteTimer_.IsEnd()) {
+		isDead_ = true;
+	}
 	// インスタンスがあるときにのみ
 	if (instance_) {
 		emitter_.cMap_->translate = instance_->GetWorldPosition();
-		emitter_.cMap_->emit = 1;
 	}
 	else {
-		emitter_.cMap_->emit = 0;
 	}
-
 	// 更新処理
 	UpdataEmitterFlags();
 	ParticleEmitter::Update();
