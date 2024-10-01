@@ -58,25 +58,6 @@ namespace LwLib
 	}
 #pragma endregion
 
-	class Curve {
-	public:
-		/// <summary>
-		/// ベジェ曲線
-		/// </summary>
-		/// <param name="p0"></param>
-		/// <param name="p1"></param>
-		/// <param name="p2"></param>
-		/// <param name="t"></param>
-		/// <returns></returns>
-		inline static Vector2 BezierCurve(const Vector2& p0, const Vector2& p1, const Vector2& p2, float t) {
-			Vector2 p0p1 = Vector2::Lerp(p0, p1, t);
-			Vector2 p1p2 = Vector2::Lerp(p1, p2, t);
-			return Vector2(Vector2::Lerp(p0p1, p1p2, t));
-		}
-
-
-	};
-
 	/// <summary>
 	/// ワールドからスクリーン
 	/// </summary>
@@ -114,7 +95,61 @@ namespace LwLib
 		}
 		return result;
 	}
+	//inline static Vector3 Slerp(const Vector3& start, const Vector3& end, float t) {
+	//	float dot = Vector3::Dot(start, end);
+	//	float theta = (float)acos((dot * (float)std::numbers::pi) / 180);
+	//	float sinTheta = (float)sin(theta);
+	//	float weightStart = (float)sin((1 - t) * theta) / sinTheta;
+	//	float weightEnd = (float)sin(t * theta) / sinTheta;
 
+	//	Vector3 result;
+	//	result.x = (weightStart * start.x + weightEnd * end.x);
+	//	result.y = (weightStart * start.y + weightEnd * end.y);
+	//	result.z = (weightStart * start.z + weightEnd * end.z);
+	//	return result;
+	//}
+
+	/// <summary>
+	/// 球面線形補間
+	/// </summary>
+	/// <param name="moveVector"></param>
+	/// <param name="targetVector"></param>
+	/// <param name="t"></param>
+	/// <returns></returns>
+	static Vector3 Slerp(const Vector3& moveVector, const Vector3& targetVector, float t)
+	{
+		Vector3 result = {};
+		Vector3 mvNormalize = Vector3::Normalize(moveVector);
+		Vector3 trNormalize = Vector3::Normalize(targetVector);
+
+		float dot = Vector3::Dot(mvNormalize, trNormalize);
+
+		// 逆向きに非常に近い場合
+		if (dot < -0.999f) {
+			// ここでは、特定の軸に沿って回転する処理に変更できる
+			result = mvNormalize* (1.0f - t);
+			result += trNormalize * t;
+			return Vector3::Normalize(result);
+		}
+
+		// 同方向に非常に近い場合
+		if (dot > 0.999f) {
+			return moveVector; // すでに同じ方向なのでそのまま返す
+		}
+		// 角度
+		float theta = std::acosf(dot);
+		float sinTheta = std::sinf(theta);
+		// 分母が非常に小さい場合の安全処理
+		if (sinTheta < 0.0001f) {
+			return moveVector; // 回転不要
+		}
+		float s0 = std::sinf((1.0f - t) * theta) / sinTheta;
+		float s1 = std::sinf(t * theta) / sinTheta;
+
+		result = (mvNormalize * s0) + (trNormalize * s1);
+
+		return Vector3::Normalize(result);
+	}
 	/// <summary>
 	/// 角度補間
 	/// </summary>

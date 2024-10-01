@@ -1,7 +1,6 @@
 #include "../StateMachine.h"
 #include "Application/GameObject/GameObjectLists.h"
-#include "Engine/LwLib/Ease/Ease.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibLists.h"
 
 void BossState::OrbitMoveState::Initialize()
 {
