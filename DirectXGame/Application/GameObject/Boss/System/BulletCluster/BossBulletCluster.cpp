@@ -19,9 +19,9 @@ void BossSystemContext::BulletCluster::Update() {
 	// 死亡処理
 	units_.erase(std::remove_if(units_.begin(), units_.end(), [&](const std::unique_ptr<InstancedUnit>& obj) {
 		if (obj->IsDead()) {
-			if (auto bullet = dynamic_cast<IBullet*>(obj.get())) {
-				gpuParticle_->DeleteEmitter(bullet->GetTag());
-			}
+			//if (auto bullet = dynamic_cast<IBullet*>(obj.get())) {
+			//	gpuParticle_->DeleteEmitter(bullet->GetTag());
+			//}
 			return true;
 		}
 		return obj->IsDead();
@@ -73,6 +73,7 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
 	pre->SetBullet(instance.get());
 	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	parentTag_ = static_cast<IBullet*>(instance.get())->GetTag();
 
 	// リストにムーブ
 	units_.push_back(std::move(instance));

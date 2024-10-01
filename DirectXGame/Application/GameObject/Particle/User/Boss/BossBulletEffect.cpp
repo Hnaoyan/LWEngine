@@ -5,7 +5,7 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 {
 	ParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 2;
-	data_.frequency = 0.001f;
+	data_.frequency = 1.0f/60.0f;
 	data_.frequencyTime = 0.0f;
 	data_.translate = {};
 	data_.radius = 1.0f;

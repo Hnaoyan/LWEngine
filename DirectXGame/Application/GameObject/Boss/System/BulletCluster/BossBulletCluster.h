@@ -60,7 +60,8 @@ namespace BossSystemContext
 		int BeginBulletPosBuffer();
 	private:
 		uint32_t texture_ = 0;
-
+		// 弾の名前
+		std::string parentTag_;
 		GlobalVariables* globalVariables_ = nullptr;
 		GPUParticleSystem* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
