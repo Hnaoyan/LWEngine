@@ -90,19 +90,19 @@ public:
 	/// </summary>
 	/// <param name="radian"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakeRotateXMatrix(float radian);
+	static Matrix4x4 MakeRotateXMatrix(const float& radian);
 	/// <summary>
 	/// Y軸行列計算
 	/// </summary>
 	/// <param name="radian"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakeRotateYMatrix(float radian);
+	static Matrix4x4 MakeRotateYMatrix(const float& radian);
 	/// <summary>
 	/// Z軸行列計算
 	/// </summary>
 	/// <param name="radian"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakeRotateZMatrix(float radian);
+	static Matrix4x4 MakeRotateZMatrix(const float& radian);
 	/// <summary>
 	/// 回転行列
 	/// </summary>
@@ -156,10 +156,12 @@ public:
 
 public: // その他計算関数
 	static Matrix4x4 MakeOrthographicMatrix(
-		float left, float top, float right, float bottom, float nearClip, float farClip);
+		const float& left, const float& top, const float& right, const float& bottom,
+		const float& nearClip, const float& farClip);
 
 	static Matrix4x4 MakeViewportMatrix(
-		float left, float top, float width, float height, float minDepth, float maxDepth);
+		const float& left, const float& top, const float& width, const float& height,
+		const float& minDepth, const float& maxDepth);
 
 	/// <summary>
 	/// プロジェクション行列作成
@@ -169,7 +171,8 @@ public: // その他計算関数
 	/// <param name="nearClip"></param>
 	/// <param name="farClip"></param>
 	/// <returns></returns>
-	static Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
+	static Matrix4x4 MakePerspectiveFovMatrix(const float& fovY, const float& aspectRatio,
+		const float& nearClip, const float& farClip);
 
 	/// <summary>
 	/// ビルボード行列作成

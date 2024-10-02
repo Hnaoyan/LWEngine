@@ -8,7 +8,7 @@ public:
 	float m[3][3];
 
 public:
-	static Matrix3x3 MakeRotateMatrix(float theta = 0);
+	static Matrix3x3 MakeRotateMatrix(const float& theta = 0);
 
 	//
 	static Matrix3x3 MakeTranslateMatrix(const Vector2& translate);

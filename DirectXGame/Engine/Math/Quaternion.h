@@ -22,9 +22,9 @@ public: // 基本的な計算
 	// 内積
 	static float Dot(const Quaternion& q0, const Quaternion& q1);
 	// 球面線形補間
-	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+	static Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, const float& t);
 	// スカラー
-	static Quaternion Scaler(const Quaternion& q, float scaler);
+	static Quaternion Scaler(const Quaternion& q, const float& scaler);
 	// 加算
 	static Quaternion Add(const Quaternion& q0, const Quaternion& q1);
 
@@ -35,6 +35,6 @@ public:
 	/// <param name="axis"></param>
 	/// <param name="angle"></param>
 	/// <returns></returns>
-	static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle);
+	static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, const float& angle);
 
 };

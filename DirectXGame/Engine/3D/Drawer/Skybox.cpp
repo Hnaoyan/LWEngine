@@ -6,7 +6,7 @@
 GeneralPipeline Skybox::sPipeline_;
 uint32_t Skybox::sSerialNumber_ = 0u;
 
-Skybox* Skybox::CreateSkybox(std::string fileName)
+Skybox* Skybox::CreateSkybox(const std::string& fileName)
 {
     // メモリ確保
     Skybox* instance = new Skybox();

@@ -14,7 +14,7 @@ namespace LwLib {
 		/// <param name="p2"></param>
 		/// <param name="t"></param>
 		/// <returns></returns>
-		inline static Vector2 BezierCurve(const Vector2& p0, const Vector2& p1, const Vector2& p2, float t) {
+		inline static Vector2 BezierCurve(const Vector2& p0, const Vector2& p1, const Vector2& p2, const float& t) {
 			Vector2 p0p1 = Vector2::Lerp(p0, p1, t);
 			Vector2 p1p2 = Vector2::Lerp(p1, p2, t);
 			return Vector2(Vector2::Lerp(p0p1, p1p2, t));
@@ -29,7 +29,7 @@ namespace LwLib {
 		/// <param name="p3"></param>
 		/// <param name="t"></param>
 		/// <returns></returns>
-		inline static Vector3 CatmullRomSpline(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Vector3& p3, float t) {
+		inline static Vector3 CatmullRomSpline(const Vector3& p0, const Vector3& p1, const Vector3& p2, const Vector3& p3, const float& t) {
 			const float s = 0.5f;
 			float t2 = t * t;
 			float t3 = t2 * t;
@@ -41,8 +41,8 @@ namespace LwLib {
 			return (e3 * t3 + e2 * t2 + e1 * t + e0) * s;
 		}
 
-		inline static Vector3 CatmullRomSpline(const std::vector<Vector3>& controlPoints, float t) {
-			assert(controlPoints.size() >= 4 && "制御点は4点未満です");
+		inline static Vector3 CatmullRomSpline(const std::vector<Vector3>& controlPoints, const float& t) {
+			assert(controlPoints.size() >= 4);
 
 			// 区画数を制御点の数-1
 			size_t division = controlPoints.size() - 1;

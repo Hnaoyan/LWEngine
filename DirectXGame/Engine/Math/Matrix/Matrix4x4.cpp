@@ -278,7 +278,7 @@ Matrix4x4 Matrix4x4::MakeScaleMatrix(const Vector3& scale)
 	return result;
 }
 
-Matrix4x4 Matrix4x4::MakeRotateXMatrix(float radian)
+Matrix4x4 Matrix4x4::MakeRotateXMatrix(const float& radian)
 {
 	Matrix4x4 result = {};
 	result.m[0][0] = 1.0f;
@@ -290,7 +290,7 @@ Matrix4x4 Matrix4x4::MakeRotateXMatrix(float radian)
 	return result;
 }
 
-Matrix4x4 Matrix4x4::MakeRotateYMatrix(float radian)
+Matrix4x4 Matrix4x4::MakeRotateYMatrix(const float& radian)
 {
 	Matrix4x4 result = {};
 	result.m[0][0] = std::cosf(radian);
@@ -302,7 +302,7 @@ Matrix4x4 Matrix4x4::MakeRotateYMatrix(float radian)
 	return result;
 }
 
-Matrix4x4 Matrix4x4::MakeRotateZMatrix(float radian)
+Matrix4x4 Matrix4x4::MakeRotateZMatrix(const float& radian)
 {
 	Matrix4x4 result = {};
 	result.m[0][0] = std::cosf(radian);
@@ -417,7 +417,7 @@ Matrix4x4 Matrix4x4::DirectionToDirection(const Vector3& from, const Vector3& to
 	return result;
 }
 
-Matrix4x4 Matrix4x4::MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip)
+Matrix4x4 Matrix4x4::MakeOrthographicMatrix(const float& left, const float& top, const float& right, const float& bottom, const float& nearClip, const float& farClip)
 {
 	Matrix4x4 result = {};
 	result.m[0][0] = 2 / (right - left);
@@ -430,7 +430,7 @@ Matrix4x4 Matrix4x4::MakeOrthographicMatrix(float left, float top, float right, 
 	return result;
 }
 
-Matrix4x4 Matrix4x4::MakeViewportMatrix(float left, float top, float width, float height, float minDepth, float maxDepth)
+Matrix4x4 Matrix4x4::MakeViewportMatrix(const float& left, const float& top, const float& width, const float& height, const float& minDepth, const float& maxDepth)
 {
 		Matrix4x4 result = {};
 		result.m[0][0] = width / 2;
@@ -443,7 +443,7 @@ Matrix4x4 Matrix4x4::MakeViewportMatrix(float left, float top, float width, floa
 		return Matrix4x4(result);
 }
 
-Matrix4x4 Matrix4x4::MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip)
+Matrix4x4 Matrix4x4::MakePerspectiveFovMatrix(const float& fovY, const float& aspectRatio, const float& nearClip, const float& farClip)
 {
 	Matrix4x4 result = {};
 

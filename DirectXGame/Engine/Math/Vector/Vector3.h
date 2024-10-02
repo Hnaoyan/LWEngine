@@ -152,7 +152,7 @@ public: // 複合演算子
 	/// <param name="end"></param>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	inline static Vector3 Lerp(const Vector3& start, const Vector3& end, float t) {
+	inline static Vector3 Lerp(const Vector3& start, const Vector3& end, const float& t) {
 		Vector3 result{};
 
 		result.x = (1.0f - t) * start.x + t * end.x;

@@ -114,7 +114,7 @@ public:
 		}
 		return Vector2(result);
 	}
-	inline static Vector2 Lerp(const Vector2& start, const Vector2& end, float t) {
+	inline static Vector2 Lerp(const Vector2& start, const Vector2& end, const float& t) {
 		Vector2 result{};
 
 		result.x = (1.0f - t) * start.x + t * end.x;
@@ -123,7 +123,7 @@ public:
 		return Vector2(result);
 	}
 
-	inline static Vector2 MakeRotateVector(const Vector2& vector,float radian) {
+	inline static Vector2 MakeRotateVector(const Vector2& vector, const float& radian) {
 		// 角度による回転行列
 		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(radian);
 		// 元のベクトルを回転させたもの

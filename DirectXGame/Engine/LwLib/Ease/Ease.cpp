@@ -1,7 +1,7 @@
 #include "Ease.h"
 #include <cmath>
 
-float Ease::EaseT(EaseType type, float t)
+float Ease::EaseT(EaseType type, const float& t)
 {
 	switch (type)
 	{

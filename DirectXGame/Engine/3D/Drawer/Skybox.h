@@ -23,7 +23,7 @@ public:
 	/// </summary>
 	/// <param name="filePath"></param>
 	/// <returns></returns>
-	static Skybox* CreateSkybox(std::string fileName);
+	static Skybox* CreateSkybox(const std::string& fileName);
 	/// <summary>
 	/// 初期化
 	/// </summary>

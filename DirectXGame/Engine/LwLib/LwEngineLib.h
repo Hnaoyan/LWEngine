@@ -26,7 +26,7 @@ namespace LwLib
 		std::uniform_int_distribution<int> distribution(min, max);
 		return distribution(sRandomEngine);
 	}
-	inline static float GetRandomValue(float min, float max) {
+	inline static float GetRandomValue(const float& min, const float& max) {
 		CreateRandomEngine();
 		std::uniform_real_distribution<float> distribution(min, max);
 		return distribution(sRandomEngine);
@@ -38,7 +38,7 @@ namespace LwLib
 		return Vector3(GetRandomValue(min.x, max.x), GetRandomValue(min.y, max.y), GetRandomValue(min.z, max.z));
 	}
 
-	inline static float GetRandomValue(float min, float max, float limit) {
+	inline static float GetRandomValue(const float& min, const float& max, const float& limit) {
 		CreateRandomEngine();
 		std::uniform_real_distribution<float> distribution(min, max);
 		float value = distribution(sRandomEngine);
@@ -85,7 +85,7 @@ namespace LwLib
 	/// <param name="b"></param>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	inline static float Lerp(float a, float b, float t, float deadZone = 0.00001f) {
+	inline static float Lerp(const float& a, const float& b, const float& t, float deadZone = 0.00001f) {
 		float clampT = std::clamp(t, 0.0f, 1.0f);
 		float result = (1.0f - clampT) * a + clampT * b;
 		//float result = a + clampT * (b - a);
@@ -116,7 +116,7 @@ namespace LwLib
 	/// <param name="targetVector"></param>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	static Vector3 Slerp(const Vector3& moveVector, const Vector3& targetVector, float t)
+	static Vector3 Slerp(const Vector3& moveVector, const Vector3& targetVector, const float& t)
 	{
 		Vector3 result = {};
 		Vector3 mvNormalize = Vector3::Normalize(moveVector);
@@ -157,7 +157,7 @@ namespace LwLib
 	/// <param name="b"></param>
 	/// <param name="t"></param>
 	/// <returns></returns>
-	inline static float LerpShortAngle(float a, float b, float t) {
+	inline static float LerpShortAngle(const float& a, const float& b, const float& t) {
 		// 角度差分
 		float diff = b - a;
 
@@ -184,7 +184,7 @@ namespace LwLib
 	/// <param name="max"></param>
 	/// <param name="rate"></param>
 	/// <returns></returns>
-	inline static float RatioCalc(float min, float max, float rate) {
+	inline static float RatioCalc(const float& min, const float& max, const float& rate) {
 		return min + (max - min) * rate;
 	}
 
@@ -214,18 +214,18 @@ namespace LwLib
 		float factor = 1.0f - std::exp(-decay * deltaTime);
 		return current + (end - current) * factor;
 	}
-	inline static Vector2 ExponentialInterpolate(const Vector2& current, const Vector2& end, float decay, float deltaTime) {
+	inline static Vector2 ExponentialInterpolate(const Vector2& current, const Vector2& end, const float& decay, const float& deltaTime) {
 		float factor = 1.0f - std::exp(-decay * deltaTime);
 		return current + (end - current) * factor;
 	}
-	inline static Vector3 ExponentialInterpolate(const Vector3& current, const Vector3& end, float decay, float deltaTime) {
+	inline static Vector3 ExponentialInterpolate(const Vector3& current, const Vector3& end, const float& decay, const float& deltaTime) {
 		float factor = 1.0f - std::exp(-decay * deltaTime);
 		return current + (end - current) * factor;
 	}
 
 #pragma region 2軸回転
 	// XZ平面回転
-	inline static Vector3 RotateXZVector(const Vector3& direct, float theta)
+	inline static Vector3 RotateXZVector(const Vector3& direct, const float& theta)
 	{
 		Vector3 normalizeVector = Vector3::Normalize(direct);
 		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(theta);
@@ -233,14 +233,14 @@ namespace LwLib
 		return Vector3(newDirect.x, normalizeVector.y, newDirect.y);
 	}
 	// XY平面回転
-	inline static Vector3 RotateXYVector(const Vector3& direct, float theta) {
+	inline static Vector3 RotateXYVector(const Vector3& direct, const float& theta) {
 		Vector3 normalizeVector = Vector3::Normalize(direct);
 		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(theta);
 		Vector2 newDirect = Matrix3x3::Transform({ normalizeVector.x,normalizeVector.y }, rotateMatrix);
 		return Vector3(newDirect.x, newDirect.y, normalizeVector.z);
 	}
 	// YZ平面回転
-	inline static Vector3 RotateYZVector(const Vector3& direct, float theta) {
+	inline static Vector3 RotateYZVector(const Vector3& direct, const float& theta) {
 		Vector3 normalizeVector = Vector3::Normalize(direct);
 		Matrix3x3 rotateMatrix = Matrix3x3::MakeRotateMatrix(theta);
 		Vector2 newDirect = Matrix3x3::Transform({ normalizeVector.y,normalizeVector.z }, rotateMatrix);

@@ -1,7 +1,7 @@
 #include "Joint.h"
 #include <optional>
 #include <vector>
-#include "../3D/ModelData.h"
+#include "../3D/ModelUtility/ModelData.h"
 
 int32_t Joint::Create(const ModelNode& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints)
 {

@@ -287,7 +287,6 @@
     <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\LwLibLists.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\TimeCall\TimeCall.h" />
-    <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\DebounceTimer.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />

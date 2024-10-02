@@ -3,7 +3,7 @@
 #include <cmath>
 #include "../Vector/Vector2.h"
 
-Matrix3x3 Matrix3x3::MakeRotateMatrix(float theta)
+Matrix3x3 Matrix3x3::MakeRotateMatrix(const float& theta)
 {
 	Matrix3x3 MakeRotateMatrix;
 	MakeRotateMatrix.m[0][0] = std::cosf(theta);

@@ -63,7 +63,7 @@ float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1)
     return ((q0.x * q1.x) + (q0.y * q1.y) + (q0.z * q1.z) + (q0.w * q1.w));
 }
 
-Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t)
+Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, const float& t)
 {
     Quaternion quaternion0 = q0;
     float dot = Dot(q0, q1);
@@ -96,7 +96,7 @@ Quaternion Quaternion::Slerp(const Quaternion& q0, const Quaternion& q1, float t
     };
 }
 
-Quaternion Quaternion::Scaler(const Quaternion& q, float scaler)
+Quaternion Quaternion::Scaler(const Quaternion& q, const float& scaler)
 {
     return Quaternion(q.x * scaler, q.y * scaler, q.z * scaler, q.w * scaler);
 }
@@ -106,7 +106,7 @@ Quaternion Quaternion::Add(const Quaternion& q0, const Quaternion& q1)
     return Quaternion(q0.x + q1.x, q0.y + q1.y, q0.z + q1.z, q0.w + q1.w);
 }
 
-Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, float angle)
+Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, const float& angle)
 {
     Quaternion result = {};
     result.w = std::cosf(angle / 2.0f);
