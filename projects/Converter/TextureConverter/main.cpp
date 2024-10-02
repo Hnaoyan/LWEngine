@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
-#include "Windows.h"
 #include <cassert>
+#include "Windows.h"
 #include "TextureConverter.h"
 
 enum Argument {

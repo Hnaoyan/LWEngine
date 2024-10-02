@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../../DirectXTex/DirectXTex.h"
+#include "../../../externals/DirectXTex/DirectXTex.h"
 
 using namespace DirectX;
 
