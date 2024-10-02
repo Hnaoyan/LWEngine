@@ -53,6 +53,8 @@ public: // メンバ関数
 	/// <returns></returns>
 	ParticleEmitter* FindEmitter(std::string tag);
 private:
+	bool isCreate_ = false;
+	bool isDelete_ = false;
 	std::string addEmitterName_;
 	int nameNum_ = 0;
 	EmitterSphere createData_{};

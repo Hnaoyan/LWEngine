@@ -1,9 +1,10 @@
 #include "SampleScene.h"
 #include "imgui.h"
-#include "../../Engine/2D/TextureManager.h"
-#include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/3D/ModelUtility/ModelManager.h"
-#include "../../Engine/PostEffect/PostEffectRender.h"
+#include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Engine/Scene/SceneManager.h"
+#include "Engine/PostEffect/PostEffectRender.h"
 
 void SampleScene::Initialize()
 {
@@ -227,7 +228,7 @@ void SampleScene::Draw()
 	dxCommon_->ClearDepthBuffer();
 
 	Model::PreDraw(commandList);
-
+	ModelRenderer::PreDraw(commandList);
 	// サンプル
 	//sampleObj_->Draw(&camera_);
 	ModelDrawDesc desc{};
@@ -269,6 +270,8 @@ void SampleScene::Draw()
 
 	//particles_->Draw(&camera_);
 	gpuParticle_->Draw(&camera_);
+
+	ModelRenderer::PostDraw();
 	Model::PostDraw();
 
 #pragma region スプライト
@@ -464,25 +467,20 @@ void SampleScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
 
-	ImGui::Begin("Scene");
-	//int srvIndex = dxCommon_->GetSrvHandler()->sNextDescriptorNum_;
-	//ImGui::InputInt("srvIndex", &srvIndex);
-	ImGui::End();
-
 }
 
 void SampleScene::LoadModel()
 {
-	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
-	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
-	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
-	//cubeModel_.reset(Model::CreateDefault("terrain"));
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
-	cubeModel_ = ModelManager::GetModel("DefaultCube");
-	sphere_.reset(Skydome::CreateSkydome());
 	ModelManager::LoadObjModel("Plane", "plane");
 	ModelManager::LoadObjModel("Axis", "BulletTest");
 
+	cubeModel_ = ModelManager::GetModel("DefaultCube");
+
+	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
+	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
+	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
+	sphere_.reset(Skydome::CreateSkydome());
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
 

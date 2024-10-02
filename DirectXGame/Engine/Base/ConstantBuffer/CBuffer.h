@@ -25,6 +25,12 @@ struct CBufferWorldTransform {
 	Matrix4x4 worldInverseTranspose;
 };
 
+struct TrailVertex
+{
+	Vector4 position;
+	Vector4 color;
+};
+
 #pragma region Model
 
 struct VertexData

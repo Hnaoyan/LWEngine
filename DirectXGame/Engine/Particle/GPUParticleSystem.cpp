@@ -13,10 +13,21 @@ void GPUParticleSystem::Initialize(Model* model)
 	createData_.radius = 1.0f;
 	createData_.emit = 0;
 
+	addEmitterName_ = "Emitter";
+
 }
 
 void GPUParticleSystem::Update()
 {
+	if (isCreate_) {
+		isCreate_ = false;
+		CreateEmitter(addEmitterName_ + std::to_string(nameNum_));
+	}
+	if (isDelete_) {
+		isDelete_ = false;
+		DeleteEmitter(addEmitterName_ + std::to_string(nameNum_));
+	}
+
 	// エミッターの削除
 	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end();) {
 		if (it->second->IsDead()) {
@@ -45,12 +56,11 @@ void GPUParticleSystem::ImGuiDraw()
 {
 	ImGui::Begin("GPUParticle");
 	ImGui::Text("\n");
-	addEmitterName_ = "Emitter";
 	if (ImGui::Button("Create")) {
-		CreateEmitter(addEmitterName_ + std::to_string(nameNum_));
+		isCreate_ = true;
 	}
 	if (ImGui::Button("Delete")) {
-		DeleteEmitter(addEmitterName_ + std::to_string(nameNum_));
+		isDelete_ = true;
 	}
 	ImGui::Separator();
 	ImGui::InputInt("AddNameNum", &nameNum_, 1);

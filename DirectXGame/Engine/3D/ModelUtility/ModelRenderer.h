@@ -54,4 +54,6 @@ public:
 
 	static void LineDraw(const LineDrawDesc& desc);
 
+	static void TrailDraw(ICamera* camera);
+
 };

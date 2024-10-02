@@ -381,6 +381,9 @@
     <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -872,6 +875,8 @@
     <FxCompile Include="Resources\shaders\DrawLine\3DLinePS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\BloomPS.hlsl" />
     <FxCompile Include="Resources\shaders\PostEffect\BloomBlurPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Trail\Trail_VS.hlsl" />
+    <FxCompile Include="Resources\shaders\Trail\Trail_PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -1078,5 +1083,6 @@
     <None Include="Resources\shaders\Utility\PostCalc.hlsli" />
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
     <None Include="Resources\shaders\Particle\ParticleCalc.hlsli" />
+    <None Include="Resources\shaders\Trail\Trail.hlsli" />
   </ItemGroup>
 </Project>

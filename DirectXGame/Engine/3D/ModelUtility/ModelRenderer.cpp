@@ -324,3 +324,17 @@ void ModelRenderer::LineDraw(const LineDrawDesc& desc)
 	//// ドローコール
 	//sCommandList_->DrawIndexedInstanced(UINT(drawDesc.modelData->indices.size()), 1, 0, 0, 0);
 }
+
+void ModelRenderer::TrailDraw(ICamera* camera)
+{
+	camera;
+	// タイプ設定
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kMissileTrail)]);
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	sCommandList_->SetGraphicsRootConstantBufferView(0, camera->GetCBuffer()->GetGPUVirtualAddress());
+
+}
