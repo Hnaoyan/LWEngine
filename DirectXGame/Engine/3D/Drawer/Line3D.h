@@ -7,12 +7,28 @@
 class Line3D
 {
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	void Intialize();
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="camera"></param>
 	void Draw(ICamera* camera);
 
 private:
+	/// <summary>
+	/// 頂点データの作成
+	/// </summary>
 	void CreateVertex();
+	/// <summary>
+	/// データの送り直し
+	/// </summary>
 	void RefreshVertex();
 
 	// 頂点情報
