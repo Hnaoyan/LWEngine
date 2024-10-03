@@ -69,6 +69,8 @@ private: // USER
 	std::unique_ptr<MissileTrail> trail_;
 	// 線描画
 	std::unique_ptr<Line3D> lines_;
+	// 三角形
+	std::unique_ptr<Triangle3D> triangle_;
 
 	std::unique_ptr<LevelLoader> levelLoader_;
 

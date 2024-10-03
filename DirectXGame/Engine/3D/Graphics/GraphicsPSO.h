@@ -74,7 +74,10 @@ private:
 	/// </summary>
 	static void CreateSpritePSO();
 
+	// 線
 	static void CreateLinePSO();
+	// 三角
+	static void CreateTrianglePSO();
 
 	static void CreateTrailPSO();
 

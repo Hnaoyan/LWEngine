@@ -81,6 +81,9 @@ void SampleScene::Initialize()
 	lines_ = std::make_unique<Line3D>();
 	lines_->Intialize();
 
+	triangle_ = std::make_unique<Triangle3D>();
+	triangle_->Initialize();
+
 }
 
 void SampleScene::GPUUpdate()
@@ -110,6 +113,7 @@ void SampleScene::Update()
 	skyboxTransform_.UpdateMatrix();
 
 	lines_->Update();
+	triangle_->Update();
 
 	// カメラの更新
 	CameraUpdate();
@@ -156,7 +160,8 @@ void SampleScene::Draw()
 
 	skybox_->Draw(desc);
 
-	lines_->Draw(&camera_);
+	//lines_->Draw(&camera_);
+	triangle_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
 	Model::PostDraw();

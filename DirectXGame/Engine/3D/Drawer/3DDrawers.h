@@ -3,3 +3,4 @@
 #include "Skydome.h"
 #include "Skybox.h"
 #include "Line3D.h"
+#include "Triangle3D.h"

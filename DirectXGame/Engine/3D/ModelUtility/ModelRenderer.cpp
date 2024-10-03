@@ -273,3 +273,23 @@ void ModelRenderer::TrailDraw(ICamera* camera, MissileTrail* trail)
 	sCommandList_->DrawInstanced(UINT(trail->GetVertexSize()), 1, 0, 0);
 
 }
+
+void ModelRenderer::TriangleDraw(ICamera* camera, Triangle3D* triangle)
+{
+	// タイプ設定
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// パイプライン
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kTriangle)]);
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	// バッファ
+	sCommandList_->SetGraphicsRootConstantBufferView(0, camera->GetCBuffer()->GetGPUVirtualAddress());
+
+	// 頂点
+	sCommandList_->IASetVertexBuffers(0, 1, &triangle->vbView_);
+	// 描画
+	sCommandList_->DrawInstanced(UINT(triangle->GetVertexSize()), 1, 0, 0);
+
+}

@@ -9,6 +9,7 @@ namespace Pipeline
 		kSkybox,
 		kSpirte,
 		kLine,
+		kTriangle,
 		kModel,
 		kSkinningModel,
 		kParticle,

@@ -384,6 +384,9 @@
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\WindowAPI\WindowAPI.h">
@@ -879,6 +882,8 @@
     <FxCompile Include="Resources\shaders\Trail\Trail_PS.hlsl" />
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl" />
     <FxCompile Include="Resources\shaders\3DLine\3DLine_VS.hlsl" />
+    <FxCompile Include="Resources\shaders\3DTriangle\3DTriangle_PS.hlsl" />
+    <FxCompile Include="Resources\shaders\3DTriangle\3DTriangle_VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -981,7 +986,6 @@
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
@@ -1087,5 +1091,6 @@
     <None Include="Resources\shaders\Particle\ParticleCalc.hlsli" />
     <None Include="Resources\shaders\Trail\Trail.hlsli" />
     <None Include="Resources\shaders\3DLine\3DLine.hlsli" />
+    <None Include="Resources\shaders\3DTriangle\3DTriangle.hlsli" />
   </ItemGroup>
 </Project>

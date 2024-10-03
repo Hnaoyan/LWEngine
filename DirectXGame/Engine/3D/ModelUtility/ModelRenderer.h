@@ -67,4 +67,5 @@ public:
 	/// <param name="trail"></param>
 	static void TrailDraw(ICamera* camera, MissileTrail* trail);
 
+	static void TriangleDraw(ICamera* camera, Triangle3D* triangle);
 };

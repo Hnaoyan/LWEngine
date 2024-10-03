@@ -31,6 +31,12 @@ struct TrailVertex
 	Vector4 color;
 };
 
+struct TriangleData 
+{
+	Vector3 position;
+	Vector4 color;
+};
+
 #pragma region Model
 
 struct VertexData
