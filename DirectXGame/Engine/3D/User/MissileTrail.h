@@ -13,6 +13,15 @@ public:
 
 	void Draw(ICamera* camera);
 
+	void CreateVertex();
+
+	D3D12_VERTEX_BUFFER_VIEW GetVbView() { return vbView_; }
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+
+	size_t GetVertexSize() { return vertexData_.size(); }
+private:
+	void RefreshVertex();
+
 private:
 	// 座標コンテナ
 	std::vector<Vector3> positionArray_;
@@ -20,7 +29,6 @@ private:
 	std::vector<TrailVertex> vertexData_;
 
 	ConstantBufferMapContext<TrailVertex> vertex_;
-	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
 	// 最大数
 	const int kMaxBufferSize = 512;

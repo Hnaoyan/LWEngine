@@ -114,6 +114,13 @@ void SampleScene::Initialize()
 
 	cubeMaterial_ = std::make_unique<Material>();
 	cubeMaterial_->CreateMaterial();
+
+	trail_ = std::make_unique<MissileTrail>();
+	//trail_->Initialize();
+
+	lines_ = std::make_unique<Line3D>();
+	lines_->Intialize();
+
 }
 
 void SampleScene::GPUUpdate()
@@ -194,6 +201,9 @@ void SampleScene::Update()
 	plane_.worldTransform.UpdateMatrix();
 
 	player_->Update();
+
+	lines_->Update();
+
 	// カメラの更新
 	CameraUpdate();
 
@@ -230,46 +240,50 @@ void SampleScene::Draw()
 	Model::PreDraw(commandList);
 	ModelRenderer::PreDraw(commandList);
 	// サンプル
-	//sampleObj_->Draw(&camera_);
-	ModelDrawDesc desc{};
-	desc.camera = &camera_;
-	desc.directionalLight = directionalLight_.get();
-	desc.spotLight = spotLight_.get();
-	desc.pointLight = pointLight_.get();
-	desc.worldTransform = &testWTF_;
+	////sampleObj_->Draw(&camera_);
+	//ModelDrawDesc desc{};
+	//desc.camera = &camera_;
+	//desc.directionalLight = directionalLight_.get();
+	//desc.spotLight = spotLight_.get();
+	//desc.pointLight = pointLight_.get();
+	//desc.worldTransform = &testWTF_;
 
-	//humans_[0]->Draw(desc);
-	//humans_[1]->Draw(desc);
-	//humans_[2]->Draw(desc);
+	////humans_[0]->Draw(desc);
+	////humans_[1]->Draw(desc);
+	////humans_[2]->Draw(desc);
 
-	//testGroup1_->Draw(desc);
-	//for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
-	//	it != group_.end(); ++it) {
-	//	//(*it)->Draw(desc);
-	//}
+	////testGroup1_->Draw(desc);
+	////for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
+	////	it != group_.end(); ++it) {
+	////	//(*it)->Draw(desc);
+	////}
 
-	////player_->Draw(&camera_);
-	//for (int i = 0; i < cubes_.size(); ++i) {
-	//	cubes_[i]->Draw(desc);
-	//}
-	
-	desc.worldTransform = &plane_.worldTransform;
-	//plane_.model->Draw(desc);
+	//////player_->Draw(&camera_);
+	////for (int i = 0; i < cubes_.size(); ++i) {
+	////	cubes_[i]->Draw(desc);
+	////}
+	//
+	//desc.worldTransform = &plane_.worldTransform;
+	////plane_.model->Draw(desc);
 
-	ModelDrawDesc textureDesc{};
-	textureDesc.camera = &camera_;
-	textureDesc.directionalLight = directionalLight_.get();
-	textureDesc.spotLight = spotLight_.get();
-	textureDesc.pointLight = pointLight_.get();
-	textureDesc.texture = newSpriteData_.uvTexture_;
-	textureDesc.worldTransform = &testWTF_;
-	cubeMaterial_->Update();
-	textureDesc.material = cubeMaterial_.get();
-	cubeModel_->Draw(textureDesc);
-	skybox_->Draw(desc);
+	//ModelDrawDesc textureDesc{};
+	//textureDesc.camera = &camera_;
+	//textureDesc.directionalLight = directionalLight_.get();
+	//textureDesc.spotLight = spotLight_.get();
+	//textureDesc.pointLight = pointLight_.get();
+	//textureDesc.texture = newSpriteData_.uvTexture_;
+	//textureDesc.worldTransform = &testWTF_;
+	//cubeMaterial_->Update();
+	//textureDesc.material = cubeMaterial_.get();
+	//cubeModel_->Draw(textureDesc);
+	//skybox_->Draw(desc);
 
-	//particles_->Draw(&camera_);
-	gpuParticle_->Draw(&camera_);
+	////particles_->Draw(&camera_);
+	//gpuParticle_->Draw(&camera_);
+
+	//trail_->Draw(&camera_);
+
+	lines_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
 	Model::PostDraw();
@@ -300,6 +314,9 @@ void SampleScene::UIDraw()
 
 void SampleScene::ImGuiDraw()
 {
+
+	//trail_->Update();
+
 	ImGui::Begin("SampleScene");
 	ImGui::ColorEdit3("DisColor", &cubeMaterial_->dissolveColor_.x);
 	ImGui::DragFloat3("DisColor", &cubeMaterial_->dissolveColor_.x, 0.01f);

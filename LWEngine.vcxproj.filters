@@ -542,9 +542,6 @@
     <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Animation\Skeleton.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -877,6 +874,8 @@
     <FxCompile Include="Resources\shaders\PostEffect\BloomBlurPS.hlsl" />
     <FxCompile Include="Resources\shaders\Trail\Trail_VS.hlsl" />
     <FxCompile Include="Resources\shaders\Trail\Trail_PS.hlsl" />
+    <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl" />
+    <FxCompile Include="Resources\shaders\3DLine\3DLine_VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
@@ -1084,5 +1083,6 @@
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
     <None Include="Resources\shaders\Particle\ParticleCalc.hlsli" />
     <None Include="Resources\shaders\Trail\Trail.hlsli" />
+    <None Include="Resources\shaders\3DLine\3DLine.hlsli" />
   </ItemGroup>
 </Project>

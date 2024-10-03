@@ -12,6 +12,7 @@
 #include "Engine/LevelEditor/LevelLoader.h"
 #include "Engine/Particle/Particle.h"
 #include "Engine/Particle/GPUParticleSystem.h"
+#include "Engine/3D/User/MissileTrail.h"
 
 #include <list>
 
@@ -61,6 +62,11 @@ private:
 	};
 	planeInfo plane_;
 private:
+	// 試しの軌跡クラス
+	std::unique_ptr<MissileTrail> trail_;
+
+	std::unique_ptr<Line3D> lines_;
+
 	std::unique_ptr<LevelLoader> levelLoader_;
 
 	// 試し

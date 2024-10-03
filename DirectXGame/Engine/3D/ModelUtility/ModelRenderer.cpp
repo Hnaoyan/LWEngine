@@ -20,64 +20,6 @@ void ModelRenderer::PostDraw()
 	sCommandList_ = nullptr;
 }
 
-void ModelRenderer::NormalDraw(const ModelDrawDesc& drawDesc)
-{
-	// プリミティブ形状の設定
-	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	// パイプラインの設定
-	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
-
-	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
-	// パイプラインステートの設定
-	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
-
-	// ワールド行列
-	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(Pipeline::ModelRegister::kWorldTransform),
-		drawDesc.worldTransform->GetCBuffer()->GetGPUVirtualAddress());
-	// ビュープロジェクション行列
-	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(Pipeline::ModelRegister::kViewProjection),
-		drawDesc.camera->GetCBuffer()->GetGPUVirtualAddress());
-
-	//---メッシュの設定---//
-	// 頂点バッファの設定
-	sCommandList_->IASetVertexBuffers(0, 1, &drawDesc.mesh->vbView_);
-	// インデックスバッファの設定
-	sCommandList_->IASetIndexBuffer(&drawDesc.mesh->ibView_);
-
-	//---マテリアルの設定---//
-	// テクスチャ
-	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList_, static_cast<UINT>(ModelRegister::kTexture), drawDesc.texture);
-	// 環境マップ
-	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList_, static_cast<UINT>(ModelRegister::kMapTexture), TextureManager::sEnvironmentTexture);
-	// Dissolve
-	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList_, static_cast<UINT>(ModelRegister::kDissolveTexture), drawDesc.material->dissolveTexture_);
-
-	// マテリアル
-	sCommandList_->SetGraphicsRootConstantBufferView(
-		static_cast<UINT>(ModelRegister::kMaterial), drawDesc.material->buffer_.cBuffer->GetGPUVirtualAddress());
-	
-	// ライト
-	if (drawDesc.directionalLight) {
-		drawDesc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kDirectionalLight));
-	}
-	if (drawDesc.spotLight) {
-		drawDesc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kSpotLight));
-	}
-	if (drawDesc.pointLight) {
-		drawDesc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(ModelRegister::kPointLight));
-	}
-
-	// ドローコール
-	sCommandList_->DrawIndexedInstanced(UINT(drawDesc.modelData->indices.size()), 1, 0, 0, 0);
-
-}
-
 void ModelRenderer::NormalDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc)
 {
 	// プリミティブ形状の設定
@@ -292,49 +234,42 @@ void ModelRenderer::InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& mo
 	sCommandList_->DrawIndexedInstanced(UINT(modelDesc.modelData->indices.size()), instanceNum, 0, 0, 0);
 }
 
-void ModelRenderer::LineDraw(const LineDrawDesc& desc)
+void ModelRenderer::LineDraw(ICamera* camera, Line3D* line)
 {
-	desc;
-	//// プリミティブ形状の設定
-	//sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
-	//
-	//// パイプラインの設定
-	//sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kModel)]);
-
-	//// ルートシグネチャの設定
-	//sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
-	//// パイプラインステートの設定
-	//sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
-
-	//// ビュープロジェクション行列
-	//sCommandList_->SetGraphicsRootConstantBufferView(
-	//	static_cast<UINT>(Pipeline::ModelRegister::kViewProjection),
-	//	drawDesc.camera->GetCBuffer()->GetGPUVirtualAddress());
-
-	////---メッシュの設定---//
-	//// 頂点バッファの設定
-	//sCommandList_->IASetVertexBuffers(0, 1, &drawDesc.mesh->vbView_);
-
-	////---マテリアルの設定---//
-	//// マテリアル
-	//sCommandList_->SetGraphicsRootConstantBufferView(
-	//	static_cast<UINT>(ModelRegister::kMaterial), drawDesc.material->buffer_.cBuffer->GetGPUVirtualAddress());
-
-
-	//// ドローコール
-	//sCommandList_->DrawIndexedInstanced(UINT(drawDesc.modelData->indices.size()), 1, 0, 0, 0);
-}
-
-void ModelRenderer::TrailDraw(ICamera* camera)
-{
-	camera;
 	// タイプ設定
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 
+	// パイプライン
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kLine)]);
+	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+
+	// バッファ
+	sCommandList_->SetGraphicsRootConstantBufferView(0, camera->GetCBuffer()->GetGPUVirtualAddress());
+
+	// 頂点
+	sCommandList_->IASetVertexBuffers(0, 1, &line->vbView_);
+	// 描画
+	sCommandList_->DrawInstanced(UINT(line->GetVertexSize()), 1, 0, 0);
+
+}
+
+void ModelRenderer::TrailDraw(ICamera* camera, MissileTrail* trail)
+{
+	// タイプ設定
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
+
+	// パイプライン
 	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kMissileTrail)]);
 	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
 
+	// バッファ
 	sCommandList_->SetGraphicsRootConstantBufferView(0, camera->GetCBuffer()->GetGPUVirtualAddress());
+
+	// 頂点
+	sCommandList_->IASetVertexBuffers(0, 1, &trail->vbView_);
+	// 描画
+	sCommandList_->DrawInstanced(UINT(trail->GetVertexSize()), 1, 0, 0);
 
 }

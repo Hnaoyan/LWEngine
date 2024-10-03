@@ -227,7 +227,6 @@
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Drawer\AnimModel.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
@@ -335,6 +334,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\3DLine\3DLine_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\3DModelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -551,6 +562,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\shaders\3DLine\3DLine.hlsli" />
     <None Include="Resources\shaders\3DModel.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />

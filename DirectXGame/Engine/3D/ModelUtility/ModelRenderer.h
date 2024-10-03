@@ -3,6 +3,8 @@
 #include "Engine/Animation/Animation.h"
 #include "ModelData.h"
 #include "../Graphics/GraphicsPSO.h"
+#include "Engine/3D/User/MissileTrail.h"
+#include "../Drawer/3DDrawers.h"
 
 class ModelRenderer
 {
@@ -36,7 +38,6 @@ public:
 	/// アニメーションなし描画
 	/// </summary>
 	/// <param name="desc"></param>
-	static void NormalDraw(const ModelDrawDesc& desc);
 	static void NormalDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc);
 	/// <summary>
 	/// アニメーションあり描画
@@ -52,8 +53,8 @@ public:
 	static void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 	static void InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 
-	static void LineDraw(const LineDrawDesc& desc);
+	static void LineDraw(ICamera* camera, Line3D* line);
 
-	static void TrailDraw(ICamera* camera);
+	static void TrailDraw(ICamera* camera, MissileTrail* trail);
 
 };

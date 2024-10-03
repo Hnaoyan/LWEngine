@@ -46,6 +46,11 @@ struct LineGPUData
 	Vector4 color[2];
 };
 
+struct LineData {
+	Vector4 position;
+	Vector4 color;
+};
+
 #pragma endregion
 
 // カメラ用

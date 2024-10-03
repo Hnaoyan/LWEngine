@@ -109,6 +109,12 @@ namespace DrawDesc
 		// 描画
 		void Draw(ID3D12GraphicsCommandList* cmdList);
 	};
+
+
+	struct TrailDesc {
+
+	};
+
 }
 
 // モデルの描画に必要な者たち
