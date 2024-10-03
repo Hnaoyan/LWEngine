@@ -220,6 +220,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\SpriteManager.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\Drawer\Triangle3D.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\PipelineStructs.h" />
     <ClInclude Include="DirectXGame\Engine\3D\User\MissileTrail.h" />
