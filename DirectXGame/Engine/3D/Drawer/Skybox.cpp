@@ -24,31 +24,6 @@ void Skybox::Initialize(const std::string& fileName)
             modelData_.vertices[i].normal = {};
             modelData_.vertices[i].texcoord = {};
         }
-        //// 右面
-        //modelData_.vertices[0].position = { 1.0f,1.0f,1.0f,1.0f };
-        //modelData_.vertices[1].position = { 1.0f,1.0f,-1.0f,1.0f };
-        //modelData_.vertices[2].position = { 1.0f,-1.0f,1.0f,1.0f };
-        //modelData_.vertices[3].position = { 1.0f,-1.0f,-1.0f,1.0f };
-        //// 左面
-        //modelData_.vertices[4].position = { -1.0f,1.0f,-1.0f,1.0f };
-        //modelData_.vertices[5].position = { -1.0f,1.0f,1.0f,1.0f };
-        //modelData_.vertices[6].position = { -1.0f,-1.0f,-1.0f,1.0f };
-        //modelData_.vertices[7].position = { -1.0f,-1.0f,1.0f,1.0f };
-        //// 前面
-        //modelData_.vertices[8].position = { -1.0f,1.0f,1.0f,1.0f };
-        //modelData_.vertices[9].position = { 1.0f,1.0f,1.0f,1.0f };
-        //modelData_.vertices[10].position = { -1.0f,-1.0f,1.0f,1.0f };
-        //modelData_.vertices[11].position = { 1.0f,-1.0f,1.0f,1.0f };
-        //// 後面
-        //modelData_.vertices[12].position = { 1.0f,1.0f,-1.0f,1.0f };
-        //modelData_.vertices[13].position = { -1.0f,1.0f,-1.0f,1.0f };
-        //modelData_.vertices[14].position = { 1.0f,-1.0f,-1.0f,1.0f };
-        //modelData_.vertices[15].position = { -1.0f,-1.0f,-1.0f,1.0f };
-        //// 上面
-        //modelData_.vertices[12].position = { 1.0f,1.0f,1.0f,1.0f };
-        //modelData_.vertices[13].position = { -1.0f,1.0f,1.0f,1.0f };
-        //modelData_.vertices[14].position = { 1.0f,-1.0f,1.0f,1.0f };
-        //modelData_.vertices[15].position = { -1.0f,-1.0f,1.0f,1.0f };
         // 右面
         modelData_.vertices[0].position = { 1.0f,1.0f,1.0f,1.0f };
         modelData_.vertices[1].position = { 1.0f,1.0f,-1.0f,1.0f };
@@ -156,6 +131,10 @@ void Skybox::Initialize(const std::string& fileName)
 
 void Skybox::Draw(const ModelDrawDesc& desc)
 {
+    if (isInvisible_) {
+        return;
+    }
+
     // パイプラインの設定
     sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kSkybox)]);
 
@@ -200,6 +179,8 @@ void Skybox::ImGuiDraw()
 {
     std::string name = "Skybox" + std::to_string(serialNum_);
     ImGui::Begin(name.c_str());
+    ImGui::Checkbox("Isinvisible", &isInvisible_);
+
     name = "Position" + std::to_string(serialNum_);
     float speed = 0.01f;
     ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, speed);

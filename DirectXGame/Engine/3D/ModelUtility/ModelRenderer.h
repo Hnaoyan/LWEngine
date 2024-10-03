@@ -53,8 +53,18 @@ public:
 	static void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 	static void InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 
+	/// <summary>
+	/// 線描画
+	/// </summary>
+	/// <param name="camera"></param>
+	/// <param name="line"></param>
 	static void LineDraw(ICamera* camera, Line3D* line);
 
+	/// <summary>
+	/// 軌跡描画
+	/// </summary>
+	/// <param name="camera"></param>
+	/// <param name="trail"></param>
 	static void TrailDraw(ICamera* camera, MissileTrail* trail);
 
 };

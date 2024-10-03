@@ -7,7 +7,7 @@ struct Camera
 
 struct LineVertex
 {
-    float32_t4 position;
+    float32_t3 position;
     float32_t4 color;
 };
 

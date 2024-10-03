@@ -211,7 +211,7 @@ void GraphicsPSO::CreateLinePSO()
 
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
 	{
-		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT)
+		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT)
 	},
 	{
 		PSOLib::SetInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT)

@@ -63,5 +63,7 @@ private:
 	std::unique_ptr<Material> material_;
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_{};
+	// 描画表示のフラグ
+	bool isInvisible_ = false;
 
 };

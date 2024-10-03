@@ -31,44 +31,11 @@ void SampleScene::Initialize()
 	plane_.worldTransform.UpdateMatrix();
 	plane_.model = ModelManager::GetModel("Plane");
 
-	testWTF_.Initialize();
-	testWTF_.transform_.translate = { 0,0,0.0f };
-	testWTF_.transform_.scale = { 1,1,1 };
-	testWTF_.UpdateMatrix();
+	skyboxTransform_.Initialize();
+	skyboxTransform_.transform_.translate = { 0,0,0.0f };
+	skyboxTransform_.transform_.scale = { 1,1,1 };
+	skyboxTransform_.UpdateMatrix();
 	//---ここから書く---//
-
-	testGroup1_ = std::make_unique<InstancedGroup>();
-	testGroup1_->Initialize(ModelManager::GetModel("DefaultCube"));
-
-	//sampleObj_ = std::make_unique<AnimSampleObject>();
-	//sampleObj_->Initialize(this->testModel_.get(),cubeModel_.get());
-	//sampleObj_->worldTransform_.transform_.translate = { -2.5f,0,0 };
-
-	// 歩くオブジェ
-	humans_[0] = std::make_unique<AnimSampleObject>();
-	humans_[0]->Initialize(this->walkModel_.get(),cubeModel_);
-	humans_[0]->worldTransform_.transform_.translate = { 0,0,0 };
-	humans_[0]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
-
-	humans_[1] = std::make_unique<AnimSampleObject>();
-	humans_[1]->Initialize(this->walkModel_.get(), cubeModel_);
-	humans_[1]->worldTransform_.transform_.translate = { 0,0,0 };
-	humans_[1]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
-
-	humans_[2] = std::make_unique<AnimSampleObject>();
-	humans_[2]->Initialize(this->sneakWalkModel_.get(), cubeModel_);
-	humans_[2]->worldTransform_.transform_.translate = { 0,0,0 };
-	humans_[2]->worldTransform_.transform_.rotate = { 0,3.14f,0 };
-
-	cubes_[0] = std::make_unique<AnimCubeObject>();
-	cubes_[0]->Initialize(testModel_.get());
-	//cubeObj_->worldTransform_.transform_.translate = { -5.0f,0,10.0f };
-
-	cubes_[1] = std::make_unique<AnimCubeObject>();
-	cubes_[1]->Initialize(testModel_.get());
-
-	player_ = std::make_unique<PlSampleObject>();
-	player_->Initialize(testModel_.get());
 
 	// 初期カメラ
 	//camera_.transform_.translate.y = 5.0f;
@@ -80,13 +47,6 @@ void SampleScene::Initialize()
 	lightData_.color = { 1,1,1,1 };
 	lightData_.direction = { 0,-1,0 };
 	lightData_.intensity = 1.0f;
-
-	newSpriteData_.spriteTransform_ = {
-		{1.0f,1.0f,1.0f},
-		{0,0,0},
-		{0,0,0},
-	};
-	newSpriteData_.isInvisible_ = true;
 
 	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
 
@@ -133,6 +93,8 @@ void SampleScene::GPUUpdate()
 
 void SampleScene::Update()
 {
+	// ポストエフェクトの変更
+	PostChanger();
 
 	if (input_->TriggerKey(DIK_LSHIFT)) {
 		sceneManager_->ChangeScene("TITLE");
@@ -145,62 +107,7 @@ void SampleScene::Update()
 		sceneManager_->ChangeScene("GAME");
 	}
 
-	if (input_->TriggerKey(DIK_0)) {
-		postEffecter_ = 0;
-	}
-	if (input_->TriggerKey(DIK_1)) {
-		postEffecter_ = 1;
-	}
-	if (input_->TriggerKey(DIK_2)) {
-		postEffecter_ = 2;
-	}
-	if (input_->TriggerKey(DIK_3)) {
-		postEffecter_ = 3;
-	}
-	if (input_->TriggerKey(DIK_4)) {
-		postEffecter_ = 4;
-	}
-	if (input_->TriggerKey(DIK_5)) {
-		postEffecter_ = 5;
-	}
-	if (input_->TriggerKey(DIK_6)) {
-		postEffecter_ = 6;
-	}
-	if (input_->TriggerKey(DIK_7)) {
-		postEffecter_ = 7;
-	}
-	if (input_->TriggerKey(DIK_8)) {
-		postEffecter_ = 8;
-	}
-	if (input_->TriggerKey(DIK_9)) {
-		postEffecter_ = 9;
-	}
-
-
-	newSprite_->SetPosition(newSpriteData_.position_);
-	newSprite_->SetUVTransform(newSpriteData_.spriteTransform_);
-	newSprite_->SetInvisible(newSpriteData_.isInvisible_);
-
-	testWTF_.UpdateMatrix();
-
-	humans_[0]->Update();
-	humans_[1]->Update();
-	humans_[2]->Update();
-
-	testGroup1_->Update();
-
-	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->Update();
-	}
-
-	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
-		it != group_.end(); ++it) {
-		(*it)->Update();
-	}
-
-	plane_.worldTransform.UpdateMatrix();
-
-	player_->Update();
+	skyboxTransform_.UpdateMatrix();
 
 	lines_->Update();
 
@@ -240,48 +147,14 @@ void SampleScene::Draw()
 	Model::PreDraw(commandList);
 	ModelRenderer::PreDraw(commandList);
 	// サンプル
-	////sampleObj_->Draw(&camera_);
-	//ModelDrawDesc desc{};
-	//desc.camera = &camera_;
-	//desc.directionalLight = directionalLight_.get();
-	//desc.spotLight = spotLight_.get();
-	//desc.pointLight = pointLight_.get();
-	//desc.worldTransform = &testWTF_;
+	ModelDrawDesc desc{};
+	desc.camera = &camera_;
+	desc.directionalLight = directionalLight_.get();
+	desc.spotLight = spotLight_.get();
+	desc.pointLight = pointLight_.get();
+	desc.worldTransform = &skyboxTransform_;
 
-	////humans_[0]->Draw(desc);
-	////humans_[1]->Draw(desc);
-	////humans_[2]->Draw(desc);
-
-	////testGroup1_->Draw(desc);
-	////for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
-	////	it != group_.end(); ++it) {
-	////	//(*it)->Draw(desc);
-	////}
-
-	//////player_->Draw(&camera_);
-	////for (int i = 0; i < cubes_.size(); ++i) {
-	////	cubes_[i]->Draw(desc);
-	////}
-	//
-	//desc.worldTransform = &plane_.worldTransform;
-	////plane_.model->Draw(desc);
-
-	//ModelDrawDesc textureDesc{};
-	//textureDesc.camera = &camera_;
-	//textureDesc.directionalLight = directionalLight_.get();
-	//textureDesc.spotLight = spotLight_.get();
-	//textureDesc.pointLight = pointLight_.get();
-	//textureDesc.texture = newSpriteData_.uvTexture_;
-	//textureDesc.worldTransform = &testWTF_;
-	//cubeMaterial_->Update();
-	//textureDesc.material = cubeMaterial_.get();
-	//cubeModel_->Draw(textureDesc);
-	//skybox_->Draw(desc);
-
-	////particles_->Draw(&camera_);
-	//gpuParticle_->Draw(&camera_);
-
-	//trail_->Draw(&camera_);
+	skybox_->Draw(desc);
 
 	lines_->Draw(&camera_);
 
@@ -292,7 +165,7 @@ void SampleScene::Draw()
 
 	Sprite::PreDraw(commandList);
 
-	newSprite_->Draw();
+
 
 	Sprite::PostDraw();
 
@@ -314,9 +187,6 @@ void SampleScene::UIDraw()
 
 void SampleScene::ImGuiDraw()
 {
-
-	//trail_->Update();
-
 	ImGui::Begin("SampleScene");
 	ImGui::ColorEdit3("DisColor", &cubeMaterial_->dissolveColor_.x);
 	ImGui::DragFloat3("DisColor", &cubeMaterial_->dissolveColor_.x, 0.01f);
@@ -324,68 +194,14 @@ void SampleScene::ImGuiDraw()
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
 	ImGui::DragFloat3("PlanePos", &plane_.worldTransform.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("PlaneRot", &plane_.worldTransform.transform_.rotate.x, 0.01f);
-	if (ImGui::Button("Test1Add")) {
-		testGroup1_->UnitRegist(generatePosition_);
-	}
-
-	if (ImGui::Button("AddGroup")) {
-		std::unique_ptr<InstancedGroup> instance = std::make_unique<InstancedGroup>();
-		instance->Initialize(ModelManager::GetModel("DefaultCube"));
-		group_.push_back(std::move(instance));
-	}
 
 	ImGui::InputInt("PostEffect", &postEffecter_, 1);
 
-	switch (postEffecter_)
-	{
-	case 0:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-		break;
-	case 1:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
-		break;
-	case 2:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
-		break;
-	case 3:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayscaleVignette;
-		break;
-	case 4:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGaussian;
-		break;
-	case 5:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
-		break;
-	case 6:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-		break;
-	case 7:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kDissolve;
-		break;
-	case 8:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
-		break;
-	case 9:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-		break;
-	default:
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-		break;
-	}
 
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
-	if (ImGui::TreeNode("SpriteData")) {
-		ImGui::Checkbox("Invisible", &newSpriteData_.isInvisible_);
-		ImGui::DragFloat2("pos", &newSpriteData_.position_.x, 0.01f);
-		ImGui::DragFloat3("SpriteTPos", &newSpriteData_.spriteTransform_.translate.x, 0.01f);
-		ImGui::DragFloat3("SpriteTRot", &newSpriteData_.spriteTransform_.rotate.x, 0.01f);
-		ImGui::DragFloat3("SpriteTSca", &newSpriteData_.spriteTransform_.scale.x, 0.01f);
-		ImGui::TreePop();
-	}
-
-	ImGui::DragFloat3("modelPos", &testWTF_.transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("modelRot", &testWTF_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("modelSca", &testWTF_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat3("modelPos", &skyboxTransform_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("modelRot", &skyboxTransform_.transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("modelSca", &skyboxTransform_.transform_.scale.x, 0.01f);
 
 
 	if (ImGui::BeginTabBar("PostEffect"))
@@ -465,19 +281,7 @@ void SampleScene::ImGuiDraw()
 
 	ImGui::End();
 
-	for (std::list<std::unique_ptr<InstancedGroup>>::iterator it = group_.begin();
-		it != group_.end(); ++it) {
-		(*it)->ImGuiDraw();
-	}
-
-	player_->ImGuiDraw();
 	skybox_->ImGuiDraw();
-	humans_[0]->ImGuiDraw();
-	humans_[1]->ImGuiDraw();
-	humans_[2]->ImGuiDraw();
-	for (int i = 0; i < cubes_.size(); ++i) {
-		cubes_[i]->ImGuiDraw();
-	}
 	// Particle
 	gpuParticle_->ImGuiDraw();
 	// カメラの
@@ -491,20 +295,16 @@ void SampleScene::LoadModel()
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
 	ModelManager::LoadObjModel("Plane", "plane");
 	ModelManager::LoadObjModel("Axis", "BulletTest");
-
-	cubeModel_ = ModelManager::GetModel("DefaultCube");
-
-	testModel_.reset(Model::CreateObj("AnimatedCube", LoadExtension::kGltf));
-	walkModel_.reset(Model::CreateObj("walk", LoadExtension::kGltf));
-	sneakWalkModel_.reset(Model::CreateObj("sneakWalk", LoadExtension::kGltf));
+	ModelManager::LoadAnimModel("AnimCube", "AnimatedCube");
+	ModelManager::LoadAnimModel("Walk", "walk");
+	ModelManager::LoadAnimModel("SneakWalk", "sneakWalk");
 	sphere_.reset(Skydome::CreateSkydome());
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }
 
 void SampleScene::LoadTexture()
 {
-	newSpriteData_.uvTexture_ = TextureManager::Load("Resources/default/uvChecker.png");
-	newSprite_.reset(Sprite::Create(newSpriteData_.uvTexture_, { 300.0f,0.0f }, { 0,0 }));
+
 }
 
 void SampleScene::CameraUpdate()
@@ -546,4 +346,76 @@ void SampleScene::LightingInitialize()
 	spLightData_.intensity = 4.0f;
 	spLightData_.decay = 2.0f;
 	spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
+}
+
+void SampleScene::PostChanger()
+{
+	if (input_->TriggerKey(DIK_0)) {
+		postEffecter_ = 0;
+	}
+	if (input_->TriggerKey(DIK_1)) {
+		postEffecter_ = 1;
+	}
+	if (input_->TriggerKey(DIK_2)) {
+		postEffecter_ = 2;
+	}
+	if (input_->TriggerKey(DIK_3)) {
+		postEffecter_ = 3;
+	}
+	if (input_->TriggerKey(DIK_4)) {
+		postEffecter_ = 4;
+	}
+	if (input_->TriggerKey(DIK_5)) {
+		postEffecter_ = 5;
+	}
+	if (input_->TriggerKey(DIK_6)) {
+		postEffecter_ = 6;
+	}
+	if (input_->TriggerKey(DIK_7)) {
+		postEffecter_ = 7;
+	}
+	if (input_->TriggerKey(DIK_8)) {
+		postEffecter_ = 8;
+	}
+	if (input_->TriggerKey(DIK_9)) {
+		postEffecter_ = 9;
+	}
+
+	switch (postEffecter_)
+	{
+	case 0:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+		break;
+	case 1:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayScale;
+		break;
+	case 2:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
+		break;
+	case 3:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGrayscaleVignette;
+		break;
+	case 4:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kGaussian;
+		break;
+	case 5:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kSmoothing;
+		break;
+	case 6:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+		break;
+	case 7:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kDissolve;
+		break;
+	case 8:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kNoise;
+		break;
+	case 9:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+		break;
+	default:
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+		break;
+	}
+
 }
