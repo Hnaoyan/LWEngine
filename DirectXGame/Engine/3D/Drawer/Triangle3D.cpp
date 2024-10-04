@@ -4,7 +4,7 @@
 
 void Triangle3D::Initialize()
 {
-	vertexData_.resize(size_t(6));
+	vertexData_.resize(size_t(512));
 
 	// 左上
 	vertexData_[0].position = { -2.0f,0.0f,0.0f };
@@ -23,7 +23,7 @@ void Triangle3D::Initialize()
 	vertexData_[3].color = { 1.0f,0.0f,0.0f,1.0f };
 
 	vertexData_[4] = vertexData_[0];
-	vertexData_[5] = vertexData_[1];
+	vertexData_[5] = vertexData_[2];
 	CreateVertex();
 }
 

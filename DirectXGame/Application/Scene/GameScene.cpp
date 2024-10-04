@@ -66,6 +66,10 @@ void GameScene::Initialize()
 
 	//enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
 	//enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
+	for (auto it = triangles_.begin(); it != triangles_.end(); ++it) {
+		(*it) = std::make_unique<Triangle3D>();
+		(*it)->Initialize();
+	}
 
 
 	// セッター処理
@@ -139,6 +143,10 @@ void GameScene::Update()
 		}
 	}
 
+	for (auto it = triangles_.begin(); it != triangles_.end(); ++it) {
+		(*it)->Update();
+	}
+
 	// 衝突処理
 	CollisionUpdate();
 	// カメラの更新
@@ -183,6 +191,10 @@ void GameScene::Draw()
 
 	bulletManager_->Draw(desc);
 	gpuParticleManager_->Draw(&camera_);
+
+	for (auto it = triangles_.begin(); it != triangles_.end(); ++it) {
+		(*it)->Draw(&camera_);
+	}
 
 	ModelRenderer::PostDraw();
 

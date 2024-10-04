@@ -78,6 +78,8 @@ private: // アプリ
 	// ゲームのシステム関係	
 	std::unique_ptr<GameSystem> gameSystem_;
 
+	std::vector<std::unique_ptr<Triangle3D>> triangles_;
+
 	// 地形マネ
 	std::unique_ptr<TerrainManager> terrainManager_;
 	// 弾のマネージャー
