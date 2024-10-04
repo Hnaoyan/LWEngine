@@ -830,9 +830,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CPUParticleSystem.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Particle\CPUParticleSystem.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

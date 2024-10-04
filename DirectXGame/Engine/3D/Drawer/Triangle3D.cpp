@@ -4,17 +4,26 @@
 
 void Triangle3D::Initialize()
 {
-	vertexData_.resize(size_t(3));
+	vertexData_.resize(size_t(6));
 
-	vertexData_[0].position = { 0.0f,0.0f,0.0f };
+	// 左上
+	vertexData_[0].position = { -2.0f,0.0f,0.0f };
 	vertexData_[0].color = { 1.0f,0.0f,0.0f,1.0f };
 
-	vertexData_[1].position = { 2.0f,-2.0f,0.0f };
-	vertexData_[1].color = { 0.0f,1.0f,0.0f,1.0f };
+	// 左下
+	vertexData_[1].position = { -2.0f,-2.0f,0.0f };
+	vertexData_[1].color = { 0.0f,0.0f,1.0f,1.0f };
 
-	vertexData_[2].position = { -2.0f,-2.0f,0.0f };
-	vertexData_[2].color = { 0.0f,0.0f,1.0f,1.0f };
+	// 右下
+	vertexData_[2].position = { 2.0f,-2.0f,0.0f };
+	vertexData_[2].color = { 0.0f,1.0f,0.0f,1.0f };
 
+	// 右上
+	vertexData_[3].position = { 2.0f,0.0f,0.0f };
+	vertexData_[3].color = { 1.0f,0.0f,0.0f,1.0f };
+
+	vertexData_[4] = vertexData_[0];
+	vertexData_[5] = vertexData_[1];
 	CreateVertex();
 }
 

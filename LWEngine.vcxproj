@@ -154,7 +154,6 @@
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.h" />
