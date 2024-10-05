@@ -113,7 +113,6 @@ void SampleScene::Update()
 	skyboxTransform_.UpdateMatrix();
 
 	lines_->Update();
-	triangle_->Update();
 
 	// カメラの更新
 	CameraUpdate();
@@ -192,6 +191,8 @@ void SampleScene::UIDraw()
 
 void SampleScene::ImGuiDraw()
 {
+	triangle_->Update();
+
 	ImGui::Begin("SampleScene");
 	ImGui::ColorEdit3("DisColor", &cubeMaterial_->dissolveColor_.x);
 	ImGui::DragFloat3("DisColor", &cubeMaterial_->dissolveColor_.x, 0.01f);

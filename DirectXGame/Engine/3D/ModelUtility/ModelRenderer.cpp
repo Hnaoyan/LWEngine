@@ -289,7 +289,11 @@ void ModelRenderer::TriangleDraw(ICamera* camera, Triangle3D* triangle)
 
 	// 頂点
 	sCommandList_->IASetVertexBuffers(0, 1, &triangle->vbView_);
+
+	sCommandList_->IASetIndexBuffer(&triangle->ibView_);
+
 	// 描画
-	sCommandList_->DrawInstanced(UINT(triangle->GetVertexSize()), 1, 0, 0);
+	//sCommandList_->DrawInstanced(UINT(triangle->GetVertexSize()), 1, 0, 0);
+	sCommandList_->DrawIndexedInstanced(UINT(triangle->GetIndexSize()), 1, 0, 0, 0);
 
 }

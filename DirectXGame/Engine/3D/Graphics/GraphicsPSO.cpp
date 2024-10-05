@@ -318,6 +318,9 @@ void GraphicsPSO::CreateTrianglePSO()
 	{
 		PSOLib::SetInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT)
 	},
+	//{	// uv
+	//	PSOLib::SetInputLayout("TEXCOORD",DXGI_FORMAT_R32G32_FLOAT)
+	//},
 	};
 	// グラフィックスパイプライン
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};
@@ -351,9 +354,11 @@ void GraphicsPSO::CreateTrianglePSO()
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[1]{};
+	D3D12_ROOT_PARAMETER rootparams[2]{};
 	// カメラ
 	rootparams[0] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	// テクスチャ
+	rootparams[1] = PSOLib::InitAsDescriptorTable(1, descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);
 
 	// スタティックサンプラー
 	D3D12_STATIC_SAMPLER_DESC samplerDesc[1] = {};

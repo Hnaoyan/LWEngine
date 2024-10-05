@@ -33,8 +33,9 @@ struct TrailVertex
 
 struct TriangleData 
 {
-	Vector3 position;
-	Vector4 color;
+	Vector3 position;	// 座標
+	Vector4 color;		// 色
+	//Vector2 texcoord;	// テクスコード
 };
 
 #pragma region Model

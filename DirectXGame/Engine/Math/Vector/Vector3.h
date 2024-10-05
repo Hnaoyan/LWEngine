@@ -10,6 +10,10 @@ public:
 	float y;
 	float z;
 
+	inline static Vector3 Right() { return Vector3(1.0f, 0.0f, 0.0f); }
+	inline static Vector3 Up() { return Vector3(0.0f, 1.0f, 0.0f); }
+	inline static Vector3 Forward() { return Vector3(0.0f, 0.0f, 1.0f); }
+
 #pragma region 四則演算
 
 	Vector3 operator+(const Vector3& Other) const {
