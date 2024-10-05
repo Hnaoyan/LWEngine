@@ -7,56 +7,29 @@
 
 void Triangle3D::Initialize()
 {
-	//vertexData_.resize(size_t(30));
-
-	//vertexData_[0].color = { 1.0f,0.0f,0.0f,1.0f };
-	//vertexData_[1].color = { 0.0f,0.0f,1.0f,1.0f };
-	//vertexData_[2].color = { 0.0f,1.0f,0.0f,1.0f };
-	//vertexData_[3].color = { 1.0f,0.0f,0.0f,1.0f };
-
-	//vertexData_[4] = vertexData_[0];
-	//vertexData_[5] = vertexData_[2];
-
-	//Vector3 head{};
-	//Vector3 tail{};
-
-	//head = { 3.0f,0.0f,0.0f };
-	//tail = { -3.0f,0.0f,0.0f };
-	//float offset = 2.0f;
-
-	//vertexData_[0].position = head;
-	//vertexData_[0].position.y += offset;
-	//vertexData_[1].position = head;
-	//vertexData_[1].position.y -= offset;
-	//vertexData_[2].position = tail;
-	//vertexData_[2].position.y += offset;
-
-	//vertexData_[3].position = tail;
-	//vertexData_[3].position.y += offset;
-	//vertexData_[4].position = tail;
-	//vertexData_[4].position.y -= offset;
-	//vertexData_[5].position = head;
-	//vertexData_[5].position.y -= offset;	
-
 	texture_ = TextureManager::Load("Resources/default/uvChecker.png");
-
-	//head[0] ={}
 	Vector3 point = {};
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 50; i++) {
 		curvePoints_.push_back(point);
 		point += Vector3(1.0f, 0.5f, 0.0f);
 	}
+	// 頂点情報作成
 	CreateVertex();
-
-	GeneratePolygon({ 0.0f,1.0f,1.0f,0.85f }, 1.0f);
-
+	// 頂点の更新
+	UpdateVertex({ 0.0f,1.0f,1.0f,0.85f }, 1.0f);
+	// ポインタにコピー
+	memcpy(vertex_.cMap_, vertexData_.data(), sizeof(TriangleData) * vertexData_.size());
+	memcpy(index_.cMap_, indices_.data(), sizeof(uint32_t) * indices_.size());
 }
 
 void Triangle3D::Update()
 {
 
 	ImGui::Begin("Triangle");
-
+	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
+	if (ImGui::Button("Generate")) {
+		curvePoints_.push_back(generatePosition_);
+	}
 	std::string name;
 	int num = 0;
 	//for (auto it = vertexData_.begin(); it != vertexData_.end(); ++it) {
@@ -65,7 +38,6 @@ void Triangle3D::Update()
 	//	name = "Color" + std::to_string(num);
 	//	ImGui::ColorEdit4(name.c_str(), &(*it).color.x);
 	//	num++;
-
 	//	ImGui::Separator();
 	//}
 
@@ -79,10 +51,11 @@ void Triangle3D::Update()
 
 	ImGui::End();
 	
+	// 頂点の情報
 	UpdateVertex(Vector4(0.0f, 1.0f, 1.0f, 0.85f), 1.0f);
-
 	// ポインタに値を渡す
 	memcpy(vertex_.cMap_, vertexData_.data(), sizeof(TriangleData) * vertexData_.size());
+	memcpy(index_.cMap_, indices_.data(), sizeof(uint32_t) * indices_.size());
 }
 
 void Triangle3D::Draw(ICamera* camera)
@@ -175,8 +148,11 @@ void Triangle3D::GeneratePolygon(const Vector4& color, const float& width)
 		right.z *= width * 0.5f;
 
 		// 頂点
-		vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y,startPoint.z - right.z},color };
-		vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y,startPoint.z + right.z},color };
+		float alpha = (vertexId + 1.0f) / (float)vertexData_.size();
+		Vector4 addColor = color;
+		addColor.w = alpha;
+		vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y,startPoint.z - right.z},addColor };
+		vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y,startPoint.z + right.z},addColor };
 	
 		// インデックスの設定
 		if (i < numPoints - 2) {
@@ -214,18 +190,31 @@ void Triangle3D::UpdateVertex(const Vector4& color, const float& width)
 		Vector3 tangent = endPoint - startPoint;
 		Vector3 normal = Vector3::Up();
 
-		Vector3 right = { -tangent.z,0.0f,tangent.x };
-		float length = std::sqrtf(right.x * right.x + right.z * right.z);
+		Vector3 right = { -tangent.y,tangent.x,0.0f };
+		float length = std::sqrtf(right.x * right.x + right.y * right.y);
 		right.x /= length;
-		right.z /= length;
+		right.y /= length;
 
 		// 幅調整
 		right.x *= width * 0.5f;
-		right.z *= width * 0.5f;
+		right.y *= width * 0.5f;
 
-		// 頂点
-		vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y,startPoint.z - right.z},color };
-		vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y,startPoint.z + right.z},color };
+		// ビルボード処理
+		if (camera_) {
+			Vector3 toCamera = Vector3::Normalize(camera_->transform_.translate - startPoint);
+			Vector3 trailDirect = Vector3::Normalize(endPoint - startPoint);
+			Vector3 perpendicular = Vector3::Cross(toCamera, trailDirect);
+
+			// 頂点
+			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},color };
+			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},color };
+		}
+		// ビルボードなし
+		else {
+			// 頂点
+			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},color };
+			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},color };
+		}
 
 		// インデックスの設定
 		if (i < numPoints - 2) {

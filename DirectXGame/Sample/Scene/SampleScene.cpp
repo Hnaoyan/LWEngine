@@ -83,7 +83,7 @@ void SampleScene::Initialize()
 
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
-
+	triangle_->SetCamera(&camera_);
 }
 
 void SampleScene::GPUUpdate()
@@ -159,7 +159,7 @@ void SampleScene::Draw()
 
 	skybox_->Draw(desc);
 
-	//lines_->Draw(&camera_);
+	lines_->Draw(&camera_);
 	triangle_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();

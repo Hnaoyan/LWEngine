@@ -10,6 +10,7 @@ public:
 	void Initialize();
 	void Update();
 	void Draw(ICamera* camera);
+	void SetCamera(ICamera* camera) { camera_ = camera; }
 private:
 	/// <summary>
 	/// 頂点データの作成
@@ -26,8 +27,7 @@ private:
 	void UpdateVertex(const Vector4& color, const float& width);
 
 private:
-	Vector3 vertexs_[3];
-
+	Vector3 generatePosition_ = {};
 	// カーブ用の座標
 	std::vector<Vector3> curvePoints_;
 
@@ -41,6 +41,8 @@ private:
 	std::vector<uint32_t> indices_;
 
 	uint32_t texture_ = 0u;
+
+	ICamera* camera_ = nullptr;
 
 public:
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};

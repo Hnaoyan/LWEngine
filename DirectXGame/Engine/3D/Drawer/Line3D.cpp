@@ -4,19 +4,7 @@
 
 void Line3D::Intialize()
 {
-	vertexData_.resize(size_t(4));
-
-	vertexData_[0].position = { 0.0f,0.0f,0.0f };
-	vertexData_[0].color = { 0.0f,1.0f,0.0f,1.0f };
-
-	vertexData_[1].position = { 2.0f,2.0f,0.0f };
-	vertexData_[1].color = { 1.0f,0.0f,0.0f,1.0f };
-
-	vertexData_[2].position = { -2.0f,-2.0f,0.0f };
-	vertexData_[2].color = { 0.0f,0.0f,1.0f,1.0f };
-
-	vertexData_[3].position = { 0.0f,0.0f,0.0f };
-	vertexData_[3].color = { 1.0f,1.0f,0.0f,1.0f };
+	vertexData_.resize(size_t(1024));
 
 	CreateVertex();
 }
