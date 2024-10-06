@@ -83,7 +83,15 @@ void SampleScene::Initialize()
 
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
-	triangle_->SetCamera(&camera_);
+	//triangle_->SetCamera(&camera_);
+
+
+	Vector3 point = {};
+	for (int i = 0; i < 50; i++) {
+		curvePoints_.push_back(point);
+		point += Vector3(1.0f, 0.5f, 0.0f);
+	}
+
 }
 
 void SampleScene::GPUUpdate()
@@ -191,9 +199,26 @@ void SampleScene::UIDraw()
 
 void SampleScene::ImGuiDraw()
 {
-	triangle_->Update();
+	triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
+
+	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
+	if (ImGui::Button("Generate")) {
+		curvePoints_.push_back(generatePosition_);
+	}
+	std::string name;
+	int num = 0;
+	if (ImGui::TreeNode("Curve")) {
+		for (auto it = curvePoints_.begin(); it != curvePoints_.end(); ++it) {
+			name = "CurvePoint" + std::to_string(num);
+			ImGui::DragFloat3(name.c_str(), &(*it).x, 0.01f);
+			ImGui::Separator();
+			num++;
+		}
+		ImGui::TreePop();
+	}
+
 	ImGui::ColorEdit3("DisColor", &cubeMaterial_->dissolveColor_.x);
 	ImGui::DragFloat3("DisColor", &cubeMaterial_->dissolveColor_.x, 0.01f);
 	ImGui::DragFloat("dis", &cubeMaterial_->threshold_, 0.01f);

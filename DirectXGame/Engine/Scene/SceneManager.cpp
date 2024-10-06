@@ -22,7 +22,7 @@ void SceneManager::Update()
 		// シーンマネージャー設定
 		nowScene_->SetSceneManager(this);
 		// 次のシーンの初期化
-		nowScene_->Initialize();
+		//nowScene_->Initialize();
 	}
 	// 現在のシーンがあれば
 	if (nowScene_) {

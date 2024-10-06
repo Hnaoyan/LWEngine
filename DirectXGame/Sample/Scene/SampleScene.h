@@ -84,6 +84,8 @@ private: // USER
 	WorldTransform skyboxTransform_;
 	std::unique_ptr<Skybox> skybox_;
 
+	// カーブ用の座標
+	std::vector<Vector3> curvePoints_;
 
 private: // SYSTEM
 	std::unique_ptr<DebugCamera> debugCamera_;

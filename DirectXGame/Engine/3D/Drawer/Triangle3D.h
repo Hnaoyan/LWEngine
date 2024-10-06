@@ -8,7 +8,7 @@ class Triangle3D
 {
 public:
 	void Initialize();
-	void Update();
+	void Update(std::vector<Vector3> controlPoint);
 	void Draw(ICamera* camera);
 	void SetCamera(ICamera* camera) { camera_ = camera; }
 private:
@@ -21,27 +21,19 @@ private:
 	/// </summary>
 	void RefreshVertex();
 
-	void GenerateVertices();
-
 	void GeneratePolygon(const Vector4& color, const float& width);
-	void UpdateVertex(const Vector4& color, const float& width);
+	void UpdateVertex(std::vector<Vector3> controllPoint, const Vector4& color, const float& width);
 
 private:
-	Vector3 generatePosition_ = {};
-	// カーブ用の座標
-	std::vector<Vector3> curvePoints_;
 
-	// 頂点情報
-	std::vector<TriangleData> vertexData_;
-	// 頂点のマッピングデータ
+private:
+	// 頂点
 	ConstantBufferMapContext<TriangleData> vertex_;
-
+	std::vector<TriangleData> vertexData_;
 	// インデックス
 	ConstantBufferMapContext<uint32_t> index_;
 	std::vector<uint32_t> indices_;
-
-	uint32_t texture_ = 0u;
-
+	// カメラ
 	ICamera* camera_ = nullptr;
 
 public:
