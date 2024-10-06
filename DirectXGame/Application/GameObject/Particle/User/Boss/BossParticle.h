@@ -2,6 +2,7 @@
 #include "Engine/Particle/Emitter/ParticleEmitter.h"
 #include "Engine/LwLib/LwLibLists.h"
 #include "Application/GameObject/Boss/System/BossSystem.h"
+#include "../../EmitterTypes.h"
 
 class Boss;
 

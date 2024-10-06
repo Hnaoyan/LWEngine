@@ -21,9 +21,9 @@ void BossSystemContext::BulletCluster::Update() {
 		// オブジェクト自体の削除（弾
 		if (obj->IsDead()) {
 			if (auto bullet = dynamic_cast<IBullet*>(obj.get())) {
-				BossParticle::BulletEffect* effect = static_cast<BossParticle::BulletEffect*>(gpuParticle_->FindEmitter(bullet->GetTag()));
-				// パーティクルの削除タイマー起動
-				effect->StartTimer(60.0f);
+				//BossParticle::BulletEffect* effect = static_cast<BossParticle::BulletEffect*>(gpuParticle_->FindEmitter(bullet->GetTag()));
+				//// パーティクルの削除タイマー起動
+				//effect->StartTimer(60.0f);
 			}
 			return true;
 		}
@@ -47,9 +47,9 @@ void BossSystemContext::BulletCluster::Draw(ModelDrawDesc desc) {
 	// 描画
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
 
+	// 軌跡
 	for (auto it = units_.begin(); it != units_.end(); ++it) {
 		IBullet* bullet = static_cast<IBullet*>((*it).get());
-
 		bullet->DrawTrail(desc.camera);
 	}
 
@@ -76,15 +76,15 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossNormalBullet", "Scale");
 	instance->Update();
 
-	// 移動のパーティクル
-	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
-	emitter->Initialize(ModelManager::GetModel("Plane"));
-	emitter->Update();
-	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
-	pre->SetBullet(instance.get());
-	pre->SetGPUParticleSystem(gpuParticle_);
-	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
-	parentTag_ = static_cast<IBullet*>(instance.get())->GetTag();
+	//// 移動のパーティクル
+	//std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	//emitter->Initialize(ModelManager::GetModel("Plane"));
+	//emitter->Update();
+	//BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	//pre->SetBullet(instance.get());
+	//pre->SetGPUParticleSystem(gpuParticle_);
+	//gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	//parentTag_ = static_cast<IBullet*>(instance.get())->GetTag();
 
 	// リストにムーブ
 	units_.push_back(std::move(instance));
@@ -100,14 +100,14 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossNormalBullet", "Scale");
 	instance->Update();
 
-	// 移動のパーティクル
-	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
-	emitter->Initialize(ModelManager::GetModel("Plane"));
-	emitter->Update();
-	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
-	pre->SetBullet(instance.get());
-	pre->SetGPUParticleSystem(gpuParticle_);
-	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	//// 移動のパーティクル
+	//std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	//emitter->Initialize(ModelManager::GetModel("Plane"));
+	//emitter->Update();
+	//BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	//pre->SetBullet(instance.get());
+	//pre->SetGPUParticleSystem(gpuParticle_);
+	//gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
 
 	// リストにムーブ
 	units_.push_back(std::move(instance));
@@ -126,14 +126,14 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossTrackingBullet", "Scale");
 	instance->Update();
 
-	// 移動のパーティクル
-	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
-	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
-	pre->SetBullet(instance.get());
-	emitter->Initialize(ModelManager::GetModel("Plane"));
-	emitter->Update();
-	pre->SetGPUParticleSystem(gpuParticle_);
-	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	//// 移動のパーティクル
+	//std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	//BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	//pre->SetBullet(instance.get());
+	//emitter->Initialize(ModelManager::GetModel("Plane"));
+	//emitter->Update();
+	//pre->SetGPUParticleSystem(gpuParticle_);
+	//gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
 
 	// リストにムーブ
 	units_.push_back(std::move(instance));
@@ -153,14 +153,14 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossTrackingBullet", "Scale");
 	instance->Update();
 
-	// 移動のパーティクル
-	std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
-	BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
-	pre->SetBullet(instance.get());
-	emitter->Initialize(ModelManager::GetModel("Plane"));
-	emitter->Update();
-	pre->SetGPUParticleSystem(gpuParticle_);
-	gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
+	//// 移動のパーティクル
+	//std::unique_ptr<ParticleEmitter> emitter = std::make_unique<BossParticle::BulletEffect>();
+	//BossParticle::BulletEffect* pre = static_cast<BossParticle::BulletEffect*>(emitter.get());
+	//pre->SetBullet(instance.get());
+	//emitter->Initialize(ModelManager::GetModel("Plane"));
+	//emitter->Update();
+	//pre->SetGPUParticleSystem(gpuParticle_);
+	//gpuParticle_->CreateEmitter(std::move(emitter), static_cast<IBullet*>(instance.get())->GetTag());
 
 	// リストにムーブ
 	units_.push_back(std::move(instance));

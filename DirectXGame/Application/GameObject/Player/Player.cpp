@@ -105,6 +105,9 @@ void Player::Draw(ModelDrawDesc desc)
 	if (!isInvisible_) {
 		ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 	}
+
+	// パーティクル
+	facadeSystem_->GetParticleManager()->Draw(desc.camera);
 }
 
 void Player::ImGuiDraw()

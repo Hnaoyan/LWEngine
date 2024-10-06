@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Particle/Emitter/ParticleEmitter.h"
 #include "Engine/3D/Instancing/InstancedUnit.h"
+#include "../../EmitterTypes.h"
 
 class Player;
 

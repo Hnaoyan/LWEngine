@@ -9,6 +9,8 @@ void Triangle3D::Initialize()
 {
 	// USER
 	isBillBoard_ = true;
+	color_ = { 0.0f,0.0f,0.0f,1.0f };
+	width_ = 1.0f;
 	// 頂点情報作成
 	CreateVertex();
 }
@@ -16,7 +18,7 @@ void Triangle3D::Initialize()
 void Triangle3D::Update(std::vector<Vector3> controlPoint)
 {	
 	// 頂点の情報
-	UpdateVertex(controlPoint, Vector4(0.0f, 1.0f, 1.0f, 0.85f), 1.0f);
+	UpdateVertex(controlPoint, color_, width_);
 	// ポインタに値を渡す
 	memcpy(vertex_.cMap_, vertexData_.data(), sizeof(TriangleData) * vertexData_.size());
 	memcpy(index_.cMap_, indices_.data(), sizeof(uint32_t) * indices_.size());
@@ -69,6 +71,7 @@ void Triangle3D::RefreshVertex()
 void Triangle3D::UpdateVertex(std::vector<Vector3> controllPoint,const Vector4& color, const float& width)
 {
 	size_t numPoints = controllPoint.size();
+	size_t alphaIndex = controllPoint.size();
 
 	// 補間数が足りない場合早期
 	if (numPoints < 2) { return; }
@@ -94,25 +97,33 @@ void Triangle3D::UpdateVertex(std::vector<Vector3> controllPoint,const Vector4& 
 		right.x *= width * 0.5f;
 		right.y *= width * 0.5f;
 
+		Vector4 newColor = color;
+
+		newColor.w = ((float)i + 1.0f) / (float)controllPoint.size();
+		//newColor.w = ((float)alphaIndex) / (float)controllPoint.size();
+		newColor.w = std::clamp(newColor.w, 0.0f, 1.0f);
+
 		// ビルボード処理
-		if (isBillBoard_) {
-			Vector3 toCamera = Vector3::Normalize(camera_->transform_.translate - startPoint);
+		if (isBillBoard_ && camera_.has_value()) {
+			assert(camera_);
+			Vector3 toCamera = Vector3::Normalize(camera_.value()->transform_.translate - startPoint);
 			Vector3 trailDirect = Vector3::Normalize(endPoint - startPoint);
 			Vector3 perpendicular = Vector3::Cross(toCamera, trailDirect);
 
-			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},color };
-			
-			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
+			perpendicular = Vector3::Normalize(perpendicular);
+			perpendicular *= width * 0.5f;
 
-			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},color };
+			// 頂点
+			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor };
+			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
+			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor };
 		}
 		// ビルボードなし
 		else {
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},color };
+			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor };
 			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
-			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},color };
+			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor };
 		}
 
 		// インデックスの設定
@@ -128,6 +139,7 @@ void Triangle3D::UpdateVertex(std::vector<Vector3> controllPoint,const Vector4& 
 
 		// 次の頂点に
 		vertexId += 2;
+		alphaIndex--;
 	}
 
 }

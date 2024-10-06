@@ -19,7 +19,7 @@ void BulletTrail::UpdateTrail(const Vector3& newPoint)
 
 void BulletTrail::Draw(ICamera* camera)
 {
-	if (!triangle_->camera_) {
+	if (!triangle_->IsCamera()) {
 		triangle_->SetCamera(camera);
 	}
 	triangle_->Update(trailPoints_);

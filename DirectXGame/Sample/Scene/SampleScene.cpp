@@ -88,7 +88,7 @@ void SampleScene::Initialize()
 
 
 	Vector3 point = {};
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 16; i++) {
 		curvePoints_.push_back(point);
 		point += Vector3(1.0f, 0.5f, 0.0f);
 	}

@@ -16,7 +16,7 @@ void BossParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle
 	isBillBoard_ = true;
 	blendMode_ = BlendMode::kScreen;
 	RefreshData(data_);
-	texture_ = TextureManager::Load("Resources/default/white2x2.png");
+	texture_ = TextureManager::Load("Resources/Effect/effect.png");
 }
 
 void BossParticle::BulletEffect::Update()

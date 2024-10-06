@@ -159,7 +159,9 @@ void BossSystemContext::TrackingBullet::CalcInferiorMissile()
 	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius_;
 	// ずらすオフセット作成
 	float offsetValue = 1.5f;
-	Vector3 offset = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue });
+	// 最小値
+	float limit = 0.5f;
+	Vector3 offset = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 	centripetalAccel += offset;
 
 	// 力の向き
