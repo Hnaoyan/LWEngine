@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedUnit.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
+#include "Trail/BulletTrail.h"
 
 class IBullet : public InstancedUnit
 {
@@ -29,6 +30,8 @@ public:
 	/// <param name="object"></param>
 	void OnCollision(ColliderObject object);
 
+	void Draw(ICamera* camera);
+
 private:
 	// コライダー
 	Sphere collider_;
@@ -38,6 +41,9 @@ private:
 	float lifeTime_ = 0.0f;
 	// 生成時の座標
 	Vector3 generatePosition_{};
+
+	// 軌跡クラス
+	std::unique_ptr<BulletTrail> trail_;
 
 public: // アクセッサ
 	Sphere* GetCollider() { return &collider_; }

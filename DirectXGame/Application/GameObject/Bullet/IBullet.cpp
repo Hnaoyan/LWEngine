@@ -1,6 +1,10 @@
 #include "IBullet.h"
-#include "../../Collision/ColliderFilter.h"
-#include "../../GameSystem/GameSystem.h"
+#include "Application/Collision/ColliderFilter.h"
+#include "Application/GameSystem/GameSystem.h"
+
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
+
+#include <imgui.h>
 
 uint32_t IBullet::sSerialNumber = 0;
 
@@ -16,6 +20,9 @@ void IBullet::Initialize()
 	collider_.SetAttribute(kCollisionAttributeBullet);
 	// 生成座標
 	generatePosition_ = transform_.translate;
+
+	// 軌跡
+	trail_ = std::make_unique<BulletTrail>();
 }
 
 void IBullet::Update()
@@ -29,10 +36,14 @@ void IBullet::Update()
 	// サイズの設定
 	collider_.radius_ = transform_.scale.x;
 	collider_.Update(transform_.translate);
+
+	// 軌跡の更新
+	trail_->UpdateTrail(transform_.translate);
 }
 
 void IBullet::ImGuiDraw()
 {
+	
 }
 
 void IBullet::OnCollision(ColliderObject object)
@@ -46,4 +57,12 @@ void IBullet::OnCollision(ColliderObject object)
 	if (std::holds_alternative<Terrain*>(object)) {
 		isDead_ = true;
 	}
+}
+
+void IBullet::Draw(ICamera* camera)
+{
+	// 軌跡クラスの設定
+	trail_->Draw(camera);
+	// 軌跡の描画
+	//ModelRenderer::TriangleDraw(camera, trail_->triangle_.get());
 }

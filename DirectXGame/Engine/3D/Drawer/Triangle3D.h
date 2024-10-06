@@ -37,6 +37,7 @@ private:
 	// インデックス
 	ConstantBufferMapContext<uint32_t> index_;
 	std::vector<uint32_t> indices_;
+public:
 	// カメラ
 	ICamera* camera_ = nullptr;
 

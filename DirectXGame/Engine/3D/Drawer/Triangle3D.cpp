@@ -8,7 +8,7 @@
 void Triangle3D::Initialize()
 {
 	// USER
-	isBillBoard_ = false;
+	isBillBoard_ = true;
 	// 頂点情報作成
 	CreateVertex();
 }
