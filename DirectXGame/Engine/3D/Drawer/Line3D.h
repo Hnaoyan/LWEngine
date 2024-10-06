@@ -15,11 +15,6 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
-	/// <summary>
-	/// 描画
-	/// </summary>
-	/// <param name="camera"></param>
-	void Draw(ICamera* camera);
 
 private:
 	/// <summary>
@@ -31,19 +26,20 @@ private:
 	/// </summary>
 	void RefreshVertex();
 
-	// 頂点情報
-	std::vector<LineData> vertexData_;
 	// 頂点のマッピングデータ
 	ConstantBufferMapContext<LineData> vertex_;
 
 	int32_t containerNum_ = 0;
 public:
-	void SetVertexData(const Vector3& start, const Vector3& end) {
-		vertexData_[containerNum_].position = start;
-		vertexData_[containerNum_++].position = end;
-	}
+	//void SetVertexData(const Vector3& start, const Vector3& end) {
+	//	vertexData_[containerNum_].position = start;
+	//	vertexData_[containerNum_++].position = end;
+	//}
 
 public:
+	// 頂点情報
+	std::vector<LineData> vertexData_;
+
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	size_t GetVertexSize() { return vertexData_.size(); }
 

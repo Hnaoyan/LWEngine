@@ -18,6 +18,10 @@ void Line3D::Intialize()
 	vertexData_[3].position = { -2.0f,2.0f,2.0f };
 	vertexData_[3].color = { 0.0f,1.0f,0.0f,1.0f };
 
+	for (int i = 0; i < 256; i++) {
+		vertexData_[i].color = { 1.0f,0.0f,0.0f,1.0f };
+	}
+
 	CreateVertex();
 }
 
@@ -26,12 +30,6 @@ void Line3D::Update()
 
 	// ポインタに値を渡す
 	memcpy(vertex_.cMap_, vertexData_.data(), sizeof(LineData) * vertexData_.size());
-}
-
-void Line3D::Draw(ICamera* camera)
-{
-	// 頂点情報とかも送らないと動かない
-	ModelRenderer::LineDraw(camera, this);
 }
 
 void Line3D::CreateVertex()

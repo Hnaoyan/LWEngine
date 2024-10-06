@@ -5,6 +5,7 @@
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
+#include "Engine/LwLib/LwLibLists.h"
 
 void SampleScene::Initialize()
 {
@@ -83,14 +84,19 @@ void SampleScene::Initialize()
 
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
-	//triangle_->SetCamera(&camera_);
+	triangle_->SetCamera(&camera_);
 
 
 	Vector3 point = {};
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 4; i++) {
 		curvePoints_.push_back(point);
 		point += Vector3(1.0f, 0.5f, 0.0f);
 	}
+
+	//curvePoints_[0] = { 0.0f,0.0f,0.0f };
+	//curvePoints_[1] = { 3.0f,3.0f,0.0f };
+	//curvePoints_[2] = { 5.0f,0.0f,0.0f };
+	//curvePoints_[3] = { 2.0f,-3.0f,0.0f };
 
 }
 
@@ -119,6 +125,26 @@ void SampleScene::Update()
 	}
 
 	skyboxTransform_.UpdateMatrix();
+
+	// キャトムルのコンテナ
+	std::vector<Vector3> sts;
+	// 始点
+	sts.push_back(LwLib::Curve::CatmullRomSpline(curvePoints_[0], curvePoints_[1], curvePoints_[2], curvePoints_[3], 0.0f));
+	// 補間点
+	for (int i = 1; i <= 10; ++i) {
+		float ratio = (float)i / 10;
+		Vector3 newPoint = LwLib::Curve::CatmullRomSpline(curvePoints_[0], curvePoints_[1], curvePoints_[2], curvePoints_[3], ratio);
+		sts.push_back(newPoint);
+	}
+
+	int vtIndex = 0;
+	for (int i = 0; i < 10; ++i) {
+		lines_->vertexData_[vtIndex++].position = sts[i];
+		lines_->vertexData_[vtIndex++].position = sts[i + 1];
+	}
+
+	lines_->vertexData_[vtIndex++].position = curvePoints_[1];
+	lines_->vertexData_[vtIndex++].position = curvePoints_[2];
 
 	lines_->Update();
 
@@ -167,8 +193,8 @@ void SampleScene::Draw()
 
 	skybox_->Draw(desc);
 
-	lines_->Draw(&camera_);
-	triangle_->Draw(&camera_);
+	ModelRenderer::LineDraw(&camera_, lines_.get());
+	ModelRenderer::TriangleDraw(&camera_, triangle_.get());
 
 	ModelRenderer::PostDraw();
 	Model::PostDraw();
@@ -202,7 +228,7 @@ void SampleScene::ImGuiDraw()
 	triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
-
+	ImGui::Checkbox("TriangleBillBoard", &triangle_->isBillBoard_);
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
 	if (ImGui::Button("Generate")) {
 		curvePoints_.push_back(generatePosition_);

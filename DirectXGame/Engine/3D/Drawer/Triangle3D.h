@@ -9,7 +9,6 @@ class Triangle3D
 public:
 	void Initialize();
 	void Update(std::vector<Vector3> controlPoint);
-	void Draw(ICamera* camera);
 	void SetCamera(ICamera* camera) { camera_ = camera; }
 private:
 	/// <summary>
@@ -21,7 +20,12 @@ private:
 	/// </summary>
 	void RefreshVertex();
 
-	void GeneratePolygon(const Vector4& color, const float& width);
+	/// <summary>
+	/// 頂点情報の更新
+	/// </summary>
+	/// <param name="controllPoint"></param>
+	/// <param name="color"></param>
+	/// <param name="width"></param>
 	void UpdateVertex(std::vector<Vector3> controllPoint, const Vector4& color, const float& width);
 
 private:
@@ -42,5 +46,7 @@ public:
 
 	size_t GetVertexSize() { return vertexData_.size(); }
 	size_t GetIndexSize() { return indices_.size(); }
+
+	bool isBillBoard_ = false;
 
 };
