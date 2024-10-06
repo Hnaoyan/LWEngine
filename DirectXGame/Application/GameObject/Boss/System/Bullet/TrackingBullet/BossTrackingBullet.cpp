@@ -46,6 +46,9 @@ void BossSystemContext::TrackingBullet::Initialize()
 		lerpRadius_ = TrackingBullet::sLerpRadius;
 	}
 
+	// 軌跡
+	trail_ = std::make_unique<BulletTrail>();
+
 }
 
 void BossSystemContext::TrackingBullet::Update()
@@ -83,6 +86,10 @@ void BossSystemContext::TrackingBullet::Update()
 	InstancedUnit::Update();
 	collider_.radius_ = transform_.scale.x;
 	collider_.Update(transform_.translate);
+
+	// 軌跡の更新
+	trail_->UpdateTrail(transform_.translate);
+
 }
 
 void BossSystemContext::TrackingBullet::ImGuiDraw()

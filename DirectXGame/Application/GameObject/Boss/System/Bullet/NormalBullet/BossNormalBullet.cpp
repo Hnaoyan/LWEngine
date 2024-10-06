@@ -22,6 +22,10 @@ void BossSystemContext::NormalBullet::Initialize()
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
 	moveDirect_ = Vector3::Normalize(velocity_);
+
+	// 軌跡
+	trail_ = std::make_unique<BulletTrail>();
+
 }
 
 void BossSystemContext::NormalBullet::Update()
@@ -39,6 +43,10 @@ void BossSystemContext::NormalBullet::Update()
 	InstancedUnit::Update();
 	collider_.radius_ = transform_.scale.x;
 	collider_.Update(transform_.translate);
+
+	// 軌跡の更新
+	trail_->UpdateTrail(transform_.translate);
+
 }
 
 void BossSystemContext::NormalBullet::ImGuiDraw()

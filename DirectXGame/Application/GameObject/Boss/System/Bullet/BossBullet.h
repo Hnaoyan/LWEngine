@@ -5,6 +5,7 @@
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
+#include "Application/GameObject/Bullet/Trail/BulletTrail.h"
 #include "../BossSystemStructs.h"
 
 #include <memory>
@@ -33,8 +34,11 @@ namespace BossSystemContext
 		/// </summary>
 		/// <param name="object"></param>
 		virtual void OnCollision(ColliderObject object) = 0;
+
+		virtual void DrawTrail(ICamera* camera);
 	public: // アクセッサ
 		Sphere* GetCollider() { return &collider_; }
+
 	protected:
 		// コライダー
 		Sphere collider_;
@@ -42,7 +46,8 @@ namespace BossSystemContext
 		Vector3 velocity_ = {};
 
 		void BufferUpdate();
-
+		// 軌跡
+		std::unique_ptr<BulletTrail> trail_;
 
 	};
 

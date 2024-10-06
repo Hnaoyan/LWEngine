@@ -46,6 +46,13 @@ void BossSystemContext::BulletCluster::Draw(ModelDrawDesc desc) {
 	modelDesc.texture = texture_;
 	// 描画
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
+
+	for (auto it = units_.begin(); it != units_.end(); ++it) {
+		IBullet* bullet = static_cast<IBullet*>((*it).get());
+
+		bullet->DrawTrail(desc.camera);
+	}
+
 }
 
 void BossSystemContext::BulletCluster::ImGuiDraw() {
