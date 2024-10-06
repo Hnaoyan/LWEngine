@@ -63,6 +63,7 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	worldTransform_.parent_ = &player_->worldTransform_;
+	worldTransform_.transform_.translate.y = -0.5f;
 
 	// ポリゴンの初期化
 	triangle_ = std::make_unique<Triangle3D>();
