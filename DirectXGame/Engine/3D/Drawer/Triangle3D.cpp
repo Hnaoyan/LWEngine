@@ -26,7 +26,7 @@ void Triangle3D::Update(std::vector<Vector3> controlPoint)
 
 void Triangle3D::CreateVertex()
 {
-	const size_t kMaxSegments = 1024;
+	const size_t kMaxSegments = 1024 * 2;
 
 	vertexData_.resize((kMaxSegments) * 2);
 	indices_.resize((kMaxSegments) * 6);

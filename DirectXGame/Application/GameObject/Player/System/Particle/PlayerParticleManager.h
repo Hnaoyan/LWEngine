@@ -54,6 +54,8 @@ namespace PlayerContext {
 		// 描画
 		void Draw(ICamera* camera);
 
+		//void TrailUpdate();
+
 	private:
 		// 保存座標と長さ
 		std::pair<std::vector<Vector3>, int32_t> trailPoint_;

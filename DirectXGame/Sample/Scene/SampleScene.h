@@ -87,6 +87,9 @@ private: // USER
 	// カーブ用の座標
 	std::vector<Vector3> curvePoints_;
 
+	bool isCurve_ = false;
+	float curveInter_ = 30.0f;
+
 private: // SYSTEM
 	std::unique_ptr<DebugCamera> debugCamera_;
 	bool isDebugCamera_ = false;

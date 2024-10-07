@@ -72,6 +72,7 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 	triangle_->SetWidth(0.5f);
 
 	// 保存数の最大値
+	// ここの値を内部で書き換えてもスムーズになるような処理も作る
 	trailPoint_.second = 20;
 }
 
@@ -85,12 +86,30 @@ void PlayerContext::MoveTrail::Update()
 	if (trailPoint_.first.size() > trailPoint_.second) {
 		trailPoint_.first.erase(trailPoint_.first.begin());
 	}
-	// 頂点の更新
-	triangle_->Update(trailPoint_.first);
 }
 
 void PlayerContext::MoveTrail::Draw(ICamera* camera)
 {
+	size_t maxNumber = trailPoint_.first.size() - 1;
+	if (trailPoint_.first[0] == trailPoint_.first[maxNumber]) {
+		return;
+	}
+
+	if (trailPoint_.first.size() > 8) {
+		std::vector<Vector3> interpolatedPoints;
+		for (int i = 1; i < trailPoint_.first.size() - 2; ++i) {
+			for (float t = 0.0f; t <= 1.0f; t += (1.0f / 30.0f)) {
+				t = std::clamp(t, 0.0f, 1.0f);
+				interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(trailPoint_.first[i - 1], trailPoint_.first[i], trailPoint_.first[i + 1], trailPoint_.first[i + 2], t));
+			}
+		}
+		triangle_->Update(interpolatedPoints);
+	}
+	else {
+		// 頂点の更新
+		triangle_->Update(trailPoint_.first);
+	}
+
 	// 描画
 	ModelRenderer::TriangleDraw(camera, triangle_.get());
 }

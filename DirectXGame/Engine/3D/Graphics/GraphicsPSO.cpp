@@ -433,7 +433,7 @@ void GraphicsPSO::CreateTrailPSO()
 	// サンプルマスク
 	gPipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	// ラスタライザステート
-	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_NONE);
+	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
 	
 	gPipeline.RasterizerState = rasterizer;
 	// デプスステンシルステート

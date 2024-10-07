@@ -225,10 +225,31 @@ void SampleScene::UIDraw()
 
 void SampleScene::ImGuiDraw()
 {
-	triangle_->Update(curvePoints_);
+	if (isCurve_) {
+		if (curvePoints_.size() > 8) {
+			std::vector<Vector3> interpolatedPoints;
+			for (int i = 1; i < curvePoints_.size() - 2; ++i) {
+				for (float t = 0.0f; t <= 1.0f; t += (1.0f / curveInter_)) {
+					t = std::clamp(t, 0.0f, 1.0f);
+					interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(curvePoints_[i - 1], curvePoints_[i], curvePoints_[i + 1], curvePoints_[i + 2], t));
+				}
+			}
+			triangle_->Update(interpolatedPoints);
+		}
+		else {
+			triangle_->Update(curvePoints_);
+		}
+	}
+	else {
+		triangle_->Update(curvePoints_);
+	}
+
+	//triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
+	ImGui::Checkbox("IsCurve", &isCurve_);
 	ImGui::Checkbox("TriangleBillBoard", &triangle_->isBillBoard_);
+	ImGui::DragFloat("Inter", &curveInter_, 0.1f);
 	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
 	if (ImGui::Button("Generate")) {
 		curvePoints_.push_back(generatePosition_);

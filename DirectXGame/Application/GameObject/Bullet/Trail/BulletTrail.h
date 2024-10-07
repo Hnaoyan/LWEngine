@@ -16,6 +16,9 @@ public:
 	
 	void UpdateTrail(const Vector3& newPoint);
 	void Draw(ICamera* camera);
+
+	void SetLength(int32_t length) { maxLength = length; }
+
 private:
 	int32_t maxLength = 0;
 

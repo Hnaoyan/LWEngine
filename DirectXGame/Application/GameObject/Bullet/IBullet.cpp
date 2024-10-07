@@ -25,6 +25,7 @@ void IBullet::Initialize()
 	trail_ = std::make_unique<BulletTrail>();
 	trail_->triangle_->SetColor({ 0.0f,1.0f,1.0f,1.0f });
 	trail_->triangle_->SetWidth(0.75f);
+	trail_->SetLength(10);
 }
 
 void IBullet::Update()
