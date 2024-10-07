@@ -118,7 +118,7 @@ public: // 複合演算子
 	/// <param name="v1"></param>
 	/// <returns></returns>
 	inline static float Length(const Vector3& v1) {
-		return float(std::sqrtf(std::powf(v1.x, 2) + std::powf(v1.y, 2) + std::powf(v1.z, 2)));
+		return float(std::sqrtf((v1.x * v1.x) + (v1.y * v1.y) + (v1.z * v1.z)));
 	}
 
 	/// <summary>
