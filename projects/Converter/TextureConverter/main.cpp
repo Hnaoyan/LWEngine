@@ -13,15 +13,13 @@ enum Argument {
 
 int main(int argc, char* argv[]) {
     // 日本語
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < argc; ++i) {
         printf(argv[i]);
 
         printf("\n");
     }
     printf("Hello,World!\n");
-
     assert(argc >= NumArgument);
-
     // 初期化処理
     HRESULT hr = S_FALSE;
     hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
