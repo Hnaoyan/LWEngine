@@ -9,11 +9,11 @@ void Triangle3D::Initialize()
 {
 	// USER
 	isBillBoard_ = true;
-	color_ = { 0.0f,0.0f,0.0f,1.0f };
+	color_ = { 1.0f,1.0f,1.0f,1.0f };
 	width_ = 1.0f;
 
 	// テクスチャ
-	texture_ = TextureManager::Load("Resources/default/uvChecker.png");
+	texture_ = TextureManager::Load("Resources/Effect/GreenEffect.png");
 
 	// 頂点情報作成
 	CreateVertex();
