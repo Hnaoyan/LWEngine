@@ -37,6 +37,8 @@ void Triangle3D::CreateVertex()
 
 	// デバイス
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
+
+	assert(vertexData_.size());
 	// 頂点作成
 	vertex_.CreateConstantBuffer(device, vertexData_.size());
 	std::memcpy(vertex_.cMap_, vertexData_.data(), sizeof(TriangleData) * vertexData_.size());
@@ -45,11 +47,8 @@ void Triangle3D::CreateVertex()
 	vbView_.SizeInBytes = UINT(sizeof(TriangleData) * vertexData_.size());
 	vbView_.StrideInBytes = sizeof(TriangleData);
 
+	assert(indices_.size());
 	// indexの作成
-	if (indices_.empty()) {
-		return;
-	}
-
 	index_.CreateConstantBuffer(device, indices_.size());
 	std::memcpy(index_.cMap_, indices_.data(), sizeof(uint32_t) * indices_.size());
 
