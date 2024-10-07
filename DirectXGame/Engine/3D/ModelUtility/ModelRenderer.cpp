@@ -286,6 +286,9 @@ void ModelRenderer::TriangleDraw(ICamera* camera, Triangle3D* triangle)
 
 	// バッファ
 	sCommandList_->SetGraphicsRootConstantBufferView(0, camera->GetCBuffer()->GetGPUVirtualAddress());
+	// テクスチャ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, 1, triangle->texture_);
 
 	// 頂点
 	sCommandList_->IASetVertexBuffers(0, 1, &triangle->vbView_);

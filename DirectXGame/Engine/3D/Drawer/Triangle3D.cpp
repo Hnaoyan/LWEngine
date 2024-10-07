@@ -11,6 +11,10 @@ void Triangle3D::Initialize()
 	isBillBoard_ = true;
 	color_ = { 0.0f,0.0f,0.0f,1.0f };
 	width_ = 1.0f;
+
+	// テクスチャ
+	texture_ = TextureManager::Load("Resources/default/uvChecker.png");
+
 	// 頂点情報作成
 	CreateVertex();
 }
@@ -84,6 +88,14 @@ void Triangle3D::UpdateVertex(std::vector<Vector3> controllPoint,const Vector4& 
 		Vector3 startPoint = controllPoint[i];
 		Vector3 endPoint = controllPoint[i + 1];
 
+		// テクスチャ座標の u 座標を線形補間で設定
+		float uStart = (float)i / (float)(numPoints - 1);
+		float uEnd = (float)(i + 1) / (float)(numPoints - 1);
+
+		// v 座標は左右の幅に応じて 0 と 1 を設定
+		float vLeft = 0.0f;   // 左側の頂点 (幅の内側)
+		float vRight = 1.0f;  // 右側の頂点 (幅の外側)
+
 		// 接戦
 		Vector3 tangent = endPoint - startPoint;
 		Vector3 normal = Vector3::Up();
@@ -114,16 +126,16 @@ void Triangle3D::UpdateVertex(std::vector<Vector3> controllPoint,const Vector4& 
 			perpendicular *= width * 0.5f;
 
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor };
+			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uStart,vLeft} };
 			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
-			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor };
+			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uEnd,vRight} };
 		}
 		// ビルボードなし
 		else {
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor };
+			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor,{uStart,vLeft} };
 			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
-			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor };
+			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor,{uEnd,vRight} };
 		}
 
 		// インデックスの設定

@@ -312,15 +312,15 @@ void GraphicsPSO::CreateTrianglePSO()
 	assert(psBlob != nullptr);
 
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
-	{
+	{	// Position
 		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT)
 	},
-	{
+	{	// Color
 		PSOLib::SetInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT)
 	},
-	//{	// uv
-	//	PSOLib::SetInputLayout("TEXCOORD",DXGI_FORMAT_R32G32_FLOAT)
-	//},
+	{	// UV
+		PSOLib::SetInputLayout("TEXCOORD",DXGI_FORMAT_R32G32_FLOAT)
+	},
 	};
 	// グラフィックスパイプライン
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};
@@ -367,7 +367,6 @@ void GraphicsPSO::CreateTrianglePSO()
 	samplerDesc[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
 	samplerDesc[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	samplerDesc[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;	// 比較しない
-
 	samplerDesc[0].MaxLOD = D3D12_FLOAT32_MAX;	// ありったけのMipmapを使う
 	samplerDesc[0].ShaderRegister = 0;	// レジスタ番号0を使う
 	samplerDesc[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	// PixelShaderで使う
@@ -382,7 +381,6 @@ void GraphicsPSO::CreateTrianglePSO()
 	rootSignatureDesc.pStaticSamplers = samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
 
-	// 
 	resultPipeline.rootSignature = CreateRootSignature(rootSignatureDesc);
 
 	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ

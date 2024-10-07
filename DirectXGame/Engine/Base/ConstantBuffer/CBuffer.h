@@ -35,7 +35,7 @@ struct TriangleData
 {
 	Vector3 position;	// 座標
 	Vector4 color;		// 色
-	//Vector2 texcoord;	// テクスコード
+	Vector2 texcoord;	// テクスコード
 };
 
 #pragma region Model
