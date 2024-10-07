@@ -32,6 +32,6 @@ int main(int argc, char* argv[]) {
     // 終了処理
     CoUninitialize();
     // システム的な停止
-    system("Pause");
+    //system("Pause");
     return 0;
 }
