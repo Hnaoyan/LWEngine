@@ -17,7 +17,6 @@ void BossSystemContext::NormalBullet::Initialize()
 	
 	InstancedUnit::Initialize();
 	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
-	//transform_.scale *= 0.5f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
@@ -31,23 +30,15 @@ void BossSystemContext::NormalBullet::Initialize()
 
 void BossSystemContext::NormalBullet::Update()
 {
-	//velocity_.x += moveDirect_.x * 2.0f;
-	//velocity_.z += moveDirect_.z * 2.0f;
-	
+	// 速度の計算
 	acceleration_ += sAcceleration * GameSystem::GameSpeedFactor();
 	velocity_ += moveDirect_ * acceleration_;
-	// 移動
-	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
+	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
 	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
 
-	InstancedUnit::Update();
-	collider_.radius_ = transform_.scale.x;
-	collider_.Update(transform_.translate);
-
-	// 軌跡の更新
-	trail_->UpdateTrail(transform_.translate);
-
+	// 基底の更新
+	IBullet::Update();
 }
 
 void BossSystemContext::NormalBullet::ImGuiDraw()

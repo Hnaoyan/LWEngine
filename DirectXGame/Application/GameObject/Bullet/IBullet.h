@@ -47,12 +47,17 @@ protected:
 	std::unique_ptr<BulletTrail> trail_;
 	// タグ
 	std::string tag_;
+	// 加速度
+	float acceleration_ = 0.0f;
 
 public: // アクセッサ
 	std::string GetTag() { return tag_; }
-	Sphere* GetCollider() { return &collider_; }
 	EulerTransform GetTransform() { return transform_; }
+	Sphere* GetCollider() { return &collider_; }
 	Vector3 GetGeneratePosition() { return generatePosition_; }
+	Vector3 GetVelocity() { return velocity_; }
+
+
 	float GetLifeTime() { return lifeTime_; }
 	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 

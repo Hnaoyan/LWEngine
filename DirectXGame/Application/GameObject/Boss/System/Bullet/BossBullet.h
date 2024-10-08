@@ -34,27 +34,21 @@ namespace BossSystemContext
 		/// </summary>
 		/// <param name="object"></param>
 		void OnCollision(ColliderObject object) override;
-
-		void SetBossPtr(Boss* boss) { boss_ = boss; }
-
 	public: // アクセッサ
-		EulerTransform GetTransform() { return transform_; }
-		Vector3 GetVelocity() { return velocity_; }
-		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 		void SetPlayer(Player* player) { player_ = player; }
 		void SetTrackType(TrackType type) { trackType_ = type; }
+		void SetBossPtr(Boss* boss) { boss_ = boss; }
 
 	private:
 		// 追跡している時間
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
+		// ボスのポインタ
 		Boss* boss_ = nullptr;
-
+		// 追尾の種類
 		TrackType trackType_;
-
-		float acceleration_ = 0.2f;
-
+		// 補間の半径
 		float lerpRadius_ = 0.0f;
 
 	private:
@@ -71,9 +65,6 @@ namespace BossSystemContext
 		static float sLerpRadius;
 		static float sBulletSpeed;
 		static float sInitSpeed;
-
-		//static float s
-
 	};
 
 	class NormalBullet : public IBullet {
@@ -97,14 +88,9 @@ namespace BossSystemContext
 		/// </summary>
 		/// <param name="object"></param>
 		void OnCollision(ColliderObject object) override;
-	public: // アクセッサ
-		EulerTransform GetTransform() { return transform_; }
-		void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
-
 	private:
+		// 移動方向
 		Vector3 moveDirect_{};
-
-		float acceleration_ = 0.0f;
 
 	public: // 共通
 		static float sAcceleration;

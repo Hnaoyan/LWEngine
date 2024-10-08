@@ -55,18 +55,21 @@ void BossSystemContext::TrackingBullet::Initialize()
 
 void BossSystemContext::TrackingBullet::Update()
 {
-
+	// 追尾タイマー
 	trackTimer_.Update();
 
 	if (trackTimer_.IsActive()) {
 		switch (trackType_)
 		{
+			// 通常
 		case BossSystemContext::TrackType::kStandard:
 			CalcStandardMissile();
 			break;
+			// 優等
 		case BossSystemContext::TrackType::kInferior:
 			CalcInferiorMissile();
 			break;
+			// 劣等
 		case BossSystemContext::TrackType::kSuperior:
 			CalcSuperiorMissile();
 			break;
@@ -79,19 +82,12 @@ void BossSystemContext::TrackingBullet::Update()
 	acceleration_ += 0.5f * GameSystem::GameSpeedFactor();
 	Vector3 direct = Vector3::Normalize(velocity_) * acceleration_;
 	velocity_ += direct;
-	transform_.translate += (velocity_) * GameSystem::GameSpeedFactor();
-
 	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
 	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
-
-	InstancedUnit::Update();
-	collider_.radius_ = transform_.scale.x;
-	collider_.Update(transform_.translate);
-
-	// 軌跡の更新
-	trail_->UpdateTrail(transform_.translate);
-
+	
+	// 基底の更新
+	IBullet::Update();
 }
 
 void BossSystemContext::TrackingBullet::ImGuiDraw()
@@ -100,9 +96,11 @@ void BossSystemContext::TrackingBullet::ImGuiDraw()
 
 void BossSystemContext::TrackingBullet::OnCollision(ColliderObject object)
 {
+	// 地形
 	if (std::holds_alternative<Terrain*>(object)) {
 		isDead_ = true;
 	}
+	// プレイヤー
 	if (std::holds_alternative<Player*>(object)) {
 		isDead_ = true;
 	}
@@ -115,7 +113,6 @@ void BossSystemContext::TrackingBullet::CalcStandardMissile()
 	Vector3 nowDirect = Vector3::Normalize(velocity_);
 	// 内積
 	float dot = Vector3::Dot(toTarget, nowDirect);
-
 	// 向心加速力の計算
 	Vector3 centripetalAccel = toTarget - (nowDirect * dot);
 	float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
@@ -142,9 +139,6 @@ void BossSystemContext::TrackingBullet::CalcInferiorMissile()
 {
 	// それぞれのベクトル
 	Vector3 playerPos = player_->worldTransform_.GetWorldPosition();
-	//float offsetValue = 4.0f;
-	//Vector3 offset = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue });
-	//playerPos += offset;
 	Vector3 toTarget = playerPos - GetWorldPosition();
 	Vector3 nowDirect = Vector3::Normalize(velocity_);
 	// 内積
@@ -163,6 +157,11 @@ void BossSystemContext::TrackingBullet::CalcInferiorMissile()
 	float offsetValue = 1.5f;
 	// 最小値
 	float limit = 0.5f;
+
+	//---オフセットによるずらし計算---//
+		//
+	// ここが原因でフラフラ動いている感ある
+	//
 	Vector3 offset = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 	centripetalAccel += offset;
 
@@ -183,19 +182,18 @@ void BossSystemContext::TrackingBullet::CalcSuperiorMissile()
 {
 	// プレイヤーの現在の位置と速度
 	Vector3 playerPosition = player_->worldTransform_.GetWorldPosition();
-	//Vector3 playerVelocity = player_->GetVelocity(); // プレイヤーの速度を取得
-	Vector3 playerVelocity = player_->worldTransform_.GetWorldPosition() - player_->prevPosition_;
+	Vector3 playerDirection = player_->worldTransform_.GetWorldPosition() - player_->prevPosition_;
 	Vector3 predictedPosition{};
 	// 予測位置を計算
 	float predictionTime = 5.5f; // ミサイルが向かう予測時間（調整可能）
 
-	if (playerVelocity.x == 0.0f && playerVelocity.y == 0.0f && playerVelocity.z == 0.0f) {
+	if (playerDirection.x == 0.0f && playerDirection.y == 0.0f && playerDirection.z == 0.0f) {
 		predictedPosition = playerPosition;
 	}
 	else {
-		predictedPosition = playerPosition + (playerVelocity * predictionTime);
+		predictedPosition = playerPosition + (playerDirection * predictionTime);
 	}
-	predictedPosition = playerPosition + (playerVelocity * predictionTime);
+	predictedPosition = playerPosition + (playerDirection * predictionTime);
 
 	Vector3 toTarget = predictedPosition - GetWorldPosition();
 	Vector3 nowDirect = Vector3::Normalize(velocity_);

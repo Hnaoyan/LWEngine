@@ -70,8 +70,8 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
 	// 速度
-	static_cast<NormalBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * 5.0f);
-	static_cast<NormalBullet*>(instance.get())->Initialize();
+	static_cast<IBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * 5.0f);
+	static_cast<IBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossNormalBullet", "Scale");
 	instance->Update();
@@ -94,8 +94,8 @@ void BossSystemContext::BulletCluster::AddBullet(const EulerTransform& transform
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<NormalBullet>();
 	// 速度
-	static_cast<NormalBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
-	static_cast<NormalBullet*>(instance.get())->Initialize();
+	static_cast<IBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
+	static_cast<IBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossNormalBullet", "Scale");
 	instance->Update();
@@ -118,10 +118,10 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<TrackingBullet>();
 	// 速度
-	static_cast<TrackingBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
 	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
-	static_cast<TrackingBullet*>(instance.get())->Initialize();
+	static_cast<IBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
+	static_cast<IBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossTrackingBullet", "Scale");
 	instance->Update();
@@ -144,10 +144,10 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	// インスタンス作成
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<TrackingBullet>();
 	// 速度
-	static_cast<TrackingBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
 	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
-	static_cast<TrackingBullet*>(instance.get())->Initialize();
+	static_cast<IBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
+	static_cast<IBullet*>(instance.get())->Initialize();
 	static_cast<TrackingBullet*>(instance.get())->SetTrackType(type);
 	instance->transform_ = transform;
 	instance->transform_.scale = globalVariables_->GetValue<Vector3>("BossTrackingBullet", "Scale");
