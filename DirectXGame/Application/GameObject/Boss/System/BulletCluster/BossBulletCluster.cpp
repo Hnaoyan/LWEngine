@@ -119,7 +119,6 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<TrackingBullet>();
 	// 速度
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
-	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
 	static_cast<IBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<IBullet*>(instance.get())->Initialize();
 	instance->transform_ = transform;
@@ -145,7 +144,6 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 	std::unique_ptr<InstancedUnit> instance = std::make_unique<TrackingBullet>();
 	// 速度
 	static_cast<TrackingBullet*>(instance.get())->SetPlayer(player);
-	static_cast<TrackingBullet*>(instance.get())->SetBossPtr(boss_);
 	static_cast<IBullet*>(instance.get())->SetVelocity(Vector3::Normalize(direct) * speed);
 	static_cast<IBullet*>(instance.get())->Initialize();
 	static_cast<TrackingBullet*>(instance.get())->SetTrackType(type);

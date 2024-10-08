@@ -37,15 +37,12 @@ namespace BossSystemContext
 	public: // アクセッサ
 		void SetPlayer(Player* player) { player_ = player; }
 		void SetTrackType(TrackType type) { trackType_ = type; }
-		void SetBossPtr(Boss* boss) { boss_ = boss; }
 
 	private:
 		// 追跡している時間
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
-		// ボスのポインタ
-		Boss* boss_ = nullptr;
 		// 追尾の種類
 		TrackType trackType_;
 		// 補間の半径

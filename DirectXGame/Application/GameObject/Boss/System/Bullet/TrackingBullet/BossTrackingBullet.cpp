@@ -35,17 +35,6 @@ void BossSystemContext::TrackingBullet::Initialize()
 
 	trackType_ = TrackType::kStandard;
 	
-	Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
-	Vector2 boss = { boss_->worldTransform_.GetWorldPosition().x,boss_->worldTransform_.GetWorldPosition().z };
-	float distance = Vector2::Distance(player, boss);
-
-	if (distance <= 75.0f) {
-		lerpRadius_ = TrackingBullet::sLerpRadius;
-	}
-	else {
-		lerpRadius_ = TrackingBullet::sLerpRadius;
-	}
-
 	// 軌跡
 	trail_ = std::make_unique<BulletTrail>();
 	trail_->triangle_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
@@ -131,7 +120,6 @@ void BossSystemContext::TrackingBullet::CalcStandardMissile()
 	force += nowDirect * propulsion;
 	// 速度の減衰処理
 	force -= velocity_ * TrackingBullet::sDamping;
-
 	velocity_ += force * GameSystem::GameSpeedFactor();
 }
 
