@@ -120,9 +120,6 @@ void Boss::ImGuiDraw()
 			ImGui::DragFloat("T_InitSpeed", &BossSystemContext::TrackingBullet::sInitSpeed, 0.01f);
 			ImGui::DragFloat("T_Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
 			ImGui::DragFloat("T_LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
-
-			int buffersize = bulletManager_->GetMissileCluster()->BeginBulletPosBuffer();
-			ImGui::DragInt("size", &buffersize);
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();

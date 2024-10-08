@@ -1082,6 +1082,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />

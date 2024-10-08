@@ -57,7 +57,6 @@ namespace BossSystemContext
 	public: // アクセッサ
 		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 		void SetBossPtr(Boss* boss) { boss_ = boss; }
-		int BeginBulletPosBuffer();
 	private:
 		uint32_t texture_ = 0;
 		// 弾の名前

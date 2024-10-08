@@ -5,6 +5,7 @@
 BulletTrail::BulletTrail()
 {
 	maxLength = 50;
+	// ポリゴン作成
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
 }
@@ -14,6 +15,7 @@ void BulletTrail::UpdateTrail(const Vector3& newPoint)
 	// 要素を追加
 	trailPoints_.push_back(newPoint);
 	// 最大値を超えた場合古いのを削除
+	// 時間で消えるようにするアルゴリズムを追加する
 	if (trailPoints_.size() > maxLength) {
 		trailPoints_.erase(trailPoints_.begin());
 	}
@@ -21,9 +23,11 @@ void BulletTrail::UpdateTrail(const Vector3& newPoint)
 
 void BulletTrail::Draw(ICamera* camera)
 {
+	// カメラのポインタを設定
 	if (!triangle_->IsCamera()) {
 		triangle_->SetCamera(camera);
 	}
+	// Catmull-Rom曲線を使った座標
 	if (trailPoints_.size() > 8) {
 		std::vector<Vector3> interpolatedPoints;
 		for (int i = 1; i < trailPoints_.size() - 2; ++i) {
@@ -34,6 +38,7 @@ void BulletTrail::Draw(ICamera* camera)
 		}
 		triangle_->Update(interpolatedPoints);
 	}
+	// 通常
 	else {
 		triangle_->Update(trailPoints_);
 	}

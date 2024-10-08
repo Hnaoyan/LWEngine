@@ -49,6 +49,7 @@ void BossSystemContext::TrackingBullet::Initialize()
 	// 軌跡
 	trail_ = std::make_unique<BulletTrail>();
 	trail_->triangle_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	trail_->triangle_->SetWidth(0.3f);
 
 }
 
@@ -79,10 +80,10 @@ void BossSystemContext::TrackingBullet::Update()
 	Vector3 direct = Vector3::Normalize(velocity_) * acceleration_;
 	velocity_ += direct;
 	transform_.translate += (velocity_) * GameSystem::GameSpeedFactor();
+
+	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
 	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
-
-	IBullet::BufferUpdate();
 
 	InstancedUnit::Update();
 	collider_.radius_ = transform_.scale.x;

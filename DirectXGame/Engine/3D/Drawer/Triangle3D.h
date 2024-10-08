@@ -52,6 +52,7 @@ private:
 	Vector4 color_{};
 	// 三角形の幅
 	float width_ = 0.0f;
+	float maxAlpha_ = 1.0f;
 
 public:
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};

@@ -6,51 +6,13 @@
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
 #include "Application/GameObject/Bullet/Trail/BulletTrail.h"
+#include "Application/GameObject/Bullet/IBullet.h"
 #include "../BossSystemStructs.h"
 
 #include <memory>
 
 namespace BossSystemContext
 {
-
-	class IBullet : public InstancedUnit {
-	public: // シリアル番号
-		static uint32_t sSerialNumber;
-		uint32_t serialNumber_ = 0;
-
-		std::string GetTag() { return tag_; }
-		std::vector<Vector3> posBuffer_;
-	protected: // タグ
-		std::string tag_;
-
-	public:
-		/// <summary>
-		/// ImGui描画
-		/// </summary>
-		/// <param name="name"></param>
-		virtual void ImGuiDraw() {};
-		/// <summary>
-		/// コールバック関数
-		/// </summary>
-		/// <param name="object"></param>
-		virtual void OnCollision(ColliderObject object) = 0;
-
-		virtual void DrawTrail(ICamera* camera);
-	public: // アクセッサ
-		Sphere* GetCollider() { return &collider_; }
-
-	protected:
-		// コライダー
-		Sphere collider_;
-		// 速度
-		Vector3 velocity_ = {};
-
-		void BufferUpdate();
-		// 軌跡
-		std::unique_ptr<BulletTrail> trail_;
-
-	};
-
 	class TrackingBullet : public IBullet {
 	public:
 		/// <summary>

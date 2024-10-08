@@ -50,7 +50,7 @@ void BossSystemContext::BulletCluster::Draw(ModelDrawDesc desc) {
 	// 軌跡
 	for (auto it = units_.begin(); it != units_.end(); ++it) {
 		IBullet* bullet = static_cast<IBullet*>((*it).get());
-		bullet->DrawTrail(desc.camera);
+		bullet->Draw(desc.camera);
 	}
 
 }
@@ -164,13 +164,4 @@ void BossSystemContext::BulletCluster::AddMissile(const EulerTransform& transfor
 
 	// リストにムーブ
 	units_.push_back(std::move(instance));
-}
-
-int BossSystemContext::BulletCluster::BeginBulletPosBuffer()
-{
-	if (units_.size() != 0) {
-		IBullet* bullet = static_cast<IBullet*>(units_.begin()->get());
-		return (int)bullet->posBuffer_.size();
-	}
-	return 0;
 }

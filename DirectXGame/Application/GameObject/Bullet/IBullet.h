@@ -8,7 +8,6 @@ class IBullet : public InstancedUnit
 public:
 	static uint32_t sSerialNumber;
 	uint32_t serialNumber_ = 0u;
-
 public:
 	/// <summary>
 	/// 初期化
@@ -23,16 +22,19 @@ public:
 	/// ImGui描画
 	/// </summary>
 	/// <param name="name"></param>
-	void ImGuiDraw();
+	virtual void ImGuiDraw();
 	/// <summary>
 	/// コールバック関数
 	/// </summary>
 	/// <param name="object"></param>
-	void OnCollision(ColliderObject object);
+	virtual void OnCollision(ColliderObject object);
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="camera"></param>
+	virtual void Draw(ICamera* camera);
 
-	void Draw(ICamera* camera);
-
-private:
+protected:
 	// コライダー
 	Sphere collider_;
 	// 速度
@@ -41,11 +43,13 @@ private:
 	float lifeTime_ = 0.0f;
 	// 生成時の座標
 	Vector3 generatePosition_{};
-
 	// 軌跡クラス
 	std::unique_ptr<BulletTrail> trail_;
+	// タグ
+	std::string tag_;
 
 public: // アクセッサ
+	std::string GetTag() { return tag_; }
 	Sphere* GetCollider() { return &collider_; }
 	EulerTransform GetTransform() { return transform_; }
 	Vector3 GetGeneratePosition() { return generatePosition_; }

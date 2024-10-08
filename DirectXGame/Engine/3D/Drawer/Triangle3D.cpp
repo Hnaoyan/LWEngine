@@ -9,11 +9,11 @@ void Triangle3D::Initialize()
 {
 	// USER
 	isBillBoard_ = true;
-	color_ = { 1.0f,1.0f,1.0f,1.0f };
 	width_ = 1.0f;
-
+	maxAlpha_ = 0.75f;
+	color_ = { 0.0f,1.0f,1.0f,maxAlpha_ };
 	// テクスチャ
-	texture_ = TextureManager::Load("Resources/Effect/GreenEffect.png");
+	texture_ = TextureManager::Load("Resources/default/white2x2.png");
 
 	const size_t kMaxSegments = 1024 * 2;
 
@@ -96,7 +96,7 @@ void Triangle3D::UpdateVertex(std::vector<Vector3> controllPoint,const Vector4& 
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color;
 		newColor.w = ((float)i + 1.0f) / (float)controllPoint.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, 1.0f);
+		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
 
 		// ビルボード処理
 		if (isBillBoard_ && camera_.has_value()) {
