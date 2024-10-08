@@ -26,7 +26,6 @@ private:
 	/// データの送り直し
 	/// </summary>
 	void RefreshVertex();
-
 	/// <summary>
 	/// 頂点情報の更新
 	/// </summary>
@@ -34,6 +33,10 @@ private:
 	/// <param name="color"></param>
 	/// <param name="width"></param>
 	void UpdateVertex(std::vector<Vector3> controllPoint, const Vector4& color, const float& width);
+	/// <summary>
+	/// 頂点バッファに送る
+	/// </summary>
+	void TransferVertex();
 
 private:
 	// 頂点
