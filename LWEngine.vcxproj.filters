@@ -1088,6 +1088,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\BulletsLists.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\User\Trail3D.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />

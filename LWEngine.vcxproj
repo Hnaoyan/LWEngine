@@ -228,6 +228,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\PipelineStructs.h" />
     <ClInclude Include="DirectXGame\Engine\3D\User\MissileTrail.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\User\Trail3D.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h" />
