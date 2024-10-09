@@ -110,7 +110,7 @@ void BossSystemContext::TrackingBullet::CalcStandardMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius_;
+	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / sLerpRadius;
 	
 	// 力の向き
 	Vector3 force = centripetalAccel * maxCentripetalAccel;
@@ -140,7 +140,7 @@ void BossSystemContext::TrackingBullet::CalcInferiorMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius_;
+	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / sLerpRadius;
 	// ずらすオフセット作成
 	float offsetValue = 1.5f;
 	// 最小値
@@ -194,7 +194,7 @@ void BossSystemContext::TrackingBullet::CalcSuperiorMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / lerpRadius_;
+	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / sLerpRadius;
 
 	Vector3 force = centripetalAccel * maxCentripetalAccel;
 

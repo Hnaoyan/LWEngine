@@ -27,19 +27,20 @@ void BulletTrail::Draw(ICamera* camera)
 	if (!polygon_->IsCamera()) {
 		polygon_->SetCamera(camera);
 	}
-	// Catmull-Rom曲線を使った座標
-	if (trailPoints_.size() > 8) {
-		std::vector<Vector3> interpolatedPoints;
-		for (int i = 1; i < trailPoints_.size() - 2; ++i) {
-			for (float t = 0.0f; t <= 1.0f; t += (1.0f / 30.0f)) {
-				t = std::clamp(t, 0.0f, 1.0f);
-				interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(trailPoints_[i - 1], trailPoints_[i], trailPoints_[i + 1], trailPoints_[i + 2], t));
-			}
-		}
-		polygon_->Update(interpolatedPoints);
-	}
-	// 通常
-	else {
-		polygon_->Update(trailPoints_);
-	}
+	//// Catmull-Rom曲線を使った座標
+	//if (trailPoints_.size() > 8) {
+	//	std::vector<Vector3> interpolatedPoints;
+	//	for (int i = 1; i < trailPoints_.size() - 2; ++i) {
+	//		for (float t = 0.0f; t <= 1.0f; t += (1.0f / 30.0f)) {
+	//			t = std::clamp(t, 0.0f, 1.0f);
+	//			interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(trailPoints_[i - 1], trailPoints_[i], trailPoints_[i + 1], trailPoints_[i + 2], t));
+	//		}
+	//	}
+	//	polygon_->Update(interpolatedPoints);
+	//}
+	//// 通常
+	//else {
+	//	polygon_->Update(trailPoints_);
+	//}
+	polygon_->Update(trailPoints_);
 }
