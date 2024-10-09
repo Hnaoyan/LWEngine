@@ -5,6 +5,7 @@
 #include "../Graphics/GraphicsPSO.h"
 #include "Engine/3D/User/MissileTrail.h"
 #include "../Drawer/3DDrawers.h"
+#include "../User/Trail3D.h"
 
 class ModelRenderer
 {
@@ -67,5 +68,11 @@ public:
 	/// <param name="trail"></param>
 	static void TrailDraw(ICamera* camera, MissileTrail* trail);
 
+	/// <summary>
+	/// 軌跡クラスでの描画
+	/// </summary>
+	/// <param name="camera"></param>
+	/// <param name="trail"></param>
+	static void TrailDraw(ICamera* camera, Trail3D* trail);
 	static void TriangleDraw(ICamera* camera, Triangle3D* triangle);
 };

@@ -6,8 +6,8 @@ BulletTrail::BulletTrail()
 {
 	maxLength = 50;
 	// ポリゴン作成
-	triangle_ = std::make_unique<Triangle3D>();
-	triangle_->Initialize();
+	polygon_ = std::make_unique<Trail3D>();
+	//triangle_->Initialize();
 }
 
 void BulletTrail::UpdateTrail(const Vector3& newPoint)
@@ -24,8 +24,8 @@ void BulletTrail::UpdateTrail(const Vector3& newPoint)
 void BulletTrail::Draw(ICamera* camera)
 {
 	// カメラのポインタを設定
-	if (!triangle_->IsCamera()) {
-		triangle_->SetCamera(camera);
+	if (!polygon_->IsCamera()) {
+		polygon_->SetCamera(camera);
 	}
 	// Catmull-Rom曲線を使った座標
 	if (trailPoints_.size() > 8) {
@@ -36,10 +36,10 @@ void BulletTrail::Draw(ICamera* camera)
 				interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(trailPoints_[i - 1], trailPoints_[i], trailPoints_[i + 1], trailPoints_[i + 2], t));
 			}
 		}
-		triangle_->Update(interpolatedPoints);
+		polygon_->Update(interpolatedPoints);
 	}
 	// 通常
 	else {
-		triangle_->Update(trailPoints_);
+		polygon_->Update(trailPoints_);
 	}
 }

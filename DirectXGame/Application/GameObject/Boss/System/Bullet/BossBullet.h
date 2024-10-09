@@ -44,7 +44,7 @@ namespace BossSystemContext
 		// プレイヤーのポインタ
 		Player* player_ = nullptr;
 		// 追尾の種類
-		TrackType trackType_;
+		TrackType trackType_ = TrackType::kStandard;
 		// 補間の半径
 		float lerpRadius_ = 0.0f;
 

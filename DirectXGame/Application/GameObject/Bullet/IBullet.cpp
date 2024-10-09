@@ -23,8 +23,8 @@ void IBullet::Initialize()
 
 	// 軌跡
 	trail_ = std::make_unique<BulletTrail>();
-	trail_->triangle_->SetColor({ 0.0f,1.0f,1.0f,1.0f });
-	trail_->triangle_->SetWidth(0.75f);
+	trail_->polygon_->SetColor({ 0.0f,1.0f,1.0f,1.0f });
+	trail_->polygon_->SetWidth(0.75f);
 	trail_->SetLength(10);
 }
 
@@ -66,5 +66,5 @@ void IBullet::Draw(ICamera* camera)
 	// 軌跡クラスの設定
 	trail_->Draw(camera);
 	// 軌跡の描画
-	ModelRenderer::TriangleDraw(camera, trail_->triangle_.get());
+	ModelRenderer::TrailDraw(camera, trail_->polygon_.get());
 }

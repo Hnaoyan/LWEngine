@@ -14,6 +14,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.cpp" />

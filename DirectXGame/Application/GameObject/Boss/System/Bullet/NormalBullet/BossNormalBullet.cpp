@@ -24,7 +24,7 @@ void BossSystemContext::NormalBullet::Initialize()
 
 	// 軌跡
 	trail_ = std::make_unique<BulletTrail>();
-	trail_->triangle_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	trail_->polygon_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 
 }
 
