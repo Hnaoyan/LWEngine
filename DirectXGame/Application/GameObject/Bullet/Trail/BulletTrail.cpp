@@ -1,10 +1,12 @@
 #include "BulletTrail.h"
 #include "Engine/LwLib/LwLibLists.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include <algorithm>
 
 BulletTrail::BulletTrail()
 {
-	maxLength = 50;
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	maxLength = global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame");
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
 	//triangle_->Initialize();

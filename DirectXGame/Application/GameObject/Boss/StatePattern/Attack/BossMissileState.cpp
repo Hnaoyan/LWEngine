@@ -1,6 +1,7 @@
 #include "../StateMachine.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
+#include <algorithm>
 
 void BossState::MissileAttackState::Initialize()
 {
@@ -59,11 +60,14 @@ void BossState::MissileAttackState::DefaultMissile()
 
 #pragma region ランダム生成パターン
 	Vector3 bossPosition = boss_->worldTransform_.GetWorldPosition();
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 25; ++i) {
 		float value = 5.0f;
 		float limitValue = 1.5f;
 		//---通常---//
 		Vector3 randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
+		if (std::min(randomValue.z, 0.0f) == randomValue.z) {
+			randomValue.z = 0.0f;
+		}
 		pos.translate = bossPosition + randomValue;
 		Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
 		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
@@ -71,12 +75,18 @@ void BossState::MissileAttackState::DefaultMissile()
 			boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
 		//---劣等---//
 		randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
+		if (std::min(randomValue.z, 0.0f) == randomValue.z) {
+			randomValue.z = 0.0f;
+		}
 		pos.translate = bossPosition + randomValue;
 		direct = Vector3::Normalize(pos.translate - bossPosition);
 		boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,
 			boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
 		//---優等---//
 		randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
+		if (std::min(randomValue.z, 0.0f) == randomValue.z) {
+			randomValue.z = 0.0f;
+		}
 		pos.translate = bossPosition + randomValue;
 		direct = Vector3::Normalize(pos.translate - bossPosition);
 		boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,

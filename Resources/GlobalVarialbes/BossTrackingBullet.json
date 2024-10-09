@@ -9,6 +9,7 @@
             0.3499999940395355
         ],
         "Speed": 90.0,
-        "TrackFrame": 120.0
+        "TrackFrame": 120.0,
+        "TrailSaveFrame": 40
     }
 }
