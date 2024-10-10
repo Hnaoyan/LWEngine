@@ -21,8 +21,6 @@ void Player::Initialize(Model* model)
 
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
-	//material_->color_.w = 0.5f;
-	//material_->Update();
 
 	worldTransform_.transform_.translate.y = -1.95f;
 	worldTransform_.transform_.translate.z = -35.0f;
@@ -63,19 +61,11 @@ void Player::Update()
 	// それぞれのステート
 	if (isKnock_) {
 		velocity_ = Ease::Easing(velocity_, Vector3(0.0f, 0.0f, 0.0f), 0.1f);
-		//worldTransform_.transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	}
 	else {
+		// それぞれの軸のマネージャ
 		verticalState_->Update();
 		horizontalState_->Update();
-		//if (currentStates_.first) {
-		//	currentStates_.first->InputHandle();
-		//	currentStates_.first->Update();
-		//}
-		//if (currentStates_.second) {
-		//	currentStates_.second->InputHandle();
-		//	currentStates_.second->Update();
-		//}
 	}
 
 	// 基底クラスの更新
