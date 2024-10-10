@@ -14,8 +14,8 @@ SamplerState smp : register(s0);
 PixelShaderOutput main(VSOutput input)
 {
     PixelShaderOutput output;
-    
-    output.color = tex.Sample(smp, input.texcoord) * input.color;
+    float32_t4 transformedUV = mul(float32_t4(input.texcoord, 0.0f, 1.0f), gMaterial.uvTransform);
+    output.color = tex.Sample(smp, transformedUV.xy) * input.color;
     if (output.color.a <= 0.01f)
     {
         discard;
