@@ -11,21 +11,29 @@ Trail3D::Trail3D()
 	isBillBoard_ = true;
 	width_ = 1.0f;
 	maxAlpha_ = 0.75f;
-	color_ = { 0.0f,1.0f,1.0f,maxAlpha_ };
+	color_ = { 1.0f,1.0f,1.0f,maxAlpha_ };
 	// テクスチャ
-	texture_ = TextureManager::Load("Resources/default/white2x2.png");
+	texture_ = TextureManager::Load("Resources/default/uvChecker.png");
 
 	// 頂点とindexのサイズ設定
 	const size_t kMaxSegments = 1024 * 2;
 	vertexData_.resize((kMaxSegments) * 2);
 	indices_.resize((kMaxSegments) * 6);
 	CreateVertex();
+
+	// マテリアル
+	material_ = std::make_unique<TrailMaterial>();
+	material_->CreateMaterial();
 }
 
 void Trail3D::Update(std::vector<Vector3> controlPoint)
 {
+	// 頂点作成
 	BuildVertexFromPoints(controlPoint);
+	// 頂点送信
 	TransferVertex();
+	// マテリアルの更新
+	material_->Update();
 }
 
 void Trail3D::TransferVertex()
@@ -37,7 +45,7 @@ void Trail3D::TransferVertex()
 
 void Trail3D::CreateVertex()
 {
-	// エラーチェック
+	// 中身のエラーチェック
 	assert(vertexData_.size());
 	assert(indices_.size());
 

@@ -416,11 +416,14 @@ void GraphicsPSO::CreateTrailPSO()
 	assert(psBlob != nullptr);
 
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {
-	{
-		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT)
+	{	// Position
+		PSOLib::SetInputLayout("POSITION", DXGI_FORMAT_R32G32B32_FLOAT)
 	},
-	{
+	{	// Color
 		PSOLib::SetInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT)
+	},
+	{	// UV
+		PSOLib::SetInputLayout("TEXCOORD",DXGI_FORMAT_R32G32_FLOAT)
 	},
 	};
 	// グラフィックスパイプライン
@@ -431,8 +434,8 @@ void GraphicsPSO::CreateTrailPSO()
 	// サンプルマスク
 	gPipeline.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	// ラスタライザステート
-	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_BACK);
-	
+	D3D12_RASTERIZER_DESC rasterizer = PSOLib::SetRasterizerState(D3D12_FILL_MODE_SOLID, D3D12_CULL_MODE_NONE);
+
 	gPipeline.RasterizerState = rasterizer;
 	// デプスステンシルステート
 	gPipeline.DepthStencilState.DepthEnable = true;
@@ -444,7 +447,7 @@ void GraphicsPSO::CreateTrailPSO()
 	gPipeline.InputLayout.pInputElementDescs = inputLayout;
 	gPipeline.InputLayout.NumElements = _countof(inputLayout);
 	// 図形の形状設定
-	gPipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
+	gPipeline.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	gPipeline.NumRenderTargets = 1;
 	gPipeline.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	gPipeline.SampleDesc.Count = 1;
@@ -455,25 +458,21 @@ void GraphicsPSO::CreateTrailPSO()
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[1]{};
-	//---共通---//
+	D3D12_ROOT_PARAMETER rootparams[3]{};
 	// テクスチャ
-	//rootparams[0] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
-
+	rootparams[0] = PSOLib::InitAsDescriptorTable(1, descRangeSRV, D3D12_SHADER_VISIBILITY_ALL);
 	// カメラ
-	rootparams[0] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	rootparams[1] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_ALL);
+	// マテリアル
+	rootparams[2] = PSOLib::InitAsConstantBufferView(1, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 	// スタティックサンプラー
-	//D3D12_STATIC_SAMPLER_DESC samplerDesc[1]{};
-	//samplerDesc[0] = PSOLib::SetSamplerDesc(0, D3D12_FILTER_MIN_MAG_MIP_LINEAR);
-
 	D3D12_STATIC_SAMPLER_DESC samplerDesc[1] = {};
 	samplerDesc[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;	// バイリニアフィルタ
 	samplerDesc[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;	// 0~1の範囲r外をリピート
 	samplerDesc[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
 	samplerDesc[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	samplerDesc[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;	// 比較しない
-
 	samplerDesc[0].MaxLOD = D3D12_FLOAT32_MAX;	// ありったけのMipmapを使う
 	samplerDesc[0].ShaderRegister = 0;	// レジスタ番号0を使う
 	samplerDesc[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	// PixelShaderで使う
@@ -488,7 +487,6 @@ void GraphicsPSO::CreateTrailPSO()
 	rootSignatureDesc.pStaticSamplers = samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = _countof(samplerDesc);
 
-	// 
 	resultPipeline.rootSignature = CreateRootSignature(rootSignatureDesc);
 
 	gPipeline.pRootSignature = resultPipeline.rootSignature.Get();	// ルートシグネチャ
@@ -505,7 +503,7 @@ void GraphicsPSO::CreateTrailPSO()
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 
 #pragma endregion
-	sPipelines_[size_t(Pipeline::Order::kMissileTrail)] = std::move(resultPipeline);
+	sPipelines_[size_t(Pipeline::Order::kTrail)] = std::move(resultPipeline);
 }
 
 void GraphicsPSO::CreateModelPSO()

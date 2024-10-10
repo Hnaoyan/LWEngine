@@ -1,7 +1,7 @@
 #pragma once
 #include "AbstractBulletFactory.h"
 
-class BulletFactory : public AbstractBulletFactory
+class PlayerBulletFactory : public AbstractBulletFactory
 {
 public:
 	InstancedUnit* CreateUnit(const std::string& name) override;

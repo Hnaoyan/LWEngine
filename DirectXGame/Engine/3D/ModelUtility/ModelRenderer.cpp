@@ -260,7 +260,7 @@ void ModelRenderer::TrailDraw(ICamera* camera, MissileTrail* trail)
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 
 	// パイプライン
-	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kMissileTrail)]);
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kTrail)]);
 	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
 
@@ -280,15 +280,18 @@ void ModelRenderer::TrailDraw(ICamera* camera, Trail3D* trail)
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// パイプライン
-	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kTriangle)]);
+	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kTrail)]);
 	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
 	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
 
 	// バッファ
-	sCommandList_->SetGraphicsRootConstantBufferView(0, camera->GetCBuffer()->GetGPUVirtualAddress());
 	// テクスチャ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList_, 1, trail->texture_);
+		sCommandList_, 0, trail->texture_);
+	// カメラ
+	sCommandList_->SetGraphicsRootConstantBufferView(1, camera->GetCBuffer()->GetGPUVirtualAddress());
+	// マテリアル
+	sCommandList_->SetGraphicsRootConstantBufferView(2, trail->GetMaterial()->GetCBuffer()->GetGPUVirtualAddress());
 
 	// 頂点
 	sCommandList_->IASetVertexBuffers(0, 1, &trail->vbView_);

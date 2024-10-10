@@ -1,13 +1,16 @@
 #pragma once
 #include "Engine/Math/Vector/Vector3.h"
 #include "Engine/3D/User/Trail3D.h"
+#include "Engine/3D/Instancing/InstancedUnit.h"
 #include <vector>
+#include <optional>
 
 class BulletTrail
 {
 public:
 	// コンストラクタ
 	BulletTrail();
+	BulletTrail(InstancedUnit* unit);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -28,7 +31,11 @@ public:
 	void SetLength(int32_t length) { maxLength = length; }
 
 private:
+	void GlobalValueInitialize();
+
+private:
 	// 保存できる座標数
 	int32_t maxLength = 0;
-
+	// 個体のポインタ
+	std::optional<InstancedUnit*> unit_ = std::nullopt;
 };

@@ -4,6 +4,9 @@
 void BossSystemContext::BulletManager::Initialize(Model* model, Boss* boss) {
 	model_ = model;
 	boss_ = boss;
+
+	factory_ = std::make_unique<BossBulletFactory>();
+
 	// 弾用
 	AddCluster();
 	// ミサイル用

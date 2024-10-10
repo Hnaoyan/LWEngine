@@ -567,7 +567,16 @@
     <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\PlayerBulletFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BossBulletFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BulletFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1100,7 +1109,22 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\TrackingBullet\ITrackingStrategy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\AbstractBulletFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\PlayerBulletFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BossBulletFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BulletFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\TrailMaterial.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

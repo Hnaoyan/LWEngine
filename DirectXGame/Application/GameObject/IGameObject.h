@@ -56,6 +56,9 @@ public:
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
 
+protected:
+	virtual void GlobalValueInitialize() {};
+
 public: // アクセッサ
 	bool IsDead() const{ return isDead_; }
 	void SetIsDead(bool isDead) { isDead_ = isDead; }

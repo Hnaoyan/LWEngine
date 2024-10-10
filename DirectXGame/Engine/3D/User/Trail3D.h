@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Base/CBufferCommon.h"
 #include "Engine/3D/ModelUtility/ModelData.h"
+#include "Engine/3D/TrailMaterial.h"
 
 #include <vector>
 #include <optional>
@@ -30,6 +31,10 @@ private:
 	// インデックス
 	ConstantBufferMapContext<uint32_t> index_;
 	std::vector<uint32_t> indices_;
+
+	// マテリアル
+	std::unique_ptr<TrailMaterial> material_;
+	
 private:
 	// カメラ
 	std::optional<ICamera*> camera_;
@@ -54,5 +59,6 @@ public:
 	bool IsCamera() { return camera_.has_value(); }
 	size_t GetVertexSize() { return vertexData_.size(); }
 	size_t GetIndexSize() { return indices_.size(); }
+	TrailMaterial* GetMaterial() { return material_.get(); }
 
 };

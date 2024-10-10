@@ -4,6 +4,7 @@
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
+#include "Application/GameObject/Bullet/User/Factory/BossBulletFactory.h"
 
 #include "../BossSystemStructs.h"
 
@@ -60,6 +61,9 @@ namespace BossSystemContext
 		Boss* boss_ = nullptr;
 		// 弾のリスト
 		std::vector<std::unique_ptr<InstancedGroup>> bulletClusters_;
+
+		// 弾生成の工場
+		std::unique_ptr<BossBulletFactory> factory_;
 
 	private:
 		// 

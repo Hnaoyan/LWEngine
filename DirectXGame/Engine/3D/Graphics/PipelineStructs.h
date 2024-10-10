@@ -15,7 +15,7 @@ namespace Pipeline
 		kParticle,
 		kPostEffect,
 		kInstancedModel,
-		kMissileTrail,
+		kTrail,
 		kCountOfParameter,
 	};
 	// 通常モデルのレジスタ番号

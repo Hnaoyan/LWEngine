@@ -47,7 +47,7 @@ public:
 
 private:
 	// グローバル変数関係の初期化
-	void GlobalValueInitialize();
+	void GlobalValueInitialize() override;
 	// グローバル変数関係の更新
 	//void GlobalValueUpdate();
 

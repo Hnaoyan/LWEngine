@@ -74,6 +74,12 @@ struct CBufferDataMaterial {
 	float dissolveThreshold;	// Dissolveの閾値
 };
 
+// 軌跡用のマテリアル
+struct CBufferDataTrailMaterial {
+	Vector4 color;			// 色
+	Matrix4x4 uvTransform;	// UV
+};
+
 // インスタンシング用
 struct CBufferInstancedUnit
 {

@@ -12,8 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BossBulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\PlayerBulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp" />
@@ -180,7 +183,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\BulletsLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\AbstractBulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BossBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\PlayerBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
@@ -190,6 +196,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />
@@ -231,6 +238,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Triangle3D.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Line3D.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\PipelineStructs.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\TrailMaterial.h" />
     <ClInclude Include="DirectXGame\Engine\3D\User\MissileTrail.h" />
     <ClInclude Include="DirectXGame\Engine\3D\User\Trail3D.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />

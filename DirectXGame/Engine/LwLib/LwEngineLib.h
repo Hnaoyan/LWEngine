@@ -247,4 +247,13 @@ namespace LwLib
 		return Vector3(normalizeVector.x, newDirect.x, newDirect.y);
 	}
 #pragma endregion
+
+	static Vector3 HomingAccelerate(const Vector3& position, const Vector3& target, const Vector3& velocity, const float& period) {
+		Vector3 result = {};
+		Vector3 diff = target - position;
+		result += (diff - velocity * period) * (2.0f / (period * period));
+		
+		return result;
+	}
+
 }

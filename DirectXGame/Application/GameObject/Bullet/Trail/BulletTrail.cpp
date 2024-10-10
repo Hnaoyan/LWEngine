@@ -5,11 +5,21 @@
 
 BulletTrail::BulletTrail()
 {
-	GlobalVariables* global = GlobalVariables::GetInstance();
-	maxLength = global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame");
+	// 外部読み込み
+	GlobalValueInitialize();
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
 	//triangle_->Initialize();
+}
+
+BulletTrail::BulletTrail(InstancedUnit* unit)
+{
+	// 外部読み込み
+	GlobalValueInitialize();
+	// ポリゴン作成
+	polygon_ = std::make_unique<Trail3D>();
+	// ユニットのポインタ
+	unit_.emplace(unit);
 }
 
 void BulletTrail::UpdateTrail(const Vector3& newPoint)
@@ -45,4 +55,10 @@ void BulletTrail::Draw(ICamera* camera)
 	//	polygon_->Update(trailPoints_);
 	//}
 	polygon_->Update(trailPoints_);
+}
+
+void BulletTrail::GlobalValueInitialize()
+{
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	maxLength = global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame");
 }
