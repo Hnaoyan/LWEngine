@@ -9,6 +9,7 @@ public:
 	float x;
 	float y;
 	//Vector2(float x_, float y_) : x(x_), y(y_) {}
+	inline static Vector2 DefaultOnes() { return Vector2(1.0f, 1.0f); }
 
 #pragma region 四則演算
 	// 加算減算

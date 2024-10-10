@@ -6,6 +6,10 @@ public:
 
 	//Vector4(float x_, float y_, float z_, float w_) : x(x_), y(y_), z(z_), w(w_) {}
 
+	inline static Vector4 DefaultOnes() {
+		return Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+
 #pragma region 四則演算
 
 	// 加算減算

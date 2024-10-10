@@ -5,7 +5,7 @@
 void TrailMaterial::CreateMaterial()
 {
 	// 色
-	color_ = { 1.0f,1.0f,1.0f,1.0f };
+	color_ = Vector4::DefaultOnes();
 
 	uvTransform_ = {
 		{1.0f,1.0f,1.0f},
