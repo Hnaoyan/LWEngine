@@ -14,16 +14,19 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	/// <param name="controlPoint"></param>
-	void Update(std::vector<Vector3> controlPoint);
+	void Update();
 
 private:
 	// 頂点更新
 	void TransferVertex();
 	// 頂点バッファ生成
 	void CreateVertex();
-	// 座標から頂点作成
+public:
+	// 通常の座標から頂点作成
 	void BuildVertexFromPoints(const std::vector<Vector3>& points);
+	// 
+	void LerpWidthVertex(const std::vector<Vector3>& points);
+
 private:
 	// 頂点
 	ConstantBufferMapContext<TriangleData> vertex_;

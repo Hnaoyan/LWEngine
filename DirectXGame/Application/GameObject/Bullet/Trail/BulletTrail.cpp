@@ -54,7 +54,8 @@ void BulletTrail::Draw(ICamera* camera)
 	//else {
 	//	polygon_->Update(trailPoints_);
 	//}
-	polygon_->Update(trailPoints_);
+	polygon_->LerpWidthVertex(trailPoints_);
+	polygon_->Update();
 }
 
 void BulletTrail::GlobalValueInitialize()

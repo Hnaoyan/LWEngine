@@ -1,5 +1,5 @@
 #include "BulletFactory.h"
-#include "../../IBullet.h"
+#include "../IBullet.h"
 
 InstancedUnit* BulletFactory::CreateUnit(const std::string& name)
 {

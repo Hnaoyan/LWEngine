@@ -4,7 +4,7 @@
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/Math/MathLib.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
-#include "Application/GameObject/Bullet/User/Factory/BossBulletFactory.h"
+#include "Application/GameObject/Bullet/Factory/BossBulletFactory.h"
 
 #include "../BossSystemStructs.h"
 
