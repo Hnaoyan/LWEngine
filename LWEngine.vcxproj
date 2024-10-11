@@ -12,9 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BossBulletFactory.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BulletFactory.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\Factory\PlayerBulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BossBulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\PlayerBulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />
@@ -182,11 +182,11 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\BulletsLists.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\AbstractBulletFactory.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BossBulletFactory.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\BulletFactory.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Factory\PlayerBulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BossBulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\PlayerBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
