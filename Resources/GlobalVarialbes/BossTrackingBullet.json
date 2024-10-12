@@ -10,6 +10,8 @@
         ],
         "Speed": 90.0,
         "TrackFrame": 120.0,
+        "TrailMaxWidth": 1.0,
+        "TrailMinWidth": 0.25,
         "TrailSaveFrame": 40
     }
 }

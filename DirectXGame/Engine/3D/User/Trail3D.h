@@ -45,6 +45,7 @@ private:
 	Vector4 color_{};
 	// 三角形の幅
 	float width_ = 0.0f;
+	float minWidth_ = 0.0f;
 	float maxAlpha_ = 1.0f;
 
 public:
@@ -56,6 +57,7 @@ public:
 public:
 	// セッター
 	void SetWidth(float width) { width_ = width; }
+	void SetMinWidth(float minWidth) { minWidth_ = minWidth; }
 	void SetColor(const Vector4& color) { color_ = color; }
 	void SetCamera(ICamera* camera) { camera_.emplace(camera); }
 	// ゲッター

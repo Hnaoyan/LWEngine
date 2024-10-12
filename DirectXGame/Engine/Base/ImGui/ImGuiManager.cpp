@@ -46,7 +46,7 @@ void ImGuiManager::End()
 
 void ImGuiManager::Draw()
 {
-#ifdef _DEBUG
+#ifdef IMGUI_ENABLED
 	// 描画用のDescriptorHeapの設定
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 	ID3D12DescriptorHeap* descriptorHeaps[] = { dxCommon_->GetSrvHandler()->GetHeap() };
@@ -54,9 +54,7 @@ void ImGuiManager::Draw()
 
 	// 実際のcommandListのImGuiの描画コマンドを積む
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
-
-#endif // _DEBUG
-
+#endif // IMGUI_ENABLED
 }
 
 void ImGuiManager::Finalize()

@@ -38,8 +38,8 @@ void BossSystemContext::TrackingBullet::Initialize()
 	// 軌跡
 	trail_ = std::make_unique<BulletTrail>();
 	trail_->polygon_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-	trail_->polygon_->SetWidth(0.5f);
-
+	trail_->polygon_->SetWidth(instance->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
+	trail_->polygon_->SetMinWidth(instance->GetValue<float>("BossTrackingBullet", "TrailMinWidth"));
 }
 
 void BossSystemContext::TrackingBullet::Update()

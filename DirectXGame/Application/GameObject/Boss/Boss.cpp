@@ -238,4 +238,6 @@ void Boss::GlobalValueInitialize()
 	instance->AddValue(groupName, "LerpRadius", BossSystemContext::TrackingBullet::sLerpRadius);
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 	instance->AddValue(groupName, "TrailSaveFrame", int32_t(50));
+	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
+	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 }

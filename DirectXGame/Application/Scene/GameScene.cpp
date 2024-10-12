@@ -227,7 +227,7 @@ void GameScene::UIDraw()
 
 void GameScene::ImGuiDraw()
 {
-#ifdef _DEBUG
+#ifdef IMGUI_ENABLED
 	// ゲームオブジェクト
 	skydome_->ImGuiDraw();
 	player_->ImGuiDraw();
@@ -318,7 +318,7 @@ void GameScene::ImGuiDraw()
 
 	ImGui::End();
 
-#endif // _DEBUG
+#endif // IMGUI_ENABLED
 }
 
 void GameScene::LoadModel()

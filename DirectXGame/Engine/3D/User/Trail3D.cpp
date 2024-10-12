@@ -11,6 +11,8 @@ Trail3D::Trail3D()
 	// USER
 	isBillBoard_ = true;
 	width_ = 1.0f;
+	minWidth_ = width_ / 2.0f;
+
 	maxAlpha_ = 0.75f;
 	color_ = { 1.0f,1.0f,1.0f,maxAlpha_ };
 	// テクスチャ
@@ -107,7 +109,7 @@ void Trail3D::BuildVertexFromPoints(const std::vector<Vector3>& points)
 			Vector3 perpendicular = Vector3::Cross(toCamera, trailDirect);
 			// 外積を幅分
 			perpendicular = Vector3::Normalize(perpendicular);
-			perpendicular *= width_ * 0.5f;
+			perpendicular *= width_;
 
 			// 頂点
 			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uStart,vLeft} };
@@ -192,7 +194,7 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 			// 外積を幅分
 			perpendicular = Vector3::Normalize(perpendicular);
 
-			float widthMin = 0.5f;
+			float widthMin = minWidth_;
 			float widthMax = width_;
 			float lerpWidth = LwLib::Lerp(widthMin, widthMax, widthRatio);
 
