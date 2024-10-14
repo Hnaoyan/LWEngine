@@ -9,9 +9,9 @@
 
 void Boss::Initialize(Model* model)
 {
-#ifdef _DEBUG
+#ifdef IMGUI_ENABLED
 	GlobalValueInitialize();
-#endif // _DEBUG
+#endif // IMGUI_ENABLED
 
 	IGameObject::Initialize(model);
 	// システム
@@ -240,4 +240,19 @@ void Boss::GlobalValueInitialize()
 	instance->AddValue(groupName, "TrailSaveFrame", int32_t(50));
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
+	instance->AddValue(groupName, "StraightFrame", float(60.0f));
+
+	// 通常
+
+
+	// 優等生
+	groupName = "TrackSuperior";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "PredictionTime", float(6.0f));	// 予測フレーム
+
+	// 劣等性
+	groupName = "TrackInferior";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "MinOffset", float(15.0f));	// ずらしの最小
+	instance->AddValue(groupName, "MaxOffset", float(25.0f));	// ずらしの最大
 }

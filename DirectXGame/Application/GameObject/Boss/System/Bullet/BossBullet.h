@@ -13,6 +13,11 @@
 
 namespace BossSystemContext
 {
+	struct TrackControlValue
+	{
+		
+	};
+
 	class TrackingBullet : public IBullet {
 	public:
 		/// <summary>
@@ -47,6 +52,16 @@ namespace BossSystemContext
 		TrackType trackType_ = TrackType::kStandard;
 		// 補間の半径
 		float lerpRadius_ = 0.0f;
+
+		// 劣等型の狙い先のオフセット位置
+		Vector3 offset_;
+
+		// 直進タイマー
+		FrameTimer straightTimer_;
+		// 加速度ベクトル
+		Vector3 accelerate_;
+	private:
+		void SetupByType();
 
 	private:
 		// 通常

@@ -1,7 +1,7 @@
 {
     "BossTrackingBullet": {
         "Damping": 0.5,
-        "InitSpeed": 85.0,
+        "InitSpeed": 90.0,
         "LerpRadius": 50.0,
         "Scale": [
             0.3499999940395355,
@@ -9,7 +9,8 @@
             0.3499999940395355
         ],
         "Speed": 90.0,
-        "TrackFrame": 120.0,
+        "StraightFrame": 1.0,
+        "TrackFrame": 600.0,
         "TrailMaxWidth": 1.0,
         "TrailMinWidth": 0.25,
         "TrailSaveFrame": 40
