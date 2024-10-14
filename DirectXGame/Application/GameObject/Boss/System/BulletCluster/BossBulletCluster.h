@@ -55,14 +55,12 @@ namespace BossSystemContext
 		void AddMissile(const EulerTransform& transform, const Vector3& direct, float speed, Player* player, TrackType type);
 
 	public: // アクセッサ
-		void SetGPU(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 		void SetBossPtr(Boss* boss) { boss_ = boss; }
 	private:
 		uint32_t texture_ = 0;
 		// 弾の名前
 		std::string parentTag_;
 		GlobalVariables* globalVariables_ = nullptr;
-		GPUParticleSystem* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
 	};
 

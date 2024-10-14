@@ -50,7 +50,6 @@ namespace BossSystemContext
 		BulletCluster* GetBeginCluster();
 		BulletCluster* GetMissileCluster();
 		void SetPlayer(Player* player) { player_ = player; }
-		void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 
 	private:
 		// モデルのリスト
@@ -64,10 +63,6 @@ namespace BossSystemContext
 
 		// 弾生成の工場
 		std::unique_ptr<BossBulletFactory> factory_;
-
-	private:
-		// 
-		GPUParticleSystem* gpuParticle_ = nullptr;
 
 	};
 

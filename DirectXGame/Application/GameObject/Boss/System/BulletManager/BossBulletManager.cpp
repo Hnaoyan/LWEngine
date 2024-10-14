@@ -43,7 +43,6 @@ void BossSystemContext::BulletManager::AddCluster() {
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
 	// セッター処理
 	static_cast<BulletCluster*>(instance.get())->SetBossPtr(boss_);
-	static_cast<BulletCluster*>(instance.get())->SetGPU(gpuParticle_);
 	// 初期化
 	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
 	bulletClusters_.push_back(std::move(instance));

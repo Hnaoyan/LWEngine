@@ -4,6 +4,9 @@
 #include <vector>
 #include <unordered_map>
 
+class Player;
+class Boss;
+
 class BulletManager
 {
 public:
@@ -33,10 +36,19 @@ public: // USER
 	void AddCluster(std::string tag);
 public: // アクセッサ
 	BulletCluster* FindCluster(std::string tag);
+
+	void SetPlayer(Player* player) { player_ = player; }
+	void SetBoss(Boss* boss) { boss_ = boss; }
+
 private:
 	// モデルのリスト
 	std::vector<Model*> models_;
 	Model* model_ = nullptr;
+
+	// オブジェクトのポインタ
+	Player* player_ = nullptr;
+	Boss* boss_ = nullptr;
+
 	// 弾のリスト
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>> clusters_;
 };

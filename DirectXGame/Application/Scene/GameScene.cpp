@@ -56,6 +56,8 @@ void GameScene::Initialize()
 	player_->Initialize(ModelManager::GetModel("Player"));
 
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+	bulletManager_->SetPlayer(player_.get());
+	bulletManager_->SetBoss(bossEnemy_.get());
 
 	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
 	enemyManager_->SetCollisionManager(collisionManager_.get());
