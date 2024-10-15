@@ -55,30 +55,10 @@ void BossSystemContext::TrackingBullet::Update()
 		trackTimer_.Start(TrackingBullet::sTrackingFrame);
 	}
 
-	if (trackTimer_.IsActive()) {
-		switch (trackType_)
-		{
-			// 通常
-		case BossSystemContext::TrackType::kStandard:
-			CalcStandardMissile();
-			break;
-			// 優等
-		case BossSystemContext::TrackType::kInferior:
-			CalcInferiorMissile();
-			break;
-			// 劣等
-		case BossSystemContext::TrackType::kSuperior:
-			CalcSuperiorMissile();
-			break;
-		default:
-			break;
-		}
-	}
+	// 追尾の速度計算処理
+	TrackUpdate();
 
 	// 移動
-	//acceleration_ += 0.5f * GameSystem::GameSpeedFactor();
-	//Vector3 direct = Vector3::Normalize(velocity_) * GameSystem::GameSpeedFactor();
-	//velocity_ += direct;
 	velocity_ += accelerate_;
 	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
@@ -132,6 +112,34 @@ void BossSystemContext::TrackingBullet::SetupByType()
 		break;
 	}
 
+}
+
+void BossSystemContext::TrackingBullet::TrackUpdate()
+{
+	// プレイヤーがいない場合早期
+	if (!player_) {
+		return;
+	}
+	// 追尾の計算
+	if (trackTimer_.IsActive()) {
+		switch (trackType_)
+		{
+			// 通常
+		case BossSystemContext::TrackType::kStandard:
+			CalcStandardMissile();
+			break;
+			// 優等
+		case BossSystemContext::TrackType::kInferior:
+			CalcInferiorMissile();
+			break;
+			// 劣等
+		case BossSystemContext::TrackType::kSuperior:
+			CalcSuperiorMissile();
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void BossSystemContext::TrackingBullet::CalcStandardMissile()

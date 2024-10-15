@@ -65,8 +65,6 @@ protected:
 	std::vector<std::unique_ptr<InstancedUnit>> units_;
 	// モデル
 	Model* model_ = nullptr;
-	// 
-	Vector3 registPosition_ = {};
 	// マテリアル
 	std::unique_ptr<Material> material_;
 	// テクスチャ

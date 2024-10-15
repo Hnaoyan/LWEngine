@@ -62,6 +62,7 @@ namespace BossSystemContext
 		Vector3 accelerate_;
 	private:
 		void SetupByType();
+		void TrackUpdate();
 
 	private:
 		// 通常

@@ -182,6 +182,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\TrackingBullet\ITrackingStrategy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Boss\BossTrackBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />

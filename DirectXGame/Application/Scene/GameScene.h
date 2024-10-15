@@ -72,7 +72,6 @@ private:
 
 private: // アプリ
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<SampleEnemyManager> enemyManager_;
 	std::unique_ptr<Boss> bossEnemy_;
 	std::unique_ptr<SkyDomeObject> skydome_;
 	// ゲームのシステム関係	

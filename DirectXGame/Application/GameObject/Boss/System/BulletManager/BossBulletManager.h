@@ -11,7 +11,6 @@
 #include <memory>
 
 class CollisionManager;
-class GPUParticleSystem;
 
 namespace BossSystemContext
 {

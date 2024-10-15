@@ -72,12 +72,6 @@ void InstancedGroup::ImGuiDraw()
 {
 	std::string name = "Group" + std::to_string(srvIndex);
 	ImGui::Begin(name.c_str());
-	name = "Position" + std::to_string(srvIndex);
-	ImGui::DragFloat3(name.c_str(), &registPosition_.x, 0.01f);
-	name = "Add" + std::to_string(srvIndex);
-	if (ImGui::Button(name.c_str())) {
-		this->UnitRegist(registPosition_);
-	}
 
 	ImGui::End();
 }

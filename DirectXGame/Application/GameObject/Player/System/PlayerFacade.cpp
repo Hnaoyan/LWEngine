@@ -13,12 +13,9 @@ void PlayerFacade::Initialize(Player* player)
 
 void PlayerFacade::Update()
 {
-
 	healthManager_.Update();
 	particleManager_.Update();
 	energyManager_.Update();
-	uiManager_;
 	animationManager_.Update();
-
 	shootingManager_.Update();
 }

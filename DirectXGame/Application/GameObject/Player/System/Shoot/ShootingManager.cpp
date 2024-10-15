@@ -18,5 +18,5 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	transform.scale = { 1.0f,1.0f,1.0f };
 	transform.translate = player_->worldTransform_.GetWorldPosition();
 	float speed = 300.0f;
-	bulletManager_->FindCluster("NormalBullet")->AddBullet(transform, direct * speed);
+	bulletManager_->FindCluster("PlayerNormalBullet")->AddBullet(transform, direct * speed);
 }

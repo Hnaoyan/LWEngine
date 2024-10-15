@@ -30,7 +30,6 @@ void GameScene::Initialize()
 	uiManager_ = std::make_unique<GameUI::UIManager>();
 	terrainManager_ = std::make_unique<TerrainManager>();
 	bulletManager_ = std::make_unique<BulletManager>();
-	enemyManager_ = std::make_unique<SampleEnemyManager>();
 	collisionManager_ = std::make_unique<CollisionManager>();
 	gameSystem_ = std::make_unique<GameSystem>();
 
@@ -59,22 +58,16 @@ void GameScene::Initialize()
 	bulletManager_->SetPlayer(player_.get());
 	bulletManager_->SetBoss(bossEnemy_.get());
 
-	enemyManager_->Initialize(ModelManager::GetModel("Enemy"));
-	enemyManager_->SetCollisionManager(collisionManager_.get());
-
 	bossEnemy_->SetGPUParticle(gpuParticleManager_.get());
 	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
-
-	//enemyManager_->AddEnemy({ 10.0f,0.0f,10.0f });
-	//enemyManager_->AddEnemy({ -10.0f,0.0f,10.0f });
 
 	// セッター処理
 	followCamera_->SetParent(player_->GetWorldTransform());
 	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
 	// プレイヤーにセットする
-	player_->PointerInitialize(bulletManager_.get(), bossEnemy_.get(), enemyManager_->GetEnemysList());
+	player_->PointerInitialize(bulletManager_.get(), bossEnemy_.get(), nullptr);
 
 	// 準備完了
 	isSceneReady_ = true;
@@ -127,8 +120,6 @@ void GameScene::Update()
 	player_->Update();
 	// 弾
 	bulletManager_->Update();
-	// 敵
-	enemyManager_->Update();
 	// ボス
 	if (bossEnemy_) {
 		bossEnemy_->Update();
@@ -180,7 +171,6 @@ void GameScene::Draw()
 	if (bossEnemy_) {
 		bossEnemy_->Draw(desc);
 	}
-	enemyManager_->Draw(desc);
 
 	bulletManager_->Draw(desc);
 	gpuParticleManager_->Draw(&camera_);
@@ -236,13 +226,11 @@ void GameScene::ImGuiDraw()
 	if (bossEnemy_) {
 		bossEnemy_->ImGuiDraw();
 	}
-	enemyManager_->ImGuiDraw();
 	terrainManager_->ImGuiDraw();
 	// カメラ
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
 	followCamera_->ImGuiDraw();
-	enemyManager_->ImGuiDraw();
 	gpuParticleManager_->ImGuiDraw();
 
 	ImGui::Begin("GameScene");
@@ -404,7 +392,6 @@ void GameScene::CameraUpdate()
 		camera_.viewMatrix_ = debugCamera_->viewMatrix_;
 		camera_.projectionMatrix_ = debugCamera_->projectionMatrix_;
 		camera_.TransferMatrix();
-		//camera_.Update();
 	}
 	else {
 		followCamera_->Update();
@@ -412,8 +399,6 @@ void GameScene::CameraUpdate()
 		camera_.projectionMatrix_ = followCamera_->projectionMatrix_;
 		camera_.transform_ = followCamera_->transform_;
 		camera_.TransferMatrix();
-		// 基底更新
-		//IScene::CameraUpdate();
 	}
 }
 
@@ -467,7 +452,6 @@ void GameScene::CollisionUpdate()
 		collisionManager_->ListRegist(bossEnemy_->GetCollider());
 		bossEnemy_->GetBulletManager()->CollisionUpdate(collisionManager_.get());
 	}
-	enemyManager_->CollisionRegist();
 	bulletManager_->CollisionUpdate(collisionManager_.get());
 	terrainManager_->CollisionUpdate(collisionManager_.get());
 
