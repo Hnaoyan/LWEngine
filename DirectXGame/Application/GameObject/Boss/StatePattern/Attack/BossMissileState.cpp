@@ -44,54 +44,38 @@ void BossState::MissileAttackState::Exit()
 
 void BossState::MissileAttackState::MissileAttack()
 {
-	DefaultMissile();
-
-
+	// 行列の回転
+	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
+	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
+	// 弾の生成
+	for (int i = 0; i < 25; ++i) {
+		//---通常---//
+		GenerateMissile(rotateMatrix, BossSystemContext::TrackType::kStandard);
+		//---劣等---//
+		GenerateMissile(rotateMatrix, BossSystemContext::TrackType::kInferior);
+		//---優等---//
+		GenerateMissile(rotateMatrix, BossSystemContext::TrackType::kSuperior);
+	}
 }
 
-void BossState::MissileAttackState::DefaultMissile()
+void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, BossSystemContext::TrackType type)
 {
 	// デフォルトの情報
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
-	// 行列の回転
-	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
-	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
-
-#pragma region ランダム生成パターン
 	Vector3 bossPosition = boss_->worldTransform_.GetWorldPosition();
-	for (int i = 0; i < 25; ++i) {
-		float value = 5.0f;
-		float limitValue = 1.5f;
-		//---通常---//
-		Vector3 randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
-		if (std::min(randomValue.z, 0.0f) == randomValue.z) {
-			randomValue.z = 0.0f;
-		}
-		pos.translate = bossPosition + randomValue;
-		Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,
-			boss_->GetPlayer(), BossSystemContext::TrackType::kStandard);
-		//---劣等---//
-		randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
-		if (std::min(randomValue.z, 0.0f) == randomValue.z) {
-			randomValue.z = 0.0f;
-		}
-		pos.translate = bossPosition + randomValue;
-		direct = Vector3::Normalize(pos.translate - bossPosition);
-		boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,
-			boss_->GetPlayer(), BossSystemContext::TrackType::kInferior);
-		//---優等---//
-		randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
-		if (std::min(randomValue.z, 0.0f) == randomValue.z) {
-			randomValue.z = 0.0f;
-		}
-		pos.translate = bossPosition + randomValue;
-		direct = Vector3::Normalize(pos.translate - bossPosition);
-		boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,
-			boss_->GetPlayer(), BossSystemContext::TrackType::kSuperior);
+
+	float value = 5.0f;
+	float limitValue = 1.5f;
+	//---通常---//
+	Vector3 randomValue = LwLib::GetRandomValue(Vector3(-value, limitValue, limitValue), Vector3(value, value, value), limitValue);
+	if (std::min(randomValue.z, 0.0f) == randomValue.z) {
+		randomValue.z = 0.0f;
 	}
-#pragma endregion
+	pos.translate = bossPosition + randomValue;
+	Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
+	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
+	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,
+		boss_->GetPlayer(), type);
 
 }

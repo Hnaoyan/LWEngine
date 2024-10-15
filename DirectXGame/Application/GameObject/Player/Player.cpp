@@ -184,12 +184,15 @@ void Player::OnCollision(ColliderObject target)
 
 	}
 
-	else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
+	//else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
+	//	facadeSystem_->GetHealth()->TakeDamage();
+	//}
+	else if (std::holds_alternative<IBullet*>(target)) {
 		facadeSystem_->GetHealth()->TakeDamage();
 	}
-	else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
-		facadeSystem_->GetHealth()->TakeDamage();
-	}
+	//else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
+	//	facadeSystem_->GetHealth()->TakeDamage();
+	//}
 
 }
 

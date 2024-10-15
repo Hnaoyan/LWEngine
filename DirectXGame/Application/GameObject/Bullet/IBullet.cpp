@@ -15,7 +15,6 @@ void IBullet::Initialize()
 	sSerialNumber++;
 
 	InstancedUnit::Initialize();
-	transform_.scale *= 0.5f;
 	collider_.Initialize(transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeBullet);
 	// 生成座標

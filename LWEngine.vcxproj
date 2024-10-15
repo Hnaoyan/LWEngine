@@ -19,6 +19,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BossBulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\PlayerBulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />
@@ -182,7 +183,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\TrackingBullet\ITrackingStrategy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Boss\BossTrackBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
@@ -192,6 +192,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BossBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\PlayerBulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />

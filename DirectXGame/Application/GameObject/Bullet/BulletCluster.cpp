@@ -61,17 +61,12 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 		it != units_.end(); ++it) {
 		manager->ListRegist(static_cast<IBullet*>((*it).get())->GetCollider());
 	}
-
 }
 
-void BulletCluster::AddBullet(const EulerTransform& transform, const Vector3& direct)
+void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 {
-	// インスタンス作成
-	std::unique_ptr<InstancedUnit> instance = std::make_unique<IBullet>();
-	instance->transform_ = transform;
-	// 速度
-	static_cast<IBullet*>(instance.get())->SetVelocity(direct);
-	static_cast<IBullet*>(instance.get())->Initialize();
-	// リストにムーブ
+	// 弾の基底クラスをインスタンシングユニットにムーブ
+	std::unique_ptr<InstancedUnit> instance = std::move(bullet);
+	// リストに追加
 	units_.push_back(std::move(instance));
 }

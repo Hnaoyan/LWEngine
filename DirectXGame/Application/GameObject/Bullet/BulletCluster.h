@@ -2,6 +2,7 @@
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
 class CollisionManager;
+class IBullet;
 
 class BulletCluster : public InstancedGroup 
 {
@@ -39,8 +40,7 @@ public: // USER
 	/// </summary>
 	/// <param name="position"></param>
 	/// <param name="direct"></param>
-	void AddBullet(const EulerTransform& transform, const Vector3& direct);
-
+	void AddBullet(std::unique_ptr<IBullet> bullet);
 private:
 	uint32_t texture_ = 0;
 

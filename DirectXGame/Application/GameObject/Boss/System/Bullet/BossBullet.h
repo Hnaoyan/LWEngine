@@ -40,14 +40,14 @@ namespace BossSystemContext
 		/// <param name="object"></param>
 		void OnCollision(ColliderObject object) override;
 	public: // アクセッサ
-		void SetPlayer(Player* player) { player_ = player; }
+		void SetPlayer(IGameObject* player) { player_ = player; }
 		void SetTrackType(TrackType type) { trackType_ = type; }
 
 	private:
 		// 追跡している時間
 		FrameTimer trackTimer_;
 		// プレイヤーのポインタ
-		Player* player_ = nullptr;
+		IGameObject* player_ = nullptr;
 		// 追尾の種類
 		TrackType trackType_ = TrackType::kStandard;
 		// 補間の半径

@@ -6,24 +6,18 @@ float BossSystemContext::NormalBullet::sAcceleration = 0.1f;
 
 void BossSystemContext::NormalBullet::Initialize()
 {
+	// 基底クラスの初期化・マスクの設定
+	IBullet::Initialize();
+	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
+
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	sAcceleration = instance->GetValue<float>("BossNormalBullet", "Acceleration");
 	acceleration_ = 0.0f;
 
-	serialNumber_ = sSerialNumber;
-	sSerialNumber++;
-
-	tag_ = "BossBullet" + std::to_string(serialNumber_);
-	
-	InstancedUnit::Initialize();
-	transform_ = { {1.0f,1.0f,1.0f} ,{0,0,0},{0.0f,0.0f,0.0f} };
-	collider_.Initialize(transform_.scale.x, this);
-	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
-
 	moveDirect_ = Vector3::Normalize(velocity_);
 
-	// 軌跡
-	trail_ = std::make_unique<BulletTrail>();
+	// 軌跡の設定
+	trail_->SetLength(50);
 	trail_->polygon_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 
 }

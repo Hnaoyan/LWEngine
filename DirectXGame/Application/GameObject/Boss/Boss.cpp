@@ -39,6 +39,8 @@ void Boss::Initialize(Model* model)
 
 void Boss::Update()
 {
+	// 1フレーム前の座標
+	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム
 	systemManager_->Update();
 	// アニメ

@@ -579,6 +579,9 @@
     <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\FrameWork\Framework.h">
@@ -1127,7 +1130,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\TrailMaterial.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Boss\BossTrackBullet.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

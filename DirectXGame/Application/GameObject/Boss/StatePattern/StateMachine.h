@@ -2,6 +2,8 @@
 #include "Engine/Math/MathLib.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Application/GameObject/Boss/Animation/BossAnimationManager.h"
+#include "Application/GameObject/Boss/System/BossSystemStructs.h"
+
 #include <memory>
 #include <variant>
 #include <map>
@@ -179,8 +181,7 @@ namespace BossState
 		void Exit() override;
 	private:
 		void MissileAttack();
-
-		void DefaultMissile();
+		void GenerateMissile(const Matrix4x4& rotateMatrix, BossSystemContext::TrackType type);
 
 	private:
 		Vector3 bulletDirect_ = {};

@@ -74,5 +74,7 @@ protected:
 public:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
+	// 前フレームの位置
+	Vector3 prevPosition_ = {};
 
 };
