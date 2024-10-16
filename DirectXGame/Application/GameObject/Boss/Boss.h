@@ -8,6 +8,7 @@
 #include "System/BossSystemLists.h"
 
 class Player;
+class BulletManager;
 
 class Boss : public IGameObject
 {
@@ -67,7 +68,10 @@ private: // サブシステム
 	// アニメーション用のやつ
 	std::unique_ptr<BossSystemContext::AnimationManager> animationManager_;
 	// 弾の管理
-	std::unique_ptr<BossSystemContext::BulletManager> bulletManager_;
+	std::unique_ptr<BossSystemContext::BulletManager> contextBulletManager;
+
+	// 外部の弾管理
+	BulletManager* bulletManager_;
 
 #pragma region 内部システムのアクセッサ
 public:
@@ -82,7 +86,7 @@ public:
 
 	// コンテキストのアクセッサ
 	BossSystemContext::HealthManager* GetHealth() { return &systemManager_->healthManager_; }
-	BossSystemContext::BulletManager* GetBulletManager() { return bulletManager_.get(); }
+	BossSystemContext::BulletManager* GetBulletManager() { return contextBulletManager.get(); }
 	BossSystemContext::ParticleManager* GetParticleManager() { return &systemManager_->particleManager_; }
 	BossSystemContext::AnimationManager* GetAnimManager() { return animationManager_.get(); }
 
@@ -106,7 +110,7 @@ public:
 	void SetPlayer(Player* player) {
 		player_ = player;
 		stateDecider_.Initialize(this, player);
-		bulletManager_->SetPlayer(player);
+		contextBulletManager->SetPlayer(player);
 	}
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 #pragma endregion

@@ -26,8 +26,8 @@ void Boss::Initialize(Model* model)
 	stateManager_.Initialize(this);
 	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
 
-	bulletManager_ = std::make_unique<BossSystemContext::BulletManager>();
-	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"), this);
+	contextBulletManager = std::make_unique<BossSystemContext::BulletManager>();
+	contextBulletManager->Initialize(ModelManager::GetModel("DefaultCube"), this);
 
 	respawnPos_ = { 0,8.5f,50.0f };
 
@@ -46,7 +46,7 @@ void Boss::Update()
 	// アニメ
 	animationManager_->Update();
 	// 弾
-	bulletManager_->Update();
+	contextBulletManager->Update();
 	// ステート
 	if (state_ && isAction_) {
 		state_->Update();
@@ -85,7 +85,7 @@ void Boss::Draw(ModelDrawDesc desc)
 		systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
 	}
 	// 弾
-	bulletManager_->Draw(desc);
+	contextBulletManager->Draw(desc);
 }
 
 void Boss::ImGuiDraw()
