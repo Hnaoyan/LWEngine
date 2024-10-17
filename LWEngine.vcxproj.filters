@@ -216,9 +216,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.cpp">
       <Filter>Application\GameObject\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.cpp">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBulletEffect.cpp">
       <Filter>Application\Particle</Filter>
     </ClCompile>
@@ -252,9 +249,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.cpp">
       <Filter>Application\GameObject\Boss\System</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\NormalBullet\BossNormalBullet.cpp">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClCompile>
@@ -263,9 +257,6 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Teleport\BossTeleportState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\TrackingBullet\BossTrackingBullet.cpp">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\UpDown\BossUpDownState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
@@ -561,12 +552,6 @@
     <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\PlayerBulletFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BossBulletFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -574,6 +559,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -751,9 +742,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h">
       <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.h">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h">
       <Filter>Application\Particle</Filter>
@@ -1097,19 +1085,10 @@
     <ClInclude Include="DirectXGame\Engine\3D\User\Trail3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\TrackingBullet\ITrackingStrategy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\PlayerBulletFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BossBulletFactory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h">
@@ -1119,6 +1098,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

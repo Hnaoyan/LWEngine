@@ -1,10 +1,11 @@
-#include "../BossBullet.h"
+#include "NormalSpinBullet.h"
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
-float BossSystemContext::NormalBullet::sAcceleration = 0.1f;
+float NormalSpinBullet::sAcceleration = 0.1f;
 
-void BossSystemContext::NormalBullet::Initialize()
+void NormalSpinBullet::Initialize()
 {
 	// 基底クラスの初期化・マスクの設定
 	IBullet::Initialize();
@@ -22,7 +23,7 @@ void BossSystemContext::NormalBullet::Initialize()
 
 }
 
-void BossSystemContext::NormalBullet::Update()
+void NormalSpinBullet::Update()
 {
 	// 速度の計算
 	acceleration_ += sAcceleration * GameSystem::GameSpeedFactor();
@@ -35,12 +36,7 @@ void BossSystemContext::NormalBullet::Update()
 	IBullet::Update();
 }
 
-void BossSystemContext::NormalBullet::ImGuiDraw()
-{
-
-}
-
-void BossSystemContext::NormalBullet::OnCollision(ColliderObject object)
+void NormalSpinBullet::OnCollision(ColliderObject object)
 {
 	if (std::holds_alternative<Terrain*>(object)) {
 		isDead_ = true;

@@ -206,7 +206,7 @@ void BossState::IState::GenerateBullet(const Vector3& direct, const float& speed
 	EulerTransform transform = boss_->worldTransform_.transform_;
 	transform.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("BossNormalBullet", "Scale");
 	// 生成
-	std::unique_ptr<IBullet> bullet = std::make_unique<BossSystemContext::NormalBullet>();
+	std::unique_ptr<IBullet> bullet = std::make_unique<NormalSpinBullet>();
 	bullet->Initialize();
 	bullet->SetVelocity(direct * speed);
 	bullet->transform_ = transform;

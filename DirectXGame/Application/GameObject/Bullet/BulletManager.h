@@ -35,6 +35,7 @@ public: // USER
 	/// </summary>
 	void AddCluster(std::string tag);
 public: // アクセッサ
+
 	BulletCluster* FindCluster(std::string tag);
 
 	void SetPlayer(Player* player) { player_ = player; }

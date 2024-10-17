@@ -1,4 +1,5 @@
 #pragma once
+#include "../BulletEnums.h"
 #include <string>
 
 class IBullet;

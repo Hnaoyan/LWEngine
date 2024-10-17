@@ -50,9 +50,8 @@ public:
 	/// </summary>
 	void DeleteUnit();
 public: // アクセッサ
-
-	// ユニットリスト取得
-	//std::vector<std::unique_ptr<InstancedUnit>> GetUnitList() { return units_; }
+	// モデルを変更できるように
+	void SetModel(Model* model) { model_ = model; }
 
 private:
 	/// <summary>

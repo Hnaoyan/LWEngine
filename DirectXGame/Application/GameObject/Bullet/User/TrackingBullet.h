@@ -1,5 +1,6 @@
 #pragma once
 #include "../IBullet.h"
+#include "../BulletEnums.h"
 
 class TrackingBullet : public IBullet
 {
@@ -25,17 +26,39 @@ public:
 	void OnCollision(ColliderObject object) override;
 
 public: // アクセッサ
-	// 追尾の種類
-	enum class TrackingType : uint32_t
-	{
-		kStandard,	// 通常
-		kInferior,	// 劣等
-		kSuperior,	// 優等
-	};
 	void SetGameObject(IGameObject* object) { object_ = object; }
 	void SetTrackType(TrackingType type) { trackingType_ = type; }
 
 private:
+	// 対象オブジェクト
 	IGameObject* object_ = nullptr;
+	// 追尾の種類
 	TrackingType trackingType_ = TrackingType::kStandard;
+	// 追跡している時間
+	FrameTimer trackTimer_;
+	// 直進タイマー
+	FrameTimer straightTimer_;
+	// 補間の半径
+	float lerpRadius_ = 0.0f;
+	// 劣等型の狙い先のオフセット位置
+	Vector3 offset_;
+	// 加速度ベクトル
+	Vector3 accelerate_;
+private:
+	void SetupByType();
+	void TrackUpdate();
+private:
+	// 通常
+	void CalcStandardMissile();
+	// 劣等
+	void CalcInferiorMissile();
+	// 優等
+	void CalcSuperiorMissile();
+
+public: // 共通
+	static float sTrackingFrame;
+	static float sDamping;
+	static float sLerpRadius;
+	static float sBulletSpeed;
+	static float sInitSpeed;
 };

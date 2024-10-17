@@ -12,7 +12,7 @@ namespace BossSystemContext
 		kStandard,	// 盆栽
 		kInferior,	// 劣等
 		kSuperior,	// 優等
-	};
+	};	
 
 	// ダメージ受けた時のパラメータ
 	struct DamageParams

@@ -26,7 +26,7 @@ void BossState::MissileAttackState::Update()
 		RotateUpdate();
 		//---弾の情報---//
 		// 速さ
-		bulletSpeed_ = BossSystemContext::TrackingBullet::sInitSpeed;
+		bulletSpeed_ = TrackingBullet::sInitSpeed;
 		// サイズ
 		bulletScale_ = 0.75f;
 		// 進む方向
@@ -50,15 +50,15 @@ void BossState::MissileAttackState::MissileAttack()
 	// 弾の生成
 	for (int i = 0; i < 25; ++i) {
 		//---通常---//
-		GenerateMissile(rotateMatrix, BossSystemContext::TrackType::kStandard);
+		GenerateMissile(rotateMatrix, TrackingType::kStandard);
 		//---劣等---//
-		GenerateMissile(rotateMatrix, BossSystemContext::TrackType::kInferior);
+		GenerateMissile(rotateMatrix, TrackingType::kInferior);
 		//---優等---//
-		GenerateMissile(rotateMatrix, BossSystemContext::TrackType::kSuperior);
+		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
 	}
 }
 
-void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, BossSystemContext::TrackType type)
+void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, TrackingType type)
 {
 	// デフォルトの情報
 	EulerTransform pos = boss_->worldTransform_.transform_;
@@ -77,9 +77,9 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 
 	// インスタンスを生成から送るまで
-	std::unique_ptr<IBullet> bullet = std::make_unique<BossSystemContext::TrackingBullet>();
-	static_cast<BossSystemContext::TrackingBullet*>(bullet.get())->SetPlayer(boss_->GetPlayer());
-	static_cast<BossSystemContext::TrackingBullet*>(bullet.get())->SetTrackType(type);
+	std::unique_ptr<IBullet> bullet = std::make_unique<TrackingBullet>();
+	static_cast<TrackingBullet*>(bullet.get())->SetGameObject(boss_->GetPlayer());
+	static_cast<TrackingBullet*>(bullet.get())->SetTrackType(type);
 	bullet->Initialize();
 	bullet->SetVelocity(direct * bulletSpeed_);
 	bullet->transform_ = pos;

@@ -1,13 +1,6 @@
 #pragma once
+#include "IBullet.h"
+#include "User/TrackingBullet.h"
+#include "User/NormalSpinBullet.h"
+
 #include <variant>
-
-class IBullet;
-namespace BossSystemContext
-{
-	class TrackingBullet;
-	class NormalBullet;
-}
-
-using namespace BossSystemContext;
-
-using BulletVariant = std::variant<IBullet*, TrackingBullet*, NormalBullet*>;

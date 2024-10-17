@@ -88,6 +88,9 @@ void Boss::ImGuiDraw()
 	if (ImGui::Button("MissileState")) {
 		stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 	}
+	if (ImGui::Button("NormalAttack")) {
+		stateManager_.ChangeRequest(std::make_unique<BossState::AttackState>());
+	}
 	ImGui::Checkbox("IsAction", &isAction_);
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
@@ -104,16 +107,12 @@ void Boss::ImGuiDraw()
 	{
 		// 通常弾
 		if (ImGui::BeginTabItem("Normal")) {
-			ImGui::DragFloat("N_Acceleration", &BossSystemContext::NormalBullet::sAcceleration, 0.01f);
+
 			ImGui::EndTabItem();
 		}
 		// 追尾弾
 		if (ImGui::BeginTabItem("Tracking")) {
-			ImGui::DragFloat("T_TrackingFrame", &BossSystemContext::TrackingBullet::sTrackingFrame, 0.01f);
-			ImGui::DragFloat("T_BulletSpeed", &BossSystemContext::TrackingBullet::sBulletSpeed, 0.01f);
-			ImGui::DragFloat("T_InitSpeed", &BossSystemContext::TrackingBullet::sInitSpeed, 0.01f);
-			ImGui::DragFloat("T_Damping", &BossSystemContext::TrackingBullet::sDamping, 0.01f);
-			ImGui::DragFloat("T_LerpRadius", &BossSystemContext::TrackingBullet::sLerpRadius, 0.01f);
+
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();
@@ -219,17 +218,17 @@ void Boss::GlobalValueInitialize()
 	//---通常弾---//
 	groupName = "BossNormalBullet";
 	instance->CreateGroup(groupName);
-	instance->AddValue(groupName, "Acceleration", BossSystemContext::NormalBullet::sAcceleration);
+
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 
 	//---追尾弾---//
 	groupName = "BossTrackingBullet";
 	instance->CreateGroup(groupName);
-	instance->AddValue(groupName, "TrackFrame", BossSystemContext::TrackingBullet::sTrackingFrame);
-	instance->AddValue(groupName, "Damping", BossSystemContext::TrackingBullet::sDamping);
-	instance->AddValue(groupName, "Speed", BossSystemContext::TrackingBullet::sBulletSpeed);
-	instance->AddValue(groupName, "InitSpeed", BossSystemContext::TrackingBullet::sInitSpeed);
-	instance->AddValue(groupName, "LerpRadius", BossSystemContext::TrackingBullet::sLerpRadius);
+	instance->AddValue(groupName, "TrackFrame", 0.0f);
+	instance->AddValue(groupName, "Damping", 0.0f);
+	instance->AddValue(groupName, "Speed", 0.0f);
+	instance->AddValue(groupName, "InitSpeed", 0.0f);
+	instance->AddValue(groupName, "LerpRadius", 0.0f);
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 	instance->AddValue(groupName, "TrailSaveFrame", int32_t(50));
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
