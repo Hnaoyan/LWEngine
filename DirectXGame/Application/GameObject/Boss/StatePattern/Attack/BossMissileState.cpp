@@ -12,7 +12,7 @@ void BossState::MissileAttackState::Initialize()
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
 	// クラスター
-	cluster_ = boss_->GetBulletManager()->GetMissileCluster();
+	//cluster_ = boss_->GetBulletManager()->GetMissileCluster();
 }
 
 void BossState::MissileAttackState::Update()
@@ -75,7 +75,15 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	pos.translate = bossPosition + randomValue;
 	Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
 	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-	boss_->GetBulletManager()->GetMissileCluster()->AddMissile(pos, direct, bulletSpeed_,
-		boss_->GetPlayer(), type);
+
+	// インスタンスを生成から送るまで
+	std::unique_ptr<IBullet> bullet = std::make_unique<BossSystemContext::TrackingBullet>();
+	static_cast<BossSystemContext::TrackingBullet*>(bullet.get())->SetPlayer(boss_->GetPlayer());
+	static_cast<BossSystemContext::TrackingBullet*>(bullet.get())->SetTrackType(type);
+	bullet->Initialize();
+	bullet->SetVelocity(direct * bulletSpeed_);
+	bullet->transform_ = pos;
+	bullet->transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("BossNormalBullet", "Scale");
+	boss_->GetTrackingCluster()->AddBullet(std::move(bullet));
 
 }

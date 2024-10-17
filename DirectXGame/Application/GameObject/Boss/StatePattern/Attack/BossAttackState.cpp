@@ -92,14 +92,14 @@ void BossState::AttackState::LockAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
+	GenerateBullet(bulletDirect_, bulletSpeed_);
 }
 
 void BossState::AttackState::StraightAttack()
 {
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
+	GenerateBullet(bulletDirect_, bulletSpeed_);
 }
 
 void BossState::AttackState::SpreadAttack()
@@ -107,7 +107,7 @@ void BossState::AttackState::SpreadAttack()
 	EulerTransform pos = boss_->worldTransform_.transform_;
 	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	// 直線
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
+	GenerateBullet(bulletDirect_, bulletSpeed_);
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
 	Vector3 newDirect{};
 	// 1
@@ -116,10 +116,10 @@ void BossState::AttackState::SpreadAttack()
 		rotValue += 0.1f;
 		// 左回転
 		newDirect = LwLib::RotateXZVector(bulletDirect_, -rotValue);
-		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+		GenerateBullet(newDirect, bulletSpeed_);
 		// 右回転
 		newDirect = LwLib::RotateXZVector(bulletDirect_, rotValue);
-		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+		GenerateBullet(newDirect, bulletSpeed_);
 	}
 
 }
@@ -130,7 +130,7 @@ void BossState::AttackState::RadialFireAttack()
 	//pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	//pos.scale *= 3.5f;
 	// 直線
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
+	GenerateBullet(bulletDirect_, bulletSpeed_);
 
 	Vector2 bulletDirect = { bulletDirect_.x,bulletDirect_.z };
 	Matrix4x4 yawMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
@@ -144,10 +144,10 @@ void BossState::AttackState::RadialFireAttack()
 		rotValue += addValue;
 		// 左回転
 		Vector3 newDirect = LwLib::RotateXZVector({ direct.x, 0.0f,direct.z }, -rotValue);
-		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+		GenerateBullet(newDirect, bulletSpeed_);
 		// 右回転
 		newDirect = LwLib::RotateXZVector({ direct.x, 0.0f,direct.z }, rotValue);
-		boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, newDirect, bulletSpeed_);
+		GenerateBullet(newDirect, bulletSpeed_);
 	}
 }
 

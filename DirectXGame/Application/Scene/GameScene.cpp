@@ -61,6 +61,7 @@ void GameScene::Initialize()
 	bossEnemy_->SetGPUParticle(gpuParticleManager_.get());
 	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
 	bossEnemy_->SetPlayer(player_.get());
+	bossEnemy_->SetBulletManager(bulletManager_.get());
 
 	// セッター処理
 	followCamera_->SetParent(player_->GetWorldTransform());
@@ -450,7 +451,7 @@ void GameScene::CollisionUpdate()
 	collisionManager_->ListRegist(player_->GetFootCollider());
 	if (bossEnemy_) {
 		collisionManager_->ListRegist(bossEnemy_->GetCollider());
-		bossEnemy_->GetBulletManager()->CollisionUpdate(collisionManager_.get());
+		//bossEnemy_->GetBulletManager()->CollisionUpdate(collisionManager_.get());
 	}
 	bulletManager_->CollisionUpdate(collisionManager_.get());
 	terrainManager_->CollisionUpdate(collisionManager_.get());

@@ -44,7 +44,7 @@ void TitleScene::GPUUpdate()
 
 void TitleScene::Update()
 {
-#ifdef _DEBUG
+#ifdef IMGUI_ENABLED
 	if (input_->TriggerKey(DIK_LSHIFT)) {
 		sceneManager_->ChangeThreadScene("SAMPLE");
 	}
@@ -54,7 +54,7 @@ void TitleScene::Update()
 	if (input_->TriggerKey(DIK_H)) {
 		sceneManager_->ChangeThreadScene("GAMEEDIT");
 	}
-#endif // _DEBUG
+#endif // IMGUI_ENABLED
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
 		sceneManager_->ChangeThreadScene("GAME");

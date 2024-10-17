@@ -127,5 +127,5 @@ void BossState::OrbitMoveState::LockOnAttack()
 	}
 	bulletDirect_ = Vector3::Normalize(playerPos - boss_->worldTransform_.GetWorldPosition());
 	
-	boss_->GetBulletManager()->GetBeginCluster()->AddBullet(pos, bulletDirect_, bulletSpeed_);
+	GenerateBullet(bulletDirect_, bulletSpeed_);
 }

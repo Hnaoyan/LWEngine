@@ -67,6 +67,8 @@ namespace BossState
 		void RotateUpdate();
 		// タイマーの処理
 		void TimerUpdate(StateVariant state);
+		// 通常の射撃を生成する関数
+		void GenerateBullet(const Vector3& direct, const float& speed);
 
 		Boss* boss_ = nullptr;
 		// 変更のフレームタイマー

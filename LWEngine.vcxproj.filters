@@ -219,9 +219,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.cpp">
       <Filter>Application\GameObject\Boss\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.cpp">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBulletEffect.cpp">
       <Filter>Application\Particle</Filter>
     </ClCompile>
@@ -233,9 +230,6 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.cpp">
       <Filter>Application\GameObject\Boss\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BulletManager\BossBulletManager.cpp">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\Boss.cpp">
       <Filter>Application\GameObject\Boss</Filter>
@@ -759,12 +753,6 @@
       <Filter>Application\GameObject\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Bullet\BossBullet.h">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BulletCluster\BossBulletCluster.h">
-      <Filter>Application\GameObject\Boss\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BulletManager\BossBulletManager.h">
       <Filter>Application\GameObject\Boss\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h">

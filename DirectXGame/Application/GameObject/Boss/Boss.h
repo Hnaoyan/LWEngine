@@ -1,14 +1,15 @@
 #pragma once
 #include "../IGameObject.h"
+
+#include "Application/GameObject/Bullet/BulletManager.h"
 #include "StatePattern/StateMachine.h"
+#include "Animation/BossAnimationManager.h"
 #include "System/BossSystem.h"
 #include "System/UI/BossUI.h"
 #include "System/BossFacade.h"
-#include "Animation/BossAnimationManager.h"
 #include "System/BossSystemLists.h"
 
 class Player;
-class BulletManager;
 
 class Boss : public IGameObject
 {
@@ -67,8 +68,6 @@ private: // サブシステム
 	std::unique_ptr<BossFacade> systemManager_;
 	// アニメーション用のやつ
 	std::unique_ptr<BossSystemContext::AnimationManager> animationManager_;
-	// 弾の管理
-	std::unique_ptr<BossSystemContext::BulletManager> contextBulletManager;
 
 	// 外部の弾管理
 	BulletManager* bulletManager_;
@@ -86,7 +85,6 @@ public:
 
 	// コンテキストのアクセッサ
 	BossSystemContext::HealthManager* GetHealth() { return &systemManager_->healthManager_; }
-	BossSystemContext::BulletManager* GetBulletManager() { return contextBulletManager.get(); }
 	BossSystemContext::ParticleManager* GetParticleManager() { return &systemManager_->particleManager_; }
 	BossSystemContext::AnimationManager* GetAnimManager() { return animationManager_.get(); }
 
@@ -110,9 +108,12 @@ public:
 	void SetPlayer(Player* player) {
 		player_ = player;
 		stateDecider_.Initialize(this, player);
-		contextBulletManager->SetPlayer(player);
 	}
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+
+	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
+	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("BossTrackingBullet"); }
+	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("BossNormalBullet"); }
 #pragma endregion
 
 public: // 内部でのみ呼び出す関数
