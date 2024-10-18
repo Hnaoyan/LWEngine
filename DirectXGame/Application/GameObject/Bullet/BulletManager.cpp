@@ -7,7 +7,7 @@ void BulletManager::Initialize(Model* model)
 	model_ = model;
 
 	AddCluster("PlayerNormalBullet");
-	AddCluster("HighBullet");
+	AddCluster("PlayerTrackingBullet");
 	AddCluster("BossTrackingBullet");
 	AddCluster("BossNormalBullet");
 }

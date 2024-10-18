@@ -68,6 +68,7 @@ public:
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
 	StateManager* HorizontalManager() { return horizontalState_.get(); }
 	StateManager* VerticalManager() { return verticalState_.get(); }
+	Boss* GetBoss() { return boss_; }
 #pragma endregion
 
 public: // セッター
@@ -82,7 +83,10 @@ public: // セッター
 		systemManager_.GetLockOn()->SetBoss(boss); 
 		systemManager_.SetEnemyList(lists);
 	}
-	void SetBoss(Boss* boss) { systemManager_.GetLockOn()->SetBoss(boss); }
+	void SetBoss(Boss* boss) { 
+		boss_ = boss;
+		systemManager_.GetLockOn()->SetBoss(boss);
+	}
 
 private: // USER
 
@@ -99,4 +103,6 @@ public:
 	FrameTimer quickBoostCoolTime_;
 
 	bool isKnock_ = false;
+private:
+	Boss* boss_ = nullptr;
 };

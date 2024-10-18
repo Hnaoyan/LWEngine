@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Math/Vector/Vector3.h"
+#include "Application/GameObject/Bullet/BulletEnums.h"
 
 class Player;
 class BulletManager;
@@ -19,6 +20,8 @@ namespace PlayerContext
 		void Initialize(Player* player);
 		void Update();
 		void OnFire(const Vector3& direct);
+		void TrackingFire();
+		void GenerateTracking(const Vector3& direct, TrackingType type);
 	private:
 
 	private:
