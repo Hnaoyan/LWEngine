@@ -10,6 +10,7 @@
 #include "../GameObject/GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameSystem/UI/GameUIManager.h"
+#include "Application/GameSystem/GameObjectManager.h"
 
 class GameScene : public IScene
 {
@@ -71,18 +72,9 @@ private:
 	void CollisionUpdate();
 
 private: // アプリ
-	std::unique_ptr<Player> player_;
-	std::unique_ptr<Boss> bossEnemy_;
-	std::unique_ptr<SkyDomeObject> skydome_;
-	// ゲームのシステム関係	
-	std::unique_ptr<GameSystem> gameSystem_;
-
-	std::vector<std::unique_ptr<Triangle3D>> triangles_;
-
-	// 地形マネ
-	std::unique_ptr<TerrainManager> terrainManager_;
-	// 弾のマネージャー
-	std::unique_ptr<BulletManager> bulletManager_;
+	// ゲーム
+	std::unique_ptr<GameObjectManager> gameObjectManager_;	// オブジェクト
+	std::unique_ptr<GameSystem> gameSystem_;	// システム
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
 	// GPUParticle
@@ -123,8 +115,6 @@ private: // システム関係
 	// カメラ君
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
-	// 追従カメラ
-	std::unique_ptr<FollowCamera> followCamera_;
 	bool isDebugCamera_ = false;
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;

@@ -21,26 +21,20 @@ void GameScene::Initialize()
 	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
-	followCamera_ = std::make_unique<FollowCamera>();
-	followCamera_->Initialize();
+
 #pragma endregion
 
 #pragma region インスタンス化
 	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
 	uiManager_ = std::make_unique<GameUI::UIManager>();
-	terrainManager_ = std::make_unique<TerrainManager>();
-	bulletManager_ = std::make_unique<BulletManager>();
+
 	collisionManager_ = std::make_unique<CollisionManager>();
+	gameObjectManager_ = std::make_unique<GameObjectManager>();
 	gameSystem_ = std::make_unique<GameSystem>();
 
-	player_ = std::make_unique<Player>();
-	bossEnemy_ = std::make_unique<Boss>();
-	skydome_ = std::make_unique<SkyDomeObject>();
 #pragma endregion
 
 #pragma region システム
-	// 地形
-	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	// パーティクル
 	gpuParticleManager_->Initialize(ModelManager::GetModel("Plane"));
 	// ゲームシステム
@@ -49,29 +43,10 @@ void GameScene::Initialize()
 	uiManager_->Initialize();
 	// コライダー
 #pragma endregion
-
-	skydome_->Initialize(ModelManager::GetModel("SkyDome"));
-	player_->PreInitialize(followCamera_.get(), gpuParticleManager_.get());
-	player_->Initialize(ModelManager::GetModel("Player"));
-
-	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
-	bulletManager_->SetPlayer(player_.get());
-	bulletManager_->SetBoss(bossEnemy_.get());
-
-	bossEnemy_->SetGPUParticle(gpuParticleManager_.get());
-	bossEnemy_->Initialize(ModelManager::GetModel("BossEnemy"));
-	bossEnemy_->SetPlayer(player_.get());
-	bossEnemy_->SetBulletManager(bulletManager_.get());
-
-	// セッター処理
-	followCamera_->SetParent(player_->GetWorldTransform());
-	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
-
-	// プレイヤーにセットする
-	player_->PointerInitialize(bulletManager_.get(), bossEnemy_.get(), nullptr);
-
 	// 準備完了
 	isSceneReady_ = true;
+
+	gameObjectManager_->Initialize(gpuParticleManager_.get());
 }
 
 void GameScene::GPUUpdate()
@@ -88,50 +63,32 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
-	// 死亡チェック
-	if (player_->IsDead() && !isGameOver_) {
-		backTitleTimer_.Start(120.0f);
-		isGameOver_ = true;
-	}
+	//// 死亡チェック
+	//if (player_->IsDead() && !isGameOver_) {
+	//	backTitleTimer_.Start(120.0f);
+	//	isGameOver_ = true;
+	//}
 
-	// シーン変更の処理
-	if (isGameOver_) {
-		backTitleTimer_.Update();
-		if (!backTitleTimer_.IsActive()) {
-			sceneManager_->ChangeScene("TITLE");
-		}
-		return;
-	}
-	if (clearText_.isClear) {
-		clearText_.transitionTimer.Update();
+	//// シーン変更の処理
+	//if (isGameOver_) {
+	//	backTitleTimer_.Update();
+	//	if (!backTitleTimer_.IsActive()) {
+	//		sceneManager_->ChangeScene("TITLE");
+	//	}
+	//	return;
+	//}
+	//if (clearText_.isClear) {
+	//	clearText_.transitionTimer.Update();
 
-		if (clearText_.transitionTimer.IsEnd()) {
-			sceneManager_->ChangeScene("TITLE");
-		}
-	}
+	//	if (clearText_.transitionTimer.IsEnd()) {
+	//		sceneManager_->ChangeScene("TITLE");
+	//	}
+	//}
 
 	//---ゲームのシステム更新---//
 	LightingUpdate();
 	gameSystem_->Update();
-	skydome_->Update();
-	terrainManager_->Update();
-
-	//---ゲームのオブジェクト更新---//
-	//プレイヤー
-	player_->Update();
-	// 弾
-	bulletManager_->Update();
-	// ボス
-	if (bossEnemy_) {
-		bossEnemy_->Update();
-		if (bossEnemy_->IsDead()) {
-			bossEnemy_->Finalize();
-			bossEnemy_.reset();
-			clearText_.isClear = true;
-			clearText_.transitionTimer.Start(300.0f);
-		}
-	}
-
+	gameObjectManager_->Update();
 	// 衝突処理
 	CollisionUpdate();
 	// カメラの更新
@@ -156,24 +113,16 @@ void GameScene::Draw()
 
 	ModelRenderer::PreDraw(commandList);
 
-	ModelDrawDesc desc{};
-	desc.camera = &camera_;
-	desc.directionalLight = directionalLight_.get();
-	desc.pointLight = pointLight_.get();
-	desc.spotLight = spotLight_.get();
-	// 球体
-	skydome_->Draw(desc);
-	// 地形
-	terrainManager_->Draw(desc);
+	// ライトの情報
+	DrawDesc::LightDesc lightDesc{};
+	lightDesc.directionalLight = directionalLight_.get();
+	lightDesc.pointLight = pointLight_.get();
+	lightDesc.spotLight = spotLight_.get();
 
-	// プレイヤー
-	player_->Draw(desc);
-	// ボス
-	if (bossEnemy_) {
-		bossEnemy_->Draw(desc);
-	}
+	// オブジェクト
+	gameObjectManager_->Draw(&camera_, lightDesc);
 
-	bulletManager_->Draw(desc);
+	// パーティクル
 	gpuParticleManager_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
@@ -195,11 +144,10 @@ void GameScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
-	player_->UISpriteDraw();
-	if (bossEnemy_) {
-		bossEnemy_->UIDraw();
-	}
+	// ゲームの
+	gameObjectManager_->UIDraw();
 
+	// UI全般
 	uiManager_->Draw();
 
 	if (clearText_.isClear) {
@@ -221,17 +169,13 @@ void GameScene::UIDraw()
 void GameScene::ImGuiDraw()
 {
 #ifdef IMGUI_ENABLED
-	// ゲームオブジェクト
-	skydome_->ImGuiDraw();
-	player_->ImGuiDraw();
-	if (bossEnemy_) {
-		bossEnemy_->ImGuiDraw();
-	}
-	terrainManager_->ImGuiDraw();
+	
+	gameObjectManager_->ImGuiDraw();
+
 	// カメラ
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
-	followCamera_->ImGuiDraw();
+
 	gpuParticleManager_->ImGuiDraw();
 
 	ImGui::Begin("GameScene");
@@ -243,20 +187,21 @@ void GameScene::ImGuiDraw()
 	}
 	ImGui::DragFloat("BloomThreshold", &gameSystem_->bloomData_.threshold, 0.01f);
 	ImGui::DragFloat("BloomSigma", &gameSystem_->bloomData_.sigma, 0.01f);
-	//ImGui::DragFloat3("BloomData", &gameSystem_->bloomData_, 0.01f);
-	if (ImGui::Button("BossRes")) {
-		if (!bossEnemy_) {
-			bossEnemy_ = std::make_unique<Boss>();
-			bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
-			bossEnemy_->SetPlayer(player_.get());
-			player_->SetBoss(bossEnemy_.get());
-		}
-	}
-	if (ImGui::Button("BossKill")) {
-		if (bossEnemy_) {
-			bossEnemy_->IsDead();
-		}
-	}
+
+	//if (ImGui::Button("BossRes")) {
+	//	if (!bossEnemy_) {
+	//		bossEnemy_ = std::make_unique<Boss>();
+	//		bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
+	//		bossEnemy_->SetPlayer(player_.get());
+	//		player_->SetBoss(bossEnemy_.get());
+	//	}
+	//}
+	//if (ImGui::Button("BossKill")) {
+	//	if (bossEnemy_) {
+	//		bossEnemy_->IsDead();
+	//	}
+	//}
+
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 
 	if (ImGui::TreeNode("DirectionalLight")) {
@@ -395,10 +340,12 @@ void GameScene::CameraUpdate()
 		camera_.TransferMatrix();
 	}
 	else {
-		followCamera_->Update();
-		camera_.viewMatrix_ = followCamera_->viewMatrix_;
-		camera_.projectionMatrix_ = followCamera_->projectionMatrix_;
-		camera_.transform_ = followCamera_->transform_;
+		// カメラの更新
+		gameObjectManager_->GetFollowCamera()->Update();
+
+		camera_.viewMatrix_ = gameObjectManager_->GetFollowCamera()->viewMatrix_;
+		camera_.projectionMatrix_ = gameObjectManager_->GetFollowCamera()->projectionMatrix_;
+		camera_.transform_ = gameObjectManager_->GetFollowCamera()->transform_;
 		camera_.TransferMatrix();
 	}
 }
@@ -446,15 +393,9 @@ void GameScene::CollisionUpdate()
 {
 	// クリア
 	collisionManager_->ListClear();
-	// 登録
-	collisionManager_->ListRegist(player_->GetCollider());
-	collisionManager_->ListRegist(player_->GetFootCollider());
-	if (bossEnemy_) {
-		collisionManager_->ListRegist(bossEnemy_->GetCollider());
-		//bossEnemy_->GetBulletManager()->CollisionUpdate(collisionManager_.get());
-	}
-	bulletManager_->CollisionUpdate(collisionManager_.get());
-	terrainManager_->CollisionUpdate(collisionManager_.get());
+
+	// ゲームの登録
+	gameObjectManager_->RegisterCollider(collisionManager_.get());
 
 	// 衝突処理
 	collisionManager_->CheckAllCollisions();
