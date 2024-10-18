@@ -80,7 +80,8 @@ public: // セッター
 	// ポインタ関係
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
 		facadeSystem_->GetShootingManager()->SetManager(manager);
-		systemManager_.GetLockOn()->SetBoss(boss); 
+		boss_ = boss;
+		systemManager_.GetLockOn()->SetBoss(boss);
 		systemManager_.SetEnemyList(lists);
 	}
 	void SetBoss(Boss* boss) { 

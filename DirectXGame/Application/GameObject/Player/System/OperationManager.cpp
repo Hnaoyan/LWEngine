@@ -51,6 +51,10 @@ void OparationManager::InputUpdate()
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(30.0f);
 	}
+	else if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y) && !shotTimer_.IsActive()) {		
+		player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
+		shotTimer_.Start(30.0f);
+	}
 
 	// カメラの処理
 	if (GameSystem::sPlayerKey.keyConfigs_.lockon && !lockOnCooltime_.IsActive()) {
