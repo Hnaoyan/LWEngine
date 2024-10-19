@@ -17,10 +17,6 @@ void NormalSpinBullet::Initialize()
 
 	moveDirect_ = Vector3::Normalize(velocity_);
 
-	// 軌跡の設定
-	trail_->SetLength(50);
-	trail_->polygon_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-
 }
 
 void NormalSpinBullet::Update()

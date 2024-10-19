@@ -5,12 +5,14 @@
 #include <vector>
 #include <optional>
 
+class IBullet;
+
 class BulletTrail
 {
 public:
 	// コンストラクタ
 	BulletTrail();
-	BulletTrail(InstancedUnit* unit);
+	BulletTrail(IBullet* unit);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -20,7 +22,7 @@ public:
 	/// 描画
 	/// </summary>
 	/// <param name="camera"></param>
-	void Draw(ICamera* camera);
+	void Update(ICamera* camera);
 
 public:
 	// 軌跡用の座標保存
@@ -29,7 +31,9 @@ public:
 	std::unique_ptr<Trail3D> polygon_;
 	// 長さ設定
 	void SetLength(int32_t length) { maxLength = length; }
-
+	// 弾
+	void SetBullet(IBullet* bullet) { unit_ = bullet; }
+	bool IsDelete() { return isDelete_; }
 private:
 	void GlobalValueInitialize();
 
@@ -37,5 +41,7 @@ private:
 	// 保存できる座標数
 	int32_t maxLength = 0;
 	// 個体のポインタ
-	std::optional<InstancedUnit*> unit_ = std::nullopt;
+	std::optional<IBullet*> unit_ = std::nullopt;
+
+	bool isDelete_ = false;
 };

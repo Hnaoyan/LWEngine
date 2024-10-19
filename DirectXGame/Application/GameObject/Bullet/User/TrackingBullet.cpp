@@ -29,11 +29,6 @@ void TrackingBullet::Initialize()
 	nowState_ = TrackingState::kStraight;
 	// タイプごとの初期化
 	SetupByType();
-	// 軌跡
-	trail_->SetLength(50);
-	trail_->polygon_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-	trail_->polygon_->SetWidth(instance->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
-	trail_->polygon_->SetMinWidth(instance->GetValue<float>("BossTrackingBullet", "TrailMinWidth"));
 }
 
 void TrackingBullet::Update()

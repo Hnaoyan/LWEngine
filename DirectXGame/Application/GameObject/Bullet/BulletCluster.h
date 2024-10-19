@@ -2,6 +2,7 @@
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
 class CollisionManager;
+class TrailManager;
 class IBullet;
 
 class BulletCluster : public InstancedGroup 
@@ -41,7 +42,11 @@ public: // USER
 	/// <param name="position"></param>
 	/// <param name="direct"></param>
 	void AddBullet(std::unique_ptr<IBullet> bullet);
+
+	// 軌跡の管理ポインタ
+	void SetTrailManager(TrailManager* trailManager) { trailManager_ = trailManager; }
 private:
 	uint32_t texture_ = 0;
+	TrailManager* trailManager_ = nullptr;
 
 };

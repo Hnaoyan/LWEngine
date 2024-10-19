@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/3D/Drawer/Model.h"
 #include "BulletCluster.h"
+#include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include <vector>
 #include <unordered_map>
 
@@ -49,6 +50,8 @@ private:
 	// オブジェクトのポインタ
 	Player* player_ = nullptr;
 	Boss* boss_ = nullptr;
+	// 軌跡管理クラス
+	std::unique_ptr<TrailManager> trailManager_;
 
 	// 弾のリスト
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>> clusters_;

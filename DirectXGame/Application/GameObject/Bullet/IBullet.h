@@ -43,8 +43,6 @@ protected:
 	float lifeTime_ = 0.0f;
 	// 生成時の座標
 	Vector3 generatePosition_{};
-	// 軌跡クラス
-	std::unique_ptr<BulletTrail> trail_;
 	// タグ
 	std::string tag_;
 	// 加速度

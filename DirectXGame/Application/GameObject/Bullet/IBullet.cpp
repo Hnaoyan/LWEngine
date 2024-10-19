@@ -19,11 +19,6 @@ void IBullet::Initialize()
 	// 生成座標
 	generatePosition_ = transform_.translate;
 
-	// 軌跡
-	trail_ = std::make_unique<BulletTrail>();
-	trail_->polygon_->SetColor({ 0.0f,1.0f,1.0f,1.0f });
-	trail_->polygon_->SetWidth(0.75f);
-	trail_->SetLength(10);
 }
 
 void IBullet::Update()
@@ -35,8 +30,6 @@ void IBullet::Update()
 	// サイズの設定
 	collider_.radius_ = transform_.scale.x;
 	collider_.Update(transform_.translate);
-	// 軌跡の更新
-	trail_->UpdateTrail(transform_.translate);
 	// ユニットの基底
 	InstancedUnit::Update();
 }
@@ -61,8 +54,5 @@ void IBullet::OnCollision(ColliderObject object)
 
 void IBullet::Draw(ICamera* camera)
 {
-	// 軌跡クラスの設定
-	trail_->Draw(camera);
-	// 軌跡の描画
-	ModelRenderer::TrailDraw(camera, trail_->polygon_.get());
+	camera;
 }

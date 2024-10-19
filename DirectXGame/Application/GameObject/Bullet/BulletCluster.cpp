@@ -3,6 +3,7 @@
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 
 uint32_t BulletCluster::sSerialNumber = 0;
 
@@ -43,11 +44,6 @@ void BulletCluster::Draw(ModelDrawDesc desc)
 	// 描画
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
 
-	for (auto it = units_.begin(); it != units_.end(); ++it) {
-		IBullet* bullet = static_cast<IBullet*>((*it).get());
-		bullet->Draw(desc.camera);
-	}
-
 }
 
 void BulletCluster::ImGuiDraw()
@@ -65,6 +61,11 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 
 void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 {
+	// 軌跡の管理
+	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>();
+	trailInstance->SetBullet(bullet.get());
+	trailManager_->AddTrail(std::move(trailInstance));
+
 	// 弾の基底クラスをインスタンシングユニットにムーブ
 	std::unique_ptr<InstancedUnit> instance = std::move(bullet);
 	// リストに追加

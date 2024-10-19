@@ -1,6 +1,7 @@
 #include "BulletTrail.h"
 #include "Engine/LwLib/LwLibLists.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
+#include "Application/GameObject/Bullet/IBullet.h"
 #include <algorithm>
 
 BulletTrail::BulletTrail()
@@ -12,7 +13,7 @@ BulletTrail::BulletTrail()
 	//triangle_->Initialize();
 }
 
-BulletTrail::BulletTrail(InstancedUnit* unit)
+BulletTrail::BulletTrail(IBullet* unit)
 {
 	// 外部読み込み
 	GlobalValueInitialize();
@@ -33,11 +34,17 @@ void BulletTrail::UpdateTrail(const Vector3& newPoint)
 	}
 }
 
-void BulletTrail::Draw(ICamera* camera)
+void BulletTrail::Update(ICamera* camera)
 {
 	// カメラのポインタを設定
 	if (!polygon_->IsCamera()) {
 		polygon_->SetCamera(camera);
+	}
+	if (unit_) {
+		UpdateTrail(unit_.value()->GetWorldPosition());
+	}
+	else if (unit_.value() == nullptr) {
+		isDelete_ = true;
 	}
 	//// Catmull-Rom曲線を使った座標
 	//if (trailPoints_.size() > 8) {
