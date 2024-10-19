@@ -91,6 +91,10 @@ public: // 複合演算子
 		return Vector3(me.x * scaler, me.y * scaler, me.z * scaler);
 	}
 
+	inline static Vector3 Reflect(const Vector3& input, const Vector3& normal) {
+		return Vector3(input - (normal * (Vector3::Dot(input, normal) * 2.0f)));
+	}
+
 #pragma endregion
 
 	/// <summary>
@@ -146,6 +150,17 @@ public: // 複合演算子
 			result.x = v.x / length;
 			result.y = v.y / length;
 			result.z = v.z / length;
+		}
+		return Vector3(result);
+	}
+
+	Vector3 Normalize() {
+		Vector3 result{};
+		float length = Length(*this);
+		if (length != 0) {
+			result.x = (*this).x / length;
+			result.y = (*this).y / length;
+			result.z = (*this).z / length;
 		}
 		return Vector3(result);
 	}

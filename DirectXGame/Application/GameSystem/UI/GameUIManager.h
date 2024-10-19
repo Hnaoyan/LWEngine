@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
 #include <string>
+#include <vector>
 
 class Sprite;
 class Boss;
@@ -42,6 +43,7 @@ namespace GameUI
 		void HelpUIInitialize();
 		void HelpUIDraw();
 
+		//std::vector<>
 
 	};
 

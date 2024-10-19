@@ -14,3 +14,10 @@ enum class TrackingType : uint32_t
 	kInferior,	// 劣等
 	kSuperior,	// 優等
 };
+
+enum class TrackingState : uint32_t
+{
+	kStraight,
+	kWave,
+	kTracking,
+};

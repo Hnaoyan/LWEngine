@@ -2,6 +2,8 @@
 #include "../IBullet.h"
 #include "../BulletEnums.h"
 
+#include <optional>
+
 class TrackingBullet : public IBullet
 {
 public:
@@ -44,9 +46,21 @@ private:
 	Vector3 offset_;
 	// 加速度ベクトル
 	Vector3 accelerate_;
+
+
+	// 曲がる軌道用のタイマー
+	FrameTimer waveTimer_;
+
+	// ステートの管理
+	TrackingState nowState_;
+	std::optional<TrackingState> requestState_ = std::nullopt;
+
+	float waveCount_ = 0.0f;
+
 private:
 	void SetupByType();
 	void TrackUpdate();
+	void WaveUpdate();
 private:
 	// 通常
 	void CalcStandardMissile();

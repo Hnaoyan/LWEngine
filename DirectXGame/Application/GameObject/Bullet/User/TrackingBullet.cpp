@@ -26,6 +26,7 @@ void TrackingBullet::Initialize()
 	
 	// 直進の時間設定
 	straightTimer_.Start(instance->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+	nowState_ = TrackingState::kStraight;
 	// タイプごとの初期化
 	SetupByType();
 	// 軌跡
@@ -40,13 +41,57 @@ void TrackingBullet::Update()
 	// 追尾タイマー
 	straightTimer_.Update();
 	trackTimer_.Update();
+	waveTimer_.Update();
 
 	if (straightTimer_.IsEnd()) {
-		trackTimer_.Start(TrackingBullet::sTrackingFrame);
+		requestState_ = TrackingState::kTracking;
 	}
-		
-	// 追尾の速度計算処理
-	TrackUpdate();
+	if (trackTimer_.IsEnd()) {
+		requestState_ = TrackingState::kWave;
+	}
+	if (waveTimer_.IsEnd()) {
+		requestState_ = TrackingState::kTracking;
+	}
+	if (requestState_) {
+
+		nowState_ = requestState_.value();
+
+		switch (nowState_)
+		{
+		case TrackingState::kStraight:
+			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+			break;
+		case TrackingState::kWave:
+			waveTimer_.Start(90.0f);
+			waveCount_ = 0.0f;
+			accelerate_ = {};
+			break;
+		case TrackingState::kTracking:
+			trackTimer_.Start(TrackingBullet::sTrackingFrame);
+			break;
+		default:
+			break;
+		}
+
+		// リクエストリセット
+		requestState_ = std::nullopt;
+	}
+
+	switch (nowState_)
+	{
+	case TrackingState::kStraight:
+
+		break;
+	case TrackingState::kWave:
+		WaveUpdate();
+		break;
+	case TrackingState::kTracking:
+		// 追尾の速度計算処理
+		TrackUpdate();
+		break;
+	default:
+		break;
+	}
 
 	// 移動
 	velocity_ += accelerate_;
@@ -116,25 +161,68 @@ void TrackingBullet::TrackUpdate()
 		return;
 	}
 	// 追尾の計算
-	if (trackTimer_.IsActive()) {
-		switch (trackingType_)
-		{
-			// 通常
-		case TrackingType::kStandard:
-			CalcStandardMissile();
-			break;
-			// 優等
-		case TrackingType::kInferior:
-			CalcInferiorMissile();
-			break;
-			// 劣等
-		case TrackingType::kSuperior:
-			CalcSuperiorMissile();
-			break;
-		default:
-			break;
-		}
+	switch (trackingType_)
+	{
+		// 通常
+	case TrackingType::kStandard:
+		CalcStandardMissile();
+		break;
+		// 優等
+	case TrackingType::kInferior:
+		CalcInferiorMissile();
+		break;
+		// 劣等
+	case TrackingType::kSuperior:
+		CalcSuperiorMissile();
+		break;
+	default:
+		break;
 	}
+}
+
+void TrackingBullet::WaveUpdate()
+{
+	Vector3 normalizeVelocity = Vector3::Normalize(velocity_);
+	// 横方向のベクトル
+	//if (Vector3::Length(sideVector) == 0) {
+	//	sideVector = Vector3::Cross(normalizeVelocity, Vector3(0.0f, 0.0f, 1.0f));
+	//}
+	//Vector3 sideVector = Vector3::Cross(normalizeVelocity, Vector3(0.0f, 1.0f, 0.0f));
+	//sideVector.Normalize();
+
+	//// 縦方向のベクトル
+	//Vector3 upVector = Vector3::Cross(sideVector, normalizeVelocity);
+	//upVector.Normalize();
+
+	//// 揺れの計算
+	//float frequency = 1.0f;
+	//float swingAmount = 1.0f;
+	//waveCount_ += (1.0f / 5.0f);
+	//float t = waveCount_ * frequency;
+	//Vector2 swing = { std::sinf(t) * swingAmount,std::cosf(t) * swingAmount };
+	//Vector3 swing3D = (sideVector * swing.x) + (upVector * swing.y);
+
+	//accelerate_ = normalizeVelocity + swing3D;
+
+	Vector3 velocity = velocity_.Normalize();
+
+	Vector3 worldUp = Vector3::Up();
+	Vector3 side = Vector3::Normalize(Vector3::Cross(worldUp, velocity));
+	Vector3 up = Vector3::Normalize(Vector3::Cross(velocity, side));
+
+	float frequency = 0.5f;
+	float maxAmount = 10.0f;
+	waveCount_ += (1.0f / 2.0f);
+	float t = waveCount_ * frequency;
+	float swayX = std::sinf(t) * maxAmount;
+
+	Vector3 sway = side * swayX;
+
+	Vector3 newDirect = velocity + sway;
+	newDirect = Vector3::Normalize(newDirect);
+	accelerate_ = newDirect;
+
+	//accelerate_ += sway * GameSystem::GameSpeedFactor();
 }
 
 void TrackingBullet::CalcStandardMissile()
