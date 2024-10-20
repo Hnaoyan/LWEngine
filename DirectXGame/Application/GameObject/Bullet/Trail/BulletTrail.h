@@ -42,6 +42,9 @@ private:
 	int32_t maxLength = 0;
 	// 個体のポインタ
 	std::optional<IBullet*> unit_ = std::nullopt;
-
+	// 消すフラグ
 	bool isDelete_ = false;
+
+	FrameTimer deleteTimer_;
+
 };

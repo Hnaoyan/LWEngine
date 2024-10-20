@@ -40,12 +40,35 @@ void BulletTrail::Update(ICamera* camera)
 	if (!polygon_->IsCamera()) {
 		polygon_->SetCamera(camera);
 	}
+
 	if (unit_) {
 		UpdateTrail(unit_.value()->GetWorldPosition());
+
+		// 死亡処理
+		if (unit_.value()->IsDead()) {
+			unit_ = std::nullopt;
+			deleteTimer_.Start(5.0f);
+			return;
+		}
 	}
-	else if (unit_.value() == nullptr) {
-		isDelete_ = true;
+	else {
+		deleteTimer_.Update();
 	}
+
+	// 削除処理
+	if (deleteTimer_.IsEnd()) {
+		// 数が減ったら消えるように
+		if (trailPoints_.size() < 4) {
+			isDelete_ = true;
+			return;
+		}
+		// 座標を削除
+		for (int i = 0; i < 3; ++i) {
+			trailPoints_.erase(trailPoints_.begin());
+		}
+		deleteTimer_.Start(1.0f);
+	}
+
 	//// Catmull-Rom曲線を使った座標
 	//if (trailPoints_.size() > 8) {
 	//	std::vector<Vector3> interpolatedPoints;

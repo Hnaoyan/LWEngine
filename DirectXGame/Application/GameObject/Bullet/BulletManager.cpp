@@ -25,8 +25,9 @@ void BulletManager::Update()
 void BulletManager::Draw(ModelDrawDesc desc)
 {
 	for (auto it = clusters_.begin(); it != clusters_.end(); ++it) {
-		BulletCluster* obj = static_cast<BulletCluster*>((*it).second.get());
-		obj->Draw(desc);
+		//BulletCluster* obj = static_cast<BulletCluster*>((*it).second.get());
+		//obj->Draw(desc);
+		(*it).second->Draw(desc);
 	}
 
 	trailManager_->Draw(desc.camera);

@@ -61,13 +61,12 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 
 void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 {
-	// 軌跡の管理
-	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>();
-	trailInstance->SetBullet(bullet.get());
-	trailManager_->AddTrail(std::move(trailInstance));
 
 	// 弾の基底クラスをインスタンシングユニットにムーブ
-	std::unique_ptr<InstancedUnit> instance = std::move(bullet);
+	//std::unique_ptr<InstancedUnit> instance = std::move(bullet);
+	// 軌跡の管理
+	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
+	trailManager_->AddTrail(std::move(trailInstance));
 	// リストに追加
-	units_.push_back(std::move(instance));
+	units_.push_back(std::move(bullet));
 }
