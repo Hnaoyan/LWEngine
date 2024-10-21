@@ -29,6 +29,10 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 
 void PlayerContext::ShootingManager::TrackingFire()
 {
+
+	GenerateTracking({ 1.0f,0.5f,0.0f }, TrackingType::kStandard);
+	GenerateTracking({ -1.0f,0.5f,0.0f }, TrackingType::kStandard);
+
 	GenerateTracking({ 1.0f,0.0f,0.0f }, TrackingType::kStandard);
 	GenerateTracking({ -1.0f,0.0f,0.0f }, TrackingType::kStandard);
 }

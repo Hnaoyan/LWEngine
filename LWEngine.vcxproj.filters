@@ -1127,6 +1127,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />

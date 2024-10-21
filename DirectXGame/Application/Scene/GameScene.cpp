@@ -58,7 +58,7 @@ void GameScene::Update()
 {
 	
 
-#ifdef _DEBUG
+#ifdef IMGUI_ENABLED
 	if (input_->TriggerKey(DIK_LSHIFT)) {
 		sceneManager_->ChangeScene("TITLE");
 	}

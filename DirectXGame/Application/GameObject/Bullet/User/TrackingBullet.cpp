@@ -30,6 +30,8 @@ void TrackingBullet::Initialize()
 		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
 		// 直進の時間設定
 		straightTimer_.Start(instance->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+	
+		isTargetBoss_ = false;
 	}
 	else if (boss) {
 		sTrackingFrame = instance->GetValue<float>("PlayerTrackingBullet", "TrackFrame");
@@ -39,6 +41,8 @@ void TrackingBullet::Initialize()
 		sLerpRadius = instance->GetValue<float>("PlayerTrackingBullet", "LerpRadius");
 		// 直進の時間設定
 		straightTimer_.Start(instance->GetValue<float>("PlayerTrackingBullet", "StraightFrame"));
+		
+		isTargetBoss_ = true;
 	}
 
 	
@@ -57,8 +61,15 @@ void TrackingBullet::Update()
 	if (straightTimer_.IsEnd()) {
 		requestState_ = TrackingState::kTracking;
 	}
-	if (trackTimer_.IsEnd()) {
-		requestState_ = TrackingState::kWave;
+	if (isTargetBoss_) {
+		if (trackTimer_.IsEnd()) {
+			requestState_ = TrackingState::kWave;
+		}
+	}
+	else {
+		if (trackTimer_.IsEnd()) {
+			requestState_ = TrackingState::kStraight;
+		}
 	}
 	if (waveTimer_.IsEnd()) {
 		requestState_ = TrackingState::kTracking;

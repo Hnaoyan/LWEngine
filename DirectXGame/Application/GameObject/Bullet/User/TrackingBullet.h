@@ -47,6 +47,8 @@ private:
 	// 加速度ベクトル
 	Vector3 accelerate_;
 
+	// 狙いがボスなら
+	bool isTargetBoss_ = false;
 
 	// 曲がる軌道用のタイマー
 	FrameTimer waveTimer_;
