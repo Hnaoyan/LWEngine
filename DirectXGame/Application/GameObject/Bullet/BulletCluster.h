@@ -45,6 +45,8 @@ public: // USER
 
 	// 軌跡の管理ポインタ
 	void SetTrailManager(TrailManager* trailManager) { trailManager_ = trailManager; }
+
+	void SetTexture(uint32_t texture) { texture_ = texture; }
 private:
 	uint32_t texture_ = 0;
 	TrailManager* trailManager_ = nullptr;

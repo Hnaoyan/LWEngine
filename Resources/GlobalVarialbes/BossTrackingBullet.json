@@ -1,18 +1,18 @@
 {
-    "BossTrackingBullet": {
-        "Damping": 0.5,
-        "InitSpeed": 90.0,
-        "LerpRadius": 50.0,
-        "Scale": [
-            0.3499999940395355,
-            0.3499999940395355,
-            0.3499999940395355
-        ],
-        "Speed": 90.0,
-        "StraightFrame": 1.0,
-        "TrackFrame": 95.0,
-        "TrailMaxWidth": 1.0,
-        "TrailMinWidth": 0.25,
-        "TrailSaveFrame": 40
-    }
+  "BossTrackingBullet": {
+    "BaseSpeed": 90.0,
+    "Damping": 0.5,
+    "InitSpeed": 90.0,
+    "LerpRadius": 50.0,
+    "Scale": [
+      0.3499999940395355,
+      0.3499999940395355,
+      0.3499999940395355
+    ],
+    "StraightFrame": 45.0,
+    "TrackFrame": 95.0,
+    "TrailMaxWidth": 1.0,
+    "TrailMinWidth": 0.25,
+    "TrailSaveFrame": 40
+  }
 }

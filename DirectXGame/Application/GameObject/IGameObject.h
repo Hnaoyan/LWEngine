@@ -22,11 +22,6 @@ public:
 	static int32_t sSerialNumber;
 	// 個体のシリアル
 	int32_t commonSerialNumber_ = 0u;
-	// それぞれのタグ
-	std::string objectTag_;
-public:
-	// タグの取得
-	std::string GetTag() const{ return objectTag_; }
 
 public:
 	/// <summary>

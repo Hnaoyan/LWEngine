@@ -73,6 +73,6 @@ public: // 共通
 	static float sTrackingFrame;
 	static float sDamping;
 	static float sLerpRadius;
-	static float sBulletSpeed;
+	static float sBaseVelocity;
 	static float sInitSpeed;
 };

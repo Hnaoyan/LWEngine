@@ -14,6 +14,7 @@ void TrailManager::Draw(ICamera* camera)
 		return obj->IsDelete();
 		}), trails_.end());
 
+	// 描画と更新
 	for (auto it = trails_.begin(); it != trails_.end(); ++it) {
 		(*it)->Update(camera);
 		ModelRenderer::TrailDraw(camera, (*it)->polygon_.get());

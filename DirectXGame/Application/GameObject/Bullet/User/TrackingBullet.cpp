@@ -7,7 +7,7 @@
 
 float TrackingBullet::sTrackingFrame = 95.0f;
 float TrackingBullet::sDamping = 0.1f;
-float TrackingBullet::sBulletSpeed = 90.0f;
+float TrackingBullet::sBaseVelocity = 90.0f;
 float TrackingBullet::sInitSpeed = 70.0f;
 float TrackingBullet::sLerpRadius = 50.0f;
 
@@ -17,12 +17,26 @@ void TrackingBullet::Initialize()
 	IBullet::Initialize();
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
+	//if (object_->GetTag());
+	Boss* boss = dynamic_cast<Boss*>(object_);
+	Player* player = dynamic_cast<Player*>(object_);
 	GlobalVariables* instance = GlobalVariables::GetInstance();
-	sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
-	sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
-	sBulletSpeed = instance->GetValue<float>("BossTrackingBullet", "Speed");
-	sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
-	sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+
+	if (player) {
+		sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
+		sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
+		sBaseVelocity = instance->GetValue<float>("BossTrackingBullet", "BaseSpeed");
+		sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
+		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+	}
+	else if (boss) {
+		sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
+		sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
+		sBaseVelocity = instance->GetValue<float>("BossTrackingBullet", "BaseSpeed");
+		sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
+		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+	}
+
 	
 	// 直進の時間設定
 	straightTimer_.Start(instance->GetValue<float>("BossTrackingBullet", "StraightFrame"));
@@ -235,12 +249,12 @@ void TrackingBullet::CalcStandardMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / sLerpRadius;
+	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / sLerpRadius;
 
 	// 力の向き
-	Vector3 force = centripetalAccel * maxCentripetalAccel;
+	Vector3 force = centripetalAccel * maxCentripetalForce;
 	// 推進力計算
-	float propulsion = TrackingBullet::sBulletSpeed * TrackingBullet::sDamping;
+	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
 	// 速度の減衰処理
@@ -265,11 +279,11 @@ void TrackingBullet::CalcInferiorMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / sLerpRadius;
+	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / sLerpRadius;
 	// 力の向き
-	Vector3 force = centripetalAccel * maxCentripetalAccel;
+	Vector3 force = centripetalAccel * maxCentripetalForce;
 	// 推進力計算
-	float propulsion = TrackingBullet::sBulletSpeed * TrackingBullet::sDamping;
+	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
 	// 速度の減衰処理
@@ -306,11 +320,11 @@ void TrackingBullet::CalcSuperiorMissile()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 
-	float maxCentripetalAccel = std::powf(TrackingBullet::sBulletSpeed, 2) / sLerpRadius;
+	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / sLerpRadius;
 
-	Vector3 force = centripetalAccel * maxCentripetalAccel;
+	Vector3 force = centripetalAccel * maxCentripetalForce;
 
-	float propulsion = TrackingBullet::sBulletSpeed * TrackingBullet::sDamping;
+	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
 
 	force += nowDirect * propulsion;
 	force -= velocity_ * TrackingBullet::sDamping;

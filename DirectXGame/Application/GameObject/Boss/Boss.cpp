@@ -88,6 +88,9 @@ void Boss::ImGuiDraw()
 	if (ImGui::Button("MissileState")) {
 		stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 	}
+	if (ImGui::Button("MissileBarrage")) {
+		stateManager_.ChangeRequest(std::make_unique<BossState::MissileBarrageState>());
+	}
 	if (ImGui::Button("NormalAttack")) {
 		stateManager_.ChangeRequest(std::make_unique<BossState::AttackState>());
 	}
@@ -226,7 +229,7 @@ void Boss::GlobalValueInitialize()
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "TrackFrame", 0.0f);
 	instance->AddValue(groupName, "Damping", 0.0f);
-	instance->AddValue(groupName, "Speed", 0.0f);
+	instance->AddValue(groupName, "BaseSpeed", 0.0f);
 	instance->AddValue(groupName, "InitSpeed", 0.0f);
 	instance->AddValue(groupName, "LerpRadius", 0.0f);
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));

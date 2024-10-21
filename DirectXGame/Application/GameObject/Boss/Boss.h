@@ -3,6 +3,7 @@
 
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "StatePattern/StateMachine.h"
+#include "StatePattern/Attack/BossMissileBarrage.h"
 #include "Animation/BossAnimationManager.h"
 #include "System/BossSystem.h"
 #include "System/UI/BossUI.h"

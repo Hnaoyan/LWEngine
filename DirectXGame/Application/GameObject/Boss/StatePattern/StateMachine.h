@@ -25,6 +25,7 @@ namespace BossState {
 	class TeleportState;
 	class MissileAttackState;
 	class SystemDownState;
+	class MissileBarrageState;
 }
 
 namespace BossSystemContext {
@@ -37,7 +38,7 @@ namespace BossSystemContext {
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*, SystemDownState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*, SystemDownState*, MissileBarrageState*>;
 
 	/// <summary>
 	/// 基のステートクラス
@@ -113,6 +114,7 @@ namespace BossState
 			kTeleport,
 			kMissile,
 			kOrbitMove,
+			kMissileBarrage,
 			kMax,
 		};
 		struct StateObject {
@@ -192,6 +194,8 @@ namespace BossState
 		float bulletScale_ = 0.5f;
 
 		BossSystemContext::BulletCluster* cluster_ = nullptr;
+
+		FrameTimer attackTimer_;
 	};
 
 	// 通常射撃状態

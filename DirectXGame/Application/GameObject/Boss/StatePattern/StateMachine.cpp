@@ -1,6 +1,7 @@
 #include "StateMachine.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Attack/BossMissileBarrage.h"
 
 void BossState::StateManager::Initialize(Boss* boss)
 {
@@ -169,6 +170,9 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 		break;
 	case BossState::StateDecider::StatePattern::kOrbitMove:
 		boss_->StateManager()->ChangeRequest(std::make_unique<OrbitMoveState>());
+		break;
+	case BossState::StateDecider::StatePattern::kMissileBarrage:
+		boss_->StateManager()->ChangeRequest(std::make_unique<MissileBarrageState>());
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;

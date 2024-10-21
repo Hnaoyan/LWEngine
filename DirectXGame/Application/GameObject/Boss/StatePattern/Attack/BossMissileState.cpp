@@ -23,6 +23,24 @@ void BossState::MissileAttackState::Update()
 	if (preActionTimer_.IsEnd()) {
 		// 変更までの時間
 		changeTimer_.Start(120.0f);
+		// 回転の処理
+		RotateUpdate();
+		//---弾の情報---//
+		// 速さ
+		bulletSpeed_ = TrackingBullet::sInitSpeed;
+		// サイズ
+		bulletScale_ = 0.75f;
+		// 進む方向
+		bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
+		MissileAttack();
+		//attackTimer_.Start(15.0f);
+	}
+	attackTimer_.Update();
+	TimerUpdate(this);
+
+	if (attackTimer_.IsEnd()) {
+		attackTimer_.Start(15.0f);
+		// 回転の処理
 		RotateUpdate();
 		//---弾の情報---//
 		// 速さ
@@ -33,7 +51,6 @@ void BossState::MissileAttackState::Update()
 		bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 		MissileAttack();
 	}
-	TimerUpdate(this);
 }
 
 void BossState::MissileAttackState::Exit()
