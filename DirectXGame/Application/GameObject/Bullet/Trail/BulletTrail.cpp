@@ -1,8 +1,11 @@
 #include "BulletTrail.h"
 #include "Engine/LwLib/LwLibLists.h"
+#include "Engine/2D/TextureManager.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Application/GameObject/Bullet/IBullet.h"
 #include <algorithm>
+
+uint32_t BulletTrail::sTexture = 0u;
 
 BulletTrail::BulletTrail()
 {
@@ -19,6 +22,8 @@ BulletTrail::BulletTrail(IBullet* unit)
 	GlobalValueInitialize();
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
+	polygon_->texture_ = sTexture;
+	
 	// ユニットのポインタ
 	unit_.emplace(unit);
 }

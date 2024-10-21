@@ -28,18 +28,20 @@ void TrackingBullet::Initialize()
 		sBaseVelocity = instance->GetValue<float>("BossTrackingBullet", "BaseSpeed");
 		sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
 		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+		// 直進の時間設定
+		straightTimer_.Start(instance->GetValue<float>("BossTrackingBullet", "StraightFrame"));
 	}
 	else if (boss) {
-		sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
-		sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
-		sBaseVelocity = instance->GetValue<float>("BossTrackingBullet", "BaseSpeed");
-		sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
-		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+		sTrackingFrame = instance->GetValue<float>("PlayerTrackingBullet", "TrackFrame");
+		sDamping = instance->GetValue<float>("PlayerTrackingBullet", "Damping");
+		sBaseVelocity = instance->GetValue<float>("PlayerTrackingBullet", "BaseSpeed");
+		sInitSpeed = instance->GetValue<float>("PlayerTrackingBullet", "InitSpeed");
+		sLerpRadius = instance->GetValue<float>("PlayerTrackingBullet", "LerpRadius");
+		// 直進の時間設定
+		straightTimer_.Start(instance->GetValue<float>("PlayerTrackingBullet", "StraightFrame"));
 	}
 
 	
-	// 直進の時間設定
-	straightTimer_.Start(instance->GetValue<float>("BossTrackingBullet", "StraightFrame"));
 	nowState_ = TrackingState::kStraight;
 	// タイプごとの初期化
 	SetupByType();

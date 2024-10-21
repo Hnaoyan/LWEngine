@@ -181,6 +181,9 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
 		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		if (newColor.w != 0.0f) {
+			newColor.w *= 0.65f;
+		}
 
 		// ビルボード処理
 		if (isBillBoard_ && camera_.has_value()) {

@@ -24,6 +24,8 @@ public:
 	/// <param name="camera"></param>
 	void Update(ICamera* camera);
 
+	static uint32_t sTexture;
+
 public:
 	// 軌跡用の座標保存
 	std::vector<Vector3> trailPoints_;

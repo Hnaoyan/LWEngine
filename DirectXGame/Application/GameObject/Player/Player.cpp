@@ -5,6 +5,7 @@
 
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
 void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
@@ -107,6 +108,22 @@ void Player::ImGuiDraw()
 {
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
+	if (ImGui::TreeNode("TrailTexture")) {
+		if (ImGui::Button("TrailUV")) {
+			BulletTrail::sTexture = TextureManager::Load("Resources/default/uvChecker.png");
+		}
+		if (ImGui::Button("Noise1")) {
+			BulletTrail::sTexture = TextureManager::Load("Resources/default/noise1.png");
+		}
+		if (ImGui::Button("Particle")) {
+			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/GreenEffect.png");
+		}
+		if (ImGui::Button("Skydome")) {
+			BulletTrail::sTexture = TextureManager::Load("Resources/SkyDome/sky.png");
+		}
+		ImGui::TreePop();
+	}
+
 	ImGui::Text("IsGround:%d", this->isGround_);
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
@@ -202,6 +219,26 @@ void Player::OnCollision(ColliderObject target)
 void Player::UISpriteDraw()
 {
 	facadeSystem_->GetUI()->Draw();
+}
+
+void Player::GlobalValueInitialize()
+{
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	std::string groupName = "PlayerTrackingBullet";
+
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "TrackFrame", 0.0f);
+	instance->AddValue(groupName, "Damping", 0.0f);
+	instance->AddValue(groupName, "BaseSpeed", 0.0f);
+	instance->AddValue(groupName, "InitSpeed", 0.0f);
+	instance->AddValue(groupName, "LerpRadius", 0.0f);
+	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
+	instance->AddValue(groupName, "TrailSaveFrame", int32_t(50));
+	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
+	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
+	instance->AddValue(groupName, "StraightFrame", float(60.0f));
+
+
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)
