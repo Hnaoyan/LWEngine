@@ -13,6 +13,8 @@ void IBullet::Initialize()
 	// シリアル番号
 	serialNumber_ = sSerialNumber;
 	sSerialNumber++;
+	// タグ設定
+	tag_ = "Bullet" + std::to_string(serialNumber_);
 
 	InstancedUnit::Initialize();
 	collider_.Initialize(transform_.scale.x, this);
