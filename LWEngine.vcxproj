@@ -20,6 +20,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.h" />

@@ -113,7 +113,7 @@ void Player::ImGuiDraw()
 			BulletTrail::sTexture = TextureManager::Load("Resources/default/uvChecker.png");
 		}
 		if (ImGui::Button("Noise1")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/default/noise1.png");
+			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/redTail.png");
 		}
 		if (ImGui::Button("Particle")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/GreenEffect.png");

@@ -5,13 +5,13 @@
         "InitSpeed": 90.0,
         "LerpRadius": 50.0,
         "Scale": [
-            0.3499999940395355,
-            0.3499999940395355,
-            0.3499999940395355
+            0.15000000596046448,
+            0.15000000596046448,
+            0.15000000596046448
         ],
         "StraightFrame": 40.0,
         "TrackFrame": 300.0,
-        "TrailMaxWidth": 1.0,
+        "TrailMaxWidth": 0.5,
         "TrailMinWidth": 0.25,
         "TrailSaveFrame": 40
     }
