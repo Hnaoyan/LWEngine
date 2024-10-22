@@ -1,10 +1,11 @@
 #include "BulletMoveEffect.h"
 #include "Application/GameObject/Bullet/IBullet.h"
+#include "Engine/2D/TextureManager.h"
 
 void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle)
 {
 	ParticleEmitter::Initialize(model, textureHandle);
-	data_.count = 1;
+	data_.count = 4;
 	data_.frequency = 0.1f;
 	data_.frequencyTime = 0.0f;
 	data_.translate = {};
@@ -12,6 +13,8 @@ void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
+
+	texture_ = TextureManager::Load("Resources/default/GNPalse.png");
 	RefreshData(data_);
 
 }
