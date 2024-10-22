@@ -9,11 +9,33 @@ public:
 	GameObjectManager();
 	~GameObjectManager() = default;
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="gpuManager"></param>
 	void Initialize(GPUParticleSystem* gpuManager);
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 描画
+	/// </summary>
+	/// <param name="camera"></param>
+	/// <param name="lights"></param>
 	void Draw(ICamera* camera, DrawDesc::LightDesc lights);
+	/// <summary>
+	/// UIの描画
+	/// </summary>
 	void UIDraw();
+	/// <summary>
+	/// ImGuiの処理
+	/// </summary>
 	void ImGuiDraw();
+	/// <summary>
+	/// 当たり判定に登録する処理
+	/// </summary>
+	/// <param name="collisionManager"></param>
 	void RegisterCollider(CollisionManager* collisionManager);
 public:
 	ICamera* GetFollowCamera() { return followCamera_.get(); }

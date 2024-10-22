@@ -45,6 +45,7 @@ void BulletManager::AddCluster(const std::string& tag)
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
 	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
 	clusters_.emplace(tag, std::move(instance));
 }
 
@@ -53,6 +54,7 @@ void BulletManager::AddCluster(const std::string& tag, Model* model)
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
 	static_cast<BulletCluster*>(instance.get())->Initialize(model);
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
 	clusters_.emplace(tag, std::move(instance));
 }
 
@@ -61,6 +63,7 @@ void BulletManager::AddCluster(const std::string& tag, Model* model, uint32_t te
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
 	static_cast<BulletCluster*>(instance.get())->Initialize(model);
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
 	static_cast<BulletCluster*>(instance.get())->SetTexture(texture);
 	clusters_.emplace(tag, std::move(instance));
 }

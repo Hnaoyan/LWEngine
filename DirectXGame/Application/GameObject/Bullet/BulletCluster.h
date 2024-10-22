@@ -1,10 +1,17 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedGroup.h"
 
+/// <summary>
+/// 前方宣言
+/// </summary>
+class GPUParticleSystem;
 class CollisionManager;
 class TrailManager;
 class IBullet;
 
+/// <summary>
+/// 弾の集合体クラス
+/// </summary>
 class BulletCluster : public InstancedGroup 
 {
 public:
@@ -45,10 +52,10 @@ public: // USER
 
 	// 軌跡の管理ポインタ
 	void SetTrailManager(TrailManager* trailManager) { trailManager_ = trailManager; }
-
+	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
 	void SetTexture(uint32_t texture) { texture_ = texture; }
 private:
 	uint32_t texture_ = 0;
 	TrailManager* trailManager_ = nullptr;
-
+	GPUParticleSystem* gpuParticle_ = nullptr;
 };

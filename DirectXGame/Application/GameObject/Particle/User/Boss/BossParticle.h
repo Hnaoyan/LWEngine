@@ -16,25 +16,6 @@ namespace BossParticle
 		Boss* boss_ = nullptr;
 	};
 
-
-	/// <summary>
-	/// 弾のエフェクト
-	/// </summary>
-	class BulletEffect : public ParticleEmitter
-	{
-	public:
-		virtual void Initialize(Model* model, uint32_t textureHandle = 0);
-		virtual void Update();
-		virtual void Draw(ICamera* camera);
-	public:
-		void SetBullet(InstancedUnit* bullet) { instance_ = bullet; }
-		void StartTimer(float frame) { deleteTimer_.Start(frame); }
-	private:
-		InstancedUnit* instance_ = nullptr;
-		// 削除用タイマー
-		FrameTimer deleteTimer_;
-
-	};
 	/// <summary>
 	/// ダメージを受けたときのエフェクト
 	/// </summary>

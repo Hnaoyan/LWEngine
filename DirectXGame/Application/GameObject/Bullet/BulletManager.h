@@ -7,6 +7,7 @@
 
 class Player;
 class Boss;
+class GPUParticleSystem;
 
 /// <summary>
 /// 弾の管理クラス
@@ -44,8 +45,10 @@ public: // アクセッサ
 
 	BulletCluster* FindCluster(std::string tag);
 
+	// セッター
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetBoss(Boss* boss) { boss_ = boss; }
+	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
 
 private:
 	// モデルのリスト
@@ -55,6 +58,8 @@ private:
 	// オブジェクトのポインタ
 	Player* player_ = nullptr;
 	Boss* boss_ = nullptr;
+	GPUParticleSystem* gpuParticle_ = nullptr;
+
 	// 軌跡管理クラス
 	std::unique_ptr<TrailManager> trailManager_;
 

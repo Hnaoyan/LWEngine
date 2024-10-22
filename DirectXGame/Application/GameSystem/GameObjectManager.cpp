@@ -24,9 +24,10 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 
 	skyDome_->Initialize(ModelManager::GetModel("SkyDome"));
 	// 弾
-	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 	bulletManager_->SetPlayer(player_.get());
 	bulletManager_->SetBoss(boss_.get());
+	bulletManager_->SetGPUParticle(gpuManager);
+	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	// プレイヤー
 	player_->PreInitialize(followCamera_.get(), gpuManager_);
