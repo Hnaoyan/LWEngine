@@ -44,7 +44,7 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
     float32_t3 max = { 1.15f, 1.15f, 1.0f };
     particle.scale = generator.GenerateRange3D(min, max);
     
-    float32_t value = 1.5f;
+    float32_t value = 1.0f;
     float32_t3 offsetMin = { -value, -value, 0.0f };
     float32_t3 offsetMax = { value, value, 0.0f };
     float32_t3 offset = generator.GenerateRange3D(offsetMin, offsetMax);
@@ -52,10 +52,11 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
     particle.translate += offset;
     
     particle.color.rgb = float32_t3(0.0f, 1.0f, 0.0f);
-    particle.color.a = 0.85f;
-    particle.lifetime = 10.0f;
+    //particle.color.a = generator.GenerateRange1D(0.5f, 0.85f);
+    particle.color.a = 1.0f;
+    particle.lifetime = 0.5f;
     particle.currentTime = 0.0f;
-    particle.isAlpha = 0;
+    particle.isAlpha = 1;
     particle.isScaleDecrement = 0;
     return particle;
 }

@@ -75,8 +75,8 @@ void main( uint3 DTid : SV_DispatchThreadID )
             {
                 alpha = gParticle[particleIndex].color.a - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             }
-            
-            gParticle[particleIndex].color.a = saturate(alpha);    
+            gParticle[particleIndex].color.a = alpha;
+            //gParticle[particleIndex].color.a = saturate(alpha);    
         }
     }    
 }

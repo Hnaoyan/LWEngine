@@ -13,8 +13,9 @@ void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
+	blendMode_ = ParticleEmitter::BlendMode::kAdd;
 
-	texture_ = TextureManager::Load("Resources/default/GNPalse.png");
+	texture_ = TextureManager::Load("Resources/Effect/circle.png");
 	RefreshData(data_);
 
 }
