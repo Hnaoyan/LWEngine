@@ -27,6 +27,8 @@ public:
 	// 
 	void LerpWidthVertex(const std::vector<Vector3>& points);
 
+	void FadeWidthVertex(const std::vector<Vector3>& points);
+
 private:
 	// 頂点
 	ConstantBufferMapContext<TriangleData> vertex_;

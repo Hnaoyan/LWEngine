@@ -26,7 +26,7 @@ void IdleHorizontal::Update()
 		arrowKey.x += 1.0f;
 	}
 
-	float speed = 4.0f;
+	float speed = 10.0f;
 	arrowKey = Vector3::Normalize(arrowKey);
 	if (arrowKey.x != 0.0f) {
 		player_->velocity_.x += arrowKey.x * GameSystem::GameSpeedFactor() * speed;

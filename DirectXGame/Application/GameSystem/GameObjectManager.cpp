@@ -73,7 +73,7 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	// 球体
 	skyDome_->Draw(drawDesc);
 	// 地形
-	terrainManager_->Draw(drawDesc);
+	//terrainManager_->Draw(drawDesc);
 	// プレイヤー
 	player_->Draw(drawDesc);
 	// ボス

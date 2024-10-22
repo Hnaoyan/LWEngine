@@ -224,8 +224,12 @@ void Player::UISpriteDraw()
 void Player::GlobalValueInitialize()
 {
 	GlobalVariables* instance = GlobalVariables::GetInstance();
-	std::string groupName = "PlayerTrackingBullet";
+	std::string groupName = "Player";
+	instance->CreateGroup(groupName);
 
+
+	//---追尾弾---//
+	groupName = "PlayerTrackingBullet";
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "TrackFrame", 0.0f);
 	instance->AddValue(groupName, "Damping", 0.0f);
