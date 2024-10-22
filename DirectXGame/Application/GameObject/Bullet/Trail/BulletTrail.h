@@ -6,6 +6,7 @@
 #include <optional>
 
 class IBullet;
+class ParticleEmitter;
 
 class BulletTrail
 {
@@ -13,6 +14,7 @@ public:
 	// コンストラクタ
 	BulletTrail();
 	BulletTrail(IBullet* unit);
+	~BulletTrail();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -48,5 +50,6 @@ private:
 	bool isDelete_ = false;
 
 	FrameTimer deleteTimer_;
-
+	// エミッター
+	ParticleEmitter* emitter_ = nullptr;
 };

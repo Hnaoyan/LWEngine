@@ -28,6 +28,11 @@ BulletTrail::BulletTrail(IBullet* unit)
 	unit_.emplace(unit);
 }
 
+BulletTrail::~BulletTrail()
+{
+
+}
+
 void BulletTrail::UpdateTrail(const Vector3& newPoint)
 {
 	// 要素を追加

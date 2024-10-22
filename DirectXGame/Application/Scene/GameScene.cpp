@@ -31,7 +31,6 @@ void GameScene::Initialize()
 	collisionManager_ = std::make_unique<CollisionManager>();
 	gameObjectManager_ = std::make_unique<GameObjectManager>();
 	gameSystem_ = std::make_unique<GameSystem>();
-
 #pragma endregion
 
 #pragma region システム
@@ -68,7 +67,6 @@ void GameScene::Update()
 	//	backTitleTimer_.Start(120.0f);
 	//	isGameOver_ = true;
 	//}
-
 	//// シーン変更の処理
 	//if (isGameOver_) {
 	//	backTitleTimer_.Update();
@@ -79,14 +77,14 @@ void GameScene::Update()
 	//}
 	//if (clearText_.isClear) {
 	//	clearText_.transitionTimer.Update();
-
 	//	if (clearText_.transitionTimer.IsEnd()) {
 	//		sceneManager_->ChangeScene("TITLE");
 	//	}
 	//}
 
-	//---ゲームのシステム更新---//
+	// ライトの更新
 	LightingUpdate();
+	//---ゲームのシステム更新---//
 	gameSystem_->Update();
 	gameObjectManager_->Update();
 	// 衝突処理
@@ -176,8 +174,6 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 	debugCamera_->ImGuiDraw();
 
-	gpuParticleManager_->ImGuiDraw();
-
 	ImGui::Begin("GameScene");
 	if (ImGui::Button("PostDefault")) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
@@ -187,20 +183,6 @@ void GameScene::ImGuiDraw()
 	}
 	ImGui::DragFloat("BloomThreshold", &gameSystem_->bloomData_.threshold, 0.01f);
 	ImGui::DragFloat("BloomSigma", &gameSystem_->bloomData_.sigma, 0.01f);
-
-	//if (ImGui::Button("BossRes")) {
-	//	if (!bossEnemy_) {
-	//		bossEnemy_ = std::make_unique<Boss>();
-	//		bossEnemy_->Initialize(ModelManager::GetModel("DefaultCube"));
-	//		bossEnemy_->SetPlayer(player_.get());
-	//		player_->SetBoss(bossEnemy_.get());
-	//	}
-	//}
-	//if (ImGui::Button("BossKill")) {
-	//	if (bossEnemy_) {
-	//		bossEnemy_->IsDead();
-	//	}
-	//}
 
 	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 

@@ -16,11 +16,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameObjectManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
@@ -164,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
@@ -196,6 +199,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletParticleComponent.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h" />

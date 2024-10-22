@@ -121,6 +121,17 @@ void GPUParticleSystem::DeleteEmitter(std::string tag)
 	}
 }
 
+void GPUParticleSystem::DeleteEmitter(ParticleEmitter* emitter)
+{
+	// 検索
+	for (auto it = emitters_.begin(); it != emitters_.end(); ++it) {
+		// ポインタと配列で比較
+		if ((*it).second.get() == emitter) {
+			emitters_.erase((*it).first);
+		}
+	}
+}
+
 ParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
 {
 	// 検索

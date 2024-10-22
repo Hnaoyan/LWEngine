@@ -4,6 +4,7 @@
 #include <memory>
 
 class ICamera;
+class GPUParticleSystem;
 
 /// <summary>
 /// 軌跡のインスタンス管理クラス
@@ -13,6 +14,9 @@ class TrailManager
 public:
 	TrailManager();
 	~TrailManager() = default;
+	// パーティクルのシステム設定
+	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
+
 public:
 	/// <summary>
 	/// 描画
@@ -28,5 +32,7 @@ public:
 private:
 	// 軌跡インスタンスのコンテナ
 	std::vector<std::unique_ptr<BulletTrail>> trails_;
+
+	GPUParticleSystem* gpuParticle_ = nullptr;
 
 };
