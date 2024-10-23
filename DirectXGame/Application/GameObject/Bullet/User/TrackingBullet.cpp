@@ -204,7 +204,7 @@ void TrackingBullet::TrackUpdate()
 
 void TrackingBullet::WaveUpdate()
 {
-	Vector3 normalizeVelocity = Vector3::Normalize(velocity_);
+	//Vector3 normalizeVelocity = Vector3::Normalize(velocity_);
 	// 横方向のベクトル
 	//if (Vector3::Length(sideVector) == 0) {
 	//	sideVector = Vector3::Cross(normalizeVelocity, Vector3(0.0f, 0.0f, 1.0f));
@@ -243,8 +243,6 @@ void TrackingBullet::WaveUpdate()
 	Vector3 newDirect = velocity + sway;
 	newDirect = Vector3::Normalize(newDirect);
 	accelerate_ = newDirect;
-
-	//accelerate_ += sway * GameSystem::GameSpeedFactor();
 }
 
 void TrackingBullet::CalcStandardMissile()

@@ -6,16 +6,16 @@ void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle
 {
 	ParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 4;
-	data_.frequency = 1.0f;
+	data_.frequency = 1.0f / 60.0f;
 	data_.frequencyTime = 0.0f;
 	data_.translate = {};
 	data_.radius = 1.0f;
-	data_.emit = 0;
+	data_.emit = 1;
 	data_.emitPattern = 2;
 
 	blendMode_ = ParticleEmitter::BlendMode::kAlpha;
 
-	texture_ = TextureManager::Load("Resources/Effect/test.png");
+	texture_ = TextureManager::Load("Resources/Effect/effect.png");
 	RefreshData(data_);
 
 }
@@ -26,7 +26,7 @@ void BulletParticle::MoveEffect::Update()
 	UpdataEmitterFlags();
 	// 座標更新
 	if (bullet_) {
-		emitter_.cMap_->emit = 1;
+		//emitter_.cMap_->emit = 1;
 		//emitter_.cMap_->frequencyTime = 0.0f;
 		emitter_.cMap_->translate = bullet_->GetWorldPosition();
 	}
