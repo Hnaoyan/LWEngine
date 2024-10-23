@@ -53,8 +53,3 @@ void IBullet::OnCollision(ColliderObject object)
 		isDead_ = true;
 	}
 }
-
-void IBullet::Draw(ICamera* camera)
-{
-	camera;
-}

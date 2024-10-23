@@ -40,8 +40,8 @@ Particle PlayerMove(RandomGenerator generator,float32_t3 emitterPosition)
 Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
 {
     Particle particle = (Particle) 0;
-    float32_t3 min = { 1.0f, 1.0f, 1.0f };
-    float32_t3 max = { 1.15f, 1.15f, 1.0f };
+    float32_t3 min = { 0.4f, 0.4f, 1.0f };
+    float32_t3 max = { 0.9f, 0.9f, 1.0f };
     particle.scale = generator.GenerateRange3D(min, max);
     
     float32_t value = 1.0f;
@@ -51,10 +51,10 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
     particle.translate = emitterPosition;
     particle.translate += offset;
     
-    particle.color.rgb = float32_t3(0.0f, 1.0f, 0.0f);
+    particle.color.rgb = float32_t3(1.0f, 1.0f, 1.0f);
     //particle.color.a = generator.GenerateRange1D(0.5f, 0.85f);
-    particle.color.a = 1.0f;
-    particle.lifetime = 0.5f;
+    particle.color.a = 0.3f;
+    particle.lifetime = 1.5f;
     particle.currentTime = 0.0f;
     particle.isAlpha = 1;
     particle.isScaleDecrement = 0;

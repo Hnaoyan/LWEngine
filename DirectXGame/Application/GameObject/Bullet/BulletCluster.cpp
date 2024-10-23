@@ -72,6 +72,7 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	//std::unique_ptr<InstancedUnit> instance = std::move(bullet);
 	// 軌跡の管理
 	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
+	bullet->SetTrail(trailInstance.get());
 	trailManager_->AddTrail(std::move(trailInstance));
 	// パーティクル
 	std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();

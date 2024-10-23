@@ -14,6 +14,9 @@ BulletTrail::BulletTrail()
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
 	//triangle_->Initialize();
+	this->maxLength = 50;
+	polygon_->SetWidth(0.5f);
+	polygon_->SetMinWidth(0.25f);
 }
 
 BulletTrail::BulletTrail(IBullet* unit)
@@ -73,7 +76,7 @@ void BulletTrail::Update(ICamera* camera)
 				return;
 			}
 			// 座標を削除
-			for (int i = 0; i < 3; ++i) {
+			for (int i = 0; i < 2; ++i) {
 				trailPoints_.erase(trailPoints_.begin());
 			}
 			deleteTimer_.Start(1.0f);

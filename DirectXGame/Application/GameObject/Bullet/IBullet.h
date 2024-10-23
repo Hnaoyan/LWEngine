@@ -28,11 +28,6 @@ public:
 	/// </summary>
 	/// <param name="object"></param>
 	virtual void OnCollision(ColliderObject object);
-	/// <summary>
-	/// 描画
-	/// </summary>
-	/// <param name="camera"></param>
-	virtual void Draw(ICamera* camera);
 
 protected:
 	// コライダー
@@ -48,6 +43,8 @@ protected:
 	// 加速度
 	float acceleration_ = 0.0f;
 
+	BulletTrail* trail_ = nullptr;
+
 public: // アクセッサ
 	std::string GetTag() { return tag_; }
 	EulerTransform GetTransform() { return transform_; }
@@ -58,5 +55,6 @@ public: // アクセッサ
 
 	float GetLifeTime() { return lifeTime_; }
 	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+	void SetTrail(BulletTrail* trail) { trail_ = trail; }
 
 };

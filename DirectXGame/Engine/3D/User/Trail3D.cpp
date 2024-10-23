@@ -10,10 +10,11 @@ Trail3D::Trail3D()
 {
 	// USER
 	isBillBoard_ = true;
-	width_ = 1.0f;
+	width_ = 0.8f;
 	minWidth_ = width_ / 2.0f;
+	minWidth_ = 0.15f;
 
-	maxAlpha_ = 0.75f;
+	maxAlpha_ = 0.35f;
 	color_ = { 1.0f,1.0f,1.0f,maxAlpha_ };
 	// テクスチャ
 	texture_ = TextureManager::Load("Resources/default/uvChecker.png");

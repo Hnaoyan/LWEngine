@@ -8,6 +8,23 @@ RWStructuredBuffer<int32_t> gFreeListIndex : register(u1);
 RWStructuredBuffer<uint32_t> gFreeList : register(u2);
 ConstantBuffer<PerFrame> gPerFrame : register(b1);
 
+void ParticleDelete(uint32_t index)
+{
+    // スケールに0を入れてVSで棄却されるように
+    gParticle[index].scale = float32_t3(0.0f, 0.0f, 0.0f);
+    int32_t freeListIndex;
+    InterlockedAdd(gFreeListIndex[0], 1, freeListIndex);
+            // Index管理
+    if ((freeListIndex + 1) < kMaxParticle)
+    {
+        gFreeList[freeListIndex + 1] = index;
+    }
+    else
+    {
+        InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
+    }
+}
+
 [numthreads(1024, 1, 1)]
 void main( uint3 DTid : SV_DispatchThreadID )
 {
@@ -18,19 +35,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
         // Alpha値が0になっているのをFreeとする
         if (gParticle[particleIndex].color.a == 0.0f)
         {
-            // スケールに0を入れてVSで棄却されるように
-            gParticle[particleIndex].scale = float32_t3(0.0f, 0.0f, 0.0f);
-            int32_t freeListIndex;
-            InterlockedAdd(gFreeListIndex[0], 1, freeListIndex);
-            // Index管理
-            if ((freeListIndex + 1) < kMaxParticle)
-            {
-                gFreeList[freeListIndex + 1] = particleIndex;
-            }
-            else
-            {
-                InterlockedAdd(gFreeListIndex[0], -1, freeListIndex);
-            }
+            ParticleDelete(particleIndex);
         }
         // 処理
         else
@@ -67,15 +72,30 @@ void main( uint3 DTid : SV_DispatchThreadID )
             gParticle[particleIndex].scale = ScaleCheck(gParticle[particleIndex].scale);
             // アルファ値の計算
             float32_t alpha = 0.0f;
-            if (gParticle[particleIndex].isAlpha == 1)
-            {
-                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
-            }
-            else
+            // 通常の減産
+            if(gParticle[particleIndex].isAlpha == 0)
             {
                 alpha = gParticle[particleIndex].color.a - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             }
+            // 1.0である場合のやつ
+            else if (gParticle[particleIndex].isAlpha == 1)
+            {
+                alpha = 1.0f - (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
+            }
+            // 減少しないやつ
+            else if (gParticle[particleIndex].isAlpha == 2)
+            {
+                alpha = gParticle[particleIndex].color.a;
+            }
+            // アルファの設定
             gParticle[particleIndex].color.a = alpha;
+            
+            // ライフタイムで削除処理
+            if (gParticle[particleIndex].currentTime > gParticle[particleIndex].lifetime)
+            {
+                ParticleDelete(particleIndex);
+            }
+            
             //gParticle[particleIndex].color.a = saturate(alpha);    
         }
     }    
