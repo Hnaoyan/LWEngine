@@ -27,9 +27,9 @@ void BulletCluster::Update()
 {
 	// 死亡処理
 	units_.erase(std::remove_if(units_.begin(), units_.end(), [&](const std::unique_ptr<InstancedUnit>& obj) {
-		if (obj->IsDead()) {
-			gpuParticle_->DeleteEmitter(static_cast<IBullet*>(obj.get())->GetTag());
-		}
+		//if (obj->IsDead()) {
+		//	gpuParticle_->DeleteEmitter(static_cast<IBullet*>(obj.get())->GetTag());
+		//}
 		return obj->IsDead();
 		}), units_.end());
 	// 基底クラス更新
@@ -73,17 +73,25 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	//std::unique_ptr<InstancedUnit> instance = std::move(bullet);
 	// 軌跡の管理
 	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
+	std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
+
+	// トレイル
 	trailInstance->SetLength(global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame"));
 	trailInstance->polygon_->SetMinWidth(global->GetValue<float>("BossTrackingBullet", "TrailMinWidth"));
 	trailInstance->polygon_->SetMaxWidth(global->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
+	trailInstance->SetBulletTag(bullet->GetTag());
+
+	// 弾
 	bullet->SetTrail(trailInstance.get());
-	trailManager_->AddTrail(std::move(trailInstance));
+
 	// パーティクル
-	std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
 	particle->Initialize(ModelManager::GetModel("Plane"));
-	particle->SetBullet(bullet.get());
 	particle->SetGPUParticleSystem(gpuParticle_);
-	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag());
+	particle->SetBullet(bullet.get());
+	particle->SetTrail(trailInstance.get());
+
 	// リストに追加
-	units_.push_back(std::move(bullet));
+	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
+	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
+	units_.push_back(std::move(bullet));	// 弾
 }

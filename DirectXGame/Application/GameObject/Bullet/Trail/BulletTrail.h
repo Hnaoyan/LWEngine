@@ -36,6 +36,13 @@ public:
 	void SetLength(int32_t length) { maxLength = length; }
 	// 弾
 	void SetBullet(IBullet* bullet) { unit_ = bullet; }
+
+	void SetMoveEmitter(ParticleEmitter* moveEmitter) { moveEmitter_ = moveEmitter; }
+	ParticleEmitter* GetEmitter() { return moveEmitter_; }
+
+	void SetBulletTag(const std::string& tag) { bulletTag_ = tag; }
+	std::string GetTag() { return bulletTag_; }
+
 	bool IsDelete() { return isDelete_; }
 private:
 	void GlobalValueInitialize();
@@ -50,7 +57,10 @@ private: // SYSTEM
 	// 消すフラグ
 	bool isDelete_ = false;
 	// エミッター
-	ParticleEmitter* emitter_ = nullptr;
+	ParticleEmitter* moveEmitter_ = nullptr;
+
+	std::string bulletTag_;
+
 private: // USER
 	// 消えるまでのタイマー
 	FrameTimer deleteTimer_;

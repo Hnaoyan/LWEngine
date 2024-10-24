@@ -7,6 +7,7 @@ void BulletManager::Initialize(Model* model)
 	model_ = model;
 
 	trailManager_ = std::make_unique<TrailManager>();
+	trailManager_->SetGPUParticle(gpuParticle_);
 
 	AddCluster("PlayerNormalBullet");
 	AddCluster("PlayerTrackingBullet");

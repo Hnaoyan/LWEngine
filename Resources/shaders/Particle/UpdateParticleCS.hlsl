@@ -87,6 +87,10 @@ void main( uint3 DTid : SV_DispatchThreadID )
             {
                 alpha = gParticle[particleIndex].color.a;
             }
+            else if (gParticle[particleIndex].isAlpha == 3)
+            {
+                alpha = Easing(gParticle[particleIndex].startAlpha, 0.0f, (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime));
+            }
             // アルファの設定
             gParticle[particleIndex].color.a = alpha;
             

@@ -7,8 +7,8 @@ namespace BulletParticle
 	class BreakEffect : public Component, public InstancedUnit
 	{
 	public:
-		void Initialize() override;
-		void Update() override;
+		//void Initialize() override;
+		//void Update() override;
 
 
 	};

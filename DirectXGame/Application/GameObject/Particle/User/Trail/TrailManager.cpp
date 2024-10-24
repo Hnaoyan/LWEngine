@@ -1,6 +1,7 @@
 #include "TrailManager.h"
 #include "Application/GameObject/Bullet/Trail/BulletTrail.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Engine/Particle/GPUParticleSystem.h"
 
 TrailManager::TrailManager()
 {
@@ -10,7 +11,10 @@ TrailManager::TrailManager()
 void TrailManager::Draw(ICamera* camera)
 {
 	// 消す処理
-	trails_.erase(std::remove_if(trails_.begin(), trails_.end(), [](const std::unique_ptr<BulletTrail>& obj) {
+	trails_.erase(std::remove_if(trails_.begin(), trails_.end(), [&](const std::unique_ptr<BulletTrail>& obj) {
+		if (obj->IsDelete()) {
+			gpuParticle_->DeleteEmitter(obj->GetTag());
+		}
 		return obj->IsDelete();
 		}), trails_.end());
 

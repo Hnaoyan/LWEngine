@@ -29,6 +29,7 @@ struct ParticleCS {
 	float lifetime;		// 生存時間
 	Vector3 velocity;	// 速度
 	float currentTime;	// 経過時間
+	float startAlpha;
 	Vector4 color;	// 色
 	uint32_t isScaleDecrement;	// スケール変更フラグ
 	uint32_t isGravity;	// 重力フラグ

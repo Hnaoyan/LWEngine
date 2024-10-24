@@ -23,7 +23,6 @@ BulletTrail::BulletTrail(IBullet* unit)
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
 	polygon_->texture_ = sTexture;
-	
 	// ユニットのポインタ
 	unit_.emplace(unit);
 }

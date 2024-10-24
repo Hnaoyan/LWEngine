@@ -32,6 +32,7 @@ struct Particle
     float32_t3 velocity;
     float32_t currentTime;
     float32_t4 color;
+    float32_t startAlpha;
     uint32_t isScaleDecrement;
     uint32_t isGravity;
     uint32_t isAlpha;
