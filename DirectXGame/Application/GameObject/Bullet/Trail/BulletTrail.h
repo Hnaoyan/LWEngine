@@ -26,11 +26,10 @@ public:
 	/// <param name="camera"></param>
 	void Update(ICamera* camera);
 
+	// テクスチャ
 	static uint32_t sTexture;
 
 public:
-	// 軌跡用の座標保存
-	std::vector<Vector3> trailPoints_;
 	// ポリゴン
 	std::unique_ptr<Trail3D> polygon_;
 	// 長さ設定
@@ -41,15 +40,18 @@ public:
 private:
 	void GlobalValueInitialize();
 
-private:
+private: // SYSTEM
+	// 軌跡用の座標保存
+	std::vector<Vector3> trailPoints_;
 	// 保存できる座標数
 	int32_t maxLength = 0;
 	// 個体のポインタ
 	std::optional<IBullet*> unit_ = std::nullopt;
 	// 消すフラグ
 	bool isDelete_ = false;
-
-	FrameTimer deleteTimer_;
 	// エミッター
 	ParticleEmitter* emitter_ = nullptr;
+private: // USER
+	// 消えるまでのタイマー
+	FrameTimer deleteTimer_;
 };

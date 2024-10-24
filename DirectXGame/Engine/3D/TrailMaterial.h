@@ -8,6 +8,7 @@ public:
 	void Update();
 public:
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return buffer_.cBuffer; }
+	void SetUVTransform(const EulerTransform& transform) { uvTransform_ = transform; }
 private:
 	// バッファ
 	ConstantBufferMapContext<CBufferDataTrailMaterial> buffer_;

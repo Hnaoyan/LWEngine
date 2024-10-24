@@ -45,6 +45,13 @@ private:
 	std::optional<ICamera*> camera_;
 	// 色
 	Vector4 color_{};
+	// UVトランスフォーム
+	EulerTransform uvTransform_{
+		{1.0f,1.0f,1.0f},
+		{0.0f,0.0f,0.0f},
+		{0.0f,0.0f,0.0f}
+	};
+
 	// 三角形の幅
 	float width_ = 0.0f;
 	float minWidth_ = 0.0f;
@@ -58,7 +65,7 @@ public:
 	bool isBillBoard_ = false;
 public:
 	// セッター
-	void SetWidth(float width) { width_ = width; }
+	void SetMaxWidth(float width) { width_ = width; }
 	void SetMinWidth(float minWidth) { minWidth_ = minWidth; }
 	void SetColor(const Vector4& color) { color_ = color; }
 	void SetCamera(ICamera* camera) { camera_.emplace(camera); }

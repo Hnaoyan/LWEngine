@@ -1,10 +1,11 @@
 #include "BulletCluster.h"
 #include "IBullet.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/Particle/GPUParticleSystem.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
-#include "Engine/Particle/GPUParticleSystem.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include "Application/GameObject/Particle/User/Bullet/BulletMoveEffect.h"
 
@@ -67,11 +68,14 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 
 void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 {
-
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	// 弾の基底クラスをインスタンシングユニットにムーブ
 	//std::unique_ptr<InstancedUnit> instance = std::move(bullet);
 	// 軌跡の管理
 	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
+	trailInstance->SetLength(global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame"));
+	trailInstance->polygon_->SetMinWidth(global->GetValue<float>("BossTrackingBullet", "TrailMinWidth"));
+	trailInstance->polygon_->SetMaxWidth(global->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
 	bullet->SetTrail(trailInstance.get());
 	trailManager_->AddTrail(std::move(trailInstance));
 	// パーティクル

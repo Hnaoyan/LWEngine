@@ -18,3 +18,8 @@ float32_t3 ScaleCheck(float32_t3 scale)
     }
     return result;
 }
+
+float32_t Easing(float32_t start, float32_t end, float32_t t)
+{    
+    return float32_t((start * (1.0f - t)) + (end * t));
+}

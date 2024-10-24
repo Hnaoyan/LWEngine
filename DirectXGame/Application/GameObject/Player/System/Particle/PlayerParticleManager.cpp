@@ -69,7 +69,7 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
 	triangle_->SetCamera(player_->camera_);
-	triangle_->SetWidth(0.5f);
+	triangle_->SetMaxWidth(0.5f);
 
 	// 保存数の最大値
 	// ここの値を内部で書き換えてもスムーズになるような処理も作る

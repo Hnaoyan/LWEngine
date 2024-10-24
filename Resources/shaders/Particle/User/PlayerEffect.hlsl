@@ -26,7 +26,7 @@ Particle PlayerMove(RandomGenerator generator,float32_t3 emitterPosition)
 {
     Particle particle = (Particle) 0;
     float32_t3 min = { 0.01f, 0.01f, 1.0f };
-    float32_t3 max = { 0.55f, 0.55f, 1.0f };
+    float32_t3 max = { 0.5f, 0.5f, 1.0f };
     particle.scale = generator.GenerateRange3D(min, max);
     particle.translate = emitterPosition;
     particle.color.rgb = float32_t3(0.0f, 0.01f, 0.05f);

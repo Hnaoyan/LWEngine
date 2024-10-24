@@ -1,6 +1,7 @@
 #include "SampleScene.h"
 #include "imgui.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/2D/SpriteManager.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/Scene/SceneManager.h"
@@ -82,17 +83,16 @@ void SampleScene::Initialize()
 	lines_ = std::make_unique<Line3D>();
 	lines_->Intialize();
 
-	triangle_ = std::make_unique<Triangle3D>();
-	triangle_->Initialize();
-	triangle_->SetCamera(&camera_);
-
+	trailPolygon_ = std::make_unique<Trail3D>();
 
 	Vector3 point = {};
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 8; i++) {
 		curvePoints_.push_back(point);
-		point += Vector3(1.0f, 0.5f, 0.0f);
+		point += Vector3(1.0f, 0.0f, 0.0f);
 	}
-
+	trailPolygon_->texture_ = TextureManager::Load("Resources/default/uvChecker.png");
+	trailPolygon_->SetMaxWidth(5.0f);
+	trailPolygon_->SetMinWidth(1.0f);
 	//curvePoints_[0] = { 0.0f,0.0f,0.0f };
 	//curvePoints_[1] = { 3.0f,3.0f,0.0f };
 	//curvePoints_[2] = { 5.0f,0.0f,0.0f };
@@ -113,16 +113,16 @@ void SampleScene::Update()
 	// ポストエフェクトの変更
 	PostChanger();
 
-	if (input_->TriggerKey(DIK_LSHIFT)) {
-		sceneManager_->ChangeScene("TITLE");
-	}
-	if (input_->TriggerKey(DIK_RSHIFT)) {
-		sceneManager_->ChangeScene("GAME");
-	}
-	// コントローラー
-	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
-		sceneManager_->ChangeScene("GAME");
-	}
+	//if (input_->TriggerKey(DIK_LSHIFT)) {
+	//	sceneManager_->ChangeScene("TITLE");
+	//}
+	//if (input_->TriggerKey(DIK_RSHIFT)) {
+	//	sceneManager_->ChangeScene("GAME");
+	//}
+	//// コントローラー
+	//if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+	//	sceneManager_->ChangeScene("GAME");
+	//}
 
 	skyboxTransform_.UpdateMatrix();
 
@@ -194,7 +194,8 @@ void SampleScene::Draw()
 	skybox_->Draw(desc);
 
 	ModelRenderer::LineDraw(&camera_, lines_.get());
-	ModelRenderer::TriangleDraw(&camera_, triangle_.get());
+	//ModelRenderer::TriangleDraw(&camera_, triangle_.get());
+	ModelRenderer::TrailDraw(&camera_, trailPolygon_.get());
 
 	ModelRenderer::PostDraw();
 	Model::PostDraw();
@@ -218,50 +219,70 @@ void SampleScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
-
+	SpriteManager::GetSprite("UVChecker")->SetUVTransform(uvTransform_);
+	//SpriteManager::GetSprite("UVChecker")->Draw();
 
 	Sprite::PostDraw();
 }
 
 void SampleScene::ImGuiDraw()
 {
+	std::vector<Vector3> interpolatedPoints;
 	if (isCurve_) {
 		if (curvePoints_.size() > 8) {
-			std::vector<Vector3> interpolatedPoints;
 			for (int i = 1; i < curvePoints_.size() - 2; ++i) {
 				for (float t = 0.0f; t <= 1.0f; t += (1.0f / curveInter_)) {
 					t = std::clamp(t, 0.0f, 1.0f);
 					interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(curvePoints_[i - 1], curvePoints_[i], curvePoints_[i + 1], curvePoints_[i + 2], t));
 				}
 			}
-			triangle_->Update(interpolatedPoints);
 		}
 		else {
-			triangle_->Update(curvePoints_);
+			interpolatedPoints = curvePoints_;
 		}
 	}
 	else {
-		triangle_->Update(curvePoints_);
+		interpolatedPoints = curvePoints_;
 	}
 
+	trailPolygon_->LerpWidthVertex(interpolatedPoints);
+	trailPolygon_->Update();
 	//triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
-	ImGui::Checkbox("IsCurve", &isCurve_);
-	ImGui::Checkbox("TriangleBillBoard", &triangle_->isBillBoard_);
-	ImGui::DragFloat("Inter", &curveInter_, 0.1f);
-	ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
-	if (ImGui::Button("Generate")) {
-		curvePoints_.push_back(generatePosition_);
-	}
-	std::string name;
-	int num = 0;
-	if (ImGui::TreeNode("Curve")) {
-		for (auto it = curvePoints_.begin(); it != curvePoints_.end(); ++it) {
-			name = "CurvePoint" + std::to_string(num);
-			ImGui::DragFloat3(name.c_str(), &(*it).x, 0.01f);
-			ImGui::Separator();
-			num++;
+	if (ImGui::TreeNode("Trail")) {
+		ImGui::DragFloat3("uvPos", &uvTransform_.translate.x, 0.01f);
+		ImGui::DragFloat3("uvSca", &uvTransform_.scale.x, 0.01f);
+		ImGui::DragFloat3("uvRot", &uvTransform_.rotate.x, 0.01f);
+		trailPolygon_->GetMaterial()->SetUVTransform(uvTransform_);
+		if (ImGui::TreeNode("Texture")) {
+			ImGui::InputText("TexturePath", &texturePath_, 256);
+			std::string texturePath = "Resources/";
+			texturePath += texturePath_;
+
+			if (ImGui::Button("LoadTexture")) {
+				trailPolygon_->texture_ = TextureManager::Load("Resources/Effect/effect.png");
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::Checkbox("IsCurve", &isCurve_);
+		ImGui::DragFloat("Inter", &curveInter_, 0.1f);
+		ImGui::DragFloat3("GeneratePos", &generatePosition_.x, 0.01f);
+		if (ImGui::Button("Generate")) {
+			curvePoints_.push_back(generatePosition_);
+		}
+		std::string name;
+		int num = 0;
+		if (ImGui::TreeNode("Curve")) {
+			for (auto it = curvePoints_.begin(); it != curvePoints_.end(); ++it) {
+				name = "CurvePoint" + std::to_string(num);
+				ImGui::DragFloat3(name.c_str(), &(*it).x, 0.01f);
+				ImGui::Separator();
+				num++;
+			}
+			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}
@@ -382,6 +403,9 @@ void SampleScene::LoadModel()
 
 void SampleScene::LoadTexture()
 {
+	SpriteManager::LoadSprite("UVChecker", TextureManager::Load("Resources/default/uvChecker.png"));
+	SpriteManager::GetSprite("UVChecker")->SetPosition({ 1280 / 2,720 / 2 });
+
 
 }
 

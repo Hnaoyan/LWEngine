@@ -13,6 +13,7 @@
 #include "Engine/Particle/Particle.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "Engine/3D/User/MissileTrail.h"
+#include "Engine/3D/User/Trail3D.h"
 
 #include <list>
 
@@ -69,8 +70,6 @@ private: // USER
 	std::unique_ptr<MissileTrail> trail_;
 	// 線描画
 	std::unique_ptr<Line3D> lines_;
-	// 三角形
-	std::unique_ptr<Triangle3D> triangle_;
 
 	std::unique_ptr<LevelLoader> levelLoader_;
 
@@ -84,8 +83,18 @@ private: // USER
 	WorldTransform skyboxTransform_;
 	std::unique_ptr<Skybox> skybox_;
 
+	// 軌跡のポリゴン
+	std::unique_ptr<Trail3D> trailPolygon_;
 	// カーブ用の座標
 	std::vector<Vector3> curvePoints_;
+
+	uint32_t trailTexture_ = 0u;
+	EulerTransform uvTransform_{
+		{1.0f,1.0f,1.0f},
+		{0,0,0},
+		{0,0,0}
+	};
+	char texturePath_;
 
 	bool isCurve_ = false;
 	float curveInter_ = 30.0f;
@@ -111,5 +120,5 @@ private: // SYSTEM
 	CBufferDataBloom bloomData_;
 
 	int postEffecter_ = 0;
-
+	
 };

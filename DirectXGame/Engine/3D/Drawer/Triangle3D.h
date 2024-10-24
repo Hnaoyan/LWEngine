@@ -62,7 +62,7 @@ public:
 	bool isBillBoard_ = false;
 public:
 	// セッター
-	void SetWidth(float width) { width_ = width; }
+	void SetMaxWidth(float width) { width_ = width; }
 	void SetColor(const Vector4& color) { color_ = color; }
 	void SetCamera(ICamera* camera) { camera_.emplace(camera); }
 	// ゲッター

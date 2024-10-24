@@ -34,6 +34,8 @@ void Trail3D::Update()
 {
 	// 頂点送信
 	TransferVertex();
+	// UVの情報
+	//material_->SetUVTransform(uvTransform_);
 	// マテリアルの更新
 	material_->Update();
 }
