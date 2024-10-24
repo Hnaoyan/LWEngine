@@ -1154,6 +1154,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Accelerater\IBulletAccelerater.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />

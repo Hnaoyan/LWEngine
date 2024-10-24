@@ -72,9 +72,14 @@ private:
 	void CalcSuperiorMissile();
 
 public: // 共通
+	// 対尾の時間
 	static float sTrackingFrame;
+	// 減衰値
 	static float sDamping;
+	// 広がり
 	static float sLerpRadius;
+	// 基本の速度
 	static float sBaseVelocity;
+	// 初期速度
 	static float sInitSpeed;
 };
