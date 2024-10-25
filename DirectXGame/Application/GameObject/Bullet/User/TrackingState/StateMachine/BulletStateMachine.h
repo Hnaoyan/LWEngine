@@ -1,5 +1,7 @@
 #pragma once
 #include "../ITrackingState.h"
+#include "Application/GameObject/Bullet/BulletEnums.h"
+
 #include <memory>
 
 class IBullet;
@@ -17,6 +19,10 @@ public:
 	/// </summary>
 	/// <param name="state"></param>
 	void ChangeRequest(std::unique_ptr<ITrackingState> state);
+	void ChangeRequest(TrackingState state);
+
+	std::unique_ptr<ITrackingState> BuildState(TrackingState newState);
+
 	/// <summary>
 	/// 更新
 	/// </summary>
