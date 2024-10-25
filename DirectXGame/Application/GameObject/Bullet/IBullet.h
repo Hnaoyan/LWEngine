@@ -2,6 +2,7 @@
 #include "Engine/3D/Instancing/InstancedUnit.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "Trail/BulletTrail.h"
+#include "User/TrackingState/StateMachine/BulletStateMachine.h"
 
 class IBullet : public InstancedUnit
 {
@@ -34,16 +35,16 @@ protected:
 	Sphere collider_;
 	// 速度
 	Vector3 velocity_ = {};
-	// 生存時間（ダメージに変更を加える場合
-	float lifeTime_ = 0.0f;
 	// 生成時の座標
 	Vector3 generatePosition_{};
 	// タグ
 	std::string tag_;
-	// 加速度
-	float acceleration_ = 0.0f;
+	// 加速度ベクトル
+	Vector3 accelerate_;
 
 	BulletTrail* trail_ = nullptr;
+	// ステートマシン
+	std::unique_ptr<BulletStateMachine> stateMachine_;
 
 public: // アクセッサ
 	std::string GetTag() { return tag_; }
@@ -51,10 +52,11 @@ public: // アクセッサ
 	Sphere* GetCollider() { return &collider_; }
 	Vector3 GetGeneratePosition() { return generatePosition_; }
 	Vector3 GetVelocity() { return velocity_; }
+	Vector3 GetAccelerate() { return accelerate_; }
 
-
-	float GetLifeTime() { return lifeTime_; }
 	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
+
 	void SetTrail(BulletTrail* trail) { trail_ = trail; }
 
 };

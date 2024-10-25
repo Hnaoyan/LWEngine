@@ -44,8 +44,6 @@ private:
 	float lerpRadius_ = 0.0f;
 	// 劣等型の狙い先のオフセット位置
 	Vector3 offset_;
-	// 加速度ベクトル
-	Vector3 accelerate_;
 
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;

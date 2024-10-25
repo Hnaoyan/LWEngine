@@ -23,6 +23,10 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Irregular\TrackingWaveringState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrakingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
@@ -196,7 +200,11 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Irregular\TrackingWaveringState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrakingStraightState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\TrackingStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />

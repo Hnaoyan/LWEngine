@@ -13,7 +13,6 @@ void NormalSpinBullet::Initialize()
 
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	sAcceleration = instance->GetValue<float>("BossNormalBullet", "Acceleration");
-	acceleration_ = 0.0f;
 
 	moveDirect_ = Vector3::Normalize(velocity_);
 
@@ -22,8 +21,8 @@ void NormalSpinBullet::Initialize()
 void NormalSpinBullet::Update()
 {
 	// 速度の計算
-	acceleration_ += sAcceleration * GameSystem::GameSpeedFactor();
-	velocity_ += moveDirect_ * acceleration_;
+	accelerate_.x += sAcceleration * GameSystem::GameSpeedFactor();
+	velocity_ += moveDirect_ * accelerate_.x;
 	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
 	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;

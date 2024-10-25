@@ -71,7 +71,7 @@ private: // サブシステム
 	std::unique_ptr<BossSystemContext::AnimationManager> animationManager_;
 
 	// 外部の弾管理
-	BulletManager* bulletManager_;
+	BulletManager* bulletManager_ = nullptr;
 
 #pragma region 内部システムのアクセッサ
 public:

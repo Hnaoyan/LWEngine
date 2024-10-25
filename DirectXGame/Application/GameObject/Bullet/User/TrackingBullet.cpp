@@ -4,6 +4,7 @@
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
+#include "TrackingState/TrackingStates.h"
 
 float TrackingBullet::sTrackingFrame = 95.0f;
 float TrackingBullet::sDamping = 0.1f;
@@ -49,6 +50,9 @@ void TrackingBullet::Initialize()
 	nowState_ = TrackingState::kStraight;
 	// タイプごとの初期化
 	SetupByType();
+
+	stateMachine_->ChangeRequest(std::make_unique<TrakingStraightState>());
+
 }
 
 void TrackingBullet::Update()
@@ -114,6 +118,8 @@ void TrackingBullet::Update()
 	default:
 		break;
 	}
+
+	stateMachine_->Update();
 
 	// 移動
 	velocity_ += accelerate_;

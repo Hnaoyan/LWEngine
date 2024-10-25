@@ -21,12 +21,12 @@ void IBullet::Initialize()
 	// 生成座標
 	generatePosition_ = transform_.translate;
 
+	// ステート
+	stateMachine_ = std::make_unique<BulletStateMachine>(this);
 }
 
 void IBullet::Update()
 {
-	// 生存時間
-	lifeTime_ += GameSystem::GameSpeedFactor();
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	// サイズの設定
