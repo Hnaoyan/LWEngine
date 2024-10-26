@@ -93,6 +93,7 @@ void SampleScene::Initialize()
 	trailPolygon_->texture_ = TextureManager::Load("Resources/default/uvChecker.png");
 	trailPolygon_->SetMaxWidth(5.0f);
 	trailPolygon_->SetMinWidth(1.0f);
+	trailPolygon_->SetCamera(&camera_);
 	//curvePoints_[0] = { 0.0f,0.0f,0.0f };
 	//curvePoints_[1] = { 3.0f,3.0f,0.0f };
 	//curvePoints_[2] = { 5.0f,0.0f,0.0f };

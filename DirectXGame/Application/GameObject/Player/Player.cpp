@@ -115,11 +115,11 @@ void Player::ImGuiDraw()
 		if (ImGui::Button("Noise1")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
 		}
-		if (ImGui::Button("Particle")) {
+		if (ImGui::Button("BlackTrail")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/BlackTrail.png");
 		}
-		if (ImGui::Button("Skydome")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/SkyDome/sky.png");
+		if (ImGui::Button("WhiteTrail")) {
+			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");
 		}
 		ImGui::TreePop();
 	}

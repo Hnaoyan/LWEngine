@@ -26,6 +26,7 @@ void BulletParticle::MoveEffect::Update()
 	UpdataEmitterFlags();
 	// 座標更新
 	if (bullet_) {
+		assert(bullet_);
 		//emitter_.cMap_->emit = 1;
 		//emitter_.cMap_->frequencyTime = 0.0f;
 		emitter_.cMap_->translate = bullet_->GetWorldPosition();

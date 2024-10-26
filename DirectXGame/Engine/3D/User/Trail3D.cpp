@@ -115,9 +115,13 @@ void Trail3D::BuildVertexFromPoints(const std::vector<Vector3>& points)
 			perpendicular *= width_;
 
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uStart,vLeft} };
-			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
-			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uEnd,vRight} };
+			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uStart,vRight} };
+			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uStart,vRight} };
+			
+			//vertexData_[vertexId] = { {startPoint - perpendicular}, newColor, {uStart, vLeft} };
+			//vertexData_[vertexId + 1] = { {startPoint + perpendicular}, newColor, {uStart, vRight} };
+			//vertexData_[vertexId + 2] = { {endPoint - perpendicular},   newColor, {uEnd, vLeft} };
+			//vertexData_[vertexId + 3] = { {endPoint + perpendicular},   newColor, {uEnd, vRight} };
 		}
 		// ビルボードなし
 		else {
@@ -173,10 +177,9 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 		Vector3 endPoint = points[i + 1];
 
 		// テクスチャ座標のUV座標設定
-		// Uの座標
-		float uStart = (float)i / (float)(numPoints - 1);
-		float uEnd = (float)(i + 1) / (float)(numPoints - 1);
-		// Vの座標
+		// Uの座標（この場合全て頂点から上下に生成しているので一つ
+		float uvX = (float)i / (float)(numPoints - 1);
+		// Vの開いている方向
 		float vLeft = 0.0f;   // 左側の頂点
 		float vRight = 1.0f;  // 右側の頂点
 
@@ -187,7 +190,7 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 		if (newColor.w != 0.0f) {
 			newColor.w *= 0.65f;
 		}
-		newColor.w = 1.0f;
+
 		// ビルボード処理
 		if (isBillBoard_ && camera_.has_value()) {
 			assert(camera_);
@@ -207,9 +210,8 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 			perpendicular *= lerpWidth * 0.5f;
 
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uStart,vLeft} };
-			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
-			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uEnd,vRight} };
+			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uvX,vLeft} };
+			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uvX,vRight} };
 		}
 		// ビルボードなし
 		else {
@@ -224,9 +226,8 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 			right.x *= width_ * 0.5f;
 			right.y *= width_ * 0.5f;
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor,{uStart,vLeft} };
-			//vertexData_[vertexId + 1] = { {startPoint.x,startPoint.y,startPoint.z},color };
-			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor,{uEnd,vRight} };
+			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor,{uvX,vLeft} };
+			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor,{uvX,vRight} };
 		}
 
 		// インデックスの設定
