@@ -594,7 +594,10 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Irregular\TrackingWaveringState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrakingStraightState.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1169,7 +1172,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Accelerater\IBulletAccelerater.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrakingStraightState.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.h">
@@ -1179,6 +1182,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\TrackingStates.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

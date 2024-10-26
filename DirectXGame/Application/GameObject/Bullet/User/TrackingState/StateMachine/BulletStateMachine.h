@@ -21,12 +21,12 @@ public:
 	void ChangeRequest(std::unique_ptr<ITrackingState> state);
 	void ChangeRequest(TrackingState state);
 
-	std::unique_ptr<ITrackingState> BuildState(TrackingState newState);
-
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
+private:
+	std::unique_ptr<ITrackingState> BuildState(TrackingState newState);
 
 private:
 	// ステート

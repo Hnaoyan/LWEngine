@@ -1,6 +1,7 @@
 #pragma once
 #include <optional>
 #include "Application/GameObject/Bullet/BulletEnums.h"
+#include "Engine/LwLib/LwLibLists.h"
 
 class IBullet;
 class BulletStateMachine;
@@ -30,4 +31,7 @@ protected:
 	IBullet* bullet_ = nullptr;
 	// ステート変更先＋リクエストフラグ
 	std::optional<TrackingState> request_ = std::nullopt;
+
+	// 変更タイマー
+	FrameTimer timer_;
 };

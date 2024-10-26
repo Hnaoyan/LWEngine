@@ -45,18 +45,23 @@ protected:
 	BulletTrail* trail_ = nullptr;
 	// ステートマシン
 	std::unique_ptr<BulletStateMachine> stateMachine_;
+	// 対象オブジェクト
+	IGameObject* object_ = nullptr;
 
 public: // アクセッサ
 	std::string GetTag() { return tag_; }
 	EulerTransform GetTransform() { return transform_; }
 	Sphere* GetCollider() { return &collider_; }
 	Vector3 GetGeneratePosition() { return generatePosition_; }
-	Vector3 GetVelocity() { return velocity_; }
-	Vector3 GetAccelerate() { return accelerate_; }
 
-	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
-	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
 
 	void SetTrail(BulletTrail* trail) { trail_ = trail; }
+
+	Vector3 GetVelocity() { return velocity_; }
+	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+	Vector3 GetAccelerate() { return accelerate_; }
+	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
+	IGameObject* GetTarget() { return object_; }
+	void SetGameObject(IGameObject* object) { object_ = object; }
 
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "../ITrackingState.h"
 
-class TrakingStraightState : public ITrackingState
+class TrackingStraightState : public ITrackingState
 {
 public:
 	void Enter() override;

@@ -31,7 +31,7 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 	switch (newState)
 	{
 	case TrackingState::kStraight:
-		instance = std::make_unique<TrakingStraightState>();
+		instance = std::make_unique<TrackingStraightState>();
 		break;
 	case TrackingState::kWave:
 		instance = std::make_unique<TrackingWaveringState>();

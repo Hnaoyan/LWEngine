@@ -28,12 +28,9 @@ public:
 	void OnCollision(ColliderObject object) override;
 
 public: // アクセッサ
-	void SetGameObject(IGameObject* object) { object_ = object; }
 	void SetTrackType(TrackingType type) { trackingType_ = type; }
 
 private:
-	// 対象オブジェクト
-	IGameObject* object_ = nullptr;
 	// 追尾の種類
 	TrackingType trackingType_ = TrackingType::kStandard;
 	// 追跡している時間

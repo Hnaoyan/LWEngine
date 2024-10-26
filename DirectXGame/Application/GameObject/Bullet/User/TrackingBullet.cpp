@@ -51,7 +51,7 @@ void TrackingBullet::Initialize()
 	// タイプごとの初期化
 	SetupByType();
 
-	stateMachine_->ChangeRequest(std::make_unique<TrakingStraightState>());
+	stateMachine_->ChangeRequest(std::make_unique<TrackingStraightState>());
 
 }
 

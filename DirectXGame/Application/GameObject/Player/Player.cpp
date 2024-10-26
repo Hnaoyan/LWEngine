@@ -116,7 +116,7 @@ void Player::ImGuiDraw()
 			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
 		}
 		if (ImGui::Button("Particle")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/GreenEffect.png");
+			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/BlackTrail.png");
 		}
 		if (ImGui::Button("Skydome")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/SkyDome/sky.png");
