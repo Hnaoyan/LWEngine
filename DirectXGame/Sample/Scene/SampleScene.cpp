@@ -263,7 +263,18 @@ void SampleScene::ImGuiDraw()
 			if (ImGui::Button("LoadTexture")) {
 				trailPolygon_->texture_ = TextureManager::Load("Resources/Effect/effect.png");
 			}
-
+			if (ImGui::Button("BlackTrail")) {
+				trailPolygon_->texture_ = TextureManager::Load("Resources/Effect/BlackTrail.png");
+			}
+			if (ImGui::Button("WhiteTrail")) {
+				trailPolygon_->texture_ = TextureManager::Load("Resources/Effect/WhiteTrail.png");
+			}
+			if (ImGui::Button("WhitePNG")) {
+				trailPolygon_->texture_ = TextureManager::Load("Resources/default/white2x2.png");
+			}
+			if (ImGui::Button("GN")) {
+				trailPolygon_->texture_ = TextureManager::Load("Resources/default/GNPalse.png");
+			}
 			ImGui::TreePop();
 		}
 
