@@ -4,7 +4,8 @@
 
 void TrackingWaveringState::Enter()
 {
-
+	// 基準設定
+	defaultDirect_ = Vector3::Normalize(bullet_->GetVelocity());
 }
 
 void TrackingWaveringState::Update(BulletStateMachine& stateMachine)

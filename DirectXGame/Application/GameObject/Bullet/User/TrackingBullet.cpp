@@ -48,8 +48,6 @@ void TrackingBullet::Initialize()
 
 	
 	nowState_ = TrackingState::kStraight;
-	// タイプごとの初期化
-	SetupByType();
 
 	stateMachine_->ChangeRequest(std::make_unique<TrackingStraightState>());
 
@@ -94,6 +92,7 @@ void TrackingBullet::Update()
 			break;
 		case TrackingState::kTracking:
 			trackTimer_.Start(TrackingBullet::sTrackingFrame);
+			stateMachine_->ChangeRequest(TrackingState::kTracking);
 			break;
 		default:
 			break;
@@ -113,13 +112,13 @@ void TrackingBullet::Update()
 		break;
 	case TrackingState::kTracking:
 		// 追尾の速度計算処理
-		TrackUpdate();
+		//TrackUpdate();
+		stateMachine_->Update();
 		break;
 	default:
 		break;
 	}
 
-	stateMachine_->Update();
 
 	// 移動
 	velocity_ += accelerate_;
@@ -149,62 +148,6 @@ void TrackingBullet::OnCollision(ColliderObject object)
 	// 
 	if (std::holds_alternative<Boss*>(object)) {
 		isDead_ = true;
-	}
-}
-
-void TrackingBullet::SetupByType()
-{
-	GlobalVariables* global = GlobalVariables::GetInstance();
-	// 初期化
-	offset_ = {};
-	// ずらすオフセット作成
-	std::string groupName = "TrackInferior";
-	float offsetValue = global->GetValue<float>(groupName, "MaxOffset");
-	// 最小値
-	float limit = global->GetValue<float>(groupName, "MinOffset");
-
-	switch (trackingType_)
-	{
-	case TrackingType::kStandard:
-
-		break;
-	case TrackingType::kInferior:
-		// オフセット
-		offset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
-
-		break;
-	case TrackingType::kSuperior:
-
-		break;
-	default:
-		break;
-	}
-
-}
-
-void TrackingBullet::TrackUpdate()
-{
-	// プレイヤーがいない場合早期
-	if (!object_) {
-		return;
-	}
-	// 追尾の計算
-	switch (trackingType_)
-	{
-		// 通常
-	case TrackingType::kStandard:
-		CalcStandardMissile();
-		break;
-		// 優等
-	case TrackingType::kInferior:
-		CalcInferiorMissile();
-		break;
-		// 劣等
-	case TrackingType::kSuperior:
-		CalcSuperiorMissile();
-		break;
-	default:
-		break;
 	}
 }
 
@@ -249,102 +192,4 @@ void TrackingBullet::WaveUpdate()
 	Vector3 newDirect = velocity + sway;
 	newDirect = Vector3::Normalize(newDirect);
 	accelerate_ = newDirect;
-}
-
-void TrackingBullet::CalcStandardMissile()
-{
-	// それぞれのベクトル
-	Vector3 toTarget = object_->worldTransform_.GetWorldPosition() - GetWorldPosition();
-	Vector3 nowDirect = Vector3::Normalize(velocity_);
-	// 内積
-	float dot = Vector3::Dot(toTarget, nowDirect);
-	// 向心加速力の計算
-	Vector3 centripetalAccel = toTarget - (nowDirect * dot);
-	float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
-	// 大きさの調整
-	if (centripetalAccelMagnitude > 2.0f) {
-		centripetalAccel /= centripetalAccelMagnitude;
-	}
-	// 最大向心力
-	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / sLerpRadius;
-
-	// 力の向き
-	Vector3 force = centripetalAccel * maxCentripetalForce;
-	// 推進力計算
-	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
-	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
-	force += nowDirect * propulsion;
-	// 速度の減衰処理
-	force -= velocity_ * TrackingBullet::sDamping;
-	accelerate_ = force * GameSystem::GameSpeedFactor();
-}
-
-void TrackingBullet::CalcInferiorMissile()
-{
-	// それぞれのベクトル
-	Vector3 playerPos = object_->worldTransform_.GetWorldPosition() + offset_;
-	Vector3 toTarget = playerPos - GetWorldPosition();
-	Vector3 nowDirect = Vector3::Normalize(velocity_);
-	// 内積
-	float dot = Vector3::Dot(toTarget, nowDirect);
-
-	// 向心加速力の計算
-	Vector3 centripetalAccel = toTarget - (nowDirect * dot);
-	float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
-	// 大きさの調整
-	if (centripetalAccelMagnitude > 2.0f) {
-		centripetalAccel /= centripetalAccelMagnitude;
-	}
-	// 最大向心力
-	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / sLerpRadius;
-	// 力の向き
-	Vector3 force = centripetalAccel * maxCentripetalForce;
-	// 推進力計算
-	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
-	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
-	force += nowDirect * propulsion;
-	// 速度の減衰処理
-	force -= velocity_ * TrackingBullet::sDamping;
-	// 速度処理
-	accelerate_ = force * GameSystem::GameSpeedFactor();
-
-}
-
-void TrackingBullet::CalcSuperiorMissile()
-{
-	// プレイヤーの現在の位置と速度
-	Vector3 playerPosition = object_->worldTransform_.GetWorldPosition();
-	Vector3 playerDirection = object_->worldTransform_.GetWorldPosition() - object_->prevPosition_;
-	Vector3 predictedPosition{};	// 予測先の座標
-	// 予測位置を計算
-	float predictionTime = GlobalVariables::GetInstance()->GetValue<float>("TrackSuperior", "PredictionTime"); // ミサイルが向かう予測時間
-	// 予測先の計算
-	if (playerDirection.x == 0.0f && playerDirection.y == 0.0f && playerDirection.z == 0.0f) {
-		predictedPosition = playerPosition;
-	}
-	else {
-		predictedPosition = playerPosition + (playerDirection * predictionTime);
-	}
-
-	Vector3 toTarget = predictedPosition - GetWorldPosition();
-	Vector3 nowDirect = Vector3::Normalize(velocity_);
-	float dot = Vector3::Dot(toTarget, nowDirect);
-
-	Vector3 centripetalAccel = toTarget - (nowDirect * dot);
-	float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
-
-	if (centripetalAccelMagnitude > 2.0f) {
-		centripetalAccel /= centripetalAccelMagnitude;
-	}
-
-	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / sLerpRadius;
-
-	Vector3 force = centripetalAccel * maxCentripetalForce;
-
-	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
-
-	force += nowDirect * propulsion;
-	force -= velocity_ * TrackingBullet::sDamping;
-
-	accelerate_ = force * GameSystem::GameSpeedFactor();
 }

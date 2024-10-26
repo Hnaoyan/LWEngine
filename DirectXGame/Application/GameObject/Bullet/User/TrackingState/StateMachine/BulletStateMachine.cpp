@@ -30,13 +30,14 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 
 	switch (newState)
 	{
-	case TrackingState::kStraight:
+	case TrackingState::kStraight: // 直進
 		instance = std::make_unique<TrackingStraightState>();
 		break;
-	case TrackingState::kWave:
+	case TrackingState::kWave: // 波の不規則挙動
 		instance = std::make_unique<TrackingWaveringState>();
 		break;
-	case TrackingState::kTracking:
+	case TrackingState::kTracking: // 追尾
+		instance = std::make_unique<TrackingMoveState>();
 		break;
 	}
 

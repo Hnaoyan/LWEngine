@@ -8,4 +8,8 @@ public:
 	void Update(BulletStateMachine& stateMachine) override;
 	void Exit() override;
 
+private:
+	// 揺らす基準のベクトル
+	Vector3 defaultDirect_{};
+
 };

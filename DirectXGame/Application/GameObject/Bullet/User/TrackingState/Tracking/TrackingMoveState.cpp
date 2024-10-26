@@ -8,7 +8,18 @@
 
 void TrackingMoveState::Enter()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	// 初期化
+	inferiorOffset_ = {};
+	// ずらすオフセット作成
+	std::string groupName = "TrackInferior";
+	float offsetValue = global->GetValue<float>(groupName, "MaxOffset");
+	// 最小値
+	float limit = global->GetValue<float>(groupName, "MinOffset");
+	// オフセット
+	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
+	timer_.Start(TrackingBullet::sTrackingFrame);
 }
 
 void TrackingMoveState::Update(BulletStateMachine& stateMachine)
@@ -20,6 +31,34 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 	if (timer_.IsEnd()) {
 		stateMachine.ChangeRequest(TrackingState::kWave);
 	}
+
+	// 誘導弾なら
+	if (dynamic_cast<TrackingBullet*>(bullet_)) {
+
+		if (!bullet_->GetTarget()) {
+			return;
+		}
+
+		// 種類の受け取り
+		TrackingType type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
+		
+		// 種類ごとの計算
+		switch (type)
+		{
+		case TrackingType::kStandard:
+			bullet_->SetAccelerate(CalcSuperiorAcceleration());
+			break;
+		case TrackingType::kInferior:
+			bullet_->SetAccelerate(CalcInferiorAcceleration());
+			break;
+		case TrackingType::kSuperior:
+			bullet_->SetAccelerate(CalcGeniusAcceleration());
+			break;
+		default:
+			break;
+		}
+	}
+
 }
 
 void TrackingMoveState::Exit()
@@ -61,10 +100,9 @@ Vector3 TrackingMoveState::CalcSuperiorAcceleration()
 
 Vector3 TrackingMoveState::CalcInferiorAcceleration()
 {
-	Vector3 offset = {};
 	Vector3 bulletVelocity = bullet_->GetVelocity();
 	// それぞれのベクトル
-	Vector3 targetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition() + offset;
+	Vector3 targetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition() + inferiorOffset_;
 	Vector3 toTarget = targetPoint - bullet_->GetWorldPosition();
 	Vector3 nowDirect = Vector3::Normalize(bulletVelocity);
 	// 内積

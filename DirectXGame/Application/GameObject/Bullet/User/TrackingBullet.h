@@ -29,7 +29,7 @@ public:
 
 public: // アクセッサ
 	void SetTrackType(TrackingType type) { trackingType_ = type; }
-
+	TrackingType GetTrackingType() { return trackingType_; }
 private:
 	// 追尾の種類
 	TrackingType trackingType_ = TrackingType::kStandard;
@@ -55,16 +55,7 @@ private:
 	float waveCount_ = 0.0f;
 
 private:
-	void SetupByType();
-	void TrackUpdate();
 	void WaveUpdate();
-private:
-	// 通常
-	void CalcStandardMissile();
-	// 劣等
-	void CalcInferiorMissile();
-	// 優等
-	void CalcSuperiorMissile();
 
 public: // 共通
 	// 対尾の時間

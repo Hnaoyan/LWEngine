@@ -7,6 +7,9 @@ public:
 	void Enter() override;
 	void Update(BulletStateMachine& stateMachine) override;
 	void Exit() override;
+private:
+	// 劣等型用のオフセット
+	Vector3 inferiorOffset_{};
 
 private: // 計算関数
 	// 優等（完全追尾
