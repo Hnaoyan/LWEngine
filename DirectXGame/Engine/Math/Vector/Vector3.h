@@ -9,15 +9,6 @@ public:
 	float x;
 	float y;
 	float z;
-
-	inline static Vector3 Right() { return Vector3(1.0f, 0.0f, 0.0f); }
-	inline static Vector3 Left() { return Vector3(Right() * -1.0f); }
-	inline static Vector3 Up() { return Vector3(0.0f, 1.0f, 0.0f); }
-	inline static Vector3 Down() { return Vector3(Up() * -1.0f); }
-	inline static Vector3 Forward() { return Vector3(0.0f, 0.0f, 1.0f); }
-	inline static Vector3 Backward() { return Vector3(Forward() * -1.0f); }
-	inline static Vector3 DefaultOnes() { return Vector3(1.0f, 1.0f, 1.0f); }
-
 #pragma region 四則演算
 
 	Vector3 operator+(const Vector3& Other) const {
@@ -98,6 +89,17 @@ public: // 複合演算子
 		return Vector3(input - (normal * (Vector3::Dot(input, normal) * 2.0f)));
 	}
 
+#pragma endregion
+
+#pragma region デフォルト関数
+	inline static Vector3 Zero() { return Vector3(0.0f, 0.0f, 0.0f); }
+	inline static Vector3 Right() { return Vector3(1.0f, 0.0f, 0.0f); }
+	inline static Vector3 Left() { return Vector3(Right() * -1.0f); }
+	inline static Vector3 Up() { return Vector3(0.0f, 1.0f, 0.0f); }
+	inline static Vector3 Down() { return Vector3(Up() * -1.0f); }
+	inline static Vector3 Forward() { return Vector3(0.0f, 0.0f, 1.0f); }
+	inline static Vector3 Backward() { return Vector3(Forward() * -1.0f); }
+	inline static Vector3 DefaultOnes() { return Vector3(1.0f, 1.0f, 1.0f); }
 #pragma endregion
 
 	/// <summary>

@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <random>
+#include <numbers>
 
 namespace LwLib
 {
@@ -186,6 +187,24 @@ namespace LwLib
 	/// <returns></returns>
 	inline static float RatioCalc(const float& min, const float& max, const float& rate) {
 		return min + (max - min) * rate;
+	}
+
+	/// <summary>
+	/// 角度からラジアンに
+	/// </summary>
+	/// <param name="angle"></param>
+	/// <returns></returns>
+	inline static float AngleToRadian(const float& angle) {
+		return float(angle * ((float)std::numbers::pi / 180.0f));
+	}
+
+	/// <summary>
+	/// ラジアンから角度に
+	/// </summary>
+	/// <param name="radian"></param>
+	/// <returns></returns>
+	inline static float RadianToAngle(const float& radian) {
+		return float(radian * (180.0f / (float)std::numbers::pi));
 	}
 
 	inline static float CalculateYawFromVector(const Vector3& direction)

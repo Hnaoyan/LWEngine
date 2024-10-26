@@ -84,15 +84,16 @@ void TrackingBullet::Update()
 		{
 		case TrackingState::kStraight:
 			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+			stateMachine_->RequestState(TrackingState::kStraight);
 			break;
 		case TrackingState::kWave:
 			waveTimer_.Start(90.0f);
 			waveCount_ = 0.0f;
-			accelerate_ = {};
+			stateMachine_->RequestState(TrackingState::kWave);
 			break;
 		case TrackingState::kTracking:
 			trackTimer_.Start(TrackingBullet::sTrackingFrame);
-			stateMachine_->ChangeRequest(TrackingState::kTracking);
+			stateMachine_->RequestState(TrackingState::kTracking);
 			break;
 		default:
 			break;
@@ -113,12 +114,12 @@ void TrackingBullet::Update()
 	case TrackingState::kTracking:
 		// 追尾の速度計算処理
 		//TrackUpdate();
-		stateMachine_->Update();
 		break;
 	default:
 		break;
 	}
 
+	stateMachine_->Update();
 
 	// 移動
 	velocity_ += accelerate_;

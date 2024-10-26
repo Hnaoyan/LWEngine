@@ -39,8 +39,6 @@ private:
 	FrameTimer straightTimer_;
 	// 補間の半径
 	float lerpRadius_ = 0.0f;
-	// 劣等型の狙い先のオフセット位置
-	Vector3 offset_;
 
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;

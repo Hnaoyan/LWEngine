@@ -19,7 +19,7 @@ void TrackingMoveState::Enter()
 	// オフセット
 	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
-	timer_.Start(TrackingBullet::sTrackingFrame);
+	//timer_.Start(TrackingBullet::sTrackingFrame);
 }
 
 void TrackingMoveState::Update(BulletStateMachine& stateMachine)

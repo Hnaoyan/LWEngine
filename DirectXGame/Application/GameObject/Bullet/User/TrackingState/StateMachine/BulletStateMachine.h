@@ -25,6 +25,9 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+
+	void RequestState(TrackingState state) { currentState_->SetRequeset(state); }
+	ITrackingState* GetCurrentState() { return currentState_.get(); }
 private:
 	std::unique_ptr<ITrackingState> BuildState(TrackingState newState);
 

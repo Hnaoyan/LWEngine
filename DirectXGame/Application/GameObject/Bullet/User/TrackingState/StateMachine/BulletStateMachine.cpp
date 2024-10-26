@@ -46,5 +46,13 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 
 void BulletStateMachine::Update()
 {
+	// 切り替えの受付
+	if (currentState_->GetChangeRequest()) {
+		TrackingState newState = currentState_->GetChangeRequest().value();
+		ChangeRequest(newState);
+		currentState_->RequestReset();
+	}
+
+	// ステートの処理
 	currentState_->Update(*this);
 }

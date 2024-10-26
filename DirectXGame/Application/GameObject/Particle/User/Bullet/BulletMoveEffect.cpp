@@ -29,6 +29,7 @@ void BulletParticle::MoveEffect::Update()
 		assert(bullet_);
 		//emitter_.cMap_->emit = 1;
 		//emitter_.cMap_->frequencyTime = 0.0f;
+		assert(bullet_->GetWorldPosition());
 		emitter_.cMap_->translate = bullet_->GetWorldPosition();
 	}
 	else {

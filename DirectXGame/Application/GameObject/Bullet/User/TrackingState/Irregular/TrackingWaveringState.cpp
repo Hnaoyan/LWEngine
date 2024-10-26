@@ -6,6 +6,7 @@ void TrackingWaveringState::Enter()
 {
 	// 基準設定
 	defaultDirect_ = Vector3::Normalize(bullet_->GetVelocity());
+	bullet_->SetAccelerate(Vector3::Zero());
 }
 
 void TrackingWaveringState::Update(BulletStateMachine& stateMachine)

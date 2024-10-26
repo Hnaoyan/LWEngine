@@ -5,7 +5,7 @@
 
 void TrackingStraightState::Enter()
 {
-
+	bullet_->SetAccelerate(Vector3::Zero());
 }
 
 void TrackingStraightState::Update(BulletStateMachine& stateMachine)

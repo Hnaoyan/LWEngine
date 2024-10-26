@@ -25,8 +25,13 @@ public:
 	virtual void Exit() {};
 
 public:
-	void SetBullet(IBullet* bullet) { bullet_ = bullet; }
+	// リクエストのリセット処理
+	void RequestReset() { request_ = std::nullopt; }
+	void SetRequeset(TrackingState state) { request_ = state; }
 
+public:
+	void SetBullet(IBullet* bullet) { bullet_ = bullet; }
+	std::optional<TrackingState> GetChangeRequest() { return request_; }
 protected:
 	IBullet* bullet_ = nullptr;
 	// ステート変更先＋リクエストフラグ
