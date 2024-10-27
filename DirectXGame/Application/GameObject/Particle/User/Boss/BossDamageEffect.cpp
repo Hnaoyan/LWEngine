@@ -5,16 +5,16 @@
 void BossParticle::DamageEffect::Initialize(Model* model, uint32_t textureHandle)
 {
 	ParticleEmitter::Initialize(model, textureHandle);
-	data_.count = 10;
+	data_.count = 5;
 	data_.frequency = 0.001f;
 	data_.frequencyTime = 0.0f;
 	data_.translate = {};
 	data_.radius = 1.0f;
 	data_.emit = 0;
 	data_.emitPattern = 3;
-	blendMode_ = BlendMode::kAdd;
+	blendMode_ = BlendMode::kAlpha;
 	RefreshData(data_);
-	isBillBoard_ = false;
+	isBillBoard_ = true;
 }
 
 void BossParticle::DamageEffect::Update()

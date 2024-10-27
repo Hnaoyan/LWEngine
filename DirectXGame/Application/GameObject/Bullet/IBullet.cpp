@@ -53,8 +53,8 @@ void IBullet::OnCollision(ColliderObject object)
 	if (std::holds_alternative<Terrain*>(object)) {
 		isDead_ = true;
 	}
-	if (isDead_ && breakEmitter_) {
-		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
-		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
-	}
+	//if (isDead_ && breakEmitter_) {
+	//	static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
+	//	static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
+	//}
 }

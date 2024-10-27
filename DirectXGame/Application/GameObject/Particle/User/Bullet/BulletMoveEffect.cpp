@@ -31,10 +31,12 @@ void BulletParticle::MoveEffect::Update()
 		//emitter_.cMap_->frequencyTime = 0.0f;
 		//assert(bullet_->GetWorldPosition());
 		emitter_.cMap_->translate = trail_->GetBeginPoint();
+		if (bullet_->IsDead()) {
+			emitter_.cMap_->emit = 0;
+		}
 	}
 	else {
 		emitter_.cMap_->emit = 0;
-
 	}
 
 	// バッファーに送るなどの処理

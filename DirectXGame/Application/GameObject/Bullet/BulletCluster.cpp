@@ -63,7 +63,7 @@ void BulletCluster::Draw(ModelDrawDesc desc)
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
 
 	// エフェクトの描画
-	bombEffectCluster_->Draw(desc);
+	//bombEffectCluster_->Draw(desc);
 }
 
 void BulletCluster::ImGuiDraw()

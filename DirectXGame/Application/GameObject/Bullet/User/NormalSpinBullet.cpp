@@ -42,6 +42,6 @@ void NormalSpinBullet::OnCollision(ColliderObject object)
 	}
 	if (isDead_ && breakEmitter_) {
 		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
-		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
+		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }

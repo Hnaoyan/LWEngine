@@ -79,15 +79,17 @@ Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
     float32_t3 direct = particle.translate;
     direct = normalize(direct);
     particle.velocity = direct;
-   
-    particle.translate *= 3.0f;
+    particle.velocity *= 0.5f;
+    
+    //particle.translate *= 3.0f;
     particle.translate += emitterPosition;
-    particle.color.rgb = generator.GenerateRange3D(float32_t3(0.0f, 0.95f, 0.95f), float32_t3(0.05f, 1.0f, 1.0f));
+    //particle.color.rgb = generator.GenerateRange3D(float32_t3(0.0f, 0.95f, 0.95f), float32_t3(0.05f, 1.0f, 1.0f));
+    particle.color.rgb = generator.GenerateRange3D(float32_t3(0.5f, 0.5f, 0.5f), float32_t3(0.6f, 0.6f, 0.6f));
     particle.color.a = generator.GenerateRange1D(float32_t(0.65f), float32_t(0.85f));
     particle.lifetime = 6.0f;
     particle.currentTime = 0.0f;
     particle.isScaleDecrement = 2;
-    particle.isGravity = 1;
+    particle.isGravity = 0;
     
     return particle;
 }

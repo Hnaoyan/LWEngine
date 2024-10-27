@@ -55,9 +55,9 @@ void BossSystemContext::ParticleManager::CreateDamageEmitter()
 	damage_.isActive = false;
 
 	std::unique_ptr<ParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();
-	instance->Initialize(ModelManager::GetModel("ParticleCube"));
+	instance->Initialize(ModelManager::GetModel("Plane"));
 	BossParticle::DamageEffect* damage = static_cast<BossParticle::DamageEffect*>(instance.get());
-	damage->SetTextureHandle(TextureManager::Load("Resources/default/white2x2.png"));
+	damage->SetTextureHandle(TextureManager::Load("Resources/Effect/Orange.png"));
 	damage->SetBoss(boss_);
 	gpuParticle_->CreateEmitter(std::move(instance), "BossDamage");
 }
