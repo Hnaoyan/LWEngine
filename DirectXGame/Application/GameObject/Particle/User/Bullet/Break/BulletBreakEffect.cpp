@@ -1,4 +1,6 @@
 #include "BulletBreakEffect.h"
+#include "Engine/2D/TextureManager.h"
+#include "Engine/LwLib/DeltaTime.h"
 
 void BulletParticle::BreakEffect::Initialize(Model* model, uint32_t textureHandle)
 {
@@ -9,8 +11,10 @@ void BulletParticle::BreakEffect::Initialize(Model* model, uint32_t textureHandl
 	data_.translate = {};
 	data_.radius = 1.0f;
 	data_.emit = 0;
-	data_.emitPattern = 3;
-	blendMode_ = Pipeline::BlendMode::kAdd;
+	data_.emitPattern = 4;
+	blendMode_ = Pipeline::BlendMode::kAlpha;
+
+	texture_ = TextureManager::Load("Resources/Effect/effect.png");
 
 	RefreshData(data_);
 	isBillBoard_ = true;
@@ -19,10 +23,12 @@ void BulletParticle::BreakEffect::Initialize(Model* model, uint32_t textureHandl
 void BulletParticle::BreakEffect::Update()
 {
 	// フラグ初期化
-	emitter_.cMap_->emit = 0;
+	//emitter_.cMap_->emit = 0;
+	perFrame_.cMap_->time += kDeltaTime;
 
-
+	//RefreshData(data_);
 	ParticleEmitter::Update();
+	emitter_.cMap_->emit = 0;
 }
 
 void BulletParticle::BreakEffect::Draw(ICamera* camera)

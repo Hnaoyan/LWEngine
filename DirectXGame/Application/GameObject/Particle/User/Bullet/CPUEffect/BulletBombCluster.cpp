@@ -9,8 +9,8 @@ void BulletBombCluster::Initialize(Model* model)
 	InstancedGroup::Initialize(model);
 
 	
-	texture_ = TextureManager::Load("Resources/Effect/ExPlo.png");
-	material_->color_.w = 0.35f;
+	texture_ = TextureManager::Load("Resources/Effect/Frea.png");
+	material_->color_ = { 0.5f,0.5f,0.5f,0.85f };
 }
 
 void BulletBombCluster::Update()

@@ -91,3 +91,26 @@ Particle BossDamage(RandomGenerator generator, float32_t3 emitterPosition)
     
     return particle;
 }
+
+Particle BulletBreak(RandomGenerator generator, float32_t3 emitterPosition)
+{
+    Particle particle = (Particle) 0;
+    float32_t maxSize = 4.0f;
+    float32_t minSize = 2.0f;
+    float32_t randScale = generator.GenerateRange1D(minSize, maxSize);
+    particle.scale = float32_t3(randScale, randScale, 1.0f);
+   
+    float32_t3 randomPosition = generator.GenerateRange3D(float32_t3(-1.0f, -1.0f, 1.0f), float32_t3(1.0f, 1.0f, 1.0f));
+    particle.velocity = float32_t3(randomPosition.x, randomPosition.y, 0);
+    particle.translate = randomPosition;
+    particle.translate += emitterPosition;
+    //particle.color.rgb = generator.GenerateRange3D(float32_t3(0.0f, 0.95f, 0.95f), float32_t3(0.05f, 1.0f, 1.0f));
+    particle.color.rgb = float32_t3(1.0f, 1.0f, 1.0f);
+    particle.color.a = generator.GenerateRange1D(float32_t(0.65f), float32_t(0.85f));
+    particle.lifetime = 3.0f;
+    particle.currentTime = 0.0f;
+    particle.isScaleDecrement = 1;
+    particle.isGravity = 1;
+    
+    return particle;
+}

@@ -12,8 +12,8 @@ namespace BulletParticle
 		virtual void Draw(ICamera* camera);
 
 	public: // セッター
-		void SetPosition(const Vector3& position) { data_.translate = position; }
-
+		void SetPosition(const Vector3& position) { emitter_.cMap_->translate = position; }
+		void SetEmitFlag(bool flag) { emitter_.cMap_->emit = flag; }
 	};
 
 }

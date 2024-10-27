@@ -52,6 +52,12 @@ void main( uint3 DTid : SV_DispatchThreadID )
                     gParticle[particleIndex] = BossDamage(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();
                 }
+                else if (gEmitter.emitPattern == 4)
+                {
+                    gParticle[particleIndex] = BulletBreak(generator, gEmitter.translate);
+                    float32_t3 test = generator.Generate3D();
+                    
+                }
             }
             // 空いていない場合
             else

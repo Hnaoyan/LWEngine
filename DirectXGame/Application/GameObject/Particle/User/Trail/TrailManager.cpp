@@ -14,6 +14,8 @@ void TrailManager::Draw(ICamera* camera)
 	trails_.erase(std::remove_if(trails_.begin(), trails_.end(), [&](const std::unique_ptr<BulletTrail>& obj) {
 		if (obj->IsDelete()) {
 			gpuParticle_->DeleteEmitter(obj->GetTag());
+			std::string name = obj->GetTag() + "Break";
+			gpuParticle_->DeleteEmitter(name);
 		}
 		return obj->IsDelete();
 		}), trails_.end());

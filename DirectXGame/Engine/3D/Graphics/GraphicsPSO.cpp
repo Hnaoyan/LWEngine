@@ -1455,6 +1455,9 @@ void GraphicsPSO::CreateInstancedPSO()
 	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
+	// 加算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
 	// PSO作成
 	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
 #pragma endregion

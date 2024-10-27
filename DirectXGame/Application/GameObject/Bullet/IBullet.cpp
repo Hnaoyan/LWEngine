@@ -1,6 +1,7 @@
 #include "IBullet.h"
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Application/GameObject/Particle/User/ParticleLists.h"
 
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 
@@ -51,5 +52,9 @@ void IBullet::OnCollision(ColliderObject object)
 	}
 	if (std::holds_alternative<Terrain*>(object)) {
 		isDead_ = true;
+	}
+	if (isDead_ && breakEmitter_) {
+		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
+		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }

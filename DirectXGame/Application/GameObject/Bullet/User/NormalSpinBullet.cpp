@@ -2,6 +2,7 @@
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
+#include "Application/GameObject/Particle/User/ParticleLists.h"
 
 float NormalSpinBullet::sAcceleration = 0.1f;
 
@@ -38,5 +39,9 @@ void NormalSpinBullet::OnCollision(ColliderObject object)
 	}
 	if (std::holds_alternative<Player*>(object)) {
 		isDead_ = true;
+	}
+	if (isDead_ && breakEmitter_) {
+		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
+		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }

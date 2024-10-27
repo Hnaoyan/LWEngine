@@ -342,10 +342,10 @@ void GameScene::LightingInitialize()
 	// 平行光源データ
 	lightData_.color = { 1.0f,1.0f,1.0f,1.0f };
 	lightData_.direction = { 0.0f,1.0f,0.0f };
-	lightData_.intensity = 1.5f;
+	lightData_.intensity = 1.2f;
 
 	// 点光源データ
-	ptLightData_.intensity = 5.0f;
+	ptLightData_.intensity = 0.5f;
 	ptLightData_.position = { 0,50.0f,0 };
 	ptLightData_.color = { 1,1,1,1 };
 	ptLightData_.decay = 10.0f;
@@ -356,7 +356,7 @@ void GameScene::LightingInitialize()
 	spLightData_.position = { 2.0f,200.0f,0.0f };
 	spLightData_.distance = 300.0f;
 	spLightData_.direction = Vector3(-0.707f, -0.707f, 0.0f);
-	spLightData_.intensity = 10.0f;
+	spLightData_.intensity = 12.5f;
 	spLightData_.decay = 3.0f;
 	//spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
 	spLightData_.cosAngle = 0.3f;

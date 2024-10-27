@@ -43,6 +43,9 @@ protected:
 	Vector3 accelerate_;
 
 	BulletTrail* trail_ = nullptr;
+
+	ParticleEmitter* breakEmitter_ = nullptr;
+
 	// ステートマシン
 	std::unique_ptr<BulletStateMachine> stateMachine_;
 	// 対象オブジェクト
@@ -56,6 +59,7 @@ public: // アクセッサ
 
 
 	void SetTrail(BulletTrail* trail) { trail_ = trail; }
+	void SetBreakEmitter(ParticleEmitter* emitter) { breakEmitter_ = emitter; }
 
 	Vector3 GetVelocity() { return velocity_; }
 	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }

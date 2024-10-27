@@ -5,6 +5,7 @@
 #include "Engine/LwLib/LwEngineLib.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "TrackingState/TrackingStates.h"
+#include "Application/GameObject/Particle/User/ParticleLists.h"
 
 float TrackingBullet::sTrackingFrame = 95.0f;
 float TrackingBullet::sDamping = 0.1f;
@@ -149,6 +150,10 @@ void TrackingBullet::OnCollision(ColliderObject object)
 	// 
 	if (std::holds_alternative<Boss*>(object)) {
 		isDead_ = true;
+	}
+	if (isDead_ && breakEmitter_) {
+		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
+		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }
 

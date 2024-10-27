@@ -7,7 +7,7 @@
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
-#include "Application/GameObject/Particle/User/Bullet/BulletMoveEffect.h"
+#include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
 
 uint32_t BulletCluster::sSerialNumber = 0;
@@ -82,11 +82,12 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
-	// 弾の基底クラスをインスタンシングユニットにムーブ
-	//std::unique_ptr<InstancedUnit> instance = std::move(bullet);
 	// 軌跡の管理
 	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
+	// 移動のパーティクル
 	std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
+	// 壊れた時のパーティクル
+	std::unique_ptr<BulletParticle::BreakEffect> breakPartice = std::make_unique<BulletParticle::BreakEffect>();
 
 	// トレイル
 	trailInstance->SetLength(global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame"));
@@ -96,6 +97,7 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 
 	// 弾
 	bullet->SetTrail(trailInstance.get());
+	bullet->SetBreakEmitter(breakPartice.get());
 
 	// パーティクル
 	particle->Initialize(ModelManager::GetModel("Plane"));
@@ -103,8 +105,13 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	particle->SetBullet(bullet.get());
 	particle->SetTrail(trailInstance.get());
 
+	breakPartice->Initialize(ModelManager::GetModel("Plane"));
+	breakPartice->SetGPUParticleSystem(gpuParticle_);
+
 	// リストに追加
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
 	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
+	std::string name = bullet->GetTag() + "Break";
+	gpuParticle_->CreateEmitter(std::move(breakPartice), name);
 	units_.push_back(std::move(bullet));	// 弾
 }

@@ -6,7 +6,7 @@ void BulletBombEffect::Initialize()
 	// 基底初期化
 	InstancedUnit::Initialize();
 	deleteTimer_.Start(30.0f);
-	transform_.scale = { 10.0f,10.0f,1.0f };
+	transform_.scale = { 5.0f,5.0f,1.0f };
 	defaultScale_ = transform_.scale;
 	isBillBoard_ = true;
 }
