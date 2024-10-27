@@ -110,13 +110,13 @@ void Player::ImGuiDraw()
 	ImGui::Begin(name.c_str());
 	if (ImGui::TreeNode("TrailTexture")) {
 		if (ImGui::Button("TrailUV")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/default/uvChecker.png");
+			BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
 		}
 		if (ImGui::Button("Noise1")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
 		}
 		if (ImGui::Button("BlackTrail")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/BlackTrail.png");
+			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/TestSmoke.png");
 		}
 		if (ImGui::Button("WhiteTrail")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");

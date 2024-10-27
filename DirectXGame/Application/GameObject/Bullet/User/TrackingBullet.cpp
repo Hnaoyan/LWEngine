@@ -61,64 +61,7 @@ void TrackingBullet::Update()
 	trackTimer_.Update();
 	waveTimer_.Update();
 
-	if (straightTimer_.IsEnd()) {
-		requestState_ = TrackingState::kTracking;
-	}
-	if (isTargetBoss_) {
-		if (trackTimer_.IsEnd()) {
-			requestState_ = TrackingState::kWave;
-		}
-	}
-	else {
-		if (trackTimer_.IsEnd()) {
-			requestState_ = TrackingState::kStraight;
-		}
-	}
-	if (waveTimer_.IsEnd()) {
-		requestState_ = TrackingState::kTracking;
-	}
-	if (requestState_) {
-
-		nowState_ = requestState_.value();
-
-		switch (nowState_)
-		{
-		case TrackingState::kStraight:
-			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
-			stateMachine_->RequestState(TrackingState::kStraight);
-			break;
-		case TrackingState::kWave:
-			waveTimer_.Start(90.0f);
-			waveCount_ = 0.0f;
-			stateMachine_->RequestState(TrackingState::kWave);
-			break;
-		case TrackingState::kTracking:
-			trackTimer_.Start(TrackingBullet::sTrackingFrame);
-			stateMachine_->RequestState(TrackingState::kTracking);
-			break;
-		default:
-			break;
-		}
-
-		// リクエストリセット
-		requestState_ = std::nullopt;
-	}
-
-	switch (nowState_)
-	{
-	case TrackingState::kStraight:
-
-		break;
-	case TrackingState::kWave:
-		WaveUpdate();
-		break;
-	case TrackingState::kTracking:
-		// 追尾の速度計算処理
-		//TrackUpdate();
-		break;
-	default:
-		break;
-	}
+	ChangeSelecter();
 
 	stateMachine_->Update();
 
@@ -157,45 +100,49 @@ void TrackingBullet::OnCollision(ColliderObject object)
 	}
 }
 
-void TrackingBullet::WaveUpdate()
+void TrackingBullet::ChangeSelecter()
 {
-	//Vector3 normalizeVelocity = Vector3::Normalize(velocity_);
-	// 横方向のベクトル
-	//if (Vector3::Length(sideVector) == 0) {
-	//	sideVector = Vector3::Cross(normalizeVelocity, Vector3(0.0f, 0.0f, 1.0f));
-	//}
-	//Vector3 sideVector = Vector3::Cross(normalizeVelocity, Vector3(0.0f, 1.0f, 0.0f));
-	//sideVector.Normalize();
+	if (straightTimer_.IsEnd()) {
+		requestState_ = TrackingState::kTracking;
+	}
+	if (isTargetBoss_) {
+		if (trackTimer_.IsEnd()) {
+			requestState_ = TrackingState::kWave;
+		}
+	}
+	else {
+		if (trackTimer_.IsEnd()) {
+			requestState_ = TrackingState::kStraight;
+		}
+	}
+	if (waveTimer_.IsEnd()) {
+		requestState_ = TrackingState::kTracking;
+	}
 
-	//// 縦方向のベクトル
-	//Vector3 upVector = Vector3::Cross(sideVector, normalizeVelocity);
-	//upVector.Normalize();
+	// リクエスト処理
+	if (requestState_) {
 
-	//// 揺れの計算
-	//float frequency = 1.0f;
-	//float swingAmount = 1.0f;
-	//waveCount_ += (1.0f / 5.0f);
-	//float t = waveCount_ * frequency;
-	//Vector2 swing = { std::sinf(t) * swingAmount,std::cosf(t) * swingAmount };
-	//Vector3 swing3D = (sideVector * swing.x) + (upVector * swing.y);
+		nowState_ = requestState_.value();
 
-	//accelerate_ = normalizeVelocity + swing3D;
+		switch (nowState_)
+		{
+		case TrackingState::kStraight:
+			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+			stateMachine_->RequestState(TrackingState::kStraight);
+			break;
+		case TrackingState::kWave:
+			waveTimer_.Start(90.0f);
+			stateMachine_->RequestState(TrackingState::kWave);
+			break;
+		case TrackingState::kTracking:
+			trackTimer_.Start(TrackingBullet::sTrackingFrame);
+			stateMachine_->RequestState(TrackingState::kTracking);
+			break;
+		default:
+			break;
+		}
 
-	Vector3 velocity = velocity_.Normalize();
-
-	Vector3 worldUp = Vector3::Up();
-	Vector3 side = Vector3::Normalize(Vector3::Cross(worldUp, velocity));
-	Vector3 up = Vector3::Normalize(Vector3::Cross(velocity, side));
-
-	float frequency = 0.5f;
-	float maxAmount = 10.0f;
-	waveCount_ += (1.0f / 2.0f);
-	float t = waveCount_ * frequency;
-	float swayX = std::sinf(t) * maxAmount;
-
-	Vector3 sway = side * swayX;
-
-	Vector3 newDirect = velocity + sway;
-	newDirect = Vector3::Normalize(newDirect);
-	accelerate_ = newDirect;
+		// リクエストリセット
+		requestState_ = std::nullopt;
+	}
 }

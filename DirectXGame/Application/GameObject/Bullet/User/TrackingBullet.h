@@ -37,8 +37,6 @@ private:
 	FrameTimer trackTimer_;
 	// 直進タイマー
 	FrameTimer straightTimer_;
-	// 補間の半径
-	float lerpRadius_ = 0.0f;
 
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;
@@ -50,10 +48,8 @@ private:
 	TrackingState nowState_;
 	std::optional<TrackingState> requestState_ = std::nullopt;
 
-	float waveCount_ = 0.0f;
-
 private:
-	void WaveUpdate();
+	void ChangeSelecter();
 
 public: // 共通
 	// 対尾の時間

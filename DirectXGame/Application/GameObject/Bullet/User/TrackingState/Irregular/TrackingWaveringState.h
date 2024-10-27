@@ -9,7 +9,17 @@ public:
 	void Exit() override;
 
 private:
+	void TrigonometricPattern();
+
+private:
 	// 揺らす基準のベクトル
 	Vector3 defaultDirect_{};
+	float waveCount_ = 0.0f;
+
+	bool isLeft_ = false;
+	bool isRight_ = false;
+
+	// 曲がる時間
+	FrameTimer curveTimer_;
 
 };
