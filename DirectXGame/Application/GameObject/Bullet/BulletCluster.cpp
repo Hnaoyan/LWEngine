@@ -8,6 +8,7 @@
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include "Application/GameObject/Particle/User/Bullet/BulletMoveEffect.h"
+#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
 
 uint32_t BulletCluster::sSerialNumber = 0;
 
@@ -21,6 +22,9 @@ void BulletCluster::Initialize(Model* model)
 	InstancedGroup::Initialize(model);
 
 	texture_ = TextureManager::GetInstance()->Load("Resources/Default/white2x2.png");
+
+	bombEffectCluster_ = std::make_unique<BulletBombCluster>();
+	bombEffectCluster_->Initialize(ModelManager::GetModel("Plane"));
 }
 
 void BulletCluster::Update()
@@ -30,8 +34,14 @@ void BulletCluster::Update()
 		//if (obj->IsDead()) {
 		//	gpuParticle_->DeleteEmitter(static_cast<IBullet*>(obj.get())->GetTag());
 		//}
+		// 壊れたパーティクル
+		if (obj->IsDead()) {
+			static_cast<BulletBombCluster*>(bombEffectCluster_.get())->BulletBomb(obj->GetWorldPosition());
+		}
 		return obj->IsDead();
 		}), units_.end());
+
+	bombEffectCluster_->Update();
 	// 基底クラス更新
 	InstancedGroup::Update();
 }
@@ -48,9 +58,12 @@ void BulletCluster::Draw(ModelDrawDesc desc)
 	material_->Update();
 	modelDesc.material = material_.get();
 	modelDesc.texture = texture_;
+
 	// 描画
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
 
+	// エフェクトの描画
+	bombEffectCluster_->Draw(desc);
 }
 
 void BulletCluster::ImGuiDraw()

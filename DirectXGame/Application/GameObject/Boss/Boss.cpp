@@ -31,7 +31,7 @@ void Boss::Initialize(Model* model)
 	worldTransform_.transform_.translate = respawnPos_;
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
-	isAction_ = true;
+	isAction_ = false;
 }
 
 void Boss::Update()

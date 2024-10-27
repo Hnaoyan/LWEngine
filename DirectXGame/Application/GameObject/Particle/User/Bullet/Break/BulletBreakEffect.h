@@ -1,15 +1,18 @@
 #pragma once
 #include "../BulletParticleComponent.h"
-#include "Engine/3D/Instancing/InstancedUnit.h"
+#include "Engine/Particle/Emitter/ParticleEmitter.h"
 
 namespace BulletParticle
 {
-	class BreakEffect : public Component, public InstancedUnit
+	class BreakEffect : public Component, public ParticleEmitter
 	{
 	public:
-		//void Initialize() override;
-		//void Update() override;
+		virtual void Initialize(Model* model, uint32_t textureHandle = 0);
+		virtual void Update();
+		virtual void Draw(ICamera* camera);
 
+	public: // セッター
+		void SetPosition(const Vector3& position) { data_.translate = position; }
 
 	};
 

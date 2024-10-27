@@ -28,8 +28,11 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameObjectManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
@@ -216,6 +219,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletParticleComponent.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletEffectCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
@@ -336,6 +342,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector2.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\CPUParticle.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\CPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />

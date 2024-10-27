@@ -13,9 +13,9 @@ void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
-	blendMode_ = ParticleEmitter::BlendMode::kAlpha;
+	blendMode_ = ParticleEmitter::BlendMode::kAdd;
 
-	texture_ = TextureManager::Load("Resources/Effect/effect.png");
+	texture_ = TextureManager::Load("Resources/Effect/TestSmoke.png");
 	RefreshData(data_);
 
 }
@@ -29,11 +29,12 @@ void BulletParticle::MoveEffect::Update()
 		assert(bullet_);
 		//emitter_.cMap_->emit = 1;
 		//emitter_.cMap_->frequencyTime = 0.0f;
-		assert(bullet_->GetWorldPosition());
-		emitter_.cMap_->translate = bullet_->GetWorldPosition();
+		//assert(bullet_->GetWorldPosition());
+		emitter_.cMap_->translate = trail_->GetBeginPoint();
 	}
 	else {
 		emitter_.cMap_->emit = 0;
+
 	}
 
 	// バッファーに送るなどの処理

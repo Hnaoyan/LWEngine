@@ -106,13 +106,14 @@ public:
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }
 	Player* GetPlayer() { return player_; }
+
 	void SetPlayer(Player* player) {
 		player_ = player;
 		stateDecider_.Initialize(this, player);
 	}
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
-
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
+
 	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("BossTrackingBullet"); }
 	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("BossNormalBullet"); }
 #pragma endregion

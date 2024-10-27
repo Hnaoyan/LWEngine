@@ -65,6 +65,12 @@ private:
 		Model* model;
 	};
 	planeInfo plane_;
+
+	Sprite* effectSprite_ = nullptr;
+	Sprite* circleSprite_ = nullptr;
+
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+
 private: // USER
 	// 軌跡クラス
 	std::unique_ptr<MissileTrail> trail_;

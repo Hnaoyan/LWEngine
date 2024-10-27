@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedGroup.h"
+#include <memory>
 
 /// <summary>
 /// 前方宣言
@@ -8,6 +9,7 @@ class GPUParticleSystem;
 class CollisionManager;
 class TrailManager;
 class IBullet;
+//class BulletBombCluster;
 
 /// <summary>
 /// 弾の集合体クラス
@@ -55,6 +57,9 @@ public: // USER
 	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
 	void SetTexture(uint32_t texture) { texture_ = texture; }
 private:
+	// 弾が壊れた時のエフェクトクラス
+	std::unique_ptr<InstancedGroup> bombEffectCluster_;
+
 	uint32_t texture_ = 0;
 	TrailManager* trailManager_ = nullptr;
 	GPUParticleSystem* gpuParticle_ = nullptr;

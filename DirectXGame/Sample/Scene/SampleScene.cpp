@@ -92,7 +92,7 @@ void SampleScene::Initialize()
 	}
 	trailPolygon_->texture_ = TextureManager::Load("Resources/default/uvChecker.png");
 	trailPolygon_->SetMaxWidth(5.0f);
-	trailPolygon_->SetMinWidth(1.0f);
+	trailPolygon_->SetMinWidth(5.0f);
 	trailPolygon_->SetCamera(&camera_);
 	//curvePoints_[0] = { 0.0f,0.0f,0.0f };
 	//curvePoints_[1] = { 3.0f,3.0f,0.0f };
@@ -223,6 +223,12 @@ void SampleScene::UIDraw()
 	SpriteManager::GetSprite("UVChecker")->SetUVTransform(uvTransform_);
 	//SpriteManager::GetSprite("UVChecker")->Draw();
 
+	circleSprite_->SetColor(color_);
+	effectSprite_->SetColor(color_);
+
+	circleSprite_->Draw();
+	effectSprite_->Draw();
+
 	Sprite::PostDraw();
 }
 
@@ -251,6 +257,37 @@ void SampleScene::ImGuiDraw()
 	//triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
+
+	if (ImGui::TreeNode("EffectSprite")) {
+		ImGui::ColorEdit4("EffectColor", &color_.x);
+		if (ImGui::Button("None")) {
+			circleSprite_->SetBlendMode(Pipeline::BlendMode::kNone);
+			effectSprite_->SetBlendMode(Pipeline::BlendMode::kNone);
+		}
+		if (ImGui::Button("Alpha")) {
+			circleSprite_->SetBlendMode(Pipeline::BlendMode::kAlpha);
+			effectSprite_->SetBlendMode(Pipeline::BlendMode::kAlpha);
+		}
+		if (ImGui::Button("Add")) {
+			circleSprite_->SetBlendMode(Pipeline::BlendMode::kAdd);
+			effectSprite_->SetBlendMode(Pipeline::BlendMode::kAdd);
+		}
+		if (ImGui::Button("Sub")) {
+			circleSprite_->SetBlendMode(Pipeline::BlendMode::kSubtract);
+			effectSprite_->SetBlendMode(Pipeline::BlendMode::kSubtract);
+		}
+		if (ImGui::Button("Mul")) {
+			circleSprite_->SetBlendMode(Pipeline::BlendMode::kMultiply);
+			effectSprite_->SetBlendMode(Pipeline::BlendMode::kMultiply);
+		}
+		if (ImGui::Button("Scr")) {
+			circleSprite_->SetBlendMode(Pipeline::BlendMode::kScreen);
+			effectSprite_->SetBlendMode(Pipeline::BlendMode::kScreen);
+		}
+
+		ImGui::TreePop();
+	}
+
 	if (ImGui::TreeNode("Trail")) {
 		ImGui::DragFloat3("uvPos", &uvTransform_.translate.x, 0.01f);
 		ImGui::DragFloat3("uvSca", &uvTransform_.scale.x, 0.01f);
@@ -418,6 +455,13 @@ void SampleScene::LoadTexture()
 	SpriteManager::LoadSprite("UVChecker", TextureManager::Load("Resources/default/uvChecker.png"));
 	SpriteManager::GetSprite("UVChecker")->SetPosition({ 1280 / 2,720 / 2 });
 
+	SpriteManager::LoadSprite("CirclePNG", TextureManager::Load("Resources/effect/circle.png"));
+	SpriteManager::LoadSprite("EffectPNG", TextureManager::Load("Resources/effect/Frea.png"));
+	effectSprite_ = SpriteManager::GetSprite("CirclePNG");
+	circleSprite_ = SpriteManager::GetSprite("EffectPNG");
+
+	effectSprite_->SetPosition({ 1280 / 2,100 });
+	circleSprite_->SetPosition({ 1280 / 2,500 });
 
 }
 

@@ -44,6 +44,12 @@ public:
 	std::string GetTag() { return bulletTag_; }
 
 	bool IsDelete() { return isDelete_; }
+
+	Vector3 GetBeginPoint() {
+		auto endPoint = trailPoints_.end();
+		endPoint--;
+		return *endPoint;
+	}
 private:
 	void GlobalValueInitialize();
 
