@@ -85,14 +85,22 @@ void Boss::ImGuiDraw()
 {
 	
 	ImGui::Begin("Boss");
-	if (ImGui::Button("MissileState")) {
+	if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
 		stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 	}
-	if (ImGui::Button("MissileBarrage")) {
+	if (ImGui::Button("MissileBarrage") || Input::GetInstance()->TriggerKey(DIK_8)) {
 		stateManager_.ChangeRequest(std::make_unique<BossState::MissileBarrageState>());
 	}
-	if (ImGui::Button("NormalAttack")) {
+	if (ImGui::Button("NormalAttack") || Input::GetInstance()->TriggerKey(DIK_9)) {
 		stateManager_.ChangeRequest(std::make_unique<BossState::AttackState>());
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_Y)) {
+		if (isAction_) {
+			isAction_ = false;
+		}
+		else {
+			isAction_ = true;
+		}
 	}
 	ImGui::Checkbox("IsAction", &isAction_);
 	ImGui::Checkbox("IsInvisible", &isInvisible_);

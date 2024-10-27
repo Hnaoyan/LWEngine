@@ -226,6 +226,7 @@ void Player::GlobalValueInitialize()
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	std::string groupName = "Player";
 	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "DashPower", 0.0f);
 
 
 	//---追尾弾---//

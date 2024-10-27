@@ -70,8 +70,11 @@ void BossState::MissileAttackState::MissileAttack()
 		GenerateMissile(rotateMatrix, TrackingType::kStandard);
 		//---劣等---//
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
+		GenerateMissile(rotateMatrix, TrackingType::kInferior);
+		GenerateMissile(rotateMatrix, TrackingType::kInferior);
 		//---優等---//
 		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
+		//GenerateMissile(rotateMatrix, TrackingType::kSuperior);
 	}
 }
 

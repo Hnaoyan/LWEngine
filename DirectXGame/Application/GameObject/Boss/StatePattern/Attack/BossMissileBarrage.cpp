@@ -17,7 +17,7 @@ void BossState::MissileBarrageState::Update()
 	// 攻撃の処理
 	attackTimer_.Update();
 	if (attackTimer_.IsEnd()) {
-		attackTimer_.Start(25.0f);
+		attackTimer_.Start(15.0f);
 		// 攻撃処理
 		Attack();
 
@@ -27,7 +27,7 @@ void BossState::MissileBarrageState::Update()
 	if (preActionTimer_.IsEnd()) {
 		// 変更までの時間
 		changeTimer_.Start(120.0f);
-		attackTimer_.Start(25.0f);
+		attackTimer_.Start(15.0f);
 		// 攻撃処理
 		Attack();
 	}
