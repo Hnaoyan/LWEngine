@@ -3,13 +3,27 @@
 #include <d3d12.h>
 #include "../../../externals/DirectXTex/DirectXTex.h"
 
-void TextureConverter::ConvertTextureWICToDDS(const std::string& filePath)
+void TextureConverter::OutputUsage()
+{
+	std::cout << "画像ファイルをWIC形式からDDS形式に変換" << std::endl;
+	std::cout << std::endl;
+	std::cout << "TextureConverter [ドライブ：][パス][ファイル名]" << std::endl;
+	std::cout << std::endl;
+	std::cout << " [ドライブ：][パス][ファイル名]：変換したいWIC形式の画像ファイルを指定" << std::endl;
+	//printf("画像ファイルをWIC形式からDDS形式に変換\n");
+	//printf("\n");
+	//printf("TextureConverter [ドライブ：][パス][ファイル名]\n");
+	//printf("\n");
+	//printf("[ドライブ：][パス][ファイル名]：変換したいWIC形式の画像ファイルを指定");
+}
+
+void TextureConverter::ConvertTextureWICToDDS(const std::string& filePath, int numOptions , char* options[])
 {
 	// テクスチャファイルを読み込む
 	LoadWICTextureFromFile(filePath);
 
 	// DDS形式に変換
-	SaveDDSTextureToFile();
+	SaveDDSTextureToFile(numOptions, options);
 }
 
 void TextureConverter::LoadWICTextureFromFile(const std::string& filePath)
@@ -87,14 +101,27 @@ void TextureConverter::SeparateFilePath(const std::wstring& filePath)
 
 }
 
-void TextureConverter::SaveDDSTextureToFile()
+void TextureConverter::SaveDDSTextureToFile(int numOptions, char* options[])
 {
+	numOptions, options;
+
+	size_t mipLevel = 0;
+	// ミップマップレベル指定を検索
+	for (int i = 0; i < numOptions; i++) {
+		if (std::string(options[i]) == "-ml") {
+			// みっぷレベル指定
+			mipLevel = std::stoi(options[i + 1]);
+			break;
+		}
+	}
+
+
 	HRESULT result = S_FALSE;
 	DirectX::ScratchImage mipChain;
 	// ミップマップ生成
 	result = DirectX::GenerateMipMaps(
 		scratchImage_.GetImages(), scratchImage_.GetImageCount(), scratchImage_.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain);
+		TEX_FILTER_DEFAULT, mipLevel, mipChain);
 
 	if (SUCCEEDED(result)) {
 		// イメージとメタデータを、ミップマップ版で置き換える
