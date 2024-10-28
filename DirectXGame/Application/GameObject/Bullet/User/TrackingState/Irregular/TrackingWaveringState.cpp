@@ -16,7 +16,14 @@ void TrackingWaveringState::Enter()
 void TrackingWaveringState::Update(BulletStateMachine& stateMachine)
 {
 	stateMachine;
+	// 右
+	if (curveDirect_ > 0) {
 
+	}
+	// 左
+	else if (curveDirect_ < 0) {
+
+	}
 	// 三角
 	TrigonometricPattern();
 }

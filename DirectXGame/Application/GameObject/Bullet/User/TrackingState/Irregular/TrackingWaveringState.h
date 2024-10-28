@@ -16,8 +16,8 @@ private:
 	Vector3 defaultDirect_{};
 	float waveCount_ = 0.0f;
 
-	bool isLeft_ = false;
-	bool isRight_ = false;
+	// 正なら右 負なら左
+	int32_t curveDirect_ = 1;
 
 	// 曲がる時間
 	FrameTimer curveTimer_;
