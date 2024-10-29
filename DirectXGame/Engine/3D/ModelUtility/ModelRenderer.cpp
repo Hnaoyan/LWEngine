@@ -2,6 +2,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "../Material.h"
 #include "../Mesh.h"
+#include "Engine/3D/Instancing/InstancedGroup.h"
 #include <cassert>
 
 ID3D12GraphicsCommandList* ModelRenderer::sCommandList_ = nullptr;
@@ -233,6 +234,55 @@ void ModelRenderer::InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& mo
 
 	// ドローコール
 	sCommandList_->DrawIndexedInstanced(UINT(modelDesc.modelData->indices.size()), instanceNum, 0, 0, 0);
+}
+
+void ModelRenderer::InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc, InstancedGroup* object)
+{
+	// プリミティブ形状の設定
+	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	// パイプラインの設定
+	sBlendPipeline_ = std::get<BlendPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kInstancedModel)]);
+
+	// ルートシグネチャの設定
+	sCommandList_->SetGraphicsRootSignature(sBlendPipeline_.rootSignature.Get());
+	// パイプラインステートの設定
+	sCommandList_->SetPipelineState(sBlendPipeline_.pipelineStates[size_t(object->GetBlendMode())].Get());
+
+	// ビュープロジェクション行列
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(Pipeline::InstancedUnitRegister::kViewProjection),
+		camera->GetCBuffer()->GetGPUVirtualAddress());
+
+	//---メッシュの設定---//
+	// 頂点バッファの設定
+	sCommandList_->IASetVertexBuffers(0, 1, &modelDesc.mesh->vbView_);
+	// インデックスバッファの設定
+	sCommandList_->IASetIndexBuffer(&modelDesc.mesh->ibView_);
+
+	//---マテリアルの設定---//
+	// テクスチャ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(Pipeline::InstancedUnitRegister::kTexture), modelDesc.texture);
+	// 環境マップ
+	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
+		sCommandList_, static_cast<UINT>(Pipeline::InstancedUnitRegister::kMapTexture), TextureManager::sEnvironmentTexture);
+	// マテリアル
+	sCommandList_->SetGraphicsRootConstantBufferView(
+		static_cast<UINT>(Pipeline::InstancedUnitRegister::kMaterial), modelDesc.material->buffer_.cBuffer->GetGPUVirtualAddress());
+
+	// トランスフォーム
+	sCommandList_->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::InstancedUnitRegister::kWorldTransform), object->GetHandle());
+
+	// ライト
+	// 平行光源
+	lightDesc.directionalLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kDirectionalLight));
+	// 方向光源
+	lightDesc.spotLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kSpotLight));
+	// 点光源
+	lightDesc.pointLight->Draw(sCommandList_, static_cast<uint32_t>(Pipeline::InstancedUnitRegister::kPointLight));
+
+	// ドローコール
+	sCommandList_->DrawIndexedInstanced(UINT(modelDesc.modelData->indices.size()), object->GetUnitCount(), 0, 0, 0);
 }
 
 void ModelRenderer::LineDraw(ICamera* camera, Line3D* line)
