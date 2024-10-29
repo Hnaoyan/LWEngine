@@ -47,6 +47,8 @@ private:
 	TrackingState nowState_;
 	std::optional<TrackingState> requestState_ = std::nullopt;
 
+	TrackingData data;
+
 private:
 	void ChangeSelecter();
 

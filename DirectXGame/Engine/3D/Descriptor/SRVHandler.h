@@ -11,7 +11,7 @@ class SRVHandler : public Singleton<SRVHandler>
 {
 public:
 	// 最大カウント
-	static const int kDescpritorSize = 1024 * 4;
+	static const int kDescpritorSize = 1024 * 10;
 	//// 現在の番号
 	//static uint32_t sNowDescriptorNum_;
 	//// 次の番号

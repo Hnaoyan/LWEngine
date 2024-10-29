@@ -11,7 +11,7 @@ class InstancedGroup
 {
 public:
 	// 最大数
-	static const uint32_t kNumInstanceMax = 512;
+	static const uint32_t kNumInstanceMax = (1024);
 	virtual ~InstancedGroup();
 protected:
 	// リソース
