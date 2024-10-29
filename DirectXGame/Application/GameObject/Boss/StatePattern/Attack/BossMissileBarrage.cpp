@@ -46,12 +46,14 @@ void BossState::MissileBarrageState::Attack()
 	// 回転
 	RotateUpdate();
 
+	// ここがコンテナの役割
+	// 始点ベクトルー終点ベクトルでSlerpした方向に飛ばす
 	// ベクトル
-	Vector3 upVector = Vector3::Up();
-	Vector3 rightVector = Vector3::Right();
-	Vector3 leftVector = rightVector * (-1.0f);
-	Vector3 rightUp = Vector3(1.0f, 1.0f, 0.0f);
-	Vector3 leftUp = Vector3(-1.0f, 1.0f, 0.0f);
+	Vector3 upVector = Vector3::Up();			// 上
+	Vector3 rightVector = Vector3::Right();		// 右
+	Vector3 leftVector = rightVector * (-1.0f);	// 左
+	Vector3 rightUp = Vector3(1.0f, 1.0f, 0.0f);	// 右上
+	Vector3 leftUp = Vector3(-1.0f, 1.0f, 0.0f);	// 左上
 
 	upVector = LwLib::Slerp(upVector, Vector3::Backward(), changeTimer_.GetElapsedFrame());
 	rightVector = LwLib::Slerp(rightVector, Vector3::Backward(), changeTimer_.GetElapsedFrame());

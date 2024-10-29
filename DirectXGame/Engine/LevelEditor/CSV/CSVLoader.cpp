@@ -19,3 +19,19 @@ void CSVLoader::LoadCSVData(std::string filePath)
 
 
 }
+
+std::stringstream CSVLoader::LoadCSVFile(std::string fullPath)
+{
+	std::stringstream popCommands;
+	// ファイルを開く
+	std::ifstream file;
+	//std::string fullPath = kDefaultDirectoryPath + filePath + kExtension;
+	file.open(fullPath);
+	assert(file.is_open());
+	// ファイル内容を文字列に
+	popCommands << file.rdbuf();
+	// 閉じる
+	file.close();
+
+	return popCommands;
+}

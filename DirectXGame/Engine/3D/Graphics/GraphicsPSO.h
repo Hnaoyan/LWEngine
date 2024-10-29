@@ -124,7 +124,7 @@ private:
 	static std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
 		size_t(Pipeline::BlendMode::kCountOfBlendMode)> CreateBlendState();
 
-	static D3D12_GRAPHICS_PIPELINE_STATE_DESC CreatePipelineDesc();
+	//static D3D12_GRAPHICS_PIPELINE_STATE_DESC CreatePipelineDesc();
 
 private:
 	static ID3D12Device* sDevice_;

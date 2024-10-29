@@ -15,5 +15,7 @@ public:
 
 	void LoadCSVData(std::string filePath);
 
+	// ファイルの中身を読みだす処理
+	std::stringstream LoadCSVFile(std::string fullPath);
 
 };
