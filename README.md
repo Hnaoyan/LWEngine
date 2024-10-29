@@ -1,8 +1,6 @@
 # 個人製作
 
-![Test Image1](https://github.com/Hnaoyan/LWEngine/blob/master/ReadmeAsset/GameScreen.gif?raw=true)
-
-ゲームのGif
+<img src="https://github.com/Hnaoyan/LWEngine/blob/master/ReadmeAsset/GameScreen.gif?raw=true" alt = Title Image width="720">
 
 ## 開発環境
 - DirectX12
