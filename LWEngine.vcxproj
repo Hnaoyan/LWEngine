@@ -378,7 +378,7 @@
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
-    <ProjectReference Include="ImGui\ImGui.vcxproj">
+    <ProjectReference Include="externals\ImGui\ImGui.vcxproj">
       <Project>{b48432a6-d5bd-4431-b42c-77277efc54c9}</Project>
     </ProjectReference>
   </ItemGroup>

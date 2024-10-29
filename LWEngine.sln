@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LWEngine", "LWEngine.vcxproj", "{39CB1F97-3E87-47A2-A6EC-E9DCA5356DD4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9} = {B48432A6-D5BD-4431-B42C-77277EFC54C9}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目", "ソリューション項目", "{996757DA-9945-4856-A237-D15E8488AEE0}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,11 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ソリューション項目
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "ImGui\ImGui.vcxproj", "{B48432A6-D5BD-4431-B42C-77277EFC54C9}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureConverter", "projects\Converter\TextureConverter\TextureConverter.vcxproj", "{19112BA7-4DBB-4160-82DB-360651187440}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "externals\ImGui\ImGui.vcxproj", "{B48432A6-D5BD-4431-B42C-77277EFC54C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +36,6 @@ Global
 		{39CB1F97-3E87-47A2-A6EC-E9DCA5356DD4}.Release|x64.Build.0 = Release|x64
 		{39CB1F97-3E87-47A2-A6EC-E9DCA5356DD4}.ReleaseImGui|x64.ActiveCfg = ReleaseImGui|x64
 		{39CB1F97-3E87-47A2-A6EC-E9DCA5356DD4}.ReleaseImGui|x64.Build.0 = ReleaseImGui|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Debug|x64.ActiveCfg = Debug|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Debug|x64.Build.0 = Debug|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Demo|x64.ActiveCfg = Debug|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Demo|x64.Build.0 = Debug|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Release|x64.ActiveCfg = Release|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Release|x64.Build.0 = Release|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.ReleaseImGui|x64.ActiveCfg = ReleaseImGui|x64
-		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.ReleaseImGui|x64.Build.0 = ReleaseImGui|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.ActiveCfg = Debug|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Debug|x64.Build.0 = Debug|x64
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77}.Demo|x64.ActiveCfg = Demo|x64
@@ -57,6 +52,14 @@ Global
 		{19112BA7-4DBB-4160-82DB-360651187440}.Release|x64.Build.0 = Release|x64
 		{19112BA7-4DBB-4160-82DB-360651187440}.ReleaseImGui|x64.ActiveCfg = ReleaseImGui|Win32
 		{19112BA7-4DBB-4160-82DB-360651187440}.ReleaseImGui|x64.Build.0 = ReleaseImGui|Win32
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Debug|x64.ActiveCfg = Debug|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Debug|x64.Build.0 = Debug|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Demo|x64.ActiveCfg = Debug|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Demo|x64.Build.0 = Debug|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Release|x64.ActiveCfg = Release|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.Release|x64.Build.0 = Release|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.ReleaseImGui|x64.ActiveCfg = ReleaseImGui|x64
+		{B48432A6-D5BD-4431-B42C-77277EFC54C9}.ReleaseImGui|x64.Build.0 = ReleaseImGui|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
