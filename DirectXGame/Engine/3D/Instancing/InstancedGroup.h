@@ -21,6 +21,13 @@ protected:
 	// Unitの数
 	uint32_t unitNum_ = 0u;
 
+	Pipeline::BlendMode blendMode_ = Pipeline::BlendMode::kAlpha;
+
+public: // 描画に使う関数
+	D3D12_GPU_DESCRIPTOR_HANDLE GetHandle() { return buffer_.GetSRVGPU(); }
+	uint32_t GetUnitCount() { return unitNum_; }
+	Pipeline::BlendMode GetBlendMode() { return blendMode_; }
+	
 public:
 	/// <summary>
 	/// 初期化

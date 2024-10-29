@@ -94,6 +94,7 @@ void TrackingBullet::OnCollision(ColliderObject object)
 	if (std::holds_alternative<Boss*>(object)) {
 		isDead_ = true;
 	}
+	// 
 	if (isDead_ && breakEmitter_) {
 		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
 		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
@@ -102,7 +103,14 @@ void TrackingBullet::OnCollision(ColliderObject object)
 
 void TrackingBullet::ChangeSelecter()
 {
+	// 進行方向とターゲット方向の向き
+	// 直接的な距離
+	// 加速度と速度を
+
 	if (straightTimer_.IsEnd()) {
+		requestState_ = TrackingState::kTracking;
+	}
+	if (waveTimer_.IsEnd()) {
 		requestState_ = TrackingState::kTracking;
 	}
 	if (isTargetBoss_) {
@@ -115,9 +123,6 @@ void TrackingBullet::ChangeSelecter()
 			requestState_ = TrackingState::kStraight;
 		}
 	}
-	if (waveTimer_.IsEnd()) {
-		requestState_ = TrackingState::kTracking;
-	}
 
 	// リクエスト処理
 	if (requestState_) {
@@ -127,7 +132,7 @@ void TrackingBullet::ChangeSelecter()
 		switch (nowState_)
 		{
 		case TrackingState::kStraight:
-			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));	
 			stateMachine_->RequestState(TrackingState::kStraight);
 			break;
 		case TrackingState::kWave:

@@ -37,12 +37,11 @@ private:
 	FrameTimer trackTimer_;
 	// 直進タイマー
 	FrameTimer straightTimer_;
+	// 曲がる軌道用のタイマー
+	FrameTimer waveTimer_;
 
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;
-
-	// 曲がる軌道用のタイマー
-	FrameTimer waveTimer_;
 
 	// ステートの管理
 	TrackingState nowState_;
@@ -52,7 +51,7 @@ private:
 	void ChangeSelecter();
 
 public: // 共通
-	// 対尾の時間
+	// 追従の時間
 	static float sTrackingFrame;
 	// 減衰値
 	static float sDamping;

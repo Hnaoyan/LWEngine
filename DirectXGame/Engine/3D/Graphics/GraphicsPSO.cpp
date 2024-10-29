@@ -1349,7 +1349,7 @@ void GraphicsPSO::CreateSkyboxPSO()
 
 void GraphicsPSO::CreateInstancedPSO()
 {
-	GeneralPipeline resultPipeline;
+	BlendPipeline resultPipeline;
 
 	ComPtr<IDxcBlob> vsBlob;
 	ComPtr<IDxcBlob> psBlob;
@@ -1451,16 +1451,42 @@ void GraphicsPSO::CreateInstancedPSO()
 	// ブレンドなし
 	D3D12_BLEND_DESC blenddesc{};
 	blenddesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-	//blenddesc.RenderTarget[0].BlendEnable = false;
+	blenddesc.RenderTarget[0].BlendEnable = false;
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kNone)] = CreatePipelineState(gPipeline);
 	// αブレンド
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_INV_SRC_ALPHA);
 	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kAlpha)] = CreatePipelineState(gPipeline);
+
 	// 加算合成
 	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
 	gPipeline.BlendState = blenddesc;
 	// PSO作成
-	resultPipeline.pipelineState = CreatePipelineState(gPipeline);
+	resultPipeline.pipelineStates[size_t(BlendMode::kAdd)] = CreatePipelineState(gPipeline);
+
+	// 減算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_SRC_ALPHA, D3D12_BLEND_OP_REV_SUBTRACT, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kSubtract)] = CreatePipelineState(gPipeline);
+
+	// 乗算合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD, D3D12_BLEND_SRC_COLOR);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kMultiply)] = CreatePipelineState(gPipeline);
+
+	// スクリーン合成
+	blenddesc = PSOLib::SetBlendDesc(D3D12_BLEND_INV_DEST_COLOR, D3D12_BLEND_OP_ADD, D3D12_BLEND_ONE);
+	gPipeline.BlendState = blenddesc;
+	// PSO作成
+	resultPipeline.pipelineStates[size_t(BlendMode::kScreen)] = CreatePipelineState(gPipeline);
+
 #pragma endregion
+
 	sPipelines_[size_t(Pipeline::Order::kInstancedModel)] = std::move(resultPipeline);
 }
 
@@ -1501,4 +1527,9 @@ Microsoft::WRL::ComPtr<ID3D12PipelineState> GraphicsPSO::CreatePipelineState(D3D
 	assert(SUCCEEDED(result));
 
 	return resultPipelineState;
+}
+
+std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>, size_t(Pipeline::BlendMode::kCountOfBlendMode)> GraphicsPSO::CreateBlendState()
+{
+	return std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>, size_t(Pipeline::BlendMode::kCountOfBlendMode)>();
 }

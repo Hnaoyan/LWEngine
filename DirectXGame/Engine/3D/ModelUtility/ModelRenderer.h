@@ -23,6 +23,8 @@ private:
 	// private static
 	// パイプライン
 	static GeneralPipeline sPipeline_;
+	// ブレンドモード対応
+	static BlendPipeline sBlendPipeline_;
 
 public: // 準備用の関数
 	/// <summary>

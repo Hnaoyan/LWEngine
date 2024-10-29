@@ -6,6 +6,7 @@
 
 ID3D12GraphicsCommandList* ModelRenderer::sCommandList_ = nullptr;
 GeneralPipeline ModelRenderer::sPipeline_;
+BlendPipeline ModelRenderer::sBlendPipeline_;
 
 void ModelRenderer::PreDraw(ID3D12GraphicsCommandList* cmdList)
 {
@@ -138,12 +139,12 @@ void ModelRenderer::InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNu
 	// プリミティブ形状の設定
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// パイプラインの設定
-	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kInstancedModel)]);
+	sBlendPipeline_ = std::get<BlendPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kInstancedModel)]);
 
 	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	sCommandList_->SetGraphicsRootSignature(sBlendPipeline_.rootSignature.Get());
 	// パイプラインステートの設定
-	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+	sCommandList_->SetPipelineState(sBlendPipeline_.pipelineStates[size_t(BlendMode::kAlpha)].Get());
 
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(
@@ -190,12 +191,12 @@ void ModelRenderer::InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& mo
 	// プリミティブ形状の設定
 	sCommandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	// パイプラインの設定
-	sPipeline_ = std::get<GeneralPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kInstancedModel)]);
+	sBlendPipeline_ = std::get<BlendPipeline>(GraphicsPSO::sPipelines_[size_t(Pipeline::Order::kInstancedModel)]);
 
 	// ルートシグネチャの設定
-	sCommandList_->SetGraphicsRootSignature(sPipeline_.rootSignature.Get());
+	sCommandList_->SetGraphicsRootSignature(sBlendPipeline_.rootSignature.Get());
 	// パイプラインステートの設定
-	sCommandList_->SetPipelineState(sPipeline_.pipelineState.Get());
+	sCommandList_->SetPipelineState(sBlendPipeline_.pipelineStates[size_t(BlendMode::kAlpha)].Get());
 
 	// ビュープロジェクション行列
 	sCommandList_->SetGraphicsRootConstantBufferView(

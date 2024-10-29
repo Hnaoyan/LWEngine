@@ -21,3 +21,12 @@ enum class TrackingState : uint32_t
 	kWave,
 	kTracking,
 };
+
+struct TrackingInfo
+{
+	float trackFrame;
+	float damping;
+	float lerpRadius;
+	float baseSpeed;
+	float initSpeed;
+};
