@@ -1210,8 +1210,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl" />
-    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl" />
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
@@ -1324,6 +1322,12 @@
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\VignettePS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
   </ItemGroup>
@@ -1481,7 +1485,6 @@
     <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
@@ -1522,6 +1525,9 @@
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="Resources\shaders\Trail\Trail.hlsli">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="Resources\shaders\Instanced\Instanced.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
   </ItemGroup>
