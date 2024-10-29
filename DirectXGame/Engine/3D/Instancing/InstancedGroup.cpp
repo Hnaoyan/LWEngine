@@ -56,7 +56,7 @@ void InstancedGroup::Draw(ModelDrawDesc desc)
 	modelDesc.material = material_.get();
 	modelDesc.texture = texture_;
 	// 描画
-	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, unitNum_, buffer_.GetSRVGPU());
+	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this);
 }
 
 void InstancedGroup::UnitRegist(const Vector3& position)

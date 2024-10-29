@@ -6,6 +6,8 @@
 #include "Engine/3D/User/MissileTrail.h"
 #include "../Drawer/3DDrawers.h"
 #include "../User/Trail3D.h"
+// ぜ
+class InstancedGroup;
 
 class ModelRenderer
 {
@@ -55,7 +57,7 @@ public:
 	/// <param name="handle"></param>
 	static void InstancedDraw(const ModelDrawDesc& desc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
 	static void InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc, uint32_t instanceNum, D3D12_GPU_DESCRIPTOR_HANDLE handle);
-
+	static void InstancedDraw(ICamera* camera, const DrawDesc::ModelDesc& modelDesc, const DrawDesc::LightDesc& lightDesc, InstancedGroup* object);
 	/// <summary>
 	/// 線描画
 	/// </summary>
