@@ -34,7 +34,7 @@ void BulletCluster::Update()
 		//if (obj->IsDead()) {
 		//	gpuParticle_->DeleteEmitter(static_cast<IBullet*>(obj.get())->GetTag());
 		//}
-		// 壊れたパーティクル
+		// 壊れたパーティクル	
 		if (obj->IsDead()) {
 			static_cast<BulletBombCluster*>(bombEffectCluster_.get())->BulletBomb(obj->GetWorldPosition());
 		}
@@ -60,10 +60,7 @@ void BulletCluster::Draw(ModelDrawDesc desc)
 	modelDesc.texture = texture_;
 
 	// 描画
-	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
-
-	// エフェクトの描画
-	//bombEffectCluster_->Draw(desc);
+	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this);
 }
 
 void BulletCluster::ImGuiDraw()

@@ -56,13 +56,14 @@ void TrackingBullet::Initialize()
 
 void TrackingBullet::Update()
 {
-	// 追尾タイマー
+	// それぞれのタイマー
 	straightTimer_.Update();
 	trackTimer_.Update();
 	waveTimer_.Update();
 
 	ChangeSelecter();
 
+	// ステートの処理
 	stateMachine_->Update();
 
 	// 移動

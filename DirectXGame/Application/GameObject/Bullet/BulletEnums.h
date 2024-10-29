@@ -1,5 +1,7 @@
 #pragma once
 #include <stdint.h>
+#include <string>
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 // 追尾の種類
 enum class BulletType : uint32_t
@@ -22,11 +24,26 @@ enum class TrackingState : uint32_t
 	kTracking,
 };
 
-struct TrackingInfo
+struct TrackingData
 {
 	float trackFrame;
 	float damping;
 	float lerpRadius;
 	float baseSpeed;
 	float initSpeed;
+
+	void LoadGlobalData(std::string groupName) {
+
+		GlobalVariables* globalVariable = GlobalVariables::GetInstance();
+
+		trackFrame = globalVariable->GetValue<float>(groupName, "TrackFrame");
+		damping = globalVariable->GetValue<float>(groupName, "Damping");
+		lerpRadius = globalVariable->GetValue<float>(groupName, "BaseSpeed");
+		baseSpeed = globalVariable->GetValue<float>(groupName, "InitSpeed");
+		initSpeed = globalVariable->GetValue<float>(groupName, "LerpRadius");
+
+	}
 };
+
+// Descending : 降順
+// Ascending : 昇順

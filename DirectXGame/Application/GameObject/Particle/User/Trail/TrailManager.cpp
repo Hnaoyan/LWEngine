@@ -12,6 +12,7 @@ void TrailManager::Draw(ICamera* camera)
 {
 	// 消す処理
 	trails_.erase(std::remove_if(trails_.begin(), trails_.end(), [&](const std::unique_ptr<BulletTrail>& obj) {
+		// 死ぬ瞬間
 		if (obj->IsDelete()) {
 			gpuParticle_->DeleteEmitter(obj->GetTag());
 			std::string name = obj->GetTag() + "Break";
@@ -22,7 +23,9 @@ void TrailManager::Draw(ICamera* camera)
 
 	// 描画と更新
 	for (auto it = trails_.begin(); it != trails_.end(); ++it) {
+		// 更新
 		(*it)->Update(camera);
+		// 描画
 		ModelRenderer::TrailDraw(camera, (*it)->polygon_.get());
 	}
 }

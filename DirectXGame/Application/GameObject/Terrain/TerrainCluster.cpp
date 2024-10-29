@@ -24,6 +24,7 @@ void TerrainCluster::Initialize(Model* model)
 		texture_ = TextureManager::Load("Resources/default/white2x2.png");
 	}
 
+	this->blendMode_ = Pipeline::BlendMode::kAdd;
 }
 
 void TerrainCluster::Update()
@@ -45,8 +46,7 @@ void TerrainCluster::Draw(ModelDrawDesc desc)
 	modelDesc.material = material_.get();
 	modelDesc.texture = texture_;
 	// 描画
-	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this->unitNum_, buffer_.GetSRVGPU());
-
+	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this);
 }
 
 void TerrainCluster::ImGuiDraw()
