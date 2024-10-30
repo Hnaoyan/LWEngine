@@ -1,18 +1,28 @@
 # 個人製作
 
-<img src="https://github.com/Hnaoyan/LWEngine/blob/master/ReadmeAsset/GameScreen.gif?raw=true" alt = Title Image width="720">
+<img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/GameScreen.gif?raw=true" alt = Title Image width="720">
 
 ## 開発環境
 - DirectX12
   - DirectXTex
 - ImGui
 
-## アプリケーション
+## 作品概要
 ボスとの1対1のゲームを作成しています。
 特徴としては板野サーカスを再現している誘導弾の挙動を利用した攻撃を使った戦いです。
 
-## 板野サーカス
+### 技術詳細
 
+目玉の誘導の挙動についてのちょっとした説明です。現在は以下のプロセスに分けて作成しています
+- 弾の属性
+  - 秀才型
+  - 優等型
+  - 劣等型
+- 追従の速度生成
+  - 初速度を与える
+  - 追従対象方向へのベクトルを使った加速度の生成
+  - 作成した加速度を現在の速度に加算
+このように速度の生成とそれらを詳細に決める属性で分離して作成しています
 
 実装内容
 
