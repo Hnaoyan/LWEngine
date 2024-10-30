@@ -39,6 +39,13 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			return;
 		}
 
+		float dot = Vector3::Dot(Vector3::Normalize(bullet_->GetVelocity()), Vector3::Normalize(bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition()));
+		// 向きが過度に離れていたら追尾しない
+		float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
+		if (dot < limitDot) {
+			return;
+		}
+
 		// 種類の受け取り
 		TrackingType type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
 		

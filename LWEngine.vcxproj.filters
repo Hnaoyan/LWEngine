@@ -1208,6 +1208,9 @@
     <ClInclude Include="DirectXGame\Engine\Particle\CPUParticle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Controller\BulletController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

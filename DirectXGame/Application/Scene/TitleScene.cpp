@@ -3,6 +3,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/2D/SpriteManager.h"
 
+#include <imgui.h>
 #include <thread>
 #include <functional>
 #include <mutex>
@@ -101,6 +102,9 @@ void TitleScene::UIDraw()
 
 void TitleScene::ImGuiDraw()
 {
+	ImGui::Begin("Title");
+
+	ImGui::End();
 
 }
 

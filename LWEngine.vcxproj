@@ -195,6 +195,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Controller\BulletController.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsLists.h" />
