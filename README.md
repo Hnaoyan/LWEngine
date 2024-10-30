@@ -6,7 +6,7 @@
 - 言語
   - C++
 - ツール
-  - DirectX12
+  - 自作ゲームエンジン(DirectX12)
   - DirectXTex
   - ImGui
 
