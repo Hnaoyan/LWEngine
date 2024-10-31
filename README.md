@@ -3,12 +3,11 @@
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/GameScreen.gif?raw=true" alt = Title Image width="720">
 
 ## 開発環境
-- 言語
-  - C++
-- ツール
-  - 自作ゲームエンジン(DirectX12)
-  - DirectXTex
-  - ImGui
+- DirectX12
+- DirectXTex
+- Assimp
+- ImGui
+- nlohmannJson
 
 ## 作品概要
 3Dアクションシューティングゲームで敵と自機の1対1のゲームを作成しています。  
