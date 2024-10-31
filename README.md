@@ -30,13 +30,13 @@
 ## 板野サーカスの弾属性
 
 ### 秀才型
-- 対象の移動先を予測した位置に向けて追従してくる属性
+対象の移動先を予測した位置に向けて追従してくる属性  
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/T_MissileGenius.gif?raw=true" alt = Title Image width="720">
 
 ### 優等型
-- 対象の位置に向けて追従してくる属性
+対象の位置に向けて追従してくる属性  
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/T_MissileSuperior.gif?raw=true" alt = Title Image width="720">
 
 ### 劣等型
-- 対象の位置から離れた位置に向けて追従してくる属性
+対象の位置から離れた位置に向けて追従してくる属性  
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/T_MissileInferior.gif?raw=true" alt = Title Image width="720">
