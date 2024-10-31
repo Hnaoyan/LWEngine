@@ -14,22 +14,30 @@ public:
 	/// </summary>
 	/// <param name="bullet"></param>
 	BulletStateMachine(IBullet* bullet) { bullet_ = bullet; }
-	/// <summary>
-	/// 変更リクエスト
-	/// </summary>
-	/// <param name="state"></param>
-	void ChangeRequest(std::unique_ptr<ITrackingState> state);
-	void ChangeRequest(TrackingState state);
+	BulletStateMachine() {};
 
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
-
+	
+	// リクエストの作成
 	void RequestState(TrackingState state) { currentState_->SetRequeset(state); }
+	// 現在のステートのゲッター
 	ITrackingState* GetCurrentState() { return currentState_.get(); }
-private:
+private: // メンバ関数
+	/// <summary>
+	/// ステートの作成
+	/// </summary>
+	/// <param name="newState"></param>
+	/// <returns></returns>
 	std::unique_ptr<ITrackingState> BuildState(TrackingState newState);
+	/// <summary>
+	/// 変更リクエストの処理
+	/// </summary>
+	/// <param name="state"></param>
+	void ChangeRequest(std::unique_ptr<ITrackingState> state);
+	void ChangeRequest(TrackingState state);
 
 private:
 	// ステート

@@ -41,6 +41,7 @@ public: // USER
 	void AddCluster(const std::string& tag);
 	void AddCluster(const std::string& tag, Model* model);
 	void AddCluster(const std::string& tag, Model* model, uint32_t texture);
+	//void AddCluster();
 public: // アクセッサ
 
 	BulletCluster* FindCluster(std::string tag);

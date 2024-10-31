@@ -29,7 +29,8 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 	// 変更
 	if (timer_.IsEnd()) {
-		stateMachine.ChangeRequest(TrackingState::kWave);
+		stateMachine.RequestState(TrackingState::kWave);
+		//stateMachine.ChangeRequest(TrackingState::kWave);
 	}
 
 	// 誘導弾なら
