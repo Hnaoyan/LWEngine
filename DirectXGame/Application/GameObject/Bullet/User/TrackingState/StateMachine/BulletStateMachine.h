@@ -13,8 +13,8 @@ public:
 	/// コンストラクタ
 	/// </summary>
 	/// <param name="bullet"></param>
-	BulletStateMachine(IBullet* bullet) { bullet_ = bullet; }
-	BulletStateMachine() {};
+	BulletStateMachine(IBullet* bullet);
+	BulletStateMachine();
 
 	/// <summary>
 	/// 更新

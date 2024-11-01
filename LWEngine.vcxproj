@@ -361,7 +361,7 @@
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\SceneTransitionManager.h" />
-    <ClInclude Include="DirectXGame\Engine\Utility\CheckLists.h" />
+    <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h" />

@@ -48,8 +48,8 @@ void TrackingBullet::Initialize()
 	}
 
 	// ステートの設定
+	stateMachine_ = std::make_unique<BulletStateMachine>(this);
 	stateMachine_->RequestState(TrackingState::kStraight);
-
 }
 
 void TrackingBullet::Update()

@@ -1,6 +1,17 @@
 #include "BulletStateMachine.h"
 #include "../TrackingStates.h"
 
+BulletStateMachine::BulletStateMachine(IBullet* bullet)
+{
+	bullet_ = bullet;
+	currentState_ = std::make_unique<TrackingStraightState>();
+}
+
+BulletStateMachine::BulletStateMachine()
+{
+	currentState_ = std::make_unique<TrackingStraightState>();
+}
+
 void BulletStateMachine::ChangeRequest(std::unique_ptr<ITrackingState> state)
 {
 	// 終了時の関数
@@ -43,6 +54,7 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 
 	return std::move(instance);
 }
+
 
 void BulletStateMachine::Update()
 {

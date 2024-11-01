@@ -4,11 +4,9 @@
 #include <cassert>
 
 uint32_t SRVHandler::kDescriptorSizeSRV_ = 0u;
-//uint32_t SRVHandler::sNowDescriptorNum_ = 2;
-//uint32_t SRVHandler::sNextDescriptorNum_ = 2;
 DirectXDevice* SRVHandler::dxDevice_ = nullptr;
 Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> SRVHandler::srvHeap_;
-std::array<bool, SRVHandler::kDescpritorSize> SRVHandler::sCheckLists_;
+std::unique_ptr<IndexAllocator> SRVHandler::sAllocator;
 
 void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 {
@@ -26,9 +24,11 @@ void SRVHandler::StaticInitialize(DirectXDevice* dxDevice)
 
 	assert(SUCCEEDED(result));
 
-	// SRVの0・1は元々使用するから
-	sCheckLists_[0] = true;
-	sCheckLists_[1] = true;
+	sAllocator = std::make_unique<IndexAllocator>(kDescpritorSize);
+
+	// imgui用などの初期化
+	sAllocator->UseIndex(0);
+	sAllocator->UseIndex(1);
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE SRVHandler::GetSrvHandleCPU(uint32_t index)

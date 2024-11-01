@@ -1217,7 +1217,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BossTrackBulletCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Utility\CheckLists.h">
+    <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
