@@ -6,11 +6,13 @@
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/GameScreen.gif?raw=true" alt = Title Image width="720">
 
 ## 開発環境
-- DirectX12
-- DirectXTex
-- Assimp
-- ImGui
-- nlohmannJson
+- 環境
+  - DirectX12
+- 外部ライブラリ
+  - DirectXTex
+  - Assimp
+  - ImGui
+  - nlohmannJson
 
 ## 力を入れている部分
 板野サーカスを意識した誘導の挙動に力を入れています。  
