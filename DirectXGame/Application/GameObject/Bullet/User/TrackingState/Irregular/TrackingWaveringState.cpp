@@ -1,6 +1,7 @@
 #include "TrackingWaveringState.h"
 #include "../../../BulletsLists.h"
 #include "../StateMachine/BulletStateMachine.h"
+#include "Engine/LwLib/LwEngineLib.h"
 
 void TrackingWaveringState::Enter()
 {
@@ -9,27 +10,54 @@ void TrackingWaveringState::Enter()
 	bullet_->SetAccelerate(Vector3::Zero());
 	waveCount_ = 0.0f;
 
-	curveTimer_.Start(15.0f);
+	// 方向の指定
+	curveDirect_ = 0;
+	curveProcess_ = std::bind(&TrackingWaveringState::LeftCurve, this);
+	//curveProcess_ = [&]() {LeftCurve(); };
+	curveTimer_.Start(curveFrame_);
 
 }
 
 void TrackingWaveringState::Update(BulletStateMachine& stateMachine)
 {
-	stateMachine;
+	// カーブ用のタイマー
+	curveTimer_.Update();
+	timer_.Update();
 	// 右
-	if (curveDirect_ > 0) {
-
+	if (curveDirect_ == 0) {
+		if (curveTimer_.IsEnd()) {
+			curveProcess_ = std::bind(&TrackingWaveringState::RightCurve, this);
+			//curveProcess_ = [&]() {RightCurve(); };
+			curveDirect_++;
+			curveTimer_.Start(curveFrame_);
+		}
 	}
 	// 左
-	else if (curveDirect_ < 0) {
+	else if (curveDirect_ == 1) {
+		if (curveTimer_.IsEnd()) {
+			curveProcess_ = [&]() {EndUpdate(); };
+			curveDirect_++;
+			curveTimer_.Start(curveFrame_);
 
+			timer_.End();
+		}
 	}
-	// 三角
-	TrigonometricPattern();
+	else {
+		// 三角
+		//TrigonometricPattern();
+	}
+
+	curveProcess_();
+
+	if (timer_.IsEnd()) {
+		stateMachine.RequestState(TrackingState::kStraight);
+	}
+
 }
 
 void TrackingWaveringState::Exit()
 {
+	curveDirect_ = 0;
 	waveCount_ = 0.0f;
 }
 
@@ -75,4 +103,27 @@ void TrackingWaveringState::TrigonometricPattern()
 	Vector3 newDirect = velocity + sway;
 	newDirect = Vector3::Normalize(newDirect);
 	bullet_->SetAccelerate(newDirect);
+}
+
+void TrackingWaveringState::RightCurve()
+{
+	float angle = 45.0f * 2.0f;
+	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(LwLib::AngleToRadian(angle));
+	Vector3 targetVector = Matrix4x4::TransformVector3(defaultDirect_, rotateMatrix);
+
+	bullet_->SetAccelerate(Ease::Easing(defaultDirect_, targetVector, curveTimer_.GetElapsedFrame()));
+
+}
+
+void TrackingWaveringState::LeftCurve()
+{
+	float angle = -45.0f * 2.0f;
+	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(LwLib::AngleToRadian(angle));
+	Vector3 targetVector = Matrix4x4::TransformVector3(defaultDirect_, rotateMatrix);
+
+	bullet_->SetAccelerate(Ease::Easing(defaultDirect_, targetVector, curveTimer_.GetElapsedFrame()));
+}
+
+void TrackingWaveringState::EndUpdate()
+{
 }
