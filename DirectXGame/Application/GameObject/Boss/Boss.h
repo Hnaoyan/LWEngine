@@ -113,7 +113,7 @@ public:
 	}
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
-
+	BulletManager* GetBulletManager() { return bulletManager_; }
 	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("BossTrackingBullet"); }
 	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("BossNormalBullet"); }
 #pragma endregion

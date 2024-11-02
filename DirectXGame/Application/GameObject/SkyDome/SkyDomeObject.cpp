@@ -19,10 +19,6 @@ void SkyDomeObject::Initialize(Model* model)
 
 void SkyDomeObject::Update()
 {
-#ifdef _DEBUG
-	GlobalValueUpdate();
-#endif // _DEBUG
-
 	// マテリアル
 	material_->Update();
 	// 行列更新
@@ -68,9 +64,9 @@ void SkyDomeObject::GlobalValueInitialize()
 	std::string groupName = "Skydome";
 	// 生成
 	global->CreateGroup(groupName);
-	global->AddValue(groupName, "Translate", worldTransform_.transform_.translate);
-	global->AddValue(groupName, "Scale", worldTransform_.transform_.scale);
-	global->AddValue(groupName, "MaterialColor", material_->color_);
+	global->AddValue(groupName, "Translate", Vector3(1.0f, 1.0f, 1.0f));
+	global->AddValue(groupName, "Scale", Vector3(1.0f,1.0f,1.0f));
+	global->AddValue(groupName, "Color", Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 	// 更新
 	GlobalValueUpdate();
 }
@@ -82,5 +78,5 @@ void SkyDomeObject::GlobalValueUpdate()
 	
 	worldTransform_.transform_.translate = global->GetValue<Vector3>(groupName, "Translate");
 	worldTransform_.transform_.scale = global->GetValue<Vector3>(groupName, "Scale");
-	material_->color_ = global->GetValue<Vector4>(groupName, "MaterialColor");
+	material_->color_ = global->GetValue<Vector4>(groupName, "Color");
 }

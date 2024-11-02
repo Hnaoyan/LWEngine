@@ -3,6 +3,8 @@
 #include "Engine/LwLib/LwEngineLib.h"
 #include <algorithm>
 
+uint32_t BossState::MissileAttackState::sMissileClusterSerial = 0;
+
 void BossState::MissileAttackState::Initialize()
 {
 	boss_->SetNowVariantState(this);
@@ -13,6 +15,8 @@ void BossState::MissileAttackState::Initialize()
 	preActionTimer_.Start(60.0f);
 	// クラスター
 	//cluster_ = boss_->GetBulletManager()->GetMissileCluster();
+	clusterSerial = sMissileClusterSerial;
+	sMissileClusterSerial++;
 }
 
 void BossState::MissileAttackState::Update()

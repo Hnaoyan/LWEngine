@@ -181,6 +181,10 @@ namespace BossState
 	class MissileAttackState : public IState
 	{
 	public:
+		static uint32_t sMissileClusterSerial;
+		uint32_t clusterSerial;
+
+	public:
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
@@ -194,6 +198,10 @@ namespace BossState
 		float bulletScale_ = 0.5f;
 
 		BossSystemContext::BulletCluster* cluster_ = nullptr;
+
+		// 
+		BossSystemContext::BulletCluster* firstPhaseCluster_ = nullptr;
+		BossSystemContext::BulletCluster* secondPhaseCluster_ = nullptr;
 
 		FrameTimer attackTimer_;
 	};

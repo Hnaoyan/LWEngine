@@ -135,6 +135,11 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 			Vector3 value = std::get<Vector3>(item);
 			root[groupName][itemName] = json::array({ value.x, value.y, value.z });
 		}
+		else if (std::holds_alternative<Vector4>(item)) {
+			// float型のjson配列登録
+			Vector4 value = std::get<Vector4>(item);
+			root[groupName][itemName] = json::array({ value.x, value.y, value.z, value.w });
+		}
 		else if (std::holds_alternative<std::string>(item)) {
 			// 文字列型の値登録
 			root[groupName][itemName] = std::get<std::string>(item);
