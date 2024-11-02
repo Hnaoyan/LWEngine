@@ -78,5 +78,6 @@ void SkyDomeObject::GlobalValueUpdate()
 	
 	worldTransform_.transform_.translate = global->GetValue<Vector3>(groupName, "Translate");
 	worldTransform_.transform_.scale = global->GetValue<Vector3>(groupName, "Scale");
-	material_->color_ = global->GetValue<Vector4>(groupName, "Color");
+	Vector4 color = global->GetValue<Vector4>(groupName, "Color");
+	material_->color_ = color;
 }

@@ -257,6 +257,11 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
 			SetValue(groupName, itemName, value);
 		}
+		else if (itItem->is_array() && itItem->size() == 4) {
+			// float型のjson配列登録
+			Vector4 value = { itItem->at(0), itItem->at(1), itItem->at(2), itItem->at(3)};
+			SetValue(groupName, itemName, value);
+		}
 		// string型
 		else if (itItem->is_string()) {
 			// string型の値を登録
