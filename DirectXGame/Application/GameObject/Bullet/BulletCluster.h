@@ -60,10 +60,12 @@ public: // USER
 	void SetColor(const Vector4& color) { material_->color_ = color; }
 	void SetTrailColor(const Vector3& color) { trailColor_ = color; }
 	//void SetElement();
-
+	void SetName(const std::string& name) { name_ = name; }
 private:
 	// 弾が壊れた時のエフェクトクラス
 	std::unique_ptr<InstancedGroup> bombEffectCluster_;
+	// 
+	std::string name_;
 
 	uint32_t texture_ = 0;
 	TrailManager* trailManager_ = nullptr;

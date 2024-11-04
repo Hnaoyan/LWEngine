@@ -104,6 +104,15 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	particle->SetBullet(bullet.get());
 	particle->SetTrail(trailInstance.get());
 
+	// 敵のクラスターである場合
+	size_t position = name_.find(":");
+	if (position != std::string::npos) {
+		std::string zokusei = name_.substr(0, position);
+		if ("Boss" == zokusei) {
+			particle->SetEmitPattern(5);
+		}
+	}
+
 	breakPartice->Initialize(ModelManager::GetModel("Plane"));
 	breakPartice->SetGPUParticleSystem(gpuParticle_);
 
