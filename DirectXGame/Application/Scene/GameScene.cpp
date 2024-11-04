@@ -232,15 +232,14 @@ void GameScene::ImGuiDraw()
 void GameScene::LoadModel()
 {
 	// モデルのロード
-	ModelManager::LoadNormalModel("Terrain", "terrain");
-	ModelManager::LoadNormalModel("Jett", "jett");
-	ModelManager::LoadNormalModel("Enemy", "EnemyBug");
-	ModelManager::LoadNormalModel("BossEnemy", "Prizm");
-	ModelManager::LoadNormalModel("Player", "Robotto");
-	ModelManager::LoadNormalModel("SkyDome", "SkyDome");
-	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
-	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");
-	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");
+	ModelManager::LoadNormalModel("Terrain", "terrain");	// 地形
+	ModelManager::LoadNormalModel("Enemy", "EnemyBug");	// 雑魚敵
+	ModelManager::LoadNormalModel("BossEnemy", "Prizm");	// ボス
+	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
+	ModelManager::LoadNormalModel("SkyDome", "SkyDome");	// 天球
+	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
+	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
+	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
 }
 
 void GameScene::LoadTexture()

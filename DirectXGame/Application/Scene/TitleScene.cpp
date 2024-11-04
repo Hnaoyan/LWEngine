@@ -46,15 +46,15 @@ void TitleScene::GPUUpdate()
 void TitleScene::Update()
 {
 #ifdef IMGUI_ENABLED
-	if (input_->TriggerKey(DIK_LSHIFT)) {
+	if (input_->TriggerKey(DIK_LEFTARROW)) {
 		sceneManager_->ChangeThreadScene("SAMPLE");
 	}
-	if (input_->TriggerKey(DIK_RSHIFT)) {
+	if (input_->TriggerKey(DIK_RIGHTARROW)) {
 		sceneManager_->ChangeThreadScene("GAME");
 	}
-	if (input_->TriggerKey(DIK_H)) {
-		sceneManager_->ChangeThreadScene("GAMEEDIT");
-	}
+	//if (input_->TriggerKey(DIK_H)) {
+	//	sceneManager_->ChangeThreadScene("GAMEEDIT");
+	//}
 #endif // IMGUI_ENABLED
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
@@ -111,7 +111,7 @@ void TitleScene::ImGuiDraw()
 void TitleScene::LoadModel()
 {
 	ModelManager::LoadObjModel("Plane", "plane");
-	ModelManager::LoadObjModel("Axis", "BulletTest");
+	//ModelManager::LoadObjModel("Axis", "BulletTest");
 
 }
 
