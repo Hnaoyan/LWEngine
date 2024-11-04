@@ -2,6 +2,9 @@
 #include <vector>
 #include <stdint.h>
 
+/// <summary>
+/// 配列によるスロット管理クラス
+/// </summary>
 class IndexAllocator
 {
 public:	// コンストラクタ・デストラクタ
