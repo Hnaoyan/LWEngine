@@ -1,0 +1,6 @@
+{
+    "BossAnimation": {
+        "CloseFrame": 15.0,
+        "OpenFrame": 40.0
+    }
+}

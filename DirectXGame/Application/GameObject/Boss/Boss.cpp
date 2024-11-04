@@ -233,6 +233,13 @@ void Boss::GlobalValueInitialize()
 
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 
+	groupName = "BossAnimation";
+	instance->CreateGroup(groupName);
+
+	instance->AddValue(groupName, "OpenFrame", float(55.0f));
+	instance->AddValue(groupName, "CloseFrame", float(30.0f));
+
+
 	//---追尾弾---//
 	groupName = "BossTrackingBullet";
 	instance->CreateGroup(groupName);

@@ -1,12 +1,15 @@
 #include "../StateMachine.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 void BossState::AttackState::Initialize()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+
 	boss_->SetNowVariantState(this);
 	preActionTimer_.Start(60.0f);
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, 55.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// 攻撃パターンのランダム
 	uint32_t randM = LwLib::GetRandomValue(0, 3);
@@ -70,9 +73,11 @@ void BossState::AttackState::Update()
 
 void BossState::AttackState::Exit()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+	
 	boss_->SetPrevVariantState(this);
 	boss_->worldTransform_.transform_.rotate.y = startRotate_;
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, 30.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, global->GetValue<float>("BossAnimation", "CloseFrame"));
 }
 
 void BossState::AttackState::SimpleAttack(const Vector3& position)

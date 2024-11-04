@@ -1,12 +1,14 @@
 #include "BossMissileBarrage.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 void BossState::MissileBarrageState::Initialize()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	boss_->SetNowVariantState(this);
 	// 開くアニメーションの受付
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, 55.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
@@ -37,8 +39,9 @@ void BossState::MissileBarrageState::Update()
 
 void BossState::MissileBarrageState::Exit()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	boss_->SetPrevVariantState(this);
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, 30.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, global->GetValue<float>("BossAnimation", "CloseFrame"));
 }
 
 void BossState::MissileBarrageState::Attack()
