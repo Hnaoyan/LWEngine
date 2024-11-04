@@ -194,8 +194,6 @@ namespace BossState
 
 	private:
 		Vector3 bulletDirect_ = {};
-		float bulletSpeed_ = 0.0f;
-		float bulletScale_ = 0.5f;
 
 		BossSystemContext::BulletCluster* cluster_ = nullptr;
 
