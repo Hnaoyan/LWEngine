@@ -56,6 +56,9 @@ public: // USER
 	void SetTrailManager(TrailManager* trailManager) { trailManager_ = trailManager; }
 	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
 	void SetTexture(uint32_t texture) { texture_ = texture; }
+
+	//void SetElement();
+
 private:
 	// 弾が壊れた時のエフェクトクラス
 	std::unique_ptr<InstancedGroup> bombEffectCluster_;

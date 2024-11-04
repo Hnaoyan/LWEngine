@@ -53,13 +53,13 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		// 種類ごとの計算
 		switch (type)
 		{
-		case TrackingType::kStandard:
+		case TrackingType::kSuperior:
 			bullet_->SetAccelerate(CalcSuperiorAcceleration());
 			break;
 		case TrackingType::kInferior:
 			bullet_->SetAccelerate(CalcInferiorAcceleration());
 			break;
-		case TrackingType::kSuperior:
+		case TrackingType::kGenius:
 			bullet_->SetAccelerate(CalcGeniusAcceleration());
 			break;
 		default:

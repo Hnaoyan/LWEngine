@@ -70,15 +70,15 @@ void BossState::MissileAttackState::MissileAttack()
 	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 	// 弾の生成
 	for (int i = 0; i < 25; ++i) {
-		//---通常---//
-		GenerateMissile(rotateMatrix, TrackingType::kStandard);
+		//---優等---//
+		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
 		//---劣等---//
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
-		//---優等---//
-		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
-		//GenerateMissile(rotateMatrix, TrackingType::kSuperior);
+		//---秀才---//
+		GenerateMissile(rotateMatrix, TrackingType::kGenius);
+		//GenerateMissile(rotateMatrix, TrackingType::kGenius);
 	}
 }
 

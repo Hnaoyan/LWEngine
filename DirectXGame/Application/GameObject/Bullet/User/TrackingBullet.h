@@ -32,7 +32,7 @@ public: // アクセッサ
 	TrackingType GetTrackingType() { return trackingType_; }
 private:
 	// 追尾の種類
-	TrackingType trackingType_ = TrackingType::kStandard;
+	TrackingType trackingType_ = TrackingType::kSuperior;
 	// 追跡している時間
 	FrameTimer trackTimer_;
 	// 直進タイマー

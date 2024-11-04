@@ -9,12 +9,12 @@ void BulletManager::Initialize(Model* model)
 	trailManager_ = std::make_unique<TrailManager>();
 	trailManager_->SetGPUParticle(gpuParticle_);
 
-	AddCluster("PlayerNormalBullet");
-	AddCluster("PlayerTrackingBullet");
-	AddCluster("PlayerDivisionBullet");
+	AddCluster("Player:NormalBullet");
+	AddCluster("Player:TrackingBullet");
+	AddCluster("Player:DivisionBullet");
 
-	AddCluster("BossTrackingBullet");
-	AddCluster("BossNormalBullet");
+	AddCluster("Boss:TrackingBullet");
+	AddCluster("Boss:NormalBullet");
 }
 
 void BulletManager::Update()
@@ -46,6 +46,22 @@ void BulletManager::CollisionUpdate(CollisionManager* manager)
 void BulletManager::AddCluster(const std::string& tag)
 {
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
+
+	size_t position = tag.find(":");
+
+	if (position != std::string::npos) {
+		std::string zokusei = tag.substr(0, position);
+
+		if ("Player" == zokusei) {
+
+		}
+
+	}
+
+	if (tag.find(":")) {
+
+	}
+
 	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
 	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);

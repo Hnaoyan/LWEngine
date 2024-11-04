@@ -15,7 +15,7 @@ public:
 private:
 	IGameObject* object_ = nullptr;
 	// 追尾の種類
-	TrackingType trackType_ = TrackingType::kStandard;
+	TrackingType trackType_ = TrackingType::kSuperior;
 	EulerTransform transform_{};
 	Vector3 direct_{};
 	float speed_ = 0.0f;
