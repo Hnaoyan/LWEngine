@@ -68,6 +68,7 @@ public:
 	void SetMaxWidth(float width) { width_ = width; }
 	void SetMinWidth(float minWidth) { minWidth_ = minWidth; }
 	void SetColor(const Vector4& color) { color_ = color; }
+	void SetColor(const Vector3& color) { color_ = { color.x,color.y,color.z,color_.w }; }
 	void SetCamera(ICamera* camera) { camera_.emplace(camera); }
 	// ゲッター
 	bool IsCamera() { return camera_.has_value(); }

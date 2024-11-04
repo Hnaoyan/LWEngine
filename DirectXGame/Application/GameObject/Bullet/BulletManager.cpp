@@ -46,25 +46,24 @@ void BulletManager::CollisionUpdate(CollisionManager* manager)
 void BulletManager::AddCluster(const std::string& tag)
 {
 	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
+	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
+	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
 
+	// 敵かプレイヤーかを判断して変化を加える
 	size_t position = tag.find(":");
-
 	if (position != std::string::npos) {
 		std::string zokusei = tag.substr(0, position);
 
 		if ("Player" == zokusei) {
-
+			static_cast<BulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 		}
-
+		else if ("Boss" == zokusei) {
+			static_cast<BulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+			static_cast<BulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.0f,0.0f });
+		}
 	}
 
-	if (tag.find(":")) {
-
-	}
-
-	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
-	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
-	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
 	clusters_.emplace(tag, std::move(instance));
 }
 

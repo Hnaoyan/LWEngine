@@ -57,6 +57,8 @@ public: // USER
 	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
 	void SetTexture(uint32_t texture) { texture_ = texture; }
 
+	void SetColor(const Vector4& color) { material_->color_ = color; }
+	void SetTrailColor(const Vector3& color) { trailColor_ = color; }
 	//void SetElement();
 
 private:
@@ -66,4 +68,5 @@ private:
 	uint32_t texture_ = 0;
 	TrailManager* trailManager_ = nullptr;
 	GPUParticleSystem* gpuParticle_ = nullptr;
+	Vector3 trailColor_{1.0f,1.0f,1.0f};
 };
