@@ -41,8 +41,6 @@ void Boss::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム
 	systemManager_->Update();
-	// アニメ
-	animationManager_->Update();
 	// ステート
 	if (state_ && isAction_) {
 		state_->Update();
@@ -203,6 +201,18 @@ void Boss::OnCollision(ColliderObject target)
 			}
 		}
 	}
+}
+
+void Boss::AnimationUpdate()
+{
+	// アニメ
+	animationManager_->Update();
+
+	// 死んでる場合パーティクル更新
+	if (isDead_) {
+		systemManager_->particleManager_.Update();
+	}
+
 }
 
 void Boss::UIDraw()

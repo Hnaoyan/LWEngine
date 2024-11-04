@@ -40,6 +40,9 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
+
+	void AnimationUpdate() override;
+
 	/// <summary>
 	/// UI描画
 	/// </summary>

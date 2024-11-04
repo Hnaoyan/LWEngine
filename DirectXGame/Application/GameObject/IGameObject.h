@@ -51,6 +51,11 @@ public:
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
 
+	/// <summary>
+	/// アニメーション用の更新関数
+	/// </summary>
+	virtual void AnimationUpdate() {};
+
 protected:
 	virtual void GlobalValueInitialize() {};
 

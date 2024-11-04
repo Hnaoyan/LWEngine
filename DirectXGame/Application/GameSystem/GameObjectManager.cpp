@@ -90,6 +90,10 @@ void GameObjectManager::Update()
 			boss_->Update();
 		}
 	}
+
+	if (boss_) {
+		boss_->AnimationUpdate();
+	}
 	bulletManager_->Update();
 }
 
