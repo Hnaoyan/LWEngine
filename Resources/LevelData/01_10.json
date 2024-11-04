@@ -42,7 +42,8 @@
                     5.0,
                     300.0
                 ]
-            }
+            },
+            "file_name": "Object"
         },
         {
             "type": "MESH",
@@ -63,7 +64,8 @@
                     5.0,
                     300.0
                 ]
-            }
+            },
+            "file_name": "Object"
         },
         {
             "type": "MESH",
@@ -84,7 +86,8 @@
                     500.0,
                     300.0
                 ]
-            }
+            },
+            "file_name": "Object"
         },
         {
             "type": "MESH",
@@ -105,7 +108,8 @@
                     500.0,
                     300.0
                 ]
-            }
+            },
+            "file_name": "Object"
         }
     ]
 }
