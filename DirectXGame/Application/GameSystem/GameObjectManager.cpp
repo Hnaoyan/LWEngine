@@ -83,14 +83,14 @@ void GameObjectManager::Update()
 	// 地形関係
 	skyDome_->Update();
 	terrainManager_->Update();
-	//if (isInGame_) {
+	if (isInGame_) {
 		// オブジェクト
 		player_->Update();
 		if (boss_) {
 			boss_->Update();
 		}
-		bulletManager_->Update();
-	//}
+	}
+	bulletManager_->Update();
 }
 
 void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
