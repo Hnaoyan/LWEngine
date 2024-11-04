@@ -109,6 +109,6 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
 	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
 	std::string name = bullet->GetTag() + "Break";
-	gpuParticle_->CreateEmitter(std::move(breakPartice), name);
+	//gpuParticle_->CreateEmitter(std::move(breakPartice), name);
 	units_.push_back(std::move(bullet));	// 弾
 }

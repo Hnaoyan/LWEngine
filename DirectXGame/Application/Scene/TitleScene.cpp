@@ -20,7 +20,7 @@ void TitleScene::Initialize()
 	LoadTexture();
 
 	levelLoader_ = std::make_unique<LevelLoader>();
-	levelLoader_->LoadSceneData("01_12");
+	levelLoader_->LoadSceneData("01_10");
 
 	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
 

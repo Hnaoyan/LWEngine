@@ -58,9 +58,9 @@ void GameScene::Update()
 	
 
 #ifdef IMGUI_ENABLED
-	if (input_->TriggerKey(DIK_LSHIFT)) {
-		sceneManager_->ChangeScene("TITLE");
-	}
+	//if (input_->TriggerKey(DIK_LSHIFT)) {
+	//	sceneManager_->ChangeScene("TITLE");
+	//}
 #endif // _DEBUG
 	//// 死亡チェック
 	//if (player_->IsDead() && !isGameOver_) {

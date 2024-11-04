@@ -9,8 +9,10 @@
 
 void Boss::Initialize(Model* model)
 {
+	isAction_ = true;
 #ifdef IMGUI_ENABLED
 	GlobalValueInitialize();
+	isAction_ = false;
 #endif // IMGUI_ENABLED
 
 	IGameObject::Initialize(model);
@@ -31,7 +33,6 @@ void Boss::Initialize(Model* model)
 	worldTransform_.transform_.translate = respawnPos_;
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
-	isAction_ = false;
 }
 
 void Boss::Update()

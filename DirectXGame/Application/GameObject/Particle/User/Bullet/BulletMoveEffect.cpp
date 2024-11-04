@@ -13,9 +13,9 @@ void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
-	blendMode_ = ParticleEmitter::BlendMode::kAdd;
+	blendMode_ = ParticleEmitter::BlendMode::kAlpha;
 
-	texture_ = TextureManager::Load("Resources/Effect/TestSmoke.png");
+	texture_ = TextureManager::Load("Resources/Effect/Smoke3.png");
 	RefreshData(data_);
 
 }

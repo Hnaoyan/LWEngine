@@ -18,6 +18,7 @@ void TerrainCluster::Initialize(Model* model)
 	InstancedGroup::Initialize(model);
 
 	if (name_ == "Object") {
+		isInvisible_ = true;
 		texture_ = TextureManager::Load("Resources/default/BackGround.png");
 	}
 	else {
@@ -35,6 +36,11 @@ void TerrainCluster::Update()
 
 void TerrainCluster::Draw(ModelDrawDesc desc)
 {
+	
+	if (isInvisible_) {
+		return;
+	}
+
 	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
 	DrawDesc::ModelDesc modelDesc{};

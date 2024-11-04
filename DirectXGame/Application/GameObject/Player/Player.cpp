@@ -109,6 +109,17 @@ void Player::ImGuiDraw()
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
 	if (ImGui::TreeNode("TrailTexture")) {
+		ImGui::InputText("TexturePath", path, 32);
+		std::string debugText = "Text:" + filePath;
+
+		if (ImGui::Button("SavePath")) {
+			filePath = "Resources/";
+			filePath += path;
+			filePath += ".png";
+			BulletTrail::sTexture = TextureManager::Load(filePath);
+		}
+
+		ImGui::Text(debugText.c_str());
 		if (ImGui::Button("TrailUV")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
 		}

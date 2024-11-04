@@ -17,7 +17,7 @@ Trail3D::Trail3D()
 	maxAlpha_ = 0.35f;
 	color_ = { 1.0f,1.0f,1.0f,maxAlpha_ };
 	// テクスチャ
-	texture_ = TextureManager::Load("Resources/default/uvChecker.png");
+	texture_ = TextureManager::Load("Resources/Effect/Frea.png");
 
 	// 頂点とindexのサイズ設定
 	const size_t kMaxSegments = 1024 * 2;

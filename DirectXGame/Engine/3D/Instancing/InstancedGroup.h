@@ -59,7 +59,8 @@ public:
 public: // アクセッサ
 	// モデルを変更できるように
 	void SetModel(Model* model) { model_ = model; }
-
+	// 隠せるように
+	void SetInvisible(bool isInvisible) { isInvisible_ = isInvisible; }
 private:
 	/// <summary>
 	/// インスタンシングのSRV確保など
@@ -75,4 +76,6 @@ protected:
 	std::unique_ptr<Material> material_;
 	// テクスチャ
 	uint32_t texture_ = 0;
+	// 隠す用のフラグ
+	bool isInvisible_ = false;
 };

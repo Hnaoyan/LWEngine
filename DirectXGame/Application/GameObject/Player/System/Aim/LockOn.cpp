@@ -12,7 +12,7 @@ void PlayerContext::LockOn::Initialize(Player* player)
 
 	data.threshold = 0.75f;
 	data.minDistanceZ = 5.0f;
-	data.maxDistanceZ = 50.0f;
+	data.maxDistanceZ = 400.0f;
 
 }
 

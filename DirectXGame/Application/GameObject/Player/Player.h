@@ -62,6 +62,9 @@ private:
 	// ステート
 	std::unique_ptr<StateManager> horizontalState_;
 	std::unique_ptr<StateManager> verticalState_;
+	
+	char path[256];
+	std::string filePath;
 
 public:
 	OparationManager* GetOperation() { return &systemManager_; }
