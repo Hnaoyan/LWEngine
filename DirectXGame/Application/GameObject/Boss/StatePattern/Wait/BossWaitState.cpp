@@ -4,8 +4,12 @@
 void BossState::WaitState::Initialize()
 {
 	boss_->SetNowVariantState(this);
-
-	changeTimer_.Start(60.0f);
+	if (boss_->GetHealth()->GetHPRatio() < 0.5f) {
+		changeTimer_.Start(30.0f);
+	}
+	else {
+		changeTimer_.Start(50.0f);
+	}
 }
 
 void BossState::WaitState::Update()

@@ -40,6 +40,9 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
+
+	void AnimationUpdate() override;
+
 	/// <summary>
 	/// UI描画
 	/// </summary>
@@ -113,9 +116,9 @@ public:
 	}
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
-
-	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("BossTrackingBullet"); }
-	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("BossNormalBullet"); }
+	BulletManager* GetBulletManager() { return bulletManager_; }
+	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
+	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
 #pragma endregion
 
 public: // 内部でのみ呼び出す関数

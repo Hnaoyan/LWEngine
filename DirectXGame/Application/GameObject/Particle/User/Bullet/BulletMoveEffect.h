@@ -14,6 +14,12 @@ namespace BulletParticle
 		virtual void Update();
 		virtual void Draw(ICamera* camera);
 
+	public:
+		void SetEmitPattern(uint32_t pattern) {
+			data_.emitPattern = pattern;
+			RefreshData(data_);
+		}
+
 	};
 
 }

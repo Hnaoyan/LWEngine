@@ -114,16 +114,19 @@ void SampleScene::Update()
 	// ポストエフェクトの変更
 	PostChanger();
 
-	//if (input_->TriggerKey(DIK_LSHIFT)) {
-	//	sceneManager_->ChangeScene("TITLE");
-	//}
-	//if (input_->TriggerKey(DIK_RSHIFT)) {
-	//	sceneManager_->ChangeScene("GAME");
-	//}
-	//// コントローラー
-	//if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
-	//	sceneManager_->ChangeScene("GAME");
-	//}
+#ifdef IMGUI_ENABLED
+	if (input_->TriggerKey(DIK_LEFTARROW)) {
+		sceneManager_->ChangeScene("TITLE");
+}
+	if (input_->TriggerKey(DIK_RIGHTARROW)) {
+		sceneManager_->ChangeScene("GAME");
+	}
+	// コントローラー
+	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+		sceneManager_->ChangeScene("GAME");
+	}
+#endif // IMGUI_ENABLE
+
 
 	skyboxTransform_.UpdateMatrix();
 
@@ -442,7 +445,6 @@ void SampleScene::LoadModel()
 {
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
 	ModelManager::LoadObjModel("Plane", "plane");
-	ModelManager::LoadObjModel("Axis", "BulletTest");
 	ModelManager::LoadAnimModel("AnimCube", "AnimatedCube");
 	ModelManager::LoadAnimModel("Walk", "walk");
 	ModelManager::LoadAnimModel("SneakWalk", "sneakWalk");

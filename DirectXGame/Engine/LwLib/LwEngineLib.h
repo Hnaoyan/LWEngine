@@ -96,6 +96,12 @@ namespace LwLib
 		}
 		return result;
 	}
+
+	template<typename T>
+	inline static T LerpToCurrent(const T& currentValue, const T& targetValue, const float& t) {
+		return currentValue + (targetValue - currentValue) * t;
+	}
+
 	//inline static Vector3 Slerp(const Vector3& start, const Vector3& end, float t) {
 	//	float dot = Vector3::Dot(start, end);
 	//	float theta = (float)acos((dot * (float)std::numbers::pi) / 180);

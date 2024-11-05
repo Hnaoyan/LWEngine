@@ -8,12 +8,13 @@ using namespace nlohmann;
 
 void GlobalVariables::Update()
 {
-	if (!ImGui::Begin("GlobalVariables", nullptr, ImGuiWindowFlags_MenuBar)) {
-		ImGui::End();
-		return;
-	}
-	if (!ImGui::BeginMenuBar())
-		return;
+	ImGui::Begin("GlobalVariables");
+	//if (!ImGui::Begin("GlobalVariables", nullptr, ImGuiWindowFlags_MenuBar)) {
+	//	ImGui::End();
+	//	return;
+	//}
+	//if (!ImGui::BeginMenuBar())
+	//	return;
 
 	// 各グループについて
 	for (std::map<std::string, Group>::iterator itGroup = datas_.begin(); itGroup != datas_.end();
@@ -23,8 +24,12 @@ void GlobalVariables::Update()
 		// グループの参照を取得
 		Group& group = itGroup->second;
 
-		if (!ImGui::BeginMenu(groupName.c_str()))
+		//if (!ImGui::BeginMenu(groupName.c_str()))
+		//	continue;
+		if (!ImGui::TreeNode(groupName.c_str())) {
 			continue;
+		}
+
 		// 各項目について
 		for (std::map<std::string, Item>::iterator itItem = group.begin();
 			itItem != group.end(); ++itItem) {
@@ -76,10 +81,13 @@ void GlobalVariables::Update()
 			MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 		}
 
-		ImGui::EndMenu();
+		//ImGui::EndMenu();
+
+		ImGui::TreePop();
+
 	}
 
-	ImGui::EndMenuBar();
+	//ImGui::EndMenuBar();
 	ImGui::End();
 }
 
@@ -134,6 +142,11 @@ void GlobalVariables::SaveFile(const std::string& groupName)
 			// float型のjson配列登録
 			Vector3 value = std::get<Vector3>(item);
 			root[groupName][itemName] = json::array({ value.x, value.y, value.z });
+		}
+		else if (std::holds_alternative<Vector4>(item)) {
+			// float型のjson配列登録
+			Vector4 value = std::get<Vector4>(item);
+			root[groupName][itemName] = json::array({ value.x, value.y, value.z, value.w });
 		}
 		else if (std::holds_alternative<std::string>(item)) {
 			// 文字列型の値登録
@@ -250,6 +263,11 @@ void GlobalVariables::LoadFile(const std::string& groupName)
 		else if (itItem->is_array() && itItem->size() == 3) {
 			// float型のjson配列登録
 			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
+			SetValue(groupName, itemName, value);
+		}
+		else if (itItem->is_array() && itItem->size() == 4) {
+			// float型のjson配列登録
+			Vector4 value = { itItem->at(0), itItem->at(1), itItem->at(2), itItem->at(3)};
 			SetValue(groupName, itemName, value);
 		}
 		// string型

@@ -35,23 +35,32 @@ void GameSystem::Initialize()
 void GameSystem::KeyBindUpdate()
 {
     sPlayerKey.keybinds_.quickBoost = XINPUT_GAMEPAD_LEFT_SHOULDER;
-    sPlayerKey.keybinds_.shot = XINPUT_GAMEPAD_RIGHT_SHOULDER;
     sPlayerKey.keybinds_.jump = XINPUT_GAMEPAD_A;
-    sPlayerKey.keybinds_.lockon = XINPUT_GAMEPAD_B;
-    sPlayerKey.keybinds_.boost = XINPUT_GAMEPAD_X;
-
     sPlayerKey.keybinds_.pressJump = input_->XRTrigger();
+    sPlayerKey.keybinds_.lockon = XINPUT_GAMEPAD_B;
+    sPlayerKey.keybinds_.shot = XINPUT_GAMEPAD_RIGHT_SHOULDER;
+    sPlayerKey.keybinds_.homingShot = XINPUT_GAMEPAD_X;
+
+    sPlayerKey.keybinds_.boost = XINPUT_GAMEPAD_X;
 }
 
 void GameSystem::KeyConfigUpdate()
 {
+    // 小ダッシュ
     sPlayerKey.keyConfigs_.quickBoost = input_->XTriggerJoystick(sPlayerKey.keybinds_.quickBoost);
+    // ジャンプ
     sPlayerKey.keyConfigs_.jump = input_->XTriggerJoystick(sPlayerKey.keybinds_.jump);
-    sPlayerKey.keyConfigs_.lockon = input_->XTriggerJoystick(sPlayerKey.keybinds_.lockon);
-    sPlayerKey.keyConfigs_.shot = input_->XTriggerJoystick(sPlayerKey.keybinds_.shot);
-    sPlayerKey.keyConfigs_.boost = input_->XTriggerJoystick(sPlayerKey.keybinds_.boost);
-
+    // 長押しジャンプ
     sPlayerKey.keyConfigs_.pressJump = input_->XRTrigger();
+    // ロックオン
+    sPlayerKey.keyConfigs_.lockon = input_->XTriggerJoystick(sPlayerKey.keybinds_.lockon);
+    // 通常射撃
+    sPlayerKey.keyConfigs_.shot = input_->XTriggerJoystick(sPlayerKey.keybinds_.shot);
+    // 追従弾
+    sPlayerKey.keyConfigs_.homingShot = input_->XTriggerJoystick(sPlayerKey.keybinds_.homingShot);
+
+    // 
+    sPlayerKey.keyConfigs_.boost = input_->XTriggerJoystick(sPlayerKey.keybinds_.boost);
 }
 
 void GameSystem::Update()

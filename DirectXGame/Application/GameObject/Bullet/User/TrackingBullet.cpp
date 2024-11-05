@@ -47,11 +47,9 @@ void TrackingBullet::Initialize()
 		isTargetBoss_ = true;
 	}
 
-	
-	nowState_ = TrackingState::kStraight;
-
-	stateMachine_->ChangeRequest(std::make_unique<TrackingStraightState>());
-
+	// ステートの設定
+	stateMachine_ = std::make_unique<BulletStateMachine>(this);
+	stateMachine_->RequestState(TrackingState::kStraight);
 }
 
 void TrackingBullet::Update()
@@ -97,7 +95,7 @@ void TrackingBullet::OnCollision(ColliderObject object)
 	}
 	// 
 	if (isDead_ && breakEmitter_) {
-		static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
+		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
 		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }
@@ -128,9 +126,7 @@ void TrackingBullet::ChangeSelecter()
 	// リクエスト処理
 	if (requestState_) {
 
-		nowState_ = requestState_.value();
-
-		switch (nowState_)
+		switch (requestState_.value())
 		{
 		case TrackingState::kStraight:
 			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));	

@@ -47,18 +47,52 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+
+	isGameClear_ = false;
+	isGameOver_ = false;
+	isInGame_ = true;
 }
 
 void GameObjectManager::Update()
 {
+	// ゲームの判断
+#ifdef RELEASE
+
+	if (player_->IsDead() && isInGame_) {
+		isInGame_ = false;
+		gameOverTimer_.Start(120.0f);
+	}
+	if (boss_->IsDead() && isInGame_) {
+		isInGame_ = false;
+		gameClearTimer_.Start(120.0f);
+	}
+
+	gameClearTimer_.Update();
+	gameOverTimer_.Update();
+
+	if (gameClearTimer_.IsEnd()) {
+		isGameClear_ = true;
+	}
+	if (gameOverTimer_.IsEnd()) {
+		isGameOver_ = true;
+	}
+
+#endif // RELEASE
+
+
 	// 地形関係
 	skyDome_->Update();
 	terrainManager_->Update();
+	if (isInGame_) {
+		// オブジェクト
+		player_->Update();
+		if (boss_) {
+			boss_->Update();
+		}
+	}
 
-	// オブジェクト
-	player_->Update();
 	if (boss_) {
-		boss_->Update();
+		boss_->AnimationUpdate();
 	}
 	bulletManager_->Update();
 }

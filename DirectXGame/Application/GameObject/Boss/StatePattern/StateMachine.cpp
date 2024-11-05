@@ -136,6 +136,11 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 		isCooltime_ = false;
 		return;
 	}
+
+	//if (std::holds_alternative<AttackState*>(nowState)) {
+
+	//}
+
 }
 
 void BossState::StateDecider::TableSelect(std::string tableTag) {

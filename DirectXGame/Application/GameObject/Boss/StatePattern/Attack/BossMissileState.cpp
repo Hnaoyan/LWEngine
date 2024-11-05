@@ -1,18 +1,25 @@
 #include "../StateMachine.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include <algorithm>
+
+uint32_t BossState::MissileAttackState::sMissileClusterSerial = 0;
 
 void BossState::MissileAttackState::Initialize()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
+
 	boss_->SetNowVariantState(this);
 	// 開くアニメーションの受付
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, 55.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
 	// クラスター
 	//cluster_ = boss_->GetBulletManager()->GetMissileCluster();
+	clusterSerial = sMissileClusterSerial;
+	sMissileClusterSerial++;
 }
 
 void BossState::MissileAttackState::Update()
@@ -26,10 +33,6 @@ void BossState::MissileAttackState::Update()
 		// 回転の処理
 		RotateUpdate();
 		//---弾の情報---//
-		// 速さ
-		bulletSpeed_ = TrackingBullet::sInitSpeed;
-		// サイズ
-		bulletScale_ = 0.75f;
 		// 進む方向
 		bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 		MissileAttack();
@@ -43,10 +46,6 @@ void BossState::MissileAttackState::Update()
 		// 回転の処理
 		RotateUpdate();
 		//---弾の情報---//
-		// 速さ
-		bulletSpeed_ = TrackingBullet::sInitSpeed;
-		// サイズ
-		bulletScale_ = 0.75f;
 		// 進む方向
 		bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 		MissileAttack();
@@ -55,8 +54,9 @@ void BossState::MissileAttackState::Update()
 
 void BossState::MissileAttackState::Exit()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	boss_->SetPrevVariantState(this);
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, 30.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, global->GetValue<float>("BossAnimation", "CloseFrame"));
 }
 
 void BossState::MissileAttackState::MissileAttack()
@@ -66,15 +66,15 @@ void BossState::MissileAttackState::MissileAttack()
 	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 	// 弾の生成
 	for (int i = 0; i < 25; ++i) {
-		//---通常---//
-		GenerateMissile(rotateMatrix, TrackingType::kStandard);
+		//---優等---//
+		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
 		//---劣等---//
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
 		GenerateMissile(rotateMatrix, TrackingType::kInferior);
-		//---優等---//
-		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
-		//GenerateMissile(rotateMatrix, TrackingType::kSuperior);
+		//---秀才---//
+		GenerateMissile(rotateMatrix, TrackingType::kGenius);
+		//GenerateMissile(rotateMatrix, TrackingType::kGenius);
 	}
 }
 
@@ -82,7 +82,6 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 {
 	// デフォルトの情報
 	EulerTransform pos = boss_->worldTransform_.transform_;
-	pos.scale = { bulletScale_,bulletScale_,bulletScale_ };
 	Vector3 bossPosition = boss_->worldTransform_.GetWorldPosition();
 
 	float value = 5.0f;
@@ -101,7 +100,7 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	static_cast<TrackingBullet*>(bullet.get())->SetGameObject(boss_->GetPlayer());
 	static_cast<TrackingBullet*>(bullet.get())->SetTrackType(type);
 	bullet->Initialize();
-	bullet->SetVelocity(direct * bulletSpeed_);
+	bullet->SetVelocity(direct * TrackingBullet::sInitSpeed);
 	bullet->transform_ = pos;
 	bullet->transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("BossNormalBullet", "Scale");
 	boss_->GetTrackingCluster()->AddBullet(std::move(bullet));

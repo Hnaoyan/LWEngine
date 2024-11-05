@@ -24,8 +24,12 @@ void BossSystemContext::AnimationManager::Update()
 {
 	// アニメーション用のタイマー
 	animTimer_.Update();
+	deathTimer_.Update();
 	if (animTimer_.IsEnd()) {
 		animState_ = AnimState::kIdle;
+	}
+	if (!deathTimer_.IsActive() && boss_->IsDead()) {
+		deathTimer_.Start(300.0f);
 	}
 
 	// ヒエラルキーの更新
@@ -37,6 +41,17 @@ void BossSystemContext::AnimationManager::Update()
 		if ((*it).first == "Core" && IsOpen()) {
 			(*it).second.worldTransform.transform_.rotate.y += 1.0f * kDeltaTime;
 		}
+
+		if (boss_->IsDead()) {
+			if ((*it).first == "Core") {
+				(*it).second.worldTransform.transform_.scale = LwLib::LerpToCurrent<Vector3>((*it).second.worldTransform.transform_.scale, Vector3::Zero(), deathTimer_.GetElapsedFrame() * 2.0f);
+
+			}
+			else {
+				(*it).second.worldTransform.transform_.scale = LwLib::LerpToCurrent<Vector3>((*it).second.worldTransform.transform_.scale, Vector3::Zero(), deathTimer_.GetElapsedFrame());
+			}
+		}
+
 		(*it).second.worldTransform.UpdateMatrix();
 	}
 }

@@ -24,17 +24,17 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	bullet->SetVelocity(direct * speed);
 	bullet->transform_ = transform;
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
-	bulletManager_->FindCluster("PlayerNormalBullet")->AddBullet(std::move(bullet));
+	bulletManager_->FindCluster("Player:NormalBullet")->AddBullet(std::move(bullet));
 }
 
 void PlayerContext::ShootingManager::TrackingFire()
 {
 
-	GenerateTracking({ 1.0f,0.5f,0.0f }, TrackingType::kStandard);
-	GenerateTracking({ -1.0f,0.5f,0.0f }, TrackingType::kStandard);
+	GenerateTracking({ 1.0f,0.5f,0.0f }, TrackingType::kSuperior);
+	GenerateTracking({ -1.0f,0.5f,0.0f }, TrackingType::kSuperior);
 
-	GenerateTracking({ 1.0f,0.0f,0.0f }, TrackingType::kStandard);
-	GenerateTracking({ -1.0f,0.0f,0.0f }, TrackingType::kStandard);
+	GenerateTracking({ 1.0f,0.0f,0.0f }, TrackingType::kSuperior);
+	GenerateTracking({ -1.0f,0.0f,0.0f }, TrackingType::kSuperior);
 }
 
 void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, TrackingType type)
@@ -55,5 +55,5 @@ void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, Tra
 	bullet->SetVelocity(newDirect * initSpeed);
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
 	bullet->transform_ = transform;
-	bulletManager_->FindCluster("PlayerTrackingBullet")->AddBullet(std::move(bullet));
+	bulletManager_->FindCluster("Player:TrackingBullet")->AddBullet(std::move(bullet));
 }

@@ -1,9 +1,12 @@
 #pragma once
 #include "../../Utility/Singleton.h"
+#include "Engine/Utility/IndexAllocator.h"
 #include "d3d12.h"
 #include <wrl.h>
 #include <stdint.h>
 #include <array>
+#include <cassert>
+#include <memory>
 
 class DirectXDevice;
 
@@ -12,10 +15,8 @@ class SRVHandler : public Singleton<SRVHandler>
 public:
 	// 最大カウント
 	static const int kDescpritorSize = 1024 * 10;
-	//// 現在の番号
-	//static uint32_t sNowDescriptorNum_;
-	//// 次の番号
-	//static uint32_t sNextDescriptorNum_;
+
+	static std::unique_ptr<IndexAllocator> sAllocator;
 
 public:
 	/// <summary>
@@ -41,20 +42,16 @@ public: // アクセッサ
 	/// </summary>
 	/// <returns></returns>
 	static uint32_t CheckAllocater() {
-		for (int i = 0; i < kDescpritorSize; ++i) {
-			if (!sCheckLists_[i]) {
-				sCheckLists_[i] = true;
-				return i;
-			}
-		}
-		return 0;
+		//assert(sAllocator->AllocateIndex() >= 0);
+		return (uint32_t)sAllocator->AllocateIndex();
 	}
 	/// <summary>
 	/// リリース時のヒープリストの処理
 	/// </summary>
 	/// <param name="index"></param>
 	static void ReleaseHeapIndex(uint32_t index) {
-		sCheckLists_[index] = false;
+		//sCheckLists_[index] = false;
+		sAllocator->ReleaseIndex((int32_t)index);
 	}
 
 	/// <summary>
@@ -69,7 +66,5 @@ private:
 	static Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_;
 	// サイズ
 	static uint32_t kDescriptorSizeSRV_;
-	// チェック用のリスト
-	static std::array<bool, kDescpritorSize> sCheckLists_;
 };
 

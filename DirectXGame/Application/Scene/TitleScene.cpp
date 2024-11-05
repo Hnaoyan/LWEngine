@@ -3,6 +3,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/2D/SpriteManager.h"
 
+#include <imgui.h>
 #include <thread>
 #include <functional>
 #include <mutex>
@@ -19,7 +20,7 @@ void TitleScene::Initialize()
 	LoadTexture();
 
 	levelLoader_ = std::make_unique<LevelLoader>();
-	levelLoader_->LoadSceneData("01_12");
+	levelLoader_->LoadSceneData("01_10");
 
 	TextureManager::sEnvironmentTexture = skybox_->GetTexture();
 
@@ -45,15 +46,15 @@ void TitleScene::GPUUpdate()
 void TitleScene::Update()
 {
 #ifdef IMGUI_ENABLED
-	if (input_->TriggerKey(DIK_LSHIFT)) {
+	if (input_->TriggerKey(DIK_LEFTARROW)) {
 		sceneManager_->ChangeThreadScene("SAMPLE");
 	}
-	if (input_->TriggerKey(DIK_RSHIFT)) {
+	if (input_->TriggerKey(DIK_RIGHTARROW)) {
 		sceneManager_->ChangeThreadScene("GAME");
 	}
-	if (input_->TriggerKey(DIK_H)) {
-		sceneManager_->ChangeThreadScene("GAMEEDIT");
-	}
+	//if (input_->TriggerKey(DIK_H)) {
+	//	sceneManager_->ChangeThreadScene("GAMEEDIT");
+	//}
 #endif // IMGUI_ENABLED
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
@@ -101,13 +102,16 @@ void TitleScene::UIDraw()
 
 void TitleScene::ImGuiDraw()
 {
+	ImGui::Begin("Title");
+
+	ImGui::End();
 
 }
 
 void TitleScene::LoadModel()
 {
 	ModelManager::LoadObjModel("Plane", "plane");
-	ModelManager::LoadObjModel("Axis", "BulletTest");
+	//ModelManager::LoadObjModel("Axis", "BulletTest");
 
 }
 

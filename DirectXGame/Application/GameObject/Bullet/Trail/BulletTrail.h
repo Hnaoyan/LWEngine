@@ -50,6 +50,9 @@ public:
 		endPoint--;
 		return *endPoint;
 	}
+
+	void SetTrailColor(const Vector3& color) { polygon_->SetColor(Vector3(color)); }
+
 private:
 	void GlobalValueInitialize();
 

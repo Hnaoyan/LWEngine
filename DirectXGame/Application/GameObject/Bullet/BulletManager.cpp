@@ -9,12 +9,12 @@ void BulletManager::Initialize(Model* model)
 	trailManager_ = std::make_unique<TrailManager>();
 	trailManager_->SetGPUParticle(gpuParticle_);
 
-	AddCluster("PlayerNormalBullet");
-	AddCluster("PlayerTrackingBullet");
-	AddCluster("PlayerDivisionBullet");
+	AddCluster("Player:NormalBullet");
+	AddCluster("Player:TrackingBullet");
+	AddCluster("Player:DivisionBullet");
 
-	AddCluster("BossTrackingBullet");
-	AddCluster("BossNormalBullet");
+	AddCluster("Boss:TrackingBullet");
+	AddCluster("Boss:NormalBullet");
 }
 
 void BulletManager::Update()
@@ -49,6 +49,22 @@ void BulletManager::AddCluster(const std::string& tag)
 	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
 	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
+	static_cast<BulletCluster*>(instance.get())->SetName(tag);
+
+	// 敵かプレイヤーかを判断して変化を加える
+	size_t position = tag.find(":");
+	if (position != std::string::npos) {
+		std::string zokusei = tag.substr(0, position);
+
+		if ("Player" == zokusei) {
+			static_cast<BulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+		}
+		else if ("Boss" == zokusei) {
+			static_cast<BulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+			static_cast<BulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.0f,0.0f });
+		}
+	}
+
 	clusters_.emplace(tag, std::move(instance));
 }
 
@@ -58,6 +74,7 @@ void BulletManager::AddCluster(const std::string& tag, Model* model)
 	static_cast<BulletCluster*>(instance.get())->Initialize(model);
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
 	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
+	static_cast<BulletCluster*>(instance.get())->SetName(tag);
 	clusters_.emplace(tag, std::move(instance));
 }
 
@@ -68,6 +85,7 @@ void BulletManager::AddCluster(const std::string& tag, Model* model, uint32_t te
 	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
 	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
 	static_cast<BulletCluster*>(instance.get())->SetTexture(texture);
+	static_cast<BulletCluster*>(instance.get())->SetName(tag);
 	clusters_.emplace(tag, std::move(instance));
 }
 

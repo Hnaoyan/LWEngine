@@ -9,8 +9,10 @@
 
 void Boss::Initialize(Model* model)
 {
+	isAction_ = true;
 #ifdef IMGUI_ENABLED
 	GlobalValueInitialize();
+	isAction_ = false;
 #endif // IMGUI_ENABLED
 
 	IGameObject::Initialize(model);
@@ -31,7 +33,6 @@ void Boss::Initialize(Model* model)
 	worldTransform_.transform_.translate = respawnPos_;
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
-	isAction_ = false;
 }
 
 void Boss::Update()
@@ -40,8 +41,6 @@ void Boss::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム
 	systemManager_->Update();
-	// アニメ
-	animationManager_->Update();
 	// ステート
 	if (state_ && isAction_) {
 		state_->Update();
@@ -204,6 +203,18 @@ void Boss::OnCollision(ColliderObject target)
 	}
 }
 
+void Boss::AnimationUpdate()
+{
+	// アニメ
+	animationManager_->Update();
+
+	// 死んでる場合パーティクル更新
+	if (isDead_) {
+		systemManager_->particleManager_.Update();
+	}
+
+}
+
 void Boss::UIDraw()
 {
 	systemManager_->uiManager_.Draw();
@@ -232,6 +243,13 @@ void Boss::GlobalValueInitialize()
 
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 
+	groupName = "BossAnimation";
+	instance->CreateGroup(groupName);
+
+	instance->AddValue(groupName, "OpenFrame", float(55.0f));
+	instance->AddValue(groupName, "CloseFrame", float(30.0f));
+
+
 	//---追尾弾---//
 	groupName = "BossTrackingBullet";
 	instance->CreateGroup(groupName);
@@ -245,6 +263,7 @@ void Boss::GlobalValueInitialize()
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
+	instance->AddValue(groupName, "TrackingDot", float(-0.85f));	// 追従判定の値
 
 	// 通常
 

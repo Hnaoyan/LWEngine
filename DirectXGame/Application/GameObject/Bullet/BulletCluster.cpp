@@ -22,6 +22,7 @@ void BulletCluster::Initialize(Model* model)
 	InstancedGroup::Initialize(model);
 
 	texture_ = TextureManager::GetInstance()->Load("Resources/Default/white2x2.png");
+	//material_->color_ = { 0.0f,1.0f,0.0f,1.0f };
 
 	bombEffectCluster_ = std::make_unique<BulletBombCluster>();
 	bombEffectCluster_->Initialize(ModelManager::GetModel("Plane"));
@@ -91,6 +92,7 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	trailInstance->polygon_->SetMinWidth(global->GetValue<float>("BossTrackingBullet", "TrailMinWidth"));
 	trailInstance->polygon_->SetMaxWidth(global->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
 	trailInstance->SetBulletTag(bullet->GetTag());
+	trailInstance->SetTrailColor(trailColor_);
 
 	// 弾
 	bullet->SetTrail(trailInstance.get());
@@ -102,6 +104,15 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	particle->SetBullet(bullet.get());
 	particle->SetTrail(trailInstance.get());
 
+	// 敵のクラスターである場合
+	size_t position = name_.find(":");
+	if (position != std::string::npos) {
+		std::string zokusei = name_.substr(0, position);
+		if ("Boss" == zokusei) {
+			particle->SetEmitPattern(5);
+		}
+	}
+
 	breakPartice->Initialize(ModelManager::GetModel("Plane"));
 	breakPartice->SetGPUParticleSystem(gpuParticle_);
 
@@ -109,6 +120,6 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
 	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
 	std::string name = bullet->GetTag() + "Break";
-	gpuParticle_->CreateEmitter(std::move(breakPartice), name);
+	//gpuParticle_->CreateEmitter(std::move(breakPartice), name);
 	units_.push_back(std::move(bullet));	// 弾
 }

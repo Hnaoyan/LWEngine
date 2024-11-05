@@ -12,9 +12,9 @@ enum class BulletType : uint32_t
 // 追尾の種類
 enum class TrackingType : uint32_t
 {
-	kStandard,	// 盆栽
-	kInferior,	// 劣等
 	kSuperior,	// 優等
+	kInferior,	// 劣等
+	kGenius,	// 秀才
 };
 
 enum class TrackingState : uint32_t

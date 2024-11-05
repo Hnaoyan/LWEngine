@@ -31,7 +31,7 @@ void IBullet::Update()
 	// 移動
 	transform_.translate += velocity_ * GameSystem::GameSpeedFactor();
 	// サイズの設定
-	collider_.radius_ = transform_.scale.x;
+	collider_.radius_ = transform_.scale.x * 2.0f;
 	collider_.Update(transform_.translate);
 	// ユニットの基底
 	InstancedUnit::Update();

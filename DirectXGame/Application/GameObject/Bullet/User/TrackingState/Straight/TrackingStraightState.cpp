@@ -12,10 +12,12 @@ void TrackingStraightState::Update(BulletStateMachine& stateMachine)
 {
 
 	if (Input::GetInstance()->TriggerKey(DIK_O)) {
-		stateMachine.ChangeRequest(TrackingState::kWave);
+		stateMachine.RequestState(TrackingState::kWave);
+		//stateMachine.ChangeRequest(TrackingState::kWave);
 	}
 }
 
 void TrackingStraightState::Exit()
 {
+
 }

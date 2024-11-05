@@ -29,7 +29,8 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 	// 変更
 	if (timer_.IsEnd()) {
-		stateMachine.ChangeRequest(TrackingState::kWave);
+		stateMachine.RequestState(TrackingState::kWave);
+		//stateMachine.ChangeRequest(TrackingState::kWave);
 	}
 
 	// 誘導弾なら
@@ -39,19 +40,26 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			return;
 		}
 
+		float dot = Vector3::Dot(Vector3::Normalize(bullet_->GetVelocity()), Vector3::Normalize(bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition()));
+		// 向きが過度に離れていたら追尾しない
+		float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
+		if (dot < limitDot) {
+			return;
+		}
+
 		// 種類の受け取り
 		TrackingType type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
 		
 		// 種類ごとの計算
 		switch (type)
 		{
-		case TrackingType::kStandard:
+		case TrackingType::kSuperior:
 			bullet_->SetAccelerate(CalcSuperiorAcceleration());
 			break;
 		case TrackingType::kInferior:
 			bullet_->SetAccelerate(CalcInferiorAcceleration());
 			break;
-		case TrackingType::kSuperior:
+		case TrackingType::kGenius:
 			bullet_->SetAccelerate(CalcGeniusAcceleration());
 			break;
 		default:

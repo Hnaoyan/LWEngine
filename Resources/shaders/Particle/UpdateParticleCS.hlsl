@@ -55,6 +55,10 @@ void main( uint3 DTid : SV_DispatchThreadID )
                 gParticle[particleIndex].scale.y -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
                 gParticle[particleIndex].scale.z -= (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
             }
+            else if (gParticle[particleIndex].isScaleDecrement == 3)
+            {
+                gParticle[particleIndex].scale.xy = Easing(float32_t2(0.7f,0.7f), float32_t2(0.0f,0.0f), (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime));
+            }
             // 重力を速度に計算するか
             if(gParticle[particleIndex].isGravity == 1)
             {
@@ -90,6 +94,10 @@ void main( uint3 DTid : SV_DispatchThreadID )
             else if (gParticle[particleIndex].isAlpha == 3)
             {
                 alpha = Easing(gParticle[particleIndex].startAlpha, 0.0f, (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime));
+            }
+            else
+            {
+                alpha = gParticle[particleIndex].color.a;
             }
             // アルファの設定
             gParticle[particleIndex].color.a = alpha;

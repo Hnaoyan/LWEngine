@@ -40,10 +40,10 @@ void main( uint3 DTid : SV_DispatchThreadID )
                     gParticle[particleIndex] = PlayerMove(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();                   
                 }
-                // ボスの弾
+                // プレイヤーの弾
                 else if(gEmitter.emitPattern == 2)
                 {
-                    gParticle[particleIndex] = BossBullet(generator, gEmitter.translate);
+                    gParticle[particleIndex] = PlayerBullet(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();
                 }
                 // ボスのヒットエフェクト
@@ -52,11 +52,17 @@ void main( uint3 DTid : SV_DispatchThreadID )
                     gParticle[particleIndex] = BossDamage(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();
                 }
+                // 弾が壊れるエフェクト
                 else if (gEmitter.emitPattern == 4)
                 {
                     gParticle[particleIndex] = BulletBreak(generator, gEmitter.translate);
                     float32_t3 test = generator.Generate3D();
-                    
+                }
+                // ボスの弾
+                else if (gEmitter.emitPattern == 5)
+                {
+                    gParticle[particleIndex] = BossBullet(generator, gEmitter.translate);
+                    float32_t3 test = generator.Generate3D();
                 }
             }
             // 空いていない場合

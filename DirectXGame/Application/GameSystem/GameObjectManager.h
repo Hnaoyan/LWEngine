@@ -40,6 +40,20 @@ public:
 public:
 	ICamera* GetFollowCamera() { return followCamera_.get(); }
 
+	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
+	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
+
+	bool IsGameClear() { return isGameClear_; }
+	bool IsGameOver() { return isGameOver_; }
+private:
+	bool isGameOver_ = false;
+	bool isGameClear_ = false;
+	
+	bool isInGame_ = false;
+
+	FrameTimer gameOverTimer_;
+	FrameTimer gameClearTimer_;
+
 private:
 	// ゲームのユニット
 	std::unique_ptr<Player> player_;
@@ -55,4 +69,5 @@ private:
 
 	// マネージャーポインタ
 	GPUParticleSystem* gpuManager_ = nullptr;
+	
 };

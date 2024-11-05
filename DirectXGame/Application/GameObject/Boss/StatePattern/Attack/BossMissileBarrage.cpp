@@ -1,12 +1,14 @@
 #include "BossMissileBarrage.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 void BossState::MissileBarrageState::Initialize()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	boss_->SetNowVariantState(this);
 	// 開くアニメーションの受付
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, 55.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
@@ -37,8 +39,9 @@ void BossState::MissileBarrageState::Update()
 
 void BossState::MissileBarrageState::Exit()
 {
+	GlobalVariables* global = GlobalVariables::GetInstance();
 	boss_->SetPrevVariantState(this);
-	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, 30.0f);
+	boss_->GetAnimManager()->AnimationExecute(AnimType::kClose, global->GetValue<float>("BossAnimation", "CloseFrame"));
 }
 
 void BossState::MissileBarrageState::Attack()
@@ -53,7 +56,7 @@ void BossState::MissileBarrageState::Attack()
 	Vector3 rightVector = Vector3::Right();		// 右
 	Vector3 leftVector = Vector3::Left();	// 左
 	Vector3 rightUp = Vector3::Up() + Vector3::Right();	// 右上
-	Vector3 leftUp = Vector3::Up() - Vector3::Left();	// 左上
+	Vector3 leftUp = Vector3::Up() + Vector3::Left();	// 左上
 
 	float t = std::clamp(changeTimer_.GetElapsedFrame(), 0.0f, 1.0f);
 
@@ -80,17 +83,17 @@ void BossState::MissileBarrageState::Attack()
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 
 	// 上
-	GenerateMissile(Matrix4x4::TransformVector3(upVector, rotateMatrix), TrackingType::kStandard);
+	GenerateMissile(Matrix4x4::TransformVector3(upVector, rotateMatrix), TrackingType::kSuperior);
 
 	// 右
-	GenerateMissile(Matrix4x4::TransformVector3(rightVector, rotateMatrix), TrackingType::kStandard);
+	GenerateMissile(Matrix4x4::TransformVector3(rightVector, rotateMatrix), TrackingType::kSuperior);
 	// 右上
-	GenerateMissile(Matrix4x4::TransformVector3(rightUp, rotateMatrix), TrackingType::kStandard);
+	GenerateMissile(Matrix4x4::TransformVector3(rightUp, rotateMatrix), TrackingType::kSuperior);
 
 	// 左
-	GenerateMissile(Matrix4x4::TransformVector3(leftVector, rotateMatrix), TrackingType::kStandard);
+	GenerateMissile(Matrix4x4::TransformVector3(leftVector, rotateMatrix), TrackingType::kSuperior);
 	// 左上
-	GenerateMissile(Matrix4x4::TransformVector3(leftUp, rotateMatrix), TrackingType::kStandard);
+	GenerateMissile(Matrix4x4::TransformVector3(leftUp, rotateMatrix), TrackingType::kSuperior);
 }
 
 void BossState::MissileBarrageState::GenerateMissile(const Vector3& direct, TrackingType type)

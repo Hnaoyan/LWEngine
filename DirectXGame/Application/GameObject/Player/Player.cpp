@@ -26,7 +26,6 @@ void Player::Initialize(Model* model)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 
-	worldTransform_.transform_.translate.y = -1.95f;
 	worldTransform_.transform_.translate.z = -35.0f;
 	worldTransform_.UpdateMatrix();
 
@@ -40,15 +39,8 @@ void Player::Initialize(Model* model)
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
-	verticalState_ = std::make_unique<StateManager>();
-	verticalState_->Initialize(this);
-	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
-	verticalState_->Update();
-
-	horizontalState_ = std::make_unique<StateManager>();
-	horizontalState_->Initialize(this);
-	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
-	horizontalState_->Update();
+	// ステート系の初期化
+	StateInitialize();
 }
 
 void Player::Update()
@@ -109,6 +101,17 @@ void Player::ImGuiDraw()
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
 	if (ImGui::TreeNode("TrailTexture")) {
+		ImGui::InputText("TexturePath", path, 32);
+		std::string debugText = "Text:" + filePath;
+
+		if (ImGui::Button("SavePath")) {
+			filePath = "Resources/";
+			filePath += path;
+			filePath += ".png";
+			BulletTrail::sTexture = TextureManager::Load(filePath);
+		}
+
+		ImGui::Text(debugText.c_str());
 		if (ImGui::Button("TrailUV")) {
 			BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
 		}
@@ -219,6 +222,19 @@ void Player::OnCollision(ColliderObject target)
 void Player::UISpriteDraw()
 {
 	facadeSystem_->GetUI()->Draw();
+}
+
+void Player::StateInitialize()
+{
+	verticalState_ = std::make_unique<StateManager>();
+	verticalState_->Initialize(this);
+	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
+	verticalState_->Update();
+
+	horizontalState_ = std::make_unique<StateManager>();
+	horizontalState_->Initialize(this);
+	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
+	horizontalState_->Update();
 }
 
 void Player::GlobalValueInitialize()
