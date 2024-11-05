@@ -5,6 +5,16 @@
 
 class Input;
 
+/// <summary>
+/// ゲーム内のシステム的陣営
+/// </summary>
+enum class FactionType
+{
+	kPlayer,	// プレイヤー
+	kEnemy,		// 敵
+	kNeutral,	// 中立
+};
+
 class GameSystem
 {
 public:
@@ -27,6 +37,7 @@ private: // 入力系の設定
 		T quickBoost;
 		T boost;
 		T pressJump;
+		T homingShot;
 	};
 
 	struct PlayerKeyConfig

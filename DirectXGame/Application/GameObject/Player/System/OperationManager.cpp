@@ -51,7 +51,7 @@ void OparationManager::InputUpdate()
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(30.0f);
 	}
-	else if (input_->XTriggerJoystick(XINPUT_GAMEPAD_X) && !shotTimer_.IsActive()) {		
+	else if (GameSystem::sPlayerKey.keyConfigs_.homingShot && !shotTimer_.IsActive()) {		
 		player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
 		shotTimer_.Start(30.0f);
 	}
