@@ -8,12 +8,13 @@ using namespace nlohmann;
 
 void GlobalVariables::Update()
 {
-	if (!ImGui::Begin("GlobalVariables", nullptr, ImGuiWindowFlags_MenuBar)) {
-		ImGui::End();
-		return;
-	}
-	if (!ImGui::BeginMenuBar())
-		return;
+	ImGui::Begin("GlobalVariables");
+	//if (!ImGui::Begin("GlobalVariables", nullptr, ImGuiWindowFlags_MenuBar)) {
+	//	ImGui::End();
+	//	return;
+	//}
+	//if (!ImGui::BeginMenuBar())
+	//	return;
 
 	// 各グループについて
 	for (std::map<std::string, Group>::iterator itGroup = datas_.begin(); itGroup != datas_.end();
@@ -23,8 +24,12 @@ void GlobalVariables::Update()
 		// グループの参照を取得
 		Group& group = itGroup->second;
 
-		if (!ImGui::BeginMenu(groupName.c_str()))
+		//if (!ImGui::BeginMenu(groupName.c_str()))
+		//	continue;
+		if (!ImGui::TreeNode(groupName.c_str())) {
 			continue;
+		}
+
 		// 各項目について
 		for (std::map<std::string, Item>::iterator itItem = group.begin();
 			itItem != group.end(); ++itItem) {
@@ -76,10 +81,13 @@ void GlobalVariables::Update()
 			MessageBoxA(nullptr, message.c_str(), "GlobalVariables", 0);
 		}
 
-		ImGui::EndMenu();
+		//ImGui::EndMenu();
+
+		ImGui::TreePop();
+
 	}
 
-	ImGui::EndMenuBar();
+	//ImGui::EndMenuBar();
 	ImGui::End();
 }
 
