@@ -92,6 +92,8 @@ public: // セッター
 		systemManager_.GetLockOn()->SetBoss(boss);
 	}
 
+	void StateInitialize();
+
 private: // USER
 	// グローバル変数関係の初期化
 	void GlobalValueInitialize() override;

@@ -26,7 +26,6 @@ void Player::Initialize(Model* model)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 
-	worldTransform_.transform_.translate.y = -1.95f;
 	worldTransform_.transform_.translate.z = -35.0f;
 	worldTransform_.UpdateMatrix();
 
@@ -40,15 +39,8 @@ void Player::Initialize(Model* model)
 	// 足場コライダー
 	footCollider_.Initialize(this);
 
-	verticalState_ = std::make_unique<StateManager>();
-	verticalState_->Initialize(this);
-	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
-	verticalState_->Update();
-
-	horizontalState_ = std::make_unique<StateManager>();
-	horizontalState_->Initialize(this);
-	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
-	horizontalState_->Update();
+	// ステート系の初期化
+	StateInitialize();
 }
 
 void Player::Update()
@@ -230,6 +222,19 @@ void Player::OnCollision(ColliderObject target)
 void Player::UISpriteDraw()
 {
 	facadeSystem_->GetUI()->Draw();
+}
+
+void Player::StateInitialize()
+{
+	verticalState_ = std::make_unique<StateManager>();
+	verticalState_->Initialize(this);
+	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
+	verticalState_->Update();
+
+	horizontalState_ = std::make_unique<StateManager>();
+	horizontalState_->Initialize(this);
+	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
+	horizontalState_->Update();
 }
 
 void Player::GlobalValueInitialize()
