@@ -20,11 +20,9 @@ void GameSystem::Initialize()
 {
     input_ = Input::GetInstance();
 
-    //keyConfig_ = std::make_unique<KeyConfigManager>();
+    keyConfig_ = KeyConfigManager();
     keyConfig_.Update();
 
-    // バインドの設定
-    KeyBindUpdate();
     bloomData_ = { 0.75f,1.5f };
     // ブラー
     sBlurEffect.data.centerPoint = { 0.5f,0.5f };
@@ -37,23 +35,9 @@ void GameSystem::Initialize()
 
 }
 
-void GameSystem::KeyBindUpdate()
-{
-
-}
-
-void GameSystem::KeyConfigUpdate()
-{
-
-}
-
 void GameSystem::Update()
 {
     // バインドの更新
-    KeyBindUpdate();
-    // 入力の更新
-    KeyConfigUpdate();
-    
     keyConfig_.Update();
 
     sKeyConfigManager = keyConfig_;
