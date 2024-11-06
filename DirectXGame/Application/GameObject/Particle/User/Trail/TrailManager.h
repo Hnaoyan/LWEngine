@@ -28,6 +28,8 @@ public:
 	/// </summary>
 	/// <param name="trail"></param>
 	void AddTrail(std::unique_ptr<BulletTrail> trail);
+	
+	BulletTrail* FindTrail(const std::string& name);
 
 private:
 	// 軌跡インスタンスのコンテナ

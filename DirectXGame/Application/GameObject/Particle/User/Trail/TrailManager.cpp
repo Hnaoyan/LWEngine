@@ -34,3 +34,15 @@ void TrailManager::AddTrail(std::unique_ptr<BulletTrail> trail)
 {
 	trails_.push_back(std::move(trail));
 }
+
+BulletTrail* TrailManager::FindTrail(const std::string& name)
+{
+	for (std::vector<std::unique_ptr<BulletTrail>>::iterator it = trails_.begin(); it != trails_.end(); ++it) {
+		// 名前が一致した場合
+		if ((*it)->GetTag() == name) {
+			return (*it).get();
+		}
+	}
+	// なかった場合
+	return nullptr;
+}
