@@ -44,10 +44,10 @@ private:
 	bool isTargetBoss_ = false;
 
 	// ステートの管理
-	TrackingState nowState_;
+	TrackingState nowState_ = TrackingState::kStraight;
 	std::optional<TrackingState> requestState_ = std::nullopt;
 
-	TrackingData data;
+	TrackingData data{};
 
 private:
 	void ChangeSelecter();

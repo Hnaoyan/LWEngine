@@ -98,17 +98,13 @@ void BossState::MissileBarrageState::Attack()
 
 void BossState::MissileBarrageState::GenerateMissile(const Vector3& direct, TrackingType type)
 {
+	// 設定部分
 	EulerTransform transform = boss_->worldTransform_.transform_;
 	float offsetValue = 2.0f;
 	transform.translate += Vector3::Normalize(direct) * offsetValue;
 
-	// インスタンスを生成から送るまで
-	std::unique_ptr<IBullet> bullet = std::make_unique<TrackingBullet>();
-	static_cast<TrackingBullet*>(bullet.get())->SetGameObject(boss_->GetPlayer());
-	static_cast<TrackingBullet*>(bullet.get())->SetTrackType(type);
-	bullet->Initialize();
-	bullet->SetVelocity(direct * TrackingBullet::sInitSpeed);
-	bullet->transform_ = transform;
-	bullet->transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("BossNormalBullet", "Scale");
-	boss_->GetTrackingCluster()->AddBullet(std::move(bullet));
+	// 生成部分
+	BulletBuilder builder;
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(TrackingBullet::sInitSpeed).SetTransform(transform).SetType(type);
+	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
 }

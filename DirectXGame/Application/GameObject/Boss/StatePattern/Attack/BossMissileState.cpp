@@ -95,14 +95,9 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
 	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 
-	// インスタンスを生成から送るまで
-	std::unique_ptr<IBullet> bullet = std::make_unique<TrackingBullet>();
-	static_cast<TrackingBullet*>(bullet.get())->SetGameObject(boss_->GetPlayer());
-	static_cast<TrackingBullet*>(bullet.get())->SetTrackType(type);
-	bullet->Initialize();
-	bullet->SetVelocity(direct * TrackingBullet::sInitSpeed);
-	bullet->transform_ = pos;
-	bullet->transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("BossNormalBullet", "Scale");
-	boss_->GetTrackingCluster()->AddBullet(std::move(bullet));
+	BulletBuilder builder;
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(TrackingBullet::sInitSpeed).SetTransform(pos).SetType(type);
+	
+	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
 
 }

@@ -1,5 +1,7 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedGroup.h"
+#include "Builder/BulletBuilder.h"
+#include "Factory/BulletFactory.h"
 #include <memory>
 
 /// <summary>
@@ -51,6 +53,7 @@ public: // USER
 	/// <param name="position"></param>
 	/// <param name="direct"></param>
 	void AddBullet(std::unique_ptr<IBullet> bullet);
+	void AddBullet(const BulletBuilder& builder, BulletType type);
 
 	// 軌跡の管理ポインタ
 	void SetTrailManager(TrailManager* trailManager) { trailManager_ = trailManager; }
@@ -64,6 +67,9 @@ public: // USER
 private:
 	// 弾が壊れた時のエフェクトクラス
 	std::unique_ptr<InstancedGroup> bombEffectCluster_;
+
+	std::unique_ptr<BulletFactory> bulletFactory_;
+
 	// 
 	std::string name_;
 
