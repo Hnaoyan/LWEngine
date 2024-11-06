@@ -1,5 +1,7 @@
 #pragma once
 #include <stdint.h>
+#include "KeyConfigManager.h"
+#include "Engine/Utility/Singleton.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 
@@ -15,7 +17,7 @@ enum class FactionType
 	kNeutral,	// 中立
 };
 
-class GameSystem
+class GameSystem : public Singleton<GameSystem>
 {
 public:
 	// ゲームの速さ
@@ -27,24 +29,6 @@ public:
 	/// <returns></returns>
 	static float GameSpeedFactor();
 
-private: // 入力系の設定
-	template<typename T>
-	struct PlayerKey
-	{
-		T lockon;
-		T jump;
-		T shot;
-		T quickBoost;
-		T boost;
-		T pressJump;
-		T homingShot;
-	};
-
-	struct PlayerKeyConfig
-	{
-		PlayerKey<bool> keyConfigs_;
-		PlayerKey<int32_t> keybinds_;
-	};
 private: // ポストエフェクト用	
 	struct DashBlur
 	{
@@ -67,8 +51,11 @@ private: // ポストエフェクト用
 
 public:
 	// プレイヤーのキー
-	static PlayerKeyConfig sPlayerKey;
 	static DashBlur sBlurEffect;
+	static KeyConfigManager sKeyConfigManager;
+	//static KeyConfigManager* GetKeyConfig() { return GetInstance()->keyConfig_.get(); }
+	//KeyConfigManager& GetKeyConfig() { return keyConfig_; }
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -80,7 +67,7 @@ public:
 
 	//void
 	CBufferDataBloom bloomData_{};
-	CBufferDataVignette vignetteData_;
+	CBufferDataVignette vignetteData_{};
 
 private:
 	/// <summary>
@@ -92,5 +79,8 @@ private:
 	/// </summary>
 	void KeyConfigUpdate();
 
+	// キーコンフィグクラス
+	//std::unique_ptr<KeyConfigManager> keyConfig_;
+	KeyConfigManager keyConfig_;
 	Input* input_ = nullptr;
 };

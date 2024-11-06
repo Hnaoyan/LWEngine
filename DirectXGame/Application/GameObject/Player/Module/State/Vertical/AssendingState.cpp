@@ -27,7 +27,7 @@ void AssendingState::Exit()
 
 void AssendingState::InputHandle()
 {
-	if (!(GameSystem::sPlayerKey.keyConfigs_.pressJump)) {
+	if (!(GameSystem::sKeyConfigManager.GetPlayerKey().pressJump)) {
 		stateManager_->ChangeRequest(StateManager::kFall);
 		return;
 	}

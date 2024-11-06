@@ -46,18 +46,18 @@ void OparationManager::InputUpdate()
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };
 	// 射撃入力
-	if (GameSystem::sPlayerKey.keyConfigs_.shot && !shotTimer_.IsActive()) {
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().shot && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(30.0f);
 	}
-	else if (GameSystem::sPlayerKey.keyConfigs_.homingShot && !shotTimer_.IsActive()) {		
+	else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
 		player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
 		shotTimer_.Start(30.0f);
 	}
 
 	// カメラの処理
-	if (GameSystem::sPlayerKey.keyConfigs_.lockon && !lockOnCooltime_.IsActive()) {
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon && !lockOnCooltime_.IsActive()) {
 		lockOn_.ToggleLockOn(player_->camera_);
 		lockOnCooltime_.Start(20.0f);
 	}
@@ -73,7 +73,7 @@ void OparationManager::InputUpdate()
 
 	float slowFactor = 0.2f;
 	bool isQucikBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalManager()->GetVariant());
-	if (!isQucikBoost && GameSystem::sPlayerKey.keyConfigs_.quickBoost && !player_->quickBoostCoolTime_.IsActive()) {
+	if (!isQucikBoost && GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost && !player_->quickBoostCoolTime_.IsActive()) {
 		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
 			return;
 		}

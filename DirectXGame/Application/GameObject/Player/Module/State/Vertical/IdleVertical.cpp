@@ -24,7 +24,7 @@ void IdleVertical::Exit()
 void IdleVertical::InputHandle()
 {
 	// ジャンプキー
-	if (GameSystem::sPlayerKey.keyConfigs_.jump)
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump)
 	{
 		stateManager_->ChangeRequest(StateManager::kJump);
 	}

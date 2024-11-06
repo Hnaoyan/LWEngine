@@ -59,9 +59,9 @@ protected:
 	/// </summary>
 	struct ShakeParameter {
 		FrameTimer timer;
-		Vector2 startValue;
-		float randomValue;
-		bool isShake;
+		Vector2 startValue{};
+		float randomValue = 0.0f;
+		bool isShake = false;
 	};
 
 	enum class ZoomType {

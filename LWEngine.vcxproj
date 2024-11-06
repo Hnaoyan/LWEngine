@@ -36,6 +36,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameObjectManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfigManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfigManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameObjectManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GamePostEffectManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
