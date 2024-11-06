@@ -81,7 +81,7 @@ void BossState::MissileAttackState::MissileAttack()
 void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, TrackingType type)
 {
 	// デフォルトの情報
-	EulerTransform pos = boss_->worldTransform_.transform_;
+	EulerTransform transform = boss_->worldTransform_.transform_;
 	Vector3 bossPosition = boss_->worldTransform_.GetWorldPosition();
 
 	float value = 5.0f;
@@ -91,12 +91,12 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	if (std::min(randomValue.z, 0.0f) == randomValue.z) {
 		randomValue.z = 0.0f;
 	}
-	pos.translate = bossPosition + randomValue;
-	Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
+	transform.translate = bossPosition + randomValue;
+	Vector3 direct = Vector3::Normalize(transform.translate - bossPosition);
 	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 
 	BulletBuilder builder;
-	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(TrackingBullet::sInitSpeed).SetTransform(pos).SetType(type);
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(TrackingBullet::sInitSpeed).SetTransform(transform).SetType(type);
 	
 	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
 
