@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include "Engine/Input/Input.h"
 
 class KeyConfigManager
 {
@@ -26,6 +27,10 @@ private:
 		PlayerKey<bool> keyConfigs_;
 		PlayerKey<int32_t> keybinds_;
 	};
+public:
+	KeyConfigManager() {
+		input_ = Input::GetInstance();
+	}
 
 public:
 
@@ -37,4 +42,6 @@ public:
 private:
 	// プレイヤーのキーコンフィグ
 	PlayerKeyConfig playerKey_{};
+
+	Input* input_ = nullptr;
 };

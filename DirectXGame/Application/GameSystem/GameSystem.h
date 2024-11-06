@@ -53,8 +53,6 @@ public:
 	// プレイヤーのキー
 	static DashBlur sBlurEffect;
 	static KeyConfigManager sKeyConfigManager;
-	//static KeyConfigManager* GetKeyConfig() { return GetInstance()->keyConfig_.get(); }
-	//KeyConfigManager& GetKeyConfig() { return keyConfig_; }
 
 	/// <summary>
 	/// 初期化
@@ -70,17 +68,7 @@ public:
 	CBufferDataVignette vignetteData_{};
 
 private:
-	/// <summary>
-	/// キーバインドの更新
-	/// </summary>
-	void KeyBindUpdate();
-	/// <summary>
-	/// キーコンフィグの状態更新
-	/// </summary>
-	void KeyConfigUpdate();
-
-	// キーコンフィグクラス
-	//std::unique_ptr<KeyConfigManager> keyConfig_;
 	KeyConfigManager keyConfig_;
+	
 	Input* input_ = nullptr;
 };

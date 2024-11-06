@@ -1,10 +1,7 @@
 #include "KeyConfigManager.h"
-#include "Engine/Input/Input.h"
 
 void KeyConfigManager::Update()
 {
-    Input* input_ = Input::GetInstance();
-
     playerKey_.keybinds_.quickBoost = XINPUT_GAMEPAD_LEFT_SHOULDER;
     playerKey_.keybinds_.jump = XINPUT_GAMEPAD_A;
     playerKey_.keybinds_.pressJump = input_->XRTrigger();

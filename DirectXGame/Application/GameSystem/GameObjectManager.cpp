@@ -90,10 +90,11 @@ void GameObjectManager::Update()
 			boss_->Update();
 		}
 	}
-
+	// アニメーションの処理
 	if (boss_) {
 		boss_->AnimationUpdate();
 	}
+	// 弾
 	bulletManager_->Update();
 }
 
