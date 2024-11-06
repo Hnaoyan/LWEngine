@@ -7,48 +7,23 @@ void StateManager::Initialize(Player* player)
 	assert(player);
 	player_ = player;
 
-	//ChangeRequest(kIdleHorizontal);
-	//ChangeRequest(kIdleVertical);
-
 }
 
 void StateManager::Update()
 {
 
 	if (request_) {
-
+		// 元の終了
 		if (currentState_) {
 			currentState_->Exit();
 		}
-
+		
+		// 新しいやつの初期化
 		tmpState_->PreInitialize(player_, this);
 		tmpState_->Initialize();
 		currentState_ = std::move(tmpState_);
 		
-		//bool isVertical = false;
-		//bool isHorizontal = false;
-
-		//isVertical = (request_.value() == kIdleVertical) || (request_.value() == kAssending) ||
-		//	(request_.value() == kFall) || (request_.value() == kJump);
-		//isHorizontal = (request_.value() == kIdleHorizontal) || (request_.value() == kMove) ||
-		//	(request_.value() == kQuickBoost) || (request_.value() == kBoost);
-		//if (isVertical) {
-		//	if (player_->GetVerticalState()) {
-		//		player_->GetVerticalState()->Exit();
-		//	}
-		//	newState->PreInitialize(player_);
-		//	newState->Initialize();
-		//	player_->SetVerticalState(std::move(newState));
-		//}
-		//else if (isHorizontal) {
-		//	if (player_->GetHorizontalState()) {
-		//		player_->GetHorizontalState()->Exit();
-		//	}
-		//	newState->PreInitialize(player_);
-		//	newState->Initialize();
-		//	player_->SetHorizontalState(std::move(newState));
-		//}
-
+		// リクエストリセット
 		request_ = std::nullopt;
 	}
 	if (currentState_) {
@@ -96,23 +71,4 @@ void StateManager::ChangeRequest(StateList request)
 
 	tmpState_ = std::move(newState);
 
-	//switch (type)
-	//{
-	//case StateManager::kVertical:
-	//	if (player_->GetVerticalState()) {
-	//		player_->GetVerticalState()->Exit();
-	//	}
-	//	newState->PreInitialize(player_);
-	//	newState->Initialize();
-	//	player_->SetVerticalState(std::move(newState));
-	//	break;
-	//case StateManager::kHorizontal:
-	//	if (player_->GetHorizontalState()) {
-	//		player_->GetHorizontalState()->Exit();
-	//	}
-	//	newState->PreInitialize(player_);
-	//	newState->Initialize();
-	//	player_->SetHorizontalState(std::move(newState));
-	//	break;
-	//}
 }

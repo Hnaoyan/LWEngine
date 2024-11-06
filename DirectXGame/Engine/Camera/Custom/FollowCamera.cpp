@@ -14,6 +14,7 @@ void FollowCamera::Initialize()
 	instance->AddValue("Camera", "LerpRate", rStickLerpRate_);
 	instance->AddValue("Camera", "DelayRate", delayRate_);
 	instance->AddValue("Camera", "XSpinLimit", xSpinLimit_);
+	instance->AddValue("Camera", "Offset", defaultOffset_);
 
 	// 初期化
 	ICamera::Initialize();
@@ -23,6 +24,7 @@ void FollowCamera::Initialize()
 	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
 	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
 	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
+	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 }
 
 void FollowCamera::Update()
@@ -32,6 +34,7 @@ void FollowCamera::Update()
 	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
 	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
 	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
+	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 
 	// コントローラー
 	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick();
