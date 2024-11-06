@@ -89,7 +89,17 @@ void BulletManager::AddCluster(const std::string& tag, Model* model, uint32_t te
 	clusters_.emplace(tag, std::move(instance));
 }
 
-IBulletCluster* BulletManager::FindCluster(std::string tag)
+void BulletManager::DeleteCluster(const std::string& tag)
+{
+	// イテレータ取得
+	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>>::iterator it = clusters_.find(tag);
+	// なければエラー
+	assert(it != clusters_.end());
+	// あればイテレータで削除処理
+	clusters_.erase(it);
+}
+
+IBulletCluster* BulletManager::FindCluster(const std::string& tag)
 {
 	// イテレータ取得
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>>::iterator it = clusters_.find(tag);

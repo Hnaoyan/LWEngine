@@ -44,7 +44,8 @@ public: // USER
 	//void AddCluster();
 public: // アクセッサ
 
-	IBulletCluster* FindCluster(std::string tag);
+	IBulletCluster* FindCluster(const std::string& tag);
+	void DeleteCluster(const std::string& tag);
 
 	// セッター
 	void SetPlayer(Player* player) { player_ = player; }
