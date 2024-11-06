@@ -117,8 +117,8 @@ public:
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
 	BulletManager* GetBulletManager() { return bulletManager_; }
-	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
-	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
+	IBulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
+	IBulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
 #pragma endregion
 
 public: // 内部でのみ呼び出す関数

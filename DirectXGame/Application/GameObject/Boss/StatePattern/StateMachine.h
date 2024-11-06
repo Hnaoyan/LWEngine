@@ -190,7 +190,7 @@ namespace BossState
 		void Exit() override;
 	private:
 		void MissileAttack();
-		void GenerateMissile(const Matrix4x4& rotateMatrix, TrackingType type);
+		void GenerateMissile(const Matrix4x4& rotateMatrix, TrackingAttribute type);
 
 	private:
 		Vector3 bulletDirect_ = {};

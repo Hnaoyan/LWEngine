@@ -21,7 +21,7 @@ namespace PlayerContext
 		void Update();
 		void OnFire(const Vector3& direct);
 		void TrackingFire();
-		void GenerateTracking(const Vector3& direct, TrackingType type);
+		void GenerateTracking(const Vector3& direct, TrackingAttribute type);
 	private:
 
 	private:

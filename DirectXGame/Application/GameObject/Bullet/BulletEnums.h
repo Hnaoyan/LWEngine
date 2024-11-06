@@ -3,20 +3,20 @@
 #include <string>
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
-// 追尾の種類
+// 弾の種類
 enum class BulletType : uint32_t
 {
 	kNormal,	// 通常
 	kTracking,	// 追尾
 };
-// 追尾の種類
-enum class TrackingType : uint32_t
+// 追従先の属性（座標の決め方）
+enum class TrackingAttribute : uint32_t
 {
 	kSuperior,	// 優等
 	kInferior,	// 劣等
 	kGenius,	// 秀才
 };
-
+// 追従の状態
 enum class TrackingState : uint32_t
 {
 	kStraight,

@@ -1,4 +1,4 @@
-#include "BulletCluster.h"
+#include "IBulletCluster.h"
 #include "IBullet.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
@@ -10,9 +10,9 @@
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
 
-uint32_t BulletCluster::sSerialNumber = 0;
+uint32_t IBulletCluster::sSerialNumber = 0u;
 
-void BulletCluster::Initialize(Model* model)
+void IBulletCluster::Initialize(Model* model)
 {
 	// シリアル番号
 	serialNumber_ = sSerialNumber;
@@ -24,33 +24,29 @@ void BulletCluster::Initialize(Model* model)
 	texture_ = TextureManager::GetInstance()->Load("Resources/Default/white2x2.png");
 	//material_->color_ = { 0.0f,1.0f,0.0f,1.0f };
 
-	bombEffectCluster_ = std::make_unique<BulletBombCluster>();
-	bombEffectCluster_->Initialize(ModelManager::GetModel("Plane"));
+	//bombEffectCluster_ = std::make_unique<BulletBombCluster>();
+	//bombEffectCluster_->Initialize(ModelManager::GetModel("Plane"));
 
 	bulletFactory_ = std::make_unique<BulletFactory>();
-
 }
 
-void BulletCluster::Update()
+void IBulletCluster::Update()
 {
 	// 死亡処理
 	units_.erase(std::remove_if(units_.begin(), units_.end(), [&](const std::unique_ptr<InstancedUnit>& obj) {
+		//// 壊れたパーティクル	
 		//if (obj->IsDead()) {
-		//	gpuParticle_->DeleteEmitter(static_cast<IBullet*>(obj.get())->GetTag());
+		//	static_cast<BulletBombCluster*>(bombEffectCluster_.get())->BulletBomb(obj->GetWorldPosition());
 		//}
-		// 壊れたパーティクル	
-		if (obj->IsDead()) {
-			static_cast<BulletBombCluster*>(bombEffectCluster_.get())->BulletBomb(obj->GetWorldPosition());
-		}
 		return obj->IsDead();
 		}), units_.end());
 
-	bombEffectCluster_->Update();
+	//bombEffectCluster_->Update();
 	// 基底クラス更新
 	InstancedGroup::Update();
 }
 
-void BulletCluster::Draw(ModelDrawDesc desc)
+void IBulletCluster::Draw(ModelDrawDesc desc)
 {
 	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
@@ -67,12 +63,7 @@ void BulletCluster::Draw(ModelDrawDesc desc)
 	ModelRenderer::InstancedDraw(desc.camera, modelDesc, lightDesc, this);
 }
 
-void BulletCluster::ImGuiDraw()
-{
-
-}
-
-void BulletCluster::CollisionUpdate(CollisionManager* manager)
+void IBulletCluster::CollisionUpdate(CollisionManager* manager)
 {
 	for (std::vector<std::unique_ptr<InstancedUnit>>::iterator it = units_.begin();
 		it != units_.end(); ++it) {
@@ -80,7 +71,7 @@ void BulletCluster::CollisionUpdate(CollisionManager* manager)
 	}
 }
 
-void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
+void IBulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	// 軌跡の管理
@@ -108,9 +99,9 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	particle->SetTrail(trailInstance.get());
 
 	// 敵のクラスターである場合
-	size_t position = name_.find(":");
+	size_t position = tag_.find(":");
 	if (position != std::string::npos) {
-		std::string zokusei = name_.substr(0, position);
+		std::string zokusei = tag_.substr(0, position);
 		if ("Boss" == zokusei) {
 			particle->SetEmitPattern(5);
 		}
@@ -127,9 +118,8 @@ void BulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	units_.push_back(std::move(bullet));	// 弾
 }
 
-void BulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
+void IBulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
 {
-
 	GlobalVariables* global = GlobalVariables::GetInstance();
 
 	std::unique_ptr<IBullet> bullet = builder.Build(type);
@@ -158,9 +148,9 @@ void BulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
 	particle->SetTrail(trailInstance.get());
 
 	// 敵のクラスターである場合
-	size_t position = name_.find(":");
+	size_t position = tag_.find(":");
 	if (position != std::string::npos) {
-		std::string zokusei = name_.substr(0, position);
+		std::string zokusei = tag_.substr(0, position);
 		if ("Boss" == zokusei) {
 			particle->SetEmitPattern(5);
 		}

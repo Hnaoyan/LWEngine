@@ -67,18 +67,18 @@ void BossState::MissileAttackState::MissileAttack()
 	// 弾の生成
 	for (int i = 0; i < 25; ++i) {
 		//---優等---//
-		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kSuperior);
 		//---劣等---//
-		GenerateMissile(rotateMatrix, TrackingType::kInferior);
-		GenerateMissile(rotateMatrix, TrackingType::kInferior);
-		GenerateMissile(rotateMatrix, TrackingType::kInferior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kInferior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kInferior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kInferior);
 		//---秀才---//
-		GenerateMissile(rotateMatrix, TrackingType::kGenius);
-		//GenerateMissile(rotateMatrix, TrackingType::kGenius);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kGenius);
+		//GenerateMissile(rotateMatrix, TrackingAttribute::kGenius);
 	}
 }
 
-void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, TrackingType type)
+void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, TrackingAttribute type)
 {
 	// デフォルトの情報
 	EulerTransform transform = boss_->worldTransform_.transform_;

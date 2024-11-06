@@ -68,4 +68,5 @@ public: // アクセッサ
 	IGameObject* GetTarget() { return object_; }
 	void SetGameObject(IGameObject* object) { object_ = object; }
 
+	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 };

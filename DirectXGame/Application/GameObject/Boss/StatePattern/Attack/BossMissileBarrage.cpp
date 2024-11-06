@@ -83,20 +83,20 @@ void BossState::MissileBarrageState::Attack()
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 
 	// 上
-	GenerateMissile(Matrix4x4::TransformVector3(upVector, rotateMatrix), TrackingType::kSuperior);
+	GenerateMissile(Matrix4x4::TransformVector3(upVector, rotateMatrix), TrackingAttribute::kSuperior);
 
 	// 右
-	GenerateMissile(Matrix4x4::TransformVector3(rightVector, rotateMatrix), TrackingType::kSuperior);
+	GenerateMissile(Matrix4x4::TransformVector3(rightVector, rotateMatrix), TrackingAttribute::kSuperior);
 	// 右上
-	GenerateMissile(Matrix4x4::TransformVector3(rightUp, rotateMatrix), TrackingType::kSuperior);
+	GenerateMissile(Matrix4x4::TransformVector3(rightUp, rotateMatrix), TrackingAttribute::kSuperior);
 
 	// 左
-	GenerateMissile(Matrix4x4::TransformVector3(leftVector, rotateMatrix), TrackingType::kSuperior);
+	GenerateMissile(Matrix4x4::TransformVector3(leftVector, rotateMatrix), TrackingAttribute::kSuperior);
 	// 左上
-	GenerateMissile(Matrix4x4::TransformVector3(leftUp, rotateMatrix), TrackingType::kSuperior);
+	GenerateMissile(Matrix4x4::TransformVector3(leftUp, rotateMatrix), TrackingAttribute::kSuperior);
 }
 
-void BossState::MissileBarrageState::GenerateMissile(const Vector3& direct, TrackingType type)
+void BossState::MissileBarrageState::GenerateMissile(const Vector3& direct, TrackingAttribute type)
 {
 	// 設定部分
 	EulerTransform transform = boss_->worldTransform_.transform_;

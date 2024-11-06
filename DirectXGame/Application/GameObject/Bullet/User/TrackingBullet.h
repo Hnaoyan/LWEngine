@@ -28,11 +28,11 @@ public:
 	void OnCollision(ColliderObject object) override;
 
 public: // アクセッサ
-	void SetTrackType(TrackingType type) { trackingType_ = type; }
-	TrackingType GetTrackingType() { return trackingType_; }
+	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
+	TrackingAttribute GetTrackingType() { return trackingType_; }
 private:
 	// 追尾の種類
-	TrackingType trackingType_ = TrackingType::kSuperior;
+	TrackingAttribute trackingType_ = TrackingAttribute::kSuperior;
 	// 追跡している時間
 	FrameTimer trackTimer_;
 	// 直進タイマー

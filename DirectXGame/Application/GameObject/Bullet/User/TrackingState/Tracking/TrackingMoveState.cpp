@@ -48,18 +48,18 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		}
 
 		// 種類の受け取り
-		TrackingType type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
+		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
 		
 		// 種類ごとの計算
 		switch (type)
 		{
-		case TrackingType::kSuperior:
+		case TrackingAttribute::kSuperior:
 			bullet_->SetAccelerate(CalcSuperiorAcceleration());
 			break;
-		case TrackingType::kInferior:
+		case TrackingAttribute::kInferior:
 			bullet_->SetAccelerate(CalcInferiorAcceleration());
 			break;
-		case TrackingType::kGenius:
+		case TrackingAttribute::kGenius:
 			bullet_->SetAccelerate(CalcGeniusAcceleration());
 			break;
 		default:

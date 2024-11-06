@@ -43,7 +43,7 @@ protected:
 	ConstantBufferMapContext<PerView> perView_;
 	ConstantBufferMapContext<PerFrame> perFrame_;
 	// エミッターのデータ
-	EmitterSphere data_;
+	EmitterSphere data_{};
 
 	// 
 	GPUParticleSystem* gpuParticleManager_ = nullptr;

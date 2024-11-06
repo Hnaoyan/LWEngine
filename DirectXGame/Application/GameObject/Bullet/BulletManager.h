@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/3D/Drawer/Model.h"
-#include "BulletCluster.h"
+#include "IBulletCluster.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include <vector>
 #include <unordered_map>
@@ -44,7 +44,7 @@ public: // USER
 	//void AddCluster();
 public: // アクセッサ
 
-	BulletCluster* FindCluster(std::string tag);
+	IBulletCluster* FindCluster(std::string tag);
 
 	// セッター
 	void SetPlayer(Player* player) { player_ = player; }

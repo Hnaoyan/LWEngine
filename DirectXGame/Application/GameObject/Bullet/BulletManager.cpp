@@ -38,18 +38,18 @@ void BulletManager::Draw(ModelDrawDesc desc)
 void BulletManager::CollisionUpdate(CollisionManager* manager)
 {
 	for (auto it = clusters_.begin(); it != clusters_.end(); ++it) {
-		BulletCluster* obj = static_cast<BulletCluster*>((*it).second.get());
+		IBulletCluster* obj = static_cast<IBulletCluster*>((*it).second.get());
 		obj->CollisionUpdate(manager);
 	}
 }
 
 void BulletManager::AddCluster(const std::string& tag)
 {
-	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
-	static_cast<BulletCluster*>(instance.get())->Initialize(model_);
-	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
-	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
-	static_cast<BulletCluster*>(instance.get())->SetName(tag);
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<IBulletCluster>();
+	static_cast<IBulletCluster*>(instance.get())->Initialize(model_);
+	static_cast<IBulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<IBulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
+	static_cast<IBulletCluster*>(instance.get())->SetTag(tag);
 
 	// 敵かプレイヤーかを判断して変化を加える
 	size_t position = tag.find(":");
@@ -57,11 +57,11 @@ void BulletManager::AddCluster(const std::string& tag)
 		std::string zokusei = tag.substr(0, position);
 
 		if ("Player" == zokusei) {
-			static_cast<BulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 		}
 		else if ("Boss" == zokusei) {
-			static_cast<BulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-			static_cast<BulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.0f,0.0f });
+			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+			static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.0f,0.0f });
 		}
 	}
 
@@ -70,31 +70,31 @@ void BulletManager::AddCluster(const std::string& tag)
 
 void BulletManager::AddCluster(const std::string& tag, Model* model)
 {
-	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
-	static_cast<BulletCluster*>(instance.get())->Initialize(model);
-	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
-	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
-	static_cast<BulletCluster*>(instance.get())->SetName(tag);
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<IBulletCluster>();
+	static_cast<IBulletCluster*>(instance.get())->Initialize(model);
+	static_cast<IBulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<IBulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
+	static_cast<IBulletCluster*>(instance.get())->SetTag(tag);
 	clusters_.emplace(tag, std::move(instance));
 }
 
 void BulletManager::AddCluster(const std::string& tag, Model* model, uint32_t texture)
 {
-	std::unique_ptr<InstancedGroup> instance = std::make_unique<BulletCluster>();
-	static_cast<BulletCluster*>(instance.get())->Initialize(model);
-	static_cast<BulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
-	static_cast<BulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
-	static_cast<BulletCluster*>(instance.get())->SetTexture(texture);
-	static_cast<BulletCluster*>(instance.get())->SetName(tag);
+	std::unique_ptr<InstancedGroup> instance = std::make_unique<IBulletCluster>();
+	static_cast<IBulletCluster*>(instance.get())->Initialize(model);
+	static_cast<IBulletCluster*>(instance.get())->SetTrailManager(trailManager_.get());
+	static_cast<IBulletCluster*>(instance.get())->SetGPUParticle(gpuParticle_);
+	static_cast<IBulletCluster*>(instance.get())->SetTexture(texture);
+	static_cast<IBulletCluster*>(instance.get())->SetTag(tag);
 	clusters_.emplace(tag, std::move(instance));
 }
 
-BulletCluster* BulletManager::FindCluster(std::string tag)
+IBulletCluster* BulletManager::FindCluster(std::string tag)
 {
 	// イテレータ取得
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>>::iterator it = clusters_.find(tag);
 	// なければエラー
 	assert(it != clusters_.end());
 	// 見つけたイテレータからポインタを取得
-	return static_cast<BulletCluster*>((*it).second.get());
+	return static_cast<IBulletCluster*>((*it).second.get());
 }
