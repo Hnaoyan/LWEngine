@@ -1238,6 +1238,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\CPUParticleEmitter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

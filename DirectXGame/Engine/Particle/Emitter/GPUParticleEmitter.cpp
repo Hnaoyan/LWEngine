@@ -109,13 +109,13 @@ void GPUParticleEmitter::Draw(ICamera* camera)
 	sCommandList->IASetIndexBuffer(&model_->GetMesh()->ibView_);
 	// テクスチャ
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(
-		sCommandList, static_cast<UINT>(Pipeline::ParticleRegister::kTexture), texture_);
+		sCommandList, static_cast<UINT>(Pipeline::GPUParticleDrawRegister::kTexture), texture_);
 	// カメラ
-	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kCamera), perView_.cBuffer->GetGPUVirtualAddress());
+	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleDrawRegister::kCamera), perView_.cBuffer->GetGPUVirtualAddress());
 	// マテリアル
-	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::ParticleRegister::kMaterial), model_->GetMaterial()->buffer_.cBuffer->GetGPUVirtualAddress());
+	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(Pipeline::GPUParticleDrawRegister::kMaterial), model_->GetMaterial()->buffer_.cBuffer->GetGPUVirtualAddress());
 	// 行列
-	sCommandList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::ParticleRegister::kMatrixs), particles_.GetSRVGPU());
+	sCommandList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleDrawRegister::kMatrixs), particles_.GetSRVGPU());
 	// 描画処理
 	sCommandList->DrawIndexedInstanced(UINT(model_->GetModelData()->indices.size()), GPUParticleSystem::kNumInstanceMax, 0, 0, 0);
 #pragma endregion

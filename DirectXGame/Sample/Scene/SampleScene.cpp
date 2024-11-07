@@ -196,6 +196,8 @@ void SampleScene::Draw()
 	desc.worldTransform = &skyboxTransform_;
 
 	skybox_->Draw(desc);
+	// 板ポリ
+	planeModel_->Draw(desc);
 
 	ModelRenderer::LineDraw(&camera_, lines_.get());
 	//ModelRenderer::TriangleDraw(&camera_, triangle_.get());
@@ -229,8 +231,8 @@ void SampleScene::UIDraw()
 	circleSprite_->SetColor(color_);
 	effectSprite_->SetColor(color_);
 
-	circleSprite_->Draw();
-	effectSprite_->Draw();
+	//circleSprite_->Draw();
+	//effectSprite_->Draw();
 
 	Sprite::PostDraw();
 }
@@ -448,6 +450,8 @@ void SampleScene::LoadModel()
 	ModelManager::LoadAnimModel("AnimCube", "AnimatedCube");
 	ModelManager::LoadAnimModel("Walk", "walk");
 	ModelManager::LoadAnimModel("SneakWalk", "sneakWalk");
+	ModelManager::LoadObjModel("TestPlane", "plane");
+	planeModel_ = ModelManager::GetModel("plane");
 	sphere_.reset(Skydome::CreateSkydome());
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

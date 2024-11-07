@@ -105,6 +105,8 @@ private: // USER
 	bool isCurve_ = false;
 	float curveInter_ = 30.0f;
 
+	Model* planeModel_ = nullptr;
+
 private: // SYSTEM
 	std::unique_ptr<DebugCamera> debugCamera_;
 	bool isDebugCamera_ = false;

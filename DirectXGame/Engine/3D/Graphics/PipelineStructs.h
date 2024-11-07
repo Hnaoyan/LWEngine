@@ -76,7 +76,7 @@ namespace Pipeline
 	};
 
 	// パーティクルのレジスタ用
-	enum class ParticleRegister : int {
+	enum class GPUParticleDrawRegister : int {
 		kMaterial,
 		kTexture,
 		kMatrixs,

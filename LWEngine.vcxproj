@@ -353,6 +353,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\CPUParticle.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\CPUParticleSystem.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\CPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Particle.h" />
