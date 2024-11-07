@@ -38,13 +38,14 @@ public: // 仮想関数
 	void Draw(ModelDrawDesc desc) override;
 
 public:
+	// 衝突の更新
 	virtual void CollisionUpdate(CollisionManager* manager);
-
+	// 弾の追加
 	virtual void AddBullet(std::unique_ptr<IBullet> bullet);
-
 	virtual void AddBullet(const BulletBuilder& builder, BulletType type);
 
 protected:
+	// 軌跡の色
 	Vector3 trailColor_{ 1.0f,1.0f,1.0f };
 
 protected: // 基底クラスに必要なやつ
