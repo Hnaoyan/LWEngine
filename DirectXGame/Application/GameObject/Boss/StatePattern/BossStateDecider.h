@@ -9,6 +9,7 @@
 class Boss;
 class Player;
 namespace BossState {
+	// ステート
 	class AttackState;
 	class MoveState;
 	class OrbitMoveState;
@@ -18,6 +19,9 @@ namespace BossState {
 	class MissileAttackState;
 	class SystemDownState;
 	class MissileBarrageState;
+
+	// 
+	class PreDecide;
 }
 
 namespace BossState
@@ -67,7 +71,6 @@ namespace BossState
 	public:
 		void Initialize(Boss* boss, Player* player);
 		void StateDecide(StateVariant nowState);
-		void ChangeRequest(StateVariant nowState);
 
 	private:
 		// ステートの変更処理
@@ -75,7 +78,7 @@ namespace BossState
 		// テーブルの決定
 		void TableSelect(std::string tableTag);
 
-
+		void DefaultDecider();
 
 	private:
 		// テーブル中か

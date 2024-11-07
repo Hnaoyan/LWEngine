@@ -47,7 +47,7 @@ void PlayerContext::ParticleManager::MoveParticleUpdate()
 void PlayerContext::ParticleManager::CreateMoveEmitter()
 {
 	// 移動のパーティクル
-	std::unique_ptr<ParticleEmitter> instance = std::make_unique<PlayerParticle::MoveEffect>();
+	std::unique_ptr<GPUParticleEmitter> instance = std::make_unique<PlayerParticle::MoveEffect>();
 	instance->Initialize(ModelManager::GetModel("Plane"));
 	PlayerParticle::MoveEffect* pre = static_cast<PlayerParticle::MoveEffect*>(instance.get());
 	pre->SetPlayer(player_);

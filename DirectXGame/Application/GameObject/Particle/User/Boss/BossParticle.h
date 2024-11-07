@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Particle/Emitter/ParticleEmitter.h"
+#include "Engine/Particle/Emitter/GPUParticleEmitter.h"
 #include "Engine/LwLib/LwLibLists.h"
 #include "Application/GameObject/Boss/System/BossSystem.h"
 #include "../../EmitterTypes.h"
@@ -19,7 +19,7 @@ namespace BossParticle
 	/// <summary>
 	/// ダメージを受けたときのエフェクト
 	/// </summary>
-	class DamageEffect : public ParticleEmitter, public EmitterComponent
+	class DamageEffect : public GPUParticleEmitter, public EmitterComponent
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);

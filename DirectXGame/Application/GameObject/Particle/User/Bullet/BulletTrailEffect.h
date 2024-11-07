@@ -1,9 +1,9 @@
 #pragma once
 #include "BulletParticleComponent.h"
-#include "Engine/Particle/Emitter/ParticleEmitter.h"
+#include "Engine/Particle/Emitter/GPUParticleEmitter.h"
 
 namespace BulletParticle {
-	class TrailEffect : public ParticleEmitter, public Component
+	class TrailEffect : public GPUParticleEmitter, public Component
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);

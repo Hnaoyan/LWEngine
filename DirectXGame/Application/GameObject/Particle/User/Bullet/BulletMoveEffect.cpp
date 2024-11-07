@@ -4,7 +4,7 @@
 
 void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle)
 {
-	ParticleEmitter::Initialize(model, textureHandle);
+	GPUParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 4;
 	data_.frequency = 1.0f / 60.0f;
 	data_.frequencyTime = 0.0f;
@@ -13,7 +13,7 @@ void BulletParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle
 	data_.emit = 0;
 	data_.emitPattern = 2;
 
-	blendMode_ = ParticleEmitter::BlendMode::kAlpha;
+	blendMode_ = GPUParticleEmitter::BlendMode::kAlpha;
 
 	texture_ = TextureManager::Load("Resources/Effect/Smoke3.png");
 	RefreshData(data_);
@@ -40,13 +40,13 @@ void BulletParticle::MoveEffect::Update()
 	}
 
 	// バッファーに送るなどの処理
-	ParticleEmitter::Update();
+	GPUParticleEmitter::Update();
 }
 
 void BulletParticle::MoveEffect::Draw(ICamera* camera)
 {
 
-	ParticleEmitter::Draw(camera);
+	GPUParticleEmitter::Draw(camera);
 
 }
 

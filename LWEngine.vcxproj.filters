@@ -438,7 +438,7 @@
     <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.cpp">
+    <ClCompile Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.cpp">
@@ -938,7 +938,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\ParticleEmitter.h">
+    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h">

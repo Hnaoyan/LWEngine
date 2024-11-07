@@ -4,7 +4,7 @@
 
 class GPUParticleSystem;
 
-class ParticleEmitter
+class GPUParticleEmitter
 {
 public:
 	// コマンドリスト
@@ -12,7 +12,7 @@ public:
 	// パイプライン
 	static BlendPipeline sPipeline_;
 
-	virtual ~ParticleEmitter() {
+	virtual ~GPUParticleEmitter() {
 		// パーティクル関係
 		SRVHandler::ReleaseHeapIndex(particles_.srvHeapData.index);
 		SRVHandler::ReleaseHeapIndex(particles_.uavHeapData.index);

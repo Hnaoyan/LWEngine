@@ -2,7 +2,7 @@
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include <stdint.h>
 
-class ParticleEmitter;
+class GPUParticleEmitter;
 
 namespace BossSystemContext
 {
@@ -18,7 +18,7 @@ namespace BossSystemContext
 	struct DamageParams
 	{
 		// エミッターのポインタ
-		ParticleEmitter* emitPtr = nullptr;
+		GPUParticleEmitter* emitPtr = nullptr;
 		// アクティブフラグ
 		bool isActive = false;
 		// テクスチャハンドル

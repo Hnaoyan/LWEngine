@@ -4,7 +4,7 @@
 
 void BossParticle::DamageEffect::Initialize(Model* model, uint32_t textureHandle)
 {
-	ParticleEmitter::Initialize(model, textureHandle);
+	GPUParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 5;
 	data_.frequency = 0.001f;
 	data_.frequencyTime = 0.0f;
@@ -30,10 +30,10 @@ void BossParticle::DamageEffect::Update()
 		}
 	}
 	//UpdataEmitterFlags();
-	ParticleEmitter::Update();
+	GPUParticleEmitter::Update();
 }
 
 void BossParticle::DamageEffect::Draw(ICamera* camera)
 {
-	ParticleEmitter::Draw(camera);
+	GPUParticleEmitter::Draw(camera);
 }

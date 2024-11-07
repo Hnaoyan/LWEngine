@@ -10,5 +10,11 @@ public:
 	static const uint32_t kNumInstanceMax = 1024;
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>> emitters_;
 
+public:
+	void Initialize();
+	void Update();
+	void Draw(ICamera* camera);
+	void ImGuiDraw();
+	void CreateEmitter();
 };
 

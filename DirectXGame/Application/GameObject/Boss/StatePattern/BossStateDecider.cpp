@@ -110,7 +110,8 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 	}
 	// 待機状態
 	if (isCooltime_) {
-		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
+		//boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
+		StateSelect(StatePattern::kWait);
 		WaitState* newState = static_cast<WaitState*>(boss_->GetState());
 		// 体力少ない場合
 		if (boss_->GetHealth()->GetHPRatio() <= 0.5f) {

@@ -1,13 +1,13 @@
 #pragma once
 #include "BulletParticleComponent.h"
-#include "Engine/Particle/Emitter/ParticleEmitter.h"
+#include "Engine/Particle/Emitter/GPUParticleEmitter.h"
 
 /// <summary>
 /// 弾の移動時のパーティクル
 /// </summary>
 namespace BulletParticle 
 {
-	class MoveEffect : public ParticleEmitter, public Component
+	class MoveEffect : public GPUParticleEmitter, public Component
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);

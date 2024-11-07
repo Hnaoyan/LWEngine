@@ -2,7 +2,7 @@
 
 void BulletParticle::TrailEffect::Initialize(Model* model, uint32_t textureHandle)
 {
-	ParticleEmitter::Initialize(model, textureHandle);
+	GPUParticleEmitter::Initialize(model, textureHandle);
 
 	RefreshData(data_);
 }
@@ -14,11 +14,11 @@ void BulletParticle::TrailEffect::Update()
 	}
 
 	// 更新
-	ParticleEmitter::Update();
+	GPUParticleEmitter::Update();
 }
 
 void BulletParticle::TrailEffect::Draw(ICamera* camera)
 {
 
-	ParticleEmitter::Draw(camera);
+	GPUParticleEmitter::Draw(camera);
 }

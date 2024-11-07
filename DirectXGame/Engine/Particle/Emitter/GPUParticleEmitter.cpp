@@ -1,4 +1,4 @@
-#include "ParticleEmitter.h"
+#include "GPUParticleEmitter.h"
 #include "../GPUParticleSystem.h"
 #include "Engine/Base/DirectXCommon.h"
 #include "Engine/2D/TextureManager.h"
@@ -6,10 +6,10 @@
 
 #include <cassert>
 
-BlendPipeline ParticleEmitter::sPipeline_;
-ID3D12GraphicsCommandList* ParticleEmitter::sCommandList = nullptr;
+BlendPipeline GPUParticleEmitter::sPipeline_;
+ID3D12GraphicsCommandList* GPUParticleEmitter::sCommandList = nullptr;
 
-void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
+void GPUParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 {
 	assert(model);
 	// モデル
@@ -39,7 +39,7 @@ void ParticleEmitter::Initialize(Model* model, uint32_t textureHandle)
 	texture_ = TextureManager::GetInstance()->Load("Resources/Effect/effect.png");
 }
 
-void ParticleEmitter::Update()
+void GPUParticleEmitter::Update()
 {
 	
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
@@ -83,7 +83,7 @@ void ParticleEmitter::Update()
 
 }
 
-void ParticleEmitter::Draw(ICamera* camera)
+void GPUParticleEmitter::Draw(ICamera* camera)
 {
 	// ビューの設定
 	perView_.cMap_->viewMatrix = camera->viewMatrix_;
@@ -127,7 +127,7 @@ void ParticleEmitter::Draw(ICamera* camera)
 
 }
 
-void ParticleEmitter::RefreshData(const EmitterSphere& data)
+void GPUParticleEmitter::RefreshData(const EmitterSphere& data)
 {
 	// エミッターの設定
 	emitter_.cMap_->count = data.count;
@@ -139,7 +139,7 @@ void ParticleEmitter::RefreshData(const EmitterSphere& data)
 	emitter_.cMap_->emitPattern = data.emitPattern;
 }
 
-void ParticleEmitter::UpdataEmitterFlags()
+void GPUParticleEmitter::UpdataEmitterFlags()
 {
 	emitter_.cMap_->frequencyTime += kDeltaTime;
 	perFrame_.cMap_->time += kDeltaTime;
@@ -153,7 +153,7 @@ void ParticleEmitter::UpdataEmitterFlags()
 	}
 }
 
-void ParticleEmitter::CreateData()
+void GPUParticleEmitter::CreateData()
 {
 	// デバイス取得
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
@@ -171,7 +171,7 @@ void ParticleEmitter::CreateData()
 	perFrame_.cMap_->time = 1.0f;
 }
 
-void ParticleEmitter::GPUInitialize()
+void GPUParticleEmitter::GPUInitialize()
 {
 	ID3D12DescriptorHeap* ppHeaps[] = { DirectXCommon::GetInstance()->GetSrvHandler()->GetHeap() };
 	//// 初期化が後なので
@@ -196,7 +196,7 @@ void ParticleEmitter::GPUInitialize()
 	BarrierUAV();
 }
 
-void ParticleEmitter::BarrierUAV()
+void GPUParticleEmitter::BarrierUAV()
 {
 	// 初期化が後なので
 	D3D12_RESOURCE_BARRIER barrierParticleUAV = DxCreateLib::ResourceLib::GetUAVBarrier(particles_.cBuffer.Get());
@@ -207,4 +207,4 @@ void ParticleEmitter::BarrierUAV()
 	sCommandList->ResourceBarrier(1, &barrierParticleUAV);
 }
 
-//template class ParticleEmitter<EmitterSphere>;
+//template class GPUParticleEmitter<EmitterSphere>;

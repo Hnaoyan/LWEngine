@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/Particle/Emitter/ParticleEmitter.h"
+#include "Engine/Particle/Emitter/GPUParticleEmitter.h"
 #include "Engine/3D/Instancing/InstancedUnit.h"
 #include "../../EmitterTypes.h"
 
@@ -15,7 +15,7 @@ namespace PlayerParticle
 		Player* player_ = nullptr;
 	};
 
-	class MoveEffect : public ParticleEmitter, public EmitterComponent
+	class MoveEffect : public GPUParticleEmitter, public EmitterComponent
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);
@@ -26,7 +26,7 @@ namespace PlayerParticle
 
 	};
 
-	class BulletEffect : public ParticleEmitter, public EmitterComponent
+	class BulletEffect : public GPUParticleEmitter, public EmitterComponent
 	{
 	public:
 		virtual void Initialize(Model* model, uint32_t textureHandle = 0);

@@ -6,7 +6,7 @@
 #include <optional>
 
 class IBullet;
-class ParticleEmitter;
+class GPUParticleEmitter;
 
 class BulletTrail
 {
@@ -37,8 +37,8 @@ public:
 	// 弾
 	void SetBullet(IBullet* bullet) { unit_ = bullet; }
 
-	void SetMoveEmitter(ParticleEmitter* moveEmitter) { moveEmitter_ = moveEmitter; }
-	ParticleEmitter* GetEmitter() { return moveEmitter_; }
+	void SetMoveEmitter(GPUParticleEmitter* moveEmitter) { moveEmitter_ = moveEmitter; }
+	GPUParticleEmitter* GetEmitter() { return moveEmitter_; }
 
 	void SetBulletTag(const std::string& tag) { bulletTag_ = tag; }
 	std::string GetTag() { return bulletTag_; }
@@ -66,7 +66,7 @@ private: // SYSTEM
 	// 消すフラグ
 	bool isDelete_ = false;
 	// エミッター
-	ParticleEmitter* moveEmitter_ = nullptr;
+	GPUParticleEmitter* moveEmitter_ = nullptr;
 
 	std::string bulletTag_;
 
