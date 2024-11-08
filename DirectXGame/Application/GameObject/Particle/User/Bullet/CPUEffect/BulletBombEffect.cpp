@@ -19,7 +19,7 @@ void BulletBombEffect::Update()
 	// タイマー更新
 	deleteTimer_.Update();
 	if (deleteTimer_.IsActive()) {
-		this->transform_.scale = Ease::Easing(defaultScale_, Vector3::Zero(), deleteTimer_.GetElapsedFrame());
+		this->transform_.scale = Ease::Easing(defaultScale_, Vector3(0.5f,0.5f,0.5f), deleteTimer_.GetElapsedFrame());
 	}
 
 	// 削除処理

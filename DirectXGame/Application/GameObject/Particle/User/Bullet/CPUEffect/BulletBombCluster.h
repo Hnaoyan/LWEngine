@@ -28,6 +28,7 @@ public: // 仮想関数
 	void Draw(ModelDrawDesc desc) override;
 
 	void BulletBomb(const Vector3& position);
+	void BombEffect(const Vector3& position);
 
 public:
 	void AddParticle(std::unique_ptr<BulletBombEffect> particle);

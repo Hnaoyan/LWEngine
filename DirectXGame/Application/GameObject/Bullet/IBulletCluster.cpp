@@ -40,7 +40,8 @@ void IBulletCluster::Update()
 		//	static_cast<BulletBombCluster*>(bombEffectCluster_.get())->BulletBomb(obj->GetWorldPosition());
 		//}
 		if (obj->IsDead()) {
-			bombCluster_->BulletBomb(obj->GetWorldPosition());
+			//bombCluster_->BulletBomb(obj->GetWorldPosition());
+			bombCluster_->BombEffect(obj->GetWorldPosition());
 		}
 		return obj->IsDead();
 		}), units_.end());
