@@ -77,6 +77,9 @@ void SampleScene::Initialize()
 	cubeMaterial_ = std::make_unique<Material>();
 	cubeMaterial_->CreateMaterial();
 
+	planeMaterial_ = std::make_unique<Material>();
+	planeMaterial_->CreateMaterial();
+
 	trail_ = std::make_unique<MissileTrail>();
 	//trail_->Initialize();
 
@@ -127,7 +130,8 @@ void SampleScene::Update()
 	}
 #endif // IMGUI_ENABLE
 
-
+	planeMaterial_->Update();
+	planeMaterial_->enableLighting_ = 0;
 	skyboxTransform_.UpdateMatrix();
 
 	// キャトムルのコンテナ
@@ -187,21 +191,25 @@ void SampleScene::Draw()
 
 	Model::PreDraw(commandList);
 	ModelRenderer::PreDraw(commandList);
-	// サンプル
-	ModelDrawDesc desc{};
-	desc.camera = &camera_;
-	desc.directionalLight = directionalLight_.get();
-	desc.spotLight = spotLight_.get();
-	desc.pointLight = pointLight_.get();
-	desc.worldTransform = &skyboxTransform_;
 
-	skybox_->Draw(desc);
+	skyboxTransform_.transform_.scale.y = skyboxTransform_.transform_.scale.x;
+
 	// 板ポリ
-	planeModel_->Draw(desc);
+	DrawDesc::ModelDesc modelDesc{};
+	modelDesc.material = planeMaterial_.get();
+	modelDesc.mesh = planeModel_->GetMesh();
+	modelDesc.modelData = planeModel_->GetModelData();
+	modelDesc.texture = TextureManager::Load("Resources/Effect/effect.png");
+	modelDesc.worldTransform = &skyboxTransform_;
+	DrawDesc::LightDesc lightDesc{};
+	lightDesc.directionalLight = directionalLight_.get();
+	lightDesc.pointLight = pointLight_.get();
+	lightDesc.spotLight = spotLight_.get();
+	ModelRenderer::NormalDraw(&camera_, modelDesc, lightDesc);
 
-	ModelRenderer::LineDraw(&camera_, lines_.get());
+	//ModelRenderer::LineDraw(&camera_, lines_.get());
 	//ModelRenderer::TriangleDraw(&camera_, triangle_.get());
-	ModelRenderer::TrailDraw(&camera_, trailPolygon_.get());
+	//ModelRenderer::TrailDraw(&camera_, trailPolygon_.get());
 
 	ModelRenderer::PostDraw();
 	Model::PostDraw();
@@ -262,7 +270,7 @@ void SampleScene::ImGuiDraw()
 	//triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
-
+	ImGui::ColorEdit4("PlaneColor", &planeMaterial_->color_.x);
 	if (ImGui::TreeNode("EffectSprite")) {
 		ImGui::ColorEdit4("EffectColor", &color_.x);
 		if (ImGui::Button("None")) {
@@ -451,7 +459,7 @@ void SampleScene::LoadModel()
 	ModelManager::LoadAnimModel("Walk", "walk");
 	ModelManager::LoadAnimModel("SneakWalk", "sneakWalk");
 	ModelManager::LoadObjModel("TestPlane", "plane");
-	planeModel_ = ModelManager::GetModel("plane");
+	planeModel_ = ModelManager::GetModel("TestPlane");
 	sphere_.reset(Skydome::CreateSkydome());
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

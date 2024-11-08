@@ -105,6 +105,7 @@ private: // USER
 	bool isCurve_ = false;
 	float curveInter_ = 30.0f;
 
+	std::unique_ptr<Material> planeMaterial_;
 	Model* planeModel_ = nullptr;
 
 private: // SYSTEM

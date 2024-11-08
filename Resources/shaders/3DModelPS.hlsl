@@ -140,7 +140,13 @@ PixelShaderOutput main(VSOutput input)
 
     resultColor.rgb += environmentColor.rgb * gMaterial.coefficient;
        
-    output.color = resultColor;
+    if (gMaterial.enableLighting == 0)
+    {
+        output.color = textureColor;
+    }
+    else
+    {
+        output.color = resultColor;
+    }
     return output;
-
 }	
