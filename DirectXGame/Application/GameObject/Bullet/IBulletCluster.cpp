@@ -9,6 +9,7 @@
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
+#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombEffect.h"
 
 uint32_t IBulletCluster::sSerialNumber = 0u;
 
@@ -38,6 +39,9 @@ void IBulletCluster::Update()
 		//if (obj->IsDead()) {
 		//	static_cast<BulletBombCluster*>(bombEffectCluster_.get())->BulletBomb(obj->GetWorldPosition());
 		//}
+		if (obj->IsDead()) {
+			bombCluster_->BulletBomb(obj->GetWorldPosition());
+		}
 		return obj->IsDead();
 		}), units_.end());
 

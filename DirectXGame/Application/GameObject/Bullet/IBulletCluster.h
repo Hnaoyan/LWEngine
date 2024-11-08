@@ -12,6 +12,8 @@ class CollisionManager;
 class TrailManager;
 class IBullet;
 
+class BulletBombCluster;
+
 /// <summary>
 /// 弾のクラスターインターフェース
 /// </summary>
@@ -44,6 +46,8 @@ public:
 	virtual void AddBullet(std::unique_ptr<IBullet> bullet);
 	virtual void AddBullet(const BulletBuilder& builder, BulletType type);
 
+	void SetBombCluster(BulletBombCluster* bombCluster) { bombCluster_ = bombCluster; }
+
 protected:
 	// 軌跡の色
 	Vector3 trailColor_{ 1.0f,1.0f,1.0f };
@@ -53,6 +57,8 @@ protected: // 基底クラスに必要なやつ
 	std::unique_ptr<InstancedGroup> bombEffectCluster_;
 	// ファクトリー
 	std::unique_ptr<BulletFactory> bulletFactory_;
+	// 爆発クラスター
+	BulletBombCluster* bombCluster_ = nullptr;
 
 	// マネージャのポインタ
 	TrailManager* trailManager_ = nullptr;

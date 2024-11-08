@@ -67,4 +67,5 @@ private:
 
 	// 弾のリスト
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>> clusters_;
+	std::vector<std::unique_ptr<InstancedGroup>> bombModel_;
 };

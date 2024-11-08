@@ -31,5 +31,6 @@ public: // 仮想関数
 
 public:
 	void AddParticle(std::unique_ptr<BulletBombEffect> particle);
+	void AddParticle(const Vector3& position);
 
 };

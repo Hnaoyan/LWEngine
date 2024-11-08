@@ -240,6 +240,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
+	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
 }
 
 void GameScene::LoadTexture()
