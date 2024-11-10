@@ -144,8 +144,23 @@ void TrackingBullet::ChangeSelecter()
 			stateMachine_->RequestState(TrackingState::kWave);
 			break;
 		case TrackingState::kTracking:
-			trackTimer_.Start(TrackingBullet::sTrackingFrame);
-			stateMachine_->RequestState(TrackingState::kTracking);
+			if (object_) {
+				float dot = Vector3::Dot(Vector3::Normalize(GetVelocity()), Vector3::Normalize(object_->worldTransform_.GetWorldPosition() - GetWorldPosition()));
+				// 向きが過度に離れていたら追尾しない
+				float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
+				if (dot < limitDot + 0.025f) {
+					straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+					stateMachine_->RequestState(TrackingState::kStraight);
+				}
+				else {
+					trackTimer_.Start(TrackingBullet::sTrackingFrame);
+					stateMachine_->RequestState(TrackingState::kTracking);
+				}
+			}
+			else {
+				trackTimer_.Start(TrackingBullet::sTrackingFrame);
+				stateMachine_->RequestState(TrackingState::kTracking);
+			}
 			break;
 		default:
 			break;
