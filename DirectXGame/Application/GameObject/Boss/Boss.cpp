@@ -122,6 +122,10 @@ void Boss::ImGuiDraw()
 		}
 		// 追尾弾
 		if (ImGui::BeginTabItem("Tracking")) {
+			ImGui::DragFloat("LerpRad", &TrackingBullet::sLerpRadius);
+			ImGui::DragFloat("Damping", &TrackingBullet::sDamping);
+			ImGui::DragFloat("Base", &TrackingBullet::sBaseVelocity);
+			ImGui::DragFloat("Init", &TrackingBullet::sInitSpeed);
 
 			ImGui::EndTabItem();
 		}

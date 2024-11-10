@@ -78,6 +78,9 @@ void TrackingMoveState::Exit()
 
 Vector3 TrackingMoveState::CalcSuperiorAcceleration()
 {
+	// キャストポインタ
+	TrackingBullet* bullet = dynamic_cast<TrackingBullet*>(bullet_);
+
 	Vector3 bulletVelocity = bullet_->GetVelocity();
 	
 	// それぞれのベクトル
@@ -93,16 +96,16 @@ Vector3 TrackingMoveState::CalcSuperiorAcceleration()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / TrackingBullet::sLerpRadius;
+	float maxCentripetalForce = std::powf(bullet->GetTrackingData().baseSpeed, 2) / bullet->GetTrackingData().lerpRadius;
 
 	// 力の向き
 	Vector3 force = centripetalAccel * maxCentripetalForce;
 	// 推進力計算
-	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
+	float propulsion = bullet->GetTrackingData().baseSpeed * bullet->GetTrackingData().damping;
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
 	// 速度の減衰処理
-	force -= bulletVelocity * TrackingBullet::sDamping;
+	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
 	// 加速度の計算
 	return Vector3(force * GameSystem::GameSpeedFactor());
@@ -110,6 +113,9 @@ Vector3 TrackingMoveState::CalcSuperiorAcceleration()
 
 Vector3 TrackingMoveState::CalcInferiorAcceleration()
 {
+	// キャストポインタ
+	TrackingBullet* bullet = dynamic_cast<TrackingBullet*>(bullet_);
+
 	Vector3 bulletVelocity = bullet_->GetVelocity();
 	// それぞれのベクトル
 	Vector3 targetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition() + inferiorOffset_;
@@ -125,21 +131,24 @@ Vector3 TrackingMoveState::CalcInferiorAcceleration()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / TrackingBullet::sLerpRadius;
+	float maxCentripetalForce = std::powf(bullet->GetTrackingData().baseSpeed, 2) / bullet->GetTrackingData().lerpRadius;
 	// 力の向き
 	Vector3 force = centripetalAccel * maxCentripetalForce;
 	// 推進力計算
-	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
+	float propulsion = bullet->GetTrackingData().baseSpeed * bullet->GetTrackingData().damping;
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
 	// 速度の減衰処理
-	force -= bulletVelocity * TrackingBullet::sDamping;
+	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
 	return Vector3(force * GameSystem::GameSpeedFactor());
 }
 
 Vector3 TrackingMoveState::CalcGeniusAcceleration()
 {
+	// キャストポインタ
+	TrackingBullet* bullet = dynamic_cast<TrackingBullet*>(bullet_);
+
 	Vector3 bulletVelocity = bullet_->GetVelocity();
 	// プレイヤーの現在の位置と速度
 	Vector3 targetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition();
@@ -166,14 +175,14 @@ Vector3 TrackingMoveState::CalcGeniusAcceleration()
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 
-	float maxCentripetalForce = std::powf(TrackingBullet::sBaseVelocity, 2) / TrackingBullet::sLerpRadius;
+	float maxCentripetalForce = std::powf(bullet->GetTrackingData().baseSpeed, 2) / bullet->GetTrackingData().lerpRadius;
 
 	Vector3 force = centripetalAccel * maxCentripetalForce;
 
-	float propulsion = TrackingBullet::sBaseVelocity * TrackingBullet::sDamping;
+	float propulsion = bullet->GetTrackingData().baseSpeed * bullet->GetTrackingData().damping;
 
 	force += nowDirect * propulsion;
-	force -= bulletVelocity * TrackingBullet::sDamping;
+	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
 	return Vector3(force * GameSystem::GameSpeedFactor());
 }
