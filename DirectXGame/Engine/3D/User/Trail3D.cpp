@@ -99,7 +99,7 @@ void Trail3D::BuildVertexFromPoints(const std::vector<Vector3>& points)
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		newColor.w = std::clamp(newColor.w, minAlpha_, maxAlpha_);
 
 		// ビルボード処理
 		if (isBillBoard_ && camera_.has_value()) {
@@ -186,9 +186,9 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		newColor.w = std::clamp(newColor.w, minAlpha_, maxAlpha_);
 		if (newColor.w != 0.0f) {
-			newColor.w *= 0.65f;
+			newColor.w *= 0.5f;
 		}
 
 		// ビルボード処理
@@ -277,7 +277,7 @@ void Trail3D::FadeWidthVertex(const std::vector<Vector3>& points)
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		newColor.w = std::clamp(newColor.w, minAlpha_, maxAlpha_);
 		if (newColor.w != 0.0f) {
 			newColor.w *= 0.65f;
 		}

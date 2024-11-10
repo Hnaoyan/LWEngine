@@ -237,10 +237,16 @@ void Boss::GlobalValueInitialize()
 	instance->AddValue(groupName, "BarrierVanishFrame", 45.0f);
 	instance->AddValue(groupName, "BarrierReappearFrame", 30.0f);
 
+	//---敵の弾のトレイル---//
+	groupName = "BossBulletTrail";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "Color", Vector3(1.0f, 0.6f, 0.6f));
+	instance->AddValue(groupName, "MaxAlpha", float(1.0f));
+	instance->AddValue(groupName, "MinAlpha", float(0.0f));
+
 	//---通常弾---//
 	groupName = "BossNormalBullet";
 	instance->CreateGroup(groupName);
-
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 
 	groupName = "BossAnimation";

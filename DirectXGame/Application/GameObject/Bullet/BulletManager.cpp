@@ -65,7 +65,7 @@ void BulletManager::AddCluster(const std::string& tag)
 		}
 		else if ("Boss" == zokusei) {
 			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-			static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.0f,0.0f });
+			static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.6f,0.6f });
 		}
 	}
 
