@@ -68,6 +68,8 @@ namespace BossState
 			}
 		}
 
+		bool isAlgorithm_ = true;
+
 	public:
 		void Initialize(Boss* boss, Player* player);
 		void StateDecide(StateVariant nowState);
@@ -78,7 +80,7 @@ namespace BossState
 		// テーブルの決定
 		void TableSelect(std::string tableTag);
 
-		void DefaultDecider();
+		//void DefaultDecider();
 
 	private:
 		// テーブル中か

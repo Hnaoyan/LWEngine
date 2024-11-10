@@ -85,5 +85,6 @@ struct CBufferInstancedUnit
 {
 	Matrix4x4 worldMatrix;
 	Matrix4x4 worldInverseTranspose;
+	Vector4 color;
 	uint32_t instancedNum;
 };

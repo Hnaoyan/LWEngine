@@ -66,13 +66,14 @@ void BulletTrail::Update(ICamera* camera)
 		deleteTimer_.Update();
 		// 削除処理
 		if (deleteTimer_.IsEnd()) {
+			int32_t deleteCount = 8;
 			// 数が減ったら消えるように
-			if (trailPoints_.size() < 4) {
+			if (trailPoints_.size() < deleteCount + 1) {
 				isDelete_ = true;
 				return;
 			}
 			// 座標を削除
-			for (int i = 0; i < 2; ++i) {
+			for (int i = 0; i < deleteCount; ++i) {
 				trailPoints_.erase(trailPoints_.begin());
 			}
 			deleteTimer_.Start(1.0f);

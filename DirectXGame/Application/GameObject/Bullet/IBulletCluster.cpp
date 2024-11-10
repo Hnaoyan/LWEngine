@@ -41,7 +41,7 @@ void IBulletCluster::Update()
 		//}
 		if (obj->IsDead()) {
 			//bombCluster_->BulletBomb(obj->GetWorldPosition());
-			bombCluster_->BombEffect(obj->GetWorldPosition());
+			//bombCluster_->BombEffect(obj->GetWorldPosition());
 		}
 		return obj->IsDead();
 		}), units_.end());

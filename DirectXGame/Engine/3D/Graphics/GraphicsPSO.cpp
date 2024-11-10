@@ -1372,6 +1372,9 @@ void GraphicsPSO::CreateInstancedPSO()
 	{
 		PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
 	},
+	{
+		PSOLib::SetInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT)
+	},
 	};
 	// グラフィックスパイプライン
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC gPipeline{};

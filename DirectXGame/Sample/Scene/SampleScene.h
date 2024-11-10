@@ -89,6 +89,9 @@ private: // USER
 	WorldTransform skyboxTransform_;
 	std::unique_ptr<Skybox> skybox_;
 
+	WorldTransform objectTransform_;
+	Model* objModel_;
+
 	// 軌跡のポリゴン
 	std::unique_ptr<Trail3D> trailPolygon_;
 	// カーブ用の座標

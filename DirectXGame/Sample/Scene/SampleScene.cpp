@@ -102,6 +102,8 @@ void SampleScene::Initialize()
 	//curvePoints_[2] = { 5.0f,0.0f,0.0f };
 	//curvePoints_[3] = { 2.0f,-3.0f,0.0f };
 
+	objectTransform_.Initialize();
+
 }
 
 void SampleScene::GPUUpdate()
@@ -133,6 +135,7 @@ void SampleScene::Update()
 	planeMaterial_->Update();
 	planeMaterial_->enableLighting_ = 0;
 	skyboxTransform_.UpdateMatrix();
+	objectTransform_.UpdateMatrix();
 
 	// キャトムルのコンテナ
 	std::vector<Vector3> sts;
@@ -196,10 +199,10 @@ void SampleScene::Draw()
 
 	// 板ポリ
 	DrawDesc::ModelDesc modelDesc{};
+	modelDesc.SetDesc(planeModel_);
+	planeMaterial_->enableLighting_ = false;
 	modelDesc.material = planeMaterial_.get();
-	modelDesc.mesh = planeModel_->GetMesh();
-	modelDesc.modelData = planeModel_->GetModelData();
-	modelDesc.texture = TextureManager::Load("Resources/Effect/effect.png");
+	modelDesc.texture = TextureManager::Load("Resources/Effect/WhiteEffect.png");
 	modelDesc.worldTransform = &skyboxTransform_;
 	DrawDesc::LightDesc lightDesc{};
 	lightDesc.directionalLight = directionalLight_.get();
@@ -207,9 +210,14 @@ void SampleScene::Draw()
 	lightDesc.spotLight = spotLight_.get();
 	ModelRenderer::NormalDraw(&camera_, modelDesc, lightDesc);
 
+	modelDesc.SetDesc(objModel_);
+	modelDesc.texture = TextureManager::Load("Resources/default/white2x2.png");
+	modelDesc.worldTransform = &objectTransform_;
+	//ModelRenderer::NormalDraw(&camera_, modelDesc, lightDesc);
+
 	//ModelRenderer::LineDraw(&camera_, lines_.get());
 	//ModelRenderer::TriangleDraw(&camera_, triangle_.get());
-	//ModelRenderer::TrailDraw(&camera_, trailPolygon_.get());
+	ModelRenderer::TrailDraw(&camera_, trailPolygon_.get());
 
 	ModelRenderer::PostDraw();
 	Model::PostDraw();
@@ -454,12 +462,14 @@ void SampleScene::ImGuiDraw()
 void SampleScene::LoadModel()
 {
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
-	ModelManager::LoadObjModel("Plane", "plane");
+	ModelManager::LoadNormalModel("BossEnemy", "cube");	// ボス
+	ModelManager::LoadNormalModel("Plane", "plane");
 	ModelManager::LoadAnimModel("AnimCube", "AnimatedCube");
 	ModelManager::LoadAnimModel("Walk", "walk");
 	ModelManager::LoadAnimModel("SneakWalk", "sneakWalk");
-	ModelManager::LoadObjModel("TestPlane", "plane");
+	ModelManager::LoadNormalModel("TestPlane", "plane");
 	planeModel_ = ModelManager::GetModel("TestPlane");
+	objModel_ = ModelManager::GetModel("BossEnemy");
 	sphere_.reset(Skydome::CreateSkydome());
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

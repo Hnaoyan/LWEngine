@@ -23,7 +23,7 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 	material_->CreateMaterial();
 	material_->color_.w = 0.85f;
 	// バリアの生成
-	Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+	//Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }
 
 void BossSystemContext::BarrierManager::Update()

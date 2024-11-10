@@ -2,6 +2,7 @@ struct WorldTransform
 {
     float32_t4x4 worldMat;
     float32_t4x4 WorldInverseTranspose;
+    float32_t4 color;
     int32_t instanceNum;
 };
 
@@ -54,6 +55,7 @@ struct VSOutput
     float32_t4 position : SV_POSITION;
     float32_t3 normal : NORMAL0;
     float32_t2 texcoord : TEXCOORD0;
+    float32_t4 color : COLOR0;
     float32_t3 worldPosition : POSITION0;
 };
 

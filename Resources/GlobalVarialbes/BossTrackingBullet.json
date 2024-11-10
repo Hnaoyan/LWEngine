@@ -12,8 +12,8 @@
         "StraightFrame": 45.0,
         "TrackFrame": 300.0,
         "TrackingDot": -0.925000011920929,
-        "TrailMaxWidth": 0.5,
-        "TrailMinWidth": 0.25,
-        "TrailSaveFrame": 40
+        "TrailMaxWidth": 1.350000023841858,
+        "TrailMinWidth": 0.10000000149011612,
+        "TrailSaveFrame": 80
     }
 }

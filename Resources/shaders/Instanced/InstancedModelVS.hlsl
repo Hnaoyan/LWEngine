@@ -5,6 +5,7 @@ struct VSInput
     float32_t4 position : POSITION0;
     float32_t3 normal : NORMAL0;
     float32_t2 texcoord : TEXCOORD0;
+    float32_t4 color : COLOR0;
 };
 
 ConstantBuffer<Camera> gCamera : register(b0);
@@ -24,6 +25,7 @@ VSOutput main(VSInput input, uint32_t instanceId : SV_InstanceID)
     output.position = mul(input.position, worldViewProjection);
     output.normal = worldNormal;
     output.texcoord = input.texcoord;
+    output.color = input.color;
     output.worldPosition = worldPos.xyz;
     
     return output;

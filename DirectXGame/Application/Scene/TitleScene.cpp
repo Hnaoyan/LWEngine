@@ -110,7 +110,7 @@ void TitleScene::ImGuiDraw()
 
 void TitleScene::LoadModel()
 {
-	ModelManager::LoadObjModel("Plane", "plane");
+	//ModelManager::LoadObjModel("Plane", "plane");
 	//ModelManager::LoadObjModel("Axis", "BulletTest");
 
 }

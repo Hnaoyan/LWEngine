@@ -12,7 +12,7 @@ void BulletParticle::BreakEffect::Initialize(Model* model, uint32_t textureHandl
 	data_.radius = 1.0f;
 	data_.emit = 0;
 	data_.emitPattern = 4;
-	blendMode_ = Pipeline::BlendMode::kAlpha;
+	blendMode_ = Pipeline::BlendMode::kAdd;
 
 	texture_ = TextureManager::Load("Resources/Effect/effect.png");
 

@@ -57,10 +57,19 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	currentStep_ = 0;
 	IsInActionSequence_ = false;
 	isCooltime_ = false;
+	isAlgorithm_ = true;
 }
 
 void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
+	// 自作アルゴリズムの場合早期リターン（ここで分岐する
+	if (isAlgorithm_) {
+
+
+
+		return;
+	}
+
 	nowState;
 	// テーブルの中でない場合
 	if (!IsInActionSequence_) {

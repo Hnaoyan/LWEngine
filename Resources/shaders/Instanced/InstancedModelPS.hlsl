@@ -128,8 +128,9 @@ PixelShaderOutput main(VSOutput input)
     
     output.color = resultColor;
     output.color.a = gMaterial.color.a;
+    //output.color = input.color;
     
-    if (output.color.a < 0.05f)
+    if (output.color.a == 0.0f)
     {
         discard;
     }
