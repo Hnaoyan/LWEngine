@@ -10,6 +10,13 @@ void TrackingStraightState::Enter()
 
 void TrackingStraightState::Update(BulletStateMachine& stateMachine)
 {
+	timer_.Update();
+
+	bullet_->SetAccelerate(bullet_->GetVelocity() * 1.0f / 300.0f);
+
+	//if (timer_.IsEnd()) {
+	//	stateMachine.RequestState(TrackingState::kWave);
+	//}
 
 	if (Input::GetInstance()->TriggerKey(DIK_O)) {
 		stateMachine.RequestState(TrackingState::kWave);

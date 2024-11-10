@@ -19,6 +19,8 @@ void TrackingMoveState::Enter()
 	// オフセット
 	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
+	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (1.0f / 300.0f);
+	bullet_->SetVelocity(newVelocity);
 	//timer_.Start(TrackingBullet::sTrackingFrame);
 }
 

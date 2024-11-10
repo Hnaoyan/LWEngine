@@ -2,7 +2,7 @@
     "BossTrackingBullet": {
         "BaseSpeed": 90.0,
         "Damping": 0.5,
-        "InitSpeed": 90.0,
+        "InitSpeed": 50.0,
         "LerpRadius": 50.0,
         "Scale": [
             0.5,
