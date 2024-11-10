@@ -20,6 +20,7 @@ std::unique_ptr<IBullet> BulletBuilder::Build(BulletType bulletType) const
 		instance = std::make_unique<TrackingBullet>();
 		static_cast<TrackingBullet*>(instance.get())->SetGameObject(object_);
 		static_cast<TrackingBullet*>(instance.get())->SetTrackType(trackType_);	// 属性の設定
+		static_cast<TrackingBullet*>(instance.get())->SetIsBarrage(isRandStraight_);	// 直進時間ランダムフラグ
 		transform.scale = global->GetValue<Vector3>("BossTrackingBullet", "Scale");
 		break;
 	default:

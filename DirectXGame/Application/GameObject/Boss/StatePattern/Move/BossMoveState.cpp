@@ -5,7 +5,7 @@ void BossState::MoveState::Initialize()
 {
 	boss_->SetNowVariantState(this);
 
-	changeTimer_.Start(150.0f);
+	changeTimer_.Start(100.0f);
 	if (boss_->worldTransform_.GetWorldPosition().x > 0) {
 		isLeft_ = true;
 	}

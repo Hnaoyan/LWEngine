@@ -96,7 +96,7 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 
 	BulletBuilder builder;
-	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(TrackingBullet::sInitSpeed).SetTransform(transform).SetType(type);
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetType(type);
 	
 	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
 

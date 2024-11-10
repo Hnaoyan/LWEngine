@@ -84,33 +84,66 @@ void Boss::ImGuiDraw()
 {
 	
 	ImGui::Begin("Boss");
-	if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
-		stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
-	}
-	if (ImGui::Button("MissileBarrage") || Input::GetInstance()->TriggerKey(DIK_8)) {
-		stateManager_.ChangeRequest(std::make_unique<BossState::MissileBarrageState>());
-	}
-	if (ImGui::Button("NormalAttack") || Input::GetInstance()->TriggerKey(DIK_9)) {
-		stateManager_.ChangeRequest(std::make_unique<BossState::AttackState>());
-	}
-	if (Input::GetInstance()->TriggerKey(DIK_Y)) {
-		if (isAction_) {
-			isAction_ = false;
+	if (ImGui::BeginTabBar("System"))
+	{
+		// デフォルト
+		if (ImGui::BeginTabItem("MAIN")) {
+			ImGui::Checkbox("IsInvisible", &isInvisible_);
+			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
+			ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+			ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+			collider_.radius_ = worldTransform_.transform_.scale.x;
+			Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
+			Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
+			float distance = Vector2::Distance(boss, player);
+			ImGui::DragFloat("PlayerDistance", &distance);
+			ImGui::EndTabItem();
 		}
-		else {
-			isAction_ = true;
+		// 行動
+		if (ImGui::BeginTabItem("ACTION")) {
+			if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
+				stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
+			}
+			if (ImGui::Button("MissileBarrage") || Input::GetInstance()->TriggerKey(DIK_8)) {
+				stateManager_.ChangeRequest(std::make_unique<BossState::MissileBarrageState>());
+			}
+			if (ImGui::Button("NormalAttack") || Input::GetInstance()->TriggerKey(DIK_9)) {
+				stateManager_.ChangeRequest(std::make_unique<BossState::AttackState>());
+			}
+			if (Input::GetInstance()->TriggerKey(DIK_Y)) {
+				if (isAction_) {
+					isAction_ = false;
+				}
+				else {
+					isAction_ = true;
+				}
+			}
+			ImGui::Checkbox("IsAction", &isAction_);
+			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("ANIM")) {
+			if (ImGui::Button("Open")) {
+				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kOpen, 60.0f);
+			}
+			if (ImGui::Button("Close")) {
+				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kClose, 60.0f);
+			}
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("BARRIER")) {
+			if (ImGui::Button("CreateBarrier")) {
+				systemManager_->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+			}
+			systemManager_->barrierManager_.ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		// UI
+		if (ImGui::BeginTabItem("UI")) {
+			systemManager_->uiManager_.ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
 	}
-	ImGui::Checkbox("IsAction", &isAction_);
-	ImGui::Checkbox("IsInvisible", &isInvisible_);
-	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
-	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-	collider_.radius_ = worldTransform_.transform_.scale.x;
-	Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
-	Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
-	float distance = Vector2::Distance(boss, player);
-	ImGui::DragFloat("PlayerDistance", &distance);
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("BulletInfo"))
@@ -127,30 +160,6 @@ void Boss::ImGuiDraw()
 			ImGui::DragFloat("Base", &TrackingBullet::sBaseVelocity);
 			ImGui::DragFloat("Init", &TrackingBullet::sInitSpeed);
 
-			ImGui::EndTabItem();
-		}
-		ImGui::EndTabBar();
-	}
-
-	if (ImGui::BeginTabBar("System"))
-	{
-		// 通常弾
-		if (ImGui::BeginTabItem("UI")) {
-			systemManager_->uiManager_.ImGuiDraw();
-			ImGui::EndTabItem();
-		}
-		// 追尾弾
-		if (ImGui::BeginTabItem("Test")) {
-
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("Anim")) {
-			if (ImGui::Button("Open")) {
-				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kOpen, 60.0f);
-			}
-			if (ImGui::Button("Close")) {
-				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kClose, 60.0f);
-			}
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();

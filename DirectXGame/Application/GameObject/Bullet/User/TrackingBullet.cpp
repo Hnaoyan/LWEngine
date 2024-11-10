@@ -47,7 +47,10 @@ void TrackingBullet::Initialize()
 		isTargetBoss_ = true;
 	}
 
-	straightFrame_ = LwLib::GetRandomValue(straightFrame_, straightFrame_ + 60.0f);
+	// 直進の時間をランダムにする処理
+	if (!isBarrage_) {
+		straightFrame_ = LwLib::GetRandomValue(straightFrame_, straightFrame_ + 60.0f);
+	}
 
 	straightTimer_.Start(straightFrame_);
 

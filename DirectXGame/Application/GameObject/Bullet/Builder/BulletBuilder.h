@@ -32,6 +32,10 @@ public: // 設定
 		object_ = object;
 		return *this;
 	}
+	BulletBuilder& SetIsRandStraight(bool flag) {
+		isRandStraight_ = flag;
+		return *this;
+	}
 	//// 直進の時間設定
 	//BulletBuilder& SetStraightFrame(const float& frame) {
 	//	straightRandomer_ = frame; 
@@ -57,6 +61,8 @@ private:
 	Vector3 direct_{};
 	// 速度のレシオ
 	float speed_ = 0.0f;
+	// 直進時間のランダムの有無
+	bool isRandStraight_ = false;
 	// 直進のタイマーの幅
 	std::optional<float> straightRandomer_;
 

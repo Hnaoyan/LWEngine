@@ -35,7 +35,7 @@ private: // ポストエフェクト用
 		// ブラーの詳細情報
 		CBufferDataBlur data;
 		bool isActive = false;
-		float maxWidth = 0.03f;
+		float maxWidth = 0.2f;
 		FrameTimer timer;
 		void Initialize() {
 			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;

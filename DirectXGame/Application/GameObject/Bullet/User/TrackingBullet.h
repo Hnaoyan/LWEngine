@@ -29,6 +29,8 @@ public:
 
 public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
+	void SetIsBarrage(bool isFlag) { isBarrage_ = isFlag; }
+
 	TrackingAttribute GetTrackingType() { return trackingType_; }
 	TrackingData GetTrackingData() { return data_; }
 private:
@@ -46,6 +48,7 @@ private:
 
 	// 直進のフレーム数
 	float straightFrame_;
+	bool isBarrage_ = false;
 
 	// ステートの管理
 	TrackingState nowState_ = TrackingState::kStraight;

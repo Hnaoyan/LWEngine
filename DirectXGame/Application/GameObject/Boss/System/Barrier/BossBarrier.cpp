@@ -22,8 +22,11 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 	material_->color_.w = 0.85f;
+#ifdef RELEASE
 	// バリアの生成
-	//Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+	Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+#endif // RELEASE
+
 }
 
 void BossSystemContext::BarrierManager::Update()
