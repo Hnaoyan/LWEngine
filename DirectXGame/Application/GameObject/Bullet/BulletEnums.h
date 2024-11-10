@@ -38,9 +38,9 @@ struct TrackingData
 
 		trackFrame = globalVariable->GetValue<float>(groupName, "TrackFrame");
 		damping = globalVariable->GetValue<float>(groupName, "Damping");
-		lerpRadius = globalVariable->GetValue<float>(groupName, "BaseSpeed");
-		baseSpeed = globalVariable->GetValue<float>(groupName, "InitSpeed");
-		initSpeed = globalVariable->GetValue<float>(groupName, "LerpRadius");
+		lerpRadius = globalVariable->GetValue<float>(groupName, "LerpRadius");
+		baseSpeed = globalVariable->GetValue<float>(groupName, "BaseSpeed");
+		initSpeed = globalVariable->GetValue<float>(groupName, "InitSpeed");
 
 	}
 };
