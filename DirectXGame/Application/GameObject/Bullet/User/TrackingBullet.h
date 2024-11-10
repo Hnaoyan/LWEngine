@@ -30,6 +30,7 @@ public:
 public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
 	TrackingAttribute GetTrackingType() { return trackingType_; }
+	TrackingData GetTrackingData() { return data_; }
 private:
 	// 追尾の種類
 	TrackingAttribute trackingType_ = TrackingAttribute::kSuperior;
@@ -43,11 +44,14 @@ private:
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;
 
+	// 直進のフレーム数
+	float straightFrame_;
+
 	// ステートの管理
 	TrackingState nowState_ = TrackingState::kStraight;
 	std::optional<TrackingState> requestState_ = std::nullopt;
 
-	TrackingData data{};
+	TrackingData data_{};
 
 private:
 	void ChangeSelecter();

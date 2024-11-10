@@ -2,6 +2,8 @@
 #include "../IBullet.h"
 #include "../BulletEnums.h"
 
+#include <optional>
+
 class BulletBuilder
 {
 public: // 設定
@@ -30,6 +32,12 @@ public: // 設定
 		object_ = object;
 		return *this;
 	}
+	//// 直進の時間設定
+	//BulletBuilder& SetStraightFrame(const float& frame) {
+	//	straightRandomer_ = frame; 
+	//	return *this;
+	//}
+
 public:
 	/// <summary>
 	/// 生成関数
@@ -49,4 +57,7 @@ private:
 	Vector3 direct_{};
 	// 速度のレシオ
 	float speed_ = 0.0f;
+	// 直進のタイマーの幅
+	std::optional<float> straightRandomer_;
+
 };

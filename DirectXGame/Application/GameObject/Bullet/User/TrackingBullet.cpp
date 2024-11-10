@@ -23,16 +23,15 @@ void TrackingBullet::Initialize()
 	Boss* boss = dynamic_cast<Boss*>(object_);
 	Player* player = dynamic_cast<Player*>(object_);
 	GlobalVariables* instance = GlobalVariables::GetInstance();
-
 	if (player) {
 		sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
 		sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
 		sBaseVelocity = instance->GetValue<float>("BossTrackingBullet", "BaseSpeed");
 		sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
 		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
+		data_.LoadGlobalData("BossTrackingBullet");
 		// 直進の時間設定
-		straightTimer_.Start(instance->GetValue<float>("BossTrackingBullet", "StraightFrame"));
-	
+		straightFrame_ = instance->GetValue<float>("BossTrackingBullet", "StraightFrame");
 		isTargetBoss_ = false;
 	}
 	else if (boss) {
@@ -41,11 +40,16 @@ void TrackingBullet::Initialize()
 		sBaseVelocity = instance->GetValue<float>("PlayerTrackingBullet", "BaseSpeed");
 		sInitSpeed = instance->GetValue<float>("PlayerTrackingBullet", "InitSpeed");
 		sLerpRadius = instance->GetValue<float>("PlayerTrackingBullet", "LerpRadius");
+		data_.LoadGlobalData("PlayerTrackingBullet");
 		// 直進の時間設定
-		straightTimer_.Start(instance->GetValue<float>("PlayerTrackingBullet", "StraightFrame"));
+		straightFrame_ = (instance->GetValue<float>("PlayerTrackingBullet", "StraightFrame"));
 		
 		isTargetBoss_ = true;
 	}
+
+	straightFrame_ = LwLib::GetRandomValue(straightFrame_, straightFrame_ + 60.0f);
+
+	straightTimer_.Start(straightFrame_);
 
 	// ステートの設定
 	stateMachine_ = std::make_unique<BulletStateMachine>(this);
