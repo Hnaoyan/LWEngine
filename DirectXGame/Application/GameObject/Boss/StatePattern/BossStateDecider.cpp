@@ -64,10 +64,23 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 {
 	// 自作アルゴリズムの場合早期リターン（ここで分岐する
 	if (isAlgorithm_) {
+		bool isAttack = std::holds_alternative<AttackState*>(nowState) || std::holds_alternative<MissileAttackState*>(nowState) || std::holds_alternative<MissileBarrageState*>(nowState);
 
+		//if (isAttack)
+		//{
 
+		//}
 
-		return;
+		//return;
+
+		// 距離が近くて攻撃直後であれば離れる（決まった場所に
+		float x_zLength = Vector2::Length(Vector2(boss_->worldTransform_.GetWorldPosition().x, boss_->worldTransform_.GetWorldPosition().z) -
+			Vector2(player_->worldTransform_.GetWorldPosition().x, player_->worldTransform_.GetWorldPosition().z));
+		if (x_zLength <= 85.0f && isAttack)
+		{
+			StateSelect(StatePattern::kOrbitMove);
+			return;
+		}
 	}
 
 	nowState;
@@ -89,13 +102,6 @@ void BossState::StateDecider::StateDecide(StateVariant nowState)
 			StateSelect(tables_[section_[sectionIndex_]].patterns[currentStep_]);
 		}
 
-		// 距離の判定
-		float x_zLength = Vector2::Length(Vector2(boss_->worldTransform_.GetWorldPosition().x, boss_->worldTransform_.GetWorldPosition().z) -
-			Vector2(player_->worldTransform_.GetWorldPosition().x, player_->worldTransform_.GetWorldPosition().z));
-		if (x_zLength > 75.0f)
-		{
-
-		}
 		
 		IsInActionSequence_ = true;
 		currentStep_++;
