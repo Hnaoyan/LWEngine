@@ -13,9 +13,15 @@ void BulletManager::Initialize(Model* model)
 
 	AddCluster("Player:NormalBullet");
 	AddCluster("Player:TrackingBullet");
+	AddCluster("Player:TInferior");
+	AddCluster("Player:TSuperior");
+	AddCluster("Player:TGenius");
 	AddCluster("Player:DivisionBullet");
 
 	AddCluster("Boss:TrackingBullet");
+	AddCluster("Boss:TInferior");
+	AddCluster("Boss:TSuperior");
+	AddCluster("Boss:TGenius");
 	AddCluster("Boss:NormalBullet");
 }
 
