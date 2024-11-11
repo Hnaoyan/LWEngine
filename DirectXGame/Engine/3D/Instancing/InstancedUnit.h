@@ -32,4 +32,5 @@ protected:
 	const Matrix4x4* parent_ = nullptr;
 	bool isDead_ = false;
 	bool isBillBoard_ = false;
+	Vector4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 };
