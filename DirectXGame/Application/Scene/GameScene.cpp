@@ -21,6 +21,7 @@ void GameScene::Initialize()
 	camera_.transform_.translate.z = -7.0f;
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
+	cameraManager_ = std::make_unique<CameraManager>();
 
 #pragma endregion
 

@@ -11,11 +11,13 @@ public:
 	~CameraManager() = default;
 
 public:
-	//void Initialize();
+	void Initialize();
 	void Update();
 
 private:
 	// 追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+	// デバッグカメラ
+	std::unique_ptr<DebugCamera> debugCamera_;
 	
 };

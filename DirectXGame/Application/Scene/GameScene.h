@@ -11,6 +11,7 @@
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameSystem/UI/GameUIManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
+#include "Application/GameSystem/Camera/CameraManager.h"
 
 class GameScene : public IScene
 {
@@ -77,6 +78,8 @@ private: // アプリ
 	std::unique_ptr<GameSystem> gameSystem_;	// システム
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
+	// カメラマネ
+	std::unique_ptr<CameraManager> cameraManager_;
 	// GPUParticle
 	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
 	// UI
