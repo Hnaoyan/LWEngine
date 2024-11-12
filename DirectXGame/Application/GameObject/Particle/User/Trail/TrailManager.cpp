@@ -26,6 +26,7 @@ void TrailManager::Draw(ICamera* camera)
 		// 更新
 		(*it)->Update(camera);
 
+		// 非表示処理
 		if ((*it)->GetAttribute() == TrackingAttribute::kSuperior && isInvisibles_[uint32_t(TrackingAttribute::kSuperior)])
 		{
 			continue;
