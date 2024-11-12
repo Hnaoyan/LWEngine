@@ -4,6 +4,7 @@
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include <vector>
 #include <unordered_map>
+#include <bitset>
 
 class Player;
 class Boss;
@@ -34,6 +35,10 @@ public:
 	/// </summary>
 	/// <param name="manager"></param>
 	void CollisionUpdate(CollisionManager* manager);
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 public: // USER
 	/// <summary>
 	/// クラスター作成
@@ -61,6 +66,9 @@ private:
 	Player* player_ = nullptr;
 	Boss* boss_ = nullptr;
 	GPUParticleSystem* gpuParticle_ = nullptr;
+
+	// 描画フラグ
+	std::bitset<size_t(TrackingAttribute::kMaxSize)> isDrawCheck_;
 
 	// 軌跡管理クラス
 	std::unique_ptr<TrailManager> trailManager_;

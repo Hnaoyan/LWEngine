@@ -1,7 +1,9 @@
 #pragma once
 #include "Application/GameObject/Bullet/Trail/BulletTrail.h"
+#include "Application/GameObject/Bullet/BulletEnums.h"
 #include <vector>
 #include <memory>
+#include <bitset>
 
 class ICamera;
 class GPUParticleSystem;
@@ -36,5 +38,8 @@ private:
 	std::vector<std::unique_ptr<BulletTrail>> trails_;
 
 	GPUParticleSystem* gpuParticle_ = nullptr;
+
+	// 描画フラグ
+	std::bitset<size_t(TrackingAttribute::kMaxSize)> isDrawCheck_;
 
 };

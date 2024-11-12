@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/Collision/CollisionManager.h"
+#include <imgui.h>
 #include <cassert>
 
 GameObjectManager::GameObjectManager()
@@ -133,9 +134,28 @@ void GameObjectManager::ImGuiDraw()
 {
 	// カメラ
 	followCamera_->ImGuiDraw();
+	
+	ImGui::Begin("GameObjectManager");
+	if (ImGui::BeginTabBar("Object"))
+	{
+		if (ImGui::BeginTabItem("BulletManager")) {
+			bulletManager_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Terrain")) {
+			terrainManager_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("SkyDome")) {
+			skyDome_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+
+	ImGui::End();
+
 	// 地形
-	terrainManager_->ImGuiDraw();
-	skyDome_->ImGuiDraw();
 	// ゲームオブジェクト
 	player_->ImGuiDraw();
 	if (boss_) {

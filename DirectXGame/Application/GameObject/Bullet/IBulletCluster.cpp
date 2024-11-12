@@ -53,6 +53,10 @@ void IBulletCluster::Update()
 
 void IBulletCluster::Draw(ModelDrawDesc desc)
 {
+	if (isInvisible_) {
+		return;
+	}
+
 	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
 	DrawDesc::ModelDesc modelDesc{};

@@ -45,6 +45,10 @@ public:
 
 	bool IsDelete() { return isDelete_; }
 
+	// 隠すフラグ
+	void SetIsInvisible(bool isInvisible) { isInvisible_ = isInvisible; }
+	bool IsInvisible() { return isInvisible_; }
+
 	Vector3 GetBeginPoint() {
 		auto endPoint = trailPoints_.end();
 		endPoint--;
@@ -65,6 +69,8 @@ private: // SYSTEM
 	std::optional<IBullet*> unit_ = std::nullopt;
 	// 消すフラグ
 	bool isDelete_ = false;
+	// 描画しないフラグ
+	bool isInvisible_ = false;
 	// エミッター
 	GPUParticleEmitter* moveEmitter_ = nullptr;
 

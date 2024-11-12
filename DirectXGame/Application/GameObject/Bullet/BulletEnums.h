@@ -15,6 +15,7 @@ enum class TrackingAttribute : uint32_t
 	kSuperior,	// 優等
 	kInferior,	// 劣等
 	kGenius,	// 秀才
+	kMaxSize,	// 最大値
 };
 // 追従の状態
 enum class TrackingState : uint32_t

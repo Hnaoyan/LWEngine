@@ -2,11 +2,14 @@
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include <cassert>
+#include <imgui.h>
 
 void BulletManager::Initialize(Model* model)
 {
 	//models_ = models;
 	model_ = model;
+
+	isDrawCheck_.reset();
 
 	trailManager_ = std::make_unique<TrailManager>();
 	trailManager_->SetGPUParticle(gpuParticle_);
@@ -50,6 +53,29 @@ void BulletManager::CollisionUpdate(CollisionManager* manager)
 		if (dynamic_cast<IBulletCluster*>((*it).second.get())) {
 			obj->CollisionUpdate(manager);
 		}
+	}
+}
+
+void BulletManager::ImGuiDraw()
+{
+	// 描画チェック
+	if (ImGui::TreeNode("DrawFlags")) {
+		bool isG = isDrawCheck_[uint32_t(TrackingAttribute::kGenius)];
+		ImGui::Checkbox("Genius", &isG);
+		isDrawCheck_[uint32_t(TrackingAttribute::kGenius)] = isG;
+
+		isG = isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)];
+		ImGui::Checkbox("Superior", &isG);
+		isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)] = isG;
+
+		isG = isDrawCheck_[uint32_t(TrackingAttribute::kInferior)];
+		ImGui::Checkbox("Inferior", &isG);
+		isDrawCheck_[uint32_t(TrackingAttribute::kInferior)] = isG;
+
+		FindCluster("Boss:Superior")->SetInvisible(isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)]);
+		FindCluster("Boss:Inferior")->SetInvisible(isDrawCheck_[uint32_t(TrackingAttribute::kInferior)]);
+		FindCluster("Boss:Genius")->SetInvisible(isDrawCheck_[uint32_t(TrackingAttribute::kGenius)]);
+		ImGui::TreePop();
 	}
 }
 

@@ -25,6 +25,11 @@ void TrailManager::Draw(ICamera* camera)
 	for (auto it = trails_.begin(); it != trails_.end(); ++it) {
 		// 更新
 		(*it)->Update(camera);
+
+		// 描画スキップ
+		if ((*it)->IsInvisible()) {
+			return;
+		}
 		// 描画
 		ModelRenderer::TrailDraw(camera, (*it)->polygon_.get());
 	}
