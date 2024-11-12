@@ -19,10 +19,8 @@ void GameScene::Initialize()
 	camera_.transform_.translate.y = 5.0f;
 	camera_.transform_.rotate.x = 0.4f;
 	camera_.transform_.translate.z = -7.0f;
-	debugCamera_ = std::make_unique<DebugCamera>();
-	debugCamera_->Initialize();
-	cameraManager_ = std::make_unique<CameraManager>();
 
+	cameraManager_ = std::make_unique<CameraManager>();
 #pragma endregion
 
 #pragma region インスタンス化
@@ -46,7 +44,8 @@ void GameScene::Initialize()
 	// 準備完了
 	isSceneReady_ = true;
 
-	gameObjectManager_->Initialize(gpuParticleManager_.get());
+	gameObjectManager_->Initialize(gpuParticleManager_.get(),&camera_);
+	cameraManager_->Initialize(gameObjectManager_.get());
 }
 
 void GameScene::GPUUpdate()
@@ -163,7 +162,6 @@ void GameScene::ImGuiDraw()
 
 	// カメラ
 	camera_.ImGuiDraw();
-	debugCamera_->ImGuiDraw();
 
 	ImGui::Begin("GameScene");
 	if (ImGui::Button("PostDefault")) {
@@ -175,7 +173,6 @@ void GameScene::ImGuiDraw()
 	ImGui::DragFloat("BloomThreshold", &gameSystem_->bloomData_.threshold, 0.01f);
 	ImGui::DragFloat("BloomSigma", &gameSystem_->bloomData_.sigma, 0.01f);
 
-	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
 
 	if (ImGui::TreeNode("DirectionalLight")) {
 		ImGui::TreePop();
@@ -305,22 +302,12 @@ void GameScene::LoadTexture()
 
 void GameScene::CameraUpdate()
 {
+	cameraManager_->Update();
 
-	if (isDebugCamera_) {
-		debugCamera_->Update();
-		camera_.viewMatrix_ = debugCamera_->viewMatrix_;
-		camera_.projectionMatrix_ = debugCamera_->projectionMatrix_;
-		camera_.TransferMatrix();
-	}
-	else {
-		// カメラの更新
-		gameObjectManager_->GetFollowCamera()->Update();
-
-		camera_.viewMatrix_ = gameObjectManager_->GetFollowCamera()->viewMatrix_;
-		camera_.projectionMatrix_ = gameObjectManager_->GetFollowCamera()->projectionMatrix_;
-		camera_.transform_ = gameObjectManager_->GetFollowCamera()->transform_;
-		camera_.TransferMatrix();
-	}
+	camera_.viewMatrix_ = cameraManager_->GetCamera()->viewMatrix_;
+	camera_.projectionMatrix_ = cameraManager_->GetCamera()->projectionMatrix_;
+	camera_.transform_ = cameraManager_->GetCamera()->transform_;
+	camera_.TransferMatrix();
 }
 
 void GameScene::LightingInitialize()

@@ -115,10 +115,6 @@ private: // リソース
 	GameClear clearText_;
 
 private: // システム関係
-	// カメラ君
-	// デバッグカメラ
-	std::unique_ptr<DebugCamera> debugCamera_;
-	bool isDebugCamera_ = false;
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
 	CBufferDataDirectionalLight lightData_;

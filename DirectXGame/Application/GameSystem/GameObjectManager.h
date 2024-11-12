@@ -13,7 +13,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="gpuManager"></param>
-	void Initialize(GPUParticleSystem* gpuManager);
+	void Initialize(GPUParticleSystem* gpuManager, ICamera* camera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -38,7 +38,7 @@ public:
 	/// <param name="collisionManager"></param>
 	void RegisterCollider(CollisionManager* collisionManager);
 public:
-	ICamera* GetFollowCamera() { return followCamera_.get(); }
+	Player* GetPlayer() { return player_.get(); }
 
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
@@ -63,9 +63,6 @@ private:
 	// 地形や背景
 	std::unique_ptr<TerrainManager> terrainManager_;
 	std::unique_ptr<SkyDomeObject> skyDome_;
-
-	// カメラ
-	std::unique_ptr<FollowCamera> followCamera_;
 
 	// マネージャーポインタ
 	GPUParticleSystem* gpuManager_ = nullptr;

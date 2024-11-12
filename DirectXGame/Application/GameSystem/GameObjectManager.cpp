@@ -13,11 +13,9 @@ GameObjectManager::GameObjectManager()
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
-	// カメラ
-	followCamera_ = std::make_unique<FollowCamera>();
 }
 
-void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
+void GameObjectManager::Initialize(GPUParticleSystem* gpuManager, ICamera* camera)
 {
 	// チェック
 	assert(gpuManager);
@@ -31,7 +29,7 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	// プレイヤー
-	player_->PreInitialize(followCamera_.get(), gpuManager_);
+	player_->PreInitialize(camera, gpuManager_);
 	player_->Initialize(ModelManager::GetModel("Player"));
 	player_->PointerInitialize(bulletManager_.get(), boss_.get(), nullptr);
 
@@ -40,11 +38,6 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
 	boss_->SetPlayer(player_.get());
 	boss_->SetBulletManager(bulletManager_.get());
-
-	// カメラ
-	followCamera_->Initialize();
-	followCamera_->SetParent(player_->GetWorldTransform());
-	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -131,10 +124,7 @@ void GameObjectManager::UIDraw()
 }
 
 void GameObjectManager::ImGuiDraw()
-{
-	// カメラ
-	followCamera_->ImGuiDraw();
-	
+{	
 	ImGui::Begin("GameObjectManager");
 	if (ImGui::BeginTabBar("Object"))
 	{
