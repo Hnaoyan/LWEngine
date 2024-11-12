@@ -19,9 +19,9 @@ void BulletManager::Initialize(Model* model)
 	AddCluster("Player:DivisionBullet");
 
 	AddCluster("Boss:TrackingBullet");
-	AddCluster("Boss:TInferior");
-	AddCluster("Boss:TSuperior");
-	AddCluster("Boss:TGenius");
+	AddCluster("Boss:Inferior");
+	AddCluster("Boss:Superior");
+	AddCluster("Boss:Genius");
 	AddCluster("Boss:NormalBullet");
 }
 
@@ -70,8 +70,23 @@ void BulletManager::AddCluster(const std::string& tag)
 			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 		}
 		else if ("Boss" == zokusei) {
-			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-			static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.6f,0.6f });
+			std::string colorName = tag.substr(position + 1);
+			if (colorName == "Inferior") {
+				static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.6f,0.6f });
+			}
+			else if (colorName == "Superior") {
+				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.6f,1.0f,0.6f });
+			}
+			else if (colorName == "Genius") {
+				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,0.0f,1.0f,1.0f });
+				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.6f,0.6f,1.0f });
+			}
+			else {
+				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,0.0f,0.0f,1.0f });
+				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.2f,0.2f,0.2f });
+			}
 		}
 	}
 

@@ -119,6 +119,10 @@ public:
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
 	BulletManager* GetBulletManager() { return bulletManager_; }
 	IBulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
+	IBulletCluster* GetSuperiorCluster() { return bulletManager_->FindCluster("Boss:Superior"); }
+	IBulletCluster* GetInferiorCluster() { return bulletManager_->FindCluster("Boss:Inferior"); }
+	IBulletCluster* GetGeneusCluster() { return bulletManager_->FindCluster("Boss:Genius"); }
+
 	IBulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
 #pragma endregion
 

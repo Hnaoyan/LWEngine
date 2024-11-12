@@ -8,8 +8,8 @@ class BulletBuilder
 {
 public: // 設定
 	// 追従の種類設定
-	BulletBuilder& SetType(TrackingAttribute type) { 
-		trackType_ = type;
+	BulletBuilder& SetAttribute(TrackingAttribute type) { 
+		trackAttribute_ = type;
 		return *this;
 	}
 	// トランスフォーム設定
@@ -54,7 +54,7 @@ private:
 	// 追従の対象
 	IGameObject* object_ = nullptr;
 	// 追尾の種類
-	TrackingAttribute trackType_ = TrackingAttribute::kSuperior;
+	TrackingAttribute trackAttribute_ = TrackingAttribute::kSuperior;
 	// 自機のトランスフォーム
 	EulerTransform transform_{};
 	// 進行方向

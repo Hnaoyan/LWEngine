@@ -107,6 +107,20 @@ void BossState::MissileBarrageState::GenerateMissile(const Vector3& direct, Trac
 
 	// 生成部分
 	BulletBuilder builder;
-	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetType(type).SetIsRandStraight(true);
-	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type).SetIsRandStraight(true);
+	
+	switch (type)
+	{
+	case TrackingAttribute::kSuperior:
+		boss_->GetSuperiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kInferior:
+		boss_->GetInferiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kGenius:
+		boss_->GetGeneusCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	}
+
+	//boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
 }
