@@ -1,6 +1,6 @@
 #include "DirectXCommon.h"
 #include "Utility/DxCreateLib.h"
-
+#include "Engine/PostEffect/PostEffectRender.h"
 #include <cassert>
 #include <thread>
 
@@ -104,7 +104,7 @@ void DirectXCommon::RenderPreDraw()
 	DirectXCommand::sCommandList_->ResourceBarrier(1, &barrier);
 	// 描画先のRTVを設定する
 	// ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHandler_->GetHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), 2);
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = DxCreateLib::DescriptorLib::GetCPUDescriptorHandle(rtvHandler_->GetHeap(), device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV), PostEffectRender::GetInstance()->srvIndex_);
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvHandler_->GetHeap()->GetCPUDescriptorHandleForHeapStart();
 	// レンダーターゲットを設定
 	DirectXCommand::sCommandList_->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
