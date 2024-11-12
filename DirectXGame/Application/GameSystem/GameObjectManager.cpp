@@ -27,7 +27,7 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 	// 弾
 	bulletManager_->SetPlayer(player_.get());
 	bulletManager_->SetBoss(boss_.get());
-	bulletManager_->SetGPUParticle(gpuManager);
+	bulletManager_->SetGPUParticle(gpuManager_);
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	// プレイヤー
@@ -36,7 +36,7 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 	player_->PointerInitialize(bulletManager_.get(), boss_.get(), nullptr);
 
 	// ボス
-	boss_->SetGPUParticle(gpuManager);
+	boss_->SetGPUParticle(gpuManager_);
 	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
 	boss_->SetPlayer(player_.get());
 	boss_->SetBulletManager(bulletManager_.get());
