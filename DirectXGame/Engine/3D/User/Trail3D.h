@@ -29,6 +29,11 @@ public:
 
 	void FadeWidthVertex(const std::vector<Vector3>& points);
 
+	void VertexDataReset() {
+		// 中身リセット
+		std::fill(vertexData_.begin(), vertexData_.end(), TriangleData{});
+	};
+
 private:
 	// 頂点
 	ConstantBufferMapContext<TriangleData> vertex_;

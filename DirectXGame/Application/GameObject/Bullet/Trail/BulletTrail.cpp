@@ -50,6 +50,8 @@ void BulletTrail::Update(ICamera* camera)
 		polygon_->SetCamera(camera);
 	}
 
+	//polygon_->VertexDataReset();
+
 	// 弾がある場合
 	if (unit_) {
 		UpdateTrail(unit_.value()->GetWorldPosition());

@@ -28,6 +28,9 @@ Trail3D::Trail3D()
 	// マテリアル
 	material_ = std::make_unique<TrailMaterial>();
 	material_->CreateMaterial();
+
+	// 頂点データ初期化
+	VertexDataReset();
 }
 
 void Trail3D::Update()
@@ -169,8 +172,6 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 
 	float widthRatio = 0.0f;
 
-	// 中身リセット
-	std::fill(vertexData_.begin(), vertexData_.end(), TriangleData{});
 
 	for (size_t i = 0; i < numPoints - 1; ++i) {
 		// 幅の割合
