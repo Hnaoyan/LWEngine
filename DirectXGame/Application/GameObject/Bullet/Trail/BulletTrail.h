@@ -2,6 +2,7 @@
 #include "Engine/Math/Vector/Vector3.h"
 #include "Engine/3D/User/Trail3D.h"
 #include "Engine/3D/Instancing/InstancedUnit.h"
+#include "Application/GameObject/Bullet/BulletEnums.h"
 #include <vector>
 #include <optional>
 
@@ -56,7 +57,8 @@ public:
 	}
 
 	void SetTrailColor(const Vector3& color) { polygon_->SetColor(Vector3(color)); }
-
+	void SetAttribute(TrackingAttribute type) { attribute_ = type; }
+	TrackingAttribute GetAttribute() { return attribute_; }
 private:
 	void GlobalValueInitialize();
 
@@ -73,6 +75,9 @@ private: // SYSTEM
 	bool isInvisible_ = false;
 	// エミッター
 	GPUParticleEmitter* moveEmitter_ = nullptr;
+
+	// 
+	TrackingAttribute attribute_;
 
 	std::string bulletTag_;
 

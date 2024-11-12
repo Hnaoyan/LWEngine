@@ -50,6 +50,8 @@ public:
 	/// <returns></returns>
 	std::unique_ptr<IBullet> Build(BulletType bulletType) const;
 
+	TrackingAttribute GetAttribute() const{ return trackAttribute_; }
+
 private:
 	// 追従の対象
 	IGameObject* object_ = nullptr;

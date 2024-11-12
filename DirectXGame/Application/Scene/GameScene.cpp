@@ -50,7 +50,7 @@ void GameScene::Initialize()
 
 void GameScene::GPUUpdate()
 {
-	gpuParticleManager_->Update();
+	//gpuParticleManager_->Update();
 }
 
 void GameScene::Update()
@@ -111,7 +111,7 @@ void GameScene::Draw()
 	gameObjectManager_->Draw(&camera_, lightDesc);
 
 	// パーティクル
-	gpuParticleManager_->Draw(&camera_);
+	//gpuParticleManager_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
 

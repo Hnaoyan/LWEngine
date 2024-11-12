@@ -26,9 +26,17 @@ void TrailManager::Draw(ICamera* camera)
 		// 更新
 		(*it)->Update(camera);
 
-		// 描画スキップ
-		if ((*it)->IsInvisible()) {
-			return;
+		if ((*it)->GetAttribute() == TrackingAttribute::kSuperior && isInvisibles_[uint32_t(TrackingAttribute::kSuperior)])
+		{
+			continue;
+		}
+		if ((*it)->GetAttribute() == TrackingAttribute::kInferior && isInvisibles_[uint32_t(TrackingAttribute::kInferior)])
+		{
+			continue;
+		}
+		if ((*it)->GetAttribute() == TrackingAttribute::kGenius && isInvisibles_[uint32_t(TrackingAttribute::kGenius)])
+		{
+			continue;
 		}
 		// 描画
 		ModelRenderer::TrailDraw(camera, (*it)->polygon_.get());

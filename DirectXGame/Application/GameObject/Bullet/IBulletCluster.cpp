@@ -6,6 +6,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Application/GameObject/Bullet/BulletsLists.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
@@ -96,6 +97,9 @@ void IBulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	trailInstance->polygon_->SetMaxWidth(global->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
 	trailInstance->SetBulletTag(bullet->GetTag());
 	trailInstance->SetTrailColor(trailColor_);
+	if (TrackingBullet* tBullet = dynamic_cast<TrackingBullet*>(bullet.get())) {
+		trailInstance->SetAttribute(tBullet->GetTrackingType());
+	}
 
 	// 弾
 	bullet->SetTrail(trailInstance.get());
@@ -145,6 +149,15 @@ void IBulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
 	trailInstance->polygon_->SetMaxWidth(global->GetValue<float>("BossTrackingBullet", "TrailMaxWidth"));
 	trailInstance->SetBulletTag(bullet->GetTag());
 	trailInstance->SetTrailColor(trailColor_);
+
+	// 追従の場合属性の設定
+	if (type == BulletType::kTracking) {
+		trailInstance->SetAttribute(builder.GetAttribute());
+	}
+	// 追従以外の場合
+	else {
+		trailInstance->SetAttribute(TrackingAttribute::kNone);
+	}
 
 	// 弾
 	bullet->SetTrail(trailInstance.get());

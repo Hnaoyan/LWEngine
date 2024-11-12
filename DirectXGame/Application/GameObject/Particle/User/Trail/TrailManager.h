@@ -33,6 +33,11 @@ public:
 	
 	BulletTrail* FindTrail(const std::string& name);
 
+public:
+	void SetFlags(const std::bitset<size_t(TrackingAttribute::kMaxSize)>& flags) {
+		isInvisibles_ = flags;
+	}
+
 private:
 	// 軌跡インスタンスのコンテナ
 	std::vector<std::unique_ptr<BulletTrail>> trails_;
@@ -40,6 +45,6 @@ private:
 	GPUParticleSystem* gpuParticle_ = nullptr;
 
 	// 描画フラグ
-	std::bitset<size_t(TrackingAttribute::kMaxSize)> isDrawCheck_;
+	std::bitset<size_t(TrackingAttribute::kMaxSize)> isInvisibles_;
 
 };

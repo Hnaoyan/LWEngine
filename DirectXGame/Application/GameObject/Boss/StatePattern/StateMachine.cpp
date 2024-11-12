@@ -52,5 +52,5 @@ void BossState::IState::GenerateBullet(const Vector3& direct, const float& speed
 	// 生成部分
 	BulletBuilder builder;
 	builder.SetDirect(direct).SetSpeed(speed).SetTransform(boss_->worldTransform_.transform_);
-	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
+	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kNormal);
 }

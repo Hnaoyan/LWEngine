@@ -43,6 +43,7 @@ void BulletManager::Draw(ModelDrawDesc desc)
 	}
 
 	// 軌跡の処理
+	trailManager_->SetFlags(this->isDrawCheck_);
 	trailManager_->Draw(desc.camera);
 }
 
