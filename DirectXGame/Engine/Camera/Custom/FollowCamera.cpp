@@ -89,7 +89,7 @@ void FollowCamera::Update()
 
 void FollowCamera::ImGuiDraw()
 {
-	ImGui::Begin("FollowCamera");
+	//ImGui::Begin("FollowCamera");
 
 	ImGui::DragFloat3("Position", &transform_.translate.x);
 	Vector3 world = GetWorldPosition();
@@ -121,7 +121,7 @@ void FollowCamera::ImGuiDraw()
 		ExecuteShake(15.0f, 5.0f);
 	}
 
-	ImGui::End();
+	//ImGui::End();
 }
 
 void FollowCamera::Reset()

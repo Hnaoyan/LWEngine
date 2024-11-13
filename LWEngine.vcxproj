@@ -44,6 +44,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\FocusCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossAttackState.cpp" />
@@ -321,6 +322,7 @@
     <ClInclude Include="DirectXGame\Engine\Camera\CameraList.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Core\ICamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\DebugCamera.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\FocusCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.h" />

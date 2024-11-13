@@ -17,6 +17,7 @@ public:
 
 public:
 	ICamera* GetCamera();
+	FollowCamera* GetFollowCamera() { return followCamera_.get(); }
 
 private:
 	// オブジェクトマネージャ
@@ -25,6 +26,8 @@ private:
 private:
 	// 追従カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+	// 注視カメラ
+	std::unique_ptr<FocusCamera> focusCamera_;
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
 

@@ -44,7 +44,7 @@ void GameScene::Initialize()
 	// 準備完了
 	isSceneReady_ = true;
 
-	gameObjectManager_->Initialize(gpuParticleManager_.get(),&camera_);
+	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 	cameraManager_->Initialize(gameObjectManager_.get());
 }
 
@@ -159,7 +159,7 @@ void GameScene::ImGuiDraw()
 #ifdef IMGUI_ENABLED
 	
 	gameObjectManager_->ImGuiDraw();
-
+	cameraManager_->ImGuiDraw();
 	// カメラ
 	camera_.ImGuiDraw();
 

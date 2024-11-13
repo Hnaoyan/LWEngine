@@ -1,6 +1,7 @@
 #include "Quaternion.h"
 #include <cmath>
 #include <numbers>
+#include <algorithm>
 
 Quaternion Quaternion::Multiply(const Quaternion& lhs, const Quaternion& rhs)
 {
@@ -108,10 +109,39 @@ Quaternion Quaternion::Add(const Quaternion& q0, const Quaternion& q1)
 
 Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, const float& angle)
 {
-    Quaternion result = {};
+    Quaternion result{};
     result.w = std::cosf(angle / 2.0f);
-    result.x = std::sinf(angle / 2.0f) * axis.x;
-    result.y = std::sinf(angle / 2.0f) * axis.y;
-    result.z = std::sinf(angle / 2.0f) * axis.z;
+    float sinf = std::sinf(angle / 2.0f);
+    result.x = sinf * axis.x;
+    result.y = sinf * axis.y;
+    result.z = sinf * axis.z;
     return result;
+}
+
+Quaternion Quaternion::MakeRotateToDirect(const Vector3& direct, const Vector3& axis)
+{
+    // 角度計算
+    //float angle = std::acosf(Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct)));
+    //Vector3 rotAxis = Vector3::Cross(Vector3::Normalize(axis), Vector3::Normalize(direct));
+
+    // 角度計算: 内積を使って角度を計算
+    float cosAngle = Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct));
+    cosAngle = std::clamp(cosAngle, -1.0f, 1.0f);  // 数値誤差で1.0fを超えないようにクランプ
+    float angle = std::acosf(cosAngle);
+
+    Vector3 rotationAxis{};
+    if (std::abs(cosAngle - 1.0f) < 0.001f) {
+        // ベクトルが同じ方向
+        rotationAxis = Vector3(1.0f, 0.0f, 0.0f); 
+    }
+    else if (std::abs(cosAngle + 1.0f) < 0.001f) {
+        // ベクトルが逆方向
+        rotationAxis = Vector3(1.0f, 0.0f, 0.0f);  // 垂直な軸
+    }
+    else {
+        rotationAxis = Vector3::Cross(Vector3::Normalize(axis), Vector3::Normalize(direct));  // 外積で回転軸を求める
+        rotationAxis.Normalize();  // 正規化
+    }
+
+    return Quaternion(Quaternion::MakeRotateAxisAngleQuaternion(rotationAxis, angle));
 }

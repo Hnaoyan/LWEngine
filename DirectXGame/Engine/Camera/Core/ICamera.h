@@ -39,6 +39,8 @@ protected: // 共通で使う関数
 	void UpdateMatrix();
 
 	void ShakeUpdate();
+
+	void UpdateView(const Matrix4x4& cameraMatrix);
 	//void ZoomUpdate();
 public:
 	void ExecuteShake(float frame, float maxValue);

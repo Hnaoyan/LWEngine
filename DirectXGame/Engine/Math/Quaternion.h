@@ -37,4 +37,5 @@ public:
 	/// <returns></returns>
 	static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, const float& angle);
 
+	static Quaternion MakeRotateToDirect(const Vector3& direct, const Vector3& axis = Vector3::Forward());
 };

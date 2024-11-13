@@ -77,6 +77,19 @@ void ICamera::ImGuiDraw()
 
 }
 
+void ICamera::UpdateView(const Matrix4x4& cameraMatrix)
+{
+	// ビュー行列
+	viewMatrix_ = Matrix4x4::MakeInverse(cameraMatrix);
+	// プロジェクション行列
+	projectionMatrix_ = Matrix4x4::MakePerspectiveFovMatrix(fov_, aspectRatio_, nearZ, farZ);
+	// 角度
+	fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0f);
+
+	// 定数バッファに送信
+	TransferMatrix();
+}
+
 void ICamera::ExecuteShake(float frame, float maxValue)
 {
 	shakeConfig_.isShake = true;
