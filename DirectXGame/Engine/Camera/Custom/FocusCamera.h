@@ -19,9 +19,16 @@ public:
 	void ImGuiDraw() override;
 
 public:
+	/// <summary>
+	/// 角度の更新
+	/// </summary>
+	void FocusUpdate();
+
+public:
 	void SetFocusPoint(Vector3* focusPoint) { focusPoint_ = focusPoint; }
 	void SetWorldTransform(WorldTransform* worldTransform) { worldTransform_ = worldTransform; }
 private:
+	bool isQuaternion_ = true;
 	// 注視座標
 	WorldTransform* worldTransform_ = nullptr;
 	Vector3* focusPoint_ = nullptr;

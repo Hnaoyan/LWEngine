@@ -6,6 +6,15 @@ class Quaternion final
 public:
 	float x, y, z, w;
 
+	Quaternion operator+(const Quaternion& other) const
+	{
+		return Quaternion::Add(*this, other);
+	}
+	Quaternion operator*(const Quaternion& other) const 
+	{
+		return Quaternion::Multiply(*this, other);
+	}
+
 public: // 基本的な計算
 	// 積
 	static Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs);
@@ -38,4 +47,6 @@ public:
 	static Quaternion MakeRotateAxisAngleQuaternion(const Vector3& axis, const float& angle);
 
 	static Quaternion MakeRotateToDirect(const Vector3& direct, const Vector3& axis = Vector3::Forward());
+
+	static Quaternion MakeRotateDirect(const Vector3& direct);
 };

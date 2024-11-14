@@ -231,6 +231,15 @@ namespace LwLib
 		return result;
 	}
 
+	inline static Vector3 CalcEulerFromVector(const Vector3& direction)
+	{
+		// 任意軸との内積
+		float dot = Vector3::Dot(direction, Vector3(0.0f, 0.0f, 1.0f));
+		dot;
+
+		return Vector3();
+	}
+
 	// 指数関数補間
 	// currrent:現在
 	// end:終了

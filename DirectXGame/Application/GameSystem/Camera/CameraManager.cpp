@@ -60,6 +60,10 @@ void CameraManager::ImGuiDraw()
 			followCamera_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+		if (ImGui::BeginTabItem("Focus")) {
+			focusCamera_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
 		if (ImGui::BeginTabItem("Debug")) {
 			debugCamera_->ImGuiDraw();
 			ImGui::EndTabItem();

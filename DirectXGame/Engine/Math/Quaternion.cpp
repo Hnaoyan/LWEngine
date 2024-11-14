@@ -1,4 +1,5 @@
 #include "Quaternion.h"
+#include "Engine/LwLib/LwEngineLib.h"
 #include <cmath>
 #include <numbers>
 #include <algorithm>
@@ -120,15 +121,18 @@ Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, const 
 
 Quaternion Quaternion::MakeRotateToDirect(const Vector3& direct, const Vector3& axis)
 {
-    // 角度計算
-    //float angle = std::acosf(Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct)));
+    //// 角度計算
+    //float dot = Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct));
+    //dot = std::clamp(dot, -1.0f, 1.0f);
+    //float angle = std::acosf(dot);
     //Vector3 rotAxis = Vector3::Cross(Vector3::Normalize(axis), Vector3::Normalize(direct));
+    //return Quaternion::MakeRotateAxisAngleQuaternion(rotAxis, angle);
+
 
     // 角度計算: 内積を使って角度を計算
     float cosAngle = Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct));
     cosAngle = std::clamp(cosAngle, -1.0f, 1.0f);  // 数値誤差で1.0fを超えないようにクランプ
     float angle = std::acosf(cosAngle);
-
     Vector3 rotationAxis{};
     if (std::abs(cosAngle - 1.0f) < 0.001f) {
         // ベクトルが同じ方向
@@ -142,6 +146,27 @@ Quaternion Quaternion::MakeRotateToDirect(const Vector3& direct, const Vector3& 
         rotationAxis = Vector3::Cross(Vector3::Normalize(axis), Vector3::Normalize(direct));  // 外積で回転軸を求める
         rotationAxis.Normalize();  // 正規化
     }
-
     return Quaternion(Quaternion::MakeRotateAxisAngleQuaternion(rotationAxis, angle));
+}
+
+Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
+{
+    Vector3 normDirect = Vector3::Normalize(direct);
+    Vector3 angle{};
+    angle.x = std::acosf(Vector3::Dot(Vector3::Right(), normDirect));
+    angle.y = std::acosf(Vector3::Dot(Vector3::Up(), normDirect));
+    angle.z = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    float angleX = std::atan2(normDirect.y, std::sqrt(normDirect.x * normDirect.x + normDirect.z * normDirect.z));
+    float angleY = std::atan2(normDirect.x, normDirect.z);
+    float angleZ = std::atan2(normDirect.y, normDirect.x);
+    
+    Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), angleX);
+    Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angleY);
+    Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angleZ);
+
+    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), angle.x);
+    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angle.y);
+    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.z);
+
+    return Quaternion(qz * qy * qx);
 }
