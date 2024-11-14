@@ -128,6 +128,9 @@ public:
 	/// <returns></returns>
 	static Matrix4x4
 		MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+	
+	static Matrix4x4
+		MakeAffineMatrix(const Vector3& scale, const Vector3& from, const Vector3& to, const Vector3& translate);
 
 	/// <summary>
 	/// アフィン変換（クォータニオン

@@ -358,6 +358,20 @@ Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotat
 	return affineMatrix;
 }
 
+Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& from, const Vector3& to, const Vector3& translate)
+{
+	// スケール
+	Matrix4x4 scaleMat = MakeScaleMatrix(scale);
+	// 回転
+	Matrix4x4 rotateMat = DirectionToDirection(from, to);
+	// 平行移動
+	Matrix4x4 translateMat = MakeTranslateMatrix(translate);
+
+	Matrix4x4 affineMatrix = Multiply(scaleMat, Multiply(rotateMat, translateMat));
+
+	return affineMatrix;
+}
+
 Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate)
 {
 	Matrix4x4 affineMatrix = {};

@@ -170,3 +170,17 @@ Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
 
     return Quaternion(qz * qy * qx);
 }
+
+Quaternion Quaternion::DirectionToDirection(const Vector3& from, const Vector3& to)
+{
+    Vector3 normFrom, normTo;
+    normFrom = Vector3::Normalize(from);
+    normTo = Vector3::Normalize(to);
+
+    Vector3 cross = Vector3::Cross(normFrom, normTo);
+    float cosAngle = Vector3::Dot(normFrom, normTo);
+    float angle = std::acosf(cosAngle);
+    float sinAngle = std::sinf(angle / 2.0f);
+
+    return Quaternion(cross.x * sinAngle, cross.y * sinAngle, cross.z * sinAngle);
+}

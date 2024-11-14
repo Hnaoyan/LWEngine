@@ -13,8 +13,8 @@ void FocusCamera::Update()
 
 	// バッファーに送る処理など
 	if (isQuaternion_) {
-		Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(transform_.scale, rotateQuaternion_, transform_.translate);
-		UpdateView(cameraMatrix);
+		//Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(transform_.scale, rotateQuaternion_, transform_.translate);
+		//UpdateView(cameraMatrix);
 	}
 	else {
 		ICamera::Update();
@@ -33,6 +33,9 @@ void FocusCamera::FocusUpdate()
 		transform_.translate.y = worldTransform_->GetWorldPosition().y;
 		Vector3 focusDirect = (*focusPoint_) - transform_.translate;
 		focusDirect = focusDirect.Normalize();
-		rotateQuaternion_ = Quaternion::MakeRotateToDirect(focusDirect);
+		rotateQuaternion_ = Quaternion::DirectionToDirection(Vector3::Forward(), focusDirect);
+		
+		Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(transform_.scale, Vector3::Forward(), focusDirect, transform_.translate);
+		UpdateView(cameraMatrix);
 	}
 }

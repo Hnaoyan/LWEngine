@@ -49,4 +49,6 @@ public:
 	static Quaternion MakeRotateToDirect(const Vector3& direct, const Vector3& axis = Vector3::Forward());
 
 	static Quaternion MakeRotateDirect(const Vector3& direct);
+
+	static Quaternion DirectionToDirection(const Vector3& from, const Vector3& to);
 };
