@@ -113,6 +113,13 @@ public:
 	static Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate);
 
 	/// <summary>
+	/// 方向ベクトルから（z軸回転無視
+	/// </summary>
+	/// <param name="direction"></param>
+	/// <returns></returns>
+	static Matrix4x4 MakeRotateMatrix(const Vector3& direction);
+
+	/// <summary>
 	/// クォータニオンを回転行列に
 	/// </summary>
 	/// <param name="rotate"></param>

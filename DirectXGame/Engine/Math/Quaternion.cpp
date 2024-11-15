@@ -152,23 +152,23 @@ Quaternion Quaternion::MakeRotateToDirect(const Vector3& direct, const Vector3& 
 Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
 {
     Vector3 normDirect = Vector3::Normalize(direct);
-    Vector3 angle{};
-    angle.x = std::acosf(Vector3::Dot(Vector3::Right(), normDirect));
-    angle.y = std::acosf(Vector3::Dot(Vector3::Up(), normDirect));
-    angle.z = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //Vector3 angle{};
+    //angle.x = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //angle.y = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //angle.z = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //float angleZ = std::atan2(normDirect.y, normDirect.x);
+    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angleZ);
+
     float angleX = std::atan2(normDirect.y, std::sqrt(normDirect.x * normDirect.x + normDirect.z * normDirect.z));
     float angleY = std::atan2(normDirect.x, normDirect.z);
-    float angleZ = std::atan2(normDirect.y, normDirect.x);
-    
-    Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), angleX);
+    Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), -angleX);
     Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angleY);
-    Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angleZ);
 
-    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), angle.x);
-    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angle.y);
+    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.x);
+    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.y);
     //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.z);
 
-    return Quaternion(qz * qy * qx);
+    return Quaternion(qy * qx); 
 }
 
 Quaternion Quaternion::DirectionToDirection(const Vector3& from, const Vector3& to)
