@@ -1,47 +1,26 @@
 #pragma once
-#include <stdint.h>
+#include <vector>
+#include "GameSystemStructs.h"
 #include "Engine/Input/Input.h"
 
 class KeyConfigManager
 {
-private:
-	/// <summary>
-	/// プレイヤーのキー
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	template<typename T>
-	struct PlayerKey
-	{
-		T lockon;
-		T jump;
-		T shot;
-		T quickBoost;
-		T boost;
-		T pressJump;
-		T homingShot;
-	};
-
-	// キーコンフィグ
-	struct PlayerKeyConfig
-	{
-		PlayerKey<bool> keyConfigs_;
-		PlayerKey<int32_t> keybinds_;
-	};
 public:
-	KeyConfigManager() {
-		input_ = Input::GetInstance();
-	}
+	KeyConfigManager();
 
-public:
-
-	PlayerKey<bool> GetPlayerKey() { return playerKey_.keyConfigs_; }
-
+	PlayerKey<bool> GetPlayerKey() { return playerKey_.keyConfigs; }
+	PlayerKeyConfig* GetKeyConfig() { return &playerKey_; }
 public:
 	void Update();
 
 private:
 	// プレイヤーのキーコンフィグ
 	PlayerKeyConfig playerKey_{};
+	// リプレイモードか
+	bool isReplay_ = false;
+	// リプレイ用の保存コンテナ
+	std::vector<ReplayData> replayContainer_;
+	// 現在のフレーム
 
 	Input* input_ = nullptr;
 };

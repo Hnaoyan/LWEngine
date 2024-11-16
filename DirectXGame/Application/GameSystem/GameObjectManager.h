@@ -4,6 +4,9 @@
 class CollisionManager;
 class CameraManager;
 
+/// <summary>
+/// ゲームのオブジェクト管理クラス
+/// </summary>
 class GameObjectManager
 {
 public:
@@ -39,19 +42,18 @@ public:
 	/// <param name="collisionManager"></param>
 	void RegisterCollider(CollisionManager* collisionManager);
 public:
+	// プレイヤー
 	Player* GetPlayer() { return player_.get(); }
 
+	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
-
 	bool IsGameClear() { return isGameClear_; }
 	bool IsGameOver() { return isGameOver_; }
-private:
-	bool isGameOver_ = false;
-	bool isGameClear_ = false;
-	
-	bool isInGame_ = false;
-
+private: // ゲームクリアなどの部分
+	bool isGameOver_ = false;	// ゲームオーバー
+	bool isGameClear_ = false;	// ゲームクリア
+	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
 

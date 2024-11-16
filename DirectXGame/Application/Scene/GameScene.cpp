@@ -157,7 +157,7 @@ void GameScene::UIDraw()
 void GameScene::ImGuiDraw()
 {
 #ifdef IMGUI_ENABLED
-	
+	gameSystem_->ImGuiDraw();
 	gameObjectManager_->ImGuiDraw();
 	cameraManager_->ImGuiDraw();
 	// カメラ

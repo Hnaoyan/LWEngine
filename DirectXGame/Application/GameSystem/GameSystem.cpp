@@ -4,6 +4,8 @@
 #include "Engine/LwLib/Ease/Ease.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
+#include <imgui.h>
+
 float GameSystem::sSpeedFactor = 1.0f;
 GameSystem::DashBlur GameSystem::sBlurEffect;
 KeyConfigManager GameSystem::sKeyConfigManager;
@@ -42,6 +44,7 @@ void GameSystem::Update()
 
     sKeyConfigManager = keyConfig_;
 
+    // ポストエフェクト関係の受付
     if (sBlurEffect.isActive) {
         sBlurEffect.timer.Update();
         sBlurEffect.data.blurWidth = Ease::Easing(sBlurEffect.maxWidth, 0.0f, sBlurEffect.timer.GetElapsedFrame());
@@ -52,5 +55,22 @@ void GameSystem::Update()
     desc.bloom = bloomData_;
     PostEffectRender::GetInstance()->Update(desc);
     //PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+    
+    // リプレイ用に記録
+    replayManager_.RecordFrame(&keyConfig_, nowFrame_);
+    // フレームカウント
+    nowFrame_++;
+}
+
+void GameSystem::ImGuiDraw()
+{
+
+    ImGui::Begin("GameSystem");
+
+    if (ImGui::Button("ExportReplayData")) {
+        replayManager_.ExportReplay("TestData");
+    }
+
+    ImGui::End();
 
 }

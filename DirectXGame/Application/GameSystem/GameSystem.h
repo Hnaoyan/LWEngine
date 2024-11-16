@@ -1,22 +1,16 @@
 #pragma once
 #include <stdint.h>
+#include "GameSystemStructs.h"
 #include "KeyConfigManager.h"
+#include "Replay/ReplayManager.h"
 #include "Engine/Utility/Singleton.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class Input;
-
 /// <summary>
-/// ゲーム内のシステム的陣営
+/// ゲームのシステム関係クラス
 /// </summary>
-enum class FactionType
-{
-	kPlayer,	// プレイヤー
-	kEnemy,		// 敵
-	kNeutral,	// 中立
-};
-
 class GameSystem : public Singleton<GameSystem>
 {
 public:
@@ -63,12 +57,24 @@ public:
 	/// </summary>
 	void Update();
 
+	void ImGuiDraw();
+
 	//void
 	CBufferDataBloom bloomData_{};
 	CBufferDataVignette vignetteData_{};
 
 private:
+	// キー管理クラス
 	KeyConfigManager keyConfig_;
-	
+	// リプレイ管理クラス
+	ReplayManager replayManager_;
+	// フレーム数のカウント
+	uint32_t nowFrame_ = 0;
+	// インプット
 	Input* input_ = nullptr;
+
+	// 出力用の名前
+	std::string replayExportName_;
+	// 入力用の名前
+	std::string replayImportName_;
 };
