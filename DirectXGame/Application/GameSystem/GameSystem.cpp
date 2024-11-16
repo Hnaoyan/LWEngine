@@ -57,7 +57,7 @@ void GameSystem::Update()
     //PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
     
     // リプレイ用に記録
-    replayManager_.RecordFrame(&keyConfig_, nowFrame_);
+    replayManager_.RecordFrame(&keyConfig_);
     // フレームカウント
     nowFrame_++;
 }
@@ -66,15 +66,7 @@ void GameSystem::ImGuiDraw()
 {
 
     ImGui::Begin("GameSystem");
-    ImGui::InputText("ExportName", replayExportName_, IM_ARRAYSIZE(replayExportName_));
-    ImGui::InputText("ImportName", replayImportName_, IM_ARRAYSIZE(replayExportName_));
-    if (ImGui::Button("ExportReplayData")) {
-        replayManager_.ExportReplay(replayExportName_);
-    }
-    if (ImGui::Button("ImportReplayData")) {
-        replayManager_.ExportReplay(replayImportName_);
-    }
-
+    replayManager_.ImGuiDraw();
     ImGui::End();
 
 }

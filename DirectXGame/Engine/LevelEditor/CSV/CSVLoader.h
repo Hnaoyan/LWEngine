@@ -13,9 +13,11 @@ public:
 	// 拡張子
 	const std::string kExtension = ".csv";
 
+	// データ取得
 	static void LoadCSVData(std::string filePath);
-
 	// ファイルの中身を読みだす処理
 	static std::stringstream LoadCSVFile(std::string fullPath);
+
+	static std::string CreateFullPath(const std::string& directory, const std::string& fileName);
 
 };

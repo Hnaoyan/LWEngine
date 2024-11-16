@@ -5,17 +5,36 @@
 
 class KeyConfigManager;
 
+/// <summary>
+/// リプレイ管理クラス
+/// </summary>
 class ReplayManager
 {
 public:
 	ReplayManager();
 
 public: // メンバ
-	void RecordFrame(KeyConfigManager* keyManager, int32_t nowFrame);
+	// 更新処理
+	void RecordFrame(KeyConfigManager* keyManager);
+	// 外部へ書き出し
 	void ExportReplay(const std::string& fileName);
+	// 外部から書き込み
 	void ImportReplay(const std::string& fileName);
+	// コンテナの初期化
+	void ClearReplayData();
 
+	void ImGuiDraw();
 private:
+	// ディレクトリパス
+	std::string directoryPath_;
 	// データ用コンテナ
 	std::vector<ReplayData> replayDatas_;
+	// レコーディング中か
+	bool isRecord_ = false;
+	// 出力用の名前
+	char exportName_[256];
+	// 入力用の名前
+	char importName_[256];
+	// 現在のフレーム番号
+	uint32_t nowFrame_;
 };

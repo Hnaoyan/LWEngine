@@ -2,6 +2,7 @@
 #include <cassert>
 #include <algorithm>
 #include <fstream>
+#include <filesystem>
 #include <numbers>
 
 void CSVLoader::LoadCSVData(std::string filePath)
@@ -32,4 +33,22 @@ std::stringstream CSVLoader::LoadCSVFile(std::string fullPath)
 	file.close();
 
 	return popCommands;
+}
+
+std::string CSVLoader::CreateFullPath(const std::string& directory, const std::string& fileName)
+{
+	// ディレクトリがなければ作成
+	std::filesystem::path dir(directory);
+	if (!std::filesystem::exists(directory))
+	{
+		std::filesystem::create_directories(directory);
+	}
+	// 拡張子がなければ追加
+	std::string name = fileName;
+	size_t isExt = name.find(".csv");
+	if (isExt == std::string::npos) {
+		name = name + ".csv";
+	}
+
+	return std::string(directory + name);
 }

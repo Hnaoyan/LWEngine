@@ -73,8 +73,4 @@ private:
 	// インプット
 	Input* input_ = nullptr;
 
-	// 出力用の名前
-	char replayExportName_[256];
-	// 入力用の名前
-	char replayImportName_[256];
 };
