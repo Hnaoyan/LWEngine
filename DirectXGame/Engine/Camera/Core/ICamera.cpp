@@ -32,14 +32,14 @@ void ICamera::Update()
 
 void ICamera::UpdateMatrix()
 {
+	// 角度
+	fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0f);
 	// カメラ行列
 	Matrix4x4 cameraMatrix = Matrix4x4::MakeAffineMatrix(transform_.scale, transform_.rotate, transform_.translate);
 	// ビュー行列
 	viewMatrix_ = Matrix4x4::MakeInverse(cameraMatrix);
 	// プロジェクション行列
-	projectionMatrix_ = Matrix4x4::MakePerspectiveFovMatrix(fov_, aspectRatio_, nearZ, farZ);
-	// 角度
-	fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0f);
+	projectionMatrix_ = Matrix4x4::MakePerspectiveFovMatrix(fovAngle_, aspectRatio_, nearZ, farZ);
 	// 前方ベクトル
 	Matrix4x4 frontMat = Matrix4x4::MakeRotateYMatrix(transform_.rotate.y);
 	frontVector_ = Matrix4x4::TransformVector3(kFrontVector, frontMat);
@@ -79,12 +79,12 @@ void ICamera::ImGuiDraw()
 
 void ICamera::UpdateView(const Matrix4x4& cameraMatrix)
 {
+	// 角度
+	fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0f);
 	// ビュー行列
 	viewMatrix_ = Matrix4x4::MakeInverse(cameraMatrix);
 	// プロジェクション行列
-	projectionMatrix_ = Matrix4x4::MakePerspectiveFovMatrix(fov_, aspectRatio_, nearZ, farZ);
-	// 角度
-	fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0f);
+	projectionMatrix_ = Matrix4x4::MakePerspectiveFovMatrix(fovAngle_, aspectRatio_, nearZ, farZ);
 
 	// 定数バッファに送信
 	TransferMatrix();

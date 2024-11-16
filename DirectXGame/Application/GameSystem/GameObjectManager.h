@@ -2,6 +2,7 @@
 #include "Application/GameObject/GameObjectLists.h"
 
 class CollisionManager;
+class CameraManager;
 
 class GameObjectManager
 {

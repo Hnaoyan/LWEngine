@@ -155,7 +155,10 @@ Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
     //Vector3 angle{};
     //angle.x = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
     //angle.y = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.x);
+    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.y);
     //angle.z = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.z);
     //float angleZ = std::atan2(normDirect.y, normDirect.x);
     //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angleZ);
 
@@ -164,9 +167,6 @@ Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
     Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), -angleX);
     Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angleY);
 
-    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.x);
-    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.y);
-    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.z);
 
     return Quaternion(qy * qx); 
 }

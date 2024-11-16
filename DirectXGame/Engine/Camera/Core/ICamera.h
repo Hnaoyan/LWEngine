@@ -54,8 +54,6 @@ public:
 	void TransferMatrix();
 
 protected:
-	// 視野角の値
-	float fov_ = 45.0f;
 	/// <summary>
 	/// シェイクの情報
 	/// </summary>
@@ -82,6 +80,8 @@ protected:
 
 	// シェイク用
 	ShakeParameter shakeConfig_;
+	// 視野角の値
+	float fov_ = 75.0f;
 
 public:
 	// ビュー行列
@@ -92,7 +92,7 @@ public:
 	EulerTransform transform_ = {};
 	// 正面ベクトル
 	const Vector3 kFrontVector = { 0.0f,0.0f,1.0f };
-
+	// 前方ベクトル
 	Vector3 frontVector_ = {};
 public:
 	// ワールド座標

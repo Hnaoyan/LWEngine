@@ -90,7 +90,7 @@ void FollowCamera::Update()
 void FollowCamera::ImGuiDraw()
 {
 	//ImGui::Begin("FollowCamera");
-
+	ImGui::DragFloat("Fov", &fov_, 0.01f);
 	ImGui::DragFloat3("Position", &transform_.translate.x);
 	Vector3 world = GetWorldPosition();
 	ImGui::DragFloat3("WorldPosition", &world.x);

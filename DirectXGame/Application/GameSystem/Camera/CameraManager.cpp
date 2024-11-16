@@ -37,6 +37,27 @@ void CameraManager::Update()
 	followCamera_->Update();
 	focusCamera_->Update();
 	debugCamera_->Update();
+
+	if (changeRequest_) {
+		ActiveCameraMode value = changeRequest_.value();
+		activeCamera_ = value;
+		switch (value)
+		{
+		case ActiveCameraMode::kNormal:
+			activeCamera_ = value;
+			break;
+		case ActiveCameraMode::kFollow:
+			break;
+		case ActiveCameraMode::kFocus:
+			break;
+		case ActiveCameraMode::kDebug:
+			break;
+		case ActiveCameraMode::kMaxSize:
+			break;
+		}
+		changeRequest_ = std::nullopt;
+	}
+
 }
 
 void CameraManager::ImGuiDraw()
@@ -45,13 +66,13 @@ void CameraManager::ImGuiDraw()
 
 	ImGui::SeparatorText("Switcher");
 	if (ImGui::Button("Follow")) {
-		activeCamera_ = ActiveCameraMode::kFollow;
+		ChangeCamera(ActiveCameraMode::kFollow);
 	}
 	if (ImGui::Button("Focus")) {
-		activeCamera_ = ActiveCameraMode::kFocus;
+		ChangeCamera(ActiveCameraMode::kFocus);
 	}
 	if (ImGui::Button("Debug")) {
-		activeCamera_ = ActiveCameraMode::kDebug;
+		ChangeCamera(ActiveCameraMode::kDebug);
 	}
 
 	if (ImGui::BeginTabBar("System"))
@@ -72,6 +93,34 @@ void CameraManager::ImGuiDraw()
 	}
 
 	ImGui::End();
+}
+
+void CameraManager::ChangeCamera(ActiveCameraMode mode)
+{
+	// リクエストを送信
+	changeRequest_ = mode;
+	// 何か追加することがあれば
+	switch (mode)
+	{
+	case ActiveCameraMode::kNormal:
+		break;
+	case ActiveCameraMode::kFollow:
+		break;
+	case ActiveCameraMode::kFocus:
+		break;
+	case ActiveCameraMode::kDebug:
+		break;
+	case ActiveCameraMode::kMaxSize:
+		break;
+	default:
+		break;
+	}
+
+}
+
+void CameraManager::UpdateCameraSwitcher()
+{
+
 }
 
 ICamera* CameraManager::GetCamera()

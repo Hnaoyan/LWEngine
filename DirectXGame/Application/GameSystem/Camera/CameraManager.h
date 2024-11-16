@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Camera/CameraList.h"
+#include <optional>
 #include <memory>
 
 class GameObjectManager;
@@ -14,6 +15,12 @@ public:
 	void Initialize(GameObjectManager* gameManager);
 	void Update();
 	void ImGuiDraw();
+
+	void ChangeCamera(ActiveCameraMode mode);
+
+private:
+	
+	void UpdateCameraSwitcher();
 
 public:
 	ICamera* GetCamera();
@@ -31,6 +38,8 @@ private:
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
 
+	// 変更のリクエスト
+	std::optional<ActiveCameraMode> changeRequest_ = std::nullopt;
 	// 現在アクティブなカメラ
 	ActiveCameraMode activeCamera_ = ActiveCameraMode::kNormal;
 };
