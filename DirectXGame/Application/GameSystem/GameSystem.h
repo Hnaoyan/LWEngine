@@ -74,7 +74,7 @@ private:
 	Input* input_ = nullptr;
 
 	// 出力用の名前
-	std::string replayExportName_;
+	char replayExportName_[256];
 	// 入力用の名前
-	std::string replayImportName_;
+	char replayImportName_[256];
 };

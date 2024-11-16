@@ -66,9 +66,13 @@ void GameSystem::ImGuiDraw()
 {
 
     ImGui::Begin("GameSystem");
-
+    ImGui::InputText("ExportName", replayExportName_, IM_ARRAYSIZE(replayExportName_));
+    ImGui::InputText("ImportName", replayImportName_, IM_ARRAYSIZE(replayExportName_));
     if (ImGui::Button("ExportReplayData")) {
-        replayManager_.ExportReplay("TestData");
+        replayManager_.ExportReplay(replayExportName_);
+    }
+    if (ImGui::Button("ImportReplayData")) {
+        replayManager_.ExportReplay(replayImportName_);
     }
 
     ImGui::End();
