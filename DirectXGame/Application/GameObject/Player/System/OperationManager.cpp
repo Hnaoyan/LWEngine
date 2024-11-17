@@ -40,8 +40,8 @@ void OparationManager::Update()
 void OparationManager::InputUpdate()
 {
 	Vector3 direct = {};
-	Vector2 sThumbL = input_->XGetLeftJoystick();
-	Vector2 sThumbR = input_->XGetRightJoystick();
+	Vector2 sThumbL = GameSystem::sKeyConfigManager.GetKeyConfig()->leftStick;
+	Vector2 sThumbR = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
 	// コントローラー操作
 	// 方向取得
 	direct = { sThumbL.x,sThumbL.y ,0 };

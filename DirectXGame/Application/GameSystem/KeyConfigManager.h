@@ -3,6 +3,8 @@
 #include "GameSystemStructs.h"
 #include "Engine/Input/Input.h"
 
+class ReplayManager;
+
 class KeyConfigManager
 {
 public:
@@ -11,16 +13,17 @@ public:
 	PlayerKey<bool> GetPlayerKey() { return playerKey_.keyConfigs; }
 	PlayerKeyConfig* GetKeyConfig() { return &playerKey_; }
 public:
-	void Update();
+	void Update(ReplayManager* replayManager);
+
+	void BeginReplay();
 
 private:
 	// プレイヤーのキーコンフィグ
 	PlayerKeyConfig playerKey_{};
 	// リプレイモードか
 	bool isReplay_ = false;
-	// リプレイ用の保存コンテナ
-	std::vector<ReplayData> replayContainer_;
-	// 現在のフレーム
+
+	uint32_t playFrame_ = 0;	// 再生中のフレーム
 
 	Input* input_ = nullptr;
 };

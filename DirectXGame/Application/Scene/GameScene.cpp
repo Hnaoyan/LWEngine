@@ -58,9 +58,9 @@ void GameScene::Update()
 	
 
 #ifdef IMGUI_ENABLED
-	//if (input_->TriggerKey(DIK_LSHIFT)) {
-	//	sceneManager_->ChangeScene("TITLE");
-	//}
+	if (input_->TriggerKey(DIK_UPARROW)) {
+		sceneManager_->ChangeScene("TITLE");
+	}
 #endif // _DEBUG
 
 	if (gameObjectManager_->IsGameOver() || gameObjectManager_->IsGameClear()) {
@@ -164,6 +164,12 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 
 	ImGui::Begin("GameScene");
+
+	if (ImGui::Button("ReplayStart")) {
+		this->Initialize();
+		gameSystem_->LaunchReplay();
+	}
+
 	if (ImGui::Button("PostDefault")) {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 	}

@@ -1,12 +1,10 @@
 #include "KeyConfigManager.h"
+#include "Replay/ReplayManager.h"
 
 KeyConfigManager::KeyConfigManager()
 {
     input_ = Input::GetInstance();
-}
-void KeyConfigManager::Update()
-{
-    // キーバインド
+    // キーバインドの設定
     playerKey_.keybinds.quickBoost = XINPUT_GAMEPAD_LEFT_SHOULDER;
     playerKey_.keybinds.jump = XINPUT_GAMEPAD_A;
     playerKey_.keybinds.pressJump = input_->XRTrigger();
@@ -15,9 +13,22 @@ void KeyConfigManager::Update()
     playerKey_.keybinds.homingShot = XINPUT_GAMEPAD_X;
     playerKey_.keybinds.boost = XINPUT_GAMEPAD_X;
 
+}
+void KeyConfigManager::Update(ReplayManager* replayManager)
+{
+
     if (isReplay_)
     {
+        // データの取得
+        playerKey_.keyConfigs = replayManager->GetReplayData(playFrame_).keyConfigs;
+        playerKey_.leftStick = replayManager->GetReplayData(playFrame_).leftStick;
+        playerKey_.rightStick = replayManager->GetReplayData(playFrame_).rightStick;
 
+        // カウント
+        playFrame_++;
+        if (playFrame_ >= replayManager->GetReplayDataSize()) {
+            isReplay_ = false;
+        }
     }
     else 
     {
@@ -40,15 +51,11 @@ void KeyConfigManager::Update()
         //---スティックの受付---//
         playerKey_.leftStick = input_->XGetLeftJoystick();
         playerKey_.rightStick = input_->XGetRightJoystick();
-
-        // 保存処理
-        ReplayData saveData{};
-        saveData.keyConfigs = playerKey_.keyConfigs;
-        saveData.leftStick = playerKey_.leftStick;
-        saveData.rightStick = playerKey_.rightStick;
-        //saveData.frameNumber = int32_t(nowFrame_);
-        replayContainer_.push_back(saveData);
     }
+}
 
-    //nowFrame_++;
+void KeyConfigManager::BeginReplay()
+{
+    isReplay_ = true;
+    playFrame_ = 0;
 }

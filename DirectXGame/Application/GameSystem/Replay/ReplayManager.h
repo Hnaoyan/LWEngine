@@ -22,8 +22,17 @@ public: // メンバ
 	void ImportReplay(const std::string& fileName);
 	// コンテナの初期化
 	void ClearReplayData();
-
+	// ImGui
 	void ImGuiDraw();
+
+	size_t GetReplayDataSize() {
+		return replayDatas_.size();
+	}
+
+	ReplayData GetReplayData(int32_t num) {
+		return replayDatas_[num];
+	}
+
 private:
 	// ディレクトリパス
 	std::string directoryPath_;
@@ -32,9 +41,10 @@ private:
 	// レコーディング中か
 	bool isRecord_ = false;
 	// 出力用の名前
-	char exportName_[256];
+	char exportName_[256] = "";
 	// 入力用の名前
-	char importName_[256];
+	char importName_[256] = "";
 	// 現在のフレーム番号
 	uint32_t nowFrame_;
+
 };

@@ -10,6 +10,7 @@
 ReplayManager::ReplayManager()
 {
     directoryPath_ = "Resources/ReplayData/";
+    ImportReplay("test");
 }
 
 void ReplayManager::RecordFrame(KeyConfigManager* keyManager)
@@ -151,4 +152,9 @@ void ReplayManager::ImGuiDraw()
     if (ImGui::Button("ClearReplayData")) {
         ClearReplayData();
     }
+
+    if (ImGui::Button("StartReplay")) {
+
+    }
+
 }

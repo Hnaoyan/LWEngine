@@ -1,7 +1,8 @@
 #include "FollowCamera.h"
 #include "imgui.h"
-#include "../../Input/Input.h"
-#include "../../LwLib/LwEngineLib.h"
+#include "Engine/Input/Input.h"
+#include "Engine/LwLib/LwEngineLib.h"
+#include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/Player/System/PlayerSystemLists.h"
 #include "Application/GameObject/Enemy/SampleEnemy.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
@@ -37,7 +38,7 @@ void FollowCamera::Update()
 	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 
 	// コントローラー
-	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick();
+	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
 
 	// 追尾
 	if (target_) {

@@ -270,6 +270,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\Camera\CameraManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\Camera\CameraSwitcher.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystemStructs.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfigManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameObjectManager.h" />

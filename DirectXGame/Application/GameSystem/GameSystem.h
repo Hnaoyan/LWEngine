@@ -4,8 +4,6 @@
 #include "KeyConfigManager.h"
 #include "Replay/ReplayManager.h"
 #include "Engine/Utility/Singleton.h"
-#include "Engine/PostEffect/PostEffectRender.h"
-#include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class Input;
 /// <summary>
@@ -23,26 +21,6 @@ public:
 	/// <returns></returns>
 	static float GameSpeedFactor();
 
-private: // ポストエフェクト用	
-	struct DashBlur
-	{
-		// ブラーの詳細情報
-		CBufferDataBlur data;
-		bool isActive = false;
-		float maxWidth = 0.2f;
-		FrameTimer timer;
-		void Initialize() {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-			data.blurWidth = maxWidth;
-			timer.Start(35.0f);
-			isActive = true;
-		}
-		void Finalize() {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-			isActive = false;
-		}
-	};
-
 public:
 	// プレイヤーのキー
 	static DashBlur sBlurEffect;
@@ -58,6 +36,8 @@ public:
 	void Update();
 
 	void ImGuiDraw();
+
+	void LaunchReplay();
 
 	//void
 	CBufferDataBloom bloomData_{};

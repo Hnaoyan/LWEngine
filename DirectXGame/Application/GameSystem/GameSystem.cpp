@@ -7,7 +7,7 @@
 #include <imgui.h>
 
 float GameSystem::sSpeedFactor = 1.0f;
-GameSystem::DashBlur GameSystem::sBlurEffect;
+DashBlur GameSystem::sBlurEffect;
 KeyConfigManager GameSystem::sKeyConfigManager;
 
 float GameSystem::GameSpeedFactor()
@@ -21,10 +21,13 @@ float GameSystem::GameSpeedFactor()
 void GameSystem::Initialize()
 {
     input_ = Input::GetInstance();
-
+    // リプレイマネージャ生成
+    replayManager_ = ReplayManager();
+    // キーコンフィグ生成
     keyConfig_ = KeyConfigManager();
-    keyConfig_.Update();
 
+    
+    // ポストエフェクト
     bloomData_ = { 0.75f,1.5f };
     // ブラー
     sBlurEffect.data.centerPoint = { 0.5f,0.5f };
@@ -40,7 +43,7 @@ void GameSystem::Initialize()
 void GameSystem::Update()
 {
     // バインドの更新
-    keyConfig_.Update();
+    keyConfig_.Update(&replayManager_);
 
     sKeyConfigManager = keyConfig_;
 
@@ -54,7 +57,6 @@ void GameSystem::Update()
     desc.blur = sBlurEffect.data;
     desc.bloom = bloomData_;
     PostEffectRender::GetInstance()->Update(desc);
-    //PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
     
     // リプレイ用に記録
     replayManager_.RecordFrame(&keyConfig_);
@@ -69,4 +71,10 @@ void GameSystem::ImGuiDraw()
     replayManager_.ImGuiDraw();
     ImGui::End();
 
+}
+
+void GameSystem::LaunchReplay()
+{
+    // リプレイの準備
+    keyConfig_.BeginReplay();
 }
