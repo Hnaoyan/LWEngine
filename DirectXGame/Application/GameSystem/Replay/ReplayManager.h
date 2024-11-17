@@ -19,7 +19,7 @@ public: // メンバ
 	// 外部へ書き出し
 	void ExportReplay(const std::string& fileName);
 	// 外部から書き込み
-	void ImportReplay(const std::string& fileName);
+	void ImportReplay();
 	// コンテナの初期化
 	void ClearReplayData();
 	// ImGui

@@ -43,6 +43,9 @@ public:
 	CBufferDataBloom bloomData_{};
 	CBufferDataVignette vignetteData_{};
 
+public:
+	ReplayManager* GetReplayManager() { return &replayManager_; }
+
 private:
 	// キー管理クラス
 	KeyConfigManager keyConfig_;

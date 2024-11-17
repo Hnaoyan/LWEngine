@@ -41,6 +41,12 @@ public:
 	/// </summary>
 	/// <param name="collisionManager"></param>
 	void RegisterCollider(CollisionManager* collisionManager);
+
+	/// <summary>
+	/// ゲーム開始準備
+	/// </summary>
+	void GameSetUp();
+
 public:
 	// プレイヤー
 	Player* GetPlayer() { return player_.get(); }

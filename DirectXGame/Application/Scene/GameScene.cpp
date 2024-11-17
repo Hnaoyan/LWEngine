@@ -166,7 +166,14 @@ void GameScene::ImGuiDraw()
 	ImGui::Begin("GameScene");
 
 	if (ImGui::Button("ReplayStart")) {
-		this->Initialize();
+		gameSystem_->GetReplayManager()->ImportReplay();
+		// インスタンス生成しなおし
+		gameObjectManager_ = std::make_unique<GameObjectManager>();
+		cameraManager_ = std::make_unique<CameraManager>();
+		// オブジェクト類の初期化
+		gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+		gameObjectManager_->GameSetUp();	// ゲームの準備
+		cameraManager_->Initialize(gameObjectManager_.get());
 		gameSystem_->LaunchReplay();
 	}
 

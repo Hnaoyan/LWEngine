@@ -10,7 +10,6 @@
 ReplayManager::ReplayManager()
 {
     directoryPath_ = "Resources/ReplayData/";
-    ImportReplay("test");
 }
 
 void ReplayManager::RecordFrame(KeyConfigManager* keyManager)
@@ -68,13 +67,13 @@ void ReplayManager::ExportReplay(const std::string& fileName)
 
 }
 
-void ReplayManager::ImportReplay(const std::string& fileName)
+void ReplayManager::ImportReplay()
 {
     // 念の為にコンテナのリセット
     ClearReplayData();
 
     // パス作成
-    std::string fullPath = CSVLoader::CreateFullPath(directoryPath_, fileName);
+    std::string fullPath = CSVLoader::CreateFullPath(directoryPath_, importName_);
     // データ取得
     std::stringstream popCommands = CSVLoader::LoadCSVFile(fullPath);
     // 解析
@@ -146,7 +145,7 @@ void ReplayManager::ImGuiDraw()
     }
     // 書き込み
     if (ImGui::Button("ImportReplayData")) {
-        ImportReplay(importName_);
+        ImportReplay();
     }
     // データ削除
     if (ImGui::Button("ClearReplayData")) {

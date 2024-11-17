@@ -167,3 +167,9 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);
 }
+
+void GameObjectManager::GameSetUp()
+{
+	boss_->SetIsAction(true);
+	boss_->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+}

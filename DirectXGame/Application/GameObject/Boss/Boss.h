@@ -51,7 +51,9 @@ public:
 
 	void Reset() { systemManager_->uiManager_.Initialize(this); }
 	void Finalize();
-
+	//
+	void SetIsAction(bool isAction) { isAction_ = isAction; }
+	BossFacade* GetSystem() { return systemManager_.get(); }
 private:
 	// グローバル変数関係の初期化
 	void GlobalValueInitialize() override;
