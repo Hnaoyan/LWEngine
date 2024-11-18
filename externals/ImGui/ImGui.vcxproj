@@ -80,16 +80,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\$(ProjectName)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\ImGui\$(ProjectName)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\LWEngine_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\ImGui\LWEngine_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\$(ProjectName)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\ImGui\$(ProjectName)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\LWEngine_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\ImGui\LWEngine_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">
-    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\$(ProjectName)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\ImGui\$(ProjectName)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\LwEngineOutputs\Generated\Outputs\LWEngine_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\LwEngineOutputs\Generated\ImGui\LWEngine_$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

@@ -147,9 +147,9 @@ private:
 	DIMOUSESTATE2 mouse_ = {};
 	DIMOUSESTATE2 preMouse_ = {};
 
-	DWORD xJoystick_;
-	XINPUT_STATE xJoyState_;
-	XINPUT_STATE xJoyStatePrev_;
+	DWORD xJoystick_{};
+	XINPUT_STATE xJoyState_{};
+	XINPUT_STATE xJoyStatePrev_{};
 
 	bool isJoystickConnected_ = false;
 

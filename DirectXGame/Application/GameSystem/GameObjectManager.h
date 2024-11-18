@@ -41,7 +41,6 @@ public:
 	/// </summary>
 	/// <param name="collisionManager"></param>
 	void RegisterCollider(CollisionManager* collisionManager);
-
 	/// <summary>
 	/// ゲーム開始準備
 	/// </summary>

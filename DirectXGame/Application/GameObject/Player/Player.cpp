@@ -26,7 +26,7 @@ void Player::Initialize(Model* model)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 
-	worldTransform_.transform_.translate.z = -35.0f;
+	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
 	worldTransform_.UpdateMatrix();
 
 	collider_.Initialize(worldTransform_.transform_.scale, this);
@@ -243,6 +243,7 @@ void Player::GlobalValueInitialize()
 	std::string groupName = "Player";
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "DashPower", 0.0f);
+	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
 
 
 	//---追尾弾---//

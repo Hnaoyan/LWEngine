@@ -21,7 +21,7 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 	followCamera_->Initialize();
 	followCamera_->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
 	followCamera_->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
-
+	// 注視点カメラ
 	focusCamera_->Initialize();
 	focusCamera_->transform_.translate = { 50.0f,0.0f,0.0f };
 	focusCamera_->SetFocusPoint(&gameManager->GetPlayer()->worldTransform_.transform_.translate);

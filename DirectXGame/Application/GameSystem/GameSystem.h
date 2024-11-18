@@ -3,6 +3,7 @@
 #include "GameSystemStructs.h"
 #include "KeyConfigManager.h"
 #include "Replay/ReplayManager.h"
+#include "Effect/PostEffectManager.h"
 #include "Engine/Utility/Singleton.h"
 
 class Input;
@@ -34,9 +35,13 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
-
+	/// <summary>
+	/// ImGui
+	/// </summary>
 	void ImGuiDraw();
-
+	/// <summary>
+	/// リプレイの開始処理
+	/// </summary>
 	void LaunchReplay();
 
 	//void
@@ -51,6 +56,8 @@ private:
 	KeyConfigManager keyConfig_;
 	// リプレイ管理クラス
 	ReplayManager replayManager_;
+	// ポストエフェクト管理クラス
+	PostEffectManager postEffectManager_;
 	// フレーム数のカウント
 	uint32_t nowFrame_ = 0;
 	// インプット

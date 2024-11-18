@@ -25,8 +25,8 @@ void GameSystem::Initialize()
     replayManager_ = ReplayManager();
     // キーコンフィグ生成
     keyConfig_ = KeyConfigManager();
-
-    
+    // ポストエフェクト生成
+    postEffectManager_ = PostEffectManager();
     // ポストエフェクト
     bloomData_ = { 0.75f,1.5f };
     // ブラー
@@ -44,7 +44,7 @@ void GameSystem::Update()
 {
     // バインドの更新
     keyConfig_.Update(&replayManager_);
-
+    // 静的なクラスに渡す
     sKeyConfigManager = keyConfig_;
 
     // ポストエフェクト関係の受付

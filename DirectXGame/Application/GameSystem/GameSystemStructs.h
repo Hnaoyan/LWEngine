@@ -51,7 +51,7 @@ enum class FactionType
 struct DashBlur
 {
 	// ブラーの詳細情報
-	CBufferDataBlur data;
+	CBufferDataBlur data{};
 	bool isActive = false;
 	float maxWidth = 0.2f;
 	FrameTimer timer;
