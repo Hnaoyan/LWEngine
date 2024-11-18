@@ -61,17 +61,17 @@ void BulletManager::ImGuiDraw()
 {
 	// 描画チェック
 	if (ImGui::TreeNode("DrawFlags")) {
-		bool isG = isDrawCheck_[uint32_t(TrackingAttribute::kGenius)];
-		ImGui::Checkbox("Genius", &isG);
-		isDrawCheck_[uint32_t(TrackingAttribute::kGenius)] = isG;
+		bool isCheck = isDrawCheck_[uint32_t(TrackingAttribute::kGenius)];
+		ImGui::Checkbox("Genius", &isCheck);
+		isDrawCheck_[uint32_t(TrackingAttribute::kGenius)] = isCheck;
 
-		isG = isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)];
-		ImGui::Checkbox("Superior", &isG);
-		isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)] = isG;
+		isCheck = isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)];
+		ImGui::Checkbox("Superior", &isCheck);
+		isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)] = isCheck;
 
-		isG = isDrawCheck_[uint32_t(TrackingAttribute::kInferior)];
-		ImGui::Checkbox("Inferior", &isG);
-		isDrawCheck_[uint32_t(TrackingAttribute::kInferior)] = isG;
+		isCheck = isDrawCheck_[uint32_t(TrackingAttribute::kInferior)];
+		ImGui::Checkbox("Inferior", &isCheck);
+		isDrawCheck_[uint32_t(TrackingAttribute::kInferior)] = isCheck;
 
 		FindCluster("Boss:Superior")->SetInvisible(isDrawCheck_[uint32_t(TrackingAttribute::kSuperior)]);
 		FindCluster("Boss:Inferior")->SetInvisible(isDrawCheck_[uint32_t(TrackingAttribute::kInferior)]);
