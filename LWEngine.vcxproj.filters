@@ -309,10 +309,10 @@
     <ClCompile Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.cpp">
       <Filter>Engine\LwLib</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.cpp">
       <Filter>Application\GameObject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.cpp">
       <Filter>Application\GameObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.cpp">
@@ -698,14 +698,11 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h">
       <Filter>Application\GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.h">
       <Filter>Application\GameObject\Player</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.h">
       <Filter>Application\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\ActionNode.h">
-      <Filter>Engine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Animation\Animation.h">
       <Filter>Engine\Animation</Filter>
@@ -788,13 +785,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemStructs.h">
       <Filter>Application\GameObject\Boss\System</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossNode.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossBehaviorTree.h">
       <Filter>Application\GameObject\Boss\System</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.h">

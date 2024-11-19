@@ -1,7 +1,7 @@
 #include "PlayerFootCollider.h"
-#include "../Player.h"
-#include "../../../Collision/ColliderFilter.h"
-#include "imgui.h"
+#include "../../Player.h"
+#include "Application/Collision/ColliderFilter.h"
+#include <imgui.h>
 
 void PlayerFootCollider::Initialize(Player* player)
 {

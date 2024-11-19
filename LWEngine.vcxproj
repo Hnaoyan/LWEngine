@@ -75,7 +75,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerBulletEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerMoveParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.cpp" />
@@ -92,7 +92,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\StateManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.cpp" />
@@ -190,9 +190,6 @@
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\ActionNode.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossBehaviorTree.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\BehaviorTree\BossNode.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h" />
@@ -239,7 +236,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerFootCollider.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />
@@ -251,7 +248,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\StateManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.h" />

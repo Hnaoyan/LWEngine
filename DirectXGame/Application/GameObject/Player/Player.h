@@ -1,7 +1,7 @@
 #pragma once
 #include "../IGameObject.h"
 #include "System/PlayerSystemLists.h"
-#include "Module/PlayerFootCollider.h"
+#include "Module/Foot/PlayerFootCollider.h"
 #include "Module/State/IPlayerState.h"
 #include "System/PlayerFacade.h"
 
