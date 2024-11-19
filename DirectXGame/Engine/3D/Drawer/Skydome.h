@@ -3,6 +3,9 @@
 #include "../ModelUtility/ModelData.h"
 #include "../WorldTransform.h"
 
+/// <summary>
+/// 天球モデルクラス
+/// </summary>
 class Skydome
 {
 public:

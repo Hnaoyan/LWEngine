@@ -4,6 +4,9 @@
 
 #include <vector>
 
+/// <summary>
+/// 3Dラインクラス
+/// </summary>
 class Line3D
 {
 public:

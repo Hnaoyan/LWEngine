@@ -5,7 +5,7 @@
 #include <string>
 
 /// <summary>
-/// ゲームシーンなどで使うものを管理するクラス
+/// 音源管理するクラス
 /// </summary>
 class AudioManager : public Singleton<AudioManager>
 {

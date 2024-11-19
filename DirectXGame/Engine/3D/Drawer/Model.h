@@ -20,6 +20,9 @@
 
 class Animation;
 
+/// <summary>
+/// 通常モデルクラス
+/// </summary>
 class Model
 {
 private:

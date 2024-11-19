@@ -15,7 +15,7 @@
 #include <chrono>
 
 /// <summary>
-/// DirectX
+/// DirectX基本クラス
 /// </summary>
 class DirectXCommon : public Singleton<DirectXCommon>
 {
@@ -27,7 +27,6 @@ public:
 	/// <param name="bufferWidth"></param>
 	/// <param name="bufferHeight"></param>
 	void Initialize(WindowAPI* winApp, int32_t bufferWidth = WindowAPI::kWindowWidth, int32_t bufferHeight = WindowAPI::kWindowHeight);
-
 	/// <summary>
 	/// 描画前
 	/// </summary>
@@ -36,7 +35,6 @@ public:
 	/// 描画後
 	/// </summary>
 	void PostDraw();
-
 	/// <summary>
 	/// レンダーテクスチャの描画前
 	/// </summary>
@@ -45,14 +43,13 @@ public:
 	/// レンダーテクスチャの描画後
 	/// </summary>
 	void RenderPostDraw();
-
 	/// <summary>
 	/// 深度クリア
 	/// </summary>
-	void ClearDepthBuffer() {
-		dsvHandler_->ClearDepthBuffer(DirectXCommand::sCommandList_.Get());
-	}
-
+	void ClearDepthBuffer() { dsvHandler_->ClearDepthBuffer(DirectXCommand::sCommandList_.Get()); }
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void Finalize();
 
 private:
@@ -70,27 +67,27 @@ private:
 	WindowAPI* winApp_ = nullptr;
 	// デバイス
 	ID3D12Device* device_ = nullptr;
-	//ID3D12GraphicsCommandList* commandList_ = nullptr;
 	// 画面のサイズ
 	int32_t backBufferWidth_ = 0;
 	int32_t backBufferHeight_ = 0;
-
+	// フェンスの値
 	UINT fenceVal_ = 0;
 
+private: // システム
 	// デバイス関係
 	std::unique_ptr<DirectXDevice> dxDevice_;
 	// コマンド関係
 	std::unique_ptr<DirectXCommand> dxCommand_;
 	// スワップチェーン・フェンス管理クラス
 	std::unique_ptr<SwapChainManager> swapChainManager_;
-
-private: // Heap
 	// SRV
 	std::unique_ptr<SRVHandler> srvHandler_;
 	// RTV
 	std::unique_ptr<RTVHandler> rtvHandler_;
 	// DSV
 	std::unique_ptr<DSVHandler> dsvHandler_;
+	// 記録時間(FPS固定用)
+	std::chrono::steady_clock::time_point reference_;
 
 public: // Fence関係
 	void SetFenceVal(UINT fenceVal) { fenceVal_ = fenceVal; }
@@ -107,9 +104,6 @@ public: // アクセッサ
 	RTVHandler* GetRtvHandler() { return rtvHandler_.get(); }
 	DSVHandler* GetDsvHandler() { return dsvHandler_.get(); }
 
-private:
-	// 記録時間(FPS固定用)
-	std::chrono::steady_clock::time_point reference_;
 
 };
 

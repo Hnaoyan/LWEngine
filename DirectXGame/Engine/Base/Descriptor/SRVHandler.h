@@ -10,12 +10,15 @@
 
 class DirectXDevice;
 
+/// <summary>
+/// SRV管理
+/// </summary>
 class SRVHandler : public Singleton<SRVHandler>
 {
 public:
 	// 最大カウント
 	static const int kDescpritorSize = 1024 * 10;
-
+	// アロケータ
 	static std::unique_ptr<IndexAllocator> sAllocator;
 
 public:

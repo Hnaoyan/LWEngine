@@ -8,6 +8,9 @@
 
 #include "../../Utility/Singleton.h"
 
+/// <summary>
+/// シェーダー読み込みクラス
+/// </summary>
 class Shader : public Singleton<Shader>
 {
 private:

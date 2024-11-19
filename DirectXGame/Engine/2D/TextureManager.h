@@ -13,6 +13,9 @@ using namespace DirectX;
 
 class DirectXCommon;
 
+/// <summary>
+/// テクスチャの読み込み管理クラス
+/// </summary>
 class TextureManager : public Singleton<TextureManager>
 {
 public: // 静的メンバ変数

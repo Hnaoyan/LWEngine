@@ -6,6 +6,9 @@
 #include <vector>
 #include <optional>
 
+/// <summary>
+/// トレイルモデルクラス
+/// </summary>
 class Trail3D
 {
 public:

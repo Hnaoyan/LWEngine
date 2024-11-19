@@ -6,13 +6,15 @@
 #include <wrl.h>
 #include <d3d12.h>
 
+/// <summary>
+/// ワールドトランスフォームクラス
+/// </summary>
 class WorldTransform
 {
 private:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> constBuffer_;
 	CBufferWorldTransform* constMap_ = nullptr;
-	//ConstantBufferMapContext<CBufferWorldTransform> data_;
 public:
 	// 定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return constBuffer_; }

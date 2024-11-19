@@ -5,6 +5,9 @@
 #include <d3d12.h>
 #include <string>
 
+/// <summary>
+/// マテリアル
+/// </summary>
 class Material
 {
 public:
@@ -12,12 +15,10 @@ public:
 	/// マテリアルの生成
 	/// </summary>
 	void CreateMaterial();
-
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
-
 	/// <summary>
 	/// ImGui
 	/// </summary>
@@ -27,7 +28,6 @@ public:
 public:
 	// データ
 	ConstantBufferMapContext<CBufferDataMaterial> buffer_;
-
 	// 色
 	Vector4 color_{ 1,1,1,1 };
 	// ライティングの設定
@@ -36,18 +36,16 @@ public:
 	float shininess_ = 100.0f;
 	// 環境マップの係数
 	float coefficient_ = 1.0f;
-	// 
-	Vector3 dissolveColor_ = { 1.0f,1.0f,1.0f };
 	// 閾値
 	float threshold_ = 0.0f;
-	// ディゾルブ用のテクスチャ
+	// ディゾルブの色
+	Vector3 dissolveColor_ = { 1.0f,1.0f,1.0f };
+	// ディゾルブのテクスチャ
 	uint32_t dissolveTexture_ = 0u;
-
 	// UVトランスフォーム
 	EulerTransform uvTransform_ = {
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
-
 };

@@ -10,12 +10,13 @@
 
 #include <d3d12.h>
 #include <dxcapi.h>
+// 通常のパイプライン
 struct GeneralPipeline
 {
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelineState;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 };
-
+// パーティクルCSパイプライン
 struct ParticleCSPipeline 
 {
 	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
@@ -23,13 +24,14 @@ struct ParticleCSPipeline
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> csRootSignature;
 };
-
+// CSパイプライン
 struct CSPipeline 
 {
 	GeneralPipeline graphicsPipeline;
 	ParticleCSPipeline computeShaderPipeline;
 };
 
+// ブレンドパイプライン
 struct BlendPipeline
 {
 	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
@@ -37,6 +39,7 @@ struct BlendPipeline
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 };
 
+// ポストエフェクトパイプライン
 struct PostEffectPipeline
 {
 	std::array<Microsoft::WRL::ComPtr<ID3D12PipelineState>,
@@ -44,8 +47,12 @@ struct PostEffectPipeline
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 };
 
+// パイプラインヴァリアント
 using PipelineVariant = std::variant<GeneralPipeline, BlendPipeline, PostEffectPipeline>;
 
+/// <summary>
+/// グラフィックスPSOクラス
+/// </summary>
 class GraphicsPSO : public Singleton<GraphicsPSO>
 {
 private:

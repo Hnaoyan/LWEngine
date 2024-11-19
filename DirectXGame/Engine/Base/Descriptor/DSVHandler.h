@@ -6,17 +6,29 @@
 
 class DirectXDevice;
 
+/// <summary>
+/// DSV管理
+/// </summary>
 class DSVHandler : public Singleton<DSVHandler>
 {
 public:
-
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="dxDevice"></param>
 	void StaticInitialize(DirectXDevice* dxDevice);
-
+	/// <summary>
+	/// デプスバッファーのクリア
+	/// </summary>
+	/// <param name="cmdList"></param>
 	void ClearDepthBuffer(ID3D12GraphicsCommandList* cmdList);
-
+	// ヒープの取得
 	ID3D12DescriptorHeap* GetHeap() { return dsvHeap_.Get(); }
 
 private:
+	/// <summary>
+	/// バッファーの作成
+	/// </summary>
 	void CreateDepthBuffer();
 
 private:

@@ -7,6 +7,9 @@
 #include "../../Base/Utility/DxCreateLib.h"
 #include "Engine/Base/CBufferCommon.h"
 
+/// <summary>
+/// インスタンシングクラス
+/// </summary>
 class InstancedGroup
 {
 public: // エンジン的な部分

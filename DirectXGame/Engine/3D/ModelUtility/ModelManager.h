@@ -3,6 +3,9 @@
 #include "../Drawer/Model.h"
 #include <unordered_map>
 
+/// <summary>
+/// モデル管理クラス
+/// </summary>
 class ModelManager :public Singleton<ModelManager>
 {
 private:

@@ -5,6 +5,9 @@
 #include <unordered_map>
 #include <string>
 
+/// <summary>
+/// スプライト管理クラス
+/// </summary>
 class SpriteManager : public Singleton<SpriteManager>
 {
 private:
