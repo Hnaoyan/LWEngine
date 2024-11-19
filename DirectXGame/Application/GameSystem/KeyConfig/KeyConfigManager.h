@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "GameSystemStructs.h"
+#include "../GameSystemStructs.h"
 #include "Engine/Input/Input.h"
 
 class ReplayManager;

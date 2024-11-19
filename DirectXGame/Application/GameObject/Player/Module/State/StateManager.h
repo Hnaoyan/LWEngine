@@ -9,7 +9,6 @@ class StateManager
 {
 public:
 	enum StateList {
-		kIdle, // 待機
 		kIdleVertical,	// 垂直の待機
 		kIdleHorizontal ,	// 水平の待機
 		kMove, // 通常移動

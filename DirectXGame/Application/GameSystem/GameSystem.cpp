@@ -56,6 +56,7 @@ void GameSystem::Update()
     PostEffectRender::PostEffectDesc desc{};
     desc.blur = sBlurEffect.data;
     desc.bloom = bloomData_;
+    desc.vignette = vignetteData_;
     PostEffectRender::GetInstance()->Update(desc);
     
     // リプレイ用に記録

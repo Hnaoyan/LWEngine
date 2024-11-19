@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include "GameSystemStructs.h"
-#include "KeyConfigManager.h"
+#include "KeyConfig/KeyConfigManager.h"
 #include "Replay/ReplayManager.h"
 #include "Effect/PostEffectManager.h"
 #include "Engine/Utility/Singleton.h"

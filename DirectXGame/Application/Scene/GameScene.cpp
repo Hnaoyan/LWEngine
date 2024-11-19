@@ -25,7 +25,7 @@ void GameScene::Initialize()
 
 #pragma region インスタンス化
 	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
-	uiManager_ = std::make_unique<GameUI::UIManager>();
+	uiManager_ = std::make_unique<GameUIManager>();
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 	gameObjectManager_ = std::make_unique<GameObjectManager>();
@@ -177,19 +177,31 @@ void GameScene::ImGuiDraw()
 		gameSystem_->LaunchReplay();
 	}
 
-	if (ImGui::Button("PostDefault")) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-	}
-	if (ImGui::Button("PostBloom")) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-	}
-	ImGui::DragFloat("BloomThreshold", &gameSystem_->bloomData_.threshold, 0.01f);
-	ImGui::DragFloat("BloomSigma", &gameSystem_->bloomData_.sigma, 0.01f);
+	if (ImGui::BeginTabBar("PostEffect")) {
+		if (ImGui::BeginTabItem("Switch")) {
+			if (ImGui::Button("PostDefault")) {
+				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+			}
+			if (ImGui::Button("PostBloom")) {
+				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+			}
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("DashEffect")) {
 
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
 
-	if (ImGui::TreeNode("DirectionalLight")) {
+	if (ImGui::TreeNode("UI")) {
+		for (int i = 0; i < controlUIs_.size(); ++i) {
+			ImGui::DragFloat2(controlUIs_[i].second.tag.c_str(), &controlUIs_[i].second.position.x, 1.0f);
+			ImGui::Text("\n");
+		}
 		ImGui::TreePop();
 	}
+
 	if (ImGui::BeginTabBar("Lighting"))
 	{
 		float defaultSpeed = 0.01f;
@@ -228,14 +240,6 @@ void GameScene::ImGuiDraw()
 
 	ImGui::End();
 
-	ImGui::Begin("UI");
-
-	for (int i = 0; i < controlUIs_.size(); ++i) {
-		ImGui::DragFloat2(controlUIs_[i].second.tag.c_str(), &controlUIs_[i].second.position.x, 1.0f);
-		ImGui::Text("\n");
-	}
-
-	ImGui::End();
 
 #endif // IMGUI_ENABLED
 }

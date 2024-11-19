@@ -83,7 +83,7 @@ private: // アプリ
 	// GPUParticle
 	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
 	// UI
-	std::unique_ptr<GameUI::UIManager> uiManager_;
+	std::unique_ptr<GameUIManager> uiManager_;
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
 

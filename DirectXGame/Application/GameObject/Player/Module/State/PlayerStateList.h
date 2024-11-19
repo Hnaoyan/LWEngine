@@ -2,7 +2,6 @@
 #include <variant>
 
 class IPlayerState;
-class IdleState;
 class IdleHorizontal;
 class IdleVertical;
 class MovingState;
@@ -12,6 +11,6 @@ class JumpingState;
 class FallingState;
 class AssendingState;
 
-using PlayerState = std::variant<IPlayerState*, IdleState*, MovingState*, BoostState*,
+using PlayerState = std::variant<IPlayerState*, MovingState*, BoostState*,
 	JumpingState*, FallingState*, AssendingState*, IdleVertical*, IdleHorizontal*,
 	QuickBoostState*>;

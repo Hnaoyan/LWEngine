@@ -25,7 +25,7 @@ public: // アクセッサ
 	// エネルギー
 	PlayerContext::EnergyManager* GetEnergy() { return &energyManager_; }
 	// UI
-	PlayerContext::UIManager* GetUI() { return &uiManager_; }
+	PlayerContext::PlayerUIManager* GetUI() { return &uiManager_; }
 	// Animation
 	PlayerContext::AnimationManager* GetAnimation() { return &animationManager_; }
 	PlayerContext::ShootingManager* GetShootingManager() { return &shootingManager_; }
@@ -39,7 +39,7 @@ private:
 	// エネルギー
 	PlayerContext::EnergyManager energyManager_;
 	// UI
-	PlayerContext::UIManager uiManager_;
+	PlayerContext::PlayerUIManager uiManager_;
 	// Animation
 	PlayerContext::AnimationManager animationManager_;
 	// 射撃関係のマネージャー

@@ -1,41 +1,22 @@
 #include "GameUIManager.h"
-#include "Engine/2D/SpriteManager.h"
-#include "Application/GameObject/GameObjectLists.h"
 
-void GameUI::UIManager::Initialize()
+void GameUIManager::Initialize()
 {
 	HelpUIInitialize();
 }
 
-void GameUI::UIManager::Draw()
+void GameUIManager::Draw()
 {
 	HelpUIDraw();
 }
 
-void GameUI::UIManager::HelpUIInitialize()
+void GameUIManager::HelpUIInitialize()
 {
-}
-
-void GameUI::UIManager::HelpUIDraw()
-{
-}
-
-void GameUI::SpriteInfo::Initialize(std::string spriteTag)
-{
-	sprite = SpriteManager::GetSprite(spriteTag);
-	color = sprite->GetColor();
-}
-
-void GameUI::SpriteInfo::Update()
-{
-
-	sprite->SetColor(color);
 
 }
 
-void GameUI::SpriteInfo::Draw()
+void GameUIManager::HelpUIDraw()
 {
-	Update();
 
-	sprite->Draw();
 }
+

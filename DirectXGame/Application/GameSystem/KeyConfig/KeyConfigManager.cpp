@@ -1,5 +1,5 @@
 #include "KeyConfigManager.h"
-#include "Replay/ReplayManager.h"
+#include "../Replay/ReplayManager.h"
 
 KeyConfigManager::KeyConfigManager()
 {

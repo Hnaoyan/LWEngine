@@ -1,13 +1,15 @@
 #pragma once
-#include "Application/GameSystem/UI/GameUIManager.h"
+#include "Application/GameSystem/UI/UIStructs.h"
 
 class Boss;
 class Sprite;
 
 namespace BossSystemContext
 {
-
-	class UIManager {
+	/// <summary>
+	/// ボスのUI関係
+	/// </summary>
+	class BossUIManager {
 	public:
 		void Initialize(Boss* boss);
 		void Draw();

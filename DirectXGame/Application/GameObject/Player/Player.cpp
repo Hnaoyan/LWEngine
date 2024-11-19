@@ -127,26 +127,6 @@ void Player::ImGuiDraw()
 		ImGui::TreePop();
 	}
 
-	ImGui::Text("IsGround:%d", this->isGround_);
-	ImGui::Checkbox("IsInvisible", &isInvisible_);
-	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
-
-	collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
-	ImGui::DragFloat3("Velocity", &velocity_.x);
-
-	if (ImGui::Button("KnockBack")) {
-		isKnock_ = true;
-		Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
-		direct = Vector3::Normalize(direct);
-		direct *= 10.0f;
-		velocity_ = { direct.x,0.0f,direct.z };
-	}
-	if (ImGui::Button("KnockReset")) {
-		isKnock_ = false;
-	}
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
@@ -178,6 +158,28 @@ void Player::ImGuiDraw()
 
 		ImGui::EndTabBar();
 	}
+	//---基本情報---//
+	ImGui::SeparatorText("StatusInfo");
+	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 200), ImGuiWindowFlags_NoTitleBar);
+	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
+	//collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
+	ImGui::DragFloat3("Velocity", &velocity_.x);
+	ImGui::Text("IsGround:%d", this->isGround_);
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
+	if (ImGui::Button("KnockBack")) {
+		isKnock_ = true;
+		Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
+		direct = Vector3::Normalize(direct);
+		direct *= 10.0f;
+		velocity_ = { direct.x,0.0f,direct.z };
+	}
+	if (ImGui::Button("KnockReset")) {
+		isKnock_ = false;
+	}
+	ImGui::EndChild();
 
 	ImGui::End();
 }

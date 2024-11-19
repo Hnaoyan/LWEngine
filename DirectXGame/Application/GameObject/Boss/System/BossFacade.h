@@ -13,6 +13,6 @@ public:
 	// HPの管理
 	BossSystemContext::HealthManager healthManager_;
 	BossSystemContext::ParticleManager particleManager_;
-	BossSystemContext::UIManager uiManager_;
+	BossSystemContext::BossUIManager uiManager_;
 	BossSystemContext::BarrierManager barrierManager_;
 };

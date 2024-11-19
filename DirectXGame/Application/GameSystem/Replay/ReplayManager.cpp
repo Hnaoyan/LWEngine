@@ -1,5 +1,5 @@
 #include "ReplayManager.h"
-#include "../KeyConfigManager.h"
+#include "../KeyConfig/KeyConfigManager.h"
 #include "Engine/LevelEditor/CSV/CSVLoader.h"
 
 #include <fstream>

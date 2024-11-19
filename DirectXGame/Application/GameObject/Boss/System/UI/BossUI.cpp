@@ -6,7 +6,7 @@
 #include "Engine/2D/SpriteManager.h"
 #include "Engine/2D/TextureManager.h"
 
-void BossSystemContext::UIManager::Initialize(Boss* boss)
+void BossSystemContext::BossUIManager::Initialize(Boss* boss)
 {
 	// ポインタ
 	boss_ = boss;
@@ -36,7 +36,7 @@ void BossSystemContext::UIManager::Initialize(Boss* boss)
 	
 }
 
-void BossSystemContext::UIManager::Draw()
+void BossSystemContext::BossUIManager::Draw()
 {
 	// 現在値
 	hpUI_.currentScale = Vector2::Lerp({ 0.0f,hpUI_.maxScale.y }, hpUI_.maxScale, boss_->GetHealth()->GetHPRatio());
@@ -47,7 +47,7 @@ void BossSystemContext::UIManager::Draw()
 	hpUI_.backGround.Draw();
 }
 
-void BossSystemContext::UIManager::ImGuiDraw()
+void BossSystemContext::BossUIManager::ImGuiDraw()
 {
 	ImGui::DragFloat2("Position", &hpUI_.position.x, 0.01f);
 	ImGui::DragFloat2("Scale", &hpUI_.currentScale.x, 0.01f);

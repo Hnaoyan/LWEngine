@@ -177,9 +177,6 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\GameSystem.cpp">
       <Filter>Application\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.cpp">
       <Filter>Application\GameObject\Player\State</Filter>
     </ClCompile>
@@ -278,9 +275,6 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\LevelEditor\CSV\CSVLoader.cpp">
       <Filter>Engine\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Particle\CPUParticleSystem.cpp">
-      <Filter>Engine\Particle</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Light\Lights\DirectionalLight.cpp">
       <Filter>Engine\Light</Filter>
@@ -609,7 +603,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfigManager.cpp">
+    <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.cpp">
@@ -636,6 +630,9 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Application\GameSystem\UI\UIStructs.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Engine\FrameWork\Framework.h">
@@ -647,14 +644,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.h">
       <Filter>Application\GameObject\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameSystem\GamePostEffectManager.h">
-      <Filter>Application\GameSystem</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">
       <Filter>Application\GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IdleState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h">
       <Filter>Application\GameObject\Player\State</Filter>
@@ -920,9 +911,6 @@
     <ClInclude Include="DirectXGame\Engine\Scene\IScene.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\ISceneTransition.h">
-      <Filter>Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h">
       <Filter>Engine\3D</Filter>
     </ClInclude>
@@ -934,9 +922,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Material.h">
       <Filter>Engine\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\CPUParticleSystem.h">
-      <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Particle\Particle.h">
       <Filter>Engine\Particle</Filter>
@@ -991,9 +976,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Animation\ModelNode.h">
       <Filter>Engine\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Scene\SceneTransition\SceneTransitionManager.h">
-      <Filter>Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h">
       <Filter>Engine\Scene</Filter>
@@ -1054,9 +1036,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\PipelineStructs.h">
       <Filter>Engine\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\PostEffect\User\IPostEffect.h">
-      <Filter>Engine\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Light\Lights\DirectionalLight.h">
       <Filter>Engine\Light</Filter>
@@ -1223,16 +1202,13 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\CPUParticle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BossTrackBulletCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfigManager.h">
+    <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.h">
@@ -1266,6 +1242,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameSystem\UI\UIStructs.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
