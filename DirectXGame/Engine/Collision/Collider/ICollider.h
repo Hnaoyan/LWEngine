@@ -3,6 +3,9 @@
 #include "ColliderShape.h"
 #include "Application/Collision/ColliderObject.h"
 
+/// <summary>
+/// コライダーインターフェース
+/// </summary>
 class ICollider
 {
 public:

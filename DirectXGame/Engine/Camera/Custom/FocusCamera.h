@@ -2,6 +2,9 @@
 #include "../Core/ICamera.h"
 #include "Engine/3D/WorldTransform.h"
 
+/// <summary>
+/// 注視カメラ
+/// </summary>
 class FocusCamera : public ICamera
 {
 public:

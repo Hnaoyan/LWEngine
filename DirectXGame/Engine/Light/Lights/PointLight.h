@@ -1,6 +1,9 @@
 #pragma once
 #include "ILight.h"
 
+/// <summary>
+/// 点光源
+/// </summary>
 class PointLight : public ILight<CBufferDataPointLight>
 {
 public:

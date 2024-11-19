@@ -34,6 +34,6 @@ struct CBufferDataHSV
 
 struct CBufferDataBloom
 {
-	float threshold;
-	float sigma;
+	float threshold;	// 閾値
+	float sigma;	// 
 };

@@ -1,6 +1,9 @@
 #pragma once
 #include "../ICollider.h"
 
+/// <summary>
+/// OBB
+/// </summary>
 class OBB : public ICollider
 {
 public: // 計算関数
@@ -27,7 +30,6 @@ public:
 public:
 	void SetRadius(const Vector3& radius) { length_ = radius; }
 public:
-	// 衝突判定用
 	// 座標
 	Vector3 position_{};
 	// 長さ

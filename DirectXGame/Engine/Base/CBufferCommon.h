@@ -12,12 +12,14 @@
 #include "ConstantBuffer/SpriteCBuffer.h"
 #include "ConstantBuffer/ParticleCBuffer.h"
 
+// バッファーの種類
 enum class BufferType : uint32_t{
 	kConstantBuffer,
 	kStructuredBuffer,
 	kRWStructuredBuffer,
 };
 
+// ヒープデータ
 struct HeapAllocationData
 {
 	std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> handles;
@@ -27,6 +29,10 @@ struct HeapAllocationData
 template<typename T>
 concept IsStruct = std::is_class_v<T>;
 
+/// <summary>
+/// コンスタントバッファー
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<typename T>
 struct ConstantBufferMapContext
 {
@@ -62,6 +68,10 @@ private:
 
 };
 
+/// <summary>
+/// ストラクチャードバッファー
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<typename T>
 struct StructuredBufferContext
 {
@@ -97,6 +107,10 @@ struct StructuredBufferContext
 
 };
 
+/// <summary>
+/// RWストラクチャードバッファー
+/// </summary>
+/// <typeparam name="T"></typeparam>
 template<typename T>
 struct RWStructuredBufferContext
 {
@@ -121,6 +135,12 @@ struct RWStructuredBufferContext
 
 };
 
+/// <summary>
+/// RWストラクチャードバッファー
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="device"></param>
+/// <param name="maxNum"></param>
 template<typename T>
 inline void RWStructuredBufferContext<T>::CreateBuffer(ID3D12Device* device, int32_t maxNum)
 {

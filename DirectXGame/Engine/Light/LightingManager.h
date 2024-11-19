@@ -9,6 +9,9 @@
 
 class DirectionalLight;
 
+/// <summary>
+/// ライト管理クラス
+/// </summary>
 class LightingManager : public Singleton<LightingManager>
 {
 public:

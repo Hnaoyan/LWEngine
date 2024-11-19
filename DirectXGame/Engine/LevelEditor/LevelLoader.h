@@ -6,6 +6,9 @@
 #include <memory>
 #include <map>
 
+/// <summary>
+/// Blenderからインポートするクラス
+/// </summary>
 class LevelLoader : public Singleton<LevelLoader>
 {
 public:

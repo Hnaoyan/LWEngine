@@ -1,14 +1,16 @@
 #pragma once
 
-// デルタタイム
 #include "DeltaTime.h"
-#include "../Math/MathLib.h"
-#include "../Camera/CameraList.h"
+#include "Engine/Math/MathLib.h"
+#include "Engine/Camera/CameraList.h"
 
 #include <algorithm>
 #include <random>
 #include <numbers>
 
+/// <summary>
+/// 自作ライブラリ（汎用関数まとめ）
+/// </summary>
 namespace LwLib
 {
 	// ランダムエンジン
@@ -213,6 +215,11 @@ namespace LwLib
 		return float(radian * (180.0f / (float)std::numbers::pi));
 	}
 
+	/// <summary>
+	/// Yawをベクトルから計算
+	/// </summary>
+	/// <param name="direction"></param>
+	/// <returns></returns>
 	inline static float CalculateYawFromVector(const Vector3& direction)
 	{
 		// 任意軸との内積
@@ -231,6 +238,11 @@ namespace LwLib
 		return result;
 	}
 
+	/// <summary>
+	/// ベクトルからオイラーに
+	/// </summary>
+	/// <param name="direction"></param>
+	/// <returns></returns>
 	inline static Vector3 CalcEulerFromVector(const Vector3& direction)
 	{
 		// 任意軸との内積
@@ -282,6 +294,14 @@ namespace LwLib
 	}
 #pragma endregion
 
+	/// <summary>
+	/// 誘導用の加速度計算
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="target"></param>
+	/// <param name="velocity"></param>
+	/// <param name="period"></param>
+	/// <returns></returns>
 	static Vector3 HomingAccelerate(const Vector3& position, const Vector3& target, const Vector3& velocity, const float& period) {
 		Vector3 result = {};
 		Vector3 diff = target - position;

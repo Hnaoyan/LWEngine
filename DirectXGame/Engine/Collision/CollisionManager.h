@@ -5,6 +5,9 @@
 
 #include <list>
 
+/// <summary>
+/// コライダーの管理クラス
+/// </summary>
 class CollisionManager : public Singleton<CollisionManager>
 {
 public:

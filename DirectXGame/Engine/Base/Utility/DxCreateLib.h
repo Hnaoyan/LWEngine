@@ -6,6 +6,9 @@
 
 #include "../../Math/MathLib.h"
 
+/// <summary>
+/// DirectX関係の作成関数
+/// </summary>
 namespace DxCreateLib
 {
 	/// <summary>

@@ -1,4 +1,9 @@
 #pragma once
+
+///
+/// インクルードパス
+/// 
+
 #include "LwEngineLib.h"
 #include "Curve/CurveLib.h"
 #include "Ease/Ease.h"

@@ -6,6 +6,9 @@
 #include <d3d12.h>
 #include <numbers>
 
+/// <summary>
+/// カメラインターフェース
+/// </summary>
 class ICamera
 {
 private:

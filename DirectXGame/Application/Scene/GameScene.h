@@ -95,7 +95,6 @@ private: // リソース
 	};
 
 	FrameTimer backTitleTimer_;
-	bool isGameOver_ = false;
 
 	// UI用のデータ
 	struct UIData {

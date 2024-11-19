@@ -11,11 +11,6 @@
 class SceneManager : public Singleton<SceneManager>
 {
 private:
-	//std::unique_ptr<IScene> sceneArray_[3];
-
-	int sceneNum_ = 0;
-	int prevSceneNum_ = 0;
-
 	/// <summary>
 	/// シーンファクトリー
 	/// </summary>

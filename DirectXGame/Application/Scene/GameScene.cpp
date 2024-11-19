@@ -11,19 +11,9 @@ void GameScene::Initialize()
 	IScene::Initialize();
 	// ライト初期化
 	LightingInitialize();
-	// ゲームオーバーフラグ
-	isGameOver_ = false;
-
-#pragma region カメラ関係
-	// 初期カメラ
-	camera_.transform_.translate.y = 5.0f;
-	camera_.transform_.rotate.x = 0.4f;
-	camera_.transform_.translate.z = -7.0f;
-
-	cameraManager_ = std::make_unique<CameraManager>();
-#pragma endregion
 
 #pragma region インスタンス化
+	cameraManager_ = std::make_unique<CameraManager>();
 	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
 	uiManager_ = std::make_unique<GameUIManager>();
 

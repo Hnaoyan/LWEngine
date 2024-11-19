@@ -5,6 +5,9 @@
 
 class SceneManager;
 
+/// <summary>
+/// シーンのインタフェース
+/// </summary>
 class IScene
 {
 public: // フレーム関数

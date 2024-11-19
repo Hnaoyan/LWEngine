@@ -14,10 +14,6 @@
 
 class Input : public Singleton<Input>
 {
-private:
-	// ComPtrのテンプレート
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
 public: // インナークラス
 	struct MouseMove {
 		LONG lX;
@@ -26,26 +22,16 @@ public: // インナークラス
 	};
 
 public:
-
+	// パッドのタイプ
 	enum class PadType {
 		DirectInput,
 		XInput,
 	};
-
+	// 状態
 	union State {
 		XINPUT_STATE xInput_;
 		DIJOYSTATE2 directInput_;
 	};
-
-	//struct JoyStick {
-	//	ComPtr<IDirectInputDevice8> device_;
-	//	int32_t deadZoneL_;
-	//	int32_t deadZoneR_;
-	//	PadType type_;
-	//	State state_;
-	//	State statePre_;
-	//};
-
 
 public:	// メンバ関数
 
@@ -86,16 +72,15 @@ public: // キーボード
 	bool ReleaseKey(BYTE keyNumber) const;
 
 public:	// コントローラー系
-
+	// スティック
 	Vector2 XGetLeftJoystick(float deadZone = 0.2f);
-
 	Vector2 XGetRightJoystick(float deadZone = 0.2f);
-
+	// スティック押し込み
 	bool XPressJoystick(int32_t keyNumber);
 	bool XNotPressJoystick(int32_t keyNumber);
 	bool XReleaseJoystick(int32_t keyNumber);
 	bool XTriggerJoystick(int32_t keyNumber);
-
+	// スティック押し
 	bool XLTrigger();
 	bool XRTrigger();
 
@@ -105,7 +90,9 @@ private:
 	/// xJoyの更新
 	/// </summary>
 	void XJoystickUpdate();
-
+	/// <summary>
+	/// 接続確認
+	/// </summary>
 	void XJoyConnected();
 
 public: // マウス系
@@ -128,19 +115,21 @@ public: // マウス系
 	/// <returns></returns>
 	const Vector2& GetMousePosition() const;
 
+	/// <summary>
+	/// マウスの更新
+	/// </summary>
 	void MouseUpdate();
 
 public:
 	~Input() override;
 
 private:
+	// デバイスのポインタ
+	Microsoft::WRL::ComPtr<IDirectInput8> directInput_;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> dJoystick_;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> dKeyBoard_;
+	Microsoft::WRL::ComPtr<IDirectInputDevice8> dMouse_;
 
-	ComPtr<IDirectInput8> directInput_;
-	ComPtr<IDirectInputDevice8> dJoystick_;
-	ComPtr<IDirectInputDevice8> dKeyBoard_;
-	ComPtr<IDirectInputDevice8> dMouse_;
-
-	//std::vector<JoyStick> devJoysticks_;
 	std::array<BYTE, 256> key_ = {};
 	std::array<BYTE, 256> preKey_ = {};
 
@@ -150,11 +139,11 @@ private:
 	DWORD xJoystick_{};
 	XINPUT_STATE xJoyState_{};
 	XINPUT_STATE xJoyStatePrev_{};
-
-	bool isJoystickConnected_ = false;
+	// 接続確認フラグ
+	bool isJoystickConnected_ = false;	
 
 	HWND hwnd_ = {};
-
+	// マウスの座標
 	Vector2 mousePosition_ = {};
 };
 

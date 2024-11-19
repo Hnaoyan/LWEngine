@@ -3,6 +3,9 @@
 #include "AbstractSceneFactory.h"
 #include "../SceneList.h"
 
+/// <summary>
+/// シーンファクトリークラス
+/// </summary>
 class SceneFactory : public AbstractSceneFactory
 {
 public:

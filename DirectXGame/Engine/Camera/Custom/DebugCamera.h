@@ -1,6 +1,9 @@
 #pragma once
 #include "../Core/ICamera.h"
 
+/// <summary>
+/// デバッグカメラ
+/// </summary>
 class DebugCamera : public ICamera {
 public:
 	/// <summary>

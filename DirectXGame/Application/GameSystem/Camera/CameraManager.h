@@ -5,6 +5,9 @@
 
 class GameObjectManager;
 
+/// <summary>
+/// カメラ管理クラス
+/// </summary>
 class CameraManager
 {
 public:
@@ -12,10 +15,23 @@ public:
 	~CameraManager() = default;
 
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="gameManager"></param>
 	void Initialize(GameObjectManager* gameManager);
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// ImGui
+	/// </summary>
 	void ImGuiDraw();
-
+	/// <summary>
+	/// カメラ変更処理
+	/// </summary>
+	/// <param name="mode"></param>
 	void ChangeCamera(ActiveCameraMode mode);
 
 private:

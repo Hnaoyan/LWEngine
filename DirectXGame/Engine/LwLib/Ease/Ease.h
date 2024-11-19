@@ -1,6 +1,9 @@
 #pragma once
 #include <stdint.h>
 
+/// <summary>
+/// 線形補間
+/// </summary>
 class Ease
 {
 public:

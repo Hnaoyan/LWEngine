@@ -7,6 +7,9 @@
 
 class DirectXDevice;
 
+/// <summary>
+/// スワップチェーン管理クラス
+/// </summary>
 class SwapChainManager : public Singleton<SwapChainManager>
 {
 public: // メンバ関数

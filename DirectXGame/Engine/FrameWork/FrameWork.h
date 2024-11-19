@@ -11,7 +11,7 @@
 #include "../2D/SpriteManager.h"
 
 /// <summary>
-/// 
+/// フレームワーク
 /// </summary>
 class Framework
 {

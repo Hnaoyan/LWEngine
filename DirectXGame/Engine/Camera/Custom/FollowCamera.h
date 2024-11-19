@@ -6,6 +6,9 @@ namespace PlayerContext {
 	class LockOn;
 }
 
+/// <summary>
+/// 追従カメラ
+/// </summary>
 class FollowCamera : public ICamera
 {
 public:

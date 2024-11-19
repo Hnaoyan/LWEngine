@@ -2,6 +2,9 @@
 #include "../IScene.h"
 #include <string>
 
+/// <summary>
+/// シーンファクトリーインターフェース
+/// </summary>
 class AbstractSceneFactory
 {
 public:

@@ -1,36 +1,34 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
 
-/// <summary>
-/// 全体的に使うオイラートランスフォーム構造体
-/// </summary>
+// オイラートランスフォーム
 struct EulerTransform {
 	Vector3 scale;
 	Vector3 rotate;
 	Vector3 translate;
 };
 
-/// <summary>
-/// クォータニオントランスフォーム
-/// </summary>
+// クォータニオントランスフォーム
 struct QuaternionTransform {
 	Vector3 scale;
 	Quaternion rotate;
 	Vector3 translate;
 };
 
-
+// ワールドトランスフォーム
 struct CBufferWorldTransform {
 	Matrix4x4 world;
 	Matrix4x4 worldInverseTranspose;
 };
 
+// トレイル頂点
 struct TrailVertex
 {
 	Vector4 position;
 	Vector4 color;
 };
 
+// 三角形データ
 struct TriangleData 
 {
 	Vector3 position;	// 座標
@@ -39,7 +37,7 @@ struct TriangleData
 };
 
 #pragma region Model
-
+// 頂点データ
 struct VertexData
 {
 	Vector4 position;	// 座標
@@ -47,6 +45,7 @@ struct VertexData
 	Vector2 texcoord;	// テクすコード
 };
 
+// 線データ
 struct LineData {
 	Vector3 position;
 	Vector4 color;
