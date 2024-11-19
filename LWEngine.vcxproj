@@ -67,8 +67,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBullet.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossDamageEffect.cpp" />
@@ -218,8 +216,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\TrackingStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />

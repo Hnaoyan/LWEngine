@@ -4,28 +4,14 @@
 #include "Engine/LwLib/LwLibrary.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/Player/System/PlayerSystemLists.h"
-#include "Application/GameObject/Enemy/SampleEnemy.h"
+#include "Application/GameObject/GameObjectLists.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 void FollowCamera::Initialize()
 {
-	GlobalVariables* instance = GlobalVariables::GetInstance();
-	instance->CreateGroup("Camera");
-	instance->AddValue("Camera", "RotateSpeed", rRotateSpeed_);
-	instance->AddValue("Camera", "LerpRate", rStickLerpRate_);
-	instance->AddValue("Camera", "DelayRate", delayRate_);
-	instance->AddValue("Camera", "XSpinLimit", xSpinLimit_);
-	instance->AddValue("Camera", "Offset", defaultOffset_);
-
 	// 初期化
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,3.0f,-10.0f };
-
-	rRotateSpeed_ = instance->GetValue<Vector2>("Camera","RotateSpeed");
-	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
-	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
-	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
-	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 }
 
 void FollowCamera::Update()
@@ -123,6 +109,22 @@ void FollowCamera::ImGuiDraw()
 	}
 
 	//ImGui::End();
+}
+
+void FollowCamera::InitializeGlobalValue()
+{
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	instance->CreateGroup("Camera");
+	instance->AddValue("Camera", "RotateSpeed", rRotateSpeed_);
+	instance->AddValue("Camera", "LerpRate", rStickLerpRate_);
+	instance->AddValue("Camera", "DelayRate", delayRate_);
+	instance->AddValue("Camera", "XSpinLimit", xSpinLimit_);
+	instance->AddValue("Camera", "Offset", defaultOffset_);
+	rRotateSpeed_ = instance->GetValue<Vector2>("Camera", "RotateSpeed");
+	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
+	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
+	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
+	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 }
 
 void FollowCamera::Reset()

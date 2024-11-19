@@ -16,6 +16,10 @@ void ICamera::Initialize()
 	data_.CreateConstantBuffer(device);
 	// 行列の更新
 	this->UpdateMatrix();
+
+	// グローバル変数の初期化
+	InitializeGlobalValue();
+
 }
 
 void ICamera::Update()

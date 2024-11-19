@@ -35,6 +35,11 @@ public:	// 継承できるように
 	/// </summary>
 	virtual void ImGuiDraw();
 
+	/// <summary>
+	/// GlobalValueの初期化
+	/// </summary>
+	virtual void InitializeGlobalValue() {};
+
 protected: // 共通で使う関数
 	/// <summary>
 	/// 行列更新
@@ -66,19 +71,20 @@ protected:
 		float randomValue = 0.0f;
 		bool isShake = false;
 	};
-
+	/// <summary>
+	/// ズームの種類
+	/// </summary>
 	enum class ZoomType {
 		kZoomOut,
 		kZoomIn,
 		kSize,
 	};
-
 	/// <summary>
 	/// ズームの情報
 	/// </summary>
 	struct ZoomParameter {
 		FrameTimer timer;
-
+		ZoomType type;
 	};
 
 	// シェイク用
@@ -106,7 +112,6 @@ private:
 	float fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0);
 	// アスペクト比率
 	float aspectRatio_ = (float)WindowAPI::kWindowWidth / (float)WindowAPI::kWindowHeight;
-
-	float nearZ = 0.1f;
-	float farZ = 1000.0f;
+	float nearZ = 0.1f;	// near
+	float farZ = 1000.0f;	// far
 };

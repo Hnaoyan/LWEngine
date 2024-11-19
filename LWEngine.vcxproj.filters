@@ -204,12 +204,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp">
       <Filter>Application\GameObject\Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.cpp">
-      <Filter>Application\GameObject\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.cpp">
-      <Filter>Application\GameObject\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.cpp">
       <Filter>Application\GameObject\Player\State</Filter>
     </ClCompile>
@@ -682,12 +676,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h">
       <Filter>Application\GameObject\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemy.h">
-      <Filter>Application\GameObject\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Enemy\SampleEnemyManager.h">
-      <Filter>Application\GameObject\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.h">
       <Filter>Application\GameObject\Player</Filter>
@@ -1492,7 +1480,6 @@
     <ClInclude Include="DirectXGame\Engine\Light\Lights\PointLight.h" />
     <ClInclude Include="DirectXGame\Engine\Light\Lights\SpotLight.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Ease\Ease.h" />
-    <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\Utillity\FrameTimer.h" />
     <ClInclude Include="DirectXGame\Engine\Math\MathLib.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h" />

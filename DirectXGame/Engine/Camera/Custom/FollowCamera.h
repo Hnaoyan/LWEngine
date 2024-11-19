@@ -25,6 +25,10 @@ public:
 	/// </summary>
 	void ImGuiDraw() override;
 
+	/// <summary>
+	/// 
+	/// </summary>
+	void InitializeGlobalValue() override;
 public:
 	/// <summary>
 	/// リセット
