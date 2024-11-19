@@ -16,9 +16,9 @@ private:
 	ConstantBufferMapContext<CBufferDataCamera> data_;
 public: // 定数バッファのアクセッサ
 	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return data_.cBuffer; }
+	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() const{ return data_.cBuffer; }
 	// マップ
-	CBufferDataCamera* GetView() { return data_.cMap_; }
+	CBufferDataCamera* GetView() const{ return data_.cMap_; }
 
 public:	// 継承できるように
 	/// <summary>
@@ -105,7 +105,7 @@ public:
 	Vector3 frontVector_ = {};
 public:
 	// ワールド座標
-	Vector3 GetWorldPosition() { return Vector3(viewMatrix_.m[2][0], viewMatrix_.m[2][1], viewMatrix_.m[2][2]); }
+	Vector3 GetWorldPosition() const { return Vector3(viewMatrix_.m[2][0], viewMatrix_.m[2][1], viewMatrix_.m[2][2]); }
 
 private:
 	// 視野角の角度

@@ -1,7 +1,7 @@
 #include "BulletFactory.h"
 #include "../IBullet.h"
 #include "../BulletsLists.h"
-#include "../Builder/BulletBuilder.h"
+#include "Builder/BulletBuilder.h"
 
 InstancedUnit* BulletFactory::CreateUnit(const std::string& name)
 {

@@ -17,7 +17,7 @@
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
@@ -194,7 +194,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemStructs.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />

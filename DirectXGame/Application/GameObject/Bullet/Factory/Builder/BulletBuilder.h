@@ -1,6 +1,6 @@
 #pragma once
-#include "../IBullet.h"
-#include "../BulletEnums.h"
+#include "../../IBullet.h"
+#include "../../BulletEnums.h"
 
 #include <optional>
 
@@ -50,7 +50,7 @@ public:
 	/// <returns></returns>
 	std::unique_ptr<IBullet> Build(BulletType bulletType) const;
 
-	TrackingAttribute GetAttribute() const{ return trackAttribute_; }
+	TrackingAttribute GetAttribute() const { return trackAttribute_; }
 
 private:
 	// 追従の対象

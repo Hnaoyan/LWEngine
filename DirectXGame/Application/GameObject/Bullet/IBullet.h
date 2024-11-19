@@ -40,7 +40,7 @@ protected:
 	// タグ
 	std::string tag_;
 	// 加速度ベクトル
-	Vector3 accelerate_;
+	Vector3 accelerate_ = {};
 
 	BulletTrail* trail_ = nullptr;
 
@@ -52,21 +52,22 @@ protected:
 	IGameObject* object_ = nullptr;
 
 public: // アクセッサ
-	std::string GetTag() { return tag_; }
-	EulerTransform GetTransform() { return transform_; }
+	std::string GetTag() const { return tag_; }
+	EulerTransform GetTransform() const { return transform_; }
+	Vector3 GetGeneratePosition() const { return generatePosition_; }
+	Vector3 GetVelocity() const { return velocity_; }
+	Vector3 GetAccelerate() const { return accelerate_; }
+
 	Sphere* GetCollider() { return &collider_; }
-	Vector3 GetGeneratePosition() { return generatePosition_; }
+	IGameObject* GetTarget() { return object_; }
 
 
 	void SetTrail(BulletTrail* trail) { trail_ = trail; }
 	void SetBreakEmitter(GPUParticleEmitter* emitter) { breakEmitter_ = emitter; }
-
-	Vector3 GetVelocity() { return velocity_; }
-	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
-	Vector3 GetAccelerate() { return accelerate_; }
-	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
-	IGameObject* GetTarget() { return object_; }
 	void SetGameObject(IGameObject* object) { object_ = object; }
+
+	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
+	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
 
 	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedGroup.h"
-#include "Builder/BulletBuilder.h"
 #include "Factory/BulletFactory.h"
+#include "Factory/Builder/BulletBuilder.h"
 #include <memory>
 
 /// <summary>

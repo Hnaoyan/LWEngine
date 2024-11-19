@@ -18,12 +18,13 @@ namespace PlayerContext {
 	class LockOn
 	{
 	public:
+		// ロックオンデータ
 		struct LockOnData {
 			float threshold = 0.0f;
 			float minDistanceZ = 5.0f;
 			float maxDistanceZ = 50.0f;
 		};
-
+		// ロックオン対象のオブジェクトクラス
 		using LockTarget = std::variant<SampleEnemy*, Boss*>;
 
 	public:
@@ -45,7 +46,6 @@ namespace PlayerContext {
 		/// </summary>
 		/// <param name="camera"></param>
 		void ChangeLockOnTarget(ICamera* camera);
-
 		/// <summary>
 		/// ImGui
 		/// </summary>

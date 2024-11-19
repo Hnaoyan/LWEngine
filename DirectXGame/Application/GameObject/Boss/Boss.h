@@ -86,9 +86,10 @@ public:
 	// ステート関係
 	BossState::IState* GetState() { return state_.get(); }
 	BossState::IState* GetPrevState() { return prevState_.get(); }
-	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
+	BossState::StateVariant GetNowState() const { return nowVariantState_; }
+
 	BossFacade* GetSystem() { return systemManager_.get(); }
 	void SetNowVariantState(BossState::StateVariant variant) { nowVariantState_ = variant; }
 	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
@@ -128,7 +129,6 @@ public:
 	IBulletCluster* GetSuperiorCluster() { return bulletManager_->FindCluster("Boss:Superior"); }
 	IBulletCluster* GetInferiorCluster() { return bulletManager_->FindCluster("Boss:Inferior"); }
 	IBulletCluster* GetGeneusCluster() { return bulletManager_->FindCluster("Boss:Genius"); }
-
 	IBulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
 #pragma endregion
 

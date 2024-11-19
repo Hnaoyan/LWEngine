@@ -546,7 +546,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.cpp">
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp">
@@ -1127,7 +1127,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Builder\BulletBuilder.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h">
