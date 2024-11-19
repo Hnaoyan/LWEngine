@@ -5,7 +5,7 @@
 #include "Application/GameSystem/GameSystem.h"
 
 #include "Engine/Input/Input.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibrary.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 
 void OparationManager::Initialize(Player* player)

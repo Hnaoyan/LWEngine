@@ -1,7 +1,7 @@
 #include "ICamera.h"
 #include "../../Base/DirectXCommon.h"
 #include "../../Base/Utility/DxCreateLib.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibrary.h"
 #include "Engine/LwLib/Ease/Ease.h"
 #include "imgui.h"
 

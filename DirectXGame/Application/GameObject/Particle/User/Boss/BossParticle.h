@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Particle/Emitter/GPUParticleEmitter.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include "Application/GameObject/Boss/System/BossSystem.h"
 #include "../../EmitterTypes.h"
 

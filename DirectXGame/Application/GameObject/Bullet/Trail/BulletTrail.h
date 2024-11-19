@@ -60,7 +60,7 @@ public:
 	void SetAttribute(TrackingAttribute type) { attribute_ = type; }
 	TrackingAttribute GetAttribute() { return attribute_; }
 private:
-	void GlobalValueInitialize();
+	void InitializeGlobalValue();
 
 private: // SYSTEM
 	// 軌跡用の座標保存

@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/3D/Instancing/InstancedUnit.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 class BulletBombEffect : public InstancedUnit
 {

@@ -3,7 +3,7 @@
 #include "../../Engine/2D/TextureManager.h"
 #include "../../Engine/3D/Drawer/Skydome.h"
 #include "../../Engine/Input/Input.h"
-#include "../../Engine/LwLib/LwEngineLib.h"
+#include "../../Engine/LwLib/LwLibrary.h"
 
 int32_t AnimSampleObject::sSerialNumber = 0u;
 std::string AnimSampleObject::sObjectName = "SampleObject";

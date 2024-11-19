@@ -17,7 +17,7 @@ public:
 	// 描画
 	void Draw(ModelDrawDesc desc);
 	// 外部データ用関数
-	void GlobalValueInitialize();
+	void InitializeGlobalValue();
 	void GlobalValueUpdate();
 private:
 	// トランスフォーム

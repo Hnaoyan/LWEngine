@@ -2,7 +2,7 @@
 #include "BulletBombEffect.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 void BulletBombCluster::Initialize(Model* model)
 {

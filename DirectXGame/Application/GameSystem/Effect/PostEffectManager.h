@@ -5,7 +5,7 @@ class PostEffectManager
 {
 public:
 	PostEffectManager();
-
+	void Update();
 public:
 
 	CBufferDataBloom bloomData_{};

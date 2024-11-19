@@ -48,17 +48,19 @@ public:
 	/// UI描画
 	/// </summary>
 	void UIDraw();
-
+	/// <summary>
+	/// リセット
+	/// </summary>
 	void Reset() { systemManager_->uiManager_.Initialize(this); }
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void Finalize();
-	//
-	void SetIsAction(bool isAction) { isAction_ = isAction; }
-	BossFacade* GetSystem() { return systemManager_.get(); }
 private:
 	// グローバル変数関係の初期化
-	void GlobalValueInitialize() override;
+	void InitializeGlobalValue() override;
 	// グローバル変数関係の更新
-	//void GlobalValueUpdate();
+	//void UpdateGlobalValue()　override;
 
 	bool isAction_ = false;
 
@@ -79,7 +81,7 @@ private: // サブシステム
 	// 外部の弾管理
 	BulletManager* bulletManager_ = nullptr;
 
-#pragma region 内部システムのアクセッサ
+#pragma region 内部システムアクセッサ
 public:
 	// ステート関係
 	BossState::IState* GetState() { return state_.get(); }
@@ -87,6 +89,7 @@ public:
 	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
+	BossFacade* GetSystem() { return systemManager_.get(); }
 	void SetNowVariantState(BossState::StateVariant variant) { nowVariantState_ = variant; }
 	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
 
@@ -107,6 +110,7 @@ private:
 	// GPU
 	GPUParticleSystem* gpuParticle_ = nullptr;
 public:
+	void SetIsAction(bool isAction) { isAction_ = isAction; }
 	// 外部
 	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }

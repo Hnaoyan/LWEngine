@@ -96,7 +96,7 @@ public: // セッター
 
 private: // USER
 	// グローバル変数関係の初期化
-	void GlobalValueInitialize() override;
+	void InitializeGlobalValue() override;
 
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 

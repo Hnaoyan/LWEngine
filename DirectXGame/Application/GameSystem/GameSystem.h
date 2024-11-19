@@ -44,10 +44,6 @@ public:
 	/// </summary>
 	void LaunchReplay();
 
-	//void
-	CBufferDataBloom bloomData_{};
-	CBufferDataVignette vignetteData_{};
-
 public:
 	ReplayManager* GetReplayManager() { return &replayManager_; }
 

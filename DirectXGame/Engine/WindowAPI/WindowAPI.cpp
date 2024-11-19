@@ -1,5 +1,5 @@
 #include "WindowAPI.h"
-#include "../LwLib/LwEngineLib.h"
+#include "../LwLib/LwLibrary.h"
 
 const wchar_t WindowAPI::kWindowClassName[] = L"DirectXTitle";
 

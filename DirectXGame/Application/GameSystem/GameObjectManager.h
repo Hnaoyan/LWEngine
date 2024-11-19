@@ -53,8 +53,8 @@ public:
 	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
-	bool IsGameClear() { return isGameClear_; }
-	bool IsGameOver() { return isGameOver_; }
+	bool IsGameClear() const { return isGameClear_; }
+	bool IsGameOver() const { return isGameOver_; }
 private: // ゲームクリアなどの部分
 	bool isGameOver_ = false;	// ゲームオーバー
 	bool isGameClear_ = false;	// ゲームクリア

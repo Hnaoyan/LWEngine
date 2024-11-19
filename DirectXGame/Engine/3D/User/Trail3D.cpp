@@ -2,7 +2,7 @@
 #include "Engine/Base/DirectXCommon.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/2D/TextureManager.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 #include<imgui.h>
 

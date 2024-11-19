@@ -1,7 +1,7 @@
 #include "MovingState.h"
 #include "Application/GameObject/Player/Player.h"
 #include "Application/GameSystem/GameSystem.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibrary.h"
 
 void MovingState::Initialize()
 {

@@ -12,6 +12,9 @@
 #include "../Math/MathLib.h"
 #include "../Utility/Singleton.h"
 
+/// <summary>
+/// 入力関係クラス
+/// </summary>
 class Input : public Singleton<Input>
 {
 public: // インナークラス

@@ -1,5 +1,5 @@
 #include "BulletTrail.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Application/GameObject/Bullet/IBullet.h"
@@ -10,7 +10,7 @@ uint32_t BulletTrail::sTexture = 0u;
 BulletTrail::BulletTrail()
 {
 	// 外部読み込み
-	GlobalValueInitialize();
+	InitializeGlobalValue();
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
 	//triangle_->Initialize();
@@ -19,7 +19,7 @@ BulletTrail::BulletTrail()
 BulletTrail::BulletTrail(IBullet* unit)
 {
 	// 外部読み込み
-	GlobalValueInitialize();
+	InitializeGlobalValue();
 	// ポリゴン作成
 	polygon_ = std::make_unique<Trail3D>();
 	polygon_->texture_ = sTexture;
@@ -101,7 +101,7 @@ void BulletTrail::Update(ICamera* camera)
 	polygon_->Update();
 }
 
-void BulletTrail::GlobalValueInitialize()
+void BulletTrail::InitializeGlobalValue()
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	maxLength = global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame");

@@ -1,7 +1,7 @@
 #pragma once
 #include <optional>
 #include "Application/GameObject/Bullet/BulletEnums.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 class IBullet;
 class BulletStateMachine;

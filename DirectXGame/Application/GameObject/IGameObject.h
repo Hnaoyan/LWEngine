@@ -43,21 +43,20 @@ public:
 	/// </summary>
 	/// <param name="name"></param>
 	virtual void ImGuiDraw() = 0;
-
 	/// <summary>
 	/// コールバック関数
 	/// </summary>
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
-
 	/// <summary>
 	/// アニメーション用の更新関数
 	/// </summary>
 	virtual void AnimationUpdate() {};
 
 protected:
-	virtual void GlobalValueInitialize() {};
+	virtual void InitializeGlobalValue() {};
+	virtual void UpdateGlobalValue() {};
 
 public: // アクセッサ
 	bool IsDead() const{ return isDead_; }

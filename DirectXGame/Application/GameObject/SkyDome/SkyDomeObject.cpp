@@ -14,7 +14,7 @@ void SkyDomeObject::Initialize(Model* model)
 	material_->CreateMaterial();
 
 	// 外部書き出しの初期化
-	GlobalValueInitialize();
+	InitializeGlobalValue();
 }
 
 void SkyDomeObject::Update()
@@ -56,7 +56,7 @@ void SkyDomeObject::Draw(ModelDrawDesc desc)
 
 }
 
-void SkyDomeObject::GlobalValueInitialize()
+void SkyDomeObject::InitializeGlobalValue()
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	std::string groupName = "Skydome";

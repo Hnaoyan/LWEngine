@@ -1,7 +1,7 @@
 #include "Boss.h"
 #include "imgui.h"
 #include "Application/GameObject/GameObjectLists.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibrary.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
@@ -11,7 +11,6 @@ void Boss::Initialize(Model* model)
 {
 	isAction_ = true;
 #ifdef IMGUI_ENABLED
-	GlobalValueInitialize();
 	isAction_ = false;
 #endif // IMGUI_ENABLED
 
@@ -238,12 +237,13 @@ void Boss::Finalize()
 	gpuParticle_->DeleteEmitter("BossDamage");
 }
 
-void Boss::GlobalValueInitialize()
+void Boss::InitializeGlobalValue()
 {
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	std::string groupName = "Boss";
 	//---ボスの共通---//
 	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "ResPosition", Vector3(0, 8.5f, 50.0f));
 	instance->AddValue(groupName, "NormalScale", worldTransform_.transform_.scale);
 	instance->AddValue(groupName, "BarrierScale", worldTransform_.transform_.scale * 2.0f);
 	instance->AddValue(groupName, "BarrierHP", 4.0f);

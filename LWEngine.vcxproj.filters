@@ -827,10 +827,10 @@
     <ClInclude Include="DirectXGame\Engine\LwLib\Ease\Ease.h">
       <Filter>Engine\LwLib</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\LwLib\LwLibLists.h">
+    <ClInclude Include="DirectXGame\Engine\LwLib\LwEnginePaths.h">
       <Filter>Engine\LwLib</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\LwLib\LwEngineLib.h">
+    <ClInclude Include="DirectXGame\Engine\LwLib\LwLibrary.h">
       <Filter>Engine\LwLib</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h">

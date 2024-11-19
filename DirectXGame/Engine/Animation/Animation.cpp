@@ -1,5 +1,5 @@
 #include "Animation.h"
-#include "../LwLib/LwEngineLib.h"
+#include "../LwLib/LwLibrary.h"
 #include "../3D/ModelUtility/ModelLoader.h"
 #include "../Base/DirectXCommon.h"
 #include "imgui.h"

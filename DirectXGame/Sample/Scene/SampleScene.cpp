@@ -6,7 +6,7 @@
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 void SampleScene::Initialize()
 {

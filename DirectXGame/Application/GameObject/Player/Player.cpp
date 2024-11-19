@@ -17,9 +17,6 @@ void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
 
 void Player::Initialize(Model* model)
 {
-#ifdef IMGUI_ENABLED
-	GlobalValueInitialize();
-#endif // IMGUI_ENABLED
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
 
@@ -239,7 +236,7 @@ void Player::StateInitialize()
 	horizontalState_->Update();
 }
 
-void Player::GlobalValueInitialize()
+void Player::InitializeGlobalValue()
 {
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	std::string groupName = "Player";
