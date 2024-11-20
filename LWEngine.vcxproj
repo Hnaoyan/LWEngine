@@ -203,7 +203,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Accelerater\IBulletAccelerater.h" />

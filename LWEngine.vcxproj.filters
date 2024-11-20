@@ -1106,7 +1106,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsLists.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\3D\User\Trail3D.h">

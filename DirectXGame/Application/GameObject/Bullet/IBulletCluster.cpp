@@ -6,7 +6,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
-#include "Application/GameObject/Bullet/BulletsLists.h"
+#include "Application/GameObject/Bullet/BulletsPaths.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include "Application/GameObject/Particle/User/ParticleLists.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"

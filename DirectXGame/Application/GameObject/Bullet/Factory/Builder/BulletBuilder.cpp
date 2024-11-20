@@ -1,5 +1,5 @@
 #include "BulletBuilder.h"
-#include "../../BulletsLists.h"
+#include "../../BulletsPaths.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 std::unique_ptr<IBullet> BulletBuilder::Build(BulletType bulletType) const
