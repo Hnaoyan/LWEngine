@@ -32,30 +32,37 @@ public:
 	/// 毎フレーム処理
 	/// </summary>
 	void Update() override;
-
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
 	/// <summary>
 	/// UI描画
 	/// </summary>
 	void UIDraw() override;
-
 	/// <summary>
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw() override;
-
+	/// <summary>
+	/// モデルのロード
+	/// </summary>
 	void LoadModel() override;
-
+	/// <summary>
+	/// テクスチャのロード
+	/// </summary>
 	void LoadTexture() override;
-
+	/// <summary>
+	/// カメラの更新
+	/// </summary>
 	void CameraUpdate() override;
-
+	/// <summary>
+	/// ライティングの初期化
+	/// </summary>
 	void LightingInitialize() override;
-
+	/// <summary>
+	/// ポストエフェクトの変更処理
+	/// </summary>
 	void PostChanger();
 
 private:
@@ -64,7 +71,7 @@ private:
 		WorldTransform worldTransform;
 		Model* model;
 	};
-	planeInfo plane_;
+	planeInfo plane_ = {};
 
 	Sprite* effectSprite_ = nullptr;
 	Sprite* circleSprite_ = nullptr;
@@ -90,7 +97,7 @@ private: // USER
 	std::unique_ptr<Skybox> skybox_;
 
 	WorldTransform objectTransform_;
-	Model* objModel_;
+	Model* objModel_ = nullptr;
 
 	// 軌跡のポリゴン
 	std::unique_ptr<Trail3D> trailPolygon_;
@@ -103,7 +110,7 @@ private: // USER
 		{0,0,0},
 		{0,0,0}
 	};
-	char texturePath_;
+	char texturePath_{};
 
 	bool isCurve_ = false;
 	float curveInter_ = 30.0f;
@@ -116,20 +123,20 @@ private: // SYSTEM
 	bool isDebugCamera_ = false;
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_;
+	CBufferDataDirectionalLight lightData_ = {};
 
 	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_;
+	CBufferDataSpotLight spLightData_ = {};
 
 	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_;
+	CBufferDataPointLight ptLightData_ = {};
 
-	CBufferDataBlur blurData_;
-	CBufferDataVignette vignetteData_;
-	CBufferDataDissolve dissolveData_;
-	CBufferDataNoise noiseData_;
-	CBufferDataHSV hsvData_;
-	CBufferDataBloom bloomData_;
+	CBufferDataBlur blurData_ = {};
+	CBufferDataVignette vignetteData_ = {};
+	CBufferDataDissolve dissolveData_ = {};
+	CBufferDataNoise noiseData_ = {};
+	CBufferDataHSV hsvData_ = {};
+	CBufferDataBloom bloomData_ = {};
 
 	int postEffecter_ = 0;
 	

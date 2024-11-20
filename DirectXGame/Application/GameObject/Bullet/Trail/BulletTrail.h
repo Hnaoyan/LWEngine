@@ -42,23 +42,26 @@ public:
 	GPUParticleEmitter* GetEmitter() { return moveEmitter_; }
 
 	void SetBulletTag(const std::string& tag) { bulletTag_ = tag; }
-	std::string GetTag() { return bulletTag_; }
 
-	bool IsDelete() { return isDelete_; }
+	std::string GetTag() const { return bulletTag_; }
+	bool IsDelete() const { return isDelete_; }
 
 	// 隠すフラグ
 	void SetIsInvisible(bool isInvisible) { isInvisible_ = isInvisible; }
-	bool IsInvisible() { return isInvisible_; }
+	bool IsInvisible() const { return isInvisible_; }
 
 	Vector3 GetBeginPoint() {
-		auto endPoint = trailPoints_.end();
-		endPoint--;
-		return *endPoint;
+		Vector3 result = {};
+		if (trailPoints_.size() > 0) {
+			auto point = --trailPoints_.end();
+			result = (*point);
+		}
+		return result;
 	}
 
 	void SetTrailColor(const Vector3& color) { polygon_->SetColor(Vector3(color)); }
 	void SetAttribute(TrackingAttribute type) { attribute_ = type; }
-	TrackingAttribute GetAttribute() { return attribute_; }
+	TrackingAttribute GetAttribute() const { return attribute_; }
 private:
 	void InitializeGlobalValue();
 
@@ -75,10 +78,9 @@ private: // SYSTEM
 	bool isInvisible_ = false;
 	// エミッター
 	GPUParticleEmitter* moveEmitter_ = nullptr;
-
-	// 
+	// 追従属性
 	TrackingAttribute attribute_;
-
+	// 弾のタグ
 	std::string bulletTag_;
 
 private: // USER

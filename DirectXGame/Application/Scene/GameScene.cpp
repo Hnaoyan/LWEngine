@@ -38,11 +38,6 @@ void GameScene::Initialize()
 	cameraManager_->Initialize(gameObjectManager_.get());
 }
 
-void GameScene::GPUUpdate()
-{
-	//gpuParticleManager_->Update();
-}
-
 void GameScene::Update()
 {
 	
@@ -71,6 +66,9 @@ void GameScene::Update()
 	CollisionUpdate();
 	// カメラの更新
 	CameraUpdate();
+
+	gpuParticleManager_->Update();
+
 }
 
 void GameScene::Draw()
@@ -101,7 +99,7 @@ void GameScene::Draw()
 	gameObjectManager_->Draw(&camera_, lightDesc);
 
 	// パーティクル
-	//gpuParticleManager_->Draw(&camera_);
+	gpuParticleManager_->Draw(&camera_);
 
 	ModelRenderer::PostDraw();
 
@@ -160,6 +158,8 @@ void GameScene::ImGuiDraw()
 		// インスタンス生成しなおし
 		gameObjectManager_ = std::make_unique<GameObjectManager>();
 		cameraManager_ = std::make_unique<CameraManager>();
+		//
+		gpuParticleManager_->DataReset();
 		// オブジェクト類の初期化
 		gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 		gameObjectManager_->GameSetUp();	// ゲームの準備
@@ -251,59 +251,54 @@ void GameScene::LoadModel()
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
-	int loadTex = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/ShotUIt.png");
+	int loadTex = TextureManager::Load("Resources/UI/ClearText.png");
+	loadTex = TextureManager::Load("Resources/UI/DashUI.png");
+	loadTex = TextureManager::Load("Resources/UI/JumpUI.png");
+	loadTex = TextureManager::Load("Resources/UI/LockonUI.png");
+	loadTex = TextureManager::Load("Resources/UI/ShotUIt.png");
 
-	loadTex = TextureManager::GetInstance()->Load("Resources/crossHair.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
+	loadTex = TextureManager::Load("Resources/crossHair.png");
+	loadTex = TextureManager::Load("Resources/default/testGage.png");
+	loadTex = TextureManager::Load("Resources/UI/GameOver.png");
 	loadTex = TextureManager::Load("Resources/default/BackGround.png");
 
 	// テクスチャのロード
 	clearText_.isClear = false;
-	uint32_t clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
+	uint32_t clearTexture = TextureManager::Load("Resources/UI/ClearText.png");
 	clearText_.clearText.reset(Sprite::Create(clearTexture, { 1280.0f / 2.0f,720.0f / 2.0f }, { 0.5f,0.5f }));
 
 	UIData data = {};
 	data.num = uiNumber_;
 	data.position = { 139.0f,60.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
+	data.texture = TextureManager::Load("Resources/UI/DashUI.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
 	data.position = { 139.0f,180.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/JumpUItt.png");
+	data.texture = TextureManager::Load("Resources/UI/JumpUItt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
 	data.position = { 139.0f,240.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/LockonUIt.png");
+	data.texture = TextureManager::Load("Resources/UI/LockonUIt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
 	data.position = { 139.0f,120.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/ShotUIt.png");
+	data.texture = TextureManager::Load("Resources/UI/ShotUIt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 
 	//SpriteManager::LoadSprite
-	uint32_t reticle = TextureManager::Load("Resources/crossHair.png");
-	SpriteManager::LoadSprite("CrossHair", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
-	SpriteManager::LoadSprite("Gage", reticle);
-	SpriteManager::LoadSprite("PlayerGage", reticle);
-	SpriteManager::LoadSprite("PlayerEnergyGage", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
-	SpriteManager::LoadSprite("HPBackUI", reticle);
-	SpriteManager::LoadSprite("PlayerHPBackUI", reticle);
-	SpriteManager::LoadSprite("PlayerEnergyBackUI", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
-	SpriteManager::LoadSprite("GageBack", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
-	SpriteManager::LoadSprite("GameOverUI", reticle);
+	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));
+	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerEnergyGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("HPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
+	SpriteManager::LoadSprite("GameOverUI", TextureManager::Load("Resources/UI/GameOver.png"));
 
 }
 

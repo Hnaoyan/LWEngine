@@ -52,10 +52,10 @@ private: // システム関係
 
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_;
+	CBufferDataDirectionalLight lightData_ = {};
 	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_;
+	CBufferDataSpotLight spLightData_ = {};
 	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_;
+	CBufferDataPointLight ptLightData_ = {};
 
 };

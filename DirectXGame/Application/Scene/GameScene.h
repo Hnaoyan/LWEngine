@@ -21,8 +21,6 @@ public:
 	/// </summary>
 	void Initialize() override;
 
-	void GPUUpdate() override;
-
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
@@ -91,7 +89,7 @@ private: // リソース
 	struct GameClear {
 		FrameTimer transitionTimer;
 		std::unique_ptr<Sprite> clearText;
-		bool isClear;
+		bool isClear = false;
 	};
 
 	FrameTimer backTitleTimer_;
@@ -100,8 +98,8 @@ private: // リソース
 	struct UIData {
 		std::string tag;
 		uint32_t num = 0;
-		Vector2 position{};
-		Vector2 scale{};
+		Vector2 position = {};
+		Vector2 scale = {};
 		uint32_t texture = 0;
 	};
 
@@ -116,9 +114,9 @@ private: // リソース
 private: // システム関係
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_;
+	CBufferDataDirectionalLight lightData_ = {};
 	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_;
+	CBufferDataSpotLight spLightData_ = {};
 	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_;
+	CBufferDataPointLight ptLightData_ = {};
 };

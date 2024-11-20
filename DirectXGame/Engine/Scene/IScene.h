@@ -23,7 +23,7 @@ public: // フレーム関数
 	/// <summary>
 	/// GPUの更新処理
 	/// </summary>
-	virtual void GPUUpdate() = 0;
+	virtual void GPUUpdate() {};
 
 	/// <summary>
 	/// 描画処理

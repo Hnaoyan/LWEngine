@@ -76,7 +76,7 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
     particle.translate = emitterPosition;
     particle.translate += offset;
     
-    particle.color.rgb = float32_t3(1.0f, 0.5f, 0.5f);
+    particle.color.rgb = float32_t3(0.35f, 0.35f, 0.35f);
     //particle.color.a = generator.GenerateRange1D(0.5f, 0.85f);
     particle.color.a = 0.1f;
     particle.startAlpha = 0.5f;

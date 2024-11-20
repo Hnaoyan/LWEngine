@@ -26,8 +26,6 @@ void SceneManager::Update()
 	}
 	// 現在のシーンがあれば
 	if (nowScene_) {
-		// シーンのGPU更新処理
-		nowScene_->GPUUpdate();
 		// シーンのCPU更新処理
 		nowScene_->Update();
 	}

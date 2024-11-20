@@ -1,6 +1,11 @@
 #include "GPUParticleSystem.h"
 #include <imgui.h>
 
+GPUParticleSystem::GPUParticleSystem()
+{
+
+}
+
 void GPUParticleSystem::Initialize(Model* model)
 {
 	assert(model);
@@ -14,6 +19,8 @@ void GPUParticleSystem::Initialize(Model* model)
 	createData_.emit = 0;
 
 	addEmitterName_ = "Emitter";
+
+	emitters_.clear();
 
 }
 
@@ -141,4 +148,9 @@ GPUParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
 		return it->second.get();
 	}
 	return nullptr;
+}
+
+void GPUParticleSystem::DataReset()
+{
+	this->emitters_.clear();
 }

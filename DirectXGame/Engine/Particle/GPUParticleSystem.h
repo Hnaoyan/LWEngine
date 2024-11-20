@@ -11,6 +11,10 @@ public:
 	static const uint32_t kNumInstanceMax = 1024;
 	// エミッターのリスト
 	std::unordered_map<std::string, std::unique_ptr<GPUParticleEmitter>>  emitters_;
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	GPUParticleSystem();
 
 public: // メンバ関数
 	/// <summary>
@@ -53,11 +57,17 @@ public: // メンバ関数
 	/// <param name="tag"></param>
 	/// <returns></returns>
 	GPUParticleEmitter* FindEmitter(std::string tag);
+
+	/// <summary>
+	/// データの初期化
+	/// </summary>
+	void DataReset();
+
 private:
-	bool isCreate_ = false;
-	bool isDelete_ = false;
-	std::string addEmitterName_;
-	int nameNum_ = 0;
-	EmitterSphere createData_{};
-	Model* model_ = nullptr;
+	bool isCreate_ = false;	// 生成フラグ
+	bool isDelete_ = false;	// 削除フラグ
+	std::string addEmitterName_;	// 追加するエミッターの名前
+	int nameNum_ = 0;	// 名前の番号
+	EmitterSphere createData_{};	// 作成データ	
+	Model* model_ = nullptr;	// モデル
 };
