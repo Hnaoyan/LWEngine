@@ -15,7 +15,7 @@ public:
 	/// </summary>
 	/// <param name="camera"></param>
 	/// <param name="gpuParticle"></param>
-	void PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle);
+	void PreInitialize(ICamera* camera, GPUParticleManager* gpuParticle);
 
 	/// <summary>
 	/// 初期化
@@ -107,10 +107,7 @@ public:
 	ICamera* camera_ = nullptr;
 	// 落下フラグ
 	bool isGround_ = false;
-	// 
-	FrameTimer quickBoostCoolTime_;
-
-	bool isKnock_ = false;
 private:
+	// ボス
 	Boss* boss_ = nullptr;
 };

@@ -117,7 +117,7 @@ void GPUParticleEmitter::Draw(ICamera* camera)
 	// 行列
 	sCommandList->SetGraphicsRootDescriptorTable(static_cast<UINT>(Pipeline::GPUParticleDrawRegister::kMatrixs), particles_.GetSRVGPU());
 	// 描画処理
-	sCommandList->DrawIndexedInstanced(UINT(model_->GetModelData()->indices.size()), GPUParticleSystem::kNumInstanceMax, 0, 0, 0);
+	sCommandList->DrawIndexedInstanced(UINT(model_->GetModelData()->indices.size()), GPUParticleManager::kNumInstanceMax, 0, 0, 0);
 #pragma endregion
 
 	// 元のリソースの状態に
@@ -158,9 +158,9 @@ void GPUParticleEmitter::CreateData()
 	// デバイス取得
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
 	// StructuredBuffer
-	particles_.CreateBuffer(device, GPUParticleSystem::kNumInstanceMax);
-	freeListIndex_.CreateBuffer(device, GPUParticleSystem::kNumInstanceMax);
-	freeList_.CreateBuffer(device, GPUParticleSystem::kNumInstanceMax);
+	particles_.CreateBuffer(device, GPUParticleManager::kNumInstanceMax);
+	freeListIndex_.CreateBuffer(device, GPUParticleManager::kNumInstanceMax);
+	freeList_.CreateBuffer(device, GPUParticleManager::kNumInstanceMax);
 	// ConstantBuffer
 	perFrame_.CreateConstantBuffer(device);
 	perView_.CreateConstantBuffer(device);

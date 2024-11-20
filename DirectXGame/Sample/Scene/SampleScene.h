@@ -10,7 +10,7 @@
 #include "Engine/PostEffect/PostEffectData.h"
 #include "Engine/3D/Instancing/InstancedGroup.h"
 #include "Engine/LevelEditor/LevelLoader.h"
-#include "Engine/Particle/Particle.h"
+#include "Engine/Particle/Fragment/Particle.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "Engine/3D/User/MissileTrail.h"
 #include "Engine/3D/User/Trail3D.h"
@@ -86,7 +86,7 @@ private: // USER
 
 	std::unique_ptr<LevelLoader> levelLoader_;
 
-	std::unique_ptr<GPUParticleSystem> gpuParticle_;
+	std::unique_ptr<GPUParticleManager> gpuParticle_;
 
 	Vector3 generatePosition_ = {};
 

@@ -8,7 +8,6 @@ void SkyDomeObject::Initialize(Model* model)
 {
 	model_ = model;
 	worldTransform_.Initialize();
-	worldTransform_.transform_.scale = { 500.0f,500.0f,500.0f };
 	worldTransform_.UpdateMatrix();
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();

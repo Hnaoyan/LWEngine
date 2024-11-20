@@ -1,5 +1,5 @@
 #include "SkinCluster.h"
-#include "../3D/Descriptor/SRVHandler.h"
+#include "Engine/Base/Descriptor/SRVHandler.h"
 #include "../Base/Utility/DxCreateLib.h"
 #include "../3D/ModelUtility/ModelData.h"
 

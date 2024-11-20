@@ -9,6 +9,7 @@ void Framework::Execute()
 	// 初期化
 	Initialize();
 
+	// ゲームループ
 	while (true)
 	{
 		// 更新
@@ -38,6 +39,7 @@ void Framework::Initialize()
 	dxCommon_ = DirectXCommon::GetInstance();
 	dxCommon_->Initialize(winApp_);
 
+	// 入力クラス
 	input_ = Input::GetInstance();
 	input_->Initialize();
 
@@ -58,21 +60,19 @@ void Framework::Initialize()
 
 	// テクスチャマネージャの初期化
 	TextureManager::GetInstance()->Initialize(dxCommon_);
-	textureManager_->Load("Resources/default/white2x2.png");
-	textureManager_->Load("Resources/default/uvChecker.png");
-	textureManager_->Load("Resources/Dissolve/noise0.png");
-	textureManager_->Load("Resources/Dissolve/noise1.png");
+	TextureManager::Load("Resources/default/white2x2.png");
+
 	// モデルマネージャの初期化
 	modelManager_->LoadNormalModel("DefaultCube", "cube");
 	modelManager_->LoadNormalModel("Sphere", "SphereCollider");
 	modelManager_->LoadNormalModel("Box", "BoxCollider");
-	modelManager_->LoadObjModel("Plane", "plane");
+	modelManager_->LoadNormalModel("Plane", "plane");
 
+	// スプライトの初期化
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
 
-	Audio::GetInstance()->Initialize();
-
-	
+	// オーディオの初期化
+	Audio::GetInstance()->Initialize();	
 }
 
 void Framework::Finalize()

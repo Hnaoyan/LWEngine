@@ -40,48 +40,55 @@ void OparationManager::Update()
 void OparationManager::InputUpdate()
 {
 	Vector3 direct = {};
+	// スティックごとの入力値
 	Vector2 sThumbL = GameSystem::sKeyConfigManager.GetKeyConfig()->leftStick;
 	Vector2 sThumbR = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
-	// コントローラー操作
-	// 方向取得
+	
+	// 方向設定
 	direct = { sThumbL.x,sThumbL.y ,0 };
-	// 射撃入力
+	//---射撃入力---//
+	// 通常
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().shot && !shotTimer_.IsActive()) {
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
-		shotTimer_.Start(30.0f);
+		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
 	}
+	// 追従
 	else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
 		player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
-		shotTimer_.Start(30.0f);
+		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
 	}
 
 	// カメラの処理
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon && !lockOnCooltime_.IsActive()) {
 		lockOn_.ToggleLockOn(player_->camera_);
-		lockOnCooltime_.Start(20.0f);
+		lockOnCooltime_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration"));
 	}
 	// スティックでロックオン対象を変更
 	if (lockOn_.ExistTarget() && (sThumbR.x != 0 || sThumbR.y != 0) && !lockOnCooltime_.IsActive()) {
 		lockOn_.ChangeLockOnTarget(player_->camera_);
-		lockOnCooltime_.Start(20.0f);
+		lockOnCooltime_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration"));
 	}
 	if (lockOn_.ExistTarget()) {
 
 	}
 	direct = Vector3::Normalize(direct);
 
-	float slowFactor = 0.2f;
-	bool isQucikBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalManager()->GetVariant());
-	if (!isQucikBoost && GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost && !player_->quickBoostCoolTime_.IsActive()) {
+	// ダッシュ入力
+	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalManager()->GetVariant());
+	if (!isQuickBoost && GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
 		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
+			return;
+		}
+		if (isQuickBoost) {
 			return;
 		}
 		player_->HorizontalManager()->ChangeRequest(StateManager::kQuickBoost);
 		return;
 	}
 
-	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, slowFactor);
-	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, slowFactor);
+	float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");
+	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, velocityDecay);
+	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, velocityDecay);
 
 }

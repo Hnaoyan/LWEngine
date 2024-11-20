@@ -1,7 +1,8 @@
 #pragma once
 #include "Framework.h"
-#include "../Scene/SceneManager.h"
-#include "../Scene/SceneFactory/AbstractSceneFactory.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
+#include "Engine/Scene/SceneManager.h"
+#include "Engine/Scene/SceneFactory/AbstractSceneFactory.h"
 
 class MyGame : public Framework
 {

@@ -68,6 +68,7 @@ protected:	// ポインタ
 	Input* input_ = nullptr;
 
 protected:
+	// マネージャ関係
 	std::unique_ptr<SceneManager> sceneManager_;
 	std::unique_ptr<ImGuiManager> imGuiManager_;
 	std::unique_ptr<ModelManager> modelManager_;

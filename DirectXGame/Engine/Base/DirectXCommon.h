@@ -6,9 +6,9 @@
 #include "DirectX/DirectXCommand.h"
 #include "DirectX/SwapChainManager.h"
 
-#include "../3D/Descriptor/SRVHandler.h"
-#include "../3D/Descriptor/RTVHandler.h"
-#include "../3D/Descriptor/DSVHandler.h"
+#include "Engine/Base/Descriptor/SRVHandler.h"
+#include "Engine/Base/Descriptor/RTVHandler.h"
+#include "Engine/Base/Descriptor/DSVHandler.h"
 
 
 #include <wrl.h>
@@ -94,7 +94,7 @@ private: // Heap
 
 public: // Fence関係
 	void SetFenceVal(UINT fenceVal) { fenceVal_ = fenceVal; }
-	UINT GetFenceVal() { return fenceVal_; }
+	UINT GetFenceVal() const { return fenceVal_; }
 
 public: // アクセッサ
 	ID3D12Device* GetDevice() { return dxDevice_->GetDevice(); }

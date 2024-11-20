@@ -14,7 +14,7 @@ void GameScene::Initialize()
 
 #pragma region インスタンス化
 	cameraManager_ = std::make_unique<CameraManager>();
-	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
+	gpuParticleManager_ = std::make_unique<GPUParticleManager>();
 	uiManager_ = std::make_unique<GameUIManager>();
 
 	collisionManager_ = std::make_unique<CollisionManager>();

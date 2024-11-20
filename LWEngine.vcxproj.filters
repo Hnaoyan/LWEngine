@@ -240,9 +240,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Teleport\BossTeleportState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClCompile>
@@ -285,7 +282,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp">
       <Filter>Engine\Base\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\LwLib\Ease\Ease.cpp">
@@ -399,10 +396,10 @@
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\RTVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp">
@@ -423,7 +420,7 @@
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp">
+    <ClCompile Include="DirectXGame\Engine\Particle\Fragment\Particle.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.cpp">
@@ -911,7 +908,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Material.h">
       <Filter>Engine\3D</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\Particle.h">
+    <ClInclude Include="DirectXGame\Engine\Particle\Fragment\Particle.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h">
@@ -929,13 +926,13 @@
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\RTVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h">
@@ -1182,9 +1179,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletEffectCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.h">

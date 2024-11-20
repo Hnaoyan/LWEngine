@@ -79,7 +79,7 @@ private: // アプリ
 	// カメラマネ
 	std::unique_ptr<CameraManager> cameraManager_;
 	// GPUParticle
-	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
+	std::unique_ptr<GPUParticleManager> gpuParticleManager_;
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
 private: // リソース

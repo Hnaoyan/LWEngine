@@ -10,7 +10,7 @@
 #include <memory>
 
 class CollisionManager;
-class GPUParticleSystem;
+class GPUParticleManager;
 class GPUParticleEmitter;
 
 namespace BossSystemContext
@@ -52,7 +52,7 @@ namespace BossSystemContext
 		}
 
 	public: // アクセッサ
-		void SetGPUParticleSystem(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+		void SetGPUParticleSystem(GPUParticleManager* ptr) { gpuParticle_ = ptr; }
 		bool IsDamage() { return damage_.isActive; }
 	
 	private: // ダメージ
@@ -62,7 +62,7 @@ namespace BossSystemContext
 		DamageParams damage_;
 
 	private: // ポインタ関係
-		GPUParticleSystem* gpuParticle_ = nullptr;
+		GPUParticleManager* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
 
 	};
