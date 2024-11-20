@@ -29,6 +29,11 @@ public:
 
 	void FadeWidthVertex(const std::vector<Vector3>& points);
 
+	void VertexDataReset() {
+		// 中身リセット
+		std::fill(vertexData_.begin(), vertexData_.end(), TriangleData{});
+	};
+
 private:
 	// 頂点
 	ConstantBufferMapContext<TriangleData> vertex_;
@@ -56,6 +61,7 @@ private:
 	float width_ = 0.0f;
 	float minWidth_ = 0.0f;
 	float maxAlpha_ = 1.0f;
+	float minAlpha_ = 0.0f;
 
 public:
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
@@ -70,6 +76,9 @@ public:
 	void SetColor(const Vector4& color) { color_ = color; }
 	void SetColor(const Vector3& color) { color_ = { color.x,color.y,color.z,color_.w }; }
 	void SetCamera(ICamera* camera) { camera_.emplace(camera); }
+
+	void SetMaxAlpha(const float& alpha) { maxAlpha_ = alpha; }
+	void SetMinAlpha(const float& alpha) { minAlpha_ = alpha; }
 	// ゲッター
 	bool IsCamera() { return camera_.has_value(); }
 	size_t GetVertexSize() { return vertexData_.size(); }

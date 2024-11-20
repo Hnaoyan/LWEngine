@@ -1,6 +1,9 @@
 #pragma once
 #include "../ICollider.h"
 
+/// <summary>
+/// AABB
+/// </summary>
 class AABB : public ICollider
 {
 public:
@@ -20,12 +23,10 @@ public:
 	}
 
 public:
-	// 衝突判定用
-	Vector3 min_ = {};
-	Vector3 max_ = {};
+	Vector3 min_ = {};	// 最小
+	Vector3 max_ = {};	// 最大
 
 private:
-	// 半径サイズ
-	Vector3 radius_ = {};
+	Vector3 radius_ = {};	// 半径サイズ
 	
 };

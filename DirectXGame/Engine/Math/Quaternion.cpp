@@ -1,6 +1,8 @@
 #include "Quaternion.h"
+#include "Engine/LwLib/LwLibrary.h"
 #include <cmath>
 #include <numbers>
+#include <algorithm>
 
 Quaternion Quaternion::Multiply(const Quaternion& lhs, const Quaternion& rhs)
 {
@@ -108,10 +110,77 @@ Quaternion Quaternion::Add(const Quaternion& q0, const Quaternion& q1)
 
 Quaternion Quaternion::MakeRotateAxisAngleQuaternion(const Vector3& axis, const float& angle)
 {
-    Quaternion result = {};
+    Quaternion result{};
     result.w = std::cosf(angle / 2.0f);
-    result.x = std::sinf(angle / 2.0f) * axis.x;
-    result.y = std::sinf(angle / 2.0f) * axis.y;
-    result.z = std::sinf(angle / 2.0f) * axis.z;
+    float sinf = std::sinf(angle / 2.0f);
+    result.x = sinf * axis.x;
+    result.y = sinf * axis.y;
+    result.z = sinf * axis.z;
     return result;
+}
+
+Quaternion Quaternion::MakeRotateToDirect(const Vector3& direct, const Vector3& axis)
+{
+    //// 角度計算
+    //float dot = Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct));
+    //dot = std::clamp(dot, -1.0f, 1.0f);
+    //float angle = std::acosf(dot);
+    //Vector3 rotAxis = Vector3::Cross(Vector3::Normalize(axis), Vector3::Normalize(direct));
+    //return Quaternion::MakeRotateAxisAngleQuaternion(rotAxis, angle);
+
+
+    // 角度計算: 内積を使って角度を計算
+    float cosAngle = Vector3::Dot(Vector3::Normalize(axis), Vector3::Normalize(direct));
+    cosAngle = std::clamp(cosAngle, -1.0f, 1.0f);  // 数値誤差で1.0fを超えないようにクランプ
+    float angle = std::acosf(cosAngle);
+    Vector3 rotationAxis{};
+    if (std::abs(cosAngle - 1.0f) < 0.001f) {
+        // ベクトルが同じ方向
+        rotationAxis = Vector3(1.0f, 0.0f, 0.0f); 
+    }
+    else if (std::abs(cosAngle + 1.0f) < 0.001f) {
+        // ベクトルが逆方向
+        rotationAxis = Vector3(1.0f, 0.0f, 0.0f);  // 垂直な軸
+    }
+    else {
+        rotationAxis = Vector3::Cross(Vector3::Normalize(axis), Vector3::Normalize(direct));  // 外積で回転軸を求める
+        rotationAxis.Normalize();  // 正規化
+    }
+    return Quaternion(Quaternion::MakeRotateAxisAngleQuaternion(rotationAxis, angle));
+}
+
+Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
+{
+    Vector3 normDirect = Vector3::Normalize(direct);
+    //Vector3 angle{};
+    //angle.x = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //angle.y = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.x);
+    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.y);
+    //angle.z = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
+    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.z);
+    //float angleZ = std::atan2(normDirect.y, normDirect.x);
+    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angleZ);
+
+    float angleX = std::atan2(normDirect.y, std::sqrt(normDirect.x * normDirect.x + normDirect.z * normDirect.z));
+    float angleY = std::atan2(normDirect.x, normDirect.z);
+    Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), -angleX);
+    Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angleY);
+
+
+    return Quaternion(qy * qx); 
+}
+
+Quaternion Quaternion::DirectionToDirection(const Vector3& from, const Vector3& to)
+{
+    Vector3 normFrom, normTo;
+    normFrom = Vector3::Normalize(from);
+    normTo = Vector3::Normalize(to);
+
+    Vector3 cross = Vector3::Cross(normFrom, normTo);
+    float cosAngle = Vector3::Dot(normFrom, normTo);
+    float angle = std::acosf(cosAngle);
+    float sinAngle = std::sinf(angle / 2.0f);
+
+    return Quaternion(cross.x * sinAngle, cross.y * sinAngle, cross.z * sinAngle);
 }

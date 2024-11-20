@@ -4,6 +4,9 @@
 class DirectXCommon;
 class WindowAPI;
 
+/// <summary>
+/// ImGui関係管理クラス
+/// </summary>
 class ImGuiManager : public Singleton<ImGuiManager>
 {
 public:

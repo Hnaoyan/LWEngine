@@ -2,7 +2,11 @@
 #include "Application/GameObject/GameObjectLists.h"
 
 class CollisionManager;
+class CameraManager;
 
+/// <summary>
+/// ゲームのオブジェクト管理クラス
+/// </summary>
 class GameObjectManager
 {
 public:
@@ -13,7 +17,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="gpuManager"></param>
-	void Initialize(GPUParticleSystem* gpuManager);
+	void Initialize(GPUParticleSystem* gpuManager, ICamera* camera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -37,20 +41,24 @@ public:
 	/// </summary>
 	/// <param name="collisionManager"></param>
 	void RegisterCollider(CollisionManager* collisionManager);
-public:
-	ICamera* GetFollowCamera() { return followCamera_.get(); }
+	/// <summary>
+	/// ゲーム開始準備
+	/// </summary>
+	void GameSetUp();
 
+public:
+	// プレイヤー
+	Player* GetPlayer() { return player_.get(); }
+
+	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
-
-	bool IsGameClear() { return isGameClear_; }
-	bool IsGameOver() { return isGameOver_; }
-private:
-	bool isGameOver_ = false;
-	bool isGameClear_ = false;
-	
-	bool isInGame_ = false;
-
+	bool IsGameClear() const { return isGameClear_; }
+	bool IsGameOver() const { return isGameOver_; }
+private: // ゲームクリアなどの部分
+	bool isGameOver_ = false;	// ゲームオーバー
+	bool isGameClear_ = false;	// ゲームクリア
+	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
 
@@ -63,9 +71,6 @@ private:
 	// 地形や背景
 	std::unique_ptr<TerrainManager> terrainManager_;
 	std::unique_ptr<SkyDomeObject> skyDome_;
-
-	// カメラ
-	std::unique_ptr<FollowCamera> followCamera_;
 
 	// マネージャーポインタ
 	GPUParticleSystem* gpuManager_ = nullptr;

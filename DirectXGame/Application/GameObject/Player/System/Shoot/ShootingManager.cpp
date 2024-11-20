@@ -30,14 +30,14 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 void PlayerContext::ShootingManager::TrackingFire()
 {
 
-	GenerateTracking({ 1.0f,0.5f,0.0f }, TrackingType::kSuperior);
-	GenerateTracking({ -1.0f,0.5f,0.0f }, TrackingType::kSuperior);
+	GenerateTracking({ 1.0f,0.5f,0.0f }, TrackingAttribute::kSuperior);
+	GenerateTracking({ -1.0f,0.5f,0.0f }, TrackingAttribute::kSuperior);
 
-	GenerateTracking({ 1.0f,0.0f,0.0f }, TrackingType::kSuperior);
-	GenerateTracking({ -1.0f,0.0f,0.0f }, TrackingType::kSuperior);
+	GenerateTracking({ 1.0f,0.0f,0.0f }, TrackingAttribute::kSuperior);
+	GenerateTracking({ -1.0f,0.0f,0.0f }, TrackingAttribute::kSuperior);
 }
 
-void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, TrackingType type)
+void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, TrackingAttribute type)
 {
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(player_->worldTransform_.transform_.rotate);
 	EulerTransform transform = player_->worldTransform_.transform_;

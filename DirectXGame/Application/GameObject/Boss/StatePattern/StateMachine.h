@@ -64,6 +64,9 @@ namespace BossState
 		virtual void Update() = 0;
 		// 終了処理
 		virtual void Exit() = 0;
+	public:
+		void SetChangeTimer(const float& time) { changeTimer_.Start(time); }
+
 	protected:
 		// ボス本体の向きの処理
 		void RotateUpdate();
@@ -101,69 +104,6 @@ namespace BossState
 	private:
 		Boss* boss_ = nullptr;
 	};
-	/// <summary>
-	/// ステート変更管理クラス
-	/// </summary>
-	class StateDecider {
-	public:
-		enum class StatePattern : uint32_t{
-			kAttack,
-			kMove,
-			kUpdown,
-			kWait,
-			kTeleport,
-			kMissile,
-			kOrbitMove,
-			kMissileBarrage,
-			kMax,
-		};
-		struct StateObject {
-			std::vector<StateDecider::StatePattern> patterns;
-			uint32_t number;
-			uint32_t maxStep;
-		};
-	private:
-		Boss* boss_ = nullptr;
-		Player* player_ = nullptr;
-
-		std::string tableTag_;
-
-		void RandomTable(uint32_t random) {
-			if (random == 0) {
-				tableTag_ = "Default";
-			}
-			else if (random == 1) {
-				tableTag_ = "MoveType";
-			}
-			else {
-				tableTag_ = "AttackType";
-			}
-		}
-
-	public:
-		void Initialize(Boss* boss, Player* player);
-		void StateDecide(StateVariant nowState);
-
-	private:
-		// ステートの変更処理
-		void StateSelect(StatePattern number);
-		// テーブルの決定
-		void TableSelect(std::string tableTag);
-
-	private:
-		// テーブル中か
-		bool IsInActionSequence_ = false;
-		bool isCooltime_ = false;
-		uint32_t randomValue_ = 0;
-		// テーブル内の位置
-		uint32_t currentStep_ = 0;
-		std::map<std::string, StateObject> tables_;
-
-		std::string currentTabletag_;
-
-		std::vector<std::string> section_;
-		uint32_t sectionIndex_ = 0;
-	};
 
 #pragma region State達
 
@@ -190,7 +130,7 @@ namespace BossState
 		void Exit() override;
 	private:
 		void MissileAttack();
-		void GenerateMissile(const Matrix4x4& rotateMatrix, TrackingType type);
+		void GenerateMissile(const Matrix4x4& rotateMatrix, TrackingAttribute type);
 
 	private:
 		Vector3 bulletDirect_ = {};

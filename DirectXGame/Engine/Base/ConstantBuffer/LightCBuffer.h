@@ -4,6 +4,7 @@
 enum EnableLighting
 {
 	kNone,			// なし
+	kAllLighting,	// 全て
 	kDirectional,	// 平行光源
 	kPoint,			// 点光源
 	kSpot,			// スポットライト

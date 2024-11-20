@@ -4,6 +4,9 @@
 #include <list>
 #include <string>
 
+/// <summary>
+/// Blenderから受け取るデータ
+/// </summary>
 class LevelData
 {
 public:

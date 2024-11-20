@@ -3,7 +3,7 @@
 #include "../../Player.h"
 #include "Engine/2D/SpriteManager.h"
 
-void PlayerContext::UIManager::Initialize(Player* player)
+void PlayerContext::PlayerUIManager::Initialize(Player* player)
 {
 	player_ = player;
 
@@ -45,7 +45,7 @@ void PlayerContext::UIManager::Initialize(Player* player)
 	energyUI_.maxScale = energyUI_.currentHP.sprite->GetSize();
 }
 
-void PlayerContext::UIManager::Draw()
+void PlayerContext::PlayerUIManager::Draw()
 {
 	reticle_->SetPosition(player_->GetOperation()->GetAimManager()->GetReticlePosition());
 	reticle_->Draw();
@@ -54,7 +54,7 @@ void PlayerContext::UIManager::Draw()
 	EnergyUI();
 }
 
-void PlayerContext::UIManager::HPUI()
+void PlayerContext::PlayerUIManager::HPUI()
 {
 	Vector2 scale = { 380.0f,48.0f };
 	// 現在値
@@ -68,7 +68,7 @@ void PlayerContext::UIManager::HPUI()
 
 }
 
-void PlayerContext::UIManager::EnergyUI()
+void PlayerContext::PlayerUIManager::EnergyUI()
 {
 	Vector2 scale = { 24.0f,280.0f };
 	// 現在値
@@ -81,7 +81,7 @@ void PlayerContext::UIManager::EnergyUI()
 	energyUI_.backGround.Draw();
 }
 
-void PlayerContext::UIManager::ImGuiDraw()
+void PlayerContext::PlayerUIManager::ImGuiDraw()
 {
 	ImGui::DragFloat2("Position", &hpUI_.position.x, 0.01f);
 	Vector2 scale = hpUI_.currentHP.sprite->GetSize();

@@ -1,6 +1,9 @@
 #pragma once
 #include "Collider/ColliderLists.h"
 
+/// <summary>
+/// 当たり判定関数
+/// </summary>
 class Collision
 {
 public:

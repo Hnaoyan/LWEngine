@@ -63,20 +63,26 @@ public:
 	// ローカル行列
 	Matrix4x4 localMatrix_ = {};
 	// 方向ベクトル
-	Vector3 rotateDirect_;
+	Vector3 rotateDirect_ = {};
 
 	// カメラのポインタ
 	ICamera* camera_ = nullptr;
+	// ビルボードを行うか
 	bool isBillBoard_ = false;
 	// ベクトルでの回転行列の作成
 	bool isVectorRotate_ = false;
 
+	// クォータニオンで計算するかどうか
 	bool isQuaternion_ = false;
 
-	Quaternion rotateQuaternion_;
+	// 回転用のクォータニオン
+	Quaternion rotateQuaternion_ = {};
 
-	Vector3 axis_{ 0.0f,0.0f,1.0f };
-	Vector3 rotVector_{ 0.0f,0.0f,0.0f };
+	// 軸
+	Vector3 axis_ = { 0.0f,0.0f,1.0f };
+	// 回転ベクトル
+	Vector3 rotVector_ = { 0.0f,0.0f,0.0f };
+	// 角度
 	float angle_ = 0.0f;
 
 };

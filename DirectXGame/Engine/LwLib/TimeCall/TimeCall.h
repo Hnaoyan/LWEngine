@@ -4,9 +4,11 @@
 
 namespace LwLib
 {
+	/// <summary>
+	/// タイムコール
+	/// </summary>
 	class TimeCall
 	{
-
 	public: // メンバ関数
 
 		/// <summary>

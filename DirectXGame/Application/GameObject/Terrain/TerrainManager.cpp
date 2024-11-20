@@ -86,7 +86,6 @@ void TerrainManager::AddCluster(std::string filename,std::string modelTag)
 
 void TerrainManager::ImGuiDraw()
 {
-	ImGui::Begin("TerrainManager");
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	std::string name = "Cluster";
 	if (ImGui::BeginTabBar(name.c_str()))
@@ -103,7 +102,6 @@ void TerrainManager::ImGuiDraw()
 		}
 		ImGui::EndTabBar();
 	}
-	ImGui::End();
 }
 
 void TerrainManager::CollisionUpdate(CollisionManager* manager)

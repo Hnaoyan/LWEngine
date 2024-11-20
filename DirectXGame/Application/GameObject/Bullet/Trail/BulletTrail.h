@@ -2,11 +2,12 @@
 #include "Engine/Math/Vector/Vector3.h"
 #include "Engine/3D/User/Trail3D.h"
 #include "Engine/3D/Instancing/InstancedUnit.h"
+#include "Application/GameObject/Bullet/BulletEnums.h"
 #include <vector>
 #include <optional>
 
 class IBullet;
-class ParticleEmitter;
+class GPUParticleEmitter;
 
 class BulletTrail
 {
@@ -37,24 +38,32 @@ public:
 	// 弾
 	void SetBullet(IBullet* bullet) { unit_ = bullet; }
 
-	void SetMoveEmitter(ParticleEmitter* moveEmitter) { moveEmitter_ = moveEmitter; }
-	ParticleEmitter* GetEmitter() { return moveEmitter_; }
+	void SetMoveEmitter(GPUParticleEmitter* moveEmitter) { moveEmitter_ = moveEmitter; }
+	GPUParticleEmitter* GetEmitter() { return moveEmitter_; }
 
 	void SetBulletTag(const std::string& tag) { bulletTag_ = tag; }
-	std::string GetTag() { return bulletTag_; }
 
-	bool IsDelete() { return isDelete_; }
+	std::string GetTag() const { return bulletTag_; }
+	bool IsDelete() const { return isDelete_; }
+
+	// 隠すフラグ
+	void SetIsInvisible(bool isInvisible) { isInvisible_ = isInvisible; }
+	bool IsInvisible() const { return isInvisible_; }
 
 	Vector3 GetBeginPoint() {
-		auto endPoint = trailPoints_.end();
-		endPoint--;
-		return *endPoint;
+		Vector3 result = {};
+		if (trailPoints_.size() > 0) {
+			auto point = --trailPoints_.end();
+			result = (*point);
+		}
+		return result;
 	}
 
 	void SetTrailColor(const Vector3& color) { polygon_->SetColor(Vector3(color)); }
-
+	void SetAttribute(TrackingAttribute type) { attribute_ = type; }
+	TrackingAttribute GetAttribute() const { return attribute_; }
 private:
-	void GlobalValueInitialize();
+	void InitializeGlobalValue();
 
 private: // SYSTEM
 	// 軌跡用の座標保存
@@ -65,9 +74,13 @@ private: // SYSTEM
 	std::optional<IBullet*> unit_ = std::nullopt;
 	// 消すフラグ
 	bool isDelete_ = false;
+	// 描画しないフラグ
+	bool isInvisible_ = false;
 	// エミッター
-	ParticleEmitter* moveEmitter_ = nullptr;
-
+	GPUParticleEmitter* moveEmitter_ = nullptr;
+	// 追従属性
+	TrackingAttribute attribute_;
+	// 弾のタグ
 	std::string bulletTag_;
 
 private: // USER

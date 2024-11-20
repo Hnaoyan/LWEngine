@@ -138,9 +138,20 @@ PixelShaderOutput main(VSOutput input)
     float32_t3 relectedVector = reflect(cameraToPosition, normalize(input.normal));
     float32_t4 environmentColor = gEnvironmentTexture.Sample(gSampler, relectedVector);
 
-    resultColor.rgb += environmentColor.rgb * gMaterial.coefficient;
-       
-    output.color = resultColor;
+    resultColor.rgb += environmentColor.rgb * gMaterial.coefficient;    
+    if (gMaterial.enableLighting == 0)
+    {
+        output.color = textureColor;
+    }
+    else
+    {
+        output.color = resultColor;
+    }
+    
+    if (output.color.a == 0.0f)
+    {
+        discard;
+    }
+    
     return output;
-
 }	

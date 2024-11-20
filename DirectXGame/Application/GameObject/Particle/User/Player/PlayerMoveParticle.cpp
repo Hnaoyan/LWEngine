@@ -3,7 +3,7 @@
 
 void PlayerParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle)
 {
-	ParticleEmitter::Initialize(model, textureHandle);
+	GPUParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 1;
 	data_.frequency = 0.1f;
 	data_.frequencyTime = 0.0f;
@@ -35,13 +35,13 @@ void PlayerParticle::MoveEffect::Update()
 	}
 
 	// バッファーに送るなどの処理
-	ParticleEmitter::Update();
+	GPUParticleEmitter::Update();
 }
 
 void PlayerParticle::MoveEffect::Draw(ICamera* camera)
 {
 
-	ParticleEmitter::Draw(camera);
+	GPUParticleEmitter::Draw(camera);
 
 }
 

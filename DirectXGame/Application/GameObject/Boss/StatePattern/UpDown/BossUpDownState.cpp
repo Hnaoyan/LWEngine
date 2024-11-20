@@ -18,7 +18,12 @@ void BossState::UpDownState::Initialize()
 		endPosition_.y = maxY;
 	}
 	// 変更のタイマー
-	changeTimer_.Start(80.0f);
+	if (boss_->GetHealth()->GetHPRatio() > 0.5f) {
+		changeTimer_.Start(65.0f);
+	}
+	else {
+		changeTimer_.Start(40.0f);
+	}
 
 }
 

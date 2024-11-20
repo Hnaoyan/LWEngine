@@ -1,6 +1,6 @@
 #include "../StateMachine.h"
 #include "Application/GameObject/GameObjectLists.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibrary.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include <algorithm>
 
@@ -67,21 +67,21 @@ void BossState::MissileAttackState::MissileAttack()
 	// 弾の生成
 	for (int i = 0; i < 25; ++i) {
 		//---優等---//
-		GenerateMissile(rotateMatrix, TrackingType::kSuperior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kSuperior);
 		//---劣等---//
-		GenerateMissile(rotateMatrix, TrackingType::kInferior);
-		GenerateMissile(rotateMatrix, TrackingType::kInferior);
-		GenerateMissile(rotateMatrix, TrackingType::kInferior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kInferior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kInferior);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kInferior);
 		//---秀才---//
-		GenerateMissile(rotateMatrix, TrackingType::kGenius);
-		//GenerateMissile(rotateMatrix, TrackingType::kGenius);
+		GenerateMissile(rotateMatrix, TrackingAttribute::kGenius);
+		//GenerateMissile(rotateMatrix, TrackingAttribute::kGenius);
 	}
 }
 
-void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, TrackingType type)
+void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatrix, TrackingAttribute type)
 {
 	// デフォルトの情報
-	EulerTransform pos = boss_->worldTransform_.transform_;
+	EulerTransform transform = boss_->worldTransform_.transform_;
 	Vector3 bossPosition = boss_->worldTransform_.GetWorldPosition();
 
 	float value = 5.0f;
@@ -91,18 +91,26 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	if (std::min(randomValue.z, 0.0f) == randomValue.z) {
 		randomValue.z = 0.0f;
 	}
-	pos.translate = bossPosition + randomValue;
-	Vector3 direct = Vector3::Normalize(pos.translate - bossPosition);
+	transform.translate = bossPosition + randomValue;
+	Vector3 direct = Vector3::Normalize(transform.translate - bossPosition);
 	direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 
-	// インスタンスを生成から送るまで
-	std::unique_ptr<IBullet> bullet = std::make_unique<TrackingBullet>();
-	static_cast<TrackingBullet*>(bullet.get())->SetGameObject(boss_->GetPlayer());
-	static_cast<TrackingBullet*>(bullet.get())->SetTrackType(type);
-	bullet->Initialize();
-	bullet->SetVelocity(direct * TrackingBullet::sInitSpeed);
-	bullet->transform_ = pos;
-	bullet->transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("BossNormalBullet", "Scale");
-	boss_->GetTrackingCluster()->AddBullet(std::move(bullet));
+	BulletBuilder builder;
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
+	
+	switch (type)
+	{
+	case TrackingAttribute::kSuperior:
+		boss_->GetSuperiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kInferior:
+		boss_->GetInferiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kGenius:
+		boss_->GetGeneusCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	}
+
+	//boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kTracking);
 
 }

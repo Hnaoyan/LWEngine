@@ -725,18 +725,18 @@ void GraphicsPSO::CreateParticlePSO()
 	descRangeSRV[0] = PSOLib::InitDescpritorRange(D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1, 0);
 
 	// ルートパラメータ
-	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(ParticleRegister::kCountOfParameter)]{};
+	D3D12_ROOT_PARAMETER rootparams[static_cast<int>(GPUParticleDrawRegister::kCountOfParameter)]{};
 	//---共通---//
 	//---VS---//
 	// カメラ
-	rootparams[static_cast<int>(ParticleRegister::kCamera)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(GPUParticleDrawRegister::kCamera)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
 	// 行列
-	rootparams[static_cast<int>(ParticleRegister::kMatrixs)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
+	rootparams[static_cast<int>(GPUParticleDrawRegister::kMatrixs)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_VERTEX);
 	//---PS---//
 	// テクスチャ
-	rootparams[static_cast<int>(ParticleRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(GPUParticleDrawRegister::kTexture)] = PSOLib::InitAsDescriptorTable(_countof(descRangeSRV), descRangeSRV, D3D12_SHADER_VISIBILITY_PIXEL);
 	// マテリアル
-	rootparams[static_cast<int>(ParticleRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_PIXEL);
+	rootparams[static_cast<int>(GPUParticleDrawRegister::kMaterial)] = PSOLib::InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_PIXEL);
 
 
 	// スタティックサンプラー
@@ -1371,6 +1371,9 @@ void GraphicsPSO::CreateInstancedPSO()
 	},
 	{
 		PSOLib::SetInputLayout("TEXCOORD", DXGI_FORMAT_R32G32_FLOAT)
+	},
+	{
+		PSOLib::SetInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT)
 	},
 	};
 	// グラフィックスパイプライン

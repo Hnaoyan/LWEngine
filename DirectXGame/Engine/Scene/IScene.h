@@ -5,6 +5,9 @@
 
 class SceneManager;
 
+/// <summary>
+/// シーンのインタフェース
+/// </summary>
 class IScene
 {
 public: // フレーム関数
@@ -20,7 +23,7 @@ public: // フレーム関数
 	/// <summary>
 	/// GPUの更新処理
 	/// </summary>
-	virtual void GPUUpdate() = 0;
+	virtual void GPUUpdate() {};
 
 	/// <summary>
 	/// 描画処理
@@ -52,10 +55,6 @@ public:	// ロード関数
 
 public:	// 初期化
 	/// <summary>
-	/// アプリ関係の初期化
-	/// </summary>
-	virtual void ApplicationInitialize() {};
-	/// <summary>
 	/// ライティング初期化関数
 	/// </summary>
 	virtual void LightingInitialize() {};
@@ -65,11 +64,6 @@ public:	// カメラなどの更新
 	/// カメラ更新
 	/// </summary>
 	virtual void CameraUpdate();
-
-	/// <summary>
-	/// コライダー関係の更新
-	/// </summary>
-	virtual void ColliderUpdate() {};
 
 	/// <summary>
 	/// デストラクタ

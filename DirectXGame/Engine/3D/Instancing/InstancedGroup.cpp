@@ -35,6 +35,7 @@ void InstancedGroup::Update()
 		// 行列の処理
 		buffer_.cMap_[unitNum_].worldMatrix = (*it)->GetWorldMatrix();
 		buffer_.cMap_[unitNum_].worldInverseTranspose = Matrix4x4::MakeTranspose(Matrix4x4::MakeInverse((*it)->GetWorldMatrix()));
+		buffer_.cMap_[unitNum_].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		buffer_.cMap_[unitNum_].instancedNum = unitNum_;
 		// イテレート
 		unitNum_++;
@@ -91,6 +92,7 @@ void InstancedGroup::CreateData()
 	for (uint32_t i = 0; i < kNumInstanceMax; ++i) {
 		buffer_.cMap_[i].worldMatrix = Matrix4x4::MakeIdentity4x4();
 		buffer_.cMap_[i].worldInverseTranspose = Matrix4x4::MakeIdentity4x4();
+		buffer_.cMap_[i].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		buffer_.cMap_[i].instancedNum = i;
 	}
 }

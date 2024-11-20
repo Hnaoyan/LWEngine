@@ -328,6 +328,36 @@ Matrix4x4 Matrix4x4::MakeRotateXYZMatrix(const Vector3& rotate)
 	return matrixRotate;
 }
 
+Matrix4x4 Matrix4x4::MakeRotateMatrix(const Vector3& direction)
+{
+	// 方向ベクトルを正規化
+	Vector3 normDirect = Vector3::Normalize(direction);
+
+	// Z軸を基準としてY軸を選択（通常の上方向）
+	Vector3 up(0.0f, 1.0f, 0.0f);
+
+	// Z軸方向が真上か真下の場合に備えた調整
+	if (std::fabs(normDirect.y) > 0.999f) {
+		up = Vector3(1.0f, 0.0f, 0.0f); // 別の軸を使う
+	}
+
+	// 新しいX軸を生成（方向ベクトルとupベクトルの外積）
+	Vector3 xAxis = Vector3::Normalize(Vector3::Cross(up, normDirect));
+
+	// 新しいY軸を生成（Z軸（方向ベクトル）とX軸の外積）
+	Vector3 yAxis = Vector3::Normalize(Vector3::Cross(normDirect, xAxis));
+
+	// 4x4の回転行列を構築
+	Matrix4x4 rotationMatrix{};
+	rotationMatrix.m[3][3] = 1.0f;
+
+	rotationMatrix.m[0][0] = xAxis.x; rotationMatrix.m[0][1] = yAxis.x; rotationMatrix.m[0][2] = normDirect.x;
+	rotationMatrix.m[1][0] = xAxis.y; rotationMatrix.m[1][1] = yAxis.y; rotationMatrix.m[1][2] = normDirect.y;
+	rotationMatrix.m[2][0] = xAxis.z; rotationMatrix.m[2][1] = yAxis.z; rotationMatrix.m[2][2] = normDirect.z;
+	
+	return rotationMatrix;
+}
+
 Matrix4x4 Matrix4x4::MakeRotateMatrix(const Quaternion& rotate)
 {
 	Matrix4x4 result = MakeIdentity4x4();
@@ -350,6 +380,20 @@ Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotat
 	Matrix4x4 scaleMat = MakeScaleMatrix(scale);
 	// 回転
 	Matrix4x4 rotateMat = MakeRotateXYZMatrix(rotate);
+	// 平行移動
+	Matrix4x4 translateMat = MakeTranslateMatrix(translate);
+
+	Matrix4x4 affineMatrix = Multiply(scaleMat, Multiply(rotateMat, translateMat));
+
+	return affineMatrix;
+}
+
+Matrix4x4 Matrix4x4::MakeAffineMatrix(const Vector3& scale, const Vector3& from, const Vector3& to, const Vector3& translate)
+{
+	// スケール
+	Matrix4x4 scaleMat = MakeScaleMatrix(scale);
+	// 回転
+	Matrix4x4 rotateMat = DirectionToDirection(from, to);
 	// 平行移動
 	Matrix4x4 translateMat = MakeTranslateMatrix(translate);
 

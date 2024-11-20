@@ -6,6 +6,9 @@
 #include <d3d12.h>
 #include <numbers>
 
+/// <summary>
+/// カメラインターフェース
+/// </summary>
 class ICamera
 {
 private:
@@ -13,9 +16,9 @@ private:
 	ConstantBufferMapContext<CBufferDataCamera> data_;
 public: // 定数バッファのアクセッサ
 	// 定数バッファ
-	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() { return data_.cBuffer; }
+	Microsoft::WRL::ComPtr<ID3D12Resource> GetCBuffer() const{ return data_.cBuffer; }
 	// マップ
-	CBufferDataCamera* GetView() { return data_.cMap_; }
+	CBufferDataCamera* GetView() const{ return data_.cMap_; }
 
 public:	// 継承できるように
 	/// <summary>
@@ -32,6 +35,11 @@ public:	// 継承できるように
 	/// </summary>
 	virtual void ImGuiDraw();
 
+	/// <summary>
+	/// GlobalValueの初期化
+	/// </summary>
+	virtual void InitializeGlobalValue() {};
+
 protected: // 共通で使う関数
 	/// <summary>
 	/// 行列更新
@@ -39,6 +47,8 @@ protected: // 共通で使う関数
 	void UpdateMatrix();
 
 	void ShakeUpdate();
+
+	void UpdateView(const Matrix4x4& cameraMatrix);
 	//void ZoomUpdate();
 public:
 	void ExecuteShake(float frame, float maxValue);
@@ -52,8 +62,6 @@ public:
 	void TransferMatrix();
 
 protected:
-	// 視野角の値
-	float fov_ = 45.0f;
 	/// <summary>
 	/// シェイクの情報
 	/// </summary>
@@ -63,23 +71,26 @@ protected:
 		float randomValue = 0.0f;
 		bool isShake = false;
 	};
-
+	/// <summary>
+	/// ズームの種類
+	/// </summary>
 	enum class ZoomType {
 		kZoomOut,
 		kZoomIn,
 		kSize,
 	};
-
 	/// <summary>
 	/// ズームの情報
 	/// </summary>
 	struct ZoomParameter {
 		FrameTimer timer;
-
+		ZoomType type;
 	};
 
 	// シェイク用
 	ShakeParameter shakeConfig_;
+	// 視野角の値
+	float fov_ = 75.0f;
 
 public:
 	// ビュー行列
@@ -90,18 +101,17 @@ public:
 	EulerTransform transform_ = {};
 	// 正面ベクトル
 	const Vector3 kFrontVector = { 0.0f,0.0f,1.0f };
-
+	// 前方ベクトル
 	Vector3 frontVector_ = {};
 public:
 	// ワールド座標
-	Vector3 GetWorldPosition() { return Vector3(viewMatrix_.m[2][0], viewMatrix_.m[2][1], viewMatrix_.m[2][2]); }
+	Vector3 GetWorldPosition() const { return Vector3(viewMatrix_.m[2][0], viewMatrix_.m[2][1], viewMatrix_.m[2][2]); }
 
 private:
 	// 視野角の角度
 	float fovAngle_ = fov_ * (float)(std::numbers::pi / 180.0);
 	// アスペクト比率
 	float aspectRatio_ = (float)WindowAPI::kWindowWidth / (float)WindowAPI::kWindowHeight;
-
-	float nearZ = 0.1f;
-	float farZ = 1000.0f;
+	float nearZ = 0.1f;	// near
+	float farZ = 1000.0f;	// far
 };

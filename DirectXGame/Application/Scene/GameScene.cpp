@@ -11,22 +11,11 @@ void GameScene::Initialize()
 	IScene::Initialize();
 	// ライト初期化
 	LightingInitialize();
-	// ゲームオーバーフラグ
-	isGameOver_ = false;
-
-#pragma region カメラ関係
-	// 初期カメラ
-	camera_.transform_.translate.y = 5.0f;
-	camera_.transform_.rotate.x = 0.4f;
-	camera_.transform_.translate.z = -7.0f;
-	debugCamera_ = std::make_unique<DebugCamera>();
-	debugCamera_->Initialize();
-
-#pragma endregion
 
 #pragma region インスタンス化
+	cameraManager_ = std::make_unique<CameraManager>();
 	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
-	uiManager_ = std::make_unique<GameUI::UIManager>();
+	uiManager_ = std::make_unique<GameUIManager>();
 
 	collisionManager_ = std::make_unique<CollisionManager>();
 	gameObjectManager_ = std::make_unique<GameObjectManager>();
@@ -45,12 +34,8 @@ void GameScene::Initialize()
 	// 準備完了
 	isSceneReady_ = true;
 
-	gameObjectManager_->Initialize(gpuParticleManager_.get());
-}
-
-void GameScene::GPUUpdate()
-{
-	gpuParticleManager_->Update();
+	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+	cameraManager_->Initialize(gameObjectManager_.get());
 }
 
 void GameScene::Update()
@@ -58,9 +43,9 @@ void GameScene::Update()
 	
 
 #ifdef IMGUI_ENABLED
-	//if (input_->TriggerKey(DIK_LSHIFT)) {
-	//	sceneManager_->ChangeScene("TITLE");
-	//}
+	if (input_->TriggerKey(DIK_UPARROW)) {
+		sceneManager_->ChangeScene("TITLE");
+	}
 #endif // _DEBUG
 
 	if (gameObjectManager_->IsGameOver() || gameObjectManager_->IsGameClear()) {
@@ -81,6 +66,9 @@ void GameScene::Update()
 	CollisionUpdate();
 	// カメラの更新
 	CameraUpdate();
+
+	gpuParticleManager_->Update();
+
 }
 
 void GameScene::Draw()
@@ -157,28 +145,53 @@ void GameScene::UIDraw()
 void GameScene::ImGuiDraw()
 {
 #ifdef IMGUI_ENABLED
-	
+	gameSystem_->ImGuiDraw();
 	gameObjectManager_->ImGuiDraw();
-
+	cameraManager_->ImGuiDraw();
 	// カメラ
 	camera_.ImGuiDraw();
-	debugCamera_->ImGuiDraw();
 
 	ImGui::Begin("GameScene");
-	if (ImGui::Button("PostDefault")) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-	}
-	if (ImGui::Button("PostBloom")) {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-	}
-	ImGui::DragFloat("BloomThreshold", &gameSystem_->bloomData_.threshold, 0.01f);
-	ImGui::DragFloat("BloomSigma", &gameSystem_->bloomData_.sigma, 0.01f);
 
-	ImGui::Checkbox("DebugCamera", &isDebugCamera_);
+	if (ImGui::Button("ReplayStart")) {
+		gameSystem_->GetReplayManager()->ImportReplay();
+		// インスタンス生成しなおし
+		gameObjectManager_ = std::make_unique<GameObjectManager>();
+		cameraManager_ = std::make_unique<CameraManager>();
+		//
+		gpuParticleManager_->DataReset();
+		// オブジェクト類の初期化
+		gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+		gameObjectManager_->GameSetUp();	// ゲームの準備
+		cameraManager_->Initialize(gameObjectManager_.get());
+		gameSystem_->LaunchReplay();
+	}
 
-	if (ImGui::TreeNode("DirectionalLight")) {
+	if (ImGui::BeginTabBar("PostEffect")) {
+		if (ImGui::BeginTabItem("Switch")) {
+			if (ImGui::Button("PostDefault")) {
+				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+			}
+			if (ImGui::Button("PostBloom")) {
+				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+			}
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("DashEffect")) {
+
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+
+	if (ImGui::TreeNode("UI")) {
+		for (int i = 0; i < controlUIs_.size(); ++i) {
+			ImGui::DragFloat2(controlUIs_[i].second.tag.c_str(), &controlUIs_[i].second.position.x, 1.0f);
+			ImGui::Text("\n");
+		}
 		ImGui::TreePop();
 	}
+
 	if (ImGui::BeginTabBar("Lighting"))
 	{
 		float defaultSpeed = 0.01f;
@@ -217,14 +230,6 @@ void GameScene::ImGuiDraw()
 
 	ImGui::End();
 
-	ImGui::Begin("UI");
-
-	for (int i = 0; i < controlUIs_.size(); ++i) {
-		ImGui::DragFloat2(controlUIs_[i].second.tag.c_str(), &controlUIs_[i].second.position.x, 1.0f);
-		ImGui::Text("\n");
-	}
-
-	ImGui::End();
 
 #endif // IMGUI_ENABLED
 }
@@ -240,85 +245,71 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
+	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
 }
 
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
-	int loadTex = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/JumpUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/LockonUI.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/ShotUIt.png");
+	int loadTex = TextureManager::Load("Resources/UI/ClearText.png");
+	loadTex = TextureManager::Load("Resources/UI/DashUI.png");
+	loadTex = TextureManager::Load("Resources/UI/JumpUI.png");
+	loadTex = TextureManager::Load("Resources/UI/LockonUI.png");
+	loadTex = TextureManager::Load("Resources/UI/ShotUIt.png");
 
-	loadTex = TextureManager::GetInstance()->Load("Resources/crossHair.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
-	loadTex = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
+	loadTex = TextureManager::Load("Resources/crossHair.png");
+	loadTex = TextureManager::Load("Resources/default/testGage.png");
+	loadTex = TextureManager::Load("Resources/UI/GameOver.png");
 	loadTex = TextureManager::Load("Resources/default/BackGround.png");
 
 	// テクスチャのロード
 	clearText_.isClear = false;
-	uint32_t clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ClearText.png");
+	uint32_t clearTexture = TextureManager::Load("Resources/UI/ClearText.png");
 	clearText_.clearText.reset(Sprite::Create(clearTexture, { 1280.0f / 2.0f,720.0f / 2.0f }, { 0.5f,0.5f }));
 
 	UIData data = {};
 	data.num = uiNumber_;
 	data.position = { 139.0f,60.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/DashUI.png");
+	data.texture = TextureManager::Load("Resources/UI/DashUI.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
 	data.position = { 139.0f,180.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/JumpUItt.png");
+	data.texture = TextureManager::Load("Resources/UI/JumpUItt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
 	data.position = { 139.0f,240.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/LockonUIt.png");
+	data.texture = TextureManager::Load("Resources/UI/LockonUIt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 	data.num = uiNumber_;
 	data.position = { 139.0f,120.0f };
-	data.texture = TextureManager::GetInstance()->Load("Resources/UI/ShotUIt.png");
+	data.texture = TextureManager::Load("Resources/UI/ShotUIt.png");
 	data.tag = "UI" + std::to_string(uiNumber_);
 	AddUI(data);
 
 	//SpriteManager::LoadSprite
-	uint32_t reticle = TextureManager::Load("Resources/crossHair.png");
-	SpriteManager::LoadSprite("CrossHair", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
-	SpriteManager::LoadSprite("Gage", reticle);
-	SpriteManager::LoadSprite("PlayerGage", reticle);
-	SpriteManager::LoadSprite("PlayerEnergyGage", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
-	SpriteManager::LoadSprite("HPBackUI", reticle);
-	SpriteManager::LoadSprite("PlayerHPBackUI", reticle);
-	SpriteManager::LoadSprite("PlayerEnergyBackUI", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/default/testGage.png");
-	SpriteManager::LoadSprite("GageBack", reticle);
-	reticle = TextureManager::GetInstance()->Load("Resources/UI/GameOver.png");
-	SpriteManager::LoadSprite("GameOverUI", reticle);
+	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));
+	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerEnergyGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("HPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
+	SpriteManager::LoadSprite("GameOverUI", TextureManager::Load("Resources/UI/GameOver.png"));
 
 }
 
 void GameScene::CameraUpdate()
 {
+	cameraManager_->Update();
 
-	if (isDebugCamera_) {
-		debugCamera_->Update();
-		camera_.viewMatrix_ = debugCamera_->viewMatrix_;
-		camera_.projectionMatrix_ = debugCamera_->projectionMatrix_;
-		camera_.TransferMatrix();
-	}
-	else {
-		// カメラの更新
-		gameObjectManager_->GetFollowCamera()->Update();
-
-		camera_.viewMatrix_ = gameObjectManager_->GetFollowCamera()->viewMatrix_;
-		camera_.projectionMatrix_ = gameObjectManager_->GetFollowCamera()->projectionMatrix_;
-		camera_.transform_ = gameObjectManager_->GetFollowCamera()->transform_;
-		camera_.TransferMatrix();
-	}
+	camera_.viewMatrix_ = cameraManager_->GetCamera()->viewMatrix_;
+	camera_.projectionMatrix_ = cameraManager_->GetCamera()->projectionMatrix_;
+	camera_.transform_ = cameraManager_->GetCamera()->transform_;
+	camera_.TransferMatrix();
 }
 
 void GameScene::LightingInitialize()

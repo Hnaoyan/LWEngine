@@ -9,14 +9,14 @@
 
 class InstancedGroup
 {
-public:
+public: // エンジン的な部分
 	// 最大数
 	static const uint32_t kNumInstanceMax = (1024);
 	virtual ~InstancedGroup();
 protected:
 	// リソース
 	StructuredBufferContext<CBufferInstancedUnit> buffer_;
-	uint32_t srvIndex;
+	uint32_t srvIndex = 0;
 
 	// Unitの数
 	uint32_t unitNum_ = 0u;
@@ -61,13 +61,17 @@ public: // アクセッサ
 	void SetModel(Model* model) { model_ = model; }
 	// 隠せるように
 	void SetInvisible(bool isInvisible) { isInvisible_ = isInvisible; }
+	// テクスチャ
+	void SetTexture(uint32_t texture) { texture_ = texture; }
+	// タグ
+	void SetTag(const std::string& tag) { tag_ = tag; }
 private:
 	/// <summary>
 	/// インスタンシングのSRV確保など
 	/// </summary>
 	void CreateData();
 
-protected:
+protected: // USER
 	// ユニットリスト
 	std::vector<std::unique_ptr<InstancedUnit>> units_;
 	// モデル
@@ -78,4 +82,6 @@ protected:
 	uint32_t texture_ = 0;
 	// 隠す用のフラグ
 	bool isInvisible_ = false;
+	// タグ
+	std::string tag_;
 };

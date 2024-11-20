@@ -1,12 +1,12 @@
 #pragma once
-#include "Application/GameSystem/UI/GameUIManager.h"
+#include "Application/GameSystem/UI/UIStructs.h"
 
 class Player;
 class Sprite;
 
 namespace PlayerContext
 {
-	class UIManager
+	class PlayerUIManager
 	{
 	public:
 		void Initialize(Player* player);
@@ -25,7 +25,5 @@ namespace PlayerContext
 		// EnergyのUI
 		GameUI::BarRenderInfo energyUI_{};
 	};
-
-
 }
 

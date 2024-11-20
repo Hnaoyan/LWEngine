@@ -25,6 +25,20 @@ void TrailManager::Draw(ICamera* camera)
 	for (auto it = trails_.begin(); it != trails_.end(); ++it) {
 		// 更新
 		(*it)->Update(camera);
+
+		// 非表示処理
+		if ((*it)->GetAttribute() == TrackingAttribute::kSuperior && isInvisibles_[uint32_t(TrackingAttribute::kSuperior)])
+		{
+			continue;
+		}
+		if ((*it)->GetAttribute() == TrackingAttribute::kInferior && isInvisibles_[uint32_t(TrackingAttribute::kInferior)])
+		{
+			continue;
+		}
+		if ((*it)->GetAttribute() == TrackingAttribute::kGenius && isInvisibles_[uint32_t(TrackingAttribute::kGenius)])
+		{
+			continue;
+		}
 		// 描画
 		ModelRenderer::TrailDraw(camera, (*it)->polygon_.get());
 	}
@@ -33,4 +47,16 @@ void TrailManager::Draw(ICamera* camera)
 void TrailManager::AddTrail(std::unique_ptr<BulletTrail> trail)
 {
 	trails_.push_back(std::move(trail));
+}
+
+BulletTrail* TrailManager::FindTrail(const std::string& name)
+{
+	for (std::vector<std::unique_ptr<BulletTrail>>::iterator it = trails_.begin(); it != trails_.end(); ++it) {
+		// 名前が一致した場合
+		if ((*it)->GetTag() == name) {
+			return (*it).get();
+		}
+	}
+	// なかった場合
+	return nullptr;
 }

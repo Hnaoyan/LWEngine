@@ -11,6 +11,7 @@
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameSystem/UI/GameUIManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
+#include "Application/GameSystem/Camera/CameraManager.h"
 
 class GameScene : public IScene
 {
@@ -19,8 +20,6 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-
-	void GPUUpdate() override;
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -77,10 +76,12 @@ private: // アプリ
 	std::unique_ptr<GameSystem> gameSystem_;	// システム
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
+	// カメラマネ
+	std::unique_ptr<CameraManager> cameraManager_;
 	// GPUParticle
 	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
 	// UI
-	std::unique_ptr<GameUI::UIManager> uiManager_;
+	std::unique_ptr<GameUIManager> uiManager_;
 private: // リソース
 	std::unique_ptr<Sprite> reticleSprite_;
 
@@ -88,18 +89,17 @@ private: // リソース
 	struct GameClear {
 		FrameTimer transitionTimer;
 		std::unique_ptr<Sprite> clearText;
-		bool isClear;
+		bool isClear = false;
 	};
 
 	FrameTimer backTitleTimer_;
-	bool isGameOver_ = false;
 
 	// UI用のデータ
 	struct UIData {
 		std::string tag;
 		uint32_t num = 0;
-		Vector2 position{};
-		Vector2 scale{};
+		Vector2 position = {};
+		Vector2 scale = {};
 		uint32_t texture = 0;
 	};
 
@@ -112,15 +112,11 @@ private: // リソース
 	GameClear clearText_;
 
 private: // システム関係
-	// カメラ君
-	// デバッグカメラ
-	std::unique_ptr<DebugCamera> debugCamera_;
-	bool isDebugCamera_ = false;
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_;
+	CBufferDataDirectionalLight lightData_ = {};
 	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_;
+	CBufferDataSpotLight spLightData_ = {};
 	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_;
+	CBufferDataPointLight ptLightData_ = {};
 };

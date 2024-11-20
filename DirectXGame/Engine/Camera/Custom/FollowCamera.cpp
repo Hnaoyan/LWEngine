@@ -1,30 +1,17 @@
 #include "FollowCamera.h"
 #include "imgui.h"
-#include "../../Input/Input.h"
-#include "../../LwLib/LwEngineLib.h"
+#include "Engine/Input/Input.h"
+#include "Engine/LwLib/LwLibrary.h"
+#include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/Player/System/PlayerSystemLists.h"
-#include "Application/GameObject/Enemy/SampleEnemy.h"
+#include "Application/GameObject/GameObjectLists.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 void FollowCamera::Initialize()
 {
-	GlobalVariables* instance = GlobalVariables::GetInstance();
-	instance->CreateGroup("Camera");
-	instance->AddValue("Camera", "RotateSpeed", rRotateSpeed_);
-	instance->AddValue("Camera", "LerpRate", rStickLerpRate_);
-	instance->AddValue("Camera", "DelayRate", delayRate_);
-	instance->AddValue("Camera", "XSpinLimit", xSpinLimit_);
-	instance->AddValue("Camera", "Offset", defaultOffset_);
-
 	// 初期化
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,3.0f,-10.0f };
-
-	rRotateSpeed_ = instance->GetValue<Vector2>("Camera","RotateSpeed");
-	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
-	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
-	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
-	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 }
 
 void FollowCamera::Update()
@@ -37,7 +24,7 @@ void FollowCamera::Update()
 	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 
 	// コントローラー
-	Vector2 rightStick = Input::GetInstance()->XGetRightJoystick();
+	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
 
 	// 追尾
 	if (target_) {
@@ -89,8 +76,8 @@ void FollowCamera::Update()
 
 void FollowCamera::ImGuiDraw()
 {
-	ImGui::Begin("FollowCamera");
-
+	//ImGui::Begin("FollowCamera");
+	ImGui::DragFloat("Fov", &fov_, 0.01f);
 	ImGui::DragFloat3("Position", &transform_.translate.x);
 	Vector3 world = GetWorldPosition();
 	ImGui::DragFloat3("WorldPosition", &world.x);
@@ -121,7 +108,23 @@ void FollowCamera::ImGuiDraw()
 		ExecuteShake(15.0f, 5.0f);
 	}
 
-	ImGui::End();
+	//ImGui::End();
+}
+
+void FollowCamera::InitializeGlobalValue()
+{
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	instance->CreateGroup("Camera");
+	instance->AddValue("Camera", "RotateSpeed", rRotateSpeed_);
+	instance->AddValue("Camera", "LerpRate", rStickLerpRate_);
+	instance->AddValue("Camera", "DelayRate", delayRate_);
+	instance->AddValue("Camera", "XSpinLimit", xSpinLimit_);
+	instance->AddValue("Camera", "Offset", defaultOffset_);
+	rRotateSpeed_ = instance->GetValue<Vector2>("Camera", "RotateSpeed");
+	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
+	delayRate_ = instance->GetValue<float>("Camera", "DelayRate");
+	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
+	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 }
 
 void FollowCamera::Reset()

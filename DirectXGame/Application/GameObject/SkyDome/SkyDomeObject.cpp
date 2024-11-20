@@ -14,7 +14,7 @@ void SkyDomeObject::Initialize(Model* model)
 	material_->CreateMaterial();
 
 	// 外部書き出しの初期化
-	GlobalValueInitialize();
+	InitializeGlobalValue();
 }
 
 void SkyDomeObject::Update()
@@ -27,14 +27,12 @@ void SkyDomeObject::Update()
 
 void SkyDomeObject::ImGuiDraw()
 {
-	ImGui::Begin("SkyDomeObject");
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	float scale = worldTransform_.transform_.scale.x;
 	ImGui::DragFloat("Scale", &scale, 0.1f);
 	worldTransform_.transform_.scale = { scale,scale,scale };
 	worldTransform_.UpdateMatrix();
 	ImGui::ColorEdit4("Color", &material_->color_.x);
-	ImGui::End();
 }
 
 void SkyDomeObject::Draw(ModelDrawDesc desc)
@@ -58,7 +56,7 @@ void SkyDomeObject::Draw(ModelDrawDesc desc)
 
 }
 
-void SkyDomeObject::GlobalValueInitialize()
+void SkyDomeObject::InitializeGlobalValue()
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	std::string groupName = "Skydome";

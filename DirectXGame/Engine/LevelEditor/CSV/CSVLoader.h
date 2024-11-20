@@ -5,6 +5,9 @@
 #include <stdint.h>
 #include <vector>
 
+/// <summary>
+/// CSVの読み込むクラス
+/// </summary>
 class CSVLoader : public Singleton<CSVLoader>
 {
 public:
@@ -13,9 +16,11 @@ public:
 	// 拡張子
 	const std::string kExtension = ".csv";
 
-	void LoadCSVData(std::string filePath);
-
+	// データ取得
+	static void LoadCSVData(std::string filePath);
 	// ファイルの中身を読みだす処理
-	std::stringstream LoadCSVFile(std::string fullPath);
+	static std::stringstream LoadCSVFile(std::string fullPath);
+	// CSV用のパス作成クラス
+	static std::string CreateFullPath(const std::string& directory, const std::string& fileName);
 
 };

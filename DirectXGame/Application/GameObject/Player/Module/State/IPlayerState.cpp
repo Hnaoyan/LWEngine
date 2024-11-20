@@ -1,5 +1,6 @@
 #include "IPlayerState.h"
 #include "../../Player.h"
+#include "Application/GameSystem/GameSystem.h"
 
 void IPlayerState::PreInitialize(Player* player, StateManager* stateManager)
 {
@@ -10,7 +11,7 @@ void IPlayerState::PreInitialize(Player* player, StateManager* stateManager)
 
 void IPlayerState::InputHandle()
 {
-	Vector2 sThumbL = input_->XGetLeftJoystick();
+	Vector2 sThumbL = GameSystem::sKeyConfigManager.GetKeyConfig()->leftStick;
 
 	leftStick_ = sThumbL;
 	leftStick_ = Vector2::Normalize(leftStick_);

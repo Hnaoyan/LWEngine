@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/Collision/CollisionManager.h"
+#include <imgui.h>
 #include <cassert>
 
 GameObjectManager::GameObjectManager()
@@ -12,11 +13,9 @@ GameObjectManager::GameObjectManager()
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
-	// カメラ
-	followCamera_ = std::make_unique<FollowCamera>();
 }
 
-void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
+void GameObjectManager::Initialize(GPUParticleSystem* gpuManager, ICamera* camera)
 {
 	// チェック
 	assert(gpuManager);
@@ -26,24 +25,19 @@ void GameObjectManager::Initialize(GPUParticleSystem* gpuManager)
 	// 弾
 	bulletManager_->SetPlayer(player_.get());
 	bulletManager_->SetBoss(boss_.get());
-	bulletManager_->SetGPUParticle(gpuManager);
+	bulletManager_->SetGPUParticle(gpuManager_);
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	// プレイヤー
-	player_->PreInitialize(followCamera_.get(), gpuManager_);
+	player_->PreInitialize(camera, gpuManager_);
 	player_->Initialize(ModelManager::GetModel("Player"));
 	player_->PointerInitialize(bulletManager_.get(), boss_.get(), nullptr);
 
 	// ボス
-	boss_->SetGPUParticle(gpuManager);
+	boss_->SetGPUParticle(gpuManager_);
 	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
 	boss_->SetPlayer(player_.get());
 	boss_->SetBulletManager(bulletManager_.get());
-
-	// カメラ
-	followCamera_->Initialize();
-	followCamera_->SetParent(player_->GetWorldTransform());
-	followCamera_->SetLockOn(player_->GetOperation()->GetLockOn());
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -130,12 +124,28 @@ void GameObjectManager::UIDraw()
 }
 
 void GameObjectManager::ImGuiDraw()
-{
-	// カメラ
-	followCamera_->ImGuiDraw();
+{	
+	ImGui::Begin("GameObjectManager");
+	if (ImGui::BeginTabBar("Object"))
+	{
+		if (ImGui::BeginTabItem("BulletManager")) {
+			bulletManager_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Terrain")) {
+			terrainManager_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("SkyDome")) {
+			skyDome_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		ImGui::EndTabBar();
+	}
+
+	ImGui::End();
+
 	// 地形
-	terrainManager_->ImGuiDraw();
-	skyDome_->ImGuiDraw();
 	// ゲームオブジェクト
 	player_->ImGuiDraw();
 	if (boss_) {
@@ -156,4 +166,10 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	}
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);
+}
+
+void GameObjectManager::GameSetUp()
+{
+	boss_->SetIsAction(true);
+	boss_->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }

@@ -5,6 +5,9 @@
 
 #include "../../Utility/Singleton.h"
 
+/// <summary>
+/// DirectXデバイス
+/// </summary>
 class DirectXDevice : public Singleton<DirectXDevice>
 {
 public: // 関数

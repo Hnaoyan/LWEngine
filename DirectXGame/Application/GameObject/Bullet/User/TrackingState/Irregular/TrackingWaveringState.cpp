@@ -1,7 +1,7 @@
 #include "TrackingWaveringState.h"
-#include "../../../BulletsLists.h"
+#include "../../../BulletsPaths.h"
 #include "../StateMachine/BulletStateMachine.h"
-#include "Engine/LwLib/LwEngineLib.h"
+#include "Engine/LwLib/LwLibrary.h"
 
 void TrackingWaveringState::Enter()
 {
@@ -14,6 +14,7 @@ void TrackingWaveringState::Enter()
 	curveDirect_ = 0;
 	curveProcess_ = std::bind(&TrackingWaveringState::LeftCurve, this);
 	//curveProcess_ = [&]() {LeftCurve(); };
+	curveFrame_ = 60.0f;
 	curveTimer_.Start(curveFrame_);
 
 }
@@ -28,7 +29,7 @@ void TrackingWaveringState::Update(BulletStateMachine& stateMachine)
 		if (curveTimer_.IsEnd()) {
 			curveProcess_ = std::bind(&TrackingWaveringState::RightCurve, this);
 			//curveProcess_ = [&]() {RightCurve(); };
-			curveDirect_++;
+			curveDirect_ = 1;
 			curveTimer_.Start(curveFrame_);
 		}
 	}
@@ -36,10 +37,8 @@ void TrackingWaveringState::Update(BulletStateMachine& stateMachine)
 	else if (curveDirect_ == 1) {
 		if (curveTimer_.IsEnd()) {
 			curveProcess_ = [&]() {EndUpdate(); };
-			curveDirect_++;
+			curveDirect_ = 0;
 			curveTimer_.Start(curveFrame_);
-
-			timer_.End();
 		}
 	}
 	else {

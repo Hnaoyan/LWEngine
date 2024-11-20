@@ -2,7 +2,7 @@
 #include "Engine/Base/DirectXCommon.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/2D/TextureManager.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 #include<imgui.h>
 
@@ -28,6 +28,9 @@ Trail3D::Trail3D()
 	// マテリアル
 	material_ = std::make_unique<TrailMaterial>();
 	material_->CreateMaterial();
+
+	// 頂点データ初期化
+	VertexDataReset();
 }
 
 void Trail3D::Update()
@@ -99,7 +102,7 @@ void Trail3D::BuildVertexFromPoints(const std::vector<Vector3>& points)
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		newColor.w = std::clamp(newColor.w, minAlpha_, maxAlpha_);
 
 		// ビルボード処理
 		if (isBillBoard_ && camera_.has_value()) {
@@ -169,6 +172,7 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 
 	float widthRatio = 0.0f;
 
+
 	for (size_t i = 0; i < numPoints - 1; ++i) {
 		// 幅の割合
 		widthRatio = (float)(i + 1) / (float)numPoints;
@@ -186,9 +190,9 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		newColor.w = std::clamp(newColor.w, minAlpha_, maxAlpha_);
 		if (newColor.w != 0.0f) {
-			newColor.w *= 0.65f;
+			newColor.w *= 0.5f;
 		}
 
 		// ビルボード処理
@@ -210,8 +214,8 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 			perpendicular *= lerpWidth * 0.5f;
 
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uvX,vLeft} };
-			vertexData_[vertexId + 1] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uvX,vRight} };
+			vertexData_[vertexId + 1] = { {startPoint.x - perpendicular.x,startPoint.y - perpendicular.y,startPoint.z - perpendicular.z},newColor,{uvX,vLeft} };
+			vertexData_[vertexId] = { {startPoint.x + perpendicular.x,startPoint.y + perpendicular.y,startPoint.z + perpendicular.z},newColor ,{uvX,vRight} };
 		}
 		// ビルボードなし
 		else {
@@ -226,8 +230,8 @@ void Trail3D::LerpWidthVertex(const std::vector<Vector3>& points)
 			right.x *= width_ * 0.5f;
 			right.y *= width_ * 0.5f;
 			// 頂点
-			vertexData_[vertexId] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor,{uvX,vLeft} };
-			vertexData_[vertexId + 1] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor,{uvX,vRight} };
+			vertexData_[vertexId + 1] = { {startPoint.x - right.x,startPoint.y - right.y,startPoint.z},newColor,{uvX,vLeft} };
+			vertexData_[vertexId] = { {startPoint.x + right.x,startPoint.y + right.y,startPoint.z},newColor,{uvX,vRight} };
 		}
 
 		// インデックスの設定
@@ -277,7 +281,7 @@ void Trail3D::FadeWidthVertex(const std::vector<Vector3>& points)
 		// アルファ値を頂点の場所に応じて
 		Vector4 newColor = color_;
 		newColor.w = ((float)i + 1.0f) / (float)points.size();
-		newColor.w = std::clamp(newColor.w, 0.0f, maxAlpha_);
+		newColor.w = std::clamp(newColor.w, minAlpha_, maxAlpha_);
 		if (newColor.w != 0.0f) {
 			newColor.w *= 0.65f;
 		}

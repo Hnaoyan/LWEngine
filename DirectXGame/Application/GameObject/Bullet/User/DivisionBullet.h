@@ -1,6 +1,6 @@
 #pragma once
 #include "../IBullet.h"
-#include "../BulletCluster.h"
+#include "../IBulletCluster.h"
 
 class DivisionBullet : public IBullet
 {
@@ -21,7 +21,7 @@ public:
 	void OnCollision(ColliderObject object) override;
 
 private:
-	BulletCluster* missileCluster_ = nullptr;
+	IBulletCluster* missileCluster_ = nullptr;
 
 	// 分裂するまでの時間
 	FrameTimer divisionTimer_;

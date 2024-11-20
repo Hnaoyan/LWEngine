@@ -4,6 +4,9 @@
 #include <wrl.h>
 #include <d3d12.h>
 
+/// <summary>
+/// DirectXコマンド
+/// </summary>
 class DirectXCommand : public Singleton<DirectXCommand>
 {
 public:

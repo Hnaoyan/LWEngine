@@ -1,5 +1,7 @@
 #pragma once
-
+/// <summary>
+/// フレームでのカウントクラス
+/// </summary>
 class FrameTimer
 {
 public:
@@ -31,19 +33,18 @@ private:
 	/// </summary>
 	void StartUp();
 public: // アクセッサ
+	// アクティブ確認
 	bool IsActive() { return isActive_; }
+	// 終了確認
 	bool IsEnd() { return isEnd_; }
+	// 一時停止確認
 	bool IsPause() { return isPause_ && !isEnd_; }
+	// 現在フレーム
 	float GetElapsedFrame() { return elapsedFrame_; }
 private:
-	// 経過フレーム（現在フレーム
-	float elapsedFrame_ = 0.0f;
-	// 終了フレーム
-	float endFrame_ = 0.0f;
-	// 有効フラグ
-	bool isActive_ = false;
-	// 終了フラグ
-	bool isEnd_ = false;
-	// 一時停止フラグ
-	bool isPause_ = false;
+	float elapsedFrame_ = 0.0f; // 経過フレーム（現在フレーム
+	float endFrame_ = 0.0f; // 終了フレーム
+	bool isActive_ = false;	// 有効フラグ
+	bool isEnd_ = false;	// 終了フラグ
+	bool isPause_ = false;	// 一時停止フラグ
 };

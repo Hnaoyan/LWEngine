@@ -4,6 +4,9 @@
 #include <algorithm>
 
 namespace LwLib {
+	/// <summary>
+	/// カーブ
+	/// </summary>
 	class Curve {
 	public:
 		/// <summary>
@@ -21,7 +24,7 @@ namespace LwLib {
 		}
 
 		/// <summary>
-		/// キャットむるさん
+		/// キャットムル
 		/// </summary>
 		/// <param name="p0"></param>
 		/// <param name="p1"></param>

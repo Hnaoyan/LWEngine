@@ -14,44 +14,37 @@ public:
 	/// 初期化
 	/// </summary>
 	void Initialize() override;
-
 	/// <summary>
 	/// GPUの更新
 	/// </summary>
 	void GPUUpdate() override;
-
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
 	void Update() override;
-
 	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw() override;
-
 	/// <summary>
 	/// UI
 	/// </summary>
 	void UIDraw() override;
-
 	/// <summary>
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw() override;
-
 	/// <summary>
 	/// モデル読み込み
 	/// </summary>
 	void LoadModel() override;
-
 	/// <summary>
 	/// テクスチャ読み込み
 	/// </summary>
 	void LoadTexture() override;
 
 private: // システム関係
-	// カメラ君
+	// カメラ
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
 	// 追従カメラ
@@ -61,12 +54,11 @@ private: // システム関係
 	std::unique_ptr<LevelLoader> levelLoader_;
 	// 箱
 	std::unique_ptr<Skybox> skybox_;
-
-	// ライト君
+	// ライト
 	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_;
+	CBufferDataDirectionalLight lightData_ = {};
 	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_;
+	CBufferDataSpotLight spLightData_ = {};
 	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_;
+	CBufferDataPointLight ptLightData_ = {};
 };

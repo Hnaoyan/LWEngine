@@ -1,9 +1,10 @@
 #pragma once
 #include "Engine/3D/Drawer/Model.h"
-#include "BulletCluster.h"
+#include "IBulletCluster.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include <vector>
 #include <unordered_map>
+#include <bitset>
 
 class Player;
 class Boss;
@@ -34,6 +35,10 @@ public:
 	/// </summary>
 	/// <param name="manager"></param>
 	void CollisionUpdate(CollisionManager* manager);
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
 public: // USER
 	/// <summary>
 	/// クラスター作成
@@ -44,7 +49,8 @@ public: // USER
 	//void AddCluster();
 public: // アクセッサ
 
-	BulletCluster* FindCluster(std::string tag);
+	IBulletCluster* FindCluster(const std::string& tag);
+	void DeleteCluster(const std::string& tag);
 
 	// セッター
 	void SetPlayer(Player* player) { player_ = player; }
@@ -61,9 +67,13 @@ private:
 	Boss* boss_ = nullptr;
 	GPUParticleSystem* gpuParticle_ = nullptr;
 
+	// 描画フラグ
+	std::bitset<size_t(TrackingAttribute::kMaxSize)> isDrawCheck_;
+
 	// 軌跡管理クラス
 	std::unique_ptr<TrailManager> trailManager_;
 
 	// 弾のリスト
 	std::unordered_map<std::string, std::unique_ptr<InstancedGroup>> clusters_;
+	std::vector<std::unique_ptr<InstancedGroup>> bombModel_;
 };

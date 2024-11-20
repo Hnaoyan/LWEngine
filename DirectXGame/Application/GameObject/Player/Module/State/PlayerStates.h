@@ -1,6 +1,5 @@
 #pragma once
 #include "IPlayerState.h"
-#include "IdleState.h"
 // 水平
 #include "Horizontal/IdleHorizontal.h"
 #include "Horizontal/QuickBoostState.h"

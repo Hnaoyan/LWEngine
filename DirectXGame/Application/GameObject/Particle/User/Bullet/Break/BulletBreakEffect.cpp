@@ -4,7 +4,7 @@
 
 void BulletParticle::BreakEffect::Initialize(Model* model, uint32_t textureHandle)
 {
-	ParticleEmitter::Initialize(model, textureHandle);
+	GPUParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 10;
 	data_.frequency = 0.1f;
 	data_.frequencyTime = 0.0f;
@@ -12,7 +12,7 @@ void BulletParticle::BreakEffect::Initialize(Model* model, uint32_t textureHandl
 	data_.radius = 1.0f;
 	data_.emit = 0;
 	data_.emitPattern = 4;
-	blendMode_ = Pipeline::BlendMode::kAlpha;
+	blendMode_ = Pipeline::BlendMode::kAdd;
 
 	texture_ = TextureManager::Load("Resources/Effect/effect.png");
 
@@ -27,11 +27,11 @@ void BulletParticle::BreakEffect::Update()
 	perFrame_.cMap_->time += kDeltaTime;
 
 	//RefreshData(data_);
-	ParticleEmitter::Update();
+	GPUParticleEmitter::Update();
 	emitter_.cMap_->emit = 0;
 }
 
 void BulletParticle::BreakEffect::Draw(ICamera* camera)
 {
-	ParticleEmitter::Draw(camera);
+	GPUParticleEmitter::Draw(camera);
 }

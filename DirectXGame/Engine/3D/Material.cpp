@@ -9,7 +9,7 @@ void Material::CreateMaterial()
 	// 色
 	color_ = { 1.0f,1.0f,1.0f,1.0f };
 	// 無し
-	enableLighting_ = kNone;
+	enableLighting_ = kAllLighting;
 
 	shininess_ = 100.0f;
 

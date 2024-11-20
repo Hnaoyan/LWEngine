@@ -1,6 +1,11 @@
 #include "GPUParticleSystem.h"
 #include <imgui.h>
 
+GPUParticleSystem::GPUParticleSystem()
+{
+
+}
+
 void GPUParticleSystem::Initialize(Model* model)
 {
 	assert(model);
@@ -14,6 +19,8 @@ void GPUParticleSystem::Initialize(Model* model)
 	createData_.emit = 0;
 
 	addEmitterName_ = "Emitter";
+
+	emitters_.clear();
 
 }
 
@@ -29,7 +36,7 @@ void GPUParticleSystem::Update()
 	}
 
 	// エミッターの削除
-	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end();) {
+	for (std::unordered_map<std::string, std::unique_ptr<GPUParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end();) {
 		if (it->second->IsDead()) {
 			it = emitters_.erase(it);
 		}
@@ -38,7 +45,7 @@ void GPUParticleSystem::Update()
 		}
 	}
 	// エミッターの更新
-	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
+	for (std::unordered_map<std::string, std::unique_ptr<GPUParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
 		it->second->Update();
 	}
 
@@ -47,7 +54,7 @@ void GPUParticleSystem::Update()
 void GPUParticleSystem::Draw(ICamera* camera)
 {
 	// パーティクルの描画
-	for (std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
+	for (std::unordered_map<std::string, std::unique_ptr<GPUParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
 		it->second->Draw(camera);
 	}
 }
@@ -84,7 +91,7 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 	auto it = emitters_.find(tag);
 	// ある場合上書き
 	if (it != emitters_.end()) {
-		std::unique_ptr<ParticleEmitter> instance = std::make_unique<ParticleEmitter>();
+		std::unique_ptr<GPUParticleEmitter> instance = std::make_unique<GPUParticleEmitter>();
 		instance->Initialize(model_);
 		instance->RefreshData(createData_);
 
@@ -92,13 +99,13 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 		return;
 	}
 	// なかった場合インスタンス生成・登録
-	std::unique_ptr<ParticleEmitter> instance = std::make_unique<ParticleEmitter>();
+	std::unique_ptr<GPUParticleEmitter> instance = std::make_unique<GPUParticleEmitter>();
 	instance->Initialize(model_);
 	instance->RefreshData(createData_);
 	emitters_.emplace(tag, std::move(instance));
 }
 
-void GPUParticleSystem::CreateEmitter(std::unique_ptr<ParticleEmitter> instance, std::string tag)
+void GPUParticleSystem::CreateEmitter(std::unique_ptr<GPUParticleEmitter> instance, std::string tag)
 {
 	// タグの要素検索
 	auto it = emitters_.find(tag);
@@ -121,7 +128,7 @@ void GPUParticleSystem::DeleteEmitter(std::string tag)
 	}
 }
 
-void GPUParticleSystem::DeleteEmitter(ParticleEmitter* emitter)
+void GPUParticleSystem::DeleteEmitter(GPUParticleEmitter* emitter)
 {
 	// 検索
 	for (auto it = emitters_.begin(); it != emitters_.end(); ++it) {
@@ -132,7 +139,7 @@ void GPUParticleSystem::DeleteEmitter(ParticleEmitter* emitter)
 	}
 }
 
-ParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
+GPUParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
 {
 	// 検索
 	auto it = emitters_.find(tag);
@@ -141,4 +148,9 @@ ParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
 		return it->second.get();
 	}
 	return nullptr;
+}
+
+void GPUParticleSystem::DataReset()
+{
+	this->emitters_.clear();
 }

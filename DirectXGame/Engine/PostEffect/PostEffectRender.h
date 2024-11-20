@@ -9,18 +9,27 @@
 #include <utility>
 
 class SRVHandler;
-
+/// <summary>
+/// ポストエフェクト描画クラス
+/// </summary>
 class PostEffectRender : public Singleton<PostEffectRender>
 {
 private:
+	// レジスター省略
 	using EffectRegister = Pipeline::PostEffectRegister;
 
 public:	// 定数バッファ
+	// ビネット
 	ConstantBufferMapContext<CBufferDataVignette> vignette_;
+	// ブラー
 	ConstantBufferMapContext<CBufferDataBlur> blur_;
+	// ディゾルブ
 	ConstantBufferMapContext<CBufferDataDissolve> dissolve_;
+	// ノイズ
 	ConstantBufferMapContext<CBufferDataNoise> noise_;
+	// HSV
 	ConstantBufferMapContext<CBufferDataHSV> hsv_;
+	// ブルーム
 	ConstantBufferMapContext<CBufferDataBloom> bloom_;
 	/// <summary>
 	/// 初期化
@@ -28,7 +37,7 @@ public:	// 定数バッファ
 	void StaticInitialize();
 
 public:
-	// ポストエフェクトのバッファーに送るデータ体
+	// ポストエフェクトのバッファーに送るデータ
 	struct PostEffectDesc {
 		CBufferDataBlur blur;
 		CBufferDataVignette vignette;

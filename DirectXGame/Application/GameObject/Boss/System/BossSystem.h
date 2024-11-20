@@ -11,7 +11,7 @@
 
 class CollisionManager;
 class GPUParticleSystem;
-class ParticleEmitter;
+class GPUParticleEmitter;
 
 namespace BossSystemContext
 {

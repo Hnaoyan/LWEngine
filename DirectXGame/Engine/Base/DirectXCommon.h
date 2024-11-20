@@ -14,6 +14,9 @@
 #include <wrl.h>
 #include <chrono>
 
+/// <summary>
+/// DirectX
+/// </summary>
 class DirectXCommon : public Singleton<DirectXCommon>
 {
 public:

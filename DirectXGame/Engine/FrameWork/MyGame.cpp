@@ -23,7 +23,6 @@ void MyGame::Initialize()
 void MyGame::Finalize()
 {
 	sceneFactory_.release();
-	// 基底フラグ
 	Framework::Finalize();
 }
 
@@ -40,12 +39,10 @@ void MyGame::Update()
 
 	// 終了フラグ
 	endRequest_ = winApp_->ProcessMessage();
-
 }
 
 void MyGame::Draw()
 {
-	// RenderGraph
 	// RenderTextureの描画前
 	dxCommon_->RenderPreDraw();
 	// シーンの描画

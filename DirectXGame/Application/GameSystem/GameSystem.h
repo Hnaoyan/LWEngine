@@ -1,22 +1,15 @@
 #pragma once
 #include <stdint.h>
-#include "KeyConfigManager.h"
+#include "GameSystemStructs.h"
+#include "KeyConfig/KeyConfigManager.h"
+#include "Replay/ReplayManager.h"
+#include "Effect/PostEffectManager.h"
 #include "Engine/Utility/Singleton.h"
-#include "Engine/PostEffect/PostEffectRender.h"
-#include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class Input;
-
 /// <summary>
-/// ゲーム内のシステム的陣営
+/// ゲームのシステム関係クラス
 /// </summary>
-enum class FactionType
-{
-	kPlayer,	// プレイヤー
-	kEnemy,		// 敵
-	kNeutral,	// 中立
-};
-
 class GameSystem : public Singleton<GameSystem>
 {
 public:
@@ -28,26 +21,6 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	static float GameSpeedFactor();
-
-private: // ポストエフェクト用	
-	struct DashBlur
-	{
-		// ブラーの詳細情報
-		CBufferDataBlur data;
-		bool isActive = false;
-		float maxWidth = 0.03f;
-		FrameTimer timer;
-		void Initialize() {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-			data.blurWidth = maxWidth;
-			timer.Start(35.0f);
-			isActive = true;
-		}
-		void Finalize() {
-			PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-			isActive = false;
-		}
-	};
 
 public:
 	// プレイヤーのキー
@@ -62,13 +35,28 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
+	/// <summary>
+	/// ImGui
+	/// </summary>
+	void ImGuiDraw();
+	/// <summary>
+	/// リプレイの開始処理
+	/// </summary>
+	void LaunchReplay();
 
-	//void
-	CBufferDataBloom bloomData_{};
-	CBufferDataVignette vignetteData_{};
+public:
+	ReplayManager* GetReplayManager() { return &replayManager_; }
 
 private:
+	// キー管理クラス
 	KeyConfigManager keyConfig_;
-	
+	// リプレイ管理クラス
+	ReplayManager replayManager_;
+	// ポストエフェクト管理クラス
+	PostEffectManager postEffectManager_;
+	// フレーム数のカウント
+	uint32_t nowFrame_ = 0;
+	// インプット
 	Input* input_ = nullptr;
+
 };

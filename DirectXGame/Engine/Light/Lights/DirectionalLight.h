@@ -1,6 +1,9 @@
 #pragma once
 #include "ILight.h"
 
+/// <summary>
+/// 平行光源
+/// </summary>
 class DirectionalLight : public ILight<CBufferDataDirectionalLight>
 {
 public:

@@ -3,6 +3,7 @@
 
 #include "Application/GameObject/Bullet/BulletManager.h"
 #include "StatePattern/StateMachine.h"
+#include "StatePattern/BossStateDecider.h"
 #include "StatePattern/Attack/BossMissileBarrage.h"
 #include "Animation/BossAnimationManager.h"
 #include "System/BossSystem.h"
@@ -47,15 +48,19 @@ public:
 	/// UI描画
 	/// </summary>
 	void UIDraw();
-
+	/// <summary>
+	/// リセット
+	/// </summary>
 	void Reset() { systemManager_->uiManager_.Initialize(this); }
+	/// <summary>
+	/// 終了処理
+	/// </summary>
 	void Finalize();
-
 private:
 	// グローバル変数関係の初期化
-	void GlobalValueInitialize() override;
+	void InitializeGlobalValue() override;
 	// グローバル変数関係の更新
-	//void GlobalValueUpdate();
+	//void UpdateGlobalValue()　override;
 
 	bool isAction_ = false;
 
@@ -76,14 +81,16 @@ private: // サブシステム
 	// 外部の弾管理
 	BulletManager* bulletManager_ = nullptr;
 
-#pragma region 内部システムのアクセッサ
+#pragma region 内部システムアクセッサ
 public:
 	// ステート関係
 	BossState::IState* GetState() { return state_.get(); }
 	BossState::IState* GetPrevState() { return prevState_.get(); }
-	BossState::StateVariant GetNowState() { return nowVariantState_; }
 	BossState::StateManager* StateManager() { return &stateManager_; }
 	BossState::StateDecider* GetDecider() { return &stateDecider_; }
+	BossState::StateVariant GetNowState() const { return nowVariantState_; }
+
+	BossFacade* GetSystem() { return systemManager_.get(); }
 	void SetNowVariantState(BossState::StateVariant variant) { nowVariantState_ = variant; }
 	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
 
@@ -104,6 +111,7 @@ private:
 	// GPU
 	GPUParticleSystem* gpuParticle_ = nullptr;
 public:
+	void SetIsAction(bool isAction) { isAction_ = isAction; }
 	// 外部
 	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
@@ -117,8 +125,11 @@ public:
 	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
 	BulletManager* GetBulletManager() { return bulletManager_; }
-	BulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
-	BulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
+	IBulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
+	IBulletCluster* GetSuperiorCluster() { return bulletManager_->FindCluster("Boss:Superior"); }
+	IBulletCluster* GetInferiorCluster() { return bulletManager_->FindCluster("Boss:Inferior"); }
+	IBulletCluster* GetGeneusCluster() { return bulletManager_->FindCluster("Boss:Genius"); }
+	IBulletCluster* GetNormalBulletCluster() { return bulletManager_->FindCluster("Boss:NormalBullet"); }
 #pragma endregion
 
 public: // 内部でのみ呼び出す関数

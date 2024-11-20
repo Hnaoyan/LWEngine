@@ -1,5 +1,5 @@
 #pragma once
-#include "Emitter/ParticleEmitter.h"
+#include "Emitter/GPUParticleEmitter.h"
 #include <stdint.h>
 #include <vector>
 #include <unordered_map>
@@ -10,7 +10,11 @@ public:
 	// 最大数
 	static const uint32_t kNumInstanceMax = 1024;
 	// エミッターのリスト
-	std::unordered_map<std::string, std::unique_ptr<ParticleEmitter>>  emitters_;
+	std::unordered_map<std::string, std::unique_ptr<GPUParticleEmitter>>  emitters_;
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	GPUParticleSystem();
 
 public: // メンバ関数
 	/// <summary>
@@ -40,24 +44,30 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="instance"></param>
 	/// <param name="tag"></param>
-	void CreateEmitter(std::unique_ptr<ParticleEmitter> instance, std::string tag);
+	void CreateEmitter(std::unique_ptr<GPUParticleEmitter> instance, std::string tag);
 	/// <summary>
 	/// エミッターの削除
 	/// </summary>
 	/// <param name="tag"></param>
 	void DeleteEmitter(std::string tag);
-	void DeleteEmitter(ParticleEmitter* emitter);
+	void DeleteEmitter(GPUParticleEmitter* emitter);
 	/// <summary>
 	/// リストからポインタの検索
 	/// </summary>
 	/// <param name="tag"></param>
 	/// <returns></returns>
-	ParticleEmitter* FindEmitter(std::string tag);
+	GPUParticleEmitter* FindEmitter(std::string tag);
+
+	/// <summary>
+	/// データの初期化
+	/// </summary>
+	void DataReset();
+
 private:
-	bool isCreate_ = false;
-	bool isDelete_ = false;
-	std::string addEmitterName_;
-	int nameNum_ = 0;
-	EmitterSphere createData_{};
-	Model* model_ = nullptr;
+	bool isCreate_ = false;	// 生成フラグ
+	bool isDelete_ = false;	// 削除フラグ
+	std::string addEmitterName_;	// 追加するエミッターの名前
+	int nameNum_ = 0;	// 名前の番号
+	EmitterSphere createData_{};	// 作成データ	
+	Model* model_ = nullptr;	// モデル
 };

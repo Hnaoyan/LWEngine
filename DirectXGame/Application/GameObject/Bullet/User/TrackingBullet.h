@@ -28,11 +28,14 @@ public:
 	void OnCollision(ColliderObject object) override;
 
 public: // アクセッサ
-	void SetTrackType(TrackingType type) { trackingType_ = type; }
-	TrackingType GetTrackingType() { return trackingType_; }
+	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
+	void SetIsBarrage(bool isFlag) { isBarrage_ = isFlag; }
+
+	TrackingAttribute GetTrackingType() { return trackingType_; }
+	TrackingData GetTrackingData() { return data_; }
 private:
 	// 追尾の種類
-	TrackingType trackingType_ = TrackingType::kSuperior;
+	TrackingAttribute trackingType_ = TrackingAttribute::kSuperior;
 	// 追跡している時間
 	FrameTimer trackTimer_;
 	// 直進タイマー
@@ -43,11 +46,15 @@ private:
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;
 
+	// 直進のフレーム数
+	float straightFrame_;
+	bool isBarrage_ = false;
+
 	// ステートの管理
-	TrackingState nowState_;
+	TrackingState nowState_ = TrackingState::kStraight;
 	std::optional<TrackingState> requestState_ = std::nullopt;
 
-	TrackingData data;
+	TrackingData data_{};
 
 private:
 	void ChangeSelecter();

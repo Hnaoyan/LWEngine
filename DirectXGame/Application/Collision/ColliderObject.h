@@ -5,11 +5,10 @@
 class IGameObject;
 class Player;
 class IBullet;
-class SampleEnemy;
 class Boss;
 class Terrain;
 class PlayerFootCollider;
 
 // 衝突オブジェクトの登録
-using ColliderObject = std::variant<IGameObject*, Player*, SampleEnemy*, Boss*, Terrain*,
+using ColliderObject = std::variant<IGameObject*, Player*, Boss*, Terrain*,
 	PlayerFootCollider*, IBullet*>;

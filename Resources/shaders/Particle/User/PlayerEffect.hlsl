@@ -76,11 +76,36 @@ Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition)
     particle.translate = emitterPosition;
     particle.translate += offset;
     
-    particle.color.rgb = float32_t3(1.0f, 0.6f, 0.6f);
+    particle.color.rgb = float32_t3(0.35f, 0.35f, 0.35f);
     //particle.color.a = generator.GenerateRange1D(0.5f, 0.85f);
     particle.color.a = 0.1f;
     particle.startAlpha = 0.5f;
-    particle.lifetime = 0.6f;
+    particle.lifetime = 1.5f;
+    particle.currentTime = 0.0f;
+    particle.isAlpha = 3;
+    particle.isScaleDecrement = 3;
+    return particle;
+}
+
+Particle BossBullet(RandomGenerator generator, float32_t3 emitterPosition, float32_t3 color)
+{
+    Particle particle = (Particle) 0;
+    float32_t3 min = { 0.4f, 0.4f, 1.0f };
+    float32_t3 max = { 0.6f, 0.6f, 1.0f };
+    particle.scale = generator.GenerateRange3D(min, max);
+    
+    float32_t value = 0.5f;
+    float32_t3 offsetMin = { -value, -value, 0.0f };
+    float32_t3 offsetMax = { value, value, 0.0f };
+    float32_t3 offset = generator.GenerateRange3D(offsetMin, offsetMax);
+    particle.translate = emitterPosition;
+    particle.translate += offset;
+    
+    particle.color.rgb = color;
+    //particle.color.a = generator.GenerateRange1D(0.5f, 0.85f);
+    particle.color.a = 0.1f;
+    particle.startAlpha = 0.5f;
+    particle.lifetime = 1.5f;
     particle.currentTime = 0.0f;
     particle.isAlpha = 3;
     particle.isScaleDecrement = 3;

@@ -19,8 +19,8 @@ void DebugCamera::Update()
 
 void DebugCamera::ImGuiDraw()
 {
-	ImGui::Begin("DebugCamera");
+	//ImGui::Begin("DebugCamera");
 	ImGui::DragFloat3("Position", &transform_.translate.x, 0.01f);
 	ImGui::DragFloat4("Rotate", &transform_.rotate.x, 0.01f);
-	ImGui::End();
+	//ImGui::End();
 }

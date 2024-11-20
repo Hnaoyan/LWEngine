@@ -2,7 +2,7 @@
 
 void PlayerParticle::BulletEffect::Initialize(Model* model, uint32_t textureHandle)
 {
-	ParticleEmitter::Initialize(model, textureHandle);
+	GPUParticleEmitter::Initialize(model, textureHandle);
 	data_.count = 2;
 	data_.frequency = 0.001f;
 	data_.frequencyTime = 0.0f;
@@ -21,10 +21,10 @@ void PlayerParticle::BulletEffect::Update()
 		emitter_.cMap_->translate = instance_->GetWorldPosition();
 		UpdataEmitterFlags();
 	}
-	ParticleEmitter::Update();
+	GPUParticleEmitter::Update();
 }
 
 void PlayerParticle::BulletEffect::Draw(ICamera* camera)
 {
-	ParticleEmitter::Draw(camera);
+	GPUParticleEmitter::Draw(camera);
 }

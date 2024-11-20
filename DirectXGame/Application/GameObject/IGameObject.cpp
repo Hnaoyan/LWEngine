@@ -5,6 +5,10 @@ int32_t IGameObject::sSerialNumber = 0u;
 
 void IGameObject::Initialize(Model* model)
 {
+#ifdef IMGUI_ENABLED
+	InitializeGlobalValue();
+#endif // IMGUI_ENABLED
+
 	// モデルの設定
 	assert(model);
 	model_ = model;

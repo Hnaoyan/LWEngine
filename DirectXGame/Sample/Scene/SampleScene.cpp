@@ -6,7 +6,7 @@
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
-#include "Engine/LwLib/LwLibLists.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 void SampleScene::Initialize()
 {
@@ -77,6 +77,9 @@ void SampleScene::Initialize()
 	cubeMaterial_ = std::make_unique<Material>();
 	cubeMaterial_->CreateMaterial();
 
+	planeMaterial_ = std::make_unique<Material>();
+	planeMaterial_->CreateMaterial();
+
 	trail_ = std::make_unique<MissileTrail>();
 	//trail_->Initialize();
 
@@ -98,6 +101,8 @@ void SampleScene::Initialize()
 	//curvePoints_[1] = { 3.0f,3.0f,0.0f };
 	//curvePoints_[2] = { 5.0f,0.0f,0.0f };
 	//curvePoints_[3] = { 2.0f,-3.0f,0.0f };
+
+	objectTransform_.Initialize();
 
 }
 
@@ -127,8 +132,10 @@ void SampleScene::Update()
 	}
 #endif // IMGUI_ENABLE
 
-
+	planeMaterial_->Update();
+	planeMaterial_->enableLighting_ = 0;
 	skyboxTransform_.UpdateMatrix();
+	objectTransform_.UpdateMatrix();
 
 	// キャトムルのコンテナ
 	std::vector<Vector3> sts;
@@ -187,17 +194,28 @@ void SampleScene::Draw()
 
 	Model::PreDraw(commandList);
 	ModelRenderer::PreDraw(commandList);
-	// サンプル
-	ModelDrawDesc desc{};
-	desc.camera = &camera_;
-	desc.directionalLight = directionalLight_.get();
-	desc.spotLight = spotLight_.get();
-	desc.pointLight = pointLight_.get();
-	desc.worldTransform = &skyboxTransform_;
 
-	skybox_->Draw(desc);
+	skyboxTransform_.transform_.scale.y = skyboxTransform_.transform_.scale.x;
 
-	ModelRenderer::LineDraw(&camera_, lines_.get());
+	// 板ポリ
+	DrawDesc::ModelDesc modelDesc{};
+	modelDesc.SetDesc(planeModel_);
+	planeMaterial_->enableLighting_ = false;
+	modelDesc.material = planeMaterial_.get();
+	modelDesc.texture = TextureManager::Load("Resources/Effect/WhiteEffect.png");
+	modelDesc.worldTransform = &skyboxTransform_;
+	DrawDesc::LightDesc lightDesc{};
+	lightDesc.directionalLight = directionalLight_.get();
+	lightDesc.pointLight = pointLight_.get();
+	lightDesc.spotLight = spotLight_.get();
+	ModelRenderer::NormalDraw(&camera_, modelDesc, lightDesc);
+
+	modelDesc.SetDesc(objModel_);
+	modelDesc.texture = TextureManager::Load("Resources/default/white2x2.png");
+	modelDesc.worldTransform = &objectTransform_;
+	//ModelRenderer::NormalDraw(&camera_, modelDesc, lightDesc);
+
+	//ModelRenderer::LineDraw(&camera_, lines_.get());
 	//ModelRenderer::TriangleDraw(&camera_, triangle_.get());
 	ModelRenderer::TrailDraw(&camera_, trailPolygon_.get());
 
@@ -229,8 +247,8 @@ void SampleScene::UIDraw()
 	circleSprite_->SetColor(color_);
 	effectSprite_->SetColor(color_);
 
-	circleSprite_->Draw();
-	effectSprite_->Draw();
+	//circleSprite_->Draw();
+	//effectSprite_->Draw();
 
 	Sprite::PostDraw();
 }
@@ -260,7 +278,7 @@ void SampleScene::ImGuiDraw()
 	//triangle_->Update(curvePoints_);
 
 	ImGui::Begin("SampleScene");
-
+	ImGui::ColorEdit4("PlaneColor", &planeMaterial_->color_.x);
 	if (ImGui::TreeNode("EffectSprite")) {
 		ImGui::ColorEdit4("EffectColor", &color_.x);
 		if (ImGui::Button("None")) {
@@ -444,10 +462,14 @@ void SampleScene::ImGuiDraw()
 void SampleScene::LoadModel()
 {
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");
-	ModelManager::LoadObjModel("Plane", "plane");
+	ModelManager::LoadNormalModel("BossEnemy", "cube");	// ボス
+	ModelManager::LoadNormalModel("Plane", "plane");
 	ModelManager::LoadAnimModel("AnimCube", "AnimatedCube");
 	ModelManager::LoadAnimModel("Walk", "walk");
 	ModelManager::LoadAnimModel("SneakWalk", "sneakWalk");
+	ModelManager::LoadNormalModel("TestPlane", "plane");
+	planeModel_ = ModelManager::GetModel("TestPlane");
+	objModel_ = ModelManager::GetModel("BossEnemy");
 	sphere_.reset(Skydome::CreateSkydome());
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 }

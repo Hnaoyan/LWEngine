@@ -1,5 +1,10 @@
 {
     "Player": {
-        "DashPower": 100.0
+        "DashPower": 100.0,
+        "InitPosition": [
+            0.0,
+            0.0,
+            -35.0
+        ]
     }
 }
