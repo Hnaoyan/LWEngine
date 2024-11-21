@@ -26,8 +26,6 @@ void GameSystem::Initialize()
     keyConfig_ = KeyConfigManager();
     // ポストエフェクト生成
     postEffectManager_ = PostEffectManager();
-    // UI
-    uiManager_ = GameUIManager();
     // ブラー
     sBlurEffect.data.centerPoint = { 0.5f,0.5f };
     sBlurEffect.data.samplesNum = 4;

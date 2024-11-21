@@ -82,33 +82,6 @@ private: // アプリ
 	std::unique_ptr<GPUParticleManager> gpuParticleManager_;
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
-private: // リソース
-	// クリア関係の変数
-	struct GameClear {
-		FrameTimer transitionTimer;
-		std::unique_ptr<Sprite> clearText;
-		bool isClear = false;
-	};
-
-	FrameTimer backTitleTimer_;
-
-	// UI用のデータ
-	struct UIData {
-		std::string tag;
-		uint32_t num = 0;
-		Vector2 position = {};
-		Vector2 scale = {};
-		uint32_t texture = 0;
-	};
-
-	std::vector<std::pair<std::unique_ptr<Sprite>, UIData>> controlUIs_;
-
-	void AddUI(UIData data);
-
-	uint32_t uiNumber_ = 0;
-
-	GameClear clearText_;
-
 private: // システム関係
 	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;

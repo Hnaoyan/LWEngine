@@ -47,7 +47,6 @@ public:
 
 public:
 	ReplayManager* GetReplayManager() { return &replayManager_; }
-
 private:
 	// キー管理クラス
 	KeyConfigManager keyConfig_;
@@ -55,8 +54,6 @@ private:
 	ReplayManager replayManager_;
 	// ポストエフェクト管理クラス
 	PostEffectManager postEffectManager_;
-	// ゲームのUI管理クラス
-	GameUIManager uiManager_;
 
 	// フレーム数のカウント
 	uint32_t nowFrame_ = 0;

@@ -19,6 +19,14 @@ namespace GameUI
 
 	};
 
+	// クリア・オーバー等の別途テキストUI用
+	struct TextUI
+	{
+		Sprite* sprite = nullptr;
+		Vector2 position = {};
+		Vector2 size = {};
+	};
+
 	// スプライトのデータ
 	struct SpriteInfo {
 		Sprite* sprite;	// スプライト

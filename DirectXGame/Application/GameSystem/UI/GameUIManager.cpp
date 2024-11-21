@@ -1,10 +1,23 @@
 #include "GameUIManager.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/2D/SpriteManager.h"
+#include "Engine/2D/TextureManager.h"
+#include "Application/GameSystem/GameObjectManager.h"
 
 GameUIManager::GameUIManager()
 {
 	InitializeGlobalValue();
+
+	AddHUD("Dash", TextureManager::Load("Resources/UI/DashUI.png"));
+	AddHUD("Jump", TextureManager::Load("Resources/UI/JumpUItt.png"));
+	AddHUD("LockOn", TextureManager::Load("Resources/UI/LockonUIt.png"));
+	AddHUD("Shot", TextureManager::Load("Resources/UI/ShotUIt.png"));
+
+	gameClear_.sprite = SpriteManager::GetSprite("GameClearText");
+	gameClear_.position = { 1280.0f / 2.0f,720.0f / 2.0f };
+
+	gameOver_.sprite = SpriteManager::GetSprite("GameOverText");
+	gameOver_.position = { 1280.0f / 2.0f,720.0f / 2.0f };
 }
 
 void GameUIManager::Initialize()
@@ -12,9 +25,24 @@ void GameUIManager::Initialize()
 
 }
 
-void GameUIManager::Draw()
+void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 {
+	// ゲームオーバー・クリアの描画
+	if (gameObjectManager->IsUIGameClear()) {
+		gameClear_.sprite->SetPosition(gameClear_.position);
+		gameClear_.sprite->Draw();
+	}
+	if (gameObjectManager->IsUIGameOver()) {
+		gameOver_.sprite->SetPosition(gameOver_.position);
+		gameOver_.sprite->Draw();
+	}
 
+	// HUD関係
+	for (std::vector<GameUI::UIData>::iterator it = hudElements_.begin(); it != hudElements_.end(); ++it) 
+	{
+		(*it).sprite->SetPosition((*it).position);
+		(*it).sprite->Draw();
+	}
 }
 
 void GameUIManager::AddHUD(std::string name, uint32_t texture)
@@ -22,7 +50,7 @@ void GameUIManager::AddHUD(std::string name, uint32_t texture)
 	GameUI::UIData data = {};
 	data.tag = name;
 	data.texture = texture;
-	data.sprite = SpriteManager::GetSprite(name);
+	data.sprite = SpriteManager::LoadSprite(name, texture);
 	data.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", name + "Pos");
 	hudElements_.push_back(data);
 }
