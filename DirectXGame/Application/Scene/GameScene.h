@@ -83,8 +83,6 @@ private: // アプリ
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
 private: // リソース
-	std::unique_ptr<Sprite> reticleSprite_;
-
 	// クリア関係の変数
 	struct GameClear {
 		FrameTimer transitionTimer;

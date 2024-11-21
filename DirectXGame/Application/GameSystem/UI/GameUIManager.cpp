@@ -1,5 +1,6 @@
 #include "GameUIManager.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
+#include "Engine/2D/SpriteManager.h"
 
 GameUIManager::GameUIManager()
 {
@@ -8,22 +9,22 @@ GameUIManager::GameUIManager()
 
 void GameUIManager::Initialize()
 {
-	HelpUIInitialize();
+
 }
 
 void GameUIManager::Draw()
 {
-	HelpUIDraw();
-}
-
-void GameUIManager::HelpUIInitialize()
-{
 
 }
 
-void GameUIManager::HelpUIDraw()
+void GameUIManager::AddHUD(std::string name, uint32_t texture)
 {
-
+	GameUI::UIData data = {};
+	data.tag = name;
+	data.texture = texture;
+	data.sprite = SpriteManager::GetSprite(name);
+	data.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", name + "Pos");
+	hudElements_.push_back(data);
 }
 
 void GameUIManager::InitializeGlobalValue()
@@ -46,5 +47,12 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "EnergySize", Vector2(24.0f, 280.0f));	// サイズ
 	globalVariable->AddValue(groupName, "EnergySizeRatio", Vector2(0.75f, 0.95f));	// サイズのレート
 	//globalVariable->AddValue(groupName, "")
+
+	groupName = "HUD";
+
+	globalVariable->AddValue(groupName, "DashPos", Vector2(139.0f, 60.0f));
+	globalVariable->AddValue(groupName, "JumpPos", Vector2(139.0f, 180.0f));
+	globalVariable->AddValue(groupName, "LockOnPos", Vector2(139.0f, 240.0f));
+	globalVariable->AddValue(groupName, "ShotPos", Vector2(139.0f, 120.0f));
 
 }

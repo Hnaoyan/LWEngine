@@ -1,5 +1,6 @@
 #pragma once
 #include "UIStructs.h"
+#include <vector>
 
 /// <summary>
 /// オブジェクトに依存しないUI・UIのグローバル変数管理クラス
@@ -12,9 +13,12 @@ public:
 	void Initialize();
 	void Draw();
 
-	// 操作説明系
-	void HelpUIInitialize();
-	void HelpUIDraw();
+private:
+	// HUD
+	std::vector<GameUI::UIData> hudElements_;
+
+	void AddHUD(std::string name, uint32_t texture);
+
 private:
 	/// <summary>
 	/// グローバル変数の初期化

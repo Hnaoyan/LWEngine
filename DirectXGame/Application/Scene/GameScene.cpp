@@ -251,16 +251,15 @@ void GameScene::LoadModel()
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
-	int loadTex = TextureManager::Load("Resources/UI/ClearText.png");
-	loadTex = TextureManager::Load("Resources/UI/DashUI.png");
-	loadTex = TextureManager::Load("Resources/UI/JumpUI.png");
-	loadTex = TextureManager::Load("Resources/UI/LockonUI.png");
-	loadTex = TextureManager::Load("Resources/UI/ShotUIt.png");
-
-	loadTex = TextureManager::Load("Resources/crossHair.png");
-	loadTex = TextureManager::Load("Resources/default/testGage.png");
-	loadTex = TextureManager::Load("Resources/UI/GameOver.png");
-	loadTex = TextureManager::Load("Resources/default/BackGround.png");
+	TextureManager::Load("Resources/UI/ClearText.png");
+	TextureManager::Load("Resources/UI/DashUI.png");
+	TextureManager::Load("Resources/UI/JumpUI.png");
+	TextureManager::Load("Resources/UI/LockonUI.png");
+	TextureManager::Load("Resources/UI/ShotUIt.png");
+	TextureManager::Load("Resources/crossHair.png");
+	TextureManager::Load("Resources/default/testGage.png");
+	TextureManager::Load("Resources/UI/GameOver.png");
+	TextureManager::Load("Resources/default/BackGround.png");
 
 	// テクスチャのロード
 	clearText_.isClear = false;

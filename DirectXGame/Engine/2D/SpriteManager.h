@@ -20,7 +20,7 @@ public:
 	/// </summary>
 	/// <param name="tag"></param>
 	/// <param name="filePath"></param>
-	static void LoadSprite(const std::string& tag, uint32_t texture);
+	static Sprite* LoadSprite(const std::string& tag, uint32_t texture);
 	/// <summary>
 	/// スプライトの取得
 	/// </summary>
