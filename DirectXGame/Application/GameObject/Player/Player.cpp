@@ -245,6 +245,8 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "LockDuration", float(25.0f));
 	instance->AddValue(groupName, "QuickBoostEndTime", float(40.0f));
 	instance->AddValue(groupName, "HitPoint", int32_t(20));
+	instance->AddValue(groupName, "AimOffset", Vector3(0.0f, 0.0f, 50.0f));
+
 	//---プレイヤーの追従弾---//
 	groupName = "PlayerTrackingBullet";
 	instance->CreateGroup(groupName);

@@ -1,6 +1,6 @@
 #include "PlayerParticleManager.h"
 #include "Application/GameObject/GameObjectLists.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"

@@ -1,11 +1,11 @@
 #pragma once
 
 /// <summary>
-/// ポインタを安全に削除するクラス
+/// ポインタの削除クラス（仮
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <param name="p"></param>
-template<class T> inline void SafeDelete(T*& p) {
-	delete p;
-	p = nullptr;
+template<class T> inline void SafeDelete(T*& classPtr) {
+	delete classPtr;
+	classPtr = nullptr;
 }

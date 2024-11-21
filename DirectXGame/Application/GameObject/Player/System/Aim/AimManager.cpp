@@ -21,8 +21,6 @@ void PlayerContext::AimManager::Initialize(Player* player)
 	offSetTransform_.transform_.translate = { 0.0f,0.0f,50.0f };
 	offSetTransform_.UpdateMatrix();
 
-	reset_.isReceivingInput = false;
-	reset_.rate = 0.03f;
 }
 
 void PlayerContext::AimManager::Update(ICamera* camera)

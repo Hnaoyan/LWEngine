@@ -917,7 +917,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticlePaths.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.h">
@@ -1358,9 +1358,6 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />
@@ -1425,7 +1422,6 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
@@ -1446,8 +1442,6 @@
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Shader.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/GameSystem/UI/UIStructs.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 
 class Player;
 class Sprite;
@@ -24,6 +25,9 @@ namespace PlayerContext
 		GameUI::BarRenderInfo hpUI_{};
 		// EnergyのUI
 		GameUI::BarRenderInfo energyUI_{};
+	private:
+		GlobalVariables* globalVariables_ = nullptr;
+
 	};
 }
 

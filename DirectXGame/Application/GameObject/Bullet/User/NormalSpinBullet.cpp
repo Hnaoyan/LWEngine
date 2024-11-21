@@ -2,7 +2,7 @@
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 
 float NormalSpinBullet::sAcceleration = 0.1f;
 

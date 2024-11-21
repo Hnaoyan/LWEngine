@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include "GameSystemStructs.h"
+#include "UI/GameUIManager.h"
 #include "KeyConfig/KeyConfigManager.h"
 #include "Replay/ReplayManager.h"
 #include "Effect/PostEffectManager.h"
@@ -54,6 +55,9 @@ private:
 	ReplayManager replayManager_;
 	// ポストエフェクト管理クラス
 	PostEffectManager postEffectManager_;
+	// ゲームのUI管理クラス
+	GameUIManager uiManager_;
+
 	// フレーム数のカウント
 	uint32_t nowFrame_ = 0;
 	// インプット

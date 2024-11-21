@@ -1,7 +1,7 @@
 #include "IBullet.h"
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 

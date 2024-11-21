@@ -5,7 +5,7 @@
 #include "Engine/LwLib/LwLibrary.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "TrackingState/TrackingStates.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 
 float TrackingBullet::sTrackingFrame = 95.0f;
 float TrackingBullet::sDamping = 0.1f;
