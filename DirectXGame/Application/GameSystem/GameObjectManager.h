@@ -17,7 +17,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="gpuManager"></param>
-	void Initialize(GPUParticleSystem* gpuManager, ICamera* camera);
+	void Initialize(GPUParticleManager* gpuManager, ICamera* camera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -73,6 +73,6 @@ private:
 	std::unique_ptr<SkyDomeObject> skyDome_;
 
 	// マネージャーポインタ
-	GPUParticleSystem* gpuManager_ = nullptr;
+	GPUParticleManager* gpuManager_ = nullptr;
 	
 };

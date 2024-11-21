@@ -40,7 +40,7 @@ public:
 private:
 	std::unique_ptr<Boss> boss_;
 	// GPUParticle
-	std::unique_ptr<GPUParticleSystem> gpuParticleManager_;
+	std::unique_ptr<GPUParticleManager> gpuParticleManager_;
 
 private: // システム関係
 	// カメラ君

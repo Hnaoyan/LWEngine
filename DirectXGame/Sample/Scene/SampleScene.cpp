@@ -25,7 +25,7 @@ void SampleScene::Initialize()
 	particles_ = std::make_unique<Particle>();
 	particles_->Initialize(ModelManager::GetModel("Plane"));
 
-	gpuParticle_ = std::make_unique<GPUParticleSystem>();
+	gpuParticle_ = std::make_unique<GPUParticleManager>();
 	gpuParticle_->Initialize(ModelManager::GetModel("Plane"));
 
 	plane_.worldTransform.Initialize();

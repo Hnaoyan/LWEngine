@@ -5,13 +5,7 @@
 #include "Engine/LwLib/LwLibrary.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include "TrackingState/TrackingStates.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
-
-float TrackingBullet::sTrackingFrame = 95.0f;
-float TrackingBullet::sDamping = 0.1f;
-float TrackingBullet::sBaseVelocity = 90.0f;
-float TrackingBullet::sInitSpeed = 70.0f;
-float TrackingBullet::sLerpRadius = 50.0f;
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 
 void TrackingBullet::Initialize()
 {
@@ -24,26 +18,17 @@ void TrackingBullet::Initialize()
 	Player* player = dynamic_cast<Player*>(object_);
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	if (player) {
-		sTrackingFrame = instance->GetValue<float>("BossTrackingBullet", "TrackFrame");
-		sDamping = instance->GetValue<float>("BossTrackingBullet", "Damping");
-		sBaseVelocity = instance->GetValue<float>("BossTrackingBullet", "BaseSpeed");
-		sInitSpeed = instance->GetValue<float>("BossTrackingBullet", "InitSpeed");
-		sLerpRadius = instance->GetValue<float>("BossTrackingBullet", "LerpRadius");
 		data_.LoadGlobalData("BossTrackingBullet");
 		// 直進の時間設定
 		straightFrame_ = instance->GetValue<float>("BossTrackingBullet", "StraightFrame");
+		// 対象がボスか
 		isTargetBoss_ = false;
 	}
 	else if (boss) {
-		sTrackingFrame = instance->GetValue<float>("PlayerTrackingBullet", "TrackFrame");
-		sDamping = instance->GetValue<float>("PlayerTrackingBullet", "Damping");
-		sBaseVelocity = instance->GetValue<float>("PlayerTrackingBullet", "BaseSpeed");
-		sInitSpeed = instance->GetValue<float>("PlayerTrackingBullet", "InitSpeed");
-		sLerpRadius = instance->GetValue<float>("PlayerTrackingBullet", "LerpRadius");
 		data_.LoadGlobalData("PlayerTrackingBullet");
 		// 直進の時間設定
 		straightFrame_ = (instance->GetValue<float>("PlayerTrackingBullet", "StraightFrame"));
-		
+		// 対象がボスか
 		isTargetBoss_ = true;
 	}
 
@@ -74,8 +59,8 @@ void TrackingBullet::Update()
 	// 移動
 	velocity_ += accelerate_;
 	// 回転
-	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
-	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
+	transform_.rotate.x += GameSystem::GameSpeedFactor();
+	transform_.rotate.y += GameSystem::GameSpeedFactor();
 
 	// 基底の更新
 	IBullet::Update();
@@ -99,11 +84,6 @@ void TrackingBullet::OnCollision(ColliderObject object)
 	// 
 	if (std::holds_alternative<Boss*>(object)) {
 		isDead_ = true;
-	}
-	// 
-	if (isDead_ && breakEmitter_) {
-		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
-		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }
 
@@ -144,21 +124,25 @@ void TrackingBullet::ChangeSelecter()
 			stateMachine_->RequestState(TrackingState::kWave);
 			break;
 		case TrackingState::kTracking:
+			// 対象がある場合
 			if (object_) {
 				float dot = Vector3::Dot(Vector3::Normalize(GetVelocity()), Vector3::Normalize(object_->worldTransform_.GetWorldPosition() - GetWorldPosition()));
 				// 向きが過度に離れていたら追尾しない
 				float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
+				// 追従しないのに切り替えの場合
 				if (dot < limitDot + 0.025f) {
 					straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
 					stateMachine_->RequestState(TrackingState::kStraight);
 				}
+				// 変わらず追従
 				else {
-					trackTimer_.Start(TrackingBullet::sTrackingFrame);
+					trackTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackFrame"));
 					stateMachine_->RequestState(TrackingState::kTracking);
 				}
 			}
+			// ない場合
 			else {
-				trackTimer_.Start(TrackingBullet::sTrackingFrame);
+				trackTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackFrame"));
 				stateMachine_->RequestState(TrackingState::kTracking);
 			}
 			break;

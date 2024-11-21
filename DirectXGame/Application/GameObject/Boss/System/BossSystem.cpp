@@ -3,7 +3,7 @@
 #include "Engine/Particle/GPUParticleSystem.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 #include "../Boss.h"
 
 void BossSystemContext::HealthManager::TakeDamage(float damage)

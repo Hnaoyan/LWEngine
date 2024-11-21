@@ -109,11 +109,11 @@ private:
 	// プレイヤー
 	Player* player_ = nullptr;
 	// GPU
-	GPUParticleSystem* gpuParticle_ = nullptr;
+	GPUParticleManager* gpuParticle_ = nullptr;
 public:
 	void SetIsAction(bool isAction) { isAction_ = isAction; }
 	// 外部
-	GPUParticleSystem* GetGPUParticle() { return gpuParticle_; }
+	GPUParticleManager* GetGPUParticle() { return gpuParticle_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }
 	Player* GetPlayer() { return player_; }
@@ -122,7 +122,7 @@ public:
 		player_ = player;
 		stateDecider_.Initialize(this, player);
 	}
-	void SetGPUParticle(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+	void SetGPUParticle(GPUParticleManager* ptr) { gpuParticle_ = ptr; }
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
 	BulletManager* GetBulletManager() { return bulletManager_; }
 	IBulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }

@@ -15,13 +15,22 @@ public:
 	ITrackingState() {};
 	virtual ~ITrackingState() = default;
 
-	// 初期化
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	virtual void Initialize() {};
-	// 開始
+	/// <summary>
+	/// 開始
+	/// </summary>
 	virtual void Enter() {};
-	// 更新
+	/// <summary>
+	/// 更新
+	/// </summary>
+	/// <param name="stateMachine"></param>
 	virtual void Update(BulletStateMachine& stateMachine) = 0;
-	// 終了
+	/// <summary>
+	/// 終了
+	/// </summary>
 	virtual void Exit() {};
 
 public:

@@ -2,7 +2,7 @@
 #include "Engine/Base/CBufferCommon.h"
 #include "Engine/3D/Drawer/Model.h"
 
-class GPUParticleSystem;
+class GPUParticleManager;
 
 class GPUParticleEmitter
 {
@@ -46,7 +46,7 @@ protected:
 	EmitterSphere data_{};
 
 	// 
-	GPUParticleSystem* gpuParticleManager_ = nullptr;
+	GPUParticleManager* gpuParticleManager_ = nullptr;
 
 public:
 	/// <summary>
@@ -75,9 +75,9 @@ public:
 	/// </summary>
 	void UpdataEmitterFlags();
 	
-	bool IsDead() { return isDead_; }
+	bool IsDead() const { return isDead_; }
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
-	void SetGPUParticleSystem(GPUParticleSystem* system) { gpuParticleManager_ = system; }
+	void SetGPUParticleSystem(GPUParticleManager* system) { gpuParticleManager_ = system; }
 
 protected: // USER
 	// パーティクルで使うオブジェクト

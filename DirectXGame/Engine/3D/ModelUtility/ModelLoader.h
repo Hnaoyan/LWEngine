@@ -8,7 +8,7 @@
 #include <assimp/postprocess.h>
 
 /// <summary>
-/// モデルなどの読み込み関数用クラス
+/// モデル読み込みクラス
 /// </summary>
 class ModelLoader : public Singleton<ModelLoader>
 {

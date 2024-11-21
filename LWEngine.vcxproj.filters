@@ -240,9 +240,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Teleport\BossTeleportState.cpp">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClCompile>
@@ -285,7 +282,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\DirectX\DirectXDevice.cpp">
       <Filter>Engine\Base\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\LwLib\Ease\Ease.cpp">
@@ -399,10 +396,10 @@
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp">
       <Filter>Engine\Input</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\RTVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp">
@@ -423,7 +420,7 @@
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp">
+    <ClCompile Include="DirectXGame\Engine\Particle\Fragment\Particle.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.cpp">
@@ -574,9 +571,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Irregular\TrackingWaveringState.cpp">
@@ -911,7 +905,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\Material.h">
       <Filter>Engine\3D</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\Particle.h">
+    <ClInclude Include="DirectXGame\Engine\Particle\Fragment\Particle.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h">
@@ -920,7 +914,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h">
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticlePaths.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\SwapChainManager.h">
@@ -929,13 +923,13 @@
     <ClInclude Include="DirectXGame\Engine\Utility\StringConverter.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\RTVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h">
@@ -1163,9 +1157,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Accelerater\IBulletAccelerater.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1184,13 +1175,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletEffectCluster.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BossTrackBulletCluster.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h">
@@ -1364,9 +1349,6 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skydome.cpp" />
@@ -1431,7 +1413,6 @@
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
@@ -1452,8 +1433,6 @@
     <ClInclude Include="DirectXGame\Engine\Audio\AudioManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Shader.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.h" />

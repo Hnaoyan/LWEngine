@@ -1,6 +1,6 @@
 #pragma once
 #include "../Utility/Singleton.h"
-#include "../3D/Descriptor/SRVHandler.h"
+#include "Engine/Base/Descriptor/SRVHandler.h"
 
 #include <string>
 #include <array>
@@ -13,6 +13,9 @@ using namespace DirectX;
 
 class DirectXCommon;
 
+/// <summary>
+/// テクスチャの読み込み管理クラス
+/// </summary>
 class TextureManager : public Singleton<TextureManager>
 {
 public: // 静的メンバ変数

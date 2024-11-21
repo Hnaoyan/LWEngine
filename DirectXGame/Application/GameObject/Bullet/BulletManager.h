@@ -8,7 +8,7 @@
 
 class Player;
 class Boss;
-class GPUParticleSystem;
+class GPUParticleManager;
 
 /// <summary>
 /// 弾の管理クラス
@@ -55,7 +55,7 @@ public: // アクセッサ
 	// セッター
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetBoss(Boss* boss) { boss_ = boss; }
-	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
+	void SetGPUParticle(GPUParticleManager* gpuParticle) { gpuParticle_ = gpuParticle; }
 
 private:
 	// モデルのリスト
@@ -65,7 +65,7 @@ private:
 	// オブジェクトのポインタ
 	Player* player_ = nullptr;
 	Boss* boss_ = nullptr;
-	GPUParticleSystem* gpuParticle_ = nullptr;
+	GPUParticleManager* gpuParticle_ = nullptr;
 
 	// 描画フラグ
 	std::bitset<size_t(TrackingAttribute::kMaxSize)> isDrawCheck_;

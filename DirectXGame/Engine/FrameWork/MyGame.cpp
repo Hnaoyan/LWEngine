@@ -1,7 +1,6 @@
 #include "MyGame.h"
-#include "../Scene/SceneFactory/SceneFactory.h"
-#include "../GlobalVariables/GlobalVariables.h"
-#include "../PostEffect/PostEffectRender.h"
+#include "Engine/Scene/SceneFactory/SceneFactory.h"
+#include "Engine/PostEffect/PostEffectRender.h"
 
 #include "imgui.h"
 

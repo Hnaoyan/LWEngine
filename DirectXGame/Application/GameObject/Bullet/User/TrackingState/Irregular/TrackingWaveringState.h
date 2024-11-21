@@ -2,6 +2,9 @@
 #include "../ITrackingState.h"
 #include <functional>
 
+/// <summary>
+/// 追従の波挙動状態
+/// </summary>
 class TrackingWaveringState : public ITrackingState
 {
 public:
@@ -10,9 +13,13 @@ public:
 	void Exit() override;
 
 private:
+	// 三角関数での計算Ｖｅｒ
 	void TrigonometricPattern();
+	// 右
 	void RightCurve();
+	// 左
 	void LeftCurve();
+	// 終了更新
 	void EndUpdate();
 
 private:
@@ -26,7 +33,7 @@ private:
 
 	// 曲がる時間
 	FrameTimer curveTimer_;
-
+	// カーブの関数ポインタ
 	std::function<void(void)> curveProcess_;
 
 };

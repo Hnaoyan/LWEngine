@@ -5,6 +5,9 @@
 #include <vector>
 #include <optional>
 
+/// <summary>
+/// 三角形モデルクラス
+/// </summary>
 class Triangle3D
 {
 public:
@@ -52,13 +55,16 @@ private:
 	Vector4 color_{};
 	// 三角形の幅
 	float width_ = 0.0f;
+	// アルファの最大値
 	float maxAlpha_ = 1.0f;
 
 public:
+	// バッファービュー
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	D3D12_INDEX_BUFFER_VIEW ibView_{};
+	// テクスチャ
 	uint32_t texture_ = 0u;
-
+	// ビルボード
 	bool isBillBoard_ = false;
 public:
 	// セッター

@@ -126,11 +126,6 @@ public:
 	void Finalize();
 
 private:
-	//Audio() = default;
-	//~Audio() = default;
-	//Audio(const Audio&) = delete;
-	//const Audio& operator=(const Audio&&) = delete;
-
 	// XAudio2のインスタンス
 	Microsoft::WRL::ComPtr<IXAudio2> xAudio2_;
 

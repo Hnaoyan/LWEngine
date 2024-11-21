@@ -5,6 +5,9 @@
 #include "../Graphics/GraphicsPSO.h"
 #include <string>
 
+/// <summary>
+/// スカイボックスモデルクラス
+/// </summary>
 class Skybox
 {
 private:

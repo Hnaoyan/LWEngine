@@ -8,9 +8,13 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
-void Player::PreInitialize(ICamera* camera, GPUParticleSystem* gpuParticle)
+void Player::PreInitialize(ICamera* camera, GPUParticleManager* gpuParticle)
 {
+	assert(camera);
+	assert(gpuParticle);
+	// カメラ
 	camera_ = camera;
+	// システム集積クラスの初期化
 	facadeSystem_ = std::make_unique<PlayerFacade>();
 	facadeSystem_->GetParticleManager()->SetGPUParticleSystem(gpuParticle);
 }
@@ -19,17 +23,17 @@ void Player::Initialize(Model* model)
 {
 	// 基底クラスの初期化
 	IGameObject::Initialize(model);
-
+	// マテリアル
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
-
+	// トランスフォーム
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
 	worldTransform_.UpdateMatrix();
-
+	// コライダー
 	collider_.Initialize(worldTransform_.transform_.scale, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
-	systemManager_.Initialize(this);
+	oparationManager_.Initialize(this);
 	// ファサード初期化
 	facadeSystem_->Initialize(this);
 
@@ -46,20 +50,12 @@ void Player::Update()
 	prevPosition_ = worldTransform_.GetWorldPosition();
 	// システム関係の更新
 	facadeSystem_->Update();
+	// システム関係
+	oparationManager_.Update();
 
-	//
-	systemManager_.Update();
-	quickBoostCoolTime_.Update();
-
-	// それぞれのステート
-	if (isKnock_) {
-		velocity_ = Ease::Easing(velocity_, Vector3(0.0f, 0.0f, 0.0f), 0.1f);
-	}
-	else {
-		// それぞれの軸のマネージャ
-		verticalState_->Update();
-		horizontalState_->Update();
-	}
+	// それぞれの軸のマネージャ
+	verticalState_->Update();
+	horizontalState_->Update();
 
 	// 基底クラスの更新
 	IGameObject::Update();
@@ -128,11 +124,11 @@ void Player::ImGuiDraw()
 	if (ImGui::BeginTabBar("System"))
 	{
 		if (ImGui::BeginTabItem("Aim")) {
-			systemManager_.GetAimManager()->ImGuiDraw();
+			oparationManager_.GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("LockOn")) {
-			systemManager_.GetLockOn()->ImGuiDraw();
+			oparationManager_.GetLockOn()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("FootCollider")) {
@@ -166,16 +162,16 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	ImGui::Text("IsGround:%d", this->isGround_);
 	ImGui::Checkbox("IsInvisible", &isInvisible_);
-	if (ImGui::Button("KnockBack")) {
-		isKnock_ = true;
-		Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
-		direct = Vector3::Normalize(direct);
-		direct *= 10.0f;
-		velocity_ = { direct.x,0.0f,direct.z };
-	}
-	if (ImGui::Button("KnockReset")) {
-		isKnock_ = false;
-	}
+	//if (ImGui::Button("KnockBack")) {
+	//	isKnock_ = true;
+	//	Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
+	//	direct = Vector3::Normalize(direct);
+	//	direct *= 10.0f;
+	//	velocity_ = { direct.x,0.0f,direct.z };
+	//}
+	//if (ImGui::Button("KnockReset")) {
+	//	isKnock_ = false;
+	//}
 	ImGui::EndChild();
 
 	ImGui::End();
@@ -225,11 +221,11 @@ void Player::UISpriteDraw()
 
 void Player::StateInitialize()
 {
+	// 軸ごとのステート
 	verticalState_ = std::make_unique<StateManager>();
 	verticalState_->Initialize(this);
 	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
 	verticalState_->Update();
-
 	horizontalState_ = std::make_unique<StateManager>();
 	horizontalState_->Initialize(this);
 	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
@@ -239,13 +235,19 @@ void Player::StateInitialize()
 void Player::InitializeGlobalValue()
 {
 	GlobalVariables* instance = GlobalVariables::GetInstance();
+	//---プレイヤー基本情報---//
 	std::string groupName = "Player";
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "DashPower", 0.0f);
 	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
+	instance->AddValue(groupName, "VelocityDecay", float(0.2f));
+	instance->AddValue(groupName, "ShotDuration", float(30.0f));
+	instance->AddValue(groupName, "LockDuration", float(25.0f));
+	instance->AddValue(groupName, "QuickBoostEndTime", float(40.0f));
+	instance->AddValue(groupName, "HitPoint", int32_t(20));
+	instance->AddValue(groupName, "AimOffset", Vector3(0.0f, 0.0f, 50.0f));
 
-
-	//---追尾弾---//
+	//---プレイヤーの追従弾---//
 	groupName = "PlayerTrackingBullet";
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "TrackFrame", 0.0f);
@@ -258,13 +260,11 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
-
-
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)
 {
-	// 修正座標（最後にこれを渡す	
+	// 修正座標	
 	Vector3 correctPosition = worldTransform_.GetWorldPosition();
 	Vector3 prevToNow = prevPosition_ - worldTransform_.GetWorldPosition();
 

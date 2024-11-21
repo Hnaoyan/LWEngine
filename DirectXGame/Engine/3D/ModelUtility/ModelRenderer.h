@@ -6,9 +6,12 @@
 #include "Engine/3D/User/MissileTrail.h"
 #include "../Drawer/3DDrawers.h"
 #include "../User/Trail3D.h"
-// ぜ
+
 class InstancedGroup;
 
+/// <summary>
+/// モデル描画クラス
+/// </summary>
 class ModelRenderer
 {
 private: 
@@ -18,11 +21,9 @@ private:
 	using BlendMode = Pipeline::BlendMode;
 
 public:
-	// public static
 	// コマンドリスト
 	static ID3D12GraphicsCommandList* sCommandList_;
 private:
-	// private static
 	// パイプライン
 	static GeneralPipeline sPipeline_;
 	// ブレンドモード対応

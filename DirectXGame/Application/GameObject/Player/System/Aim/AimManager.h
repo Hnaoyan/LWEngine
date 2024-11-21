@@ -9,12 +9,6 @@ class ICamera;
 namespace PlayerContext {
 	class AimManager
 	{
-	private:
-		struct ResetValue {
-			bool isReceivingInput;
-			float rate;
-		};
-
 	public:
 		/// <summary>
 		/// 初期化
@@ -46,12 +40,11 @@ namespace PlayerContext {
 	private: // User
 		// プレイヤーからのオフセット
 		WorldTransform offSetTransform_;
+		// 親の行列
 		Matrix4x4 parentMatrix_{};
 		// エイムの位置
 		Vector3 targetPosition_{};
 		// エイムのスクリーン上座標
 		Vector2 screenPosition_ = {};
-		// 
-		ResetValue reset_{};
 	};
 }

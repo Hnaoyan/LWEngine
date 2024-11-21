@@ -7,11 +7,10 @@
 /// <summary>
 /// 前方宣言
 /// </summary>
-class GPUParticleSystem;
+class GPUParticleManager;
 class CollisionManager;
 class TrailManager;
 class IBullet;
-
 class BulletBombCluster;
 
 /// <summary>
@@ -62,12 +61,12 @@ protected: // 基底クラスに必要なやつ
 
 	// マネージャのポインタ
 	TrailManager* trailManager_ = nullptr;
-	GPUParticleSystem* gpuParticle_ = nullptr;
+	GPUParticleManager* gpuParticle_ = nullptr;
 
 public: // アクセッサ系
 	// 軌跡の管理ポインタ
 	void SetTrailManager(TrailManager* trailManager) { trailManager_ = trailManager; }
-	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
+	void SetGPUParticle(GPUParticleManager* gpuParticle) { gpuParticle_ = gpuParticle; }
 	void SetColor(const Vector4& color) { material_->color_ = color; }
 	void SetTrailColor(const Vector3& color) { trailColor_ = color; }
 

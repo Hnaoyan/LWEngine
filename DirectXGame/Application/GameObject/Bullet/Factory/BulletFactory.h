@@ -6,6 +6,9 @@
 class BulletBuilder;
 class IBullet;
 
+/// <summary>
+/// 弾の生成クラス（ファクトリークラス
+/// </summary>
 class BulletFactory : public AbstractBulletFactory
 {
 public:

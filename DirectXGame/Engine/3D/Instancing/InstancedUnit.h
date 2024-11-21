@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/Base/CBufferCommon.h"
 
+/// <summary>
+/// インスタンシングの個体
+/// </summary>
 class InstancedUnit
 {
 public:

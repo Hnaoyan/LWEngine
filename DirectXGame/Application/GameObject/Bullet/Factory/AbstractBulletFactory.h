@@ -5,6 +5,9 @@
 class IBullet;
 class InstancedUnit;
 
+/// <summary>
+/// 生成基底
+/// </summary>
 class AbstractBulletFactory
 {
 public:

@@ -1,21 +1,30 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
+#include "Engine/2D/Drawer/Sprite.h"
 #include <string>
 #include <vector>
 #include <memory>
-
-class Sprite;
 
 namespace GameUI
 {
 	// UI用のデータ
 	struct UIData {
-		std::unique_ptr<Sprite> sprite;	// スプライト
+		Sprite* sprite;	// スプライト
 		std::string tag;	// 名前
-		uint32_t num = 0;	// 番号
 		Vector2 position{};	// 座標
 		Vector2 scale{};	// スケール
 		uint32_t texture = 0;	// テクスチャ
+
+		void ImGuiDraw();
+
+	};
+
+	// クリア・オーバー等の別途テキストUI用
+	struct TextUI
+	{
+		Sprite* sprite = nullptr;
+		Vector2 position = {};
+		Vector2 size = {};
 	};
 
 	// スプライトのデータ

@@ -5,6 +5,9 @@
 #include "../Base/CBufferCommon.h"
 #include "ModelUtility/ModelData.h"
 
+/// <summary>
+/// メッシュ
+/// </summary>
 class Mesh
 {
 public:

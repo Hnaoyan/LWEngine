@@ -22,7 +22,7 @@ void GameEditScene::Initialize()
 	followCamera_->Initialize();
 #pragma endregion
 	// インスタンス生成
-	gpuParticleManager_ = std::make_unique<GPUParticleSystem>();
+	gpuParticleManager_ = std::make_unique<GPUParticleManager>();
 	boss_ = std::make_unique<Boss>();
 
 	// パーティクル

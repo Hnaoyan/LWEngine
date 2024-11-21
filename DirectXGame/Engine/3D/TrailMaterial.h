@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/Base/CBufferCommon.h"
 
+/// <summary>
+/// トレイル用マテリアル
+/// </summary>
 class TrailMaterial
 {
 public:

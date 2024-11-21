@@ -4,6 +4,9 @@
 
 #include <optional>
 
+/// <summary>
+/// 生成のパラメータ設定クラス（ビルダークラス
+/// </summary>
 class BulletBuilder
 {
 public: // 設定

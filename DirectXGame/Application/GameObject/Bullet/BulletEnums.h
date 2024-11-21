@@ -21,29 +21,31 @@ enum class TrackingAttribute : uint32_t
 // 追従の状態
 enum class TrackingState : uint32_t
 {
-	kStraight,
-	kWave,
-	kTracking,
+	kStraight,	// 直進
+	kWave,		// 波
+	kTracking,	// 追従
 };
 
 struct TrackingData
 {
-	float trackFrame;
-	float damping;
-	float lerpRadius;
-	float baseSpeed;
-	float initSpeed;
+	float trackFrame;	// 追従フレーム
+	float damping;	// 減衰率
+	float lerpRadius;	// 広がる半径
+	float baseSpeed;	// 基本速度
+	float initSpeed;	// 初速度
 
-	void LoadGlobalData(std::string groupName) {
-
+	/// <summary>
+	/// 読み込み関数
+	/// </summary>
+	/// <param name="groupName"></param>
+	void LoadGlobalData(std::string groupName)
+	{
 		GlobalVariables* globalVariable = GlobalVariables::GetInstance();
-
 		trackFrame = globalVariable->GetValue<float>(groupName, "TrackFrame");
 		damping = globalVariable->GetValue<float>(groupName, "Damping");
 		lerpRadius = globalVariable->GetValue<float>(groupName, "LerpRadius");
 		baseSpeed = globalVariable->GetValue<float>(groupName, "BaseSpeed");
 		initSpeed = globalVariable->GetValue<float>(groupName, "InitSpeed");
-
 	}
 };
 

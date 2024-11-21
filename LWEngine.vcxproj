@@ -26,7 +26,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Irregular\TrackingWaveringState.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.cpp" />
@@ -68,7 +67,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossDamageEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerBulletEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerMoveParticle.cpp" />
@@ -107,9 +105,9 @@
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\SpriteManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\RTVHandler.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Line3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Model.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Skybox.cpp" />
@@ -161,7 +159,7 @@
     <ClCompile Include="DirectXGame\Engine\Math\Vector\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\GPUParticleSystem.cpp" />
-    <ClCompile Include="DirectXGame\Engine\Particle\Particle.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Particle\Fragment\Particle.cpp" />
     <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
@@ -198,7 +196,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BossTrackBulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.h" />
@@ -206,7 +203,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Accelerater\IBulletAccelerater.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h" />
@@ -226,8 +222,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BombEffectPlane.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletEffectCluster.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticleLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticlePaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h" />
@@ -284,7 +279,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\SpriteCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\CBuffer.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\DSVHandler.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\3DDrawers.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Model.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Skybox.h" />
@@ -310,8 +305,8 @@
     <ClInclude Include="DirectXGame\Engine\Base\CBufferCommon.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ImGui\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Utility\DxCreateLib.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\RTVHandler.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\Descriptor\SRVHandler.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\RTVHandler.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\Shader.h" />
     <ClInclude Include="DirectXGame\Engine\Audio\Audio.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectX\DirectXCommand.h" />
@@ -357,7 +352,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\CPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\GPUParticleSystem.h" />
-    <ClInclude Include="DirectXGame\Engine\Particle\Particle.h" />
+    <ClInclude Include="DirectXGame\Engine\Particle\Fragment\Particle.h" />
     <ClInclude Include="DirectXGame\Engine\Base\ConstantBuffer\ParticleCBuffer.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectData.h" />
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />

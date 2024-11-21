@@ -8,7 +8,7 @@
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Application/GameObject/Bullet/BulletsPaths.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
 #include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombEffect.h"
 

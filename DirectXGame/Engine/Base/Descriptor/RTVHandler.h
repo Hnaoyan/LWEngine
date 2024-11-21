@@ -8,10 +8,13 @@
 class DirectXDevice;
 class SwapChainManager;
 
+/// <summary>
+/// RTV管理
+/// </summary>
 class RTVHandler : public Singleton<RTVHandler>
 {
 public:
-
+	// 次の番号
 	static uint32_t sNextIndexDescriptorHeap_;
 
 public: // 初期化時のみ

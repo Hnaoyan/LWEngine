@@ -4,6 +4,9 @@
 #include "Trail/BulletTrail.h"
 #include "User/TrackingState/StateMachine/BulletStateMachine.h"
 
+/// <summary>
+/// 弾の基底クラス
+/// </summary>
 class IBullet : public InstancedUnit
 {
 public:
@@ -41,11 +44,8 @@ protected:
 	std::string tag_;
 	// 加速度ベクトル
 	Vector3 accelerate_ = {};
-
+	// 軌跡
 	BulletTrail* trail_ = nullptr;
-
-	GPUParticleEmitter* breakEmitter_ = nullptr;
-
 	// ステートマシン
 	std::unique_ptr<BulletStateMachine> stateMachine_;
 	// 対象オブジェクト
@@ -70,4 +70,8 @@ public: // アクセッサ
 	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
 
 	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
+private:
+	// 壊れるときのパーティクルのエミッター（今は使えない
+	GPUParticleEmitter* breakEmitter_ = nullptr;
+
 };

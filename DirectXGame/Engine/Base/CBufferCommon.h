@@ -4,7 +4,7 @@
 #include <type_traits>
 #include <concepts>
 
-#include "Engine/3D/Descriptor/SRVHandler.h"
+#include "Engine/Base/Descriptor/SRVHandler.h"
 #include "Engine/Base/Utility/DxCreateLib.h"
 
 #include "ConstantBuffer/CBuffer.h"

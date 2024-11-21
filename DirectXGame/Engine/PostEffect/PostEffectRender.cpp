@@ -1,6 +1,6 @@
 #include "PostEffectRender.h"
-#include "../3D/Descriptor/SRVHandler.h"
-#include "../Base/DirectXCommon.h"
+#include "Engine/Base/Descriptor/SRVHandler.h"
+#include "Engine/Base/DirectXCommon.h"
 #include "Engine/2D/TextureManager.h"
 #include <cassert>
 

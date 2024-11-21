@@ -20,7 +20,7 @@ void QuickBoostState::Initialize()
 	float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "DashPower");
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
-	changeTimer_.Start(40.0f);
+	changeTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "QuickBoostEndTime"));
 
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 
@@ -51,8 +51,6 @@ void QuickBoostState::Update()
 void QuickBoostState::Exit()
 {
 	GameSystem::sBlurEffect.Finalize();
-
-	player_->quickBoostCoolTime_.Start(45.0f);
 
 	player_->GetSystemFacede()->GetAnimation()->Reset();
 }

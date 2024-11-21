@@ -1,19 +1,32 @@
 #pragma once
+#include "UIStructs.h"
+#include <vector>
+
+class GameObjectManager;
 
 /// <summary>
-/// オブジェクトに依存しないUI管理クラス
+/// オブジェクトに依存しないUI・UIのグローバル変数管理クラス
 /// </summary>
 class GameUIManager
 {
 public:
+	GameUIManager();
 	void Initialize();
-	void Draw();
+	void Draw(GameObjectManager* gameObjectManager);
 
-	// 操作説明系
-	void HelpUIInitialize();
-	void HelpUIDraw();
+private:
+	// HUD
+	std::vector<GameUI::UIData> hudElements_;
 
-	//std::vector<>
+	void AddHUD(std::string name, uint32_t texture);
 
+	GameUI::TextUI gameClear_ = {};
+	GameUI::TextUI gameOver_ = {};
+
+private:
+	/// <summary>
+	/// グローバル変数の初期化
+	/// </summary>
+	void InitializeGlobalValue();
 };
 

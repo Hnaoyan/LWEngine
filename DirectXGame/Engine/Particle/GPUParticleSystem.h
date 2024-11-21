@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 
-class GPUParticleSystem
+class GPUParticleManager
 {
 public:
 	// 最大数
@@ -14,7 +14,7 @@ public:
 	/// <summary>
 	/// コンストラクタ
 	/// </summary>
-	GPUParticleSystem();
+	GPUParticleManager();
 
 public: // メンバ関数
 	/// <summary>

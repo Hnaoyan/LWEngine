@@ -6,7 +6,7 @@
 #include <bitset>
 
 class ICamera;
-class GPUParticleSystem;
+class GPUParticleManager;
 
 /// <summary>
 /// 軌跡のインスタンス管理クラス
@@ -17,7 +17,7 @@ public:
 	TrailManager();
 	~TrailManager() = default;
 	// パーティクルのシステム設定
-	void SetGPUParticle(GPUParticleSystem* gpuParticle) { gpuParticle_ = gpuParticle; }
+	void SetGPUParticle(GPUParticleManager* gpuParticle) { gpuParticle_ = gpuParticle; }
 
 public:
 	/// <summary>
@@ -42,7 +42,7 @@ private:
 	// 軌跡インスタンスのコンテナ
 	std::vector<std::unique_ptr<BulletTrail>> trails_;
 
-	GPUParticleSystem* gpuParticle_ = nullptr;
+	GPUParticleManager* gpuParticle_ = nullptr;
 
 	// 描画フラグ
 	std::bitset<size_t(TrackingAttribute::kMaxSize)> isInvisibles_;

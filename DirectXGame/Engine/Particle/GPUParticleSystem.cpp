@@ -1,12 +1,12 @@
 #include "GPUParticleSystem.h"
 #include <imgui.h>
 
-GPUParticleSystem::GPUParticleSystem()
+GPUParticleManager::GPUParticleManager()
 {
 
 }
 
-void GPUParticleSystem::Initialize(Model* model)
+void GPUParticleManager::Initialize(Model* model)
 {
 	assert(model);
 	model_ = model;
@@ -24,7 +24,7 @@ void GPUParticleSystem::Initialize(Model* model)
 
 }
 
-void GPUParticleSystem::Update()
+void GPUParticleManager::Update()
 {
 	if (isCreate_) {
 		isCreate_ = false;
@@ -51,7 +51,7 @@ void GPUParticleSystem::Update()
 
 }
 
-void GPUParticleSystem::Draw(ICamera* camera)
+void GPUParticleManager::Draw(ICamera* camera)
 {
 	// パーティクルの描画
 	for (std::unordered_map<std::string, std::unique_ptr<GPUParticleEmitter>>::iterator it = emitters_.begin(); it != emitters_.end(); ++it) {
@@ -59,7 +59,7 @@ void GPUParticleSystem::Draw(ICamera* camera)
 	}
 }
 
-void GPUParticleSystem::ImGuiDraw()
+void GPUParticleManager::ImGuiDraw()
 {
 	ImGui::Begin("GPUParticle");
 	ImGui::Text("\n");
@@ -85,7 +85,7 @@ void GPUParticleSystem::ImGuiDraw()
 	ImGui::End();
 }
 
-void GPUParticleSystem::CreateEmitter(std::string tag)
+void GPUParticleManager::CreateEmitter(std::string tag)
 {
 	// タグの要素検索
 	auto it = emitters_.find(tag);
@@ -105,7 +105,7 @@ void GPUParticleSystem::CreateEmitter(std::string tag)
 	emitters_.emplace(tag, std::move(instance));
 }
 
-void GPUParticleSystem::CreateEmitter(std::unique_ptr<GPUParticleEmitter> instance, std::string tag)
+void GPUParticleManager::CreateEmitter(std::unique_ptr<GPUParticleEmitter> instance, std::string tag)
 {
 	// タグの要素検索
 	auto it = emitters_.find(tag);
@@ -118,7 +118,7 @@ void GPUParticleSystem::CreateEmitter(std::unique_ptr<GPUParticleEmitter> instan
 	emitters_.emplace(tag, std::move(instance));
 }
 
-void GPUParticleSystem::DeleteEmitter(std::string tag)
+void GPUParticleManager::DeleteEmitter(std::string tag)
 {
 	// タグの要素検索
 	auto it = emitters_.find(tag);
@@ -128,7 +128,7 @@ void GPUParticleSystem::DeleteEmitter(std::string tag)
 	}
 }
 
-void GPUParticleSystem::DeleteEmitter(GPUParticleEmitter* emitter)
+void GPUParticleManager::DeleteEmitter(GPUParticleEmitter* emitter)
 {
 	// 検索
 	for (auto it = emitters_.begin(); it != emitters_.end(); ++it) {
@@ -139,7 +139,7 @@ void GPUParticleSystem::DeleteEmitter(GPUParticleEmitter* emitter)
 	}
 }
 
-GPUParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
+GPUParticleEmitter* GPUParticleManager::FindEmitter(std::string tag)
 {
 	// 検索
 	auto it = emitters_.find(tag);
@@ -150,7 +150,7 @@ GPUParticleEmitter* GPUParticleSystem::FindEmitter(std::string tag)
 	return nullptr;
 }
 
-void GPUParticleSystem::DataReset()
+void GPUParticleManager::DataReset()
 {
 	this->emitters_.clear();
 }

@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Application/GameObject/Particle/User/ParticleLists.h"
+#include "Application/GameObject/Particle/User/ParticlePaths.h"
 #include "Engine/3D/Drawer/Triangle3D.h"
 
 class Player;
-class GPUParticleSystem;
+class GPUParticleManager;
 
 namespace PlayerContext {
 
@@ -35,11 +35,11 @@ namespace PlayerContext {
 
 	private: // ポインタ関係
 		std::unique_ptr<MoveTrail> moveTrail_;
-		GPUParticleSystem* gpuParticle_ = nullptr;
+		GPUParticleManager* gpuParticle_ = nullptr;
 		Player* player_ = nullptr;
 
 	public: // アクセッサ
-		void SetGPUParticleSystem(GPUParticleSystem* ptr) { gpuParticle_ = ptr; }
+		void SetGPUParticleSystem(GPUParticleManager* ptr) { gpuParticle_ = ptr; }
 		bool IsMove() { return moveParams_.isActive; }
 		MoveTrail* GetMoveTrail() { return moveTrail_.get(); }
 	};

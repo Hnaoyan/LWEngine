@@ -15,7 +15,7 @@ GameObjectManager::GameObjectManager()
 	terrainManager_ = std::make_unique<TerrainManager>();
 }
 
-void GameObjectManager::Initialize(GPUParticleSystem* gpuManager, ICamera* camera)
+void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
 {
 	// チェック
 	assert(gpuManager);

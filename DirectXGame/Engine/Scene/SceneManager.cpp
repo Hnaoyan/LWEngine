@@ -5,7 +5,6 @@ void SceneManager::Update()
 {
 	// 切り替え
 	if (nextScene_ && nextScene_->GetSceneReady()) {
-		//nextInitialize_.detach();
 		if (nowScene_) {
 			delete nowScene_;
 		}
@@ -26,7 +25,7 @@ void SceneManager::Update()
 	}
 	// 現在のシーンがあれば
 	if (nowScene_) {
-		// シーンのCPU更新処理
+		// シーンの更新処理
 		nowScene_->Update();
 	}
 	// コマンドリストの送り出し
@@ -86,7 +85,6 @@ void SceneManager::ChangeThreadScene(const std::string& sceneName)
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
 	// 初期化
-	//nextInitialize_ = std::thread(&IScene::Initialize, nextScene_);
 	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
 	isThread_ = true;
 	nextSceneName_ = sceneName;

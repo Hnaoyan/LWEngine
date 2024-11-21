@@ -9,6 +9,9 @@
 class IBullet;
 class GPUParticleEmitter;
 
+/// <summary>
+/// 弾の軌跡クラス
+/// </summary>
 class BulletTrail
 {
 public:

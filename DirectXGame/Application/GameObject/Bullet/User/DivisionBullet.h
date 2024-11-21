@@ -2,6 +2,9 @@
 #include "../IBullet.h"
 #include "../IBulletCluster.h"
 
+/// <summary>
+/// 分裂する弾（今は使ってない
+/// </summary>
 class DivisionBullet : public IBullet
 {
 public:
