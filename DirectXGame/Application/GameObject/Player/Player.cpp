@@ -29,11 +29,11 @@ void Player::Initialize(Model* model)
 	// トランスフォーム
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
 	worldTransform_.UpdateMatrix();
-
+	// コライダー
 	collider_.Initialize(worldTransform_.transform_.scale, this);
 	collider_.SetAttribute(kCollisionAttributePlayer);
 	// システム関係の初期化
-	systemManager_.Initialize(this);
+	oparationManager_.Initialize(this);
 	// ファサード初期化
 	facadeSystem_->Initialize(this);
 
@@ -51,7 +51,7 @@ void Player::Update()
 	// システム関係の更新
 	facadeSystem_->Update();
 	// システム関係
-	systemManager_.Update();
+	oparationManager_.Update();
 
 	// それぞれの軸のマネージャ
 	verticalState_->Update();
@@ -124,11 +124,11 @@ void Player::ImGuiDraw()
 	if (ImGui::BeginTabBar("System"))
 	{
 		if (ImGui::BeginTabItem("Aim")) {
-			systemManager_.GetAimManager()->ImGuiDraw();
+			oparationManager_.GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("LockOn")) {
-			systemManager_.GetLockOn()->ImGuiDraw();
+			oparationManager_.GetLockOn()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("FootCollider")) {

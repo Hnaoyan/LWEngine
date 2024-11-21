@@ -53,7 +53,7 @@ private:
 	std::unique_ptr<PlayerFacade> facadeSystem_;
 	std::unique_ptr<Material> material_;
 	// 操作関係
-	OparationManager systemManager_;
+	OparationManager oparationManager_;
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
 	// AABBコライダー
@@ -67,7 +67,7 @@ private:
 	std::string filePath;
 
 public:
-	OparationManager* GetOperation() { return &systemManager_; }
+	OparationManager* GetOperation() { return &oparationManager_; }
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
 	StateManager* HorizontalManager() { return horizontalState_.get(); }
 	StateManager* VerticalManager() { return verticalState_.get(); }
@@ -84,12 +84,12 @@ public: // セッター
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
 		facadeSystem_->GetShootingManager()->SetManager(manager);
 		boss_ = boss;
-		systemManager_.GetLockOn()->SetBoss(boss);
-		systemManager_.SetEnemyList(lists);
+		oparationManager_.GetLockOn()->SetBoss(boss);
+		oparationManager_.SetEnemyList(lists);
 	}
 	void SetBoss(Boss* boss) { 
 		boss_ = boss;
-		systemManager_.GetLockOn()->SetBoss(boss);
+		oparationManager_.GetLockOn()->SetBoss(boss);
 	}
 
 	void StateInitialize();

@@ -122,7 +122,7 @@ namespace BossState
 	{
 	public:
 		static uint32_t sMissileClusterSerial;
-		uint32_t clusterSerial;
+		uint32_t clusterSerial = 0u;
 
 	public:
 		void Initialize() override;
@@ -153,10 +153,10 @@ namespace BossState
 		/// </summary>
 		enum class ShotPattern : uint32_t
 		{
-			kPredictive,
-			kStraight,
-			kSpread,
-			kRadialFire,
+			kPredictive,	// 予測
+			kStraight,	// 直進
+			kSpread,	// 広域
+			kRadialFire,	// 円
 		};
 
 	public: // 継承
@@ -181,17 +181,17 @@ namespace BossState
 		// 弾の生成部分の大枠
 		void GenerateProcess();
 	private:
-		float fireCooltime_ = 0.0f;
-		FrameTimer fireTimer_;
+		float fireCooltime_ = 0.0f;	// クールタイム
+		FrameTimer fireTimer_;	// 射撃時間
 
-		Vector3 bulletDirect_ = {};
-		float bulletSpeed_ = 0.0f;
-		float bulletScale_ = 0.5f;
+		Vector3 bulletDirect_ = {};	// 向き
+		float bulletSpeed_ = 0.0f;	// 速度
+		float bulletScale_ = 0.5f;	// スケール
 
-		ShotPattern pattern_;
+		// 種類
+		ShotPattern pattern_ = ShotPattern::kPredictive;
 
-		float startRotate_ = 0.0f;
-
+		float startRotate_ = 0.0f;	// 開始角度
 	};
 
 	// 移動状態
@@ -242,15 +242,15 @@ namespace BossState
 			Vector2 LFront, LBack, RFront, RBack;
 		};
 		// 制御点
-		FourPoint controlPoint;
+		FourPoint controlPoint = {};
 		// 回転のパターン
-		QuaterRotationPattern quaterPattern_;
+		QuaterRotationPattern quaterPattern_ = QuaterRotationPattern::kFirst;
 
 		bool isEnd_ = false;
 		FrameTimer curveTimer_;
-		Vector3 startPosition_{};
-		Vector3 controlPosition_{};
-		Vector3 endPosition_{};
+		Vector3 startPosition_ = {};
+		Vector3 controlPosition_ = {};
+		Vector3 endPosition_ = {};
 
 	private: // 攻撃
 		// 攻撃処理

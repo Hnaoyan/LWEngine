@@ -6,6 +6,9 @@ class Player;
 
 namespace PlayerContext
 {
+	/// <summary>
+	/// プレイヤーの簡易アニメーション関係
+	/// </summary>
 	class AnimationManager
 	{
 	private:
@@ -20,9 +23,9 @@ namespace PlayerContext
 
 			// 戻る時間
 			FrameTimer returnTimer;
-			//
+			// アクティブフラグ
 			bool isActive_ = false;
-
+			// 開始値
 			float start_ = 0.0f;
 
 			void Initialize() {
@@ -33,12 +36,10 @@ namespace PlayerContext
 			void Update() {
 				// 1フレームでのパラメータ加算値
 				const float step = 2.0f * float(3.14f) / period;
-
 				// パラメータを1ステップ分加算
 				parameter += step;
 				// 2πを超えたら0に戻す
 				parameter = std::fmod(parameter, 2.0f * float(3.14f));
-
 			}
 
 		};

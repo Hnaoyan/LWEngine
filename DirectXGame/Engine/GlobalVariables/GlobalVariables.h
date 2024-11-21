@@ -45,6 +45,13 @@ public:
 
 public:	// 設定系関数
 #pragma region 設定
+	/// <summary>
+	/// キーに値を上書き・書き込み
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="groupName"></param>
+	/// <param name="key"></param>
+	/// <param name="value"></param>
 	template<typename T>
 	void SetValue(const std::string& groupName, const std::string& key, const T& value) 
 	{
@@ -59,6 +66,13 @@ public:	// 設定系関数
 #pragma endregion
 
 #pragma region 取得
+	/// <summary>
+	/// キーから値を取得
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="groupName"></param>
+	/// <param name="key"></param>
+	/// <returns></returns>
 	template<typename T>
 	T GetValue(const std::string& groupName, const std::string& key) {
 		// 指定グループが存在するか
@@ -73,6 +87,13 @@ public:	// 設定系関数
 #pragma endregion
 
 #pragma region 追加
+	/// <summary>
+	/// 値が未登録なら書き込み
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="groupName"></param>
+	/// <param name="key"></param>
+	/// <param name="value"></param>
 	template<typename T>
 	void AddValue(const std::string& groupName, const std::string& key, const T& value)
 	{

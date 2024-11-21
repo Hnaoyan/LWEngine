@@ -10,17 +10,33 @@ namespace PlayerContext
 	class PlayerUIManager
 	{
 	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="player"></param>
 		void Initialize(Player* player);
+		/// <summary>
+		/// 描画
+		/// </summary>
 		void Draw();
+		/// <summary>
+		/// ImGui
+		/// </summary>
 		void ImGuiDraw();
 	private:
+		/// <summary>
+		/// HPUI関係
+		/// </summary>
 		void HPUI();
+		/// <summary>
+		/// EnergyUI関係
+		/// </summary>
 		void EnergyUI();
 	private:
+		// 親
 		Player* player_ = nullptr;
-
+		// レティクル用スプライト
 		Sprite* reticle_ = nullptr;
-
 		// HPのUI
 		GameUI::BarRenderInfo hpUI_{};
 		// EnergyのUI
