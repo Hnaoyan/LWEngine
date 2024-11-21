@@ -3,6 +3,9 @@
 
 #include <optional>
 
+/// <summary>
+/// 消える弾の集合（現在使ってない
+/// </summary>
 class BulletFadeCluster : public IBulletCluster
 {
 public: // 仮想関数

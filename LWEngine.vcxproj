@@ -26,7 +26,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Irregular\TrackingWaveringState.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\ITrackingState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.cpp" />
@@ -197,7 +196,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BossTrackBulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.h" />
@@ -205,7 +203,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\Accelerater\IBulletAccelerater.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h" />

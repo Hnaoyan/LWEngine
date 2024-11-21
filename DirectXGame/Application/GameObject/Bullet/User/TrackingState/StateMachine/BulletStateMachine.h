@@ -6,6 +6,9 @@
 
 class IBullet;
 
+/// <summary>
+/// 弾のステート管理クラス
+/// </summary>
 class BulletStateMachine
 {
 public:
@@ -20,7 +23,6 @@ public:
 	/// 更新
 	/// </summary>
 	void Update();
-	
 	// リクエストの作成
 	void RequestState(TrackingState state) { currentState_->SetRequeset(state); }
 	// 現在のステートのゲッター

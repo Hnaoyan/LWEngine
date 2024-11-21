@@ -1,6 +1,9 @@
 #pragma once
 #include "../IBullet.h"
 
+/// <summary>
+/// 通常の弾
+/// </summary>
 class NormalSpinBullet : public IBullet
 {
 public:

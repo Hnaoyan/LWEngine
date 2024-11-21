@@ -11,7 +11,6 @@ class GPUParticleManager;
 class CollisionManager;
 class TrailManager;
 class IBullet;
-
 class BulletBombCluster;
 
 /// <summary>

@@ -4,6 +4,9 @@
 
 #include <optional>
 
+/// <summary>
+/// 追従の弾
+/// </summary>
 class TrackingBullet : public IBullet
 {
 public:
@@ -31,8 +34,8 @@ public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
 	void SetIsBarrage(bool isFlag) { isBarrage_ = isFlag; }
 
-	TrackingAttribute GetTrackingType() { return trackingType_; }
-	TrackingData GetTrackingData() { return data_; }
+	TrackingAttribute GetTrackingType() const { return trackingType_; }
+	TrackingData GetTrackingData() const { return data_; }
 private:
 	// 追尾の種類
 	TrackingAttribute trackingType_ = TrackingAttribute::kSuperior;
@@ -54,20 +57,9 @@ private:
 	TrackingState nowState_ = TrackingState::kStraight;
 	std::optional<TrackingState> requestState_ = std::nullopt;
 
+	// 追従のデータ構造体
 	TrackingData data_{};
 
 private:
 	void ChangeSelecter();
-
-public: // 共通
-	// 追従の時間
-	static float sTrackingFrame;
-	// 減衰値
-	static float sDamping;
-	// 広がり
-	static float sLerpRadius;
-	// 基本の速度
-	static float sBaseVelocity;
-	// 初期速度
-	static float sInitSpeed;
 };

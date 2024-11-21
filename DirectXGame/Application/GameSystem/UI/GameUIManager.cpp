@@ -7,17 +7,18 @@
 GameUIManager::GameUIManager()
 {
 	InitializeGlobalValue();
-
+	// 操作関係のHUD
 	AddHUD("Dash", TextureManager::Load("Resources/UI/DashUI.png"));
 	AddHUD("Jump", TextureManager::Load("Resources/UI/JumpUItt.png"));
 	AddHUD("LockOn", TextureManager::Load("Resources/UI/LockonUIt.png"));
 	AddHUD("Shot", TextureManager::Load("Resources/UI/ShotUIt.png"));
 
+	// それぞれの初期化
 	gameClear_.sprite = SpriteManager::GetSprite("GameClearText");
-	gameClear_.position = { 1280.0f / 2.0f,720.0f / 2.0f };
+	gameClear_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ClearTextPos");
 
 	gameOver_.sprite = SpriteManager::GetSprite("GameOverText");
-	gameOver_.position = { 1280.0f / 2.0f,720.0f / 2.0f };
+	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
 }
 
 void GameUIManager::Initialize()
@@ -82,5 +83,8 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "JumpPos", Vector2(139.0f, 180.0f));
 	globalVariable->AddValue(groupName, "LockOnPos", Vector2(139.0f, 240.0f));
 	globalVariable->AddValue(groupName, "ShotPos", Vector2(139.0f, 120.0f));
+
+	globalVariable->AddValue(groupName, "ClearTextPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	globalVariable->AddValue(groupName, "OverTextPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 
 }

@@ -1,6 +1,9 @@
 #pragma once
 #include "../ITrackingState.h"
 
+/// <summary>
+/// 追従移動状態
+/// </summary>
 class TrackingMoveState : public ITrackingState
 {
 public:

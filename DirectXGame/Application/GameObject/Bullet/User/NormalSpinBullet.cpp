@@ -25,8 +25,8 @@ void NormalSpinBullet::Update()
 	accelerate_.x += sAcceleration * GameSystem::GameSpeedFactor();
 	velocity_ += moveDirect_ * accelerate_.x;
 	// 回転
-	transform_.rotate.x += GameSystem::GameSpeedFactor() * 3.0f;
-	transform_.rotate.y += GameSystem::GameSpeedFactor() * 2.0f;
+	transform_.rotate.x += GameSystem::GameSpeedFactor();
+	transform_.rotate.y += GameSystem::GameSpeedFactor();
 
 	// 基底の更新
 	IBullet::Update();
@@ -39,9 +39,5 @@ void NormalSpinBullet::OnCollision(ColliderObject object)
 	}
 	if (std::holds_alternative<Player*>(object)) {
 		isDead_ = true;
-	}
-	if (isDead_ && breakEmitter_) {
-		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
-		//static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	}
 }
