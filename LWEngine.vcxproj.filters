@@ -256,9 +256,6 @@
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp">
       <Filter>Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\Scene\GameEditScene.cpp">
-      <Filter>Application\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp">
       <Filter>Application\GameObject</Filter>
     </ClCompile>
@@ -734,9 +731,6 @@
       <Filter>Engine\3D\Drawer</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h">
-      <Filter>Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Scene\GameEditScene.h">
       <Filter>Application\Scene</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h">
