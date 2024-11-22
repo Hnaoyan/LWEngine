@@ -12,11 +12,13 @@ void BossState::MoveState::Initialize()
 	else {
 		isLeft_ = false;
 	}
+	float directAngle = 0.0f;
 	if (boss_->worldTransform_.GetWorldPosition().z > 0) {
-		boss_->worldTransform_.transform_.rotate.y = 0.0f;
+		boss_->worldTransform_.transform_.rotate.y = directAngle;
 	}
 	else {
-		boss_->worldTransform_.transform_.rotate.y = 3.14f;
+		directAngle = 3.14f;
+		boss_->worldTransform_.transform_.rotate.y = directAngle;
 	}
 	boss_->worldTransform_.UpdateMatrix();
 }

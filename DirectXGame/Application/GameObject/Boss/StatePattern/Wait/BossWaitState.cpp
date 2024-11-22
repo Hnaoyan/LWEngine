@@ -4,11 +4,14 @@
 void BossState::WaitState::Initialize()
 {
 	boss_->SetNowVariantState(this);
-	if (boss_->GetHealth()->GetHPRatio() < 0.5f) {
-		changeTimer_.Start(30.0f);
+	float hpThreshold = 1.0f / 2.0f;
+	float changeFrame = 30.0f;
+	if (boss_->GetHealth()->GetHPRatio() < hpThreshold) {
+		changeTimer_.Start(changeFrame);
 	}
 	else {
-		changeTimer_.Start(50.0f);
+		changeFrame = 50.0f;
+		changeTimer_.Start(changeFrame);
 	}
 }
 

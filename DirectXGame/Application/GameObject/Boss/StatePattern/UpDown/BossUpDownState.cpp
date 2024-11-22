@@ -7,7 +7,8 @@ void BossState::UpDownState::Initialize()
 
 	float minY = 8.5f;
 	float maxY = 20.0f;
-	if (boss_->worldTransform_.GetWorldPosition().y > 8.5f) {
+	float floarJud = 8.5f;
+	if (boss_->worldTransform_.GetWorldPosition().y > floarJud) {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
 		endPosition_.y = minY;
@@ -18,7 +19,8 @@ void BossState::UpDownState::Initialize()
 		endPosition_.y = maxY;
 	}
 	// 変更のタイマー
-	if (boss_->GetHealth()->GetHPRatio() > 0.5f) {
+	float hpThreshold = 1.0f / 2.0f;
+	if (boss_->GetHealth()->GetHPRatio() > hpThreshold) {
 		changeTimer_.Start(65.0f);
 	}
 	else {

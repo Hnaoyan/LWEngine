@@ -6,11 +6,13 @@ void BossState::OrbitMoveState::Initialize()
 {
 	boss_->SetNowVariantState(this);
 	startPosition_ = boss_->worldTransform_.GetWorldPosition();
-	changeTimer_.Start(150.0f);
-
-	if (boss_->GetHealth()->GetHPRatio() < 0.75f) {
+	float changeFrame = 150.0f;
+	changeTimer_.Start(changeFrame);
+	float changeThreshold = 3.0f / 4.0f;
+	if (boss_->GetHealth()->GetHPRatio() < changeThreshold) {
 		isAttack_ = true;
-		fireTimer_.Start(2.5f);
+		float fireDuration = 2.5f;
+		fireTimer_.Start(fireDuration);
 	}
 	else {
 		isAttack_ = false;
@@ -30,7 +32,8 @@ void BossState::OrbitMoveState::Update()
 	if (isAttack_) {
 		fireTimer_.Update();
 		if (!fireTimer_.IsActive()) {
-			fireTimer_.Start(2.5f);
+			float fireDuration = 2.5f;
+			fireTimer_.Start(fireDuration);
 			LockOnAttack();
 		}
 

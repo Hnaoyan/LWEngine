@@ -6,8 +6,8 @@ void BossState::TeleportState::Initialize()
 	boss_->SetNowVariantState(this);
 	//boss_->worldTransform_.transform_.translate.y = 20.0f;
 	boss_->worldTransform_.UpdateMatrix();
-
-	changeTimer_.Start(150.0f);
+	float changeFrame = 150.0f;
+	changeTimer_.Start(changeFrame);
 
 	if (isCross_) {
 		isCross_ = false;
