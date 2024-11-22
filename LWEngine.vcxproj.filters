@@ -1045,7 +1045,7 @@
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h">
+    <ClInclude Include="DirectXGame\Engine\Scene\ScenePaths.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h">

@@ -356,7 +356,7 @@
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
-    <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\ScenePaths.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h" />

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AbstractSceneFactory.h"
-#include "../SceneList.h"
+#include "../ScenePaths.h"
 
 /// <summary>
 /// シーンファクトリークラス
