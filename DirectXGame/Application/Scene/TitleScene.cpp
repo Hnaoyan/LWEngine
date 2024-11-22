@@ -46,9 +46,9 @@ void TitleScene::GPUUpdate()
 void TitleScene::Update()
 {
 #ifdef IMGUI_ENABLED
-	if (input_->TriggerKey(DIK_LEFTARROW)) {
-		sceneManager_->ChangeThreadScene("SAMPLE");
-	}
+	//if (input_->TriggerKey(DIK_LEFTARROW)) {
+	//	sceneManager_->ChangeThreadScene("SAMPLE");
+	//}
 	if (input_->TriggerKey(DIK_RIGHTARROW)) {
 		sceneManager_->ChangeThreadScene("GAME");
 	}

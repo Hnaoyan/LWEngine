@@ -511,18 +511,6 @@
     <ClCompile Include="DirectXGame\Engine\LevelEditor\LevelLoader.cpp">
       <Filter>Engine\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Sample\Object\AnimCubeObject.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Sample\Object\AnimSampleObject.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Sample\Object\PlSampleObject.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp">
-      <Filter>Sample</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\SkyDome\SkyDomeObject.cpp">
       <Filter>Application\GameObject\SkyDome</Filter>
     </ClCompile>
@@ -1072,18 +1060,6 @@
     <ClInclude Include="DirectXGame\Engine\LevelEditor\LevelData.h">
       <Filter>Engine\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Sample\Object\AnimCubeObject.h">
-      <Filter>Sample</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h">
-      <Filter>Sample</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Sample\Object\PlSampleObject.h">
-      <Filter>Sample</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h">
-      <Filter>Sample</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\SkyDome\SkyDomeObject.h">
       <Filter>Application\GameObject\SkyDome</Filter>
     </ClInclude>
@@ -1466,7 +1442,6 @@
     <ClInclude Include="DirectXGame\Engine\PostEffect\PostEffectRender.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.h" />
-    <ClInclude Include="DirectXGame\Engine\Scene\SceneList.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
