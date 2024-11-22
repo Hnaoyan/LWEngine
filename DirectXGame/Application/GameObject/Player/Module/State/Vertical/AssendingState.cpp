@@ -11,7 +11,7 @@ void AssendingState::Update()
 {
 	float energy = player_->GetSystemFacede()->GetEnergy()->GetNowEnergy();
 	if (energy <= 0.0f) {
-		stateManager_->ChangeRequest(StateManager::kFall);
+		stateMachine_->ChangeRequest(PlayerStateLists::kFall);
 		return;
 	}
 	float assendPower = 3.0f;
@@ -28,7 +28,7 @@ void AssendingState::Exit()
 void AssendingState::InputHandle()
 {
 	if (!(GameSystem::sKeyConfigManager.GetPlayerKey().pressJump)) {
-		stateManager_->ChangeRequest(StateManager::kFall);
+		stateMachine_->ChangeRequest(PlayerStateLists::kFall);
 		return;
 	}
 }

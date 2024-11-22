@@ -39,10 +39,10 @@ void QuickBoostState::Update()
 
 	if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {
 		if (leftStick_.x != 0 || leftStick_.y != 0) {
-			stateManager_->ChangeRequest(StateManager::kMove);
+			stateMachine_->ChangeRequest(PlayerStateLists::kMove);
 		}
 		else {
-			stateManager_->ChangeRequest(StateManager::kIdleHorizontal);
+			stateMachine_->ChangeRequest(PlayerStateLists::kIdleHorizontal);
 		}
 		return;
 	}

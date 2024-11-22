@@ -608,6 +608,7 @@
       <Filter>Application\GameObject\Bullet\Trail</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\main.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1192,6 +1193,7 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\CPUParticleEmitter.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
@@ -1371,10 +1373,6 @@
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectXCommon.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
-    <ClCompile Include="DirectXGame\Sample\Object\AnimCubeObject.cpp" />
-    <ClCompile Include="DirectXGame\Sample\Object\AnimSampleObject.cpp" />
-    <ClCompile Include="DirectXGame\Sample\Object\PlSampleObject.cpp" />
-    <ClCompile Include="DirectXGame\Sample\Scene\SampleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
@@ -1455,10 +1453,6 @@
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
-    <ClInclude Include="DirectXGame\Sample\Object\AnimCubeObject.h" />
-    <ClInclude Include="DirectXGame\Sample\Object\AnimSampleObject.h" />
-    <ClInclude Include="DirectXGame\Sample\Object\PlSampleObject.h" />
-    <ClInclude Include="DirectXGame\Sample\Scene\SampleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli">

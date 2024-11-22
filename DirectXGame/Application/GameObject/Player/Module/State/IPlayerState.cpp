@@ -2,10 +2,10 @@
 #include "../../Player.h"
 #include "Application/GameSystem/GameSystem.h"
 
-void IPlayerState::PreInitialize(Player* player, StateManager* stateManager)
+void IPlayerState::PreInitialize(Player* player, PlayerStateMachine* stateMachine)
 {
 	player_ = player;
-	stateManager_ = stateManager;
+	stateMachine_ = stateMachine;
 	input_ = Input::GetInstance();
 }
 

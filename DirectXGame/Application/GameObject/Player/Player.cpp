@@ -41,7 +41,8 @@ void Player::Initialize(Model* model)
 	footCollider_.Initialize(this);
 
 	// ステート系の初期化
-	StateInitialize();
+	stateManager_ = std::make_unique<PlayerStateManager>();
+	stateManager_->Initialize(this);
 }
 
 void Player::Update()
@@ -54,8 +55,7 @@ void Player::Update()
 	oparationManager_.Update();
 
 	// それぞれの軸のマネージャ
-	verticalState_->Update();
-	horizontalState_->Update();
+	stateManager_->Update();
 
 	// 基底クラスの更新
 	IGameObject::Update();
@@ -217,19 +217,6 @@ void Player::OnCollision(ColliderObject target)
 void Player::UISpriteDraw()
 {
 	facadeSystem_->GetUI()->Draw();
-}
-
-void Player::StateInitialize()
-{
-	// 軸ごとのステート
-	verticalState_ = std::make_unique<StateManager>();
-	verticalState_->Initialize(this);
-	verticalState_->ChangeRequest(StateManager::StateList::kIdleVertical);
-	verticalState_->Update();
-	horizontalState_ = std::make_unique<StateManager>();
-	horizontalState_->Initialize(this);
-	horizontalState_->ChangeRequest(StateManager::StateList::kIdleHorizontal);
-	horizontalState_->Update();
 }
 
 void Player::InitializeGlobalValue()

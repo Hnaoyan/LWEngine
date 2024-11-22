@@ -60,8 +60,7 @@ private:
 	AABB collider_;
 
 	// ステート
-	std::unique_ptr<StateManager> horizontalState_;
-	std::unique_ptr<StateManager> verticalState_;
+	std::unique_ptr<PlayerStateManager> stateManager_;
 	
 	char path[256];
 	std::string filePath;
@@ -69,8 +68,8 @@ private:
 public:
 	OparationManager* GetOperation() { return &oparationManager_; }
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
-	StateManager* HorizontalManager() { return horizontalState_.get(); }
-	StateManager* VerticalManager() { return verticalState_.get(); }
+	PlayerStateMachine* HorizontalState() { return stateManager_->GetHorizontal(); }
+	PlayerStateMachine* VerticalState() { return stateManager_->GetVertical(); }
 	Boss* GetBoss() { return boss_; }
 #pragma endregion
 
@@ -91,8 +90,6 @@ public: // セッター
 		boss_ = boss;
 		oparationManager_.GetLockOn()->SetBoss(boss);
 	}
-
-	void StateInitialize();
 
 private: // USER
 	// グローバル変数関係の初期化

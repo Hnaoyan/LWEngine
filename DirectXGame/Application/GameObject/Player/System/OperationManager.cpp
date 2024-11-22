@@ -75,7 +75,7 @@ void OparationManager::InputUpdate()
 	direct = Vector3::Normalize(direct);
 
 	// ダッシュ入力
-	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalManager()->GetVariant());
+	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalState()->GetVariant());
 	if (!isQuickBoost && GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
 		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
 			return;
@@ -83,7 +83,7 @@ void OparationManager::InputUpdate()
 		if (isQuickBoost) {
 			return;
 		}
-		player_->HorizontalManager()->ChangeRequest(StateManager::kQuickBoost);
+		player_->HorizontalState()->ChangeRequest(PlayerStateLists::kQuickBoost);
 		return;
 	}
 

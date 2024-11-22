@@ -36,7 +36,7 @@ void IdleHorizontal::Update()
 	//}
 
 	if (isLeftStickActive_) {
-		stateManager_->ChangeRequest(StateManager::kMove);
+		stateMachine_->ChangeRequest(PlayerStateLists::kMove);
 		return;
 	}
 }

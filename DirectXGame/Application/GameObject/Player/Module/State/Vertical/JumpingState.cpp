@@ -18,7 +18,7 @@ void JumpingState::Update()
 {
 	// ステート変更
 	if (player_->velocity_.y < 0) {
-		stateManager_->ChangeRequest(StateManager::kFall);
+		stateMachine_->ChangeRequest(PlayerStateLists::kFall);
 		return;
 	}
 	float gravity = -4.5f;
@@ -34,6 +34,6 @@ void JumpingState::InputHandle()
 	float energyRatio = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().pressJump && energyRatio >= 0.5f)
 	{
-		player_->VerticalManager()->ChangeRequest(StateManager::kAssending);
+		player_->VerticalState()->ChangeRequest(PlayerStateLists::kAssending);
 	}
 }

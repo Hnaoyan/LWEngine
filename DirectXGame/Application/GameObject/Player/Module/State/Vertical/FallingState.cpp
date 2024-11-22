@@ -12,7 +12,7 @@ void FallingState::Update()
 {
 	// ステート変更
 	if (player_->isGround_) {
-		stateManager_->ChangeRequest(StateManager::kIdleVertical);
+		stateMachine_->ChangeRequest(PlayerStateLists::kIdleVertical);
 		return;
 	}
 	float gravity = -4.5f;
@@ -29,6 +29,6 @@ void FallingState::InputHandle()
 	float energyRatio = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().pressJump && energyRatio >= 0.5f)
 	{
-		player_->VerticalManager()->ChangeRequest(StateManager::kAssending);
+		player_->VerticalState()->ChangeRequest(PlayerStateLists::kAssending);
 	}
 }

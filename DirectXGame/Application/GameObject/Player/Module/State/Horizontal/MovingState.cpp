@@ -36,7 +36,7 @@ void MovingState::Update()
 	}
 
 	if (!isLeftStickActive_) {
-		stateManager_->ChangeRequest(StateManager::kIdleHorizontal);
+		stateMachine_->ChangeRequest(PlayerStateLists::kIdleHorizontal);
 		return;
 	}
 }

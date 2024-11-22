@@ -10,3 +10,14 @@
 #include "Vertical/AssendingState.h"
 #include "Vertical/FallingState.h"
 #include "Vertical/JumpingState.h"
+
+enum class PlayerStateLists {
+	kIdleVertical,	// 垂直の待機
+	kIdleHorizontal,	// 水平の待機
+	kMove, // 通常移動
+	kJump, // ジャンプ
+	kFall, // 落下
+	kBoost, // 早い移動
+	kQuickBoost, // ダッシュ
+	kAssending, // 上昇
+};

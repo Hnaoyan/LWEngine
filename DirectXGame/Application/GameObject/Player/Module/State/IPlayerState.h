@@ -3,7 +3,7 @@
 #include "PlayerStateList.h"
 
 class Player;
-class StateManager;
+class PlayerStateMachine;
 
 class IPlayerState
 {
@@ -16,7 +16,7 @@ public:
 	/// 前初期化
 	/// </summary>
 	/// <param name="player"></param>
-	void PreInitialize(Player* player, StateManager* stateManager);
+	void PreInitialize(Player* player, PlayerStateMachine* stateMachine);
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -50,7 +50,7 @@ protected:
 protected:
 	// プレイヤー
 	Player* player_ = nullptr;
-	StateManager* stateManager_ = nullptr;
+	PlayerStateMachine* stateMachine_ = nullptr;
 	Input* input_ = nullptr;
 
 	// 左スティック入力

@@ -1,6 +1,7 @@
 #pragma once
 #include "OperationManager.h"
 #include "../Module/State/StateManager.h"
+#include "../Module/State/PlayerStateMachine.h"
 
 //#include "Assending/AssendingManager.h"
 #include "Aim/AimManager.h"

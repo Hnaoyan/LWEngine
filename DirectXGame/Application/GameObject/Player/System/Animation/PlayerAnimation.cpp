@@ -16,7 +16,7 @@ void PlayerContext::AnimationManager::Initialize(Player* player)
 
 void PlayerContext::AnimationManager::Update()
 {
-	bool isIdle = std::holds_alternative<IdleHorizontal*>(player_->HorizontalManager()->GetVariant());
+	bool isIdle = std::holds_alternative<IdleHorizontal*>(player_->HorizontalState()->GetVariant());
 	
 	if (isIdle)
 	{
