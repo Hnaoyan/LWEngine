@@ -48,6 +48,3 @@ struct TrackingData
 		initSpeed = globalVariable->GetValue<float>(groupName, "InitSpeed");
 	}
 };
-
-// Descending : 降順
-// Ascending : 昇順

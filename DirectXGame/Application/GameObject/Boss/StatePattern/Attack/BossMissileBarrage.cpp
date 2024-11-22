@@ -11,15 +11,17 @@ void BossState::MissileBarrageState::Initialize()
 	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// アクション前の待機タイマー
-	preActionTimer_.Start(60.0f);
+	float preFrame = 60.0f;
+	preActionTimer_.Start(preFrame);
 }
 
 void BossState::MissileBarrageState::Update()
 {
 	// 攻撃の処理
 	attackTimer_.Update();
+	float attackDuration = 5.0f;
 	if (attackTimer_.IsEnd()) {
-		attackTimer_.Start(5.0f);
+		attackTimer_.Start(attackDuration);
 		// 攻撃処理
 		Attack();
 
@@ -28,8 +30,9 @@ void BossState::MissileBarrageState::Update()
 	preActionTimer_.Update();
 	if (preActionTimer_.IsEnd()) {
 		// 変更までの時間
-		changeTimer_.Start(120.0f);
-		attackTimer_.Start(5.0f);
+		float changeFrame = 120.0f;
+		changeTimer_.Start(changeFrame);
+		attackTimer_.Start(attackDuration);
 		// 攻撃処理
 		Attack();
 	}

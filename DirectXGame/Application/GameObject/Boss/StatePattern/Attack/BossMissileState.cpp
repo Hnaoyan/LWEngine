@@ -28,21 +28,22 @@ void BossState::MissileAttackState::Update()
 	preActionTimer_.Update();
 	// 待機時間終了時
 	if (preActionTimer_.IsEnd()) {
+		float changeFrame = 120.0f;
 		// 変更までの時間
-		changeTimer_.Start(120.0f);
+		changeTimer_.Start(changeFrame);
 		// 回転の処理
 		RotateUpdate();
 		//---弾の情報---//
 		// 進む方向
 		bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
 		MissileAttack();
-		//attackTimer_.Start(15.0f);
 	}
 	attackTimer_.Update();
 	TimerUpdate(this);
 
 	if (attackTimer_.IsEnd()) {
-		attackTimer_.Start(15.0f);
+		float attackDuration = 15.0f;
+		attackTimer_.Start(attackDuration);
 		// 回転の処理
 		RotateUpdate();
 		//---弾の情報---//

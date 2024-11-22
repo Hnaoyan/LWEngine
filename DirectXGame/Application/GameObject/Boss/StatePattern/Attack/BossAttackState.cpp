@@ -8,29 +8,32 @@ void BossState::AttackState::Initialize()
 	GlobalVariables* global = GlobalVariables::GetInstance();
 
 	boss_->SetNowVariantState(this);
-	preActionTimer_.Start(60.0f);
+	float actionDuration = 60.0f;
+	preActionTimer_.Start(actionDuration);
 	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// 攻撃パターンのランダム
-	uint32_t randM = LwLib::GetRandomValue(0, 3);
-	if (randM == 0) {
+	uint32_t pattern = LwLib::GetRandomValue(0, 3);
+	float coolTime = 10.0f;
+	if (pattern == 0) {
 		pattern_ = ShotPattern::kPredictive;
-		fireCooltime_ = 10.0f;
+		fireCooltime_ = coolTime;
 	}
-	else if (randM == 1) {
+	else if (pattern == 1) {
 		pattern_ = ShotPattern::kStraight;
-		fireCooltime_ = 15.0f;
+		coolTime += 5.0f;
+		fireCooltime_ = coolTime;
 	}
-	else if(randM == 2){
+	else if(pattern == 2){
 		pattern_ = ShotPattern::kSpread;
-		fireCooltime_ = 20.0f;
+		coolTime += 10.0f;
+		fireCooltime_ = coolTime;
 	}
 	else {
 		pattern_ = ShotPattern::kRadialFire;
-		fireCooltime_ = 20.0f;
+		coolTime += 15.0f;
+		fireCooltime_ = coolTime;
 	}
-
-	//pattern_ = ShotPattern::kSpread;
 
 	// 初期の角度
 	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
@@ -51,7 +54,8 @@ void BossState::AttackState::Update()
 	// 待機終了タイミング
 	if (preActionTimer_.IsEnd()) {
 		fireTimer_.Start(fireCooltime_);
-		changeTimer_.Start(90.0f);
+		float changeFrame = 90.0f;
+		changeTimer_.Start(changeFrame);
 	}
 
 	// クールタイム
