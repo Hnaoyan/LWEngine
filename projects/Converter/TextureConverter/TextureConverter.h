@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include "../../../externals/DirectXTex/DirectXTex.h"
 
 using namespace DirectX;
@@ -7,11 +8,14 @@ using namespace DirectX;
 class TextureConverter
 {
 public:
+    static void OutputUsage();
+
+public:
     /// <summary>
     /// WICからDDSに変換
     /// </summary>
     /// <param name="filePath"></param>
-    void ConvertTextureWICToDDS(const std::string& filePath);
+    void ConvertTextureWICToDDS(const std::string& filePath,int numOptions = 0, char* options[] = nullptr);
     /// <summary>
     /// テクスチャファイル読み込み
     /// </summary>
@@ -33,7 +37,7 @@ private:
     /// <summary>
     /// DDSテクスチャとしてファイル書き出し
     /// </summary>
-    void SaveDDSTextureToFile();
+    void SaveDDSTextureToFile(int numOptions, char* options[]);
 private:
     // 画像情報
     DirectX::TexMetadata metaData_;

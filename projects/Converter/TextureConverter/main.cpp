@@ -1,9 +1,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
+#include <iostream>
 #include "Windows.h"
 #include "TextureConverter.h"
-
+//$(TargetDir)
 enum Argument {
     kApplicationPath,   
     kFilePath,           
@@ -13,14 +14,19 @@ enum Argument {
 
 int main(int argc, char* argv[]) {
     // 日本語
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < argc; ++i) {
         printf(argv[i]);
 
         printf("\n");
     }
     printf("Hello,World!\n");
+    //assert(argc >= NumArgument);
 
-    assert(argc >= NumArgument);
+    if (argc < NumArgument) {
+        // 使い方を表示
+        TextureConverter::OutputUsage();
+        return 0;
+    }
 
     // 初期化処理
     HRESULT hr = S_FALSE;
@@ -29,11 +35,17 @@ int main(int argc, char* argv[]) {
 
     // テクスチャのコンバート
     TextureConverter converter;
-    converter.ConvertTextureWICToDDS(argv[kFilePath]);
+
+    // オプション数
+    int numOptions = argc - NumArgument;
+    // オプション配列
+    char** options = argv + NumArgument;
+
+    converter.ConvertTextureWICToDDS(argv[kFilePath], numOptions, options);
     
     // 終了処理
     CoUninitialize();
     // システム的な停止
-    system("Pause");
+    //system("Pause");
     return 0;
 }
