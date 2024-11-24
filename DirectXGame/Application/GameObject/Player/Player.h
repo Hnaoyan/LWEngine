@@ -78,7 +78,7 @@ public: // セッター
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-	Vector3 GetVelocity() { return velocity_; }
+	Vector3 GetVelocity() const { return velocity_; }
 	// ポインタ関係
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
 		facadeSystem_->GetShootingManager()->SetManager(manager);

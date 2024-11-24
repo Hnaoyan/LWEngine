@@ -49,13 +49,14 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
-	/// <summary>
-	/// アニメーション用の更新関数
-	/// </summary>
-	virtual void AnimationUpdate() {};
-
 protected:
+	/// <summary>
+	/// グローバル変数の初期化
+	/// </summary>
 	virtual void InitializeGlobalValue() {};
+	/// <summary>
+	/// グローバル変数の更新
+	/// </summary>
 	virtual void UpdateGlobalValue() {};
 
 public: // アクセッサ

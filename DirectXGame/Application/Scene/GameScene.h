@@ -50,21 +50,19 @@ public:
 	/// テクスチャ読み込み
 	/// </summary>
 	void LoadTexture() override;
-
+private:
 	/// <summary>
 	/// カメラ更新
 	/// </summary>
-	void CameraUpdate() override;
-
+	void CameraUpdate();
 	/// <summary>
 	/// ライト初期化
 	/// </summary>
-	void LightingInitialize() override;
+	void LightingInitialize();
 	/// <summary>
 	/// ライトの更新
 	/// </summary>
 	void LightingUpdate();
-private:
 	/// <summary>
 	/// 衝突処理
 	/// </summary>

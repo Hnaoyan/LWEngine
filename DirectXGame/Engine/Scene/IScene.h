@@ -10,6 +10,12 @@ class SceneManager;
 /// </summary>
 class IScene
 {
+public:
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	virtual ~IScene() = default;
+
 public: // フレーム関数
 	/// <summary>
 	/// 初期化
@@ -24,7 +30,6 @@ public: // フレーム関数
 	/// GPUの更新処理
 	/// </summary>
 	virtual void GPUUpdate() {};
-
 	/// <summary>
 	/// 描画処理
 	/// </summary>
@@ -53,22 +58,6 @@ public:	// ロード関数
 		isSceneReady_ = true;
 	}
 
-public:	// 初期化
-	/// <summary>
-	/// ライティング初期化関数
-	/// </summary>
-	virtual void LightingInitialize() {};
-
-public:	// カメラなどの更新
-	/// <summary>
-	/// カメラ更新
-	/// </summary>
-	virtual void CameraUpdate();
-
-	/// <summary>
-	/// デストラクタ
-	/// </summary>
-	virtual ~IScene() = default;
 
 public: // 取得・設定
 	/// <summary>

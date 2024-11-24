@@ -9,9 +9,3 @@ void IScene::Initialize()
 	// カメラ初期化
 	camera_.Initialize();
 }
-
-void IScene::CameraUpdate()
-{
-	// カメラ更新
-	camera_.Update();
-}
