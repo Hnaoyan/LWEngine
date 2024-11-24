@@ -1,7 +1,7 @@
 #include "TextureConverter.h"
 #include <Windows.h>
 #include <d3d12.h>
-#include "../../../externals/DirectXTex/DirectXTex.h"
+#include "../../externals/DirectXTex/DirectXTex.h"
 
 void TextureConverter::ConvertTextureWICToDDS(const std::string& filePath)
 {
