@@ -106,6 +106,10 @@
     <OutDir>$(SolutionDir)..\LwEngineOutputs\Converter\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\LwEngineOutputs\Converter\Obj\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">
+    <OutDir>$(SolutionDir)..\LwEngineOutputs\Converter\Outputs\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\LwEngineOutputs\Converter\Obj\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
