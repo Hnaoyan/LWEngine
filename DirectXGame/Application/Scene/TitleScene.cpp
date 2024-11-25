@@ -117,13 +117,18 @@ void TitleScene::ImGuiDraw()
 	if (ImGui::Button("AddTexture")) {
 		AddSprite(texturePath, spriteTag);
 	}
-
-	int num = 0;
-	for (std::vector<std::pair<Vector2, Sprite*>>::iterator it = textures_.begin(); it != textures_.end(); ++it) {
-		std::string name = "Pos" + std::to_string(num);
-		ImGui::DragFloat2(name.c_str(), &(*it).first.x, 1.0f);
-		(*it).second->SetPosition((*it).first);
-		num++;
+	if (ImGui::Button("Clear")) {
+		textures_.clear();
+	}
+	if (ImGui::TreeNode("Textures")) {
+		int num = 0;
+		for (std::vector<std::pair<Vector2, Sprite*>>::iterator it = textures_.begin(); it != textures_.end(); ++it) {
+			std::string name = "Pos" + std::to_string(num);
+			ImGui::DragFloat2(name.c_str(), &(*it).first.x, 1.0f);
+			(*it).second->SetPosition((*it).first);
+			num++;
+		}
+		ImGui::TreePop();
 	}
 
 	ImGui::End();
