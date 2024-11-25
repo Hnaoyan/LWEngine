@@ -1,7 +1,6 @@
 #include "FallingState.h"
 #include "../../../Player.h"
 #include "Application/GameSystem/GameSystem.h"
-#include "Application/GameSystem/GameSystem.h"
 
 void FallingState::Initialize()
 {

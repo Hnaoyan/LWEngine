@@ -97,6 +97,8 @@ private: // USER
 
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 
+	void NowState();
+
 public:
 	// 移動速度
 	Vector3 velocity_ = {};

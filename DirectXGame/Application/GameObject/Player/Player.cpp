@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "../GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Module/State/PlayerStateList.h"
 
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
@@ -123,6 +124,10 @@ void Player::ImGuiDraw()
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
+		if (ImGui::BeginTabItem("State")) {
+			NowState();
+			ImGui::EndTabItem();
+		}
 		if (ImGui::BeginTabItem("Aim")) {
 			oparationManager_.GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
@@ -247,6 +252,44 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
+}
+
+void Player::NowState()
+{
+	PlayerState horizon = stateManager_->GetHorizontal()->GetVariant();
+	PlayerState vertical = stateManager_->GetVertical()->GetVariant();
+	std::string horizonName;
+	std::string verticalName;
+	if (std::holds_alternative<AssendingState*>(vertical)) {
+		verticalName = "Assending";
+	}
+	else if (std::holds_alternative<FallingState*>(vertical)) {
+		verticalName = "Falling";
+	}
+	else if (std::holds_alternative<IdleVertical*>(vertical)) {
+		verticalName = "Idle";
+	}
+	else if (std::holds_alternative<JumpingState*>(vertical)) {
+		verticalName = "Jumping";
+	}
+
+	//if (std::holds_alternative<BoostState*>(horizon)) {
+	//	horizonName = "Boost";
+	//}
+	//else if (std::holds_alternative<IdleHorizontal*>(horizon)) {
+	//	horizonName = "Idle";
+	//}
+	//else if (std::holds_alternative<MovingState*>(horizon)) {
+	//	horizonName = "Move";
+	//}
+	//else if (std::holds_alternative<QuickBoostState>(horizon)) {
+	//	horizonName = "Quick";
+	//}
+	verticalName = "VerticalState:" + verticalName;
+	horizonName = "HorizontalState:" + horizonName;
+
+	ImGui::Text(verticalName.c_str());
+	ImGui::Text(horizonName.c_str());
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)
