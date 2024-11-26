@@ -33,6 +33,7 @@ private:
 	Vector3 rotVector_ = Vector3::Right();
 	float rotRatio_ = 0.5f;
 	float focusT_ = 0.5f;
+	float slerpScale_ = 1.0f;
 	// 向ける処理
 	void FocusUpdate();
 

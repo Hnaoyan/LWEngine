@@ -27,13 +27,14 @@ void OrbitCamera::ImGuiDraw()
 
 	ImGui::DragFloat("FocusT", &focusT_, 0.01f);
 	focusT_ = std::clamp(focusT_, 0.0f, 1.0f);
+	ImGui::DragFloat("SlerpScale", &slerpScale_, 0.01f);
 }
 
 void OrbitCamera::FocusUpdate()
 {
 	if (objects_.first && objects_.second) {
 		centerPoint_ = Ease::Easing(*objects_.first, *objects_.second, focusT_);
-		//transform_.translate = LwLib::Slerp(Vector3::Backward(), rotVector_, rotRatio_);
+		transform_.translate = LwLib::Slerp(Vector3::Normalize(*objects_.first), Vector3::Normalize(*objects_.second), rotRatio_) * slerpScale_;
 
 	}
 	// 対象地点があれば
