@@ -8,6 +8,7 @@ CameraManager::CameraManager()
 	followCamera_ = std::make_unique<FollowCamera>();
 	focusCamera_ = std::make_unique<FocusCamera>();
 	debugCamera_ = std::make_unique<DebugCamera>();
+	orbitCamera_ = std::make_unique<OrbitCamera>();
 }
 
 void CameraManager::Initialize(GameObjectManager* gameManager)
@@ -25,7 +26,10 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 	focusCamera_->Initialize();
 	focusCamera_->transform_.translate = { 50.0f,0.0f,0.0f };
 	focusCamera_->SetFocusPoint(&gameManager->GetPlayer()->worldTransform_.transform_.translate);
-	focusCamera_->SetWorldTransform(gameObjManager_->GetPlayer()->GetWorldTransform());
+	// 半円カメラ
+	orbitCamera_->Initialize();
+	orbitCamera_->SetObject(&gameManager->GetPlayer()->worldTransform_.transform_.translate, &gameManager->GetBoss()->worldTransform_.transform_.translate);
+	
 	// 選択
 	activeCamera_ = ActiveCameraMode::kFollow;
 
@@ -37,6 +41,7 @@ void CameraManager::Update()
 	followCamera_->Update();
 	focusCamera_->Update();
 	debugCamera_->Update();
+	orbitCamera_->Update();
 
 	if (changeRequest_) {
 		ActiveCameraMode value = changeRequest_.value();
@@ -74,6 +79,9 @@ void CameraManager::ImGuiDraw()
 	if (ImGui::Button("Debug")) {
 		ChangeCamera(ActiveCameraMode::kDebug);
 	}
+	if (ImGui::Button("Orbit")) {
+		ChangeCamera(ActiveCameraMode::kOrbit);
+	}
 
 	if (ImGui::BeginTabBar("System"))
 	{
@@ -83,6 +91,10 @@ void CameraManager::ImGuiDraw()
 		}
 		if (ImGui::BeginTabItem("Focus")) {
 			focusCamera_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Orbit")) {
+			orbitCamera_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Debug")) {
@@ -134,6 +146,9 @@ ICamera* CameraManager::GetCamera()
 		break;
 	case ActiveCameraMode::kFocus:
 		return focusCamera_.get();
+		break;
+	case ActiveCameraMode::kOrbit:
+		return orbitCamera_.get();
 		break;
 	case ActiveCameraMode::kDebug:
 		return debugCamera_.get();

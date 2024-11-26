@@ -49,6 +49,7 @@ public:
 public:
 	// プレイヤー
 	Player* GetPlayer() { return player_.get(); }
+	Boss* GetBoss() { return boss_.get(); }
 
 	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }

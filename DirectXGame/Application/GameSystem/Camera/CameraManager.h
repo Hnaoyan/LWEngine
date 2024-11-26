@@ -2,6 +2,7 @@
 #include "Engine/Camera/CameraList.h"
 #include <optional>
 #include <memory>
+#include <unordered_map>
 
 class GameObjectManager;
 
@@ -53,6 +54,10 @@ private:
 	std::unique_ptr<FocusCamera> focusCamera_;
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
+	// 
+	std::unique_ptr<OrbitCamera> orbitCamera_;
+	// カメラのリスト
+	std::unordered_map<std::string, std::unique_ptr<ICamera>> cameras_;
 
 	// 変更のリクエスト
 	std::optional<ActiveCameraMode> changeRequest_ = std::nullopt;

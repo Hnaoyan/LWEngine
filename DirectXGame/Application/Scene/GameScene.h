@@ -7,14 +7,30 @@
 #include "Engine/Camera/CameraList.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
-#include "../GameObject/GameObjectLists.h"
+
+#include "Application/GameObject/GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameSystem/UI/GameUIManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
 #include "Application/GameSystem/Camera/CameraManager.h"
 
+#include <optional>
+
 class GameScene : public IScene
 {
+private:
+	// ゲームシーンの状態
+	enum class GameState
+	{
+		kWait,
+		kGamePlay,
+		kReplay,
+	};
+
+	// 変更リクエスト
+	GameState nowState_ = GameState::kWait;
+	std::optional<GameState> stateRequest_;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -81,7 +97,6 @@ private: // アプリ
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
 private: // システム関係
-	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
 	CBufferDataDirectionalLight lightData_ = {};
 	std::unique_ptr<SpotLight> spotLight_;
