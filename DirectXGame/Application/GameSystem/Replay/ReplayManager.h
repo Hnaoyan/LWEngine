@@ -18,6 +18,7 @@ public: // メンバ
 	void RecordFrame(KeyConfigManager* keyManager);
 	// 外部へ書き出し
 	void ExportReplay(const std::string& fileName);
+	void ExportReplay();
 	// 外部から書き込み
 	void ImportReplay();
 	// コンテナの初期化
@@ -32,6 +33,9 @@ public: // メンバ
 	ReplayData GetReplayData(int32_t num) {
 		return replayDatas_[num];
 	}
+
+	// リプレイの記録準備（スタート
+	void RecordSetUp();
 
 private:
 	// ディレクトリパス

@@ -3,6 +3,9 @@
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 
+/// <summary>
+/// ゲームシーンの状態
+/// </summary>
 enum class GameSceneState
 {
 	kWait,

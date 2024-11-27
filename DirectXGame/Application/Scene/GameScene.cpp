@@ -140,17 +140,30 @@ void GameScene::ImGuiDraw()
 	if (ImGui::Button("ReplayStart")) {
 		gameSystem_->GetReplayManager()->ImportReplay();
 		// インスタンス生成しなおし
-		gameObjectManager_ = std::make_unique<GameObjectManager>();
-		cameraManager_ = std::make_unique<CameraManager>();
-		//
-		gpuParticleManager_->DataReset();
+		//gameObjectManager_ = std::make_unique<GameObjectManager>();
+		//cameraManager_ = std::make_unique<CameraManager>();
+
 		// オブジェクト類の初期化
+		gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
 		gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 		gameObjectManager_->GameSetUp();	// ゲームの準備
 		cameraManager_->Initialize(gameObjectManager_.get());
 		gameSystem_->LaunchReplay();
 	}
-
+	if (ImGui::Button("RecordingStart")) {
+		// インスタンス生成しなおし
+		//gameObjectManager_ = std::make_unique<GameObjectManager>();
+		// オブジェクト類の初期化
+		gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+		gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+		gameObjectManager_->GameSetUp();	// ゲームの準備
+		cameraManager_->Initialize(gameObjectManager_.get());
+		cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+		gameSystem_->GetReplayManager()->RecordSetUp();	// 記録のスタート処理
+	}
+	if (ImGui::Button("RecordingEnd")) {
+		gameSystem_->GetReplayManager()->ExportReplay();
+	}
 	if (ImGui::BeginTabBar("PostEffect")) {
 		if (ImGui::BeginTabItem("Switch")) {
 			if (ImGui::Button("PostDefault")) {

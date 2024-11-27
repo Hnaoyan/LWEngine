@@ -60,11 +60,9 @@ void GameSystem::Update()
 
 void GameSystem::ImGuiDraw()
 {
-
     ImGui::Begin("GameSystem");
     replayManager_.ImGuiDraw();
     ImGui::End();
-
 }
 
 void GameSystem::LaunchReplay()

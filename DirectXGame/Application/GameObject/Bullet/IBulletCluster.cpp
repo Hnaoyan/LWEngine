@@ -125,7 +125,7 @@ void IBulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 
 	// リストに追加
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
-	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
+	//gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
 	std::string name = bullet->GetTag() + "Break";
 	//gpuParticle_->CreateEmitter(std::move(breakPartice), name);
 	units_.push_back(std::move(bullet));	// 弾
@@ -183,7 +183,7 @@ void IBulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
 
 	// リストに追加
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
-	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
+	//gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
 	std::string name = bullet->GetTag() + "Break";
 	units_.push_back(std::move(bullet));	// 弾
 }

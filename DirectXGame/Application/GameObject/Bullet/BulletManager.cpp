@@ -8,6 +8,7 @@ void BulletManager::Initialize(Model* model)
 {
 	//models_ = models;
 	model_ = model;
+	clusters_.clear();
 
 	isDrawCheck_.reset();
 
