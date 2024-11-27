@@ -31,7 +31,7 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 	orbitCamera_->SetObject(&gameManager->GetPlayer()->worldTransform_.transform_.translate, &gameManager->GetBoss()->worldTransform_.transform_.translate);
 	
 	// 選択
-	activeCamera_ = ActiveCameraMode::kFollow;
+	activeCamera_ = ActiveCameraMode::kDebug;
 
 }
 

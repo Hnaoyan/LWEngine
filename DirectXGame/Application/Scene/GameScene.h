@@ -19,17 +19,10 @@
 class GameScene : public IScene
 {
 private:
-	// ゲームシーンの状態
-	enum class GameState
-	{
-		kWait,
-		kGamePlay,
-		kReplay,
-	};
 
 	// 変更リクエスト
-	GameState nowState_ = GameState::kWait;
-	std::optional<GameState> stateRequest_;
+	GameSceneState nowState_ = GameSceneState::kWait;
+	std::optional<GameSceneState> stateRequest_;
 
 public:
 	/// <summary>

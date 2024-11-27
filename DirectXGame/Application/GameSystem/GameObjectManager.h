@@ -54,11 +54,9 @@ public:
 	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
-	bool IsGameClear() const { return isGameClear_; }
-	bool IsGameOver() const { return isGameOver_; }
+	bool IsSceneChange() const { return isSceneChange_; }
 private: // ゲームクリアなどの部分
-	bool isGameOver_ = false;	// ゲームオーバー
-	bool isGameClear_ = false;	// ゲームクリア
+	bool isSceneChange_ = false;	// シーンの切り替わりフラグ
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;

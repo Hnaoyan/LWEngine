@@ -48,7 +48,7 @@ void GameScene::Update()
 	}
 #endif // _DEBUG
 	// シーンの切り替え処理
-	if (gameObjectManager_->IsGameOver() || gameObjectManager_->IsGameClear()) {
+	if (gameObjectManager_->IsSceneChange()) {
 		sceneManager_->ChangeScene("TITLE");
 		return;
 	}

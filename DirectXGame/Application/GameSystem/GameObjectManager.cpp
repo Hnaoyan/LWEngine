@@ -42,8 +42,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-	isGameClear_ = false;
-	isGameOver_ = false;
+	isSceneChange_ = false;
 	isInGame_ = true;
 }
 
@@ -65,11 +64,12 @@ void GameObjectManager::Update()
 	gameOverTimer_.Update();
 
 	if (gameClearTimer_.IsEnd()) {
-		isGameClear_ = true;
+		isSceneChange_ = true;
 	}
 	if (gameOverTimer_.IsEnd()) {
-		isGameOver_ = true;
+		isSceneChange_ = true;
 	}
+
 
 #endif // RELEASE
 
@@ -159,8 +159,10 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	assert(collisionManager);
 
 	// 全ての衝突設定
-	collisionManager->ListRegist(player_->GetCollider());
-	collisionManager->ListRegist(player_->GetFootCollider());
+	if (player_) {
+		collisionManager->ListRegist(player_->GetCollider());
+		collisionManager->ListRegist(player_->GetFootCollider());
+	}
 	if (boss_) {
 		collisionManager->ListRegist(boss_->GetCollider());
 	}

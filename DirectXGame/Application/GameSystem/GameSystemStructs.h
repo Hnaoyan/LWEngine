@@ -3,6 +3,14 @@
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 
+enum class GameSceneState
+{
+	kWait,
+	kGamePlay,
+	kReplay,
+};
+
+
 /// <summary>
 /// プレイヤーのキー
 /// </summary>
