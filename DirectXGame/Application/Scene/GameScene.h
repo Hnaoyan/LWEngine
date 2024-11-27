@@ -22,7 +22,7 @@ private:
 
 	// 変更リクエスト
 	GameSceneState nowState_ = GameSceneState::kWait;
-	std::optional<GameSceneState> stateRequest_;
+	std::optional<GameSceneState> stateRequest_ = std::nullopt;
 
 public:
 	/// <summary>
@@ -76,6 +76,9 @@ private:
 	/// 衝突処理
 	/// </summary>
 	void CollisionUpdate();
+
+	void SceneStateRequest(GameSceneState state) { stateRequest_ = state; }
+	void ChangeState();
 
 private: // アプリ
 	// ゲーム

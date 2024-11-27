@@ -11,6 +11,7 @@ enum class GameSceneState
 	kWait,
 	kGamePlay,
 	kReplay,
+	kRecord,
 };
 
 
