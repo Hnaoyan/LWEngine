@@ -31,7 +31,11 @@ void BossSystemContext::AnimationManager::Update()
 	hitEffect_.Update();
 	// エフェクト中は
 	if (hitEffect_.timer.IsActive()) {
-		commonMaterial_->color_.w = hitEffect_.alpha;
+		commonMaterial_->color_ = { 1.0f,0.0f,0.0f,hitEffect_.alpha };
+	}
+	// エフェクトなくなったら
+	else {
+		//commonMaterial_->color_ = { 1.0f,1.0f,1.0f,1.0f };
 	}
 	// アニメーション用のタイマー
 	animTimer_.Update();

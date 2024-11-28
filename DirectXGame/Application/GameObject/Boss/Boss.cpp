@@ -27,9 +27,7 @@ void Boss::Initialize(Model* model)
 	stateManager_.Initialize(this);
 	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
 
-	respawnPos_ = { 0,8.5f,50.0f };
-
-	worldTransform_.transform_.translate = respawnPos_;
+	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "ResPosition");
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
 }
@@ -261,6 +259,11 @@ void Boss::InitializeGlobalValue()
 	instance->AddValue(groupName, "BarrierVanishFrame", 45.0f);
 	instance->AddValue(groupName, "BarrierReappearFrame", 30.0f);
 
+	//---ボスのエフェクトアニメーション---//
+	groupName = "BossEffect";
+	instance->AddValue(groupName, "DamageDistance", float(-5.0f));
+	
+
 	//---敵の弾のトレイル---//
 	groupName = "BossBulletTrail";
 	instance->CreateGroup(groupName);
@@ -308,4 +311,11 @@ void Boss::InitializeGlobalValue()
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "MinOffset", float(15.0f));	// ずらしの最小
 	instance->AddValue(groupName, "MaxOffset", float(25.0f));	// ずらしの最大
+}
+
+Vector3 Boss::HitEffectPosition()
+{
+	Vector3 direct = Vector3::Normalize(worldTransform_.GetWorldPosition() - camera_->transform_.translate);
+	direct.y = 0.0f;
+	return Vector3(direct * GlobalVariables::GetInstance()->GetValue<float>("BossEffect","DamageDistance"));
 }

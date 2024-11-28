@@ -62,7 +62,7 @@ void main( uint3 DTid : SV_DispatchThreadID )
             // 重力を速度に計算するか
             if(gParticle[particleIndex].isGravity == 1)
             {
-                float gravity = -3.5f;
+                float gravity = -1.5f;
                 gParticle[particleIndex].velocity.y += (gravity) * (gParticle[particleIndex].currentTime / gParticle[particleIndex].lifetime);
 
             }

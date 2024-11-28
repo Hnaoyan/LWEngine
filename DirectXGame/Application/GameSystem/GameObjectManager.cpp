@@ -38,6 +38,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
 	boss_->SetPlayer(player_.get());
 	boss_->SetBulletManager(bulletManager_.get());
+	boss_->SetCamera(camera);
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));

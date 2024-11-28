@@ -81,6 +81,8 @@ private: // サブシステム
 	// 外部の弾管理
 	BulletManager* bulletManager_ = nullptr;
 
+	ICamera* camera_ = nullptr;
+
 #pragma region 内部システムアクセッサ
 public:
 	// ステート関係
@@ -93,13 +95,13 @@ public:
 	BossFacade* GetSystem() { return systemManager_.get(); }
 	void SetNowVariantState(BossState::StateVariant variant) { nowVariantState_ = variant; }
 	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
-
+	void SetCamera(ICamera* camera) { camera_ = camera; }
 	// コンテキストのアクセッサ
 	BossSystemContext::HealthManager* GetHealth() { return &systemManager_->healthManager_; }
 	BossSystemContext::ParticleManager* GetParticleManager() { return &systemManager_->particleManager_; }
 	BossSystemContext::AnimationManager* GetAnimManager() { return animationManager_.get(); }
 
-	Vector3 respawnPos_ = {};
+	Vector3 HitEffectPosition();
 #pragma endregion
 
 #pragma region 外部関係のポインタやアクセッサ
