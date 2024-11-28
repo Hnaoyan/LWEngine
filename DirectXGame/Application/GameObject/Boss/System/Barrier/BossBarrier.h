@@ -54,7 +54,7 @@ namespace BossSystemContext
 		uint32_t textureHandle_ = 0u;
 		Model* model_ = nullptr;
 		std::unique_ptr<Material> material_;
-
+		bool isInvisible_ = true;
 	public: // アクセッサ
 		bool IsActive() { return param.isActive; }
 		bool IsShattered() { return param.isShattered; }

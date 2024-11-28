@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
+#include "Engine/GlobalVariables/GlobalVariables.h"
 #include "Engine/LwLib/LwEnginePaths.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/PostEffect/PostEffectRender.h"
@@ -86,14 +87,17 @@ struct DamageVignette
 {
 	CBufferDataVignette data{};
 	FrameTimer timer;
+	float maxPow = 0.0f;
 	// 初期化処理
 	void Initialize() {
 		float damageEffectFrame = 35.0f;
 		timer.Start(damageEffectFrame);
+		maxPow = GlobalVariables::GetInstance()->GetValue<float>("PostEffect", "VigPow");
 	}
 	// 更新処理
 	void Update() {
 		timer.Update();
+		data.powValue = Ease::Easing(maxPow, 0.0f, timer.GetElapsedFrame());
 	}
 	// 終了処理
 	void Finalize() {

@@ -37,19 +37,20 @@ void PostEffectManager::Update()
 	else if (sDashEffect.timer.IsActive())
 	{
 		sDashEffect.Update();
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+		nowEffect = Pipeline::PostEffectType::kRadialBlur;
 	}
 	// ダメージ
 	else if (sDamageEffect.timer.IsActive())
 	{
 		sDamageEffect.Update();
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
+		nowEffect = Pipeline::PostEffectType::kVignette;
 	}
 	// 通常状態
 	else
 	{
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+		nowEffect = Pipeline::PostEffectType::kBloom;
 	}
+	PostEffectRender::sPostEffect = nowEffect;
 
 	// 値の渡す処理
 	PostEffectRender::PostEffectDesc desc{};
@@ -62,6 +63,17 @@ void PostEffectManager::Update()
 
 void PostEffectManager::ImGuiDraw()
 {
+	if (ImGui::TreeNode("PostEffectType")) {
+		if (ImGui::Button("Bloom")) {
+			nowEffect = Pipeline::PostEffectType::kBloom;
+		}
+		if (ImGui::Button("Vignette")) {
+			nowEffect = Pipeline::PostEffectType::kVignette;
+		}
+		if (ImGui::Button("VignetteBlur")) {
+			nowEffect = Pipeline::PostEffectType::kVignetteBlur;
+		}
+	}
 	// ビネット
 	ImGui::DragFloat3("VignetteColor", &sDamageEffect.data.color.x, 0.01f);
 	ImGui::DragFloat("VignettePow", &sDamageEffect.data.powValue, 0.01f);

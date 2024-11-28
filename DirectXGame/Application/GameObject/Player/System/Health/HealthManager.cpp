@@ -16,9 +16,9 @@ void PlayerContext::HealthManager::Update()
 	hitPoint_.invincibility.Update();
 	hitPoint_.damageEffectDuration.Update(GameSystem::GameSpeedFactor());
 
-	if (hitPoint_.invincibility.IsActive()) {
-		PostEffectManager::sDamageEffect.Initialize();
-	}
+	//if (hitPoint_.invincibility.IsActive()) {
+
+	//}
 	if (hitPoint_.invincibility.IsEnd()) {
 		PostEffectManager::sDamageEffect.Finalize();
 	}
@@ -39,6 +39,7 @@ void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 	hitPoint_.currentHealth -= damage;
 	hitPoint_.invincibility.Start(30.0f); // 無敵時間
 	hitPoint_.damageEffectDuration.Start(5.0f); // エフェクトの時間
+	PostEffectManager::sDamageEffect.Initialize();	// ダメージエフェクト
 
 	if (hitPoint_.currentHealth < 1) {
 		player_->SetIsDead(true);

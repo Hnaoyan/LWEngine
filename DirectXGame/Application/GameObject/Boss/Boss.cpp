@@ -98,6 +98,7 @@ void Boss::ImGuiDraw()
 			ImGui::DragFloat("PlayerDistance", &distance);
 			ImGui::EndTabItem();
 		}
+
 		// 行動
 		if (ImGui::BeginTabItem("ACTION")) {
 			if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
@@ -120,6 +121,8 @@ void Boss::ImGuiDraw()
 			ImGui::Checkbox("IsAction", &isAction_);
 			ImGui::EndTabItem();
 		}
+
+		// アニメーション：モデル
 		if (ImGui::BeginTabItem("ANIM")) {
 			if (ImGui::Button("Open")) {
 				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kOpen, 60.0f);
@@ -127,8 +130,14 @@ void Boss::ImGuiDraw()
 			if (ImGui::Button("Close")) {
 				animationManager_->AnimationExecute(BossSystemContext::AnimationManager::AnimType::kClose, 60.0f);
 			}
+
+			// アニメーション
+			animationManager_->ImGuiDraw();
+
 			ImGui::EndTabItem();
 		}
+
+		// バリア関係
 		if (ImGui::BeginTabItem("BARRIER")) {
 			if (ImGui::Button("CreateBarrier")) {
 				systemManager_->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
@@ -136,6 +145,7 @@ void Boss::ImGuiDraw()
 			systemManager_->barrierManager_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
+
 		// UI
 		if (ImGui::BeginTabItem("UI")) {
 			systemManager_->uiManager_.ImGuiDraw();
@@ -185,15 +195,18 @@ void Boss::OnCollision(ColliderObject target)
 		// 本体との衝突処理
 		else {
 			float damageRatio = 1.0f;
+			// 弱点むき出し状態のダメージ倍率アップ
 			if (animationManager_->IsOpen()) {
 				damageRatio *= 2.5f;
+				// 点滅の処理
+				animationManager_->AnimationDamageExecute();
+			}
+			else {
+
 			}
 			// 距離に応じて
 			if (distance >= 150.0f) {
-				systemManager_->healthManager_.TakeDamage(damageRatio * 0.25f);
-			}
-			if (distance >= 100.0f) {
-				systemManager_->healthManager_.TakeDamage(damageRatio * 0.4f);
+				systemManager_->healthManager_.TakeDamage(damageRatio * 0.35f);
 			}
 			else if (distance >= 75.0f) {
 				systemManager_->healthManager_.TakeDamage(damageRatio * 0.5f);
@@ -204,6 +217,8 @@ void Boss::OnCollision(ColliderObject target)
 
 			// オンヒットエフェクト
 			systemManager_->particleManager_.OnBulletHit();
+
+			// 死亡処理
 			if (systemManager_->healthManager_.IsDead()) {
 				isDead_ = true;
 			}

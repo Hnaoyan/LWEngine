@@ -6,6 +6,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/DeltaTime.h"
 #include "Engine/LwLib/Ease/Ease.h"
+#include <imgui.h>
 
 void BossSystemContext::AnimationManager::Initialize(Boss* boss)
 {
@@ -18,10 +19,20 @@ void BossSystemContext::AnimationManager::Initialize(Boss* boss)
 	CreateHierarchy("Core", "BarrierSphere", { scale / 1.5f,{},{} }, TextureManager::Load("Resources/Dissolve/noise0.png"));
 	// 閉じる処理
 	AnimationExecute(AnimType::kClose);
+
+	commonMaterial_ = std::make_unique<Material>();
+	commonMaterial_->CreateMaterial();
 }
 
 void BossSystemContext::AnimationManager::Update()
 {
+	commonMaterial_->Update();
+
+	hitEffect_.Update();
+	// エフェクト中は
+	if (hitEffect_.timer.IsActive()) {
+		commonMaterial_->color_.w = hitEffect_.alpha;
+	}
 	// アニメーション用のタイマー
 	animTimer_.Update();
 	deathTimer_.Update();
@@ -63,8 +74,16 @@ void BossSystemContext::AnimationManager::Draw(ICamera* camera, DrawDesc::LightD
 		modelDesc.SetDesc((*it).second.model);
 		modelDesc.worldTransform = &(*it).second.worldTransform;
 		modelDesc.texture = (*it).second.texture;
+		modelDesc.material = commonMaterial_.get();
 		ModelRenderer::NormalDraw(camera, modelDesc, lightDesc);
 	}
+}
+
+void BossSystemContext::AnimationManager::ImGuiDraw()
+{
+	ImGui::SeparatorText("Animation:Model");
+	ImGui::ColorEdit4("MaterialColor", &commonMaterial_->color_.x);
+	ImGui::DragFloat("LampFrame", &hitEffect_.returnFrame, 0.01f);
 }
 
 void BossSystemContext::AnimationManager::AnimationExecute(AnimType type)

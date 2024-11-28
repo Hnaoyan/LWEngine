@@ -79,6 +79,10 @@ void BulletManager::ImGuiDraw()
 		FindCluster("Boss:Genius")->SetInvisible(isDrawCheck_[uint32_t(TrackingAttribute::kGenius)]);
 		ImGui::TreePop();
 	}
+	if (ImGui::TreeNode("Trail")) {
+		ImGui::Text("Size:%d", trailManager_->GetContainairSize());
+		ImGui::TreePop();
+	}
 }
 
 void BulletManager::AddCluster(const std::string& tag)

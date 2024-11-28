@@ -22,6 +22,7 @@ void BossSystemContext::BarrierManager::Initialize(Boss* boss)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 	material_->color_.w = 0.85f;
+
 #ifdef RELEASE
 	// バリアの生成
 	Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
@@ -60,6 +61,9 @@ void BossSystemContext::BarrierManager::Update()
 
 void BossSystemContext::BarrierManager::Draw(ICamera* camera, const DrawDesc::LightDesc& lightDesc)
 {
+	if (isInvisible_) {
+		return;
+	}
 	if (material_->threshold_ != 1.0f) {
 		// 設定
 		DrawDesc::ModelDesc modelDesc{};
@@ -76,10 +80,13 @@ void BossSystemContext::BarrierManager::ImGuiDraw()
 {
 	ImGui::ColorEdit3("DissolveColor", &material_->dissolveColor_.x);
 	ImGui::DragFloat("Thresold", &material_->threshold_, 0.01f, 0.0f, 1.0f);
+	ImGui::Checkbox("Invisible", &isInvisible_);
 }
 
 void BossSystemContext::BarrierManager::Create(float generateValue)
 {
+	// 描画フラグ
+	isInvisible_ = false;
 	// パラメータ
 	param.isActive = true;
 	param.currentHP = generateValue;

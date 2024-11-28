@@ -9,6 +9,8 @@ public:
 	void ImGuiDraw();
 	void InitializeGlobalValue();
 public:
+	// 現在のエフェクト
+	Pipeline::PostEffectType nowEffect;
 	// 全体的なブルームの値
 	CBufferDataBloom bloomData_{};
 	// ダッシュのエフェクト
