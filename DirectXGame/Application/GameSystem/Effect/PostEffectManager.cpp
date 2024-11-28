@@ -14,10 +14,19 @@ PostEffectManager::PostEffectManager()
 
 void PostEffectManager::Update()
 {
-
-	if (dashEffect_.isActive) {
-		dashEffect_.timer.Update();
-		dashEffect_.data.blurWidth = Ease::Easing(dashEffect_.maxWidth, 0.0f, dashEffect_.timer.GetElapsedFrame());
+	// ダメージとダッシュの両方
+	if (dashEffect_.timer.IsActive() && damageEffect_.timer.IsActive()) {
+		dashEffect_.Update();
+		damageEffect_.Update();
 	}
-
+	// ダッシュ
+	else if (dashEffect_.timer.IsActive())
+	{
+		dashEffect_.Update();
+	}
+	// ダメージ
+	else if (damageEffect_.timer.IsActive())
+	{
+		damageEffect_.Update();
+	}
 }

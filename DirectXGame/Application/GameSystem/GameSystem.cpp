@@ -62,6 +62,11 @@ void GameSystem::ImGuiDraw()
 {
     ImGui::Begin("GameSystem");
     replayManager_.ImGuiDraw();
+
+    //if (ImGui::Button("Vignette")) {
+
+    //}
+
     ImGui::End();
 }
 

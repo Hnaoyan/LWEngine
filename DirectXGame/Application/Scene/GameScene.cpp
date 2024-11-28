@@ -163,6 +163,12 @@ void GameScene::ImGuiDraw()
 			if (ImGui::Button("PostBloom")) {
 				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 			}
+			if (ImGui::Button("PostBlur")) {
+				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
+			}
+			if (ImGui::Button("PostVignette")) {
+				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
+			}
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("DashEffect")) {

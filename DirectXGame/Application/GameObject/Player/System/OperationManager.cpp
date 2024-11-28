@@ -77,14 +77,14 @@ void OparationManager::InputUpdate()
 	// ダッシュ入力
 	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalState()->GetVariant());
 	if (!isQuickBoost && GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
-		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
+		if (player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
+			player_->HorizontalState()->ChangeRequest(PlayerStateLists::kQuickBoost);
 			return;
 		}
-		if (isQuickBoost) {
-			return;
-		}
-		player_->HorizontalState()->ChangeRequest(PlayerStateLists::kQuickBoost);
-		return;
+		//if (isQuickBoost) {
+		//	return;
+		//}
+		//return;
 	}
 
 	float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");

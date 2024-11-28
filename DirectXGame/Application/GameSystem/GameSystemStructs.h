@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 
@@ -74,9 +75,29 @@ struct DashBlur
 		timer.Start(35.0f);
 		isActive = true;
 	}
+	void Update() {
+		timer.Update();
+		data.blurWidth = Ease::Easing(maxWidth, 0.0f, timer.GetElapsedFrame());
+	}
 	// 終了処理
 	void Finalize() {
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 		isActive = false;
 	}
+};
+
+struct DamageVignette
+{
+	CBufferDataVignette data{};
+	FrameTimer timer;
+
+	void Initialize() {
+		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
+		float damageEffectFrame = 35.0f;
+		timer.Start(damageEffectFrame);
+	}
+	void Update() {
+		timer.Update();
+	}
+
 };

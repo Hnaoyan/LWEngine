@@ -37,9 +37,8 @@ void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 	}
 
 	hitPoint_.currentHealth -= damage;
-
-	hitPoint_.invincibility.Start(30.0f);
-	hitPoint_.damageEffectDuration.Start(5.0f);
+	hitPoint_.invincibility.Start(30.0f); // 無敵時間
+	hitPoint_.damageEffectDuration.Start(5.0f); // エフェクトの時間
 
 	if (hitPoint_.currentHealth < 1) {
 		player_->SetIsDead(true);

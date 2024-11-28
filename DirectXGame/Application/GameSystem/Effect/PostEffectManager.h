@@ -13,5 +13,6 @@ public:
 
 	// ダッシュのエフェクト
 	DashBlur dashEffect_{};
-
+	// ダメージのエフェクト
+	DamageVignette damageEffect_{};
 };
