@@ -28,6 +28,11 @@ public:
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
 	PlayerContext::AimManager* GetAimManager() { return &aimManager_; }
 	PlayerContext::LockOn* GetLockOn() { return &lockOn_; }
+	void SetCooltime(float cooltime){
+		if (!longDashCoolTimer_.IsActive()) {
+			longDashCoolTimer_.Start(cooltime);
+		}
+	}
 private: // POINTER
 	// 親
 	Player* player_ = nullptr;
@@ -42,7 +47,9 @@ private: // USER
 	FrameTimer lockOnCooltime_;
 
 	Vector3 dashVelocity_{};
-	FrameTimer dashCooltime_;
+	// 長押しダッシュ用
+	FrameTimer longDashTimer_;
+	FrameTimer longDashCoolTimer_;
 
 private: // SYSTEM
 	// ロックオンシステム

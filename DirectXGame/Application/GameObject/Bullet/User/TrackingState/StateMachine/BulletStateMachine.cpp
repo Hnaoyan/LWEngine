@@ -18,6 +18,9 @@ void BulletStateMachine::ChangeRequest(std::unique_ptr<ITrackingState> state)
 	if (currentState_) {
 		currentState_->Exit();
 	}
+
+	changeCount_++;
+
 	state->SetBullet(bullet_);
 	state->Enter();
 	currentState_ = std::move(state);
@@ -29,6 +32,8 @@ void BulletStateMachine::ChangeRequest(TrackingState state)
 		currentState_->Exit();
 	}
 	std::unique_ptr<ITrackingState> newState = BuildState(state);
+
+	changeCount_++;
 
 	newState->SetBullet(bullet_);
 	newState->Enter();

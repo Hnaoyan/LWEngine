@@ -145,7 +145,9 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 
 	ImGui::Begin("GameScene");
-
+	if (ImGui::Button("Restart")) {
+		stateRequest_ = GameSceneState::kGameRestart;
+	}
 	if (ImGui::Button("ReplayStart")) {
 		stateRequest_ = GameSceneState::kReplay;
 	}
@@ -309,6 +311,14 @@ void GameScene::ChangeState()
 		{
 		case GameSceneState::kWait:
 
+			break;
+		case GameSceneState::kGameRestart:
+			// オブジェクト類の初期化
+			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+			gameObjectManager_->GameSetUp();	// ゲームの準備
+			cameraManager_->Initialize(gameObjectManager_.get());
+			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
 			break;
 		case GameSceneState::kGamePlay:
 

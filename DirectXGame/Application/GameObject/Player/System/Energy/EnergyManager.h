@@ -15,7 +15,7 @@ namespace PlayerContext
 			float currentEnergy = 0.0f;
 			// 減少
 			float defaultDecr = 0.0f;
-			// 
+			// 上昇中か
 			bool isAssending = false;
 			// リチャージ時間
 			FrameTimer rechargeTimer_;
@@ -24,8 +24,10 @@ namespace PlayerContext
 	public:
 		void Initialize(Player* player);
 		void Update();
+		// エネルギーの割合
 		float GetEnergyRatio() { return energy_.currentEnergy / energy_.maxEnergy; }
 		float GetNowEnergy() { return energy_.currentEnergy; }
+		void BoostDecrement();
 		void QuickBoostDecre();
 		// ダッシュが出来るか
 		bool CheckQuickBoost() { return energy_.currentEnergy > (energy_.maxEnergy / 5.0f) ? true : false; }

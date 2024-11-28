@@ -30,4 +30,9 @@ void FallingState::InputHandle()
 	{
 		player_->VerticalState()->ChangeRequest(PlayerStateLists::kAssending);
 	}
+
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->isDoubleJump_) {
+		player_->VerticalState()->ChangeRequest(PlayerStateLists::kJump);
+		player_->isDoubleJump_ = true;
+	}
 }

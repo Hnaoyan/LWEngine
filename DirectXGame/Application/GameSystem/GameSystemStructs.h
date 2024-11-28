@@ -11,11 +11,11 @@
 enum class GameSceneState
 {
 	kWait,
-	kGamePlay,
-	kReplay,
-	kRecord,
+	kGameRestart,	// 再スタート
+	kGamePlay,	// スタート
+	kReplay,	// リプレイ
+	kRecord,	// 保存
 };
-
 
 /// <summary>
 /// プレイヤーのキー

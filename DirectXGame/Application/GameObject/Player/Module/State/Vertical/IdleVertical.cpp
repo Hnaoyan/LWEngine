@@ -5,6 +5,8 @@
 void IdleVertical::Initialize()
 {
 	nowState_ = this;
+	// 着地の際に二段ジャンプをリセット
+	player_->isDoubleJump_ = false;
 }
 
 void IdleVertical::Update()

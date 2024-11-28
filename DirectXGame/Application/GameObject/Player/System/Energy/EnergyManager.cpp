@@ -17,22 +17,34 @@ void PlayerContext::EnergyManager::Update()
 	quickBoostRecoveryTime_.Update();
 	energy_.isAssending = std::holds_alternative<AssendingState*>(player_->VerticalState()->GetVariant());
 	if (energy_.isAssending) {
-		energy_.currentEnergy -= 75.0f * GameSystem::GameSpeedFactor();
+		float decrementAssending = 75.0f;
+		energy_.currentEnergy -= decrementAssending * GameSystem::GameSpeedFactor();
 	}
-	//else /*if(std::holds_alternative<IdleVertical*>(player_->GetVerticalState()->GetNowState()))*/{
-	//	if (energy_.maxEnergy > energy_.currentEnergy) {
-	//		energy_.currentEnergy += 5.0f * GameSystem::GameSpeedFactor();
-	//	}
-	//}
 	else if(!quickBoostRecoveryTime_.IsActive()) {
 		if (energy_.maxEnergy > energy_.currentEnergy) {
-			energy_.currentEnergy += 5.0f * GameSystem::GameSpeedFactor();
+			float recoveryValue = 5.0f;
+			energy_.currentEnergy += recoveryValue * GameSystem::GameSpeedFactor();
 		}
 	}
 }
 
+void PlayerContext::EnergyManager::BoostDecrement()
+{
+	float defaultDecrement = (energy_.maxEnergy / 5.0f);
+	energy_.currentEnergy -= defaultDecrement;
+	if (energy_.currentEnergy < 0.0f) {
+		energy_.currentEnergy = 0.0f;
+	}
+	quickBoostRecoveryTime_.Start(10.0f);
+}
+
 void PlayerContext::EnergyManager::QuickBoostDecre()
 {
-	energy_.currentEnergy -= (energy_.maxEnergy / 5.0f);
+	float defaultDecrement = (energy_.maxEnergy / 5.0f);
+	float rate = 0.75f;
+	energy_.currentEnergy -= (defaultDecrement * rate);
+	if (energy_.currentEnergy < 0.0f) {
+		energy_.currentEnergy = 0.0f;
+	}
 	quickBoostRecoveryTime_.Start(10.0f);
 }

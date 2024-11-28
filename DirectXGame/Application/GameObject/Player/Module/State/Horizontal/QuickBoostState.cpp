@@ -1,9 +1,7 @@
 #include "QuickBoostState.h"
-#include "Engine/LwLib/LwLibrary.h"
 #include "Application/GameObject/Player/Player.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameSystem/Effect/PostEffectManager.h"
-#include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 void QuickBoostState::Initialize()
@@ -22,8 +20,11 @@ void QuickBoostState::Initialize()
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
 	changeTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "QuickBoostEndTime"));
-
+	// ゲージ減少
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
+	// ジャスト回避受付開始
+	float dodgeFrame = 10.0f;
+	player_->GetSystemFacede()->GetDudgeManager()->DodgeExcept(dodgeFrame);
 
 	PostEffectManager::sDashEffect.Initialize();
 }
@@ -54,10 +55,10 @@ void QuickBoostState::Exit()
 	PostEffectManager::sDashEffect.Finalize();
 
 	player_->GetSystemFacede()->GetAnimation()->Reset();
+	player_->GetOperation()->SetCooltime(GlobalVariables::GetInstance()->GetValue<float>("Player", "DashCooltime"));
 }
 	
 void QuickBoostState::InputHandle()
 {
 	IPlayerState::InputHandle();
-
 }

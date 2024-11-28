@@ -64,6 +64,8 @@ private:
 	
 	char path[256];
 	std::string filePath;
+public:
+	bool isDoubleJump_ = false;
 
 public:
 	OparationManager* GetOperation() { return &oparationManager_; }

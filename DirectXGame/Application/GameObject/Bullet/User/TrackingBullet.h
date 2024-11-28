@@ -60,6 +60,9 @@ private:
 	// 追従のデータ構造体
 	TrackingData data_{};
 
+	// ステートの変更回数
+	int32_t changeCount_ = 0;
+
 private:
 	void ChangeSelecter();
 };

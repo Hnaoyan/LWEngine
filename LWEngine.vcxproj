@@ -38,6 +38,8 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\SecondJumpingState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Camera\CameraManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameObjectManager.cpp" />
@@ -231,7 +233,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\SecondJumpingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h" />

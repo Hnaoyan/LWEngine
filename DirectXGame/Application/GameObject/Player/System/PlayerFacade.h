@@ -29,6 +29,9 @@ public: // アクセッサ
 	// Animation
 	PlayerContext::AnimationManager* GetAnimation() { return &animationManager_; }
 	PlayerContext::ShootingManager* GetShootingManager() { return &shootingManager_; }
+
+	// 回避用
+	PlayerContext::JustDodgeManager* GetDudgeManager() { return &justDodgeManager_; }
 #pragma endregion
 
 private:
@@ -44,6 +47,8 @@ private:
 	PlayerContext::AnimationManager animationManager_;
 	// 射撃関係のマネージャー
 	PlayerContext::ShootingManager shootingManager_;
+	// ジャスト回避などの無敵処理関係
+	PlayerContext::JustDodgeManager justDodgeManager_;
 	//// Aim
 	//PlayerContext::AimManager aimManager_;
 	//// LockOn

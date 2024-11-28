@@ -136,6 +136,10 @@ void TrackingBullet::ChangeSelecter()
 				}
 				// 変わらず追従
 				else {
+					if (stateMachine_->GetChangeCount() > 5) {
+						straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+						stateMachine_->RequestState(TrackingState::kStraight);
+					}
 					trackTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackFrame"));
 					stateMachine_->RequestState(TrackingState::kTracking);
 				}

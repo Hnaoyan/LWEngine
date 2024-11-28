@@ -297,6 +297,7 @@ void Boss::InitializeGlobalValue()
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
 	instance->AddValue(groupName, "TrackingDot", float(-0.85f));	// 追従判定の値
+	instance->AddValue(groupName, "TrackingDotLoose", float(-0.85f));	// 追従判定の値（緩め）
 
 	// 通常
 

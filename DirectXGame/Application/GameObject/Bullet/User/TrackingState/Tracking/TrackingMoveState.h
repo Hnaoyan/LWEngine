@@ -14,6 +14,8 @@ private:
 	// 劣等型用のオフセット
 	Vector3 inferiorOffset_{};
 
+	FrameTimer looseTimer_;	// 追従解除が緩くなるまでのタイマー
+
 private: // 計算関数
 	// 優等（完全追尾
 	Vector3 CalcSuperiorAcceleration();

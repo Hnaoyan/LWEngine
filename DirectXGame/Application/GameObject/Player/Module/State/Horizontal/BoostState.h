@@ -1,5 +1,6 @@
 #pragma once
 #include "../IPlayerState.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 class BoostState : public IPlayerState
 {
@@ -10,5 +11,7 @@ public: // 継承部
 	void InputHandle() override;
 
 private:
+	FrameTimer changeTimer_;	// 変更までの時間
+	Vector3 dashVelocity_{};	// 速度
 
 };

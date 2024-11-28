@@ -35,7 +35,7 @@ void BossSystemContext::AnimationManager::Update()
 	}
 	// エフェクトなくなったら
 	else {
-		//commonMaterial_->color_ = { 1.0f,1.0f,1.0f,1.0f };
+		commonMaterial_->color_ = { 1.0f,1.0f,1.0f,1.0f };
 	}
 	// アニメーション用のタイマー
 	animTimer_.Update();

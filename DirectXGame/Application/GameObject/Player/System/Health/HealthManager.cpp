@@ -15,10 +15,6 @@ void PlayerContext::HealthManager::Update()
 	// クールタイムの処理
 	hitPoint_.invincibility.Update();
 	hitPoint_.damageEffectDuration.Update(GameSystem::GameSpeedFactor());
-
-	//if (hitPoint_.invincibility.IsActive()) {
-
-	//}
 	if (hitPoint_.invincibility.IsEnd()) {
 		PostEffectManager::sDamageEffect.Finalize();
 	}

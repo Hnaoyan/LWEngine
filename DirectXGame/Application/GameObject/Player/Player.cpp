@@ -69,6 +69,12 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
+	if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
+		material_->color_.w = 0.3f;
+	}
+	else {
+		material_->color_.w = 0.3f;
+	}
 	// マテリアル更新
 	model_->GetMaterial()->Update();
 	// デスクの設定
@@ -211,7 +217,19 @@ void Player::OnCollision(ColliderObject target)
 	//	facadeSystem_->GetHealth()->TakeDamage();
 	//}
 	else if (std::holds_alternative<IBullet*>(target)) {
-		facadeSystem_->GetHealth()->TakeDamage();
+		// ジャスト回避処理
+		if (facadeSystem_->GetDudgeManager()->IsActive()) {
+			float invisibleFrame = 15.0f;
+			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame);
+		}
+		// 無敵処理
+		else if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
+
+		}
+		// ダメージを受ける処理
+		else {
+			facadeSystem_->GetHealth()->TakeDamage();
+		}
 	}
 	//else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
 	//	facadeSystem_->GetHealth()->TakeDamage();
@@ -230,15 +248,23 @@ void Player::InitializeGlobalValue()
 	//---プレイヤー基本情報---//
 	std::string groupName = "Player";
 	instance->CreateGroup(groupName);
-	instance->AddValue(groupName, "DashPower", 0.0f);
+	// ダッシュ関係
+	instance->AddValue(groupName, "DashPower", float(0.0f));
+	instance->AddValue(groupName, "QuickBoostEndTime", float(40.0f));
+	instance->AddValue(groupName, "BoostDashPower", float(0.0f));
+	instance->AddValue(groupName, "BoostEndTime", float(30.0f));
+	instance->AddValue(groupName, "DashCooltime", float(30.0f));
+	instance->AddValue(groupName, "DashExceptTime", float(12.0f));
+
 	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
 	instance->AddValue(groupName, "VelocityDecay", float(0.2f));
 	instance->AddValue(groupName, "ShotDuration", float(30.0f));
 	instance->AddValue(groupName, "LockDuration", float(25.0f));
-	instance->AddValue(groupName, "QuickBoostEndTime", float(40.0f));
 	instance->AddValue(groupName, "HitPoint", int32_t(20));
 	instance->AddValue(groupName, "AimOffset", Vector3(0.0f, 0.0f, 50.0f));
-
+	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));
+	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));
+	instance->AddValue(groupName, "FallGravity", float(-3.0f));
 	//---プレイヤーの追従弾---//
 	groupName = "PlayerTrackingBullet";
 	instance->CreateGroup(groupName);
