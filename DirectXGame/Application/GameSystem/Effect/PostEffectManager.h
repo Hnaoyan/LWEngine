@@ -17,4 +17,7 @@ public:
 	static DashBlur sDashEffect;
 	// ダメージのエフェクト
 	static DamageVignette sDamageEffect;
+	// スローモーション処理
+	static SlowGrayScale sSlowEffect;
+
 };

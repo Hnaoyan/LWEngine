@@ -9,6 +9,7 @@ namespace PlayerContext
 	{
 	public:
 		JustDodgeManager() {};
+		JustDodgeManager(Player* player) : player_(player) {};
 
 		// ジャスト回避開始処理
 		void DodgeExcept(const float& frame) {
@@ -28,6 +29,8 @@ namespace PlayerContext
 		FrameTimer dodgeTimer_;
 		// 無敵時間
 		FrameTimer invisibleTimer_;
+		// 
+		Player* player_ = nullptr;
 	};
 }
 

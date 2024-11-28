@@ -83,6 +83,7 @@ struct DashBlur
 	}
 };
 
+// ダメージエフェクト
 struct DamageVignette
 {
 	CBufferDataVignette data{};
@@ -104,4 +105,25 @@ struct DamageVignette
 		timer.End();
 	}
 
+};
+
+// ジャスト回避エフェクト
+struct SlowGrayScale
+{
+	CBufferDataGrayscale data{};
+	FrameTimer timer;
+
+	void Initialize() {
+		float frame = 30.0f;
+		timer.Start(frame);
+	}
+
+	void Update() {
+		timer.Update();
+		data.lerpFactor = Ease::Easing(1.0f, 0.0f, timer.GetElapsedFrame());
+	}
+
+	void Finalize() {
+		timer.End();
+	}
 };

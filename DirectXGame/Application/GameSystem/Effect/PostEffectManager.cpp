@@ -6,6 +6,7 @@
 
 DashBlur PostEffectManager::sDashEffect;
 DamageVignette PostEffectManager::sDamageEffect;
+SlowGrayScale PostEffectManager::sSlowEffect;
 
 PostEffectManager::PostEffectManager()
 {
@@ -27,8 +28,12 @@ PostEffectManager::PostEffectManager()
 
 void PostEffectManager::Update()
 {
+	if (sSlowEffect.timer.IsActive()) {
+		sSlowEffect.Update();
+		nowEffect = Pipeline::PostEffectType::kGrayscaleBloom;
+	}
 	// ダメージとダッシュの両方
-	if (sDashEffect.timer.IsActive() && sDamageEffect.timer.IsActive()) {
+	else if (sDashEffect.timer.IsActive() && sDamageEffect.timer.IsActive()) {
 		sDashEffect.Update();
 		sDamageEffect.Update();
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignetteBlur;
@@ -57,6 +62,7 @@ void PostEffectManager::Update()
 	desc.bloom = bloomData_;
 	desc.blur = sDashEffect.data;
 	desc.vignette = sDamageEffect.data;
+	desc.grayscale = sSlowEffect.data;
 	PostEffectRender::GetInstance()->Update(desc);
 
 }
@@ -73,6 +79,13 @@ void PostEffectManager::ImGuiDraw()
 		if (ImGui::Button("VignetteBlur")) {
 			nowEffect = Pipeline::PostEffectType::kVignetteBlur;
 		}
+		if (ImGui::Button("Gray")) {
+			nowEffect = Pipeline::PostEffectType::kGrayScale;
+		}
+		if (ImGui::Button("GrayBloom")) {
+			nowEffect = Pipeline::PostEffectType::kGrayscaleBloom;
+		}
+		ImGui::TreePop();
 	}
 	// ビネット
 	ImGui::DragFloat3("VignetteColor", &sDamageEffect.data.color.x, 0.01f);

@@ -22,6 +22,7 @@ void PostEffectRender::StaticInitialize()
 	noise_.CreateConstantBuffer(device);
 	hsv_.CreateConstantBuffer(device);
 	bloom_.CreateConstantBuffer(device);
+	grayscale_.CreateConstantBuffer(device);
 
 	vignette_.cMap_->scale = 16.0f;
 	vignette_.cMap_->powValue = 0.8f;
@@ -43,6 +44,8 @@ void PostEffectRender::StaticInitialize()
 
 	bloom_.cMap_->threshold = 0.1f;
 	bloom_.cMap_->sigma = 2.0f;
+
+	grayscale_.cMap_->lerpFactor = 1.0f;
 }
 
 void PostEffectRender::Update(const PostEffectDesc& desc)
@@ -69,6 +72,9 @@ void PostEffectRender::Update(const PostEffectDesc& desc)
 	// Bloom
 	bloom_.cMap_->threshold = desc.bloom.threshold;
 	bloom_.cMap_->sigma = desc.bloom.sigma;
+
+	// Grayscale
+	grayscale_.cMap_->lerpFactor = desc.grayscale.lerpFactor;
 
 	// ノイズでの処理時のみ
 	if (sPostEffect != Pipeline::PostEffectType::kNoise) {
@@ -104,7 +110,7 @@ void PostEffectRender::Draw(ID3D12GraphicsCommandList* cmdList)
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kNoise), noise_.cBuffer->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kHSV), hsv_.cBuffer->GetGPUVirtualAddress());
 	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kBloom), bloom_.cBuffer->GetGPUVirtualAddress());
-
+	commandList_->SetGraphicsRootConstantBufferView(static_cast<UINT>(EffectRegister::kGrayscale), grayscale_.cBuffer->GetGPUVirtualAddress());
 	// 描画
 	commandList_->DrawInstanced(3, 1, 0, 0);
 }

@@ -73,7 +73,7 @@ void Player::Draw(ModelDrawDesc desc)
 		material_->color_.w = 0.3f;
 	}
 	else {
-		material_->color_.w = 0.3f;
+		material_->color_.w = 1.0f;
 	}
 	// マテリアル更新
 	model_->GetMaterial()->Update();
@@ -165,6 +165,7 @@ void Player::ImGuiDraw()
 	//---基本情報---//
 	ImGui::SeparatorText("StatusInfo");
 	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 200), ImGuiWindowFlags_NoTitleBar);
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
@@ -172,7 +173,8 @@ void Player::ImGuiDraw()
 	//collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	ImGui::Text("IsGround:%d", this->isGround_);
-	ImGui::Checkbox("IsInvisible", &isInvisible_);
+	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisible();
+	ImGui::Text("IsInvisible:%d", isInv);
 	//if (ImGui::Button("KnockBack")) {
 	//	isKnock_ = true;
 	//	Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
@@ -218,9 +220,10 @@ void Player::OnCollision(ColliderObject target)
 	//}
 	else if (std::holds_alternative<IBullet*>(target)) {
 		// ジャスト回避処理
-		if (facadeSystem_->GetDudgeManager()->IsActive()) {
-			float invisibleFrame = 15.0f;
+		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisible()) {
+			float invisibleFrame = 30.0f;
 			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame);
+			PostEffectManager::sSlowEffect.Initialize();
 		}
 		// 無敵処理
 		else if (facadeSystem_->GetDudgeManager()->IsInvisible()) {

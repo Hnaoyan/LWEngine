@@ -42,3 +42,8 @@ struct BloomData
     float32_t threshold;
     float32_t gaussSigma;
 };
+
+struct GrayscaleData
+{
+    float32_t lerpFactor;
+};

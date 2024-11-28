@@ -120,6 +120,7 @@ namespace Pipeline
 		kNoise,
 		kHSV,
 		kBloom,
+		kGrayscale,
 		kCountOfParameter,
 	};
 	// ポストエフェクトの種類
@@ -137,6 +138,7 @@ namespace Pipeline
 		kBloom,	// ブルーム
 		// USER
 		kVignetteBlur,	// ビネットとブラーの合わせ（ブルームも掛ける）
+		kGrayscaleBloom,	// グレースケールとブルームの合わせ
 		kCountOfType,
 	};
 }

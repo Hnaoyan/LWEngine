@@ -1323,6 +1323,7 @@
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\BloomVignetteBlurPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\GrayscaleBloomPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
