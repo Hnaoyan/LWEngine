@@ -134,7 +134,9 @@ namespace Pipeline
 		kDissolve,			// Dissolve
 		kNoise,				// ランダムノイズ
 		kLuminanceOutline,	// 簡易アウトライン
-		kBloom,
+		kBloom,	// ブルーム
+		// USER
+		kVignetteBlur,	// ビネットとブラーの合わせ（ブルームも掛ける）
 		kCountOfType,
 	};
 }

@@ -6,13 +6,13 @@ class PostEffectManager
 public:
 	PostEffectManager();
 	void Update();
+	void ImGuiDraw();
+	void InitializeGlobalValue();
 public:
-
+	// 全体的なブルームの値
 	CBufferDataBloom bloomData_{};
-	CBufferDataVignette vignetteData_{};
-
 	// ダッシュのエフェクト
-	DashBlur dashEffect_{};
+	static DashBlur sDashEffect;
 	// ダメージのエフェクト
-	DamageVignette damageEffect_{};
+	static DamageVignette sDamageEffect;
 };

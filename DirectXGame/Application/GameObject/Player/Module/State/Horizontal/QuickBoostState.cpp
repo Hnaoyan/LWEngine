@@ -2,6 +2,7 @@
 #include "Engine/LwLib/LwLibrary.h"
 #include "Application/GameObject/Player/Player.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Application/GameSystem/Effect/PostEffectManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
@@ -24,7 +25,7 @@ void QuickBoostState::Initialize()
 
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 
-	GameSystem::sBlurEffect.Initialize();
+	PostEffectManager::sDashEffect.Initialize();
 }
 
 void QuickBoostState::Update()
@@ -50,7 +51,7 @@ void QuickBoostState::Update()
 
 void QuickBoostState::Exit()
 {
-	GameSystem::sBlurEffect.Finalize();
+	PostEffectManager::sDashEffect.Finalize();
 
 	player_->GetSystemFacede()->GetAnimation()->Reset();
 }

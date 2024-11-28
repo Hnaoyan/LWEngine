@@ -65,15 +65,12 @@ struct DashBlur
 {
 	// ブラーの詳細情報
 	CBufferDataBlur data{};
-	bool isActive = false;
 	float maxWidth = 0.2f;
 	FrameTimer timer;
 	// 初期化
 	void Initialize() {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
 		data.blurWidth = maxWidth;
 		timer.Start(35.0f);
-		isActive = true;
 	}
 	void Update() {
 		timer.Update();
@@ -81,8 +78,7 @@ struct DashBlur
 	}
 	// 終了処理
 	void Finalize() {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-		isActive = false;
+		timer.End();
 	}
 };
 
@@ -90,14 +86,18 @@ struct DamageVignette
 {
 	CBufferDataVignette data{};
 	FrameTimer timer;
-
+	// 初期化処理
 	void Initialize() {
-		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
 		float damageEffectFrame = 35.0f;
 		timer.Start(damageEffectFrame);
 	}
+	// 更新処理
 	void Update() {
 		timer.Update();
+	}
+	// 終了処理
+	void Finalize() {
+		timer.End();
 	}
 
 };

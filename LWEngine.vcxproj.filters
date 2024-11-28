@@ -1318,6 +1318,7 @@
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\BloomVignetteBlurPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />

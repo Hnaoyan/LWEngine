@@ -17,10 +17,10 @@ void PlayerContext::HealthManager::Update()
 	hitPoint_.damageEffectDuration.Update(GameSystem::GameSpeedFactor());
 
 	if (hitPoint_.invincibility.IsActive()) {
-		//PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
+		PostEffectManager::sDamageEffect.Initialize();
 	}
 	if (hitPoint_.invincibility.IsEnd()) {
-		//PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+		PostEffectManager::sDamageEffect.Finalize();
 	}
 
 	if (hitPoint_.currentHealth <= 0) {

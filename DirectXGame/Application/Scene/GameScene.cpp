@@ -155,29 +155,6 @@ void GameScene::ImGuiDraw()
 	if (ImGui::Button("RecordingEnd")) {
 		gameSystem_->GetReplayManager()->ExportReplay();
 	}
-	if (ImGui::BeginTabBar("PostEffect")) {
-		if (ImGui::BeginTabItem("Switch")) {
-			if (ImGui::Button("PostDefault")) {
-				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-			}
-			if (ImGui::Button("PostBloom")) {
-				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-			}
-			if (ImGui::Button("PostBlur")) {
-				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kRadialBlur;
-			}
-			if (ImGui::Button("PostVignette")) {
-				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignette;
-			}
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("DashEffect")) {
-
-			ImGui::EndTabItem();
-		}
-		ImGui::EndTabBar();
-	}
-
 	if (ImGui::BeginTabBar("Lighting"))
 	{
 		float defaultSpeed = 0.01f;

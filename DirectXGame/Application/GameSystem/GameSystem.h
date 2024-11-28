@@ -25,7 +25,6 @@ public:
 
 public:
 	// プレイヤーのキー
-	static DashBlur sBlurEffect;
 	static KeyConfigManager sKeyConfigManager;
 
 	/// <summary>
