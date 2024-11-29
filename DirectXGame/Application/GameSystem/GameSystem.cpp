@@ -25,6 +25,9 @@ void GameSystem::Initialize()
     keyConfig_ = KeyConfigManager();
     // ポストエフェクト生成
     postEffectManager_ = PostEffectManager();
+    postEffectManager_.Initialize(this);
+
+    // ポストエフェクトレンダラーの設定
     PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 }
 

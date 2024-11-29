@@ -7,6 +7,7 @@
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
@@ -70,15 +71,9 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
-	//if (facadeSystem_->GetHealth()->IsInvisible()) {
-	//	material_->color_.w = facadeSystem_->GetHealth()->GetAlpha();
-	//}
-	//else if (facadeSystem_->GetHealth()->EndInvisible()) {
-	//	material_->color_.w = 1.0f;
-	//}
-
 	// マテリアル更新
 	model_->GetMaterial()->Update();
+	material_->Update();
 	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
 	DrawDesc::ModelDesc modelDesc{};
@@ -87,10 +82,10 @@ void Player::Draw(ModelDrawDesc desc)
 	lightDesc.spotLight = desc.spotLight;
 	modelDesc.SetDesc(model_);
 	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
-	material_->Update();
 	modelDesc.material = material_.get();
 	// プレイヤーの描画
 	if (!isInvisible_) {
+		// 本体の描画
 		ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 	}
 
@@ -130,6 +125,13 @@ void Player::ImGuiDraw()
 	}
 	NowState();
 
+	// アウトライン用の
+	if (ImGui::TreeNode("Outline")) {
+		
+		ImGui::DragFloat4("OutlineColor", &outlineMaterial_->color_.x, 0.01f);
+		ImGui::TreePop();
+	}
+
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
@@ -158,6 +160,7 @@ void Player::ImGuiDraw()
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Material")) {
+			ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
 			ImGui::DragFloat("MaterialShininess", &material_->shininess_, 0.01f);
 			ImGui::DragFloat("Threshold", &material_->threshold_, 0.01f, 0.0f, 1.0f);
 			ImGui::EndTabItem();
@@ -172,7 +175,6 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	ImGui::Text("IsGround:%d", this->isGround_);
 	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisible();

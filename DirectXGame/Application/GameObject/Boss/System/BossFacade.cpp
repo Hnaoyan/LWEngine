@@ -4,7 +4,7 @@
 void BossFacade::Initialize(Boss* boss)
 {
 	// HP
-	healthManager_.Initialize(20);
+	healthManager_.Initialize(60);
 	// パーティクル
 	particleManager_.Initialize(boss);
 	// UI

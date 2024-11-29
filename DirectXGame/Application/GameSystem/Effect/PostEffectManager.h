@@ -1,10 +1,13 @@
 #pragma once
 #include "../GameSystemStructs.h"
 
+class GameSystem;
+
 class PostEffectManager
 {
 public:
 	PostEffectManager();
+	void Initialize(GameSystem* system);
 	void Update();
 	void ImGuiDraw();
 	void InitializeGlobalValue();
@@ -19,5 +22,7 @@ public:
 	static DamageVignette sDamageEffect;
 	// スローモーション処理
 	static SlowGrayScale sSlowEffect;
+private:
+	GameSystem* gameSystem_ = nullptr;
 
 };

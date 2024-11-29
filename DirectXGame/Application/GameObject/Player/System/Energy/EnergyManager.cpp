@@ -23,9 +23,11 @@ void PlayerContext::EnergyManager::Update()
 	//	energy_.currentEnergy -= decrementAssending * GameSystem::GameSpeedFactor();
 	//}
 
+	// オーバーヒートの処理
 	if (overheatTimer_.IsActive()) {
 		energy_.currentEnergy = Ease::Easing(0.0f, energy_.maxEnergy, overheatTimer_.GetElapsedFrame());
 	}
+	// 通常の処理
 	else if(!quickBoostRecoveryCoolTime_.IsActive()) {
 		if (energy_.maxEnergy > energy_.currentEnergy) {
 			energy_.currentEnergy += energy_.recoveryValue * GameSystem::GameSpeedFactor();

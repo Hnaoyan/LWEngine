@@ -36,7 +36,7 @@ public: // アクセッサ
 	// アクティブ確認
 	bool IsActive() { return isActive_; }
 	// 終了確認
-	bool IsEnd() { return isEnd_; }
+	bool IsEnd() { return isEnd_ && !isActive_; }
 	// 一時停止確認
 	bool IsPause() { return isPause_ && !isEnd_; }
 	// 現在フレーム

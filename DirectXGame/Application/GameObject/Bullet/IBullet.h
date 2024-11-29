@@ -51,6 +51,9 @@ protected:
 	// 対象オブジェクト
 	IGameObject* object_ = nullptr;
 
+	// ダメージ量
+	float damageRatio_ = 1.0f;
+
 public: // アクセッサ
 	std::string GetTag() const { return tag_; }
 	EulerTransform GetTransform() const { return transform_; }
@@ -60,8 +63,9 @@ public: // アクセッサ
 
 	Sphere* GetCollider() { return &collider_; }
 	IGameObject* GetTarget() { return object_; }
+	float DamageRatio() const { return damageRatio_; }
 
-
+	void SetDamageRatio(const float& ratio) { damageRatio_ = ratio; }
 	void SetTrail(BulletTrail* trail) { trail_ = trail; }
 	void SetBreakEmitter(GPUParticleEmitter* emitter) { breakEmitter_ = emitter; }
 	void SetGameObject(IGameObject* object) { object_ = object; }

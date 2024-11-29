@@ -24,6 +24,14 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	bullet->SetVelocity(direct * speed);
 	bullet->transform_ = transform;
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
+	// ダメージの違い
+	if (isChangeAttack_) {
+		isChangeAttack_ = false;
+		bullet->SetDamageRatio(5.0f);
+		// コンボのリセット
+		player_->GetSystemFacede()->GetDudgeManager()->ComboReset();
+	}
+
 	bulletManager_->FindCluster("Player:NormalBullet")->AddBullet(std::move(bullet));
 }
 

@@ -26,8 +26,18 @@ PostEffectManager::PostEffectManager()
 
 }
 
+void PostEffectManager::Initialize(GameSystem* system)
+{
+	// ゲームシステム設定
+	gameSystem_ = system;
+}
+
 void PostEffectManager::Update()
 {
+	if (gameSystem_->GetReplayManager()->IsReplayNow()) {
+		return;
+	}
+
 	if (sSlowEffect.timer.IsActive()) {
 		sSlowEffect.Update();
 		nowEffect = Pipeline::PostEffectType::kGrayscaleBloom;

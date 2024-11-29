@@ -11,6 +11,7 @@ namespace PlayerContext
 	class EnergyManager
 	{
 	private:
+		// エネルギー関係の値
 		struct EnergyData
 		{
 			// 量
@@ -29,7 +30,9 @@ namespace PlayerContext
 		};
 
 	public:
+		// 初期化
 		void Initialize(Player* player);
+		// 更新
 		void Update();
 		// エネルギーを瞬時に回復するやつ
 		void RecoverGage(float recoverEnergy);
@@ -47,12 +50,17 @@ namespace PlayerContext
 		// ImGUi
 		void ImGuiDraw();
 	private:
+		/// <summary>
+		/// 減少の処理
+		/// </summary>
+		/// <param name="value"></param>
 		void DecrementProcess(float value);
 
 	private:
+		// プレイヤー
 		Player* player_ = nullptr;
+		// 小ダッシュのリカバリー時間
 		FrameTimer quickBoostRecoveryCoolTime_;
-
 		// オーバーヒートの時間
 		FrameTimer overheatTimer_;
 		// ダッシュの消費量

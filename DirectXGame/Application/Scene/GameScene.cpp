@@ -203,6 +203,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Enemy", "EnemyBug");	// 雑魚敵
 	ModelManager::LoadNormalModel("BossEnemy", "Prizm");	// ボス
 	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
+	ModelManager::LoadNormalModel("PlayerOutline", "Robotto");	// コンボ用の枠モデル
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");	// 天球
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ

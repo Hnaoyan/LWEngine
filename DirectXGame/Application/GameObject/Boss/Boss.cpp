@@ -193,7 +193,7 @@ void Boss::OnCollision(ColliderObject target)
 		}
 		// 本体との衝突処理
 		else {
-			float damageRatio = 1.0f;
+			float damageRatio = 1.0f * (*bullet)->DamageRatio();
 			// 弱点むき出し状態のダメージ倍率アップ
 			if (animationManager_->IsOpen()) {
 				damageRatio *= 2.5f;

@@ -46,7 +46,10 @@ public:
 	/// UI描画
 	/// </summary>
 	void UISpriteDraw();
-
+	/// <summary>
+	/// コライダーの設定関数
+	/// </summary>
+	/// <param name="collisionManager"></param>
 	void SetCollier(CollisionManager* collisionManager) override;
 
 private:
@@ -80,6 +83,7 @@ public: // アクセッサ
 	PlayerStateMachine* HorizontalState() { return stateManager_->GetHorizontal(); }
 	PlayerStateMachine* VerticalState() { return stateManager_->GetVertical(); }
 	Boss* GetBoss() { return boss_; }
+	Material* GetMaterial() { return material_.get(); }
 	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
@@ -116,4 +120,9 @@ public:
 private:
 	// ボス
 	Boss* boss_ = nullptr;
+
+	// アウトライン用のモデル
+	WorldTransform outlineTransform_{};
+	Model* outlineModel_ = nullptr;
+	std::unique_ptr<Material> outlineMaterial_;
 };
