@@ -93,6 +93,12 @@ void TrackingBullet::ChangeSelecter()
 	// 直接的な距離
 	// 加速度と速度を
 
+	//if (!isTargetBoss_) {
+	//	Player* player = dynamic_cast<Player*>(object_);
+
+	//	if(player->GetSystemFacede)
+	//}
+
 	if (straightTimer_.IsEnd()) {
 		requestState_ = TrackingState::kTracking;
 	}

@@ -13,9 +13,31 @@ void PlayerContext::HealthManager::Initialize(Player* player, uint32_t maxHP)
 void PlayerContext::HealthManager::Update()
 {
 	// クールタイムの処理
-	hitPoint_.invincibility.Update();
+	invisibleEffect_.Update();
+
+	// それぞれの色の変わり
+	if (invisibleEffect_.activeTimer.IsActive()) {
+		// アルファの代わり
+		if (invisibleEffect_.upTimer.IsActive()) {
+			invisibleEffect_.color.w = Ease::Easing(0.0f, 1.0f, invisibleEffect_.upTimer.GetElapsedFrame());
+		}
+		else if (invisibleEffect_.downTimer.IsActive()) {
+			invisibleEffect_.color.w = Ease::Easing(1.0f, 0.0f, invisibleEffect_.upTimer.GetElapsedFrame());
+		}
+		// 切り替わり
+		if (invisibleEffect_.downTimer.IsEnd()) {
+			invisibleEffect_.upTimer.Start(invisibleEffect_.returnFrame);
+		}
+		else if (invisibleEffect_.upTimer.IsEnd()) {
+			invisibleEffect_.downTimer.Start(invisibleEffect_.returnFrame);
+		}
+	}
+	else if (invisibleEffect_.activeTimer.IsEnd()) {
+		invisibleEffect_.color.w = 1.0f;
+	}
+
 	hitPoint_.damageEffectDuration.Update(GameSystem::GameSpeedFactor());
-	if (hitPoint_.invincibility.IsEnd()) {
+	if (invisibleEffect_.activeTimer.IsEnd()) {
 		PostEffectManager::sDamageEffect.Finalize();
 	}
 
@@ -28,12 +50,13 @@ void PlayerContext::HealthManager::Update()
 void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 {
 	// 無敵時間
-	if (hitPoint_.invincibility.IsActive()) {
+	if (invisibleEffect_.activeTimer.IsActive()) {
 		return;
 	}
 
 	hitPoint_.currentHealth -= damage;
-	hitPoint_.invincibility.Start(30.0f); // 無敵時間
+	invisibleEffect_.upTimer.Start(invisibleEffect_.returnFrame);
+	invisibleEffect_.activeTimer.Start(30.0f); // 無敵時間
 	hitPoint_.damageEffectDuration.Start(5.0f); // エフェクトの時間
 	PostEffectManager::sDamageEffect.Initialize();	// ダメージエフェクト
 

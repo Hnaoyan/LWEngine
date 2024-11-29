@@ -100,7 +100,10 @@ void OparationManager::InputUpdate()
 
 	// ダッシュ入力の受付
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
-		if (player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost() && !longDashTimer_.IsActive()) {
+		// エネルギー側でこの入力が可能か
+		bool isEnergy = /*player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost() && */!player_->GetSystemFacede()->GetEnergy()->IsOverheat();
+		// ロングダッシュにするかどうか
+		if (isEnergy && !longDashTimer_.IsActive()) {
 			longDashTimer_.Start(12.0f);
 		}
 	}

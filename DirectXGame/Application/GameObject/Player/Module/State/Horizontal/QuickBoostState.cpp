@@ -23,22 +23,23 @@ void QuickBoostState::Initialize()
 	// ゲージ減少
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 	// ジャスト回避受付開始
-	float dodgeFrame = 10.0f;
-	player_->GetSystemFacede()->GetDudgeManager()->DodgeExcept(dodgeFrame);
+	player_->GetSystemFacede()->GetDudgeManager()->DodgeExcept();
 
+	// ダッシュエフェクト
 	PostEffectManager::sDashEffect.Initialize();
 }
 
 void QuickBoostState::Update()
 {
 	changeTimer_.Update();
-
+	// 減速処理
 	dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, changeTimer_.GetElapsedFrame());
 	dashVelocity_.z = LwLib::Lerp(dashVelocity_.z, 0, changeTimer_.GetElapsedFrame());
 
 	player_->velocity_.x += dashVelocity_.x * GameSystem::GameSpeedFactor();
 	player_->velocity_.z += dashVelocity_.z * GameSystem::GameSpeedFactor();
 
+	// 変更処理
 	if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {
 		if (leftStick_.x != 0 || leftStick_.y != 0) {
 			stateMachine_->ChangeRequest(PlayerStateLists::kMove);

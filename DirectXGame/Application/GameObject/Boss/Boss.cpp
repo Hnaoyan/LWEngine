@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwLibrary.h"
+#include "Engine/Collision/CollisionManager.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
@@ -244,6 +245,11 @@ void Boss::UIDraw()
 void Boss::Finalize()
 {
 	gpuParticle_->DeleteEmitter("BossDamage");
+}
+
+void Boss::SetCollier(CollisionManager* collisionManager)
+{
+	collisionManager->ListRegist(&collider_);
 }
 
 void Boss::InitializeGlobalValue()

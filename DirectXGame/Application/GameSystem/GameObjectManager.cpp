@@ -161,11 +161,10 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 
 	// 全ての衝突設定
 	if (player_) {
-		collisionManager->ListRegist(player_->GetCollider());
-		collisionManager->ListRegist(player_->GetFootCollider());
+		player_->SetCollier(collisionManager);
 	}
 	if (boss_) {
-		collisionManager->ListRegist(boss_->GetCollider());
+		boss_->SetCollier(collisionManager);
 	}
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);

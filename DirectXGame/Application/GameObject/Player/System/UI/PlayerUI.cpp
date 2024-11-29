@@ -79,8 +79,14 @@ void PlayerContext::PlayerUIManager::EnergyUI()
 	Vector2 scale = globalVariables_->GetValue<Vector2>("PlayerUI", "EnergySize");
 	// 現在値
 	float t = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
+	Vector4 color = { 0.0f,1.0f,0.0f,1.0f };
+	// オーバーヒートしているなら色を赤に
+	if (player_->GetSystemFacede()->GetEnergy()->IsOverheat()) {
+		color = { 1.0f,0.0f,0.0f,1.0f };
+	}
 	energyUI_.currentScale = Vector2::Lerp({ energyUI_.maxScale.x, 0.0f }, energyUI_.maxScale, t);
 	energyUI_.currentHP.sprite->SetSize(energyUI_.currentScale);
+	energyUI_.currentHP.color = (color);
 	energyUI_.currentHP.Draw();
 	// 背景
 	energyUI_.backGround.sprite->SetPosition({ energyUI_.position.x - (scale.x / 2.0f),energyUI_.position.y });

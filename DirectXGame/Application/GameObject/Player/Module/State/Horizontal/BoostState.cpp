@@ -25,8 +25,7 @@ void BoostState::Initialize()
 	// ゲージ減少
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 	// ジャスト回避受付開始
-	float dodgeFrame = 10.0f;
-	player_->GetSystemFacede()->GetDudgeManager()->DodgeExcept(dodgeFrame);
+	player_->GetSystemFacede()->GetDudgeManager()->DodgeExcept();
 	PostEffectManager::sDashEffect.Initialize();
 }
 

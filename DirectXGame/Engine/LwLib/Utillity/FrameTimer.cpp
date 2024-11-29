@@ -1,5 +1,6 @@
 #include "FrameTimer.h"
 #include <algorithm>
+#include "Application/GameSystem/GameSystem.h"
 
 void FrameTimer::Start(float endFrame)
 {
@@ -29,6 +30,7 @@ void FrameTimer::Resume()
 
 void FrameTimer::Update(float gameFactor)
 {
+	float factor = gameFactor;
 	// ポーズしていない上アクティブの場合更新
 	if (isActive_ && !isPause_) {
 		// 時間が来たら終了
@@ -37,7 +39,7 @@ void FrameTimer::Update(float gameFactor)
 			return;
 		}
 		// 現在の値計算
-		elapsedFrame_ += (1.0f / (gameFactor * endFrame_));
+		elapsedFrame_ += (1.0f / (factor * endFrame_));
 		// 範囲内にクランプ
 		elapsedFrame_ = std::clamp(elapsedFrame_, 0.0f, 1.0f);
 	}

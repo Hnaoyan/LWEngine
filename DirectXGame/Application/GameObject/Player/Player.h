@@ -47,6 +47,8 @@ public:
 	/// </summary>
 	void UISpriteDraw();
 
+	void SetCollier(CollisionManager* collisionManager) override;
+
 #pragma region 内部システム関係
 private:
 	// システムファサードクラス
@@ -64,6 +66,12 @@ private:
 	
 	char path[256];
 	std::string filePath;
+
+	// スローモーションの値
+	float slowFactor_ = 30.0f;
+	// 無敵時間のフレーム
+	float invisibleFrame_ = 30.0f;
+
 public:
 	bool isDoubleJump_ = false;
 

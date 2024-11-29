@@ -57,6 +57,9 @@ public:
 	/// 終了処理
 	/// </summary>
 	void Finalize();
+
+	void SetCollier(CollisionManager* collisionManager) override;
+
 private:
 	// グローバル変数関係の初期化
 	void InitializeGlobalValue() override;

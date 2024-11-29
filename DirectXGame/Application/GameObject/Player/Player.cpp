@@ -4,6 +4,7 @@
 #include "Application/GameSystem/GameSystem.h"
 #include "Module/State/PlayerStateList.h"
 
+#include "Engine/Collision/CollisionManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/2D/TextureManager.h"
@@ -69,12 +70,25 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
+	// 無敵中なら
 	if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
 		material_->color_.w = 0.3f;
+		// スロー
+		GameSystem::sSpeedFactor = slowFactor_;
 	}
-	else {
+	else if (facadeSystem_->GetHealth()->IsInvisible()) {
+		material_->color_.w = facadeSystem_->GetHealth()->GetAlpha();
+	}
+	else if (facadeSystem_->GetHealth()->EndInvisible()) {
 		material_->color_.w = 1.0f;
 	}
+	// 終了タイミング
+	if (facadeSystem_->GetDudgeManager()->EndInvisible()) {
+		material_->color_.w = 1.0f;
+		GameSystem::sSpeedFactor = 1.0f;
+	}
+
+
 	// マテリアル更新
 	model_->GetMaterial()->Update();
 	// デスクの設定
@@ -147,7 +161,7 @@ void Player::ImGuiDraw()
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Energy")) {
-			//ImGui::DragFloat("Energy", &energyManager_.energy_.currentEnergy);
+			facadeSystem_->GetEnergy()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("UI")) {
@@ -175,6 +189,11 @@ void Player::ImGuiDraw()
 	ImGui::Text("IsGround:%d", this->isGround_);
 	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisible();
 	ImGui::Text("IsInvisible:%d", isInv);
+
+	// 
+	ImGui::DragFloat("SlowFactor", &slowFactor_, 0.01f);
+	ImGui::DragFloat("InvisibleFrame", &invisibleFrame_, 0.01f);
+
 	//if (ImGui::Button("KnockBack")) {
 	//	isKnock_ = true;
 	//	Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
@@ -207,42 +226,40 @@ void Player::OnCollision(ColliderObject target)
 
 		// 座標修正関数
 		CollisionCorrect(type, min, max);
-
-		//if (type == ICollider::CollisionType3D::kBottomFace) {
-		//	correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
-		//	worldTransform_.transform_.translate.y = correctPos.y;
-		//}
-
 	}
-
-	//else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
-	//	facadeSystem_->GetHealth()->TakeDamage();
-	//}
 	else if (std::holds_alternative<IBullet*>(target)) {
 		// ジャスト回避処理
-		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisible()) {
-			float invisibleFrame = 30.0f;
-			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame);
-			PostEffectManager::sSlowEffect.Initialize();
+		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisible()) 
+		{
+			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame_);
+			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_);
 		}
-		// 無敵処理
-		else if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
+		//// 無敵処理
+		//else if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
 
-		}
+		//}
+		//else if (facadeSystem_->GetHealth()->IsInvisible()) {
+
+		//}
 		// ダメージを受ける処理
 		else {
 			facadeSystem_->GetHealth()->TakeDamage();
 		}
 	}
-	//else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
-	//	facadeSystem_->GetHealth()->TakeDamage();
-	//}
-
 }
 
 void Player::UISpriteDraw()
 {
 	facadeSystem_->GetUI()->Draw();
+}
+
+void Player::SetCollier(CollisionManager* collisionManager)
+{
+	collisionManager->ListRegist(&collider_);
+	collisionManager->ListRegist(footCollider_.GetCollider());
+	if (facadeSystem_->GetDudgeManager()->IsActive()) {
+		collisionManager->ListRegist(facadeSystem_->GetDudgeManager()->GetCollider());
+	}
 }
 
 void Player::InitializeGlobalValue()

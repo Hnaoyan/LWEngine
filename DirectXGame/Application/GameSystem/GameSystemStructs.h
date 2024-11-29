@@ -113,8 +113,7 @@ struct SlowGrayScale
 	CBufferDataGrayscale data{};
 	FrameTimer timer;
 
-	void Initialize() {
-		float frame = 30.0f;
+	void Initialize(float frame) {
 		timer.Start(frame);
 	}
 

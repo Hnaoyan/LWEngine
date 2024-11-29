@@ -3,6 +3,8 @@
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "../Collision/ColliderFilter.h"
 
+class CollisionManager;
+
 class IGameObject
 {
 public:
@@ -49,6 +51,11 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
+	/// <summary>
+	/// コライダーをマネージャに設定する関数
+	/// </summary>
+	/// <param name="collisionManager"></param>
+	virtual void SetCollier(CollisionManager* collisionManager) = 0;
 protected:
 	/// <summary>
 	/// グローバル変数の初期化
