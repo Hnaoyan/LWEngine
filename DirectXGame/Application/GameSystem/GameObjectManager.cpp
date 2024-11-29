@@ -108,12 +108,12 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	skyDome_->Draw(drawDesc);
 	// 地形
 	terrainManager_->Draw(drawDesc);
-	// プレイヤー
-	player_->Draw(drawDesc);
 	// ボス
 	if (boss_) {
 		boss_->Draw(drawDesc);
 	}
+	// プレイヤー
+	player_->Draw(drawDesc);
 	// 弾
 	bulletManager_->Draw(drawDesc);
 }
