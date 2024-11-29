@@ -18,8 +18,8 @@ void GameScene::Initialize()
 	uiManager_ = std::make_unique<GameUIManager>();
 
 	collisionManager_ = std::make_unique<CollisionManager>();
-	gameObjectManager_ = std::make_unique<GameObjectManager>();
 	gameSystem_ = std::make_unique<GameSystem>();
+	gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
 #pragma endregion
 
 #pragma region システム
@@ -124,9 +124,6 @@ void GameScene::UIDraw()
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 	Sprite::PreDraw(commandList);
-
-	// ゲームの
-	gameObjectManager_->UIDraw();
 
 	// UI全般
 	uiManager_->Draw(gameObjectManager_.get());
@@ -328,7 +325,7 @@ void GameScene::ChangeState()
 			// インスタンス生成しなおし
 			//cameraManager_ = std::make_unique<CameraManager>();
 
-			gameObjectManager_ = std::make_unique<GameObjectManager>();
+			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
 			// オブジェクト類の初期化
 			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
 			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
@@ -339,7 +336,7 @@ void GameScene::ChangeState()
 			break;
 		case GameSceneState::kRecord:
 			// インスタンス生成しなおし
-			gameObjectManager_ = std::make_unique<GameObjectManager>();
+			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
 			// オブジェクト類の初期化
 			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
 			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());

@@ -3,6 +3,7 @@
 
 class CollisionManager;
 class CameraManager;
+class GameSystem;
 
 /// <summary>
 /// ゲームのオブジェクト管理クラス
@@ -10,7 +11,7 @@ class CameraManager;
 class GameObjectManager
 {
 public:
-	GameObjectManager();
+	GameObjectManager(GameSystem* system);
 	~GameObjectManager() = default;
 public:
 	/// <summary>
@@ -55,12 +56,15 @@ public:
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
 	bool IsSceneChange() const { return isSceneChange_; }
+
+	void SetGameSystem(GameSystem* system) { gameSystem_ = system; }
 private: // ゲームクリアなどの部分
 	bool isSceneChange_ = false;	// シーンの切り替わりフラグ
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
 
+	GameSystem* gameSystem_ = nullptr;
 private:
 	// ゲームのユニット
 	std::unique_ptr<Player> player_;

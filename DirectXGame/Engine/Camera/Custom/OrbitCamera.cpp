@@ -6,7 +6,7 @@ void OrbitCamera::Initialize()
 {
 	ICamera::Initialize();
 
-
+	transform_.translate = { 50.0f,50.0f,0.0f };
 }
 
 void OrbitCamera::Update()
@@ -34,7 +34,7 @@ void OrbitCamera::FocusUpdate()
 {
 	if (objects_.first && objects_.second) {
 		centerPoint_ = Ease::Easing(*objects_.first, *objects_.second, focusT_);
-		transform_.translate = LwLib::Slerp(Vector3::Normalize(*objects_.first), Vector3::Normalize(*objects_.second), rotRatio_) * slerpScale_;
+		//transform_.translate = LwLib::Slerp(Vector3::Normalize(*objects_.first), Vector3::Normalize(*objects_.second), rotRatio_) * slerpScale_;
 
 	}
 	// 対象地点があれば

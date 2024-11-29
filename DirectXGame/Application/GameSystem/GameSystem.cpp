@@ -39,7 +39,7 @@ void GameSystem::Update()
     // リプレイ用に記録
     replayManager_.RecordFrame(&keyConfig_);
     // フレームカウント
-    nowFrame_++;
+    recordNowFrame_++;
 }
 
 void GameSystem::ImGuiDraw()
@@ -58,5 +58,5 @@ void GameSystem::ImGuiDraw()
 void GameSystem::LaunchReplay()
 {
     // リプレイの準備
-    keyConfig_.BeginReplay();
+    replayManager_.ReplaySetUp();
 }

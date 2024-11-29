@@ -12,6 +12,7 @@ void FollowCamera::Initialize()
 	// 初期化
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,3.0f,-10.0f };
+	destinationAngle_ = {};
 }
 
 void FollowCamera::Update()

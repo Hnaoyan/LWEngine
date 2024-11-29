@@ -55,7 +55,7 @@ private:
 	PostEffectManager postEffectManager_;
 
 	// フレーム数のカウント
-	uint32_t nowFrame_ = 0;
+	uint32_t recordNowFrame_ = 0;
 	// インプット
 	Input* input_ = nullptr;
 

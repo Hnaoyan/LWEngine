@@ -23,10 +23,10 @@ void ReplayManager::RecordFrame(KeyConfigManager* keyManager)
     saveData.keyConfigs = keyManager->GetPlayerKey();
     saveData.leftStick = keyManager->GetKeyConfig()->leftStick;
     saveData.rightStick = keyManager->GetKeyConfig()->rightStick;
-    saveData.frameNumber = int32_t(nowFrame_);
+    saveData.frameNumber = int32_t(recordNowFrame_);
     replayDatas_.push_back(saveData);
 
-    nowFrame_++;
+    recordNowFrame_++;
 }
 
 void ReplayManager::ExportReplay(const std::string& fileName)
@@ -194,7 +194,21 @@ void ReplayManager::ImGuiDraw()
 void ReplayManager::RecordSetUp()
 {
     isRecord_ = true;
-
     replayDatas_.clear();
-    nowFrame_ = 0;
+    recordNowFrame_ = 0;
+}
+
+void ReplayManager::ReplaySetUp()
+{
+    isReplayNow_ = true;
+    replayNowFrame_ = 0;
+}
+
+void ReplayManager::ReplayCount()
+{
+    replayNowFrame_++;
+    if (replayNowFrame_ >= GetReplayDataSize()) {
+        isReplayNow_ = false;
+        replayNowFrame_ = 0;
+    }
 }

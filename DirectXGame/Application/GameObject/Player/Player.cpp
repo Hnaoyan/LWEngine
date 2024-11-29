@@ -70,24 +70,12 @@ void Player::Update()
 
 void Player::Draw(ModelDrawDesc desc)
 {
-	// 無敵中なら
-	if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
-		material_->color_.w = 0.3f;
-		// スロー
-		GameSystem::sSpeedFactor = slowFactor_;
-	}
-	else if (facadeSystem_->GetHealth()->IsInvisible()) {
-		material_->color_.w = facadeSystem_->GetHealth()->GetAlpha();
-	}
-	else if (facadeSystem_->GetHealth()->EndInvisible()) {
-		material_->color_.w = 1.0f;
-	}
-	// 終了タイミング
-	if (facadeSystem_->GetDudgeManager()->EndInvisible()) {
-		material_->color_.w = 1.0f;
-		GameSystem::sSpeedFactor = 1.0f;
-	}
-
+	//if (facadeSystem_->GetHealth()->IsInvisible()) {
+	//	material_->color_.w = facadeSystem_->GetHealth()->GetAlpha();
+	//}
+	//else if (facadeSystem_->GetHealth()->EndInvisible()) {
+	//	material_->color_.w = 1.0f;
+	//}
 
 	// マテリアル更新
 	model_->GetMaterial()->Update();
@@ -140,12 +128,13 @@ void Player::ImGuiDraw()
 		}
 		ImGui::TreePop();
 	}
+	NowState();
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
-		if (ImGui::BeginTabItem("State")) {
-			NowState();
+		if (ImGui::BeginTabItem("Health")) {
+			facadeSystem_->GetHealth()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Aim")) {
@@ -184,26 +173,16 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
-	//collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	ImGui::Text("IsGround:%d", this->isGround_);
 	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisible();
 	ImGui::Text("IsInvisible:%d", isInv);
 
 	// 
-	ImGui::DragFloat("SlowFactor", &slowFactor_, 0.01f);
 	ImGui::DragFloat("InvisibleFrame", &invisibleFrame_, 0.01f);
+	ImGui::DragFloat("EnergyRecover", &energyRecover_, 0.01f);
+	ImGui::DragFloat("TrackCancel", &trackCancelDistance, 0.01f);
 
-	//if (ImGui::Button("KnockBack")) {
-	//	isKnock_ = true;
-	//	Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
-	//	direct = Vector3::Normalize(direct);
-	//	direct *= 10.0f;
-	//	velocity_ = { direct.x,0.0f,direct.z };
-	//}
-	//if (ImGui::Button("KnockReset")) {
-	//	isKnock_ = false;
-	//}
 	ImGui::EndChild();
 
 	ImGui::End();
@@ -232,7 +211,8 @@ void Player::OnCollision(ColliderObject target)
 		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisible()) 
 		{
 			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame_);
-			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_);
+			facadeSystem_->GetEnergy()->RecoverGage(energyRecover_);
+			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_ + 45.0f);
 		}
 		//// 無敵処理
 		//else if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
@@ -275,6 +255,8 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "BoostEndTime", float(30.0f));
 	instance->AddValue(groupName, "DashCooltime", float(30.0f));
 	instance->AddValue(groupName, "DashExceptTime", float(12.0f));
+
+	// エネルギー関係
 
 	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
 	instance->AddValue(groupName, "VelocityDecay", float(0.2f));

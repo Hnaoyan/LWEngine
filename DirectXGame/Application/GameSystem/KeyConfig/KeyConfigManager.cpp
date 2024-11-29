@@ -17,18 +17,15 @@ KeyConfigManager::KeyConfigManager()
 void KeyConfigManager::Update(ReplayManager* replayManager)
 {
 
-    if (isReplay_)
+    if (replayManager->IsReplayNow())
     {
         // データの取得
-        playerKey_.keyConfigs = replayManager->GetReplayData(playFrame_).keyConfigs;
-        playerKey_.leftStick = replayManager->GetReplayData(playFrame_).leftStick;
-        playerKey_.rightStick = replayManager->GetReplayData(playFrame_).rightStick;
+        playerKey_.keyConfigs = replayManager->GetReplayData(replayManager->GetReplayFrame()).keyConfigs;
+        playerKey_.leftStick = replayManager->GetReplayData(replayManager->GetReplayFrame()).leftStick;
+        playerKey_.rightStick = replayManager->GetReplayData(replayManager->GetReplayFrame()).rightStick;
 
-        // カウント
-        playFrame_++;
-        if (playFrame_ >= replayManager->GetReplayDataSize()) {
-            isReplay_ = false;
-        }
+        // フレームカウント処理
+        replayManager->ReplayCount();
     }
     else 
     {

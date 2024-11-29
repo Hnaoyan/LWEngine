@@ -1,10 +1,11 @@
 #include "GameObjectManager.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Application/GameSystem/GameSystem.h"
 #include <imgui.h>
 #include <cassert>
 
-GameObjectManager::GameObjectManager()
+GameObjectManager::GameObjectManager(GameSystem* system)
 {
 	// ゲームオブジェクト
 	player_ = std::make_unique<Player>();
@@ -13,6 +14,8 @@ GameObjectManager::GameObjectManager()
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
+
+	gameSystem_ = system;
 }
 
 void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
@@ -118,7 +121,10 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 void GameObjectManager::UIDraw()
 {
 	// それぞれのUI
-	player_->UISpriteDraw();
+	if (!gameSystem_->GetReplayManager()->IsReplayNow()) {
+		player_->UISpriteDraw();
+	}
+
 	if (boss_) {
 		boss_->UIDraw();
 	}

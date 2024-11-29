@@ -49,7 +49,6 @@ public:
 
 	void SetCollier(CollisionManager* collisionManager) override;
 
-#pragma region 内部システム関係
 private:
 	// システムファサードクラス
 	std::unique_ptr<PlayerFacade> facadeSystem_;
@@ -67,28 +66,26 @@ private:
 	char path[256];
 	std::string filePath;
 
-	// スローモーションの値
-	float slowFactor_ = 30.0f;
 	// 無敵時間のフレーム
 	float invisibleFrame_ = 30.0f;
+	float energyRecover_ = 10.0f;
 
 public:
 	bool isDoubleJump_ = false;
+	float trackCancelDistance = 75.0f;
 
-public:
+public: // アクセッサ
 	OparationManager* GetOperation() { return &oparationManager_; }
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
 	PlayerStateMachine* HorizontalState() { return stateManager_->GetHorizontal(); }
 	PlayerStateMachine* VerticalState() { return stateManager_->GetVertical(); }
 	Boss* GetBoss() { return boss_; }
-#pragma endregion
-
-public: // セッター
 	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Vector3 GetVelocity() const { return velocity_; }
+	void SetColor(const Vector4& color) { material_->color_ = color; }
 	// ポインタ関係
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
 		facadeSystem_->GetShootingManager()->SetManager(manager);

@@ -7,6 +7,9 @@ class Player;
 
 namespace PlayerContext
 {
+	/// <summary>
+	/// 体力のマネージャ
+	/// </summary>
 	class HealthManager
 	{
 	public:
@@ -25,18 +28,23 @@ namespace PlayerContext
 		/// </summary>
 		/// <param name="damage"></param>
 		void TakeDamage(uint32_t damage = 1);
+		/// <summary>
+		/// ImGui
+		/// </summary>
+		void ImGuiDraw();
 
-		float GetHPRatio() { return (float)hitPoint_.currentHealth / (float)hitPoint_.maxHealth; }
-		
+	public: // アクセッサ
 		bool IsInvisible() { return invisibleEffect_.activeTimer.IsActive(); }
 		bool EndInvisible() { return invisibleEffect_.activeTimer.IsEnd(); }
+		float GetHPRatio() { return (float)hitPoint_.currentHealth / (float)hitPoint_.maxHealth; }
 		float GetAlpha() { return invisibleEffect_.color.w; }
 	private:
-
+		// HPのデータ
 		struct HealthData {
 			uint32_t maxHealth = 0;
 			uint32_t currentHealth = 0;
 			FrameTimer damageEffectDuration;
+			float invisibleFrame = 60.0f;
 		};
 
 		// 無敵状態のエフェクトクラス
@@ -50,7 +58,7 @@ namespace PlayerContext
 			FrameTimer upTimer;	// 0→1になる
 			FrameTimer downTimer;	// 1→0になる
 			Vector4 color;	// 状態のカラー
-			float returnFrame = 6.0f;	// 返るフレーム
+			float returnFrame = 8.0f;	// 返るフレーム
 		};
 		// HP関係
 		HealthData hitPoint_;

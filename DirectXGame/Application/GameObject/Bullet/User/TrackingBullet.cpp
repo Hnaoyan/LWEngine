@@ -93,26 +93,36 @@ void TrackingBullet::ChangeSelecter()
 	// 直接的な距離
 	// 加速度と速度を
 
-	//if (!isTargetBoss_) {
-	//	Player* player = dynamic_cast<Player*>(object_);
-
-	//	if(player->GetSystemFacede)
-	//}
-
 	if (straightTimer_.IsEnd()) {
 		requestState_ = TrackingState::kTracking;
 	}
 	if (waveTimer_.IsEnd()) {
 		requestState_ = TrackingState::kTracking;
 	}
+	// ボスなら
 	if (isTargetBoss_) {
 		if (trackTimer_.IsEnd()) {
 			requestState_ = TrackingState::kWave;
 		}
 	}
+	// プレイヤーなら
 	else {
 		if (trackTimer_.IsEnd()) {
 			requestState_ = TrackingState::kStraight;
+		}
+		Player* player = dynamic_cast<Player*>(object_);
+
+		if (player->GetSystemFacede()->GetDudgeManager()->IsInvisible()) {
+			float maxDistance = player->trackCancelDistance;
+			float bulletToPlayer = Vector3::Distance(GetWorldPosition(), player->worldTransform_.GetWorldPosition());
+			if (bulletToPlayer <= maxDistance) {
+				straightTimer_.End();
+				waveTimer_.End();
+				trackTimer_.End();
+				// ジャスト回避時のみ例外処理
+				straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame") * 2.5f);
+				stateMachine_->RequestState(TrackingState::kStraight);
+			}
 		}
 	}
 

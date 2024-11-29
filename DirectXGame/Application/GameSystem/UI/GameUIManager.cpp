@@ -28,6 +28,9 @@ void GameUIManager::Initialize()
 
 void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 {
+	// オブジェクトのUI
+	gameObjectManager->UIDraw();
+
 	// ゲームオーバー・クリアの描画
 	if (gameObjectManager->IsUIGameClear()) {
 		gameClear_.sprite->SetPosition(gameClear_.position);

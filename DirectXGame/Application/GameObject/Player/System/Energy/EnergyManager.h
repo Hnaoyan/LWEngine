@@ -5,6 +5,9 @@ class Player;
 
 namespace PlayerContext
 {
+	/// <summary>
+	/// エネルギーの管理クラス
+	/// </summary>
 	class EnergyManager
 	{
 	private:
@@ -16,7 +19,7 @@ namespace PlayerContext
 			// 減少
 			float defaultDecr = 0.0f;
 			// 回復量
-			float recoveryValue = 10.0f;
+			float recoveryValue = 12.5f;
 			// 回復開始までの時間
 			float recoveryFrame = 10.0f;
 			// 上昇中か
@@ -28,13 +31,18 @@ namespace PlayerContext
 	public:
 		void Initialize(Player* player);
 		void Update();
+		// エネルギーを瞬時に回復するやつ
+		void RecoverGage(float recoverEnergy);
 		// エネルギーの割合
 		float GetEnergyRatio() { return energy_.currentEnergy / energy_.maxEnergy; }
 		float GetNowEnergy() { return energy_.currentEnergy; }
+		// ブーストの減少
 		void BoostDecrement();
+		// 小ダッシュの減少
 		void QuickBoostDecre();
 		// ダッシュが出来るか
 		bool CheckQuickBoost() { return energy_.currentEnergy > (energy_.maxEnergy / 5.0f) ? true : false; }
+		// オーバーヒート確認
 		bool IsOverheat() { return overheatTimer_.IsActive(); }
 		// ImGUi
 		void ImGuiDraw();

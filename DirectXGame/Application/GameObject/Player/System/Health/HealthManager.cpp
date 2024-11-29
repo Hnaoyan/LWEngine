@@ -2,6 +2,7 @@
 #include "../../Player.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Engine/PostEffect/PostEffectRender.h"
+#include <imgui.h>
 
 void PlayerContext::HealthManager::Initialize(Player* player, uint32_t maxHP)
 {
@@ -31,9 +32,12 @@ void PlayerContext::HealthManager::Update()
 		else if (invisibleEffect_.upTimer.IsEnd()) {
 			invisibleEffect_.downTimer.Start(invisibleEffect_.returnFrame);
 		}
+
+		player_->SetColor(Vector4(1.0f, 1.0f, 1.0f, invisibleEffect_.color.w));
 	}
 	else if (invisibleEffect_.activeTimer.IsEnd()) {
 		invisibleEffect_.color.w = 1.0f;
+		player_->SetColor(Vector4(1.0f, 1.0f, 1.0f, invisibleEffect_.color.w));
 	}
 
 	hitPoint_.damageEffectDuration.Update(GameSystem::GameSpeedFactor());
@@ -56,7 +60,7 @@ void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 
 	hitPoint_.currentHealth -= damage;
 	invisibleEffect_.upTimer.Start(invisibleEffect_.returnFrame);
-	invisibleEffect_.activeTimer.Start(30.0f); // 無敵時間
+	invisibleEffect_.activeTimer.Start(hitPoint_.invisibleFrame); // 無敵時間
 	hitPoint_.damageEffectDuration.Start(5.0f); // エフェクトの時間
 	PostEffectManager::sDamageEffect.Initialize();	// ダメージエフェクト
 
@@ -68,4 +72,12 @@ void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 		player_->camera_->ExecuteShake(15.0f, 2.0f);
 	}
 
+}
+
+void PlayerContext::HealthManager::ImGuiDraw()
+{
+	static float bar = 0.1f;
+	ImGui::DragFloat("Bar", &bar, 0.01f);
+	ImGui::DragFloat("InviFrame", &hitPoint_.invisibleFrame, bar);
+	ImGui::DragFloat("returnFrame", &invisibleEffect_.returnFrame, bar);
 }

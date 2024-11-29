@@ -33,6 +33,11 @@ void PlayerContext::EnergyManager::Update()
 	}
 }
 
+void PlayerContext::EnergyManager::RecoverGage(float recoverEnergy)
+{
+	energy_.currentEnergy += recoverEnergy;
+}
+
 void PlayerContext::EnergyManager::BoostDecrement()
 {
 	float defaultDecrement = (energy_.maxEnergy / decrementRate_);

@@ -6,9 +6,17 @@ class Player;
 
 namespace PlayerContext
 {
+
 	class JustDodgeManager
 	{
 	private:
+		// コンボの情報
+		struct ComboData
+		{
+			// コンボがつながるフレームカウント
+			FrameTimer keepTimer;
+			int32_t count = 0;
+		};
 		// プレイヤー
 		Player* player_ = nullptr;
 
@@ -45,12 +53,18 @@ namespace PlayerContext
 		FrameTimer dodgeTimer_;
 		// 無敵時間
 		FrameTimer invisibleTimer_;
+		// 無敵から基にもどる
+		FrameTimer invisibleReturnTimer_;
 		// ジャスト回避フレーム
 		float justDodgeFrame_ = 10.0f;
 		// ダッシュ時の残像判定
 		Vector3 colliderPosition_{};
 		// スフィアコライダー
 		Sphere collider_;
+		// スローモーションの値
+		float slowFactor_ = 30.0f;
+		// 回避コンボの情報
+		ComboData comboData_{};
 	};
 }
 
