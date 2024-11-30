@@ -45,12 +45,7 @@ void FollowCamera::Update()
 			// 追尾してるオブジェクトの座標
 			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
 			sub = Vector3::Normalize(sub);
-			if (isAtan_) {
-				destinationAngle_.y = std::atan2f(sub.x, sub.z);
-			}
-			else {
-				destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
-			}
+			destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 			// Y軸角度
 			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
 			transform_.rotate.y = destinationAngle_.y;

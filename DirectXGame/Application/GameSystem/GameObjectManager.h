@@ -61,6 +61,8 @@ public:
 private: // ゲームクリアなどの部分
 	bool isSceneChange_ = false;	// シーンの切り替わりフラグ
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
+	bool isChangeInput_ = false;	// シーン変更の受付フラグ
+
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
 

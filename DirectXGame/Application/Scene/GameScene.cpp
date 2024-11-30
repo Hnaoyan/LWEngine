@@ -39,7 +39,8 @@ void GameScene::Initialize()
 	cameraManager_->Initialize(gameObjectManager_.get());
 
 #ifdef RELEASE
-	nowState_ = GameSceneState::kGamePlay;
+	stateRequest_ = GameSceneState::kRecord;
+	//nowState_ = GameSceneState::kGamePlay;
 #endif // RELEASE
 
 
@@ -52,18 +53,18 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
+	// シーンの切り替え処理
+	if (gameObjectManager_->IsSceneChange()) {
+		// プレイの保存
+		gameSystem_->GetReplayManager()->ExportReplay();
+		// リプレイモードに移行
+		stateRequest_ = GameSceneState::kReplay;
+		//sceneManager_->ChangeScene("TITLE");
+	}
 
 	// ステートの切り替わり処理
 	ChangeState();
 
-	// シーンの切り替え処理
-	if (gameObjectManager_->IsSceneChange()) {
-		sceneManager_->ChangeScene("TITLE");
-		return;
-	}
-
-	// ライトの更新
-	LightingUpdate();
 	//---ゲームのシステム更新---//
 	gameSystem_->Update();
 	gameObjectManager_->Update();
@@ -71,6 +72,8 @@ void GameScene::Update()
 	CollisionUpdate();
 	// カメラの更新
 	CameraUpdate();
+	// ライトの更新
+	LightingUpdate();
 
 	gpuParticleManager_->Update();
 
@@ -142,18 +145,30 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 
 	ImGui::Begin("GameScene");
-	if (ImGui::Button("Restart")) {
-		stateRequest_ = GameSceneState::kGameRestart;
+	if (ImGui::TreeNode("Replayer")) {
+		if (ImGui::Button("Restart")) {
+			stateRequest_ = GameSceneState::kGameRestart;
+		}
+		if (ImGui::Button("ReplayStart")) {
+			stateRequest_ = GameSceneState::kReplay;
+		}
+		if (ImGui::Button("RecordingStart")) {
+			stateRequest_ = GameSceneState::kRecord;
+		}
+		if (ImGui::Button("RecordingEnd")) {
+			gameSystem_->GetReplayManager()->ExportReplay();
+		}
+		ImGui::TreePop();
 	}
-	if (ImGui::Button("ReplayStart")) {
-		stateRequest_ = GameSceneState::kReplay;
-	}
-	if (ImGui::Button("RecordingStart")) {
-		stateRequest_ = GameSceneState::kRecord;
-	}
-	if (ImGui::Button("RecordingEnd")) {
-		gameSystem_->GetReplayManager()->ExportReplay();
-	}
+	ImGui::Separator();
+
+	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
+	Vector2 leftStick = GameSystem::sKeyConfigManager.GetKeyConfig()->leftStick;
+	ImGui::DragFloat2("left", &leftStick.x);
+	ImGui::DragFloat2("right", &rightStick.x);
+
+	ImGui::Text("");
+	// ライティング
 	if (ImGui::BeginTabBar("Lighting"))
 	{
 		float defaultSpeed = 0.01f;

@@ -97,6 +97,8 @@ private:
 	/// </summary>
 	static void CreateParticlePSO();
 	static void CreateParticleCSPSO();
+
+	static void CreateCPUParticlePSO();
 	/// <summary>
 	/// Skinning作成
 	/// </summary>

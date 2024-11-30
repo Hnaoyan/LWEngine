@@ -16,6 +16,7 @@ namespace Pipeline
 		kPostEffect,
 		kInstancedModel,
 		kTrail,
+		kCPUParticle,
 		kCountOfParameter,
 	};
 	// 通常モデルのレジスタ番号
@@ -75,7 +76,7 @@ namespace Pipeline
 		kCountOfParameter,
 	};
 
-	// パーティクルのレジスタ用
+	// GPUパーティクルのレジスタ用
 	enum class GPUParticleDrawRegister : int {
 		kMaterial,
 		kTexture,
@@ -84,6 +85,18 @@ namespace Pipeline
 
 		kCountOfParameter,
 	};
+
+	// CPUパーティクルのレジスタ
+	enum class CPUParticleRegister : int
+	{
+		kMaterial,
+		kTexture,
+		kMatrixs,
+		kCamera,
+		kCountOfParmeter,
+
+	};
+
 	// ブレンドモード
 	enum class BlendMode : int {
 		kNone,
