@@ -50,8 +50,8 @@ void BossState::MissileContainerState::Exit()
 void BossState::MissileContainerState::SpawnMissile()
 {
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
-	Vector3 referenceLeftAxis = Vector3(-1.0f, 1.0f, 1.0f);
-	Vector3 referenceRightAxis = Vector3(1.0f, 1.0f, 1.0f);
+	Vector3 referenceLeftAxis = Vector3(-1.0f, 1.0f, 0.0f);
+	Vector3 referenceRightAxis = Vector3(1.0f, 1.0f, 0.0f);
 	TrackingAttribute attribute = TrackingAttribute::kGenius;
 
 	GenerateMissile(Matrix4x4::TransformVector3(referenceLeftAxis.Normalize(),rotateMatrix), attribute);
@@ -66,7 +66,7 @@ void BossState::MissileContainerState::GenerateMissile(const Vector3& direct, Tr
 
 	// ビルダー
 	BulletBuilder builder;
-	builder.SetTargetObject(boss_).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossAction", "WaveAttackInitSpeed")).SetTransform(transform).SetAttribute(type);
+	builder.SetTargetObject(boss_).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossAction", "ContainerInitSpeed")).SetTransform(transform).SetAttribute(type);
 	builder.SetAttribute(type).SetParentAttribute(0);
 	// Clusterのタイプ設定
 	switch (type)

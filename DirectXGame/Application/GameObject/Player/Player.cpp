@@ -30,6 +30,7 @@ void Player::Initialize(Model* model)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 	// トランスフォーム
+	worldTransform_.transform_.rotate = {};
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
 	worldTransform_.UpdateMatrix();
 	// コライダー

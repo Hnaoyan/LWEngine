@@ -31,7 +31,7 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	//tables_[tableTag_].patterns.push_back(StatePattern::kMissile);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissileBarrage);
-	//tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissileContainer);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
@@ -45,17 +45,25 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "UpDownMove";
-	tables_[tableTag_].patterns.push_back(StatePattern::kAttack);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissileWave);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissileBarrage);
 	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
+	tableTag_ = "NewBe";
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissileContainer);
+	tables_[tableTag_].patterns.push_back(StatePattern::kOrbitMove);
+	tables_[tableTag_].patterns.push_back(StatePattern::kMissileWave);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
+	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
+
 	section_.push_back("AttackType");
 	section_.push_back("MoveAttack");
 	section_.push_back("UpDownMove");
 	section_.push_back("MoveAttack");
+	section_.push_back("NewBe");
 
 	currentStep_ = 0;
 	IsInActionSequence_ = false;
