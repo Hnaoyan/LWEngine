@@ -195,7 +195,7 @@ void Boss::OnCollision(ColliderObject target)
 		float distance = Vector2::Distance(xzBoss, xzBullet);
 		// バリアとの衝突処理
 		if (systemManager_->barrierManager_.IsActive()) {
-			systemManager_->barrierManager_.DamageProcess(-1.0f);
+			systemManager_->barrierManager_.DamageProcess((-1.0f) * (*bullet)->DamageRatio());
 			// バリアが割れる瞬間の処理
 			if (systemManager_->barrierManager_.IsShattered()) {
 				systemManager_->barrierManager_.BarrierBreak();

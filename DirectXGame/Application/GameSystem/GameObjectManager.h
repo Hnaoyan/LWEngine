@@ -57,6 +57,7 @@ public:
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
 	bool IsSceneChange() const { return isSceneChange_; }
 	bool IsSceneReplay() const { return isSceneReplay_; }
+	bool IsChange() const { return isChangeInput_; }
 
 	void SetGameSystem(GameSystem* system) { gameSystem_ = system; }
 private: // ゲームクリアなどの部分

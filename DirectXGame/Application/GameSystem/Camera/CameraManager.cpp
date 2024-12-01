@@ -1,5 +1,6 @@
 #include "CameraManager.h"
 #include "../GameObjectManager.h"
+#include "../GameSystem.h"
 
 #include <imgui.h>
 
@@ -35,14 +36,24 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 
 }
 
-void CameraManager::Update()
+void CameraManager::Update(GameSystem* gameSystem)
 {
 	// 更新
 	followCamera_->Update();
 	focusCamera_->Update();
 	debugCamera_->Update();
 	orbitCamera_->Update();
+	durationTimer_.Update();
+	// リプレイ中のカメラ切り替え
+	if (gameSystem->IsReplayMode()) {
+		if (!durationTimer_.IsActive()) {
+			UpdateCameraSwitcher();
+			// 長押しの重なりを回避するためのタイマー
+			durationTimer_.Start(5.0f);
+		}
+	}
 
+	// リクエストによる変更
 	if (changeRequest_) {
 		ActiveCameraMode value = changeRequest_.value();
 		activeCamera_ = value;
@@ -132,6 +143,54 @@ void CameraManager::ChangeCamera(ActiveCameraMode mode)
 
 void CameraManager::UpdateCameraSwitcher()
 {
+	Input* input = Input::GetInstance();
+
+	if (input->XTriggerJoystick(XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
+		switch (activeCamera_)
+		{
+		case ActiveCameraMode::kNormal:
+
+			break;
+		case ActiveCameraMode::kFollow:
+			ChangeCamera(ActiveCameraMode::kFocus);
+			break;
+		case ActiveCameraMode::kFocus:
+			ChangeCamera(ActiveCameraMode::kOrbit);
+			break;
+		case ActiveCameraMode::kOrbit:
+			ChangeCamera(ActiveCameraMode::kFollow);
+			break;
+		case ActiveCameraMode::kDebug:
+			break;
+		case ActiveCameraMode::kMaxSize:
+			break;
+		default:
+			break;
+		}
+	}
+	else if (input->XTriggerJoystick(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+		switch (activeCamera_)
+		{
+		case ActiveCameraMode::kNormal:
+
+			break;
+		case ActiveCameraMode::kFollow:
+			ChangeCamera(ActiveCameraMode::kOrbit);
+			break;
+		case ActiveCameraMode::kFocus:
+			ChangeCamera(ActiveCameraMode::kFollow);
+			break;
+		case ActiveCameraMode::kOrbit:
+			ChangeCamera(ActiveCameraMode::kFocus);
+			break;
+		case ActiveCameraMode::kDebug:
+			break;
+		case ActiveCameraMode::kMaxSize:
+			break;
+		default:
+			break;
+		}
+	}
 
 }
 

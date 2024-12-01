@@ -23,6 +23,9 @@ private:
 	GameUI::TextUI gameClear_ = {};
 	GameUI::TextUI gameOver_ = {};
 
+	GameUI::TextUI titleBack_ = {};
+	GameUI::TextUI replay_ = {};
+
 private:
 	/// <summary>
 	/// グローバル変数の初期化

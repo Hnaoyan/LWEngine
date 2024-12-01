@@ -19,6 +19,13 @@ GameUIManager::GameUIManager()
 
 	gameOver_.sprite = SpriteManager::GetSprite("GameOverText");
 	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
+
+	titleBack_.sprite = SpriteManager::GetSprite("ResultTitleUI");
+	titleBack_.position = Vector2(800, 720 / 2);
+
+	replay_.sprite = SpriteManager::GetSprite("ResultReplayUI");
+	replay_.position = Vector2(800, 720 / 2 + 50);
+
 }
 
 void GameUIManager::Initialize()
@@ -31,6 +38,11 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	// オブジェクトのUI
 	gameObjectManager->UIDraw();
 
+	// リプレイ中なら非表示に
+	if (gameObjectManager->IsSceneReplay()) {
+		return;
+	}
+
 	// ゲームオーバー・クリアの描画
 	if (gameObjectManager->IsUIGameClear()) {
 		gameClear_.sprite->SetPosition(gameClear_.position);
@@ -39,6 +51,13 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	if (gameObjectManager->IsUIGameOver()) {
 		gameOver_.sprite->SetPosition(gameOver_.position);
 		gameOver_.sprite->Draw();
+	}
+
+	if (gameObjectManager->IsChange()) {
+		titleBack_.sprite->SetPosition(titleBack_.position);
+		titleBack_.sprite->Draw();
+		replay_.sprite->SetPosition(replay_.position);
+		replay_.sprite->Draw();
 	}
 
 	// HUD関係

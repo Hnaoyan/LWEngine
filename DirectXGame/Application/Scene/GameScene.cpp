@@ -253,13 +253,15 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
 	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/ClearText.png"));
 	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOver.png"));
+	SpriteManager::LoadSprite("ResultTitleUI", TextureManager::Load("Resources/UI/TitleBackUI.png"));
+	SpriteManager::LoadSprite("ResultReplayUI", TextureManager::Load("Resources/UI/ReplayUI.png"));
 
 }
 
 void GameScene::CameraUpdate()
 {
 	// カメラの管理クラス
-	cameraManager_->Update();
+	cameraManager_->Update(gameSystem_.get());
 
 	// シーンで使用するカメラの更新
 	camera_.viewMatrix_ = cameraManager_->GetCamera()->viewMatrix_;

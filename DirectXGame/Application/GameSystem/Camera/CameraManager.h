@@ -1,10 +1,12 @@
 #pragma once
 #include "Engine/Camera/CameraList.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include <optional>
 #include <memory>
 #include <unordered_map>
 
 class GameObjectManager;
+class GameSystem;
 
 /// <summary>
 /// カメラ管理クラス
@@ -24,7 +26,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(GameSystem* gameSystem);
 	/// <summary>
 	/// ImGui
 	/// </summary>
@@ -46,6 +48,8 @@ public:
 private:
 	// オブジェクトマネージャ
 	GameObjectManager* gameObjManager_ = nullptr;
+	// フレームタイマー
+	FrameTimer durationTimer_;
 
 private:
 	// 追従カメラ
