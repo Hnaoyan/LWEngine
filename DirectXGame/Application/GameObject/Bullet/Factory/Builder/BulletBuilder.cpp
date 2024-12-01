@@ -1,4 +1,6 @@
 #include "BulletBuilder.h"
+#include "Engine/Collision/Collider/ICollider.h"
+#include "Application/Collision/ColliderFilter.h"
 #include "../../BulletsPaths.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
@@ -23,6 +25,12 @@ std::unique_ptr<IBullet> BulletBuilder::Build(BulletType bulletType) const
 		static_cast<TrackingBullet*>(instance.get())->SetIsBarrage(isRandStraight_);	// 直進時間ランダムフラグ
 		transform.scale = global->GetValue<Vector3>("BossTrackingBullet", "Scale");
 		break;
+	case BulletType::kContainer:
+		instance = std::make_unique<ContainerBullet>();
+		//ContainerBullet* bullet = static_cast<ContainerBullet*>(instance.get());
+		static_cast<ContainerBullet*>(instance.get())->SetGameObject(object_);
+		static_cast<ContainerBullet*>(instance.get())->SetCluster(cluster_);
+		break;
 	default:
 		break;
 	}
@@ -31,6 +39,12 @@ std::unique_ptr<IBullet> BulletBuilder::Build(BulletType bulletType) const
 	// 速度の設定
 	instance->SetVelocity(direct_ * speed_);
 	instance->transform_ = transform;
+	if (parentAttribute_ == 0) {
+		instance->GetCollider()->SetAttribute(kCollisionAttributeEnemyBullet);
+	}
+	else {
+		instance->GetCollider()->SetAttribute(kCollisionAttributeBullet);
+	}
 
 	// 返す
 	return instance;

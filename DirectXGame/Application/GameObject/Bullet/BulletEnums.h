@@ -6,8 +6,9 @@
 // 弾の種類
 enum class BulletType : uint32_t
 {
-	kNormal,	// 通常
-	kTracking,	// 追尾
+	kNormal,	// 通常弾
+	kTracking,	// 追従弾
+	kContainer,	// ミサイルコンテナ弾
 };
 // 追従先の属性（座標の決め方）
 enum class TrackingAttribute : uint32_t

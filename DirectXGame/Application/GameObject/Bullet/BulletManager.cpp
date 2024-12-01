@@ -21,12 +21,14 @@ void BulletManager::Initialize(Model* model)
 	AddCluster("Player:TSuperior");
 	AddCluster("Player:TGenius");
 	AddCluster("Player:DivisionBullet");
+	AddCluster("Player:ContainerBullet");
 
-	AddCluster("Boss:TrackingBullet");
-	AddCluster("Boss:Inferior");
-	AddCluster("Boss:Superior");
-	AddCluster("Boss:Genius");
-	AddCluster("Boss:NormalBullet");
+	AddCluster("Boss:TrackingBullet");	// 追従弾
+	AddCluster("Boss:Inferior");	// 劣等弾
+	AddCluster("Boss:Superior");	// 優等弾
+	AddCluster("Boss:Genius");		// 秀才弾
+	AddCluster("Boss:NormalBullet");	// 通常弾
+	AddCluster("Boss:ContainerBullet");	// コンテナ弾
 }
 
 void BulletManager::Update()
@@ -103,17 +105,25 @@ void BulletManager::AddCluster(const std::string& tag)
 		}
 		else if ("Boss" == zokusei) {
 			std::string colorName = tag.substr(position + 1);
+			// 劣等
 			if (colorName == "Inferior") {
 				static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 1.0f,0.6f,0.6f });
 			}
+			// 優等
 			else if (colorName == "Superior") {
 				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.6f,1.0f,0.6f });
 			}
+			// 秀才
 			else if (colorName == "Genius") {
 				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,0.0f,1.0f,1.0f });
 				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.6f,0.6f,1.0f });
+			}
+			// コンテナ
+			else if (colorName == "ContainerBullet"){
+				static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.8f,0.8f,0.8f });
 			}
 			else {
 				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,0.0f,0.0f,1.0f });

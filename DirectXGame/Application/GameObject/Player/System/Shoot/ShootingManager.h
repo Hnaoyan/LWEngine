@@ -27,6 +27,9 @@ namespace PlayerContext
 		void TrackingFire();
 		// 誘導の生成
 		void GenerateTracking(const Vector3& direct, TrackingAttribute type);
+
+		void FireContainer();
+
 	public:
 		void SetAttackPattern(bool isAttack) { isChangeAttack_ = isAttack; }
 

@@ -65,3 +65,17 @@ void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, Tra
 	bullet->transform_ = transform;
 	bulletManager_->FindCluster("Player:TrackingBullet")->AddBullet(std::move(bullet));
 }
+
+void PlayerContext::ShootingManager::FireContainer()
+{
+
+	Vector3 direct = Vector3::Up();
+	EulerTransform transform = player_->worldTransform_.transform_;
+	transform.scale = { 0.2f,0.2f,0.2f };
+	// 生成処理
+	BulletBuilder builder;
+	builder.SetTargetObject(player_).SetDirect(direct).SetSpeed(10.0f).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
+	builder.SetParentAttribute(1);
+	builder.SetCluster(bulletManager_->FindCluster("Player:TrackingBullet"));
+	bulletManager_->FindCluster("Player:ContainerBullet")->AddBullet(builder, BulletType::kContainer);
+}

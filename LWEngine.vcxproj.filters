@@ -611,6 +611,8 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1198,6 +1200,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

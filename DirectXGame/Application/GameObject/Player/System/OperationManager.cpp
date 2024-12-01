@@ -58,6 +58,11 @@ void OparationManager::InputUpdate()
 		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
 	}
 
+	if (input_->TriggerKey(DIK_U)) {
+		player_->GetSystemFacede()->GetShootingManager()->FireContainer();
+		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
+	}
+
 	// カメラの処理
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon && !lockOnCooltime_.IsActive()) {
 		lockOn_.ToggleLockOn(player_->camera_);
