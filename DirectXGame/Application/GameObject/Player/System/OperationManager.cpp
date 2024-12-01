@@ -52,16 +52,16 @@ void OparationManager::InputUpdate()
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
 	}
-	// 追従（強化弾として扱う
-	else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
-		player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
-		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
-	}
+	//// 追従（強化弾として扱う
+	//else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
+	//	player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
+	//	shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
+	//}
 
-	if (input_->TriggerKey(DIK_U)) {
-		player_->GetSystemFacede()->GetShootingManager()->FireContainer();
-		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
-	}
+	//if (input_->TriggerKey(DIK_U)) {
+	//	player_->GetSystemFacede()->GetShootingManager()->FireContainer();
+	//	shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
+	//}
 
 	// カメラの処理
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon && !lockOnCooltime_.IsActive()) {
