@@ -117,6 +117,9 @@ void Boss::ImGuiDraw()
 			if (ImGui::Button("MissileWave")) {
 				stateManager_.ChangeRequest(std::make_unique<BossState::MissileWaveState>());
 			}
+			if (ImGui::Button("MissileContainer")) {
+				stateManager_.ChangeRequest(std::make_unique<BossState::MissileContainerState>());
+			}
 			if (Input::GetInstance()->TriggerKey(DIK_Y)) {
 				if (isAction_) {
 					isAction_ = false;
@@ -278,8 +281,11 @@ void Boss::InitializeGlobalValue()
 	instance->AddValue(groupName, "DamageDistance", float(-5.0f));
 	
 	groupName = "BossAction";
+	// 波状
 	instance->AddValue(groupName, "WaveAttackDuration", float(30.0f));	// 
-	instance->AddValue(groupName, "WaveAttackInitSpeed", float(100.0f));	// 
+	instance->AddValue(groupName, "WaveAttackInitSpeed", float(100.0f));	//
+	// コンテナ
+	instance->AddValue(groupName, "ContainerInitSpeed", float(10.0f));
 
 	//---敵の弾のトレイル---//
 	groupName = "BossBulletTrail";

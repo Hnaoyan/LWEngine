@@ -6,6 +6,7 @@
 #include "StatePattern/BossStateDecider.h"
 #include "StatePattern/Attack/BossMissileBarrage.h"
 #include "StatePattern/Attack/BossMisslieWave.h"
+#include "StatePattern/Attack/BossMissileContainer.h"
 #include "Animation/BossAnimationManager.h"
 #include "System/BossSystem.h"
 #include "System/UI/BossUI.h"
@@ -137,6 +138,7 @@ public:
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
 	BulletManager* GetBulletManager() { return bulletManager_; }
 	IBulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
+	IBulletCluster* GetContainerCluster() { return bulletManager_->FindCluster("Boss:ContainerBullet"); }
 	IBulletCluster* GetSuperiorCluster() { return bulletManager_->FindCluster("Boss:Superior"); }
 	IBulletCluster* GetInferiorCluster() { return bulletManager_->FindCluster("Boss:Inferior"); }
 	IBulletCluster* GetGeneusCluster() { return bulletManager_->FindCluster("Boss:Genius"); }

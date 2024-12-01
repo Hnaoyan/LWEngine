@@ -3,6 +3,7 @@
 #include "Application/GameObject/GameObjectLists.h"
 #include "Attack/BossMissileBarrage.h"
 #include "Attack/BossMisslieWave.h"
+#include "Attack/BossMissileContainer.h"
 
 void BossState::StateManager::Initialize(Boss* boss)
 {
