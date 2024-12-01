@@ -5,6 +5,7 @@
 #include "StatePattern/StateMachine.h"
 #include "StatePattern/BossStateDecider.h"
 #include "StatePattern/Attack/BossMissileBarrage.h"
+#include "StatePattern/Attack/BossMisslieWave.h"
 #include "Animation/BossAnimationManager.h"
 #include "System/BossSystem.h"
 #include "System/UI/BossUI.h"

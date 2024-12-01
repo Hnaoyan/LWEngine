@@ -1,5 +1,6 @@
 #include "BossStateDecider.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Attack/BossMisslieWave.h"
 
 void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 {
@@ -143,33 +144,39 @@ void BossState::StateDecider::TableSelect(std::string tableTag) {
 
 void BossState::StateDecider::StateSelect(StatePattern number)
 {
+	std::unique_ptr<IState> newState;
 	switch (number)
 	{
 	case BossState::StateDecider::StatePattern::kAttack:
-		boss_->StateManager()->ChangeRequest(std::make_unique<AttackState>());
+		newState = std::make_unique<AttackState>();
 		break;
 	case BossState::StateDecider::StatePattern::kMove:
-		boss_->StateManager()->ChangeRequest(std::make_unique<MoveState>());
+		newState = std::make_unique<MoveState>();
 		break;
 	case BossState::StateDecider::StatePattern::kUpdown:
-		boss_->StateManager()->ChangeRequest(std::make_unique<UpDownState>());
+		newState = std::make_unique<UpDownState>();
 		break;
 	case BossState::StateDecider::StatePattern::kWait:
-		boss_->StateManager()->ChangeRequest(std::make_unique<WaitState>());
+		newState = std::make_unique<WaitState>();
 		break;
 	case BossState::StateDecider::StatePattern::kTeleport:
-		boss_->StateManager()->ChangeRequest(std::make_unique<TeleportState>());
+		newState = std::make_unique<TeleportState>();
 		break;
 	case BossState::StateDecider::StatePattern::kMissile:
-		boss_->StateManager()->ChangeRequest(std::make_unique<MissileAttackState>());
+		newState = std::make_unique<MissileAttackState>();
 		break;
 	case BossState::StateDecider::StatePattern::kOrbitMove:
-		boss_->StateManager()->ChangeRequest(std::make_unique<OrbitMoveState>());
+		newState = std::make_unique<OrbitMoveState>();
 		break;
 	case BossState::StateDecider::StatePattern::kMissileBarrage:
-		boss_->StateManager()->ChangeRequest(std::make_unique<MissileBarrageState>());
+		newState = std::make_unique<MissileBarrageState>();
+		break;
+	case BossState::StateDecider::StatePattern::kMissileWave:
+		newState = std::make_unique<MissileWaveState>();
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;
 	}
+
+	boss_->StateManager()->ChangeRequest(std::move(newState));
 }

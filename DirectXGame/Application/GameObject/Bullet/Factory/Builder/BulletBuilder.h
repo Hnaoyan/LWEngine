@@ -24,7 +24,7 @@ public: // 設定
 	}
 	// 方向設定
 	BulletBuilder& SetDirect(const Vector3& direct) { 
-		direct_ = direct;
+		direct_ = Vector3::Normalize(direct);
 		return *this;
 	}
 	// 速度設定

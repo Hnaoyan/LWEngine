@@ -104,6 +104,7 @@ void Boss::ImGuiDraw()
 
 		// 行動
 		if (ImGui::BeginTabItem("ACTION")) {
+			ImGui::Text("");
 			if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
 				stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 			}
@@ -112,6 +113,9 @@ void Boss::ImGuiDraw()
 			}
 			if (ImGui::Button("NormalAttack") || Input::GetInstance()->TriggerKey(DIK_9)) {
 				stateManager_.ChangeRequest(std::make_unique<BossState::AttackState>());
+			}
+			if (ImGui::Button("MissileWave")) {
+				stateManager_.ChangeRequest(std::make_unique<BossState::MissileWaveState>());
 			}
 			if (Input::GetInstance()->TriggerKey(DIK_Y)) {
 				if (isAction_) {
@@ -273,6 +277,9 @@ void Boss::InitializeGlobalValue()
 	groupName = "BossEffect";
 	instance->AddValue(groupName, "DamageDistance", float(-5.0f));
 	
+	groupName = "BossAction";
+	instance->AddValue(groupName, "WaveAttackDuration", float(30.0f));	// 
+	instance->AddValue(groupName, "WaveAttackInitSpeed", float(100.0f));	// 
 
 	//---敵の弾のトレイル---//
 	groupName = "BossBulletTrail";

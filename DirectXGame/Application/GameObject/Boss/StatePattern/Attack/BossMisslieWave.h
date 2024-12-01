@@ -14,7 +14,14 @@ namespace BossState
 			kPhase1,
 			kPhase2,
 			kPhase3,
-			kSize,
+			kPhase4,
+			kPhase5,
+			kPhase6,
+			kPhase7,
+			kPhase8,
+			kPhase9,
+			kPhase10,
+			kEndPhase,
 		};
 	public:
 		void Initialize() override;
@@ -27,6 +34,8 @@ namespace BossState
 
 		// 生成間隔
 		FrameTimer spawnTimer_;
+		// 生成のフェーズ
+		int32_t spawnPhase_ = kPhase1;
 
 	};
 }

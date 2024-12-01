@@ -1,0 +1,6 @@
+{
+    "BossAction": {
+        "WaveAttackDuration": 30.0,
+        "WaveAttackInitSpeed": 60.0
+    }
+}
