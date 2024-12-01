@@ -49,7 +49,7 @@ void CameraManager::Update(GameSystem* gameSystem)
 		if (!durationTimer_.IsActive()) {
 			UpdateCameraSwitcher();
 			// 長押しの重なりを回避するためのタイマー
-			durationTimer_.Start(5.0f);
+			durationTimer_.Start(10.0f);
 		}
 	}
 

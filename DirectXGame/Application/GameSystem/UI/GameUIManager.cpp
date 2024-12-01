@@ -3,8 +3,9 @@
 #include "Engine/2D/SpriteManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
+#include "Application/GameSystem/GameSystem.h"
 
-GameUIManager::GameUIManager()
+GameUIManager::GameUIManager(GameSystem* gameSystem)
 {
 	InitializeGlobalValue();
 	// 操作関係のHUD
@@ -26,6 +27,7 @@ GameUIManager::GameUIManager()
 	replay_.sprite = SpriteManager::GetSprite("ResultReplayUI");
 	replay_.position = Vector2(800, 720 / 2 + 50);
 
+	gameSystem_ = gameSystem;
 }
 
 void GameUIManager::Initialize()
@@ -39,7 +41,7 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	gameObjectManager->UIDraw();
 
 	// リプレイ中なら非表示に
-	if (gameObjectManager->IsSceneReplay()) {
+	if (gameSystem_->IsReplayMode()) {
 		return;
 	}
 

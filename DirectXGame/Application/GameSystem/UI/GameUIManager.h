@@ -3,6 +3,7 @@
 #include <vector>
 
 class GameObjectManager;
+class GameSystem;
 
 /// <summary>
 /// オブジェクトに依存しないUI・UIのグローバル変数管理クラス
@@ -10,7 +11,7 @@ class GameObjectManager;
 class GameUIManager
 {
 public:
-	GameUIManager();
+	GameUIManager(GameSystem* gameSystem);
 	void Initialize();
 	void Draw(GameObjectManager* gameObjectManager);
 
@@ -25,6 +26,8 @@ private:
 
 	GameUI::TextUI titleBack_ = {};
 	GameUI::TextUI replay_ = {};
+
+	GameSystem* gameSystem_ = nullptr;
 
 private:
 	/// <summary>
