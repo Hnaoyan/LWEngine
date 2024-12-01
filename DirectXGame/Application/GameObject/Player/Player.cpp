@@ -87,6 +87,7 @@ void Player::Draw(ModelDrawDesc desc)
 	if (!isInvisible_) {
 		// 本体の描画
 		ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+		//facadeSystem_->GetDudgeManager()->Draw(desc);
 	}
 
 	// パーティクル
@@ -97,32 +98,32 @@ void Player::ImGuiDraw()
 {
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
-	if (ImGui::TreeNode("TrailTexture")) {
-		ImGui::InputText("TexturePath", path, 32);
-		std::string debugText = "Text:" + filePath;
+	//if (ImGui::TreeNode("TrailTexture")) {
+	//	ImGui::InputText("TexturePath", path, 32);
+	//	std::string debugText = "Text:" + filePath;
 
-		if (ImGui::Button("SavePath")) {
-			filePath = "Resources/";
-			filePath += path;
-			filePath += ".png";
-			BulletTrail::sTexture = TextureManager::Load(filePath);
-		}
+	//	if (ImGui::Button("SavePath")) {
+	//		filePath = "Resources/";
+	//		filePath += path;
+	//		filePath += ".png";
+	//		BulletTrail::sTexture = TextureManager::Load(filePath);
+	//	}
 
-		ImGui::Text(debugText.c_str());
-		if (ImGui::Button("TrailUV")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
-		}
-		if (ImGui::Button("Noise1")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
-		}
-		if (ImGui::Button("BlackTrail")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/TestSmoke.png");
-		}
-		if (ImGui::Button("WhiteTrail")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");
-		}
-		ImGui::TreePop();
-	}
+	//	ImGui::Text(debugText.c_str());
+	//	if (ImGui::Button("TrailUV")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
+	//	}
+	//	if (ImGui::Button("Noise1")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
+	//	}
+	//	if (ImGui::Button("BlackTrail")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/TestSmoke.png");
+	//	}
+	//	if (ImGui::Button("WhiteTrail")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");
+	//	}
+	//	ImGui::TreePop();
+	//}
 	NowState();
 
 	// アウトライン用の
@@ -135,6 +136,10 @@ void Player::ImGuiDraw()
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
+		if (ImGui::BeginTabItem("Dodge")) {
+			facadeSystem_->GetDudgeManager()->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
 		if (ImGui::BeginTabItem("Health")) {
 			facadeSystem_->GetHealth()->ImGuiDraw();
 			ImGui::EndTabItem();

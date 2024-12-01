@@ -1,6 +1,8 @@
 #pragma once
 #include "Engine/LwLib/LwEnginePaths.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
+#include "Engine/3D/Drawer/Model.h"
+#include <memory>
 
 class Player;
 
@@ -22,6 +24,19 @@ namespace PlayerContext
 			// 攻撃の種類変更
 			bool isChangeAttack_ = false;
 		};
+
+		// 回避用の距離を分かるようにするコライダーモデルの情報
+		struct DodgeCollider
+		{
+			WorldTransform transform;
+			uint32_t texture;
+			std::unique_ptr<Material> material;
+			void Update() {
+				transform.UpdateMatrix();
+				material->Update();
+			}
+		};
+
 		// プレイヤー
 		Player* player_ = nullptr;
 
@@ -39,6 +54,8 @@ namespace PlayerContext
 		void InvisibleExcept(const float& frame);
 		// 更新
 		void Update();
+		// 描画
+		void Draw(ModelDrawDesc desc);
 		// ImGui
 		void ImGuiDraw();
 		// 攻撃のダメージ量に変化を加えるかどうか
@@ -76,6 +93,8 @@ namespace PlayerContext
 		float slowFactor_ = 30.0f;
 		// 回避コンボの情報
 		ComboData comboData_{};
+		// 
+		DodgeCollider dodgeColliderObject;
 	};
 }
 

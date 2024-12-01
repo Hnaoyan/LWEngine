@@ -223,6 +223,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("PlayerOutline", "Robotto");	// コンボ用の枠モデル
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");	// 天球
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
+	ModelManager::LoadNormalModel("ColliderSphere", "sphere");	// ボスのバリア
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
 	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ

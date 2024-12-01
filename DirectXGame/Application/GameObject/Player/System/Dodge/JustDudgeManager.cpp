@@ -1,6 +1,9 @@
 #include "JustDudgeManager.h"
 #include "../../Player.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include <imgui.h>
 
 PlayerContext::JustDodgeManager::JustDodgeManager(Player* player)
@@ -10,6 +13,13 @@ PlayerContext::JustDodgeManager::JustDodgeManager(Player* player)
 	// 残像用コライダー
 	collider_.Initialize(player_->worldTransform_.transform_.scale.x, player_);
 	collider_.SetAttribute(kCollisionAttributePlayer);
+
+	dodgeColliderObject.material = std::make_unique<Material>();
+	dodgeColliderObject.material->CreateMaterial();
+	dodgeColliderObject.material->color_.w = 0.05f;
+	dodgeColliderObject.transform.Initialize();
+	dodgeColliderObject.transform.parent_ = &player_->worldTransform_;
+	dodgeColliderObject.texture = TextureManager::Load("Resources/default/white2x2.png");
 }
 
 void PlayerContext::JustDodgeManager::DodgeExcept()
@@ -38,6 +48,8 @@ void PlayerContext::JustDodgeManager::InvisibleExcept(const float& frame)
 
 void PlayerContext::JustDodgeManager::Update()
 {
+	// 
+	dodgeColliderObject.Update();
 	// 無敵時間の処理（ジャスト回避
 	if (invisibleTimer_.IsActive()) {
 		GameSystem::sSpeedFactor = slowFactor_;
@@ -103,11 +115,26 @@ void PlayerContext::JustDodgeManager::Update()
 	collider_.Update(colliderPosition_);
 }
 
+void PlayerContext::JustDodgeManager::Draw(ModelDrawDesc desc)
+{
+	DrawDesc::LightDesc light{};
+	DrawDesc::ModelDesc model{};
+	light.directionalLight = desc.directionalLight;
+	light.pointLight = desc.pointLight;
+	light.spotLight = desc.spotLight;
+	model.SetDesc(ModelManager::GetModel("ColliderSphere"));
+	model.material = dodgeColliderObject.material.get();
+	model.worldTransform = &dodgeColliderObject.transform;
+	model.texture = dodgeColliderObject.texture;
+	ModelRenderer::NormalDraw(desc.camera, model, light);
+}
+
 void PlayerContext::JustDodgeManager::ImGuiDraw()
 {
 	static float bar = 0.01f;
 	ImGui::DragFloat("Bar", &bar, 0.01f);
 	ImGui::DragFloat("JustDudgeFrame", &justDodgeFrame_, bar);
 	ImGui::DragFloat("SlowFactor", &slowFactor_, bar);
+	ImGui::DragFloat3("scale", &dodgeColliderObject.transform.transform_.scale.x, bar);
 	ImGui::InputInt("ComboCount", &comboData_.nowCombo);
 }
