@@ -56,15 +56,18 @@ public:
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
 	bool IsSceneChange() const { return isSceneChange_; }
+	bool IsSceneReplay() const { return isSceneReplay_; }
 
 	void SetGameSystem(GameSystem* system) { gameSystem_ = system; }
 private: // ゲームクリアなどの部分
 	bool isSceneChange_ = false;	// シーンの切り替わりフラグ
+	bool isSceneReplay_ = false;	// リプレイに行くフラグ
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	bool isChangeInput_ = false;	// シーン変更の受付フラグ
 
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
+	FrameTimer waitingTimer_;	// ゲーム終了後の待機時間
 
 	GameSystem* gameSystem_ = nullptr;
 private:

@@ -55,13 +55,15 @@ void GameScene::Update()
 #endif // _DEBUG
 	// シーンの切り替え処理
 	if (gameObjectManager_->IsSceneChange()) {
+		sceneManager_->ChangeScene("TITLE");
+	}
+
+	if (gameObjectManager_->IsSceneReplay()) {
 		// プレイの保存
 		gameSystem_->GetReplayManager()->ExportReplay();
 		// リプレイモードに移行
 		stateRequest_ = GameSceneState::kReplay;
-		//sceneManager_->ChangeScene("TITLE");
 	}
-
 	// ステートの切り替わり処理
 	ChangeState();
 

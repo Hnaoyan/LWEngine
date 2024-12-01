@@ -60,6 +60,11 @@ void GameSystem::ImGuiDraw()
 
 void GameSystem::LaunchReplay()
 {
+    // ポストエフェクト解除
+    PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+    // スローだった場合の初期化
+    sSpeedFactor = 1.0f;
     // リプレイの準備
     replayManager_.ReplaySetUp();
+    isReplay_ = true;
 }

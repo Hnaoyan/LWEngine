@@ -56,33 +56,47 @@ void GameObjectManager::Update()
 {
 	// ゲームの判断
 #ifdef RELEASE
-
-	if (player_->IsDead() && isInGame_) {
-		isInGame_ = false;
-		gameOverTimer_.Start(120.0f);
+	if (gameSystem_->IsReplayMode()) {
+		if ((player_->IsDead() || boss_->IsDead()) && isInGame_) {
+			isInGame_ = false;
+			waitingTimer_.Start(120.0f);
+		}
 	}
-	if (boss_->IsDead() && isInGame_) {
-		isInGame_ = false;
-		gameClearTimer_.Start(120.0f);
+	else {
+		// クリアしたタイミングの処理
+		if (player_->IsDead() && isInGame_) {
+			isInGame_ = false;
+			waitingTimer_.Start(120.0f);
+			gameOverTimer_.Start(120.0f);
+		}
+		if (boss_->IsDead() && isInGame_) {
+			isInGame_ = false;
+			waitingTimer_.Start(120.0f);
+			gameClearTimer_.Start(120.0f);
+		}
 	}
 
+	// UIが出ている時間
 	gameClearTimer_.Update();
 	gameOverTimer_.Update();
+	waitingTimer_.Update();
 
-	if (gameClearTimer_.IsEnd()) {
-		isChangeInput_ = true;
-		//isSceneChange_ = true;
+	// ゲーム終了のタイミング
+	if (waitingTimer_.IsEnd()) {
+		if (gameSystem_->IsReplayMode()) {
+			isSceneChange_ = true;
+		}
+		else {
+			isChangeInput_ = true;
+		}
 	}
-	if (gameOverTimer_.IsEnd()) {
-		isChangeInput_ = true;
-		//if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-		//	isSceneChange_ = true;
-		//}
-		//isSceneChange_ = true;
-	}
-
+	
+	// タイトルかリプレイかを選択できるように
 	if (isChangeInput_) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+		if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_A)) {
+			isSceneReplay_ = true;
+		}
+		else if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
 			isSceneChange_ = true;
 		}
 	}

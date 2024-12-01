@@ -23,6 +23,7 @@ namespace BossState
 
 	private:
 		void SpawnMissile();
+		void GenerateMissile(const Vector3& direct, TrackingAttribute type);
 
 		// 生成間隔
 		FrameTimer spawnTimer_;

@@ -46,6 +46,7 @@ public:
 
 public:
 	ReplayManager* GetReplayManager() { return &replayManager_; }
+	bool IsReplayMode() { return isReplay_; }
 private:
 	// キー管理クラス
 	KeyConfigManager keyConfig_;
@@ -58,5 +59,8 @@ private:
 	uint32_t recordNowFrame_ = 0;
 	// インプット
 	Input* input_ = nullptr;
+
+	// リプレイ状態か
+	bool isReplay_ = false;
 
 };
