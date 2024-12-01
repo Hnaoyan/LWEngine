@@ -117,7 +117,7 @@ namespace BossState
 
 	};
 
-	// ミサイルの攻撃
+	// ミサイルの一斉射撃
 	class MissileAttackState : public IState
 	{
 	public:
@@ -131,7 +131,7 @@ namespace BossState
 	private:
 		void MissileAttack();
 		void GenerateMissile(const Matrix4x4& rotateMatrix, TrackingAttribute type);
-
+		void GenerateMissile(const Vector3& direct, TrackingAttribute type);
 	private:
 		Vector3 bulletDirect_ = {};
 

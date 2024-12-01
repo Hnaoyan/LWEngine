@@ -55,6 +55,9 @@ void Boss::Update()
 	}
 	// コライダーの更新
 	collider_.Update(worldTransform_.GetWorldPosition());
+
+	// 正面の方向ベクトル
+	frontVector_ = Matrix4x4::TransformVector3(Vector3::Backward(), Matrix4x4::MakeRotateXYZMatrix(worldTransform_.transform_.rotate));
 }
 
 void Boss::Draw(ModelDrawDesc desc)
@@ -89,6 +92,7 @@ void Boss::ImGuiDraw()
 			ImGui::Checkbox("IsInvisible", &isInvisible_);
 			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
 			ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+			ImGui::DragFloat3("FrontVector", &frontVector_.x);
 			ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 			collider_.radius_ = worldTransform_.transform_.scale.x;
 			Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };

@@ -116,6 +116,10 @@ private:
 	Player* player_ = nullptr;
 	// GPU
 	GPUParticleManager* gpuParticle_ = nullptr;
+
+	// 前方方向のベクトル
+	Vector3 frontVector_{};
+
 public:
 	void SetIsAction(bool isAction) { isAction_ = isAction; }
 	// 外部
