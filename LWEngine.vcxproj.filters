@@ -614,6 +614,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1183,9 +1184,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.h">
       <Filter>Application\GameSystem</Filter>
     </ClInclude>
@@ -1204,6 +1202,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
@@ -1512,5 +1513,6 @@
     <None Include="Resources\shaders\Instanced\Instanced.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
+    <None Include="Resources\shaders\Utility\MathCalc.hlsli" />
   </ItemGroup>
 </Project>

@@ -152,6 +152,10 @@ void Boss::ImGuiDraw()
 			if (ImGui::Button("CreateBarrier")) {
 				systemManager_->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 			}
+			if (ImGui::Button("BreakBarrier")) {
+				systemManager_->barrierManager_.BarrierBreakExcept();
+				systemManager_->particleManager_.BarrierBreakExcept();
+			}
 			systemManager_->barrierManager_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
@@ -193,18 +197,19 @@ void Boss::OnCollision(ColliderObject target)
 		Vector2 xzBullet = { (*bullet)->GetGeneratePosition().x,(*bullet)->GetGeneratePosition().z };
 		Vector2 xzBoss = { worldTransform_.GetWorldPosition().x ,worldTransform_.GetWorldPosition().z };
 		float distance = Vector2::Distance(xzBoss, xzBullet);
+		float damageRatio = 1.0f * (*bullet)->DamageRatio();
 		// バリアとの衝突処理
 		if (systemManager_->barrierManager_.IsActive()) {
-			systemManager_->barrierManager_.DamageProcess((-1.0f) * (*bullet)->DamageRatio());
-			// バリアが割れる瞬間の処理
+			damageRatio *= 2.0f;
+			systemManager_->barrierManager_.DamageProcess(damageRatio);
 			if (systemManager_->barrierManager_.IsShattered()) {
-				systemManager_->barrierManager_.BarrierBreak();
-				//stateManager_.ChangeRequest(std::make_unique<BossState::SystemDownState>());
+				systemManager_->barrierManager_.BarrierBreakExcept();
+				systemManager_->particleManager_.BarrierBreakExcept();
 			}
+
 		}
 		// 本体との衝突処理
 		else {
-			float damageRatio = 1.0f * (*bullet)->DamageRatio();
 			// 弱点むき出し状態のダメージ倍率アップ
 			if (animationManager_->IsOpen()) {
 				damageRatio *= 2.5f;
@@ -255,7 +260,9 @@ void Boss::UIDraw()
 
 void Boss::Finalize()
 {
+	// GPUParticleの登録を解除する処理
 	gpuParticle_->DeleteEmitter("BossDamage");
+	gpuParticle_->DeleteEmitter("BossBarrierBreak");
 }
 
 void Boss::SetCollier(CollisionManager* collisionManager)
@@ -275,6 +282,7 @@ void Boss::InitializeGlobalValue()
 	instance->AddValue(groupName, "BarrierHP", 4.0f);
 	instance->AddValue(groupName, "BarrierVanishFrame", 45.0f);
 	instance->AddValue(groupName, "BarrierReappearFrame", 30.0f);
+	instance->AddValue(groupName, "BarrierDissolveColor", Vector3(1.0f, 1.0f, 1.0f));
 
 	//---ボスのエフェクトアニメーション---//
 	groupName = "BossEffect";

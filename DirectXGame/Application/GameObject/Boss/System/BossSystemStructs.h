@@ -14,8 +14,8 @@ namespace BossSystemContext
 		kSuperior,	// 優等
 	};	
 
-	// ダメージ受けた時のパラメータ
-	struct DamageParams
+	// エフェクトのパラメータ
+	struct EffectParams
 	{
 		// エミッターのポインタ
 		GPUParticleEmitter* emitPtr = nullptr;

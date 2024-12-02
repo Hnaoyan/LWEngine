@@ -1,10 +1,13 @@
 #pragma once
 
-enum EmitterType
+// エミッターの番号
+enum ParticleEmitterType
 {
-	kDefault,
+	kDefaultParticle,
 	kPlayerMove,
-	kBossBullet,
-	kBossHitEffect,
-	kNoneType,
+	kPlayerBullet,
+	kBossHit,
+	kBulletBreak,
+	kBossBulletMove,
+	kBossBarrierBreak,
 };

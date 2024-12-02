@@ -1,6 +1,6 @@
 {
     "Boss": {
-        "BarrierHP": 4.0,
+        "BarrierHP": 10.0,
         "BarrierReappearFrame": 30.0,
         "BarrierScale": [
             18.0,

@@ -50,17 +50,23 @@ namespace BossSystemContext
 			damage_.isActive = true;
 			damage_.activeTimer.Start(damage_.activeFrame);
 		}
+		void BarrierBreakExcept() {
+			barrierBreak_.isActive = true;
+			barrierBreak_.activeTimer.Start(barrierBreak_.activeFrame);
+		}
 
 	public: // アクセッサ
 		void SetGPUParticleSystem(GPUParticleManager* ptr) { gpuParticle_ = ptr; }
 		bool IsDamage() { return damage_.isActive; }
-	
+		bool IsBarrierBreak() { return barrierBreak_.isActive; }
 	private: // ダメージ
 		// 生成
 		void CreateDamageEmitter();
+		void CreateBarrierBreakEmitter();
 		// ダメージ関係のパラメータ
-		DamageParams damage_;
-
+		EffectParams damage_;
+		// バリア割れるエフェクト
+		EffectParams barrierBreak_{};
 	private: // ポインタ関係
 		GPUParticleManager* gpuParticle_ = nullptr;
 		Boss* boss_ = nullptr;
