@@ -41,8 +41,6 @@ void GameSystem::Update()
     postEffectManager_.Update();
     // リプレイ用に記録
     replayManager_.RecordFrame(&keyConfig_);
-    // フレームカウント
-    recordNowFrame_++;
 }
 
 void GameSystem::ImGuiDraw()

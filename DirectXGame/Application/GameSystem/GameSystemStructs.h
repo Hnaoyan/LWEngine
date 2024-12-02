@@ -107,6 +107,32 @@ struct DamageVignette
 
 };
 
+struct GameStartVignette
+{
+	CBufferDataVignette data{};
+	FrameTimer timer;
+	float maxPow = 0.0f;
+	float scale = 0.0f;
+	// 初期化処理
+	void Initialize() {
+		float damageEffectFrame = 120.0f;
+		maxPow = 0.4f;
+		scale = 25.0f;
+		timer.Start(damageEffectFrame);
+	}
+	// 更新処理
+	void Update() {
+		timer.Update();
+		data.color = { 0.0f,0.0f,0.0f };
+		data.powValue = Ease::Easing(maxPow, 0.0f, timer.GetElapsedFrame());
+		data.scale = Ease::Easing(0.0f, scale, timer.GetElapsedFrame());
+	}
+	// 終了処理
+	void Finalize() {
+		timer.End();
+	}
+};
+
 // ジャスト回避エフェクト
 struct SlowGrayScale
 {

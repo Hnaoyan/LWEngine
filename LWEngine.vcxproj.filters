@@ -615,6 +615,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1205,6 +1206,7 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

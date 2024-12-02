@@ -46,7 +46,8 @@ public:
 	/// ゲーム開始準備
 	/// </summary>
 	void GameSetUp();
-
+	
+	void UpdateObject();
 public:
 	// プレイヤー
 	Player* GetPlayer() { return player_.get(); }
@@ -69,7 +70,8 @@ private: // ゲームクリアなどの部分
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
 	FrameTimer waitingTimer_;	// ゲーム終了後の待機時間
-
+	FrameTimer gameWaitTimer_;
+	bool isGame = false;
 	GameSystem* gameSystem_ = nullptr;
 private:
 	// ゲームのユニット

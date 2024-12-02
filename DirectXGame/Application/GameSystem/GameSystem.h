@@ -55,12 +55,8 @@ private:
 	// ポストエフェクト管理クラス
 	PostEffectManager postEffectManager_;
 
-	// フレーム数のカウント
-	uint32_t recordNowFrame_ = 0;
 	// インプット
 	Input* input_ = nullptr;
-
 	// リプレイ状態か
 	bool isReplay_ = false;
-
 };

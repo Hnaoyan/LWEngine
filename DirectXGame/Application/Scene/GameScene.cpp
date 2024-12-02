@@ -345,9 +345,9 @@ void GameScene::ChangeState()
 			break;
 		case GameSceneState::kReplay:
 			gameSystem_->GetReplayManager()->ImportReplay();
-			// インスタンス生成しなおし
-			//cameraManager_ = std::make_unique<CameraManager>();
-
+			// UIを隠すフラグ
+			uiManager_->SetIsHudHide(true);
+			// ゲームオブジェクト生成
 			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
 			// オブジェクト類の初期化
 			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
@@ -356,11 +356,9 @@ void GameScene::ChangeState()
 			cameraManager_->Initialize(gameObjectManager_.get());
 			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
 			gameSystem_->LaunchReplay();
-			// UIを隠すフラグ
-			uiManager_->SetIsHudHide(true);
 			break;
 		case GameSceneState::kRecord:
-			// インスタンス生成しなおし
+			// ゲームオブジェクト生成
 			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
 			// オブジェクト類の初期化
 			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
@@ -369,7 +367,6 @@ void GameScene::ChangeState()
 			cameraManager_->Initialize(gameObjectManager_.get());
 			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
 			gameSystem_->GetReplayManager()->RecordSetUp();	// 記録のスタート処理
-
 			break;
 		}
 

@@ -109,24 +109,18 @@ void GameObjectManager::Update()
 	}
 
 #endif // RELEASE
+	//if (!gameSystem_->IsReplayMode()) {
+	//	if (PostEffectManager::sGameVigenette.timer.IsEnd()) {
+	//		isGame = true;
+	//		gameSystem_->GetReplayManager()->RecordSetUp();
+	//	}
+	//	if (!isGame) {
+	//		return;
+	//	}
+	//}
 
-
-	// 地形関係
-	skyDome_->Update();
-	terrainManager_->Update();
-	if (isInGame_) {
-		// オブジェクト
-		player_->Update();
-		if (boss_) {
-			boss_->Update();
-		}
-	}
-	// アニメーションの処理
-	if (boss_) {
-		boss_->AnimationUpdate();
-	}
-	// 弾
-	bulletManager_->Update();
+	// オブジェクトの更新
+	UpdateObject();
 }
 
 void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
@@ -166,6 +160,9 @@ void GameObjectManager::UIDraw()
 void GameObjectManager::ImGuiDraw()
 {	
 	ImGui::Begin("GameObjectManager");
+	if (ImGui::Button("Start")) {
+		gameWaitTimer_.Start(60.0f);
+	}
 	if (ImGui::BeginTabBar("Object"))
 	{
 		if (ImGui::BeginTabItem("BulletManager")) {
@@ -211,6 +208,30 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 
 void GameObjectManager::GameSetUp()
 {
+	// ポストエフェクト解除
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+	// 速度の初期化
+	gameSystem_->sSpeedFactor = 1.0f;
 	boss_->SetIsAction(true);
 	boss_->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+}
+
+void GameObjectManager::UpdateObject()
+{
+	// 地形関係
+	skyDome_->Update();
+	terrainManager_->Update();
+	if (isInGame_) {
+		// オブジェクト
+		player_->Update();
+		if (boss_) {
+			boss_->Update();
+		}
+	}
+	// アニメーションの処理
+	if (boss_) {
+		boss_->AnimationUpdate();
+	}
+	// 弾
+	bulletManager_->Update();
 }
