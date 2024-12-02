@@ -52,7 +52,7 @@ private:
 	// 入力用の名前
 	char importName_[256] = "Replay";
 	// 現在のフレーム番号
-	uint32_t recordNowFrame_;
+	int32_t recordNowFrame_;
 	// 現在リプレイを再生しているか？
 	bool isReplayNow_ = false;
 	// リプレイ中の現在のフレーム

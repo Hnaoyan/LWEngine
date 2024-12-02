@@ -162,7 +162,7 @@ Particle BossBarrierBreak(RandomGenerator generator, float32_t3 emitterPosition)
     float32_t3 direct = particle.translate;
     direct = normalize(direct);
     particle.velocity = direct;
-    particle.velocity *= 0.1f;
+    particle.velocity *= 0.3f;
     
     //particle.translate *= 3.0f;
     particle.translate += emitterPosition;
