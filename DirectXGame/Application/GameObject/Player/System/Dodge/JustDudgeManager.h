@@ -37,6 +37,21 @@ namespace PlayerContext
 			}
 		};
 
+		struct InvisibleData
+		{
+			// 無敵（スローモーション）時間
+			FrameTimer activeTimer;
+			// 無敵後の余裕を持たせるタイマー
+			FrameTimer afterTimer;
+			// 無敵から基にもどる
+			FrameTimer returnTimer;
+			void Update() {
+				activeTimer.Update();
+				afterTimer.Update();
+				returnTimer.Update();
+			}
+		};
+
 		// プレイヤー
 		Player* player_ = nullptr;
 
@@ -63,9 +78,11 @@ namespace PlayerContext
 		// ジャスト回避可能状態
 		bool IsActive() { return dodgeTimer_.IsActive(); }
 		// 無敵状態
-		bool IsInvisible() { return invisibleTimer_.IsActive(); }
+		bool IsInvisible() { return invisible_.activeTimer.IsActive(); }
+		// ジャスト回避の後の無敵猶予
+		bool IsInvisibleAfter() { return invisible_.afterTimer.IsActive(); }
 		// 無敵の終了タイミング
-		bool EndInvisible() { return invisibleTimer_.IsEnd(); }
+		bool EndInvisible() { return invisible_.activeTimer.IsEnd(); }
 		// コライダー
 		Sphere* GetCollider() { return &collider_; }
 		// コライダーの設定
@@ -79,18 +96,16 @@ namespace PlayerContext
 	private:
 		// 回避を受け付けている時間
 		FrameTimer dodgeTimer_;
-		// 無敵（スローモーション）時間
-		FrameTimer invisibleTimer_;
-		// 無敵から基にもどる
-		FrameTimer invisibleReturnTimer_;
+		// 
+		InvisibleData invisible_;
 		// ジャスト回避フレーム
 		float justDodgeFrame_ = 10.0f;
+		// スローモーションの値
+		float slowFactor_ = 30.0f;
 		// ダッシュ時の残像判定
 		Vector3 colliderPosition_{};
 		// スフィアコライダー
 		Sphere collider_;
-		// スローモーションの値
-		float slowFactor_ = 30.0f;
 		// 回避コンボの情報
 		ComboData comboData_{};
 		// 

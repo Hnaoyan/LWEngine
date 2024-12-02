@@ -33,7 +33,7 @@ void PlayerContext::JustDodgeManager::DodgeExcept()
 void PlayerContext::JustDodgeManager::InvisibleExcept(const float& frame)
 {
 	// スローモーション（無敵時間）開始処理
-	invisibleTimer_.Start(frame);
+	invisible_.activeTimer.Start(frame);
 	float keepFrame = 60.0f * 5.0f;
 	comboData_.keepTimer.Start(keepFrame);
 	comboData_.nowCombo++;
@@ -51,19 +51,23 @@ void PlayerContext::JustDodgeManager::Update()
 	// 
 	dodgeColliderObject.Update();
 	// 無敵時間の処理（ジャスト回避
-	if (invisibleTimer_.IsActive()) {
+	if (invisible_.activeTimer.IsActive()) {
 		GameSystem::sSpeedFactor = slowFactor_;
 		player_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.3f));
 	}
 	// 戻り始める処理
-	if (invisibleTimer_.IsEnd()) {
-		invisibleReturnTimer_.Start(45.0f);
+	if (invisible_.activeTimer.IsEnd()) {
+		invisible_.returnTimer.Start(45.0f);
 		//GameSystem::sSpeedFactor = 1.0f;
 		player_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 	// 戻ってくる時間
-	if (invisibleReturnTimer_.IsActive()) {
-		GameSystem::sSpeedFactor = Ease::Easing(slowFactor_, 1.0f, invisibleReturnTimer_.GetElapsedFrame());
+	if (invisible_.returnTimer.IsActive()) {
+		GameSystem::sSpeedFactor = Ease::Easing(slowFactor_, 1.0f, invisible_.returnTimer.GetElapsedFrame());
+	}
+	// スローモーション後の猶予
+	if (invisible_.returnTimer.IsEnd()) {
+		invisible_.afterTimer.Start(30.0f);
 	}
 
 	if (comboData_.keepTimer.IsActive()) {
@@ -108,9 +112,8 @@ void PlayerContext::JustDodgeManager::Update()
 	}
 	// 回避タイマー
 	dodgeTimer_.Update();
-	// 無敵タイマー
-	invisibleTimer_.Update();
-	invisibleReturnTimer_.Update();
+	// 無敵関係のタイマー
+	invisible_.Update();
 	// コライダーの更新
 	collider_.Update(colliderPosition_);
 }

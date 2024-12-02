@@ -101,6 +101,13 @@ void GameObjectManager::Update()
 		}
 	}
 
+	// リプレイ中に戻れるように
+	if (gameSystem_->IsReplayMode()) {
+		if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+			isSceneChange_ = true;
+		}
+	}
+
 #endif // RELEASE
 
 

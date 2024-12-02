@@ -222,13 +222,10 @@ void Player::OnCollision(ColliderObject target)
 			facadeSystem_->GetEnergy()->RecoverGage(energyRecover_);
 			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_ + 45.0f);
 		}
-		//// 無敵処理
-		//else if (facadeSystem_->GetDudgeManager()->IsInvisible()) {
+		// ジャスト回避後の猶予
+		else if (facadeSystem_->GetDudgeManager()->IsInvisibleAfter()) {
 
-		//}
-		//else if (facadeSystem_->GetHealth()->IsInvisible()) {
-
-		//}
+		}
 		// ダメージを受ける処理
 		else {
 			facadeSystem_->GetHealth()->TakeDamage();
