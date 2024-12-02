@@ -29,6 +29,8 @@ private:
 	GameUI::TextUI titleBack_ = {};
 	GameUI::TextUI replay_ = {};
 
+	GameUI::TextUI cameraChange_ = {};
+
 	GameSystem* gameSystem_ = nullptr;
 
 	// HUDを消しておくかのフラグ

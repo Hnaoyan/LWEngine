@@ -27,6 +27,9 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 	replay_.sprite = SpriteManager::GetSprite("ResultReplayUI");
 	replay_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ReplayExceptUIPos");
 
+	cameraChange_.sprite = SpriteManager::GetSprite("CameraChangeUI");
+	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
+
 	gameSystem_ = gameSystem;
 }
 
@@ -42,6 +45,7 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
 	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "TitleExceptUIPos");
 	replay_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ReplayExceptUIPos");
+	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
 #endif // IMGUI_ENABLED
 
 	// オブジェクトのUI
@@ -52,6 +56,9 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
 		titleBack_.sprite->SetPosition(titleBack_.position);
 		titleBack_.sprite->Draw();
+
+		cameraChange_.sprite->SetPosition(cameraChange_.position);
+		cameraChange_.sprite->Draw();
 		return;
 	}
 	// ゲームオーバー・クリアの描画
@@ -74,8 +81,8 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
 	titleBack_.sprite->SetPosition(titleBack_.position);
 	titleBack_.sprite->Draw();
-	replay_.sprite->SetPosition(replay_.position);
-	replay_.sprite->Draw();
+	cameraChange_.sprite->SetPosition(cameraChange_.position);
+	cameraChange_.sprite->Draw();
 #endif // _DEBUG
 
 	// HUD関係
@@ -133,4 +140,5 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "ReplayExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 	
 	globalVariable->AddValue(groupName, "NowReplayTitleExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	globalVariable->AddValue(groupName, "CameraChangeUIPos", Vector2(1280.0f / 2.0f + 200.0f, 720.0f));
 }
