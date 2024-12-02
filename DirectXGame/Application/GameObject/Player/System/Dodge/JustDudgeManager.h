@@ -29,7 +29,7 @@ namespace PlayerContext
 		struct DodgeCollider
 		{
 			WorldTransform transform;
-			uint32_t texture;
+			uint32_t texture = 0u;
 			std::unique_ptr<Material> material;
 			void Update() {
 				transform.UpdateMatrix();
@@ -87,6 +87,8 @@ namespace PlayerContext
 		Sphere* GetCollider() { return &collider_; }
 		// コライダーの設定
 		void SetPosition(const Vector3& position) { colliderPosition_ = position; }
+
+		FrameTimer* GetComboKeepTimer() { return &comboData_.keepTimer; }
 	public:
 		void ComboReset() {
 			comboData_.keepTimer.End();

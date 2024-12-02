@@ -84,11 +84,15 @@ void Player::Draw(ModelDrawDesc desc)
 	modelDesc.SetDesc(model_);
 	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
 	modelDesc.material = material_.get();
+
+
 	// プレイヤーの描画
 	if (!isInvisible_) {
 		// 本体の描画
 		ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 		//facadeSystem_->GetDudgeManager()->Draw(desc);
+
+		facadeSystem_->GetUI()->Draw(desc);
 	}
 
 	// パーティクル

@@ -116,6 +116,8 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "EnergySize", Vector2(24.0f, 280.0f));	// サイズ
 	globalVariable->AddValue(groupName, "EnergySizeRatio", Vector2(0.75f, 0.95f));	// サイズのレート
 	//globalVariable->AddValue(groupName, "")
+	globalVariable->AddValue(groupName, "ComboTimerColor", Vector4(0.3f, 1.0f, 0.3f, 0.95f));	// 色
+	globalVariable->AddValue(groupName, "ComboTimerSize", Vector2(24.0f, 280.0f));	// サイズ
 
 	groupName = "HUD";
 

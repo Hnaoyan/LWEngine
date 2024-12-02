@@ -227,6 +227,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
 	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
+	ModelManager::LoadNormalModel("Plane", "plane");
 }
 
 void GameScene::LoadTexture()
@@ -246,6 +247,7 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));
 	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerDodgeGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("HPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));

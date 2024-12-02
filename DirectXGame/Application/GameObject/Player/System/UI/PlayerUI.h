@@ -23,6 +23,10 @@ namespace PlayerContext
 		/// ImGui
 		/// </summary>
 		void ImGuiDraw();
+	public:
+		
+		void ComboGageUpdate();
+		void Draw(ModelDrawDesc desc);
 	private:
 		/// <summary>
 		/// HPUI関係
@@ -32,6 +36,8 @@ namespace PlayerContext
 		/// EnergyUI関係
 		/// </summary>
 		void EnergyUI();
+	public:
+		GameUI::BillBoardRenderInfo* GetJustDodgeUI() { return &justDodgeUI_; }
 	private:
 		// 親
 		Player* player_ = nullptr;
@@ -41,6 +47,12 @@ namespace PlayerContext
 		GameUI::BarRenderInfo hpUI_{};
 		// EnergyのUI
 		GameUI::BarRenderInfo energyUI_{};
+
+		// ジャスト回避コンボのUI
+		//GameUI::BarRenderInfo justDodgeUI_{};
+		// 
+		GameUI::BillBoardRenderInfo justDodgeUI_{};
+
 	private:
 		GlobalVariables* globalVariables_ = nullptr;
 

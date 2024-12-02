@@ -2,6 +2,9 @@
 #include "imgui.h"
 #include "../../Player.h"
 #include "Engine/2D/SpriteManager.h"
+#include "Engine/2D/TextureManager.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 
 void PlayerContext::PlayerUIManager::Initialize(Player* player)
 {
@@ -49,6 +52,17 @@ void PlayerContext::PlayerUIManager::Initialize(Player* player)
 	energyUI_.backGround.sprite->SetAnchorPoint({});
 
 	energyUI_.maxScale = energyUI_.currentHP.sprite->GetSize();
+
+	// ジャスト回避コンボ
+	justDodgeUI_.model = ModelManager::GetModel("Plane");
+	justDodgeUI_.material = std::make_unique<Material>();
+	justDodgeUI_.material->CreateMaterial();
+	justDodgeUI_.material->color_ = { 1.0f,1.0f,1.0f,1.0f };
+	justDodgeUI_.material->shininess_ = 100.0f;
+	justDodgeUI_.texture = TextureManager::Load("Resources/default/white2x2.png");
+	justDodgeUI_.worldTransform.Initialize();
+	justDodgeUI_.offset = { 0.0f,3.0f,0.0f };
+	justDodgeUI_.maxScale = { 2.0f,0.2f,1.0f };
 }
 
 void PlayerContext::PlayerUIManager::Draw()
@@ -99,4 +113,45 @@ void PlayerContext::PlayerUIManager::ImGuiDraw()
 	Vector2 scale = hpUI_.currentHP.sprite->GetSize();
 	ImGui::DragFloat2("Scale", &scale.x, 1.0f);
 	hpUI_.currentHP.sprite->SetSize(scale);
+	ImGui::DragFloat3("ComboUIOffset", &justDodgeUI_.offset.x, 0.1f);
+	ImGui::DragFloat3("JustComboScale", &justDodgeUI_.worldTransform.transform_.scale.x, 0.1f);
+	ImGui::ColorEdit4("PlaneColor", &justDodgeUI_.material->color_.x);
+	ImGui::DragFloat("PlaneShinnes", &justDodgeUI_.material->shininess_);
+}
+
+void PlayerContext::PlayerUIManager::ComboGageUpdate()
+{
+	
+
+
+}
+
+void PlayerContext::PlayerUIManager::Draw(ModelDrawDesc desc)
+{
+	// ジャスト回避用の
+	if (player_->GetSystemFacede()->GetDudgeManager()->GetComboKeepTimer()->IsActive()) {
+		justDodgeUI_.isInvisible_ = false;
+		justDodgeUI_.worldTransform.transform_.scale = Ease::Easing(justDodgeUI_.maxScale, Vector3(0.0f, justDodgeUI_.maxScale.y, justDodgeUI_.maxScale.z), player_->GetSystemFacede()->GetDudgeManager()->GetComboKeepTimer()->GetElapsedFrame());
+	}
+	else {
+		return;
+	}
+	// UIのやつ
+	justDodgeUI_.worldTransform.transform_.translate = player_->worldTransform_.transform_.translate;
+	justDodgeUI_.Update();
+	justDodgeUI_.worldTransform.transform_.rotate = desc.camera->transform_.rotate;
+	justDodgeUI_.worldTransform.UpdateMatrix();
+	justDodgeUI_.material->Update();
+	justDodgeUI_.isInvisible_ = true;
+
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(justDodgeUI_.model);
+	modelDesc.worldTransform = &justDodgeUI_.worldTransform;
+	modelDesc.material = justDodgeUI_.material.get();
+	modelDesc.texture = justDodgeUI_.texture;
+	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
