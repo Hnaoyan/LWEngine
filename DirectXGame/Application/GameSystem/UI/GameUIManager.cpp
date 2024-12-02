@@ -22,10 +22,10 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
 
 	titleBack_.sprite = SpriteManager::GetSprite("ResultTitleUI");
-	titleBack_.position = Vector2(800, 720 / 2);
+	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "TitleExceptUIPos");
 
 	replay_.sprite = SpriteManager::GetSprite("ResultReplayUI");
-	replay_.position = Vector2(800, 720 / 2 + 50);
+	replay_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ReplayExceptUIPos");
 
 	gameSystem_ = gameSystem;
 }
@@ -37,14 +37,23 @@ void GameUIManager::Initialize()
 
 void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 {
+#ifdef IMGUI_ENABLED
+	gameClear_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ClearTextPos");
+	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
+	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "TitleExceptUIPos");
+	replay_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ReplayExceptUIPos");
+#endif // IMGUI_ENABLED
+
 	// オブジェクトのUI
 	gameObjectManager->UIDraw();
 
 	// リプレイ中なら非表示に
 	if (gameSystem_->IsReplayMode()) {
+		titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
+		titleBack_.sprite->SetPosition(titleBack_.position);
+		titleBack_.sprite->Draw();
 		return;
 	}
-
 	// ゲームオーバー・クリアの描画
 	if (gameObjectManager->IsUIGameClear()) {
 		gameClear_.sprite->SetPosition(gameClear_.position);
@@ -61,6 +70,13 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		replay_.sprite->SetPosition(replay_.position);
 		replay_.sprite->Draw();
 	}
+#ifdef _DEBUG
+	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
+	titleBack_.sprite->SetPosition(titleBack_.position);
+	titleBack_.sprite->Draw();
+	replay_.sprite->SetPosition(replay_.position);
+	replay_.sprite->Draw();
+#endif // _DEBUG
 
 	// HUD関係
 	for (std::vector<GameUI::UIData>::iterator it = hudElements_.begin(); it != hudElements_.end(); ++it) 
@@ -111,4 +127,8 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "ClearTextPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 	globalVariable->AddValue(groupName, "OverTextPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 
+	globalVariable->AddValue(groupName, "TitleExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	globalVariable->AddValue(groupName, "ReplayExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	
+	globalVariable->AddValue(groupName, "NowReplayTitleExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 }

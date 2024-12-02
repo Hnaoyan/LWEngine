@@ -251,8 +251,8 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
-	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/ClearText.png"));
-	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOver.png"));
+	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/GameClearText.png"));
+	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOverText.png"));
 	SpriteManager::LoadSprite("ResultTitleUI", TextureManager::Load("Resources/UI/TitleBackUI.png"));
 	SpriteManager::LoadSprite("ResultReplayUI", TextureManager::Load("Resources/UI/ReplayUI.png"));
 
@@ -354,6 +354,8 @@ void GameScene::ChangeState()
 			cameraManager_->Initialize(gameObjectManager_.get());
 			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
 			gameSystem_->LaunchReplay();
+			// UIを隠すフラグ
+			uiManager_->SetIsHudHide(true);
 			break;
 		case GameSceneState::kRecord:
 			// インスタンス生成しなおし

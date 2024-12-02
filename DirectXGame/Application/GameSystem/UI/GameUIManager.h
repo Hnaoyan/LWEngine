@@ -15,6 +15,8 @@ public:
 	void Initialize();
 	void Draw(GameObjectManager* gameObjectManager);
 
+	void SetIsHudHide(bool isHide) { isHUDHide_ = isHide; }
+	bool IsHUDHide() { return isHUDHide_; }
 private:
 	// HUD
 	std::vector<GameUI::UIData> hudElements_;
@@ -28,6 +30,9 @@ private:
 	GameUI::TextUI replay_ = {};
 
 	GameSystem* gameSystem_ = nullptr;
+
+	// HUDを消しておくかのフラグ
+	bool isHUDHide_ = false;
 
 private:
 	/// <summary>
