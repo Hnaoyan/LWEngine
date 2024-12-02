@@ -196,12 +196,14 @@ void ReplayManager::RecordSetUp()
     isRecord_ = true;
     replayDatas_.clear();
     recordNowFrame_ = 0;
+    isReplayEnd_ = false;
 }
 
 void ReplayManager::ReplaySetUp()
 {
     isReplayNow_ = true;
     replayNowFrame_ = 0;
+    isReplayEnd_ = false;
 }
 
 void ReplayManager::ReplayCount()
@@ -209,6 +211,7 @@ void ReplayManager::ReplayCount()
     replayNowFrame_++;
     if (replayNowFrame_ >= GetReplayDataSize()) {
         isReplayNow_ = false;
+        isReplayEnd_ = true;
         replayNowFrame_ = 0;
     }
 }

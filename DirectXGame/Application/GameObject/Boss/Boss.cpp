@@ -212,7 +212,7 @@ void Boss::OnCollision(ColliderObject target)
 		else {
 			// 弱点むき出し状態のダメージ倍率アップ
 			if (animationManager_->IsOpen()) {
-				damageRatio *= 2.5f;
+				damageRatio *= 1.75f;
 				// 点滅の処理
 				animationManager_->AnimationDamageExecute();
 			}
@@ -221,7 +221,7 @@ void Boss::OnCollision(ColliderObject target)
 			}
 			// 距離に応じて
 			if (distance >= 150.0f) {
-				systemManager_->healthManager_.TakeDamage(damageRatio * 0.35f);
+				systemManager_->healthManager_.TakeDamage(damageRatio * 0.25f);
 			}
 			else if (distance >= 75.0f) {
 				systemManager_->healthManager_.TakeDamage(damageRatio * 0.5f);

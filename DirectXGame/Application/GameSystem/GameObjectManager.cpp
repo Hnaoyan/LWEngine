@@ -103,7 +103,7 @@ void GameObjectManager::Update()
 
 	// リプレイ中に戻れるように
 	if (gameSystem_->IsReplayMode()) {
-		if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+		if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_B) || gameSystem_->GetReplayManager()->IsReplayEnd()) {
 			isSceneChange_ = true;
 		}
 	}

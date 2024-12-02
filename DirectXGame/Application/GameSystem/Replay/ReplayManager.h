@@ -39,6 +39,7 @@ public: // メンバ
 	void ReplaySetUp();
 	int32_t GetReplayFrame() { return replayNowFrame_; }
 	bool IsReplayNow() { return isReplayNow_; }
+	bool IsReplayEnd() { return isReplayEnd_; }
 	void ReplayCount();
 private:
 	// ディレクトリパス
@@ -55,6 +56,7 @@ private:
 	int32_t recordNowFrame_;
 	// 現在リプレイを再生しているか？
 	bool isReplayNow_ = false;
+	bool isReplayEnd_ = false;
 	// リプレイ中の現在のフレーム
 	int32_t replayNowFrame_ = 0;
 };
