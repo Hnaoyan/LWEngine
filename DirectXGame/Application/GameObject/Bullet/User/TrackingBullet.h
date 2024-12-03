@@ -52,6 +52,7 @@ private:
 	// 直進のフレーム数
 	float straightFrame_;
 	bool isBarrage_ = false;
+	bool isCount = false;
 
 	// ステートの管理
 	TrackingState nowState_ = TrackingState::kStraight;

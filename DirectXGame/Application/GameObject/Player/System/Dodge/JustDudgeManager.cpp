@@ -67,6 +67,7 @@ void PlayerContext::JustDodgeManager::Update()
 	}
 	// スローモーション後の猶予
 	if (invisible_.returnTimer.IsEnd()) {
+		dodgeCount_ = 0;
 		invisible_.afterTimer.Start(30.0f);
 	}
 
@@ -140,4 +141,5 @@ void PlayerContext::JustDodgeManager::ImGuiDraw()
 	ImGui::DragFloat("SlowFactor", &slowFactor_, bar);
 	ImGui::DragFloat3("scale", &dodgeColliderObject.transform.transform_.scale.x, bar);
 	ImGui::InputInt("ComboCount", &comboData_.nowCombo);
+	ImGui::InputInt("DodgeCount", &dodgeCount_);
 }

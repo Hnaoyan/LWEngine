@@ -37,6 +37,7 @@ namespace PlayerContext
 			}
 		};
 
+		// 回避・無敵関係の情報
 		struct InvisibleData
 		{
 			// 無敵（スローモーション）時間
@@ -58,27 +59,28 @@ namespace PlayerContext
 	public:
 		JustDodgeManager() {};
 		JustDodgeManager(Player* player);
-
-		// ジャスト回避受付開始処理
-		void DodgeExcept(const float& frame) {
-			dodgeTimer_.Start(frame);
-		}
-		// ジャスト回避処理（内部フレーム
-		void DodgeExcept();
-		// ジャスト回避の開始
-		void InvisibleExcept(const float& frame);
 		// 更新
 		void Update();
 		// 描画
 		void Draw(ModelDrawDesc desc);
 		// ImGui
 		void ImGuiDraw();
+	public:
+		// ジャスト回避受付開始処理
+		void DodgeExcept(const float& frame) { dodgeTimer_.Start(frame); }
+		// ジャスト回避処理（内部フレーム
+		void DodgeExcept();
+		// ジャスト回避の開始
+		void InvisibleExcept(const float& frame);
+		// 回避カウント
+		void DodgeCountIncrement() { dodgeCount_++; }
+	public:	// アクセッサ
 		// 攻撃のダメージ量に変化を加えるかどうか
 		bool IsChangeAttack() { return comboData_.isChangeAttack_; }
 		// ジャスト回避可能状態
 		bool IsActive() { return dodgeTimer_.IsActive(); }
 		// 無敵状態
-		bool IsInvisible() { return invisible_.activeTimer.IsActive(); }
+		bool IsInvisibleActive() { return invisible_.activeTimer.IsActive(); }
 		// ジャスト回避の後の無敵猶予
 		bool IsInvisibleAfter() { return invisible_.afterTimer.IsActive(); }
 		// 無敵の終了タイミング
@@ -87,9 +89,10 @@ namespace PlayerContext
 		Sphere* GetCollider() { return &collider_; }
 		// コライダーの設定
 		void SetPosition(const Vector3& position) { colliderPosition_ = position; }
-
+		// コンボの維持するタイマー
 		FrameTimer* GetComboKeepTimer() { return &comboData_.keepTimer; }
 	public:
+		// コンボデータの初期化
 		void ComboReset() {
 			comboData_.keepTimer.End();
 			comboData_.nowCombo = 0;
@@ -98,7 +101,7 @@ namespace PlayerContext
 	private:
 		// 回避を受け付けている時間
 		FrameTimer dodgeTimer_;
-		// 
+		// 無敵の情報
 		InvisibleData invisible_;
 		// ジャスト回避フレーム
 		float justDodgeFrame_ = 10.0f;
@@ -110,8 +113,11 @@ namespace PlayerContext
 		Sphere collider_;
 		// 回避コンボの情報
 		ComboData comboData_{};
-		// 
+		// 回避範囲表示のオブジェクト
 		DodgeCollider dodgeColliderObject;
+		// 回避した際に追従を振り切った数
+		int32_t dodgeCount_ = 0;
+
 	};
 }
 

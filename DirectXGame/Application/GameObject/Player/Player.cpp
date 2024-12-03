@@ -187,7 +187,7 @@ void Player::ImGuiDraw()
 	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
 	ImGui::DragFloat3("Velocity", &velocity_.x);
 	ImGui::Text("IsGround:%d", this->isGround_);
-	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisible();
+	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisibleActive();
 	ImGui::Text("IsInvisible:%d", isInv);
 
 	// 
@@ -220,7 +220,7 @@ void Player::OnCollision(ColliderObject target)
 	}
 	else if (std::holds_alternative<IBullet*>(target)) {
 		// ジャスト回避処理
-		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisible()) 
+		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisibleActive()) 
 		{
 			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame_);
 			facadeSystem_->GetEnergy()->RecoverGage(energyRecover_);

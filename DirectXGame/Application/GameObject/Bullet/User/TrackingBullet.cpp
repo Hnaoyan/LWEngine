@@ -112,7 +112,7 @@ void TrackingBullet::ChangeSelecter()
 		}
 		Player* player = dynamic_cast<Player*>(object_);
 
-		if (player->GetSystemFacede()->GetDudgeManager()->IsInvisible()) {
+		if (player->GetSystemFacede()->GetDudgeManager()->IsInvisibleActive()) {
 			float maxDistance = player->trackCancelDistance;
 			float bulletToPlayer = Vector3::Distance(GetWorldPosition(), player->worldTransform_.GetWorldPosition());
 			if (bulletToPlayer <= maxDistance) {
@@ -122,7 +122,15 @@ void TrackingBullet::ChangeSelecter()
 				// ジャスト回避時のみ例外処理
 				straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame") * 2.5f);
 				stateMachine_->RequestState(TrackingState::kStraight);
+				if (!isCount) {
+					// 振り切りカウント
+					player->GetSystemFacede()->GetDudgeManager()->DodgeCountIncrement();
+					isCount = true;
+				}
 			}
+		}
+		else {
+			isCount = false;
 		}
 	}
 
