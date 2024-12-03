@@ -16,7 +16,7 @@ void DivisionBullet::Update()
 
 }
 
-void DivisionBullet::OnCollision(ColliderObject object)
+void DivisionBullet::OnCollision([[maybe_unused]]ColliderObject object)
 {
-	object;
+	
 }
