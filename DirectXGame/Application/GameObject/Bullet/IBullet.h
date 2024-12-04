@@ -44,8 +44,6 @@ protected:
 	Sphere collider_;
 	// 速度
 	Vector3 velocity_ = {};
-	// 生成時の座標
-	Vector3 generatePosition_{};
 	// タグ
 	std::string tag_;
 	// 加速度ベクトル
@@ -61,7 +59,6 @@ protected:
 public: // アクセッサ
 	std::string GetTag() const { return tag_; }
 	EulerTransform GetTransform() const { return transform_; }
-	Vector3 GetGeneratePosition() const { return generatePosition_; }
 	Vector3 GetVelocity() const { return velocity_; }
 	Vector3 GetAccelerate() const { return accelerate_; }
 

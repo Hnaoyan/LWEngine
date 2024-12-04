@@ -116,7 +116,7 @@ Vector3 TrackingMoveState::CalcSuperiorAcceleration()
 	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
 	// 加速度の計算
-	return Vector3(force * GameSystem::GameSpeedFactor());
+	return Vector3(force);
 }
 
 Vector3 TrackingMoveState::CalcInferiorAcceleration()
@@ -149,7 +149,7 @@ Vector3 TrackingMoveState::CalcInferiorAcceleration()
 	// 速度の減衰処理
 	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
-	return Vector3(force * GameSystem::GameSpeedFactor());
+	return Vector3(force);
 }
 
 Vector3 TrackingMoveState::CalcGeniusAcceleration()
@@ -192,5 +192,5 @@ Vector3 TrackingMoveState::CalcGeniusAcceleration()
 	force += nowDirect * propulsion;
 	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
-	return Vector3(force * GameSystem::GameSpeedFactor());
+	return Vector3(force);
 }

@@ -10,11 +10,17 @@
 
 void Boss::Initialize(Model* model)
 {
-	isAction_ = true;
+	// debugなら
 #ifdef IMGUI_ENABLED
 	isAction_ = false;
 #endif // IMGUI_ENABLED
 
+	// Releaseなら
+#ifdef RELEASE
+	isAction_ = true;
+#endif // RELEASE
+
+	// 基底
 	IGameObject::Initialize(model);
 	// システム
 	systemManager_ = std::make_unique<BossFacade>();
@@ -28,6 +34,7 @@ void Boss::Initialize(Model* model)
 	stateManager_.Initialize(this);
 	stateManager_.ChangeRequest(std::make_unique<BossState::WaitState>());
 
+	// 座標関係の初期化
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "ResPosition");
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
@@ -46,6 +53,7 @@ void Boss::Update()
 	}
 	// 座標更新
 	IGameObject::Update();
+
 	// バリア時の当たり判定
 	if (systemManager_->barrierManager_.IsActive()) {
 		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale").x;
@@ -87,7 +95,7 @@ void Boss::ImGuiDraw()
 	ImGui::Begin("Boss");
 	if (ImGui::BeginTabBar("System"))
 	{
-		// デフォルト
+		// ボス自体の状態
 		if (ImGui::BeginTabItem("MAIN")) {
 			ImGui::Checkbox("IsInvisible", &isInvisible_);
 			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
@@ -192,15 +200,18 @@ void Boss::ImGuiDraw()
 
 void Boss::OnCollision(ColliderObject target)
 {
+	// 弾との衝突
 	if (std::holds_alternative<IBullet*>(target)) {
 		IBullet** bullet = std::get_if<IBullet*>(&target);
-		Vector2 xzBullet = { (*bullet)->GetGeneratePosition().x,(*bullet)->GetGeneratePosition().z };
-		Vector2 xzBoss = { worldTransform_.GetWorldPosition().x ,worldTransform_.GetWorldPosition().z };
-		float distance = Vector2::Distance(xzBoss, xzBullet);
-		float damageRatio = 1.0f * (*bullet)->DamageRatio();
+		//Vector2 xzBullet = { (*bullet)->transform_.translate.x,(*bullet)->transform_.translate.z };	// 弾のXZ平面上座標
+		//Vector2 xzBoss = { worldTransform_.GetWorldPosition().x ,worldTransform_.GetWorldPosition().z };	// ボスのXZ平面上座標
+		//float distance = Vector2::Distance(xzBoss, xzBullet);
+		float damageRatio = (*bullet)->DamageRatio();
 		// バリアとの衝突処理
 		if (systemManager_->barrierManager_.IsActive()) {
-			damageRatio *= 2.0f;
+			float magnification = 2.0f;	// 倍率
+			// ダメージの値
+			damageRatio *= magnification;
 			systemManager_->barrierManager_.DamageProcess(damageRatio);
 			if (systemManager_->barrierManager_.IsShattered()) {
 				systemManager_->barrierManager_.BarrierBreakExcept();
@@ -216,19 +227,18 @@ void Boss::OnCollision(ColliderObject target)
 				// 点滅の処理
 				animationManager_->AnimationDamageExecute();
 			}
-			else {
+			systemManager_->healthManager_.TakeDamage(damageRatio);
 
-			}
-			// 距離に応じて
-			if (distance >= 150.0f) {
-				systemManager_->healthManager_.TakeDamage(damageRatio * 0.25f);
-			}
-			else if (distance >= 75.0f) {
-				systemManager_->healthManager_.TakeDamage(damageRatio * 0.5f);
-			}
-			else {
-				systemManager_->healthManager_.TakeDamage(damageRatio);
-			}
+			//// 距離に応じて
+			//if (distance >= 150.0f) {
+			//	systemManager_->healthManager_.TakeDamage(damageRatio * 0.25f);
+			//}
+			//else if (distance >= 75.0f) {
+			//	systemManager_->healthManager_.TakeDamage(damageRatio * 0.5f);
+			//}
+			//else {
+			//	systemManager_->healthManager_.TakeDamage(damageRatio);
+			//}
 
 			// オンヒットエフェクト
 			systemManager_->particleManager_.OnBulletHit();

@@ -51,13 +51,23 @@ void TrackingBullet::Update()
 	trackTimer_.Update();
 	waveTimer_.Update();
 
+	trackCoolTime_.Update();	// 追従しない時間
+	trackingTime_.Update();	// 追従する時間
+
 	ChangeSelecter();
 
 	// ステートの処理
-	stateMachine_->Update();
-
+	stateMachine_->Update(trackingTime_.IsActive());
+	// 追従の時間関係
+	if (trackingTime_.IsEnd()) {
+		float randomCoolTime = LwLib::GetRandomValue(5.0f, 10.0f);
+		trackCoolTime_.Start(randomCoolTime);
+	}
+	if (trackCoolTime_.IsEnd()) {
+		trackingTime_.Start();
+	}
 	// 移動
-	velocity_ += accelerate_;
+	velocity_ += accelerate_ * GameSystem::GameSpeedFactor();
 	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor();
 	transform_.rotate.y += GameSystem::GameSpeedFactor();
@@ -173,6 +183,7 @@ void TrackingBullet::ChangeSelecter()
 				trackTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackFrame"));
 				stateMachine_->RequestState(TrackingState::kTracking);
 			}
+			trackingTime_.Start();
 			break;
 		default:
 			break;

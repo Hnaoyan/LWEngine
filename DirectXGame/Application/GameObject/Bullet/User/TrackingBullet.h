@@ -46,7 +46,10 @@ private:
 	FrameTimer straightTimer_;
 	// 曲がる軌道用のタイマー
 	FrameTimer waveTimer_;
-
+	// 追従をしないフレーム
+	FrameTimer trackCoolTime_;
+	// 追従するフレーム
+	FrameTimer trackingTime_;
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;
 

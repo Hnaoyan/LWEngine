@@ -22,12 +22,12 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(bool isActive);
+public:	// アクセッサ
 	// リクエストの作成
 	void RequestState(TrackingState state) { currentState_->SetRequeset(state); }
 	// 現在のステートのゲッター
 	ITrackingState* GetCurrentState() { return currentState_.get(); }
-
 	// 変更回数
 	int32_t GetChangeCount() { return changeCount_; }
 

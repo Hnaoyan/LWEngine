@@ -20,7 +20,6 @@ void IBullet::Initialize()
 	InstancedUnit::Initialize();
 	collider_.Initialize(transform_.scale.x, this);
 	// 生成座標
-	generatePosition_ = transform_.translate;
 
 }
 
