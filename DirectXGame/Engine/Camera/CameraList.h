@@ -5,6 +5,7 @@
 #include "Custom/FollowCamera.h"
 #include "Custom/FocusCamera.h"
 #include "Custom/OrbitCamera.h"
+#include "Custom/SideCamera.h"
 
 /// <summary>
 /// アクティブ中のカメラ選択
@@ -15,6 +16,7 @@ enum class ActiveCameraMode
 	kFollow,
 	kFocus,
 	kOrbit,
+	kSide,
 	kDebug,
 	kMaxSize,
 };

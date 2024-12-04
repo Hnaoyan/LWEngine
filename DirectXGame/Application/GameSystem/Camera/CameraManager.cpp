@@ -10,6 +10,7 @@ CameraManager::CameraManager()
 	focusCamera_ = std::make_unique<FocusCamera>();
 	debugCamera_ = std::make_unique<DebugCamera>();
 	orbitCamera_ = std::make_unique<OrbitCamera>();
+	sideCamera_ = std::make_unique<SideCamera>();
 }
 
 void CameraManager::Initialize(GameObjectManager* gameManager)
@@ -34,6 +35,9 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 	// 選択
 	activeCamera_ = ActiveCameraMode::kFollow;
 
+	sideCamera_->Initialize();
+	sideCamera_->SetParent(&gameManager->GetPlayer()->worldTransform_);
+
 }
 
 void CameraManager::Update(GameSystem* gameSystem)
@@ -43,7 +47,10 @@ void CameraManager::Update(GameSystem* gameSystem)
 	focusCamera_->Update();
 	debugCamera_->Update();
 	orbitCamera_->Update();
+	sideCamera_->Update();
+
 	durationTimer_.Update();
+
 	// リプレイ中のカメラ切り替え
 	if (gameSystem->IsReplayMode()) {
 		if (!durationTimer_.IsActive()) {
@@ -51,6 +58,10 @@ void CameraManager::Update(GameSystem* gameSystem)
 			// 長押しの重なりを回避するためのタイマー
 			durationTimer_.Start(10.0f);
 		}
+	}
+	// リプレイでない場合
+	else {
+		//changeRequest_ = ActiveCameraMode::kSide;
 	}
 
 	// リクエストによる変更
@@ -93,6 +104,9 @@ void CameraManager::ImGuiDraw()
 	if (ImGui::Button("Orbit")) {
 		ChangeCamera(ActiveCameraMode::kOrbit);
 	}
+	if (ImGui::Button("Side")) {
+		ChangeCamera(ActiveCameraMode::kSide);
+	}
 
 	if (ImGui::BeginTabBar("System"))
 	{
@@ -106,6 +120,10 @@ void CameraManager::ImGuiDraw()
 		}
 		if (ImGui::BeginTabItem("Orbit")) {
 			orbitCamera_->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Side")) {
+			sideCamera_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Debug")) {
@@ -160,6 +178,9 @@ void CameraManager::UpdateCameraSwitcher()
 		case ActiveCameraMode::kOrbit:
 			ChangeCamera(ActiveCameraMode::kFollow);
 			break;
+		case ActiveCameraMode::kSide:
+			ChangeCamera(ActiveCameraMode::kSide);
+			break;
 		case ActiveCameraMode::kDebug:
 			break;
 		case ActiveCameraMode::kMaxSize:
@@ -182,6 +203,9 @@ void CameraManager::UpdateCameraSwitcher()
 			break;
 		case ActiveCameraMode::kOrbit:
 			ChangeCamera(ActiveCameraMode::kFocus);
+			break;
+		case ActiveCameraMode::kSide:
+			ChangeCamera(ActiveCameraMode::kSide);
 			break;
 		case ActiveCameraMode::kDebug:
 			break;
@@ -208,6 +232,9 @@ ICamera* CameraManager::GetCamera()
 		break;
 	case ActiveCameraMode::kOrbit:
 		return orbitCamera_.get();
+		break;
+	case ActiveCameraMode::kSide:
+		return sideCamera_.get();
 		break;
 	case ActiveCameraMode::kDebug:
 		return debugCamera_.get();

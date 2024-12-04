@@ -60,6 +60,8 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	// 
 	std::unique_ptr<OrbitCamera> orbitCamera_;
+	//
+	std::unique_ptr<SideCamera> sideCamera_;
 	// カメラのリスト
 	std::unordered_map<std::string, std::unique_ptr<ICamera>> cameras_;
 

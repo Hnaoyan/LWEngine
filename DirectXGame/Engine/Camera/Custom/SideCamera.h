@@ -21,5 +21,11 @@ public:
 	/// グローバル変数の初期化
 	/// </summary>
 	void InitializeGlobalValue() override;
+public:
+	void SetParent(const WorldTransform* transform) { worldTransform_.parent_ = transform; }
+
+private:
+	// 親子関係を組む用
+	WorldTransform worldTransform_;
 
 };
