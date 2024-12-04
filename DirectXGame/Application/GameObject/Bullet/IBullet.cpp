@@ -22,8 +22,6 @@ void IBullet::Initialize()
 	// 生成座標
 	generatePosition_ = transform_.translate;
 
-	// ステート
-	stateMachine_ = std::make_unique<BulletStateMachine>(this);
 }
 
 void IBullet::Update()

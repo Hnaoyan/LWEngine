@@ -8,6 +8,11 @@
 class DivisionBullet : public IBullet
 {
 public:
+	~DivisionBullet() override {
+		missileCluster_ = nullptr;
+	}
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>

@@ -12,6 +12,12 @@ class IBullet : public InstancedUnit
 public:
 	static uint32_t sSerialNumber;
 	uint32_t serialNumber_ = 0u;
+
+	~IBullet() override {
+		trail_ = nullptr;
+		object_ = nullptr;
+	}
+
 public:
 	/// <summary>
 	/// 初期化
@@ -46,8 +52,6 @@ protected:
 	Vector3 accelerate_ = {};
 	// 軌跡
 	BulletTrail* trail_ = nullptr;
-	// ステートマシン
-	std::unique_ptr<BulletStateMachine> stateMachine_;
 	// 対象オブジェクト
 	IGameObject* object_ = nullptr;
 
@@ -73,7 +77,6 @@ public: // アクセッサ
 	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
 
-	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 private:
 	// 壊れるときのパーティクルのエミッター（今は使えない
 	GPUParticleEmitter* breakEmitter_ = nullptr;

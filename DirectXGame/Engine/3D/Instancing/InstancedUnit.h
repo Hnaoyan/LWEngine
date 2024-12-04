@@ -7,6 +7,8 @@
 class InstancedUnit
 {
 public:
+	virtual ~InstancedUnit() = default;
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>

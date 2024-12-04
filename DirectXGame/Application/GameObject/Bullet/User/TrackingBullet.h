@@ -34,6 +34,7 @@ public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
 	void SetIsBarrage(bool isFlag) { isBarrage_ = isFlag; }
 
+	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 	TrackingAttribute GetTrackingType() const { return trackingType_; }
 	TrackingData GetTrackingData() const { return data_; }
 private:
@@ -63,6 +64,8 @@ private:
 
 	// ステートの変更回数
 	int32_t changeCount_ = 0;
+	// ステートマシン
+	std::unique_ptr<BulletStateMachine> stateMachine_;
 
 private:
 	void ChangeSelecter();
