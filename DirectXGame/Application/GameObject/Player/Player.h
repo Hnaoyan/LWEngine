@@ -74,7 +74,6 @@ private:
 	float energyRecover_ = 10.0f;
 
 public:
-	bool isDoubleJump_ = false;
 	float trackCancelDistance = 75.0f;
 
 public: // アクセッサ
@@ -117,6 +116,8 @@ public:
 	ICamera* camera_ = nullptr;
 	// 落下フラグ
 	bool isGround_ = false;
+	bool isDoubleJump_ = false;
+
 private:
 	// ボス
 	Boss* boss_ = nullptr;

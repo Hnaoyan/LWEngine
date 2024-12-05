@@ -11,12 +11,16 @@ class IBullet : public InstancedUnit
 {
 public:
 	static uint32_t sSerialNumber;
-	uint32_t serialNumber_ = 0u;
 
 	~IBullet() override {
 		trail_ = nullptr;
 		object_ = nullptr;
 	}
+private:
+	// シリアル番号
+	uint32_t serialNumber_ = 0u;
+	// ダメージ量
+	float damageRatio_ = 1.0f;
 
 public:
 	/// <summary>
@@ -42,10 +46,10 @@ public:
 protected:
 	// コライダー
 	Sphere collider_;
-	// 速度
-	Vector3 velocity_ = {};
 	// タグ
 	std::string tag_;
+	// 速度
+	Vector3 velocity_ = {};
 	// 加速度ベクトル
 	Vector3 accelerate_ = {};
 	// 軌跡
@@ -53,8 +57,6 @@ protected:
 	// 対象オブジェクト
 	IGameObject* object_ = nullptr;
 
-	// ダメージ量
-	float damageRatio_ = 1.0f;
 
 public: // アクセッサ
 	std::string GetTag() const { return tag_; }

@@ -56,6 +56,8 @@ private:
 public:
 	// トランスフォーム
 	EulerTransform transform_ = { {1.0f,1.0f,1.0f} ,{},{} };
+	// 方向ベクトル
+	Vector3 rotateDirect_ = {};
 	// 親子ポインタ
 	const WorldTransform* parent_ = nullptr;
 	// 行列のみで渡す親
@@ -64,8 +66,6 @@ public:
 	Matrix4x4 worldMatrix_ = {};
 	// ローカル行列
 	Matrix4x4 localMatrix_ = {};
-	// 方向ベクトル
-	Vector3 rotateDirect_ = {};
 
 	// カメラのポインタ
 	ICamera* camera_ = nullptr;

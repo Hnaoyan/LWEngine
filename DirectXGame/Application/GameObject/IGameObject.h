@@ -22,8 +22,13 @@ public:
 public:
 	// 共通のシリアル
 	static int32_t sSerialNumber;
+protected:
 	// 個体のシリアル
 	int32_t commonSerialNumber_ = 0u;
+	// 死亡フラグ
+	bool isDead_ = false;
+	// デバッグ用の非表示フラグ
+	bool isInvisible_ = false;
 
 public:
 	/// <summary>
@@ -73,10 +78,6 @@ public: // アクセッサ
 protected:
 	// モデル
 	Model* model_ = nullptr;
-	// 死亡フラグ
-	bool isDead_ = false;
-	// デバッグ用の非表示フラグ
-	bool isInvisible_ = false;
 
 public:
 	// ワールドトランスフォーム

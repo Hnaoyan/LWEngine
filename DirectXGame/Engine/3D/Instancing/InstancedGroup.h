@@ -25,6 +25,8 @@ protected:
 	uint32_t unitNum_ = 0u;
 
 	Pipeline::BlendMode blendMode_ = Pipeline::BlendMode::kAlpha;
+	// テクスチャ
+	uint32_t texture_ = 0;
 
 public: // 描画に使う関数
 	D3D12_GPU_DESCRIPTOR_HANDLE GetHandle() { return buffer_.GetSRVGPU(); }
@@ -81,8 +83,6 @@ protected: // USER
 	Model* model_ = nullptr;
 	// マテリアル
 	std::unique_ptr<Material> material_;
-	// テクスチャ
-	uint32_t texture_ = 0;
 	// 隠す用のフラグ
 	bool isInvisible_ = false;
 	// タグ
