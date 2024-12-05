@@ -160,9 +160,6 @@ void GameObjectManager::UIDraw()
 void GameObjectManager::ImGuiDraw()
 {	
 	ImGui::Begin("GameObjectManager");
-	if (ImGui::Button("Start")) {
-		gameWaitTimer_.Start(60.0f);
-	}
 	if (ImGui::BeginTabBar("Object"))
 	{
 		if (ImGui::BeginTabItem("BulletManager")) {

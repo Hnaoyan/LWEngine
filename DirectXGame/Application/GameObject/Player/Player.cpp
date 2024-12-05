@@ -129,7 +129,25 @@ void Player::ImGuiDraw()
 	//	}
 	//	ImGui::TreePop();
 	//}
-	NowState();
+	//---基本情報---//
+	ImGui::SeparatorText("StatusInfo");
+	NowState();	// ステート
+	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 200), ImGuiWindowFlags_NoTitleBar);
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
+	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat3("Velocity", &velocity_.x);
+	ImGui::Text("IsGround:%d", this->isGround_);
+	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisibleActive();
+	ImGui::Text("IsInvisible:%d", isInv);
+
+	// 
+	ImGui::DragFloat("InvisibleFrame", &invisibleFrame_, 0.01f);
+	ImGui::DragFloat("EnergyRecover", &energyRecover_, 0.01f);
+	ImGui::DragFloat("TrackCancel", &trackCancelDistance, 0.01f);
+
+	ImGui::EndChild();
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
@@ -171,24 +189,6 @@ void Player::ImGuiDraw()
 
 		ImGui::EndTabBar();
 	}
-	//---基本情報---//
-	ImGui::SeparatorText("StatusInfo");
-	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 200), ImGuiWindowFlags_NoTitleBar);
-	ImGui::Checkbox("IsInvisible", &isInvisible_);
-	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-	ImGui::DragFloat3("Velocity", &velocity_.x);
-	ImGui::Text("IsGround:%d", this->isGround_);
-	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisibleActive();
-	ImGui::Text("IsInvisible:%d", isInv);
-
-	// 
-	ImGui::DragFloat("InvisibleFrame", &invisibleFrame_, 0.01f);
-	ImGui::DragFloat("EnergyRecover", &energyRecover_, 0.01f);
-	ImGui::DragFloat("TrackCancel", &trackCancelDistance, 0.01f);
-
-	ImGui::EndChild();
 
 	ImGui::End();
 }
@@ -259,7 +259,6 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "DashExceptTime", float(12.0f));
 
 	// エネルギー関係
-
 	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
 	instance->AddValue(groupName, "VelocityDecay", float(0.2f));
 	instance->AddValue(groupName, "ShotDuration", float(30.0f));
@@ -269,6 +268,22 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));
 	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));
 	instance->AddValue(groupName, "FallGravity", float(-3.0f));
+
+	//---（仮）弾---//
+	groupName = "Bullet";
+	// 弾本体
+	instance->AddValue(groupName, "InferiorColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "SuperirorColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "GeniusColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "ContainerColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "NormalColor", Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+	// 軌跡
+	instance->AddValue(groupName, "InferiorTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "SuperirorTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "GeniusTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "ContainerTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "NormalTrailColor", Vector3(0.2f, 0.2f, 0.2f));
+
 	//---プレイヤーの追従弾---//
 	groupName = "PlayerTrackingBullet";
 	instance->CreateGroup(groupName);

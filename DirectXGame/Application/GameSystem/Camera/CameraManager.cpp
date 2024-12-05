@@ -50,6 +50,7 @@ void CameraManager::Update(GameSystem* gameSystem)
 	orbitCamera_->Update();
 	sideCamera_->Update();
 
+	// キー入力の間隔
 	durationTimer_.Update();
 
 	// リプレイ中のカメラ切り替え

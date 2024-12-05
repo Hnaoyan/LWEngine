@@ -130,7 +130,7 @@ void TrackingBullet::ChangeSelecter()
 				waveTimer_.End();
 				trackTimer_.End();
 				// ジャスト回避時のみ例外処理
-				straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame") * 2.5f);
+				straightTimer_.Start(data_.straightFrame * 2.5f);
 				stateMachine_->RequestState(TrackingState::kStraight);
 				if (!isCount) {
 					// 振り切りカウント
@@ -150,7 +150,7 @@ void TrackingBullet::ChangeSelecter()
 		switch (requestState_.value())
 		{
 		case TrackingState::kStraight:
-			straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));	
+			straightTimer_.Start(data_.straightFrame);
 			stateMachine_->RequestState(TrackingState::kStraight);
 			break;
 		case TrackingState::kWave:
@@ -165,22 +165,22 @@ void TrackingBullet::ChangeSelecter()
 				float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
 				// 追従しないのに切り替えの場合
 				if (dot < limitDot + 0.025f) {
-					straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+					straightTimer_.Start(data_.straightFrame);
 					stateMachine_->RequestState(TrackingState::kStraight);
 				}
 				// 変わらず追従
 				else {
 					if (stateMachine_->GetChangeCount() > 5) {
-						straightTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+						straightTimer_.Start(data_.straightFrame);
 						stateMachine_->RequestState(TrackingState::kStraight);
 					}
-					trackTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackFrame"));
+					trackTimer_.Start(data_.trackFrame);
 					stateMachine_->RequestState(TrackingState::kTracking);
 				}
 			}
 			// ない場合
 			else {
-				trackTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackFrame"));
+				trackTimer_.Start(data_.trackFrame);
 				stateMachine_->RequestState(TrackingState::kTracking);
 			}
 			trackingTime_.Start();

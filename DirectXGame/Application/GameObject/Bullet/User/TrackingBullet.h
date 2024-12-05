@@ -50,11 +50,11 @@ private:
 	FrameTimer trackCoolTime_;
 	// 追従するフレーム
 	FrameTimer trackingTime_;
-	// 狙いがボスなら
-	bool isTargetBoss_ = false;
 
 	// 直進のフレーム数
 	float straightFrame_;
+	// 狙いがボスなら
+	bool isTargetBoss_ = false;
 	bool isBarrage_ = false;
 	bool isCount = false;
 
