@@ -131,13 +131,6 @@ void Player::ImGuiDraw()
 	//}
 	NowState();
 
-	// アウトライン用の
-	if (ImGui::TreeNode("Outline")) {
-		
-		ImGui::DragFloat4("OutlineColor", &outlineMaterial_->color_.x, 0.01f);
-		ImGui::TreePop();
-	}
-
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{

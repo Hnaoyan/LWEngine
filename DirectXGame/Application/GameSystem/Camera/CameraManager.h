@@ -38,8 +38,13 @@ public:
 	void ChangeCamera(ActiveCameraMode mode);
 
 private:
-	
-	void UpdateCameraSwitcher();
+	// ゲーム中のカメラ切り替わり
+	void InGameCameraSwitcher();
+	// リプレイのカメラ切り替わり
+	void ReplayCameraSwitcher();
+
+	// 入力による切り替え
+	void InputSwitch();
 
 public:
 	ICamera* GetCamera();
@@ -60,7 +65,7 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	// 
 	std::unique_ptr<OrbitCamera> orbitCamera_;
-	//
+	// サイドカメラ
 	std::unique_ptr<SideCamera> sideCamera_;
 	// カメラのリスト
 	std::unordered_map<std::string, std::unique_ptr<ICamera>> cameras_;
