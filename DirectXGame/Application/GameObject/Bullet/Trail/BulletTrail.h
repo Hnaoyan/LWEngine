@@ -73,20 +73,22 @@ private: // SYSTEM
 	std::vector<Vector3> trailPoints_;
 	// 保存できる座標数
 	int32_t maxLength = 0;
+	// 追従属性
+	TrackingAttribute attribute_;
 	// 個体のポインタ
 	std::optional<IBullet*> unit_ = std::nullopt;
+	// エミッター
+	GPUParticleEmitter* moveEmitter_ = nullptr;
+	// 弾のタグ
+	std::string bulletTag_;
+
 	// 消すフラグ
 	bool isDelete_ = false;
 	// 描画しないフラグ
 	bool isInvisible_ = false;
-	// エミッター
-	GPUParticleEmitter* moveEmitter_ = nullptr;
-	// 追従属性
-	TrackingAttribute attribute_;
-	// 弾のタグ
-	std::string bulletTag_;
 
 private: // USER
 	// 消えるまでのタイマー
 	FrameTimer deleteTimer_;
+
 };
