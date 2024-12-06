@@ -54,6 +54,7 @@ void Framework::Initialize()
 	modelManager_ = std::make_unique<ModelManager>();
 	spriteManager_ = std::make_unique<SpriteManager>();
 	sceneManager_ = std::make_unique<SceneManager>();
+	transitionManager_ = std::make_unique<SceneTransitionManager>();
 
 	// ImGuiの初期化
 	imGuiManager_->Initialize(dxCommon_, winApp_);
@@ -70,6 +71,8 @@ void Framework::Initialize()
 
 	// スプライトの初期化
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);
+	spriteManager_->LoadSprite("TransitionSprite", TextureManager::Load("Resources/default/white2x2.png"));
+	transitionManager_->Initialize();
 
 	// オーディオの初期化
 	Audio::GetInstance()->Initialize();	

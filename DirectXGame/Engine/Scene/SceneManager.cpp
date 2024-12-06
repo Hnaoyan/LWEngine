@@ -1,5 +1,7 @@
 #include "SceneManager.h"
+#include "Transition/SceneTransitionManager.h"
 #include <cassert>
+#include <imgui.h>
 
 void SceneManager::Update()
 {
@@ -54,6 +56,10 @@ void SceneManager::ImGuiDraw()
 	if (nowScene_) {
 		nowScene_->ImGuiDraw();
 	}
+	// シーンマネージャ
+	ImGui::Begin("SceneManager");
+	ImGui::ColorEdit4("TransitionColor", &SceneTransitionManager::GetInstance()->sColor.x);
+	ImGui::End();
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)

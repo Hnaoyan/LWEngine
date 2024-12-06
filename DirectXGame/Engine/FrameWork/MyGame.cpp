@@ -35,6 +35,9 @@ void MyGame::Update()
 
 	// シーンの更新
 	sceneManager_->Update();
+	
+	// 遷移クラスの更新
+	transitionManager_->Update();
 
 	// 終了フラグ
 	endRequest_ = winApp_->ProcessMessage();
@@ -55,6 +58,8 @@ void MyGame::Draw()
 	PostEffectRender::GetInstance()->Draw(dxCommon_->GetCommandList());
 	// PostEffectを掛けないUIの描画
 	sceneManager_->UIDraw();
+	// 遷移スプライト
+	transitionManager_->Draw();
 	// ImGuiの描画
 	ImGuiDraw();
 	// 描画後処理
