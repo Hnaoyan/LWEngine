@@ -7,23 +7,44 @@ void SceneManager::Update()
 {
 	// 切り替え
 	if (nextScene_ && nextScene_->GetSceneReady()) {
-		if (nowScene_) {
-			delete nowScene_;
-		}
+		// スレッドを使った切り替えの場合
 		if (isThread_) {
-			nextInitialize_.join();
-			nextScene_->Initialize();
+			if (!transitionManager_->ChangeTiming()) {
+				if (nowScene_) {
+					delete nowScene_;
+				}
+				nextInitialize_.join();
+				nextScene_->Initialize();
+				isThread_ = false;
+				// シーン切り替え
+				nowScene_ = nextScene_;
+				nextScene_ = nullptr;
+				isChangeActive_ = false;
+
+				transitionManager_->ExecuteReturn();
+
+				// シーンマネージャー設定
+				nowScene_->SetSceneManager(this);
+			}
 		}
-		isThread_ = false;
-		// シーン切り替え
-		nowScene_ = nextScene_;
-		nextScene_ = nullptr;
-		isChangeActive_ = false;
+		// 通常の切り替え
+		else {
+			if (nowScene_) {
+				delete nowScene_;
+			}
+			isThread_ = false;
+			// シーン切り替え
+			nowScene_ = nextScene_;
+			nextScene_ = nullptr;
+			isChangeActive_ = false;
 
-		transitionManager_->ExecuteReturn();
+			transitionManager_->ExecuteReturn();
 
-		// シーンマネージャー設定
-		nowScene_->SetSceneManager(this);
+			// シーンマネージャー設定
+			nowScene_->SetSceneManager(this);
+		}
+
+
 		// 次のシーンの初期化
 		//nowScene_->Initialize();
 	}

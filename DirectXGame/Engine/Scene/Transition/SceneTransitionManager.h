@@ -29,7 +29,7 @@ public:
 	}
 
 	// 変更のタイミング
-	bool ChangeTiming() { return setupTimer_.IsEnd(); }
+	bool ChangeTiming() { return setupTimer_.IsActive(); }
 
 private:
 	// 画面用のテクスチャ
