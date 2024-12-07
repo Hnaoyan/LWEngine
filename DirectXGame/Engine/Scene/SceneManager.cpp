@@ -20,6 +20,8 @@ void SceneManager::Update()
 		nextScene_ = nullptr;
 		isChangeActive_ = false;
 
+		transitionManager_->ExecuteReturn();
+
 		// シーンマネージャー設定
 		nowScene_->SetSceneManager(this);
 		// 次のシーンの初期化
@@ -58,7 +60,7 @@ void SceneManager::ImGuiDraw()
 	}
 	// シーンマネージャ
 	ImGui::Begin("SceneManager");
-	ImGui::ColorEdit4("TransitionColor", &SceneTransitionManager::GetInstance()->sColor.x);
+	ImGui::ColorEdit4("TransitionColor", &transitionManager_->sColor.x);
 	ImGui::End();
 }
 
@@ -78,6 +80,8 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 
 	nextSceneName_ = sceneName;
 	isChangeActive_ = true;
+	//// 遷移開始
+	//transitionManager_->ExecuteStart(120.0f);
 }
 
 void SceneManager::ChangeThreadScene(const std::string& sceneName)
@@ -94,6 +98,7 @@ void SceneManager::ChangeThreadScene(const std::string& sceneName)
 	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
 	isThread_ = true;
 	nextSceneName_ = sceneName;
-
 	isChangeActive_ = true;
+	// 遷移開始
+	transitionManager_->ExecuteStart(120.0f);
 }

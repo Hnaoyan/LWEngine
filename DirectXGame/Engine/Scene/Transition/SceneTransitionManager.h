@@ -17,7 +17,19 @@ public:
 	void Draw();
 public:
 	// 色
-	static Vector4 sColor;
+	Vector4 sColor;
+
+	void ExecuteStart(float changeFrame) {
+		changeFrame_ = changeFrame;
+		setupTimer_.Start(changeFrame_);
+	}
+
+	void ExecuteReturn() {
+		returnTimer_.Start(changeFrame_);
+	}
+
+	// 変更のタイミング
+	bool ChangeTiming() { return setupTimer_.IsEnd(); }
 
 private:
 	// 画面用のテクスチャ
@@ -27,4 +39,6 @@ private:
 	FrameTimer setupTimer_;
 	// 戻ってくる時間
 	FrameTimer returnTimer_;
+
+	float changeFrame_ = 1.0f;
 };

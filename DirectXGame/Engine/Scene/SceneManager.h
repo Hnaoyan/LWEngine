@@ -8,6 +8,8 @@
 #include "SceneFactory/AbstractSceneFactory.h"
 #include "Engine/Utility/Singleton.h"
 
+class SceneTransitionManager;
+
 class SceneManager : public Singleton<SceneManager>
 {
 private:
@@ -27,6 +29,8 @@ private:
 
 	bool isThread_ = false;
 	bool isChangeActive_ = false;
+
+	SceneTransitionManager* transitionManager_ = nullptr;
 public:
 	/// <summary>
 	/// シーン生成クラス設定
@@ -55,5 +59,7 @@ public:
 	/// <param name="sceneName"></param>
 	void ChangeScene(const std::string& sceneName);
 	void ChangeThreadScene(const std::string& sceneName);
+
+	void SetTransitionManager(SceneTransitionManager* manager) { transitionManager_ = manager; }
 
 };

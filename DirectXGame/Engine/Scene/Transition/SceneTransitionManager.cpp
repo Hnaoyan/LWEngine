@@ -5,14 +5,16 @@
 #include "Engine/WindowAPI/WindowAPI.h"
 #include <imgui.h>
 
-Vector4 SceneTransitionManager::sColor = { 1.0f,1.0f,1.0f,1.0f };
-
 SceneTransitionManager::SceneTransitionManager()
 {
 }
 
 void SceneTransitionManager::Initialize()
 {
+	// 色
+	sColor = { 0.0f,0.0f,0.0f,0.0f };
+
+	// スプライト
 	transitionSprite_ = SpriteManager::GetSprite("TransitionSprite");
 	transitionSprite_->SetAnchorPoint(Vector2(0.5f, 0.5f));
 	Vector2 center = Vector2((float)WindowAPI::kWindowWidth, (float)WindowAPI::kWindowHeight);
@@ -27,10 +29,18 @@ void SceneTransitionManager::Update()
 	setupTimer_.Update();
 	returnTimer_.Update();
 
-	if (setupTimer_.IsEnd()) {
-		returnTimer_.Start();
-
+	// アルファ値の処理
+	if (setupTimer_.IsActive()) {
+		sColor.w = Ease::Easing(0.0f, 1.0f, setupTimer_.GetElapsedFrame());
 	}
+	else if(returnTimer_.IsActive()){
+		sColor.w = Ease::Easing(1.0f, 0.0f, returnTimer_.GetElapsedFrame());
+	}
+
+	//// 切り返し処理
+	//if (setupTimer_.IsEnd()) {
+	//	returnTimer_.Start(changeFrame_);
+	//}
 }
 
 void SceneTransitionManager::Draw()
