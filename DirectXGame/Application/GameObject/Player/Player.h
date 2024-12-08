@@ -70,10 +70,10 @@ private:
 	std::string filePath;
 
 	// 無敵時間のフレーム
-	float invisibleFrame_ = 30.0f;
 	float energyRecover_ = 10.0f;
 
 public:
+	float invisibleFrame_ = 30.0f;
 	float trackCancelDistance = 75.0f;
 
 public: // アクセッサ

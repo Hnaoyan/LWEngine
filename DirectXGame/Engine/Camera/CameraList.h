@@ -6,6 +6,7 @@
 #include "Custom/FocusCamera.h"
 #include "Custom/OrbitCamera.h"
 #include "Custom/SideCamera.h"
+#include "Custom/TransitionCamera.h"
 
 /// <summary>
 /// アクティブ中のカメラ選択
@@ -17,6 +18,7 @@ enum class ActiveCameraMode
 	kFocus,
 	kOrbit,
 	kSide,
+	kTransition,
 	kDebug,
 	kMaxSize,
 };

@@ -11,6 +11,7 @@ CameraManager::CameraManager()
 	debugCamera_ = std::make_unique<DebugCamera>();
 	orbitCamera_ = std::make_unique<OrbitCamera>();
 	sideCamera_ = std::make_unique<SideCamera>();
+	transitionCamera_ = std::make_unique<TransitionCamera>();
 }
 
 void CameraManager::Initialize(GameObjectManager* gameManager)
@@ -39,6 +40,7 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 	sideCamera_->Initialize();
 	sideCamera_->SetParent(&gameManager->GetPlayer()->worldTransform_);
 
+	transitionCamera_->Initialize();
 }
 
 void CameraManager::Update(GameSystem* gameSystem)
@@ -49,6 +51,7 @@ void CameraManager::Update(GameSystem* gameSystem)
 	debugCamera_->Update();
 	orbitCamera_->Update();
 	sideCamera_->Update();
+	transitionCamera_->Update();
 
 	// キー入力の間隔
 	durationTimer_.Update();

@@ -51,6 +51,9 @@ namespace PlayerContext
 				afterTimer.Update();
 				returnTimer.Update();
 			}
+
+			bool receptionFlag = false;
+			float delayFrame = 0.0f;
 		};
 
 		// プレイヤー

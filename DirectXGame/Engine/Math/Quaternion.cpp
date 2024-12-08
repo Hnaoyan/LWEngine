@@ -152,23 +152,22 @@ Quaternion Quaternion::MakeRotateToDirect(const Vector3& direct, const Vector3& 
 Quaternion Quaternion::MakeRotateDirect(const Vector3& direct)
 {
     Vector3 normDirect = Vector3::Normalize(direct);
-    //Vector3 angle{};
-    //angle.x = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
-    //angle.y = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
-    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.x);
-    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.y);
-    //angle.z = std::acosf(Vector3::Dot(Vector3::Forward(), normDirect));
-    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angle.z);
-    //float angleZ = std::atan2(normDirect.y, normDirect.x);
-    //Quaternion qz = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Forward(), angleZ);
 
-    float angleX = std::atan2(normDirect.y, std::sqrt(normDirect.x * normDirect.x + normDirect.z * normDirect.z));
-    float angleY = std::atan2(normDirect.x, normDirect.z);
-    Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), -angleX);
+    //float angleX = std::atan2(normDirect.y, std::sqrt(normDirect.x * normDirect.x + normDirect.z * normDirect.z));
+    //float angleY = std::atan2(normDirect.x, normDirect.z);
+    //Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), -angleX);
+    //Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angleY);
+
+    Vector3 projectXZ = Vector3(normDirect.x, 0.0f, normDirect.z).Normalize();
+    float angleY = LwLib::CalculateYawFromVector(projectXZ);
     Quaternion qy = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Up(), angleY);
 
+    Vector3 projectXY = Vector3(0.0f, normDirect.y, Vector3::Length(projectXZ)).Normalize();
+    float angleX = std::asinf(projectXY.y);
+    Quaternion qx = Quaternion::MakeRotateAxisAngleQuaternion(Vector3::Right(), -angleX);
+    return Quaternion(qy * qx);
 
-    return Quaternion(qy * qx); 
+    //return Quaternion(Quaternion::MakeRotateToDirect(normDirect));
 }
 
 Quaternion Quaternion::DirectionToDirection(const Vector3& from, const Vector3& to)
