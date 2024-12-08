@@ -7,6 +7,9 @@
 
 class SampleBulletManager;
 
+/// <summary>
+/// プレイヤー
+/// </summary>
 class Player : public IGameObject
 {
 public:
@@ -46,8 +49,12 @@ public:
 	/// UI描画
 	/// </summary>
 	void UISpriteDraw();
+	/// <summary>
+	/// コライダーの設定関数
+	/// </summary>
+	/// <param name="collisionManager"></param>
+	void SetCollier(CollisionManager* collisionManager) override;
 
-#pragma region 内部システム関係
 private:
 	// システムファサードクラス
 	std::unique_ptr<PlayerFacade> facadeSystem_;
@@ -65,20 +72,26 @@ private:
 	char path[256];
 	std::string filePath;
 
+	// 無敵時間のフレーム
+	float energyRecover_ = 10.0f;
+
 public:
+	float invisibleFrame_ = 30.0f;
+	float trackCancelDistance = 75.0f;
+
+public: // アクセッサ
 	OparationManager* GetOperation() { return &oparationManager_; }
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
 	PlayerStateMachine* HorizontalState() { return stateManager_->GetHorizontal(); }
 	PlayerStateMachine* VerticalState() { return stateManager_->GetVertical(); }
 	Boss* GetBoss() { return boss_; }
-#pragma endregion
-
-public: // セッター
+	Material* GetMaterial() { return material_.get(); }
 	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Vector3 GetVelocity() const { return velocity_; }
+	void SetColor(const Vector4& color) { material_->color_ = color; }
 	// ポインタ関係
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
 		facadeSystem_->GetShootingManager()->SetManager(manager);
@@ -97,6 +110,8 @@ private: // USER
 
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 
+	void NowState();
+
 public:
 	// 移動速度
 	Vector3 velocity_ = {};
@@ -104,7 +119,14 @@ public:
 	ICamera* camera_ = nullptr;
 	// 落下フラグ
 	bool isGround_ = false;
+	bool isDoubleJump_ = false;
+
 private:
 	// ボス
 	Boss* boss_ = nullptr;
+
+	// アウトライン用のモデル
+	WorldTransform outlineTransform_{};
+	Model* outlineModel_ = nullptr;
+	std::unique_ptr<Material> outlineMaterial_;
 };

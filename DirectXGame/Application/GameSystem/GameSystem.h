@@ -25,7 +25,6 @@ public:
 
 public:
 	// プレイヤーのキー
-	static DashBlur sBlurEffect;
 	static KeyConfigManager sKeyConfigManager;
 
 	/// <summary>
@@ -47,6 +46,7 @@ public:
 
 public:
 	ReplayManager* GetReplayManager() { return &replayManager_; }
+	bool IsReplayMode() { return isReplay_; }
 private:
 	// キー管理クラス
 	KeyConfigManager keyConfig_;
@@ -55,9 +55,8 @@ private:
 	// ポストエフェクト管理クラス
 	PostEffectManager postEffectManager_;
 
-	// フレーム数のカウント
-	uint32_t nowFrame_ = 0;
 	// インプット
 	Input* input_ = nullptr;
-
+	// リプレイ状態か
+	bool isReplay_ = false;
 };

@@ -30,7 +30,6 @@ void OparationManager::Update()
 	// Aimの処理
 	aimManager_.Update(player_->camera_);
 	// クールタイム
-	dashCooltime_.Update(GameSystem::GameSpeedFactor());
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 	lockOnCooltime_.Update(GameSystem::sSpeedFactor);
 	// 座標更新
@@ -53,11 +52,16 @@ void OparationManager::InputUpdate()
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
 	}
-	// 追従
-	else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
-		player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
-		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
-	}
+	//// 追従（強化弾として扱う
+	//else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
+	//	player_->GetSystemFacede()->GetShootingManager()->TrackingFire();
+	//	shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
+	//}
+
+	//if (input_->TriggerKey(DIK_U)) {
+	//	player_->GetSystemFacede()->GetShootingManager()->FireContainer();
+	//	shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
+	//}
 
 	// カメラの処理
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon && !lockOnCooltime_.IsActive()) {
@@ -73,22 +77,41 @@ void OparationManager::InputUpdate()
 
 	}
 	direct = Vector3::Normalize(direct);
+	// 速度の計算
+	float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");
+	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, velocityDecay);
+	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, velocityDecay);
 
+	// 長押し確認
+	longDashTimer_.Update();
+	longDashCoolTimer_.Update();
 	// ダッシュ入力
-	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalState()->GetVariant());
-	if (!isQuickBoost && GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
-		if (!player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost()) {
-			return;
-		}
-		if (isQuickBoost) {
-			return;
-		}
+	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalState()->GetVariant()) || std::holds_alternative<BoostState*>(player_->HorizontalState()->GetVariant());
+	// ダッシュ中かクールタイムなら早期
+	if (isQuickBoost || longDashCoolTimer_.IsActive()) {
+		return;
+	}
+
+	// 長めのダッシュの場合
+	if (longDashTimer_.IsEnd()) {
+		player_->HorizontalState()->ChangeRequest(PlayerStateLists::kBoost);
+		return;
+	}
+	// 小ダッシュの場合
+	if (!GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost && longDashTimer_.IsActive()) {
 		player_->HorizontalState()->ChangeRequest(PlayerStateLists::kQuickBoost);
 		return;
 	}
 
-	float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");
-	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, velocityDecay);
-	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, velocityDecay);
+	// ダッシュ入力の受付
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
+		// エネルギー側でこの入力が可能か
+		bool isEnergy = /*player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost() && */!player_->GetSystemFacede()->GetEnergy()->IsOverheat();
+		// ロングダッシュにするかどうか
+		if (isEnergy && !longDashTimer_.IsActive()) {
+			longDashTimer_.Start(12.0f);
+		}
+	}
+
 
 }

@@ -32,18 +32,20 @@ void BossSystemContext::ParticleManager::Initialize(Boss* boss)
 	SetGPUParticleSystem(boss_->GetGPUParticle());
 	// ダメージのエミッタ作成
 	CreateDamageEmitter();
-
+	// バリアわれるときのエミッタ作成
+	CreateBarrierBreakEmitter();
 
 }
 void BossSystemContext::ParticleManager::Update()
 {
-	//if (isDamage_) {
-	//	isDamage_ = false;
-	//}
-
 	damage_.activeTimer.Update();
 	if (damage_.activeTimer.IsEnd()) {
 		damage_.isActive = false;
+	}
+
+	barrierBreak_.activeTimer.Update();
+	if (barrierBreak_.activeTimer.IsEnd()) {
+		barrierBreak_.isActive = false;
 	}
 
 }
@@ -57,7 +59,20 @@ void BossSystemContext::ParticleManager::CreateDamageEmitter()
 	std::unique_ptr<GPUParticleEmitter> instance = std::make_unique<BossParticle::DamageEffect>();
 	instance->Initialize(ModelManager::GetModel("Plane"));
 	BossParticle::DamageEffect* damage = static_cast<BossParticle::DamageEffect*>(instance.get());
-	damage->SetTextureHandle(TextureManager::Load("Resources/Effect/Cross.png"));
+	damage->SetTextureHandle(TextureManager::Load("Resources/Effect/effect.png"));
 	damage->SetBoss(boss_);
 	gpuParticle_->CreateEmitter(std::move(instance), "BossDamage");
+}
+
+void BossSystemContext::ParticleManager::CreateBarrierBreakEmitter()
+{
+	barrierBreak_.activeFrame = 3.0f;
+	barrierBreak_.isActive = false;
+
+	std::unique_ptr<GPUParticleEmitter> instance = std::make_unique<BossParticle::BarrierBreakEffect>();
+	instance->Initialize(ModelManager::GetModel("Plane"));
+	BossParticle::BarrierBreakEffect* barrierBreak = static_cast<BossParticle::BarrierBreakEffect*>(instance.get());
+	barrierBreak->SetTextureHandle(TextureManager::Load("Resources/Effect/effect.png"));
+	barrierBreak->SetBoss(boss_);
+	gpuParticle_->CreateEmitter(std::move(instance), "BossBarrierBreak");
 }

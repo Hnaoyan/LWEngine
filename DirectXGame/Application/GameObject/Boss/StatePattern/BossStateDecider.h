@@ -19,7 +19,8 @@ namespace BossState {
 	class MissileAttackState;
 	class SystemDownState;
 	class MissileBarrageState;
-
+	class MissileWaveState;
+	class MissileContainerState;
 	// 
 	class PreDecide;
 }
@@ -27,7 +28,10 @@ namespace BossState {
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*, SystemDownState*, MissileBarrageState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*,
+		WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*,
+		SystemDownState*, MissileBarrageState*, MissileWaveState*,
+		MissileContainerState*>;
 
 	/// <summary>
 	/// 判断クラス
@@ -43,6 +47,8 @@ namespace BossState
 			kMissile,
 			kOrbitMove,
 			kMissileBarrage,
+			kMissileWave,
+			kMissileContainer,
 			kMax,
 		};
 		struct StateObject {

@@ -9,6 +9,8 @@ void PlayerFacade::Initialize(Player* player)
 	animationManager_.Initialize(player);
 	// 射撃の管理
 	shootingManager_.Initialize(player);
+
+	justDodgeManager_ = PlayerContext::JustDodgeManager(player);
 }
 
 void PlayerFacade::Update()
@@ -18,4 +20,5 @@ void PlayerFacade::Update()
 	energyManager_.Update();
 	animationManager_.Update();
 	shootingManager_.Update();
+	justDodgeManager_.Update();
 }

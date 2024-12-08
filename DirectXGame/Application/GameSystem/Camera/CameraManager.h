@@ -1,9 +1,12 @@
 #pragma once
 #include "Engine/Camera/CameraList.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include <optional>
 #include <memory>
+#include <unordered_map>
 
 class GameObjectManager;
+class GameSystem;
 
 /// <summary>
 /// カメラ管理クラス
@@ -23,7 +26,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(GameSystem* gameSystem);
 	/// <summary>
 	/// ImGui
 	/// </summary>
@@ -35,8 +38,13 @@ public:
 	void ChangeCamera(ActiveCameraMode mode);
 
 private:
-	
-	void UpdateCameraSwitcher();
+	// ゲーム中のカメラ切り替わり
+	void InGameCameraSwitcher();
+	// リプレイのカメラ切り替わり
+	void ReplayCameraSwitcher();
+
+	// 入力による切り替え
+	void InputSwitch();
 
 public:
 	ICamera* GetCamera();
@@ -45,6 +53,8 @@ public:
 private:
 	// オブジェクトマネージャ
 	GameObjectManager* gameObjManager_ = nullptr;
+	// フレームタイマー
+	FrameTimer durationTimer_;
 
 private:
 	// 追従カメラ
@@ -53,6 +63,15 @@ private:
 	std::unique_ptr<FocusCamera> focusCamera_;
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
+	// 
+	std::unique_ptr<OrbitCamera> orbitCamera_;
+	// サイドカメラ
+	std::unique_ptr<SideCamera> sideCamera_;
+
+	std::unique_ptr<TransitionCamera> transitionCamera_;
+
+	// カメラのリスト
+	std::unordered_map<std::string, std::unique_ptr<ICamera>> cameras_;
 
 	// 変更のリクエスト
 	std::optional<ActiveCameraMode> changeRequest_ = std::nullopt;

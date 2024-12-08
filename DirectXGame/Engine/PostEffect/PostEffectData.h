@@ -37,3 +37,8 @@ struct CBufferDataBloom
 	float threshold;	// 閾値
 	float sigma;	// 
 };
+
+struct CBufferDataGrayscale
+{
+	float lerpFactor;	// 遷移値
+};

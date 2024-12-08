@@ -3,6 +3,11 @@
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "../Collision/ColliderFilter.h"
 
+class CollisionManager;
+
+/// <summary>
+/// ゲームオブジェクトの基底クラス
+/// </summary>
 class IGameObject
 {
 public:
@@ -20,8 +25,13 @@ public:
 public:
 	// 共通のシリアル
 	static int32_t sSerialNumber;
+protected:
 	// 個体のシリアル
 	int32_t commonSerialNumber_ = 0u;
+	// 死亡フラグ
+	bool isDead_ = false;
+	// デバッグ用の非表示フラグ
+	bool isInvisible_ = false;
 
 public:
 	/// <summary>
@@ -49,6 +59,11 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	virtual void OnCollision(ColliderObject target) = 0;
+	/// <summary>
+	/// コライダーをマネージャに設定する関数
+	/// </summary>
+	/// <param name="collisionManager"></param>
+	virtual void SetCollier(CollisionManager* collisionManager) = 0;
 protected:
 	/// <summary>
 	/// グローバル変数の初期化
@@ -66,10 +81,6 @@ public: // アクセッサ
 protected:
 	// モデル
 	Model* model_ = nullptr;
-	// 死亡フラグ
-	bool isDead_ = false;
-	// デバッグ用の非表示フラグ
-	bool isInvisible_ = false;
 
 public:
 	// ワールドトランスフォーム

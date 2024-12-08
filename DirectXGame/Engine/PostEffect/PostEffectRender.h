@@ -31,6 +31,8 @@ public:	// 定数バッファ
 	ConstantBufferMapContext<CBufferDataHSV> hsv_;
 	// ブルーム
 	ConstantBufferMapContext<CBufferDataBloom> bloom_;
+	// グレースケール
+	ConstantBufferMapContext<CBufferDataGrayscale> grayscale_;
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -45,6 +47,7 @@ public:
 		CBufferDataNoise noise;
 		CBufferDataHSV hsv;
 		CBufferDataBloom bloom;
+		CBufferDataGrayscale grayscale;
 	};
 	/// <summary>
 	/// 更新処理

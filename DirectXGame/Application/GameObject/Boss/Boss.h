@@ -5,6 +5,8 @@
 #include "StatePattern/StateMachine.h"
 #include "StatePattern/BossStateDecider.h"
 #include "StatePattern/Attack/BossMissileBarrage.h"
+#include "StatePattern/Attack/BossMisslieWave.h"
+#include "StatePattern/Attack/BossMissileContainer.h"
 #include "Animation/BossAnimationManager.h"
 #include "System/BossSystem.h"
 #include "System/UI/BossUI.h"
@@ -13,6 +15,9 @@
 
 class Player;
 
+/// <summary>
+/// ボス本体
+/// </summary>
 class Boss : public IGameObject
 {
 public:
@@ -41,9 +46,10 @@ public:
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
 	void OnCollision(ColliderObject target) override;
-
+	/// <summary>
+	/// アニメーションの更新
+	/// </summary>
 	void AnimationUpdate();
-
 	/// <summary>
 	/// UI描画
 	/// </summary>
@@ -56,6 +62,9 @@ public:
 	/// 終了処理
 	/// </summary>
 	void Finalize();
+
+	void SetCollier(CollisionManager* collisionManager) override;
+
 private:
 	// グローバル変数関係の初期化
 	void InitializeGlobalValue() override;
@@ -81,6 +90,8 @@ private: // サブシステム
 	// 外部の弾管理
 	BulletManager* bulletManager_ = nullptr;
 
+	ICamera* camera_ = nullptr;
+
 #pragma region 内部システムアクセッサ
 public:
 	// ステート関係
@@ -93,13 +104,13 @@ public:
 	BossFacade* GetSystem() { return systemManager_.get(); }
 	void SetNowVariantState(BossState::StateVariant variant) { nowVariantState_ = variant; }
 	void SetPrevVariantState(BossState::StateVariant variant) { prevVariantState_ = variant; }
-
+	void SetCamera(ICamera* camera) { camera_ = camera; }
 	// コンテキストのアクセッサ
 	BossSystemContext::HealthManager* GetHealth() { return &systemManager_->healthManager_; }
 	BossSystemContext::ParticleManager* GetParticleManager() { return &systemManager_->particleManager_; }
 	BossSystemContext::AnimationManager* GetAnimManager() { return animationManager_.get(); }
 
-	Vector3 respawnPos_ = {};
+	Vector3 HitEffectPosition();
 #pragma endregion
 
 #pragma region 外部関係のポインタやアクセッサ
@@ -110,6 +121,10 @@ private:
 	Player* player_ = nullptr;
 	// GPU
 	GPUParticleManager* gpuParticle_ = nullptr;
+
+	// 前方方向のベクトル
+	Vector3 frontVector_{};
+
 public:
 	void SetIsAction(bool isAction) { isAction_ = isAction; }
 	// 外部
@@ -126,6 +141,7 @@ public:
 	void SetBulletManager(BulletManager* bulletManager) { bulletManager_ = bulletManager; }
 	BulletManager* GetBulletManager() { return bulletManager_; }
 	IBulletCluster* GetTrackingCluster() { return bulletManager_->FindCluster("Boss:TrackingBullet"); }
+	IBulletCluster* GetContainerCluster() { return bulletManager_->FindCluster("Boss:ContainerBullet"); }
 	IBulletCluster* GetSuperiorCluster() { return bulletManager_->FindCluster("Boss:Superior"); }
 	IBulletCluster* GetInferiorCluster() { return bulletManager_->FindCluster("Boss:Inferior"); }
 	IBulletCluster* GetGeneusCluster() { return bulletManager_->FindCluster("Boss:Genius"); }

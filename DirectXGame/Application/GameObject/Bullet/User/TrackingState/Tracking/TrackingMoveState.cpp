@@ -21,7 +21,9 @@ void TrackingMoveState::Enter()
 
 	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (1.0f / 300.0f);
 	bullet_->SetVelocity(newVelocity);
-	//timer_.Start(TrackingBullet::sTrackingFrame);
+
+	// 1.5秒で追従を緩くする（仮
+	looseTimer_.Start(90.0f);
 }
 
 void TrackingMoveState::Update(BulletStateMachine& stateMachine)
@@ -45,7 +47,13 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		float dot = Vector3::Dot(Vector3::Normalize(bullet_->GetVelocity()), Vector3::Normalize(bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition()));
 		// 向きが過度に離れていたら追尾しない
 		float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
+
+		if (!looseTimer_.IsActive()) {
+			limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDotLoose");
+		}
+
 		if (dot < limitDot) {
+			stateMachine.RequestState(TrackingState::kStraight);
 			return;
 		}
 
@@ -108,7 +116,7 @@ Vector3 TrackingMoveState::CalcSuperiorAcceleration()
 	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
 	// 加速度の計算
-	return Vector3(force * GameSystem::GameSpeedFactor());
+	return Vector3(force);
 }
 
 Vector3 TrackingMoveState::CalcInferiorAcceleration()
@@ -141,7 +149,7 @@ Vector3 TrackingMoveState::CalcInferiorAcceleration()
 	// 速度の減衰処理
 	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
-	return Vector3(force * GameSystem::GameSpeedFactor());
+	return Vector3(force);
 }
 
 Vector3 TrackingMoveState::CalcGeniusAcceleration()
@@ -184,5 +192,5 @@ Vector3 TrackingMoveState::CalcGeniusAcceleration()
 	force += nowDirect * propulsion;
 	force -= bulletVelocity * bullet->GetTrackingData().damping;
 
-	return Vector3(force * GameSystem::GameSpeedFactor());
+	return Vector3(force);
 }

@@ -3,12 +3,17 @@
 
 class CollisionManager;
 
+/// <summary>
+/// 地形オブジェクト管理
+/// </summary>
 class TerrainCluster : public InstancedGroup
 {
 public:
-	static uint32_t sSerialNumber;
-	uint32_t serialNumber_ = 0u;
-	std::string name_;
+	std::string name_;	// 名前
+	static uint32_t sSerialNumber;	// 通しの番号
+	uint32_t serialNumber_ = 0u;	// シリアル番号
+private:
+	uint32_t texture_ = 0;	// テクスチャ
 
 public: // 仮想関数
 	/// <summary>
@@ -42,6 +47,4 @@ public: // USER
 	/// <param name="manager"></param>
 	void CollisionUpdate(CollisionManager* manager);
 
-private:
-	uint32_t texture_ = 0;
 };

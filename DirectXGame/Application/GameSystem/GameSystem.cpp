@@ -6,7 +6,6 @@
 #include <imgui.h>
 
 float GameSystem::sSpeedFactor = 1.0f;
-DashBlur GameSystem::sBlurEffect;
 KeyConfigManager GameSystem::sKeyConfigManager;
 
 float GameSystem::GameSpeedFactor()
@@ -26,10 +25,9 @@ void GameSystem::Initialize()
     keyConfig_ = KeyConfigManager();
     // ポストエフェクト生成
     postEffectManager_ = PostEffectManager();
-    // ブラー
-    sBlurEffect.data.centerPoint = { 0.5f,0.5f };
-    sBlurEffect.data.samplesNum = 4;
+    postEffectManager_.Initialize(this);
 
+    // ポストエフェクトレンダラーの設定
     PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 }
 
@@ -39,36 +37,32 @@ void GameSystem::Update()
     keyConfig_.Update(&replayManager_);
     // 静的なクラスに渡す
     sKeyConfigManager = keyConfig_;
-
-    // ポストエフェクト関係の受付
-    if (sBlurEffect.isActive) {
-        sBlurEffect.timer.Update();
-        sBlurEffect.data.blurWidth = Ease::Easing(sBlurEffect.maxWidth, 0.0f, sBlurEffect.timer.GetElapsedFrame());
-    }
-
-    PostEffectRender::PostEffectDesc desc{};
-    desc.blur = sBlurEffect.data;
-    desc.bloom = postEffectManager_.bloomData_;
-    desc.vignette = postEffectManager_.vignetteData_;
-    PostEffectRender::GetInstance()->Update(desc);
-    
+    // ポストエフェクト
+    postEffectManager_.Update();
     // リプレイ用に記録
     replayManager_.RecordFrame(&keyConfig_);
-    // フレームカウント
-    nowFrame_++;
 }
 
 void GameSystem::ImGuiDraw()
 {
-
     ImGui::Begin("GameSystem");
     replayManager_.ImGuiDraw();
-    ImGui::End();
 
+    postEffectManager_.ImGuiDraw();
+    //if (ImGui::Button("Vignette")) {
+
+    //}
+
+    ImGui::End();
 }
 
 void GameSystem::LaunchReplay()
 {
+    // ポストエフェクト解除
+    PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+    // スローだった場合の初期化
+    sSpeedFactor = 1.0f;
     // リプレイの準備
-    keyConfig_.BeginReplay();
+    replayManager_.ReplaySetUp();
+    isReplay_ = true;
 }

@@ -5,6 +5,9 @@
 
 class ReplayManager;
 
+/// <summary>
+/// キーの処理管理クラス
+/// </summary>
 class KeyConfigManager
 {
 public:

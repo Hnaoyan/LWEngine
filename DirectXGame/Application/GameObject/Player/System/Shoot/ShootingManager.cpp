@@ -24,6 +24,14 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	bullet->SetVelocity(direct * speed);
 	bullet->transform_ = transform;
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
+	// ダメージの違い
+	if (isChangeAttack_) {
+		isChangeAttack_ = false;
+		bullet->SetDamageRatio(5.0f);
+		// コンボのリセット
+		player_->GetSystemFacede()->GetDudgeManager()->ComboReset();
+	}
+
 	bulletManager_->FindCluster("Player:NormalBullet")->AddBullet(std::move(bullet));
 }
 
@@ -56,4 +64,18 @@ void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, Tra
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
 	bullet->transform_ = transform;
 	bulletManager_->FindCluster("Player:TrackingBullet")->AddBullet(std::move(bullet));
+}
+
+void PlayerContext::ShootingManager::FireContainer()
+{
+
+	Vector3 direct = Vector3::Up();
+	EulerTransform transform = player_->worldTransform_.transform_;
+	transform.scale = { 0.2f,0.2f,0.2f };
+	// 生成処理
+	BulletBuilder builder;
+	builder.SetTargetObject(player_).SetDirect(direct).SetSpeed(10.0f).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
+	builder.SetParentAttribute(1);
+	builder.SetCluster(bulletManager_->FindCluster("Player:TrackingBullet"));
+	bulletManager_->FindCluster("Player:ContainerBullet")->AddBullet(builder, BulletType::kContainer);
 }

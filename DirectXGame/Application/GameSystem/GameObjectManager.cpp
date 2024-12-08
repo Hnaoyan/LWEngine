@@ -1,10 +1,12 @@
 #include "GameObjectManager.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/Input/Input.h"
+#include "Application/GameSystem/GameSystem.h"
 #include <imgui.h>
 #include <cassert>
 
-GameObjectManager::GameObjectManager()
+GameObjectManager::GameObjectManager(GameSystem* system)
 {
 	// ゲームオブジェクト
 	player_ = std::make_unique<Player>();
@@ -13,6 +15,8 @@ GameObjectManager::GameObjectManager()
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
+
+	gameSystem_ = system;
 }
 
 void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
@@ -38,12 +42,13 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
 	boss_->SetPlayer(player_.get());
 	boss_->SetBulletManager(bulletManager_.get());
+	boss_->SetCamera(camera);
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-	isGameClear_ = false;
-	isGameOver_ = false;
+	isSceneChange_ = false;
+	isChangeInput_ = false;
 	isInGame_ = true;
 }
 
@@ -51,45 +56,71 @@ void GameObjectManager::Update()
 {
 	// ゲームの判断
 #ifdef RELEASE
-
-	if (player_->IsDead() && isInGame_) {
-		isInGame_ = false;
-		gameOverTimer_.Start(120.0f);
+	if (gameSystem_->IsReplayMode()) {
+		if ((player_->IsDead() || boss_->IsDead()) && isInGame_) {
+			isInGame_ = false;
+			waitingTimer_.Start(120.0f);
+		}
 	}
-	if (boss_->IsDead() && isInGame_) {
-		isInGame_ = false;
-		gameClearTimer_.Start(120.0f);
+	else {
+		// クリアしたタイミングの処理
+		if (player_->IsDead() && isInGame_) {
+			isInGame_ = false;
+			waitingTimer_.Start(120.0f);
+			gameOverTimer_.Start(120.0f);
+		}
+		if (boss_->IsDead() && isInGame_) {
+			isInGame_ = false;
+			waitingTimer_.Start(120.0f);
+			gameClearTimer_.Start(120.0f);
+		}
 	}
 
+	// UIが出ている時間
 	gameClearTimer_.Update();
 	gameOverTimer_.Update();
+	waitingTimer_.Update();
 
-	if (gameClearTimer_.IsEnd()) {
-		isGameClear_ = true;
+	// ゲーム終了のタイミング
+	if (waitingTimer_.IsEnd()) {
+		if (gameSystem_->IsReplayMode()) {
+			isSceneChange_ = true;
+		}
+		else {
+			isChangeInput_ = true;
+		}
 	}
-	if (gameOverTimer_.IsEnd()) {
-		isGameOver_ = true;
+	
+	// タイトルかリプレイかを選択できるように
+	if (isChangeInput_) {
+		if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_A)) {
+			isSceneReplay_ = true;
+		}
+		else if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_B)) {
+			isSceneChange_ = true;
+		}
+	}
+
+	// リプレイ中に戻れるように
+	if (gameSystem_->IsReplayMode()) {
+		if (Input::GetInstance()->XTriggerJoystick(XINPUT_GAMEPAD_B) || gameSystem_->GetReplayManager()->IsReplayEnd()) {
+			isSceneChange_ = true;
+		}
 	}
 
 #endif // RELEASE
+	//if (!gameSystem_->IsReplayMode()) {
+	//	if (PostEffectManager::sGameVigenette.timer.IsEnd()) {
+	//		isGame = true;
+	//		gameSystem_->GetReplayManager()->RecordSetUp();
+	//	}
+	//	if (!isGame) {
+	//		return;
+	//	}
+	//}
 
-
-	// 地形関係
-	skyDome_->Update();
-	terrainManager_->Update();
-	if (isInGame_) {
-		// オブジェクト
-		player_->Update();
-		if (boss_) {
-			boss_->Update();
-		}
-	}
-	// アニメーションの処理
-	if (boss_) {
-		boss_->AnimationUpdate();
-	}
-	// 弾
-	bulletManager_->Update();
+	// オブジェクトの更新
+	UpdateObject();
 }
 
 void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
@@ -104,20 +135,23 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	skyDome_->Draw(drawDesc);
 	// 地形
 	terrainManager_->Draw(drawDesc);
-	// プレイヤー
-	player_->Draw(drawDesc);
+	// 弾
+	bulletManager_->Draw(drawDesc);
 	// ボス
 	if (boss_) {
 		boss_->Draw(drawDesc);
 	}
-	// 弾
-	bulletManager_->Draw(drawDesc);
+	// プレイヤー
+	player_->Draw(drawDesc);
 }
 
 void GameObjectManager::UIDraw()
 {
 	// それぞれのUI
-	player_->UISpriteDraw();
+	if (!gameSystem_->GetReplayManager()->IsReplayNow()) {
+		player_->UISpriteDraw();
+	}
+
 	if (boss_) {
 		boss_->UIDraw();
 	}
@@ -159,10 +193,11 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	assert(collisionManager);
 
 	// 全ての衝突設定
-	collisionManager->ListRegist(player_->GetCollider());
-	collisionManager->ListRegist(player_->GetFootCollider());
+	if (player_) {
+		player_->SetCollier(collisionManager);
+	}
 	if (boss_) {
-		collisionManager->ListRegist(boss_->GetCollider());
+		boss_->SetCollier(collisionManager);
 	}
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);
@@ -170,6 +205,30 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 
 void GameObjectManager::GameSetUp()
 {
+	// ポストエフェクト解除
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+	// 速度の初期化
+	gameSystem_->sSpeedFactor = 1.0f;
 	boss_->SetIsAction(true);
 	boss_->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+}
+
+void GameObjectManager::UpdateObject()
+{
+	// 地形関係
+	skyDome_->Update();
+	terrainManager_->Update();
+	if (isInGame_) {
+		// オブジェクト
+		player_->Update();
+		if (boss_) {
+			boss_->Update();
+		}
+	}
+	// アニメーションの処理
+	if (boss_) {
+		boss_->AnimationUpdate();
+	}
+	// 弾
+	bulletManager_->Update();
 }

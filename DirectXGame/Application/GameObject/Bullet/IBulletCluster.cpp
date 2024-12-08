@@ -86,10 +86,10 @@ void IBulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 	GlobalVariables* global = GlobalVariables::GetInstance();
 	// 軌跡の管理
 	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
-	// 移動のパーティクル
-	std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
-	// 壊れた時のパーティクル
-	std::unique_ptr<BulletParticle::BreakEffect> breakPartice = std::make_unique<BulletParticle::BreakEffect>();
+	//// 移動のパーティクル
+	//std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
+	//// 壊れた時のパーティクル
+	//std::unique_ptr<BulletParticle::BreakEffect> breakPartice = std::make_unique<BulletParticle::BreakEffect>();
 
 	// トレイル
 	trailInstance->SetLength(global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame"));
@@ -103,29 +103,29 @@ void IBulletCluster::AddBullet(std::unique_ptr<IBullet> bullet)
 
 	// 弾
 	bullet->SetTrail(trailInstance.get());
-	bullet->SetBreakEmitter(breakPartice.get());
+	//bullet->SetBreakEmitter(breakPartice.get());
 
-	// パーティクル
-	particle->Initialize(ModelManager::GetModel("Plane"));
-	particle->SetGPUParticleSystem(gpuParticle_);
-	particle->SetBullet(bullet.get());
-	particle->SetTrail(trailInstance.get());
+	//// パーティクル
+	//particle->Initialize(ModelManager::GetModel("Plane"));
+	//particle->SetGPUParticleSystem(gpuParticle_);
+	//particle->SetBullet(bullet.get());
+	//particle->SetTrail(trailInstance.get());
 
-	// 敵のクラスターである場合
-	size_t position = tag_.find(":");
-	if (position != std::string::npos) {
-		std::string zokusei = tag_.substr(0, position);
-		if ("Boss" == zokusei) {
-			particle->SetEmitPattern(5);
-		}
-	}
+	//// 敵のクラスターである場合
+	//size_t position = tag_.find(":");
+	//if (position != std::string::npos) {
+	//	std::string zokusei = tag_.substr(0, position);
+	//	if ("Boss" == zokusei) {
+	//		particle->SetEmitPattern(5);
+	//	}
+	//}
 
-	breakPartice->Initialize(ModelManager::GetModel("Plane"));
-	breakPartice->SetGPUParticleSystem(gpuParticle_);
+	//breakPartice->Initialize(ModelManager::GetModel("Plane"));
+	//breakPartice->SetGPUParticleSystem(gpuParticle_);
 
 	// リストに追加
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
-	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
+	//gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
 	std::string name = bullet->GetTag() + "Break";
 	//gpuParticle_->CreateEmitter(std::move(breakPartice), name);
 	units_.push_back(std::move(bullet));	// 弾
@@ -138,10 +138,10 @@ void IBulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
 	std::unique_ptr<IBullet> bullet = builder.Build(type);
 	// 軌跡の管理
 	std::unique_ptr<BulletTrail> trailInstance = std::make_unique<BulletTrail>(bullet.get());
-	// 移動のパーティクル
-	std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
-	// 壊れた時のパーティクル
-	std::unique_ptr<BulletParticle::BreakEffect> breakPartice = std::make_unique<BulletParticle::BreakEffect>();
+	//// 移動のパーティクル
+	//std::unique_ptr<BulletParticle::MoveEffect> particle = std::make_unique<BulletParticle::MoveEffect>();
+	//// 壊れた時のパーティクル
+	//std::unique_ptr<BulletParticle::BreakEffect> breakPartice = std::make_unique<BulletParticle::BreakEffect>();
 
 	// トレイル
 	trailInstance->SetLength(global->GetValue<int32_t>("BossTrackingBullet", "TrailSaveFrame"));
@@ -161,29 +161,29 @@ void IBulletCluster::AddBullet(const BulletBuilder& builder, BulletType type)
 
 	// 弾
 	bullet->SetTrail(trailInstance.get());
-	bullet->SetBreakEmitter(breakPartice.get());
+	//bullet->SetBreakEmitter(breakPartice.get());
 
-	// パーティクル
-	particle->Initialize(ModelManager::GetModel("Plane"));
-	particle->SetGPUParticleSystem(gpuParticle_);
-	particle->SetBullet(bullet.get());
-	particle->SetTrail(trailInstance.get());
+	//// パーティクル
+	//particle->Initialize(ModelManager::GetModel("Plane"));
+	//particle->SetGPUParticleSystem(gpuParticle_);
+	//particle->SetBullet(bullet.get());
+	//particle->SetTrail(trailInstance.get());
 
-	// 敵のクラスターである場合
-	size_t position = tag_.find(":");
-	if (position != std::string::npos) {
-		std::string zokusei = tag_.substr(0, position);
-		if ("Boss" == zokusei) {
-			particle->SetEmitPattern(5);
-		}
-	}
+	//// 敵のクラスターである場合
+	//size_t position = tag_.find(":");
+	//if (position != std::string::npos) {
+	//	std::string zokusei = tag_.substr(0, position);
+	//	if ("Boss" == zokusei) {
+	//		particle->SetEmitPattern(5);
+	//	}
+	//}
 
-	breakPartice->Initialize(ModelManager::GetModel("Plane"));
-	breakPartice->SetGPUParticleSystem(gpuParticle_);
+	//breakPartice->Initialize(ModelManager::GetModel("Plane"));
+	//breakPartice->SetGPUParticleSystem(gpuParticle_);
 
 	// リストに追加
 	trailManager_->AddTrail(std::move(trailInstance));	// 軌跡
-	gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
+	//gpuParticle_->CreateEmitter(std::move(particle), bullet->GetTag()); // エミッター
 	std::string name = bullet->GetTag() + "Break";
 	units_.push_back(std::move(bullet));	// 弾
 }

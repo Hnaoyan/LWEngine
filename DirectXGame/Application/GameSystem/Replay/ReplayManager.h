@@ -18,6 +18,7 @@ public: // メンバ
 	void RecordFrame(KeyConfigManager* keyManager);
 	// 外部へ書き出し
 	void ExportReplay(const std::string& fileName);
+	void ExportReplay();
 	// 外部から書き込み
 	void ImportReplay();
 	// コンテナの初期化
@@ -33,6 +34,13 @@ public: // メンバ
 		return replayDatas_[num];
 	}
 
+	// リプレイの記録準備（スタート
+	void RecordSetUp();
+	void ReplaySetUp();
+	int32_t GetReplayFrame() { return replayNowFrame_; }
+	bool IsReplayNow() { return isReplayNow_; }
+	bool IsReplayEnd() { return isReplayEnd_; }
+	void ReplayCount();
 private:
 	// ディレクトリパス
 	std::string directoryPath_;
@@ -41,10 +49,14 @@ private:
 	// レコーディング中か
 	bool isRecord_ = false;
 	// 出力用の名前
-	char exportName_[256] = "";
+	char exportName_[256] = "Replay";
 	// 入力用の名前
-	char importName_[256] = "";
+	char importName_[256] = "Replay";
 	// 現在のフレーム番号
-	uint32_t nowFrame_;
-
+	int32_t recordNowFrame_;
+	// 現在リプレイを再生しているか？
+	bool isReplayNow_ = false;
+	bool isReplayEnd_ = false;
+	// リプレイ中の現在のフレーム
+	int32_t replayNowFrame_ = 0;
 };

@@ -11,7 +11,17 @@ class IBullet : public InstancedUnit
 {
 public:
 	static uint32_t sSerialNumber;
+
+	~IBullet() override {
+		trail_ = nullptr;
+		object_ = nullptr;
+	}
+private:
+	// シリアル番号
 	uint32_t serialNumber_ = 0u;
+	// ダメージ量
+	float damageRatio_ = 1.0f;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -36,32 +46,29 @@ public:
 protected:
 	// コライダー
 	Sphere collider_;
-	// 速度
-	Vector3 velocity_ = {};
-	// 生成時の座標
-	Vector3 generatePosition_{};
 	// タグ
 	std::string tag_;
+	// 速度
+	Vector3 velocity_ = {};
 	// 加速度ベクトル
 	Vector3 accelerate_ = {};
 	// 軌跡
 	BulletTrail* trail_ = nullptr;
-	// ステートマシン
-	std::unique_ptr<BulletStateMachine> stateMachine_;
 	// 対象オブジェクト
 	IGameObject* object_ = nullptr;
+
 
 public: // アクセッサ
 	std::string GetTag() const { return tag_; }
 	EulerTransform GetTransform() const { return transform_; }
-	Vector3 GetGeneratePosition() const { return generatePosition_; }
 	Vector3 GetVelocity() const { return velocity_; }
 	Vector3 GetAccelerate() const { return accelerate_; }
 
 	Sphere* GetCollider() { return &collider_; }
 	IGameObject* GetTarget() { return object_; }
+	float DamageRatio() const { return damageRatio_; }
 
-
+	void SetDamageRatio(const float& ratio) { damageRatio_ = ratio; }
 	void SetTrail(BulletTrail* trail) { trail_ = trail; }
 	void SetBreakEmitter(GPUParticleEmitter* emitter) { breakEmitter_ = emitter; }
 	void SetGameObject(IGameObject* object) { object_ = object; }
@@ -69,7 +76,6 @@ public: // アクセッサ
 	void SetVelocity(const Vector3& velocity) { velocity_ = velocity; }
 	void SetAccelerate(const Vector3& accelerate) { accelerate_ = accelerate; }
 
-	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 private:
 	// 壊れるときのパーティクルのエミッター（今は使えない
 	GPUParticleEmitter* breakEmitter_ = nullptr;

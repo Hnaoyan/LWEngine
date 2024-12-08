@@ -51,4 +51,6 @@ public:
 	static Quaternion MakeRotateDirect(const Vector3& direct);
 
 	static Quaternion DirectionToDirection(const Vector3& from, const Vector3& to);
+
+	//static Quaternion FromEuler(const Vector3& euler);
 };

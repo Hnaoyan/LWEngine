@@ -3,6 +3,9 @@
 #include "Barrier/BossBarrier.h"
 #include "BossSystem.h"
 
+/// <summary>
+/// システム管理
+/// </summary>
 class BossFacade
 {
 public:

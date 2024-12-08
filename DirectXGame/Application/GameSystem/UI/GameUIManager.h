@@ -3,6 +3,7 @@
 #include <vector>
 
 class GameObjectManager;
+class GameSystem;
 
 /// <summary>
 /// オブジェクトに依存しないUI・UIのグローバル変数管理クラス
@@ -10,10 +11,12 @@ class GameObjectManager;
 class GameUIManager
 {
 public:
-	GameUIManager();
+	GameUIManager(GameSystem* gameSystem);
 	void Initialize();
 	void Draw(GameObjectManager* gameObjectManager);
 
+	void SetIsHudHide(bool isHide) { isHUDHide_ = isHide; }
+	bool IsHUDHide() { return isHUDHide_; }
 private:
 	// HUD
 	std::vector<GameUI::UIData> hudElements_;
@@ -22,6 +25,16 @@ private:
 
 	GameUI::TextUI gameClear_ = {};
 	GameUI::TextUI gameOver_ = {};
+
+	GameUI::TextUI titleBack_ = {};
+	GameUI::TextUI replay_ = {};
+
+	GameUI::TextUI cameraChange_ = {};
+
+	GameSystem* gameSystem_ = nullptr;
+
+	// HUDを消しておくかのフラグ
+	bool isHUDHide_ = false;
 
 private:
 	/// <summary>

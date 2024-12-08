@@ -7,6 +7,9 @@
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/LevelEditor/LevelLoader.h"
 
+/// <summary>
+/// タイトルシーン
+/// </summary>
 class TitleScene : public IScene
 {
 public:

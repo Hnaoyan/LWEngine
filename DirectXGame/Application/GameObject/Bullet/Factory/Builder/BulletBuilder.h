@@ -4,6 +4,8 @@
 
 #include <optional>
 
+class IBulletCluster;
+
 /// <summary>
 /// 生成のパラメータ設定クラス（ビルダークラス
 /// </summary>
@@ -22,7 +24,7 @@ public: // 設定
 	}
 	// 方向設定
 	BulletBuilder& SetDirect(const Vector3& direct) { 
-		direct_ = direct;
+		direct_ = Vector3::Normalize(direct);
 		return *this;
 	}
 	// 速度設定
@@ -37,6 +39,14 @@ public: // 設定
 	}
 	BulletBuilder& SetIsRandStraight(bool flag) {
 		isRandStraight_ = flag;
+		return *this;
+	}
+	BulletBuilder& SetCluster(IBulletCluster* cluster) {
+		cluster_ = cluster;
+		return *this;
+	}
+	BulletBuilder& SetParentAttribute(int32_t attribute) {
+		parentAttribute_ = attribute;
 		return *this;
 	}
 	//// 直進の時間設定
@@ -70,5 +80,9 @@ private:
 	bool isRandStraight_ = false;
 	// 直進のタイマーの幅
 	std::optional<float> straightRandomer_;
+	// 
+	IBulletCluster* cluster_ = nullptr;
+	// 親の属性（０なら敵・１ならプレイヤー
+	int32_t parentAttribute_ = 0u;
 
 };

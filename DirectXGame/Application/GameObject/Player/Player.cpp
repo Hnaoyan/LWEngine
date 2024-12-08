@@ -2,9 +2,12 @@
 #include "imgui.h"
 #include "../GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
+#include "Module/State/PlayerStateList.h"
 
+#include "Engine/Collision/CollisionManager.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/LwLib/Ease/Ease.h"
 
@@ -27,6 +30,7 @@ void Player::Initialize(Model* model)
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 	// トランスフォーム
+	worldTransform_.transform_.rotate = {};
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
 	worldTransform_.UpdateMatrix();
 	// コライダー
@@ -70,6 +74,7 @@ void Player::Draw(ModelDrawDesc desc)
 {
 	// マテリアル更新
 	model_->GetMaterial()->Update();
+	material_->Update();
 	// デスクの設定
 	DrawDesc::LightDesc lightDesc{};
 	DrawDesc::ModelDesc modelDesc{};
@@ -78,11 +83,16 @@ void Player::Draw(ModelDrawDesc desc)
 	lightDesc.spotLight = desc.spotLight;
 	modelDesc.SetDesc(model_);
 	modelDesc.worldTransform = &facadeSystem_->GetAnimation()->bodyTransform_;
-	material_->Update();
 	modelDesc.material = material_.get();
+
+
 	// プレイヤーの描画
 	if (!isInvisible_) {
+		// 本体の描画
 		ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+		//facadeSystem_->GetDudgeManager()->Draw(desc);
+
+		facadeSystem_->GetUI()->Draw(desc);
 	}
 
 	// パーティクル
@@ -93,36 +103,63 @@ void Player::ImGuiDraw()
 {
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
-	if (ImGui::TreeNode("TrailTexture")) {
-		ImGui::InputText("TexturePath", path, 32);
-		std::string debugText = "Text:" + filePath;
+	//if (ImGui::TreeNode("TrailTexture")) {
+	//	ImGui::InputText("TexturePath", path, 32);
+	//	std::string debugText = "Text:" + filePath;
 
-		if (ImGui::Button("SavePath")) {
-			filePath = "Resources/";
-			filePath += path;
-			filePath += ".png";
-			BulletTrail::sTexture = TextureManager::Load(filePath);
-		}
+	//	if (ImGui::Button("SavePath")) {
+	//		filePath = "Resources/";
+	//		filePath += path;
+	//		filePath += ".png";
+	//		BulletTrail::sTexture = TextureManager::Load(filePath);
+	//	}
 
-		ImGui::Text(debugText.c_str());
-		if (ImGui::Button("TrailUV")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
-		}
-		if (ImGui::Button("Noise1")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
-		}
-		if (ImGui::Button("BlackTrail")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/TestSmoke.png");
-		}
-		if (ImGui::Button("WhiteTrail")) {
-			BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");
-		}
-		ImGui::TreePop();
-	}
+	//	ImGui::Text(debugText.c_str());
+	//	if (ImGui::Button("TrailUV")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
+	//	}
+	//	if (ImGui::Button("Noise1")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
+	//	}
+	//	if (ImGui::Button("BlackTrail")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/TestSmoke.png");
+	//	}
+	//	if (ImGui::Button("WhiteTrail")) {
+	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//---基本情報---//
+	ImGui::SeparatorText("StatusInfo");
+	NowState();	// ステート
+	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 200), ImGuiWindowFlags_NoTitleBar);
+	ImGui::Checkbox("IsInvisible", &isInvisible_);
+	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+	ImGui::DragFloat3("Velocity", &velocity_.x);
+	ImGui::Text("IsGround:%d", this->isGround_);
+	bool isInv = facadeSystem_->GetDudgeManager()->IsInvisibleActive();
+	ImGui::Text("IsInvisible:%d", isInv);
+
+	// 
+	ImGui::DragFloat("InvisibleFrame", &invisibleFrame_, 0.01f);
+	ImGui::DragFloat("EnergyRecover", &energyRecover_, 0.01f);
+	ImGui::DragFloat("TrackCancel", &trackCancelDistance, 0.01f);
+
+	ImGui::EndChild();
 
 	// システムのタブ
 	if (ImGui::BeginTabBar("System"))
 	{
+		if (ImGui::BeginTabItem("Dodge")) {
+			facadeSystem_->GetDudgeManager()->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
+		if (ImGui::BeginTabItem("Health")) {
+			facadeSystem_->GetHealth()->ImGuiDraw();
+			ImGui::EndTabItem();
+		}
 		if (ImGui::BeginTabItem("Aim")) {
 			oparationManager_.GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
@@ -136,7 +173,7 @@ void Player::ImGuiDraw()
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Energy")) {
-			//ImGui::DragFloat("Energy", &energyManager_.energy_.currentEnergy);
+			facadeSystem_->GetEnergy()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("UI")) {
@@ -144,6 +181,7 @@ void Player::ImGuiDraw()
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Material")) {
+			ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
 			ImGui::DragFloat("MaterialShininess", &material_->shininess_, 0.01f);
 			ImGui::DragFloat("Threshold", &material_->threshold_, 0.01f, 0.0f, 1.0f);
 			ImGui::EndTabItem();
@@ -151,28 +189,6 @@ void Player::ImGuiDraw()
 
 		ImGui::EndTabBar();
 	}
-	//---基本情報---//
-	ImGui::SeparatorText("StatusInfo");
-	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(250, 200), ImGuiWindowFlags_NoTitleBar);
-	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
-	ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-	ImGui::DragFloat4("ModelColor", &material_->color_.x, 0.01f);
-	//collider_.SetRadius(worldTransform_.transform_.scale * 0.75f);
-	ImGui::DragFloat3("Velocity", &velocity_.x);
-	ImGui::Text("IsGround:%d", this->isGround_);
-	ImGui::Checkbox("IsInvisible", &isInvisible_);
-	//if (ImGui::Button("KnockBack")) {
-	//	isKnock_ = true;
-	//	Vector3 direct = worldTransform_.GetWorldPosition() - camera_->transform_.translate;
-	//	direct = Vector3::Normalize(direct);
-	//	direct *= 10.0f;
-	//	velocity_ = { direct.x,0.0f,direct.z };
-	//}
-	//if (ImGui::Button("KnockReset")) {
-	//	isKnock_ = false;
-	//}
-	ImGui::EndChild();
 
 	ImGui::End();
 }
@@ -194,29 +210,38 @@ void Player::OnCollision(ColliderObject target)
 
 		// 座標修正関数
 		CollisionCorrect(type, min, max);
-
-		//if (type == ICollider::CollisionType3D::kBottomFace) {
-		//	correctPos.y = (*terrain)->GetWorldPosition().y + (*terrain)->GetTransform().scale.y + worldTransform_.transform_.scale.y;
-		//	worldTransform_.transform_.translate.y = correctPos.y;
-		//}
-
 	}
-
-	//else if (std::holds_alternative<BossSystemContext::NormalBullet*>(target)) {
-	//	facadeSystem_->GetHealth()->TakeDamage();
-	//}
 	else if (std::holds_alternative<IBullet*>(target)) {
-		facadeSystem_->GetHealth()->TakeDamage();
-	}
-	//else if (std::holds_alternative<BossSystemContext::TrackingBullet*>(target)) {
-	//	facadeSystem_->GetHealth()->TakeDamage();
-	//}
+		// ジャスト回避処理
+		if (facadeSystem_->GetDudgeManager()->IsActive() && !facadeSystem_->GetDudgeManager()->IsInvisibleActive()) 
+		{
+			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame_);
+			facadeSystem_->GetEnergy()->RecoverGage(energyRecover_);
+			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_ + 45.0f);
+		}
+		// ジャスト回避後の猶予
+		else if (facadeSystem_->GetDudgeManager()->IsInvisibleAfter()) {
 
+		}
+		// ダメージを受ける処理
+		else {
+			facadeSystem_->GetHealth()->TakeDamage();
+		}
+	}
 }
 
 void Player::UISpriteDraw()
 {
 	facadeSystem_->GetUI()->Draw();
+}
+
+void Player::SetCollier(CollisionManager* collisionManager)
+{
+	collisionManager->ListRegist(&collider_);
+	collisionManager->ListRegist(footCollider_.GetCollider());
+	if (facadeSystem_->GetDudgeManager()->IsActive()) {
+		collisionManager->ListRegist(facadeSystem_->GetDudgeManager()->GetCollider());
+	}
 }
 
 void Player::InitializeGlobalValue()
@@ -225,14 +250,39 @@ void Player::InitializeGlobalValue()
 	//---プレイヤー基本情報---//
 	std::string groupName = "Player";
 	instance->CreateGroup(groupName);
-	instance->AddValue(groupName, "DashPower", 0.0f);
+	// ダッシュ関係
+	instance->AddValue(groupName, "DashPower", float(0.0f));
+	instance->AddValue(groupName, "QuickBoostEndTime", float(40.0f));
+	instance->AddValue(groupName, "BoostDashPower", float(0.0f));
+	instance->AddValue(groupName, "BoostEndTime", float(30.0f));
+	instance->AddValue(groupName, "DashCooltime", float(30.0f));
+	instance->AddValue(groupName, "DashExceptTime", float(12.0f));
+
+	// エネルギー関係
 	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
 	instance->AddValue(groupName, "VelocityDecay", float(0.2f));
 	instance->AddValue(groupName, "ShotDuration", float(30.0f));
 	instance->AddValue(groupName, "LockDuration", float(25.0f));
-	instance->AddValue(groupName, "QuickBoostEndTime", float(40.0f));
 	instance->AddValue(groupName, "HitPoint", int32_t(20));
 	instance->AddValue(groupName, "AimOffset", Vector3(0.0f, 0.0f, 50.0f));
+	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));
+	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));
+	instance->AddValue(groupName, "FallGravity", float(-3.0f));
+
+	//---（仮）弾---//
+	groupName = "Bullet";
+	// 弾本体
+	instance->AddValue(groupName, "InferiorColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "SuperirorColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "GeniusColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "ContainerColor", Vector4(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "NormalColor", Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+	// 軌跡
+	instance->AddValue(groupName, "InferiorTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "SuperirorTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "GeniusTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "ContainerTrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "NormalTrailColor", Vector3(0.2f, 0.2f, 0.2f));
 
 	//---プレイヤーの追従弾---//
 	groupName = "PlayerTrackingBullet";
@@ -247,6 +297,44 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
+}
+
+void Player::NowState()
+{
+	PlayerState horizon = stateManager_->GetHorizontal()->GetVariant();
+	PlayerState vertical = stateManager_->GetVertical()->GetVariant();
+	std::string horizonName;
+	std::string verticalName;
+	if (std::holds_alternative<AssendingState*>(vertical)) {
+		verticalName = "Assending";
+	}
+	else if (std::holds_alternative<FallingState*>(vertical)) {
+		verticalName = "Falling";
+	}
+	else if (std::holds_alternative<IdleVertical*>(vertical)) {
+		verticalName = "Idle";
+	}
+	else if (std::holds_alternative<JumpingState*>(vertical)) {
+		verticalName = "Jumping";
+	}
+
+	//if (std::holds_alternative<BoostState*>(horizon)) {
+	//	horizonName = "Boost";
+	//}
+	//else if (std::holds_alternative<IdleHorizontal*>(horizon)) {
+	//	horizonName = "Idle";
+	//}
+	//else if (std::holds_alternative<MovingState*>(horizon)) {
+	//	horizonName = "Move";
+	//}
+	//else if (std::holds_alternative<QuickBoostState>(horizon)) {
+	//	horizonName = "Quick";
+	//}
+	verticalName = "VerticalState:" + verticalName;
+	horizonName = "HorizontalState:" + horizonName;
+
+	ImGui::Text(verticalName.c_str());
+	ImGui::Text(horizonName.c_str());
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)

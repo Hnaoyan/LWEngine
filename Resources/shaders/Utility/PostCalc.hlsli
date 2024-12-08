@@ -152,3 +152,16 @@ float32_t3 HSVToRGB(float32_t3 hsv)
     return float32_t3(r, g, b);
 }
 
+float32_t Easing(float32_t start, float32_t end, float32_t factor)
+{
+    return float32_t((start * (1.0f - factor)) + (end * factor));
+}
+
+float32_t3 Easing(float32_t3 start,float32_t3 end,float32_t factor)
+{
+    float32_t3 result;
+    result.x = Easing(start.x, end.x, factor);
+    result.y = Easing(start.y, end.y, factor);
+    result.z = Easing(start.z, end.z, factor);
+    return result;
+}

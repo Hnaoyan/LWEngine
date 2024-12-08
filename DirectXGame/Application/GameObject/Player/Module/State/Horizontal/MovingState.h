@@ -1,5 +1,6 @@
 #pragma once
 #include "../IPlayerState.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 class MovingState : public IPlayerState
 {
@@ -10,5 +11,6 @@ public: // 継承部
 	void InputHandle() override;
 
 private:
+
 
 };

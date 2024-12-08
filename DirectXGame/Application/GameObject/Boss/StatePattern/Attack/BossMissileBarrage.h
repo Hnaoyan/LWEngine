@@ -1,6 +1,6 @@
 #pragma once
 #include "../StateMachine.h"
-#include "Engine/LwLib/Utillity/FrameTimer.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 namespace BossState
 {

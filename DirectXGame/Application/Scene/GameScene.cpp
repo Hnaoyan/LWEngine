@@ -15,11 +15,11 @@ void GameScene::Initialize()
 #pragma region インスタンス化
 	cameraManager_ = std::make_unique<CameraManager>();
 	gpuParticleManager_ = std::make_unique<GPUParticleManager>();
-	uiManager_ = std::make_unique<GameUIManager>();
 
 	collisionManager_ = std::make_unique<CollisionManager>();
-	gameObjectManager_ = std::make_unique<GameObjectManager>();
 	gameSystem_ = std::make_unique<GameSystem>();
+	gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
+	uiManager_ = std::make_unique<GameUIManager>(gameSystem_.get());
 #pragma endregion
 
 #pragma region システム
@@ -33,28 +33,40 @@ void GameScene::Initialize()
 #pragma endregion
 	// 準備完了
 	isSceneReady_ = true;
+	
 
 	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 	cameraManager_->Initialize(gameObjectManager_.get());
+
+#ifdef RELEASE
+	stateRequest_ = GameSceneState::kRecord;
+	//nowState_ = GameSceneState::kGamePlay;
+#endif // RELEASE
+
+
 }
 
 void GameScene::Update()
 {
-	
-
 #ifdef IMGUI_ENABLED
 	if (input_->TriggerKey(DIK_UPARROW)) {
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
 	// シーンの切り替え処理
-	if (gameObjectManager_->IsGameOver() || gameObjectManager_->IsGameClear()) {
+	if (gameObjectManager_->IsSceneChange()) {
 		sceneManager_->ChangeScene("TITLE");
-		return;
 	}
 
-	// ライトの更新
-	LightingUpdate();
+	if (gameObjectManager_->IsSceneReplay()) {
+		// プレイの保存
+		gameSystem_->GetReplayManager()->ExportReplay();
+		// リプレイモードに移行
+		stateRequest_ = GameSceneState::kReplay;
+	}
+	// ステートの切り替わり処理
+	ChangeState();
+
 	//---ゲームのシステム更新---//
 	gameSystem_->Update();
 	gameObjectManager_->Update();
@@ -62,6 +74,8 @@ void GameScene::Update()
 	CollisionUpdate();
 	// カメラの更新
 	CameraUpdate();
+	// ライトの更新
+	LightingUpdate();
 
 	gpuParticleManager_->Update();
 
@@ -116,9 +130,6 @@ void GameScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
-	// ゲームの
-	gameObjectManager_->UIDraw();
-
 	// UI全般
 	uiManager_->Draw(gameObjectManager_.get());
 
@@ -136,38 +147,30 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 
 	ImGui::Begin("GameScene");
-
-	if (ImGui::Button("ReplayStart")) {
-		gameSystem_->GetReplayManager()->ImportReplay();
-		// インスタンス生成しなおし
-		gameObjectManager_ = std::make_unique<GameObjectManager>();
-		cameraManager_ = std::make_unique<CameraManager>();
-		//
-		gpuParticleManager_->DataReset();
-		// オブジェクト類の初期化
-		gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-		gameObjectManager_->GameSetUp();	// ゲームの準備
-		cameraManager_->Initialize(gameObjectManager_.get());
-		gameSystem_->LaunchReplay();
-	}
-
-	if (ImGui::BeginTabBar("PostEffect")) {
-		if (ImGui::BeginTabItem("Switch")) {
-			if (ImGui::Button("PostDefault")) {
-				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
-			}
-			if (ImGui::Button("PostBloom")) {
-				PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
-			}
-			ImGui::EndTabItem();
+	if (ImGui::TreeNode("Replayer")) {
+		if (ImGui::Button("Restart")) {
+			stateRequest_ = GameSceneState::kGameRestart;
 		}
-		if (ImGui::BeginTabItem("DashEffect")) {
-
-			ImGui::EndTabItem();
+		if (ImGui::Button("ReplayStart")) {
+			stateRequest_ = GameSceneState::kReplay;
 		}
-		ImGui::EndTabBar();
+		if (ImGui::Button("RecordingStart")) {
+			stateRequest_ = GameSceneState::kRecord;
+		}
+		if (ImGui::Button("RecordingEnd")) {
+			gameSystem_->GetReplayManager()->ExportReplay();
+		}
+		ImGui::TreePop();
 	}
+	ImGui::Separator();
 
+	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
+	Vector2 leftStick = GameSystem::sKeyConfigManager.GetKeyConfig()->leftStick;
+	ImGui::DragFloat2("left", &leftStick.x);
+	ImGui::DragFloat2("right", &rightStick.x);
+
+	ImGui::Text("");
+	// ライティング
 	if (ImGui::BeginTabBar("Lighting"))
 	{
 		float defaultSpeed = 0.01f;
@@ -217,11 +220,14 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Enemy", "EnemyBug");	// 雑魚敵
 	ModelManager::LoadNormalModel("BossEnemy", "Prizm");	// ボス
 	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
+	ModelManager::LoadNormalModel("PlayerOutline", "Robotto");	// コンボ用の枠モデル
 	ModelManager::LoadNormalModel("SkyDome", "SkyDome");	// 天球
 	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
+	ModelManager::LoadNormalModel("ColliderSphere", "sphere");	// ボスのバリア
 	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
 	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
+	ModelManager::LoadNormalModel("Plane", "plane");
 }
 
 void GameScene::LoadTexture()
@@ -241,20 +247,24 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));
 	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("PlayerDodgeGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("HPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
-	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/ClearText.png"));
-	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOver.png"));
+	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/GameClearText.png"));
+	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOverText.png"));
+	SpriteManager::LoadSprite("ResultTitleUI", TextureManager::Load("Resources/UI/TitleBackUI.png"));
+	SpriteManager::LoadSprite("ResultReplayUI", TextureManager::Load("Resources/UI/ReplayUI.png"));
+	SpriteManager::LoadSprite("CameraChangeUI", TextureManager::Load("Resources/UI/CameraChangeUI.png"));
 
 }
 
 void GameScene::CameraUpdate()
 {
 	// カメラの管理クラス
-	cameraManager_->Update();
+	cameraManager_->Update(gameSystem_.get());
 
 	// シーンで使用するカメラの更新
 	camera_.viewMatrix_ = cameraManager_->GetCamera()->viewMatrix_;
@@ -312,4 +322,55 @@ void GameScene::CollisionUpdate()
 
 	// 衝突処理
 	collisionManager_->CheckAllCollisions();
+}
+
+void GameScene::ChangeState()
+{
+	if (stateRequest_) {
+		nowState_ = stateRequest_.value();
+		switch (nowState_)
+		{
+		case GameSceneState::kWait:
+
+			break;
+		case GameSceneState::kGameRestart:
+			// オブジェクト類の初期化
+			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+			gameObjectManager_->GameSetUp();	// ゲームの準備
+			cameraManager_->Initialize(gameObjectManager_.get());
+			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			break;
+		case GameSceneState::kGamePlay:
+
+			break;
+		case GameSceneState::kReplay:
+			gameSystem_->GetReplayManager()->ImportReplay();
+			// UIを隠すフラグ
+			uiManager_->SetIsHudHide(true);
+			// ゲームオブジェクト生成
+			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
+			// オブジェクト類の初期化
+			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+			gameObjectManager_->GameSetUp();	// ゲームの準備
+			cameraManager_->Initialize(gameObjectManager_.get());
+			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			gameSystem_->LaunchReplay();
+			break;
+		case GameSceneState::kRecord:
+			// ゲームオブジェクト生成
+			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
+			// オブジェクト類の初期化
+			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+			gameObjectManager_->GameSetUp();	// ゲームの準備
+			cameraManager_->Initialize(gameObjectManager_.get());
+			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			gameSystem_->GetReplayManager()->RecordSetUp();	// 記録のスタート処理
+			break;
+		}
+
+		stateRequest_ = std::nullopt;
+	}
 }

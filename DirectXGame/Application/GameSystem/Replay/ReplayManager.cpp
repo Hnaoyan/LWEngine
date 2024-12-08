@@ -23,10 +23,10 @@ void ReplayManager::RecordFrame(KeyConfigManager* keyManager)
     saveData.keyConfigs = keyManager->GetPlayerKey();
     saveData.leftStick = keyManager->GetKeyConfig()->leftStick;
     saveData.rightStick = keyManager->GetKeyConfig()->rightStick;
-    saveData.frameNumber = int32_t(nowFrame_);
+    saveData.frameNumber = int32_t(recordNowFrame_);
     replayDatas_.push_back(saveData);
 
-    nowFrame_++;
+    recordNowFrame_++;
 }
 
 void ReplayManager::ExportReplay(const std::string& fileName)
@@ -65,6 +65,43 @@ void ReplayManager::ExportReplay(const std::string& fileName)
     // ファイルを閉じる
     file.close();
 
+}
+
+void ReplayManager::ExportReplay()
+{
+    // パス作成
+    std::string fullPath = CSVLoader::CreateFullPath(directoryPath_, exportName_);
+    // 書き込み用ファイル
+    std::ofstream file;
+    // 書き込み用に開く
+    file.open(fullPath);
+
+    if (!file.is_open()) {
+        return;
+    }
+
+    file << "// フレーム番号, 左スティックx.y, 右スティックx.y, キー\n";
+    file << "// ブースト, ダッシュ, ジャンプ, 長押しジャンプ, ロックオン, 通常射撃, 誘導射撃\n";
+
+    for (std::vector<ReplayData>::iterator it = replayDatas_.begin(); it != replayDatas_.end(); ++it)
+    {
+        // 値の入手
+        int32_t frame = (*it).frameNumber;
+        PlayerKey<bool> configs = (*it).keyConfigs;
+        Vector2 leftStick = (*it).leftStick;
+        Vector2 rightStick = (*it).rightStick;
+        // 書き込み
+        file << "FrameData," << frame << ", "
+            << leftStick.x << ", " << leftStick.y << ", " // 左スティック
+            << rightStick.x << ", " << rightStick.y << ", " // 右
+            << configs.boost << ", " << configs.quickBoost << ", "  // ダッシュ
+            << configs.jump << ", " << configs.pressJump << ", "    // ジャンプ
+            << configs.lockon << ", "   // ロックオン
+            << configs.shot << ", " << configs.homingShot << ", "   // 射撃系
+            << "\n";    // 改行
+    }
+    // ファイルを閉じる
+    file.close();
 }
 
 void ReplayManager::ImportReplay()
@@ -152,8 +189,29 @@ void ReplayManager::ImGuiDraw()
         ClearReplayData();
     }
 
-    if (ImGui::Button("StartReplay")) {
+}
 
+void ReplayManager::RecordSetUp()
+{
+    isRecord_ = true;
+    replayDatas_.clear();
+    recordNowFrame_ = 0;
+    isReplayEnd_ = false;
+}
+
+void ReplayManager::ReplaySetUp()
+{
+    isReplayNow_ = true;
+    replayNowFrame_ = 0;
+    isReplayEnd_ = false;
+}
+
+void ReplayManager::ReplayCount()
+{
+    replayNowFrame_++;
+    if (replayNowFrame_ >= GetReplayDataSize()) {
+        isReplayNow_ = false;
+        isReplayEnd_ = true;
+        replayNowFrame_ = 0;
     }
-
 }

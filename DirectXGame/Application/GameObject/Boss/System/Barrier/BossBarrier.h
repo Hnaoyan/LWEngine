@@ -8,6 +8,9 @@ class Boss;
 
 namespace BossSystemContext
 {
+	/// <summary>
+	/// バリア管理クラス
+	/// </summary>
 	class BarrierManager
 	{
 	private:
@@ -22,6 +25,9 @@ namespace BossSystemContext
 		struct AnimParameter {
 			FrameTimer vanishTimer;	 // 破壊演出用タイマー
 			FrameTimer reappearTimer; // 修復演出用タイマー
+			//---ディゾルブ---//
+			uint32_t shaveTexture;	// 削れている表現用のテクスチャ
+			uint32_t recoveryTexture;	// 復活時の表現用のテクスチャ
 		};
 
 	public:
@@ -39,7 +45,7 @@ namespace BossSystemContext
 		// ダメージ
 		void DamageProcess(float damage);
 		// 壊れる
-		void BarrierBreak();
+		void BarrierBreakExcept();
 		
 	private:
 		//
@@ -54,7 +60,7 @@ namespace BossSystemContext
 		uint32_t textureHandle_ = 0u;
 		Model* model_ = nullptr;
 		std::unique_ptr<Material> material_;
-
+		bool isInvisible_ = true;
 	public: // アクセッサ
 		bool IsActive() { return param.isActive; }
 		bool IsShattered() { return param.isShattered; }

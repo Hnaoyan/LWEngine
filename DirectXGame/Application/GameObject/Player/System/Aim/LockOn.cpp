@@ -14,6 +14,8 @@ void PlayerContext::LockOn::Initialize(Player* player)
 	data.minDistanceZ = 5.0f;
 	data.maxDistanceZ = 400.0f;
 
+	// 対象の初期化
+	target_ = nullptr;
 }
 
 void PlayerContext::LockOn::Update()

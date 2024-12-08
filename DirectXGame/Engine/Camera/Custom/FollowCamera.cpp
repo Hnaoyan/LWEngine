@@ -12,10 +12,8 @@ void FollowCamera::Initialize()
 	// 初期化
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,3.0f,-10.0f };
-}
+	destinationAngle_ = {};
 
-void FollowCamera::Update()
-{
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	rRotateSpeed_ = instance->GetValue<Vector2>("Camera", "RotateSpeed");
 	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
@@ -23,6 +21,10 @@ void FollowCamera::Update()
 	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
 	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 
+}
+
+void FollowCamera::Update()
+{
 	// コントローラー
 	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
 
@@ -44,12 +46,7 @@ void FollowCamera::Update()
 			// 追尾してるオブジェクトの座標
 			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
 			sub = Vector3::Normalize(sub);
-			if (isAtan_) {
-				destinationAngle_.y = std::atan2f(sub.x, sub.z);
-			}
-			else {
-				destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
-			}
+			destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 			// Y軸角度
 			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
 			transform_.rotate.y = destinationAngle_.y;

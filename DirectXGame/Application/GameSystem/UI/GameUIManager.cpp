@@ -3,8 +3,9 @@
 #include "Engine/2D/SpriteManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
+#include "Application/GameSystem/GameSystem.h"
 
-GameUIManager::GameUIManager()
+GameUIManager::GameUIManager(GameSystem* gameSystem)
 {
 	InitializeGlobalValue();
 	// 操作関係のHUD
@@ -19,6 +20,17 @@ GameUIManager::GameUIManager()
 
 	gameOver_.sprite = SpriteManager::GetSprite("GameOverText");
 	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
+
+	titleBack_.sprite = SpriteManager::GetSprite("ResultTitleUI");
+	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "TitleExceptUIPos");
+
+	replay_.sprite = SpriteManager::GetSprite("ResultReplayUI");
+	replay_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ReplayExceptUIPos");
+
+	cameraChange_.sprite = SpriteManager::GetSprite("CameraChangeUI");
+	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
+
+	gameSystem_ = gameSystem;
 }
 
 void GameUIManager::Initialize()
@@ -28,6 +40,27 @@ void GameUIManager::Initialize()
 
 void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 {
+#ifdef IMGUI_ENABLED
+	gameClear_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ClearTextPos");
+	gameOver_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "OverTextPos");
+	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "TitleExceptUIPos");
+	replay_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "ReplayExceptUIPos");
+	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
+#endif // IMGUI_ENABLED
+
+	// オブジェクトのUI
+	gameObjectManager->UIDraw();
+
+	// リプレイ中なら非表示に
+	if (gameSystem_->IsReplayMode()) {
+		titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
+		titleBack_.sprite->SetPosition(titleBack_.position);
+		titleBack_.sprite->Draw();
+
+		cameraChange_.sprite->SetPosition(cameraChange_.position);
+		cameraChange_.sprite->Draw();
+		return;
+	}
 	// ゲームオーバー・クリアの描画
 	if (gameObjectManager->IsUIGameClear()) {
 		gameClear_.sprite->SetPosition(gameClear_.position);
@@ -37,6 +70,20 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		gameOver_.sprite->SetPosition(gameOver_.position);
 		gameOver_.sprite->Draw();
 	}
+
+	if (gameObjectManager->IsChange()) {
+		titleBack_.sprite->SetPosition(titleBack_.position);
+		titleBack_.sprite->Draw();
+		replay_.sprite->SetPosition(replay_.position);
+		replay_.sprite->Draw();
+	}
+#ifdef _DEBUG
+	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
+	titleBack_.sprite->SetPosition(titleBack_.position);
+	titleBack_.sprite->Draw();
+	cameraChange_.sprite->SetPosition(cameraChange_.position);
+	cameraChange_.sprite->Draw();
+#endif // _DEBUG
 
 	// HUD関係
 	for (std::vector<GameUI::UIData>::iterator it = hudElements_.begin(); it != hudElements_.end(); ++it) 
@@ -76,6 +123,8 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "EnergySize", Vector2(24.0f, 280.0f));	// サイズ
 	globalVariable->AddValue(groupName, "EnergySizeRatio", Vector2(0.75f, 0.95f));	// サイズのレート
 	//globalVariable->AddValue(groupName, "")
+	globalVariable->AddValue(groupName, "ComboTimerColor", Vector4(0.3f, 1.0f, 0.3f, 0.95f));	// 色
+	globalVariable->AddValue(groupName, "ComboTimerSize", Vector2(24.0f, 280.0f));	// サイズ
 
 	groupName = "HUD";
 
@@ -87,4 +136,9 @@ void GameUIManager::InitializeGlobalValue()
 	globalVariable->AddValue(groupName, "ClearTextPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 	globalVariable->AddValue(groupName, "OverTextPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
 
+	globalVariable->AddValue(groupName, "TitleExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	globalVariable->AddValue(groupName, "ReplayExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	
+	globalVariable->AddValue(groupName, "NowReplayTitleExceptUIPos", Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
+	globalVariable->AddValue(groupName, "CameraChangeUIPos", Vector2(1280.0f / 2.0f + 200.0f, 720.0f));
 }

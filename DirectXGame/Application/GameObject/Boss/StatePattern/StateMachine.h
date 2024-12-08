@@ -26,6 +26,8 @@ namespace BossState {
 	class MissileAttackState;
 	class SystemDownState;
 	class MissileBarrageState;
+	class MissileWaveState;
+	class MissileContainerState;
 }
 
 namespace BossSystemContext {
@@ -38,7 +40,10 @@ namespace BossSystemContext {
 namespace BossState
 {
 	// クラスのリスト
-	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*, WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*, SystemDownState*, MissileBarrageState*>;
+	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*,
+		WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*,
+		SystemDownState*, MissileBarrageState*, MissileWaveState*,
+		MissileContainerState*>;
 
 	/// <summary>
 	/// 基のステートクラス
@@ -117,7 +122,7 @@ namespace BossState
 
 	};
 
-	// ミサイルの攻撃
+	// ミサイルの一斉射撃
 	class MissileAttackState : public IState
 	{
 	public:
@@ -131,7 +136,7 @@ namespace BossState
 	private:
 		void MissileAttack();
 		void GenerateMissile(const Matrix4x4& rotateMatrix, TrackingAttribute type);
-
+		void GenerateMissile(const Vector3& direct, TrackingAttribute type);
 	private:
 		Vector3 bulletDirect_ = {};
 

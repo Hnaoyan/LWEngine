@@ -16,12 +16,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp" />
@@ -29,6 +32,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\StateMachine\BulletStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Straight\TrackingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingState\Tracking\TrackingMoveState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.cpp" />
@@ -37,6 +41,8 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Camera\CameraManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\GameObjectManager.cpp" />
@@ -137,6 +143,8 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Core\ICamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.cpp" />
@@ -163,6 +171,7 @@
     <ClCompile Include="DirectXGame\Engine\PostEffect\PostEffectRender.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneFactory\SceneFactory.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\SceneManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Utility\StringConverter.cpp" />
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\WindowAPI\WindowAPI.cpp" />
@@ -175,6 +184,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemLists.h" />
@@ -199,6 +210,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h" />
@@ -211,6 +223,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletParticleComponent.h" />
@@ -228,8 +241,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h" />
@@ -260,6 +275,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\GameObjectManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\Replay\ReplayManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\GameUIManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\UIStructs.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
@@ -314,6 +330,8 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FocusCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\OrbitCamera.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.h" />
@@ -357,6 +375,7 @@
     <ClInclude Include="DirectXGame\Engine\Scene\ScenePaths.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Engine\LwLib\DeltaTime.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\SafeDelete.h" />
     <ClInclude Include="DirectXGame\Engine\Utility\Singleton.h" />
@@ -535,6 +554,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\BloomVignetteBlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\BoxFilterPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -573,6 +600,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Pixel</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\GrayscaleBloomPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\GrayscalePS.hlsl">
@@ -712,6 +747,7 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\Trail\Trail.hlsli" />
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
+    <None Include="Resources\shaders\Utility\MathCalc.hlsli" />
     <None Include="Resources\shaders\Utility\PostCalc.hlsli" />
     <None Include="Resources\shaders\Utility\Random.hlsli" />
   </ItemGroup>

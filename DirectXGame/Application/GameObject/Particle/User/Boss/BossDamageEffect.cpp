@@ -23,7 +23,7 @@ void BossParticle::DamageEffect::Update()
 	emitter_.cMap_->emit = 0;
 	// ボス
 	if (boss_) {
-		emitter_.cMap_->translate = boss_->worldTransform_.GetWorldPosition();
+		emitter_.cMap_->translate = boss_->worldTransform_.GetWorldPosition() + boss_->HitEffectPosition();
 		if (boss_->GetParticleManager()->IsDamage()) {
 			perFrame_.cMap_->time += kDeltaTime;
 			emitter_.cMap_->emit = 1;

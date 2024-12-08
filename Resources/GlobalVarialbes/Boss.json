@@ -1,6 +1,11 @@
 {
     "Boss": {
-        "BarrierHP": 4.0,
+        "BarrierDissolveColor": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "BarrierHP": 20.0,
         "BarrierReappearFrame": 30.0,
         "BarrierScale": [
             18.0,
@@ -12,6 +17,11 @@
             6.0,
             6.0,
             6.0
+        ],
+        "ResPosition": [
+            0.0,
+            8.5,
+            50.0
         ]
     }
 }

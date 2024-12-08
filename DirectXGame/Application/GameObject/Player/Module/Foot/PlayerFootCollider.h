@@ -4,6 +4,9 @@
 
 class Player;
 
+/// <summary>
+/// 足場コライダー
+/// </summary>
 class PlayerFootCollider
 {
 public:

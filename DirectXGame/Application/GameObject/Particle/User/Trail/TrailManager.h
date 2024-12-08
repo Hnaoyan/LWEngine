@@ -37,7 +37,7 @@ public:
 	void SetFlags(const std::bitset<size_t(TrackingAttribute::kMaxSize)>& flags) {
 		isInvisibles_ = flags;
 	}
-
+	size_t GetContainairSize() { return trails_.size(); }
 private:
 	// 軌跡インスタンスのコンテナ
 	std::vector<std::unique_ptr<BulletTrail>> trails_;

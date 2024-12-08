@@ -5,6 +5,7 @@
 
 #include "../Base/ImGui/ImGuiManager.h"
 #include "../Scene/SceneManager.h"
+#include "../Scene/Transition/SceneTransitionManager.h"
 #include "../Audio/AudioManager.h"
 #include "../3D/ModelUtility/ModelManager.h"
 #include "../2D/TextureManager.h"
@@ -69,11 +70,12 @@ protected:	// ポインタ
 
 protected:
 	// マネージャ関係
-	std::unique_ptr<SceneManager> sceneManager_;
-	std::unique_ptr<ImGuiManager> imGuiManager_;
-	std::unique_ptr<ModelManager> modelManager_;
-	std::unique_ptr<SpriteManager> spriteManager_;
-	std::unique_ptr<TextureManager> textureManager_;
-	std::unique_ptr<AudioManager> audioManager_;
+	std::unique_ptr<SceneManager> sceneManager_;	// シーンマネージャ
+	std::unique_ptr<SceneTransitionManager> transitionManager_;	// シーン遷移用マネージャー
+	std::unique_ptr<ImGuiManager> imGuiManager_;	// ImGuiマネージャ
+	std::unique_ptr<ModelManager> modelManager_;	// モデルマネージャ
+	std::unique_ptr<SpriteManager> spriteManager_;	// スプライトマネージャ
+	std::unique_ptr<TextureManager> textureManager_;	// テクスチャマネージャ
+	std::unique_ptr<AudioManager> audioManager_;	// 音源マネージャ
 };
 

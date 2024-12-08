@@ -1,6 +1,7 @@
 #include "EnergyManager.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/Player/Player.h"
+#include <imgui.h>
 
 void PlayerContext::EnergyManager::Initialize(Player* player)
 {
@@ -13,26 +14,72 @@ void PlayerContext::EnergyManager::Initialize(Player* player)
 
 void PlayerContext::EnergyManager::Update()
 {
-	// 上昇中か
-	quickBoostRecoveryTime_.Update();
-	energy_.isAssending = std::holds_alternative<AssendingState*>(player_->VerticalState()->GetVariant());
-	if (energy_.isAssending) {
-		energy_.currentEnergy -= 75.0f * GameSystem::GameSpeedFactor();
-	}
-	//else /*if(std::holds_alternative<IdleVertical*>(player_->GetVerticalState()->GetNowState()))*/{
-	//	if (energy_.maxEnergy > energy_.currentEnergy) {
-	//		energy_.currentEnergy += 5.0f * GameSystem::GameSpeedFactor();
-	//	}
+	// タイマーの更新
+	quickBoostRecoveryCoolTime_.Update();
+	overheatTimer_.Update();
+	//energy_.isAssending = std::holds_alternative<AssendingState*>(player_->VerticalState()->GetVariant());
+	//if (energy_.isAssending) {
+	//	float decrementAssending = 75.0f;
+	//	energy_.currentEnergy -= decrementAssending * GameSystem::GameSpeedFactor();
 	//}
-	else if(!quickBoostRecoveryTime_.IsActive()) {
+
+	// オーバーヒートの処理
+	if (overheatTimer_.IsActive()) {
+		energy_.currentEnergy = Ease::Easing(0.0f, energy_.maxEnergy, overheatTimer_.GetElapsedFrame());
+	}
+	// 通常の処理
+	else if(!quickBoostRecoveryCoolTime_.IsActive()) {
 		if (energy_.maxEnergy > energy_.currentEnergy) {
-			energy_.currentEnergy += 5.0f * GameSystem::GameSpeedFactor();
+			energy_.currentEnergy += energy_.recoveryValue * GameSystem::GameSpeedFactor();
 		}
 	}
 }
 
+void PlayerContext::EnergyManager::RecoverGage(float recoverEnergy)
+{
+	energy_.currentEnergy += recoverEnergy;
+}
+
+void PlayerContext::EnergyManager::BoostDecrement()
+{
+	float defaultDecrement = (energy_.maxEnergy / decrementRate_);
+	DecrementProcess(defaultDecrement);
+}
+
 void PlayerContext::EnergyManager::QuickBoostDecre()
 {
-	energy_.currentEnergy -= (energy_.maxEnergy / 5.0f);
-	quickBoostRecoveryTime_.Start(10.0f);
+	float defaultDecrement = (energy_.maxEnergy / decrementRate_);
+	quickRate_ = 0.75f;
+	DecrementProcess(defaultDecrement * quickRate_);
+}
+
+void PlayerContext::EnergyManager::ImGuiDraw()
+{
+	static float bar = 0.01f;
+	ImGui::DragFloat("Bar", &bar, 0.01f);
+	// 最大値
+	ImGui::DragFloat("MaxEnergy", &energy_.maxEnergy, bar);
+	// ダッシュの消費割合
+	ImGui::DragFloat("DashEnergy", &decrementRate_, bar);
+	// 回復量
+	ImGui::DragFloat("RecoveryValue", &energy_.recoveryValue, bar);
+	// ダッシュ後の回復までの時間
+	ImGui::DragFloat("RecoveryFrame", &energy_.recoveryFrame, bar);
+	if (ImGui::Button("Overheat")) {
+		overheatTimer_.Start(60.0f * 3.0f);
+		energy_.currentEnergy = 0.0f;
+	}
+}
+
+void PlayerContext::EnergyManager::DecrementProcess(float value)
+{
+	energy_.currentEnergy -= (value);
+	// 0を切った場合オーバーヒート
+	if (energy_.currentEnergy <= 0.0f) {
+		energy_.currentEnergy = 0.0f;
+		// ３秒オーバーヒート
+		overheatTimer_.Start(60.0f * 3.0f);
+	}
+	// 回復するまでのクールタイム
+	quickBoostRecoveryCoolTime_.Start(energy_.recoveryFrame);
 }

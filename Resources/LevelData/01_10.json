@@ -3,12 +3,12 @@
     "objects": [
         {
             "type": "MESH",
-            "name": "Floar",
+            "name": "Cube",
             "transform": {
                 "translation": [
                     0.0,
                     0.0,
-                    -8.0
+                    -12.0
                 ],
                 "rotation": [
                     0.0,
@@ -18,14 +18,36 @@
                 "scaling": [
                     500.0,
                     500.0,
-                    5.0
+                    10.0
                 ]
             },
             "file_name": "Terrain"
         },
         {
             "type": "MESH",
-            "name": "Wall1",
+            "name": "立方体",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    300.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    500.0,
+                    500.0,
+                    10.0
+                ]
+            },
+            "file_name": "Object"
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.001",
             "transform": {
                 "translation": [
                     0.0,
@@ -39,15 +61,14 @@
                 ],
                 "scaling": [
                     500.0,
-                    5.0,
+                    1.0,
                     300.0
                 ]
-            },
-            "file_name": "Object"
+            }
         },
         {
             "type": "MESH",
-            "name": "Wall2",
+            "name": "立方体.002",
             "transform": {
                 "translation": [
                     0.0,
@@ -61,37 +82,14 @@
                 ],
                 "scaling": [
                     500.0,
-                    5.0,
+                    1.0,
                     300.0
                 ]
-            },
-            "file_name": "Object"
+            }
         },
         {
             "type": "MESH",
-            "name": "Wall3",
-            "transform": {
-                "translation": [
-                    500.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    5.0,
-                    500.0,
-                    300.0
-                ]
-            },
-            "file_name": "Object"
-        },
-        {
-            "type": "MESH",
-            "name": "Wall4",
+            "name": "立方体.003",
             "transform": {
                 "translation": [
                     -500.0,
@@ -104,12 +102,32 @@
                     0.0
                 ],
                 "scaling": [
-                    5.0,
+                    1.0,
                     500.0,
                     300.0
                 ]
-            },
-            "file_name": "Object"
+            }
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    500.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    500.0,
+                    300.0
+                ]
+            }
         }
     ]
 }

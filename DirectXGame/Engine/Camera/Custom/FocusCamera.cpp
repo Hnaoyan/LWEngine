@@ -32,9 +32,9 @@ void FocusCamera::ImGuiDraw()
 void FocusCamera::FocusUpdate()
 {
 	// 対象地点があれば
-	if (worldTransform_) {
+	if (focusPoint_) {
 		//transform_.translate.y = worldTransform_->GetWorldPosition().y;
-		Vector3 focusDirect = (*focusPoint_) - transform_.translate;
+		Vector3 focusDirect = (*focusPoint_) - transform_.translate;	// 目的地点-自地点
 		focusDirect = focusDirect.Normalize();
 		rotateQuaternion_ = Quaternion::MakeRotateDirect(focusDirect);
 

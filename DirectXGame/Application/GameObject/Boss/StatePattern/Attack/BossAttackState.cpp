@@ -13,28 +13,28 @@ void BossState::AttackState::Initialize()
 	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// 攻撃パターンのランダム
-	uint32_t pattern = LwLib::GetRandomValue(0, 3);
-	float coolTime = 10.0f;
-	if (pattern == 0) {
-		pattern_ = ShotPattern::kPredictive;
-		fireCooltime_ = coolTime;
-	}
-	else if (pattern == 1) {
-		pattern_ = ShotPattern::kStraight;
-		coolTime += 5.0f;
-		fireCooltime_ = coolTime;
-	}
-	else if(pattern == 2){
-		pattern_ = ShotPattern::kSpread;
-		coolTime += 10.0f;
-		fireCooltime_ = coolTime;
-	}
-	else {
-		pattern_ = ShotPattern::kRadialFire;
-		coolTime += 15.0f;
-		fireCooltime_ = coolTime;
-	}
-
+	//uint32_t pattern = LwLib::GetRandomValue(0, 3);
+	//float coolTime = 10.0f;
+	//if (pattern == 0) {
+	//	pattern_ = ShotPattern::kPredictive;
+	//	fireCooltime_ = coolTime;
+	//}
+	//else if (pattern == 1) {
+	//	pattern_ = ShotPattern::kStraight;
+	//	coolTime += 5.0f;
+	//	fireCooltime_ = coolTime;
+	//}
+	//else if(pattern == 2){
+	//	pattern_ = ShotPattern::kSpread;
+	//	coolTime += 10.0f;
+	//	fireCooltime_ = coolTime;
+	//}
+	//else {
+	//	pattern_ = ShotPattern::kRadialFire;
+	//	coolTime += 15.0f;
+	//	fireCooltime_ = coolTime;
+	//}
+	pattern_ = ShotPattern::kRadialFire;
 	// 初期の角度
 	startRotate_ = boss_->worldTransform_.transform_.rotate.y;
 

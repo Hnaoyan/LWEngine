@@ -30,40 +30,38 @@ void main( uint3 DTid : SV_DispatchThreadID )
                 // デフォルト
                 if (gEmitter.emitPattern == 0)
                 {
-                    //DefaultPop(generator, particleIndex);
                     gParticle[particleIndex] = DefaultPop(generator);
-                    float32_t3 test = generator.Generate3D();
                 }
                 // プレイヤーの移動
                 else if(gEmitter.emitPattern == 1)
                 {
                     gParticle[particleIndex] = PlayerMove(generator, gEmitter.translate);
-                    float32_t3 test = generator.Generate3D();                   
                 }
                 // プレイヤーの弾
                 else if(gEmitter.emitPattern == 2)
                 {
                     gParticle[particleIndex] = PlayerBullet(generator, gEmitter.translate);
-                    float32_t3 test = generator.Generate3D();
                 }
                 // ボスのヒットエフェクト
                 else if (gEmitter.emitPattern == 3)
                 {
                     gParticle[particleIndex] = BossDamage(generator, gEmitter.translate);
-                    float32_t3 test = generator.Generate3D();
                 }
                 // 弾が壊れるエフェクト
                 else if (gEmitter.emitPattern == 4)
                 {
                     gParticle[particleIndex] = BulletBreak(generator, gEmitter.translate);
-                    float32_t3 test = generator.Generate3D();
                 }
                 // ボスの弾
                 else if (gEmitter.emitPattern == 5)
                 {
                     gParticle[particleIndex] = BossBullet(generator, gEmitter.translate);
-                    float32_t3 test = generator.Generate3D();
                 }
+                else if (gEmitter.emitPattern == 6)
+                {
+                    gParticle[particleIndex] = BossBarrierBreak(generator, gEmitter.translate);
+                }
+                float32_t3 test = generator.Generate3D();
             }
             // 空いていない場合
             else

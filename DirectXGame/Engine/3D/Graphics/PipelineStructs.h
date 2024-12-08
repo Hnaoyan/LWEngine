@@ -16,6 +16,7 @@ namespace Pipeline
 		kPostEffect,
 		kInstancedModel,
 		kTrail,
+		kCPUParticle,
 		kCountOfParameter,
 	};
 	// 通常モデルのレジスタ番号
@@ -75,7 +76,7 @@ namespace Pipeline
 		kCountOfParameter,
 	};
 
-	// パーティクルのレジスタ用
+	// GPUパーティクルのレジスタ用
 	enum class GPUParticleDrawRegister : int {
 		kMaterial,
 		kTexture,
@@ -84,6 +85,18 @@ namespace Pipeline
 
 		kCountOfParameter,
 	};
+
+	// CPUパーティクルのレジスタ
+	enum class CPUParticleRegister : int
+	{
+		kMaterial,
+		kTexture,
+		kMatrixs,
+		kCamera,
+		kCountOfParmeter,
+
+	};
+
 	// ブレンドモード
 	enum class BlendMode : int {
 		kNone,
@@ -120,6 +133,7 @@ namespace Pipeline
 		kNoise,
 		kHSV,
 		kBloom,
+		kGrayscale,
 		kCountOfParameter,
 	};
 	// ポストエフェクトの種類
@@ -134,7 +148,10 @@ namespace Pipeline
 		kDissolve,			// Dissolve
 		kNoise,				// ランダムノイズ
 		kLuminanceOutline,	// 簡易アウトライン
-		kBloom,
+		kBloom,	// ブルーム
+		// USER
+		kVignetteBlur,	// ビネットとブラーの合わせ（ブルームも掛ける）
+		kGrayscaleBloom,	// グレースケールとブルームの合わせ
 		kCountOfType,
 	};
 }

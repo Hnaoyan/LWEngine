@@ -1,0 +1,13 @@
+{
+    "PostEffect": {
+        "BloomSigma": 1.5,
+        "BloomThreshold": 0.75,
+        "VigColor": [
+            0.5,
+            0.0,
+            0.0
+        ],
+        "VigPow": 0.5,
+        "VigScale": 24.0
+    }
+}

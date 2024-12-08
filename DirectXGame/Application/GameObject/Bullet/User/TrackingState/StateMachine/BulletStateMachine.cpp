@@ -18,6 +18,9 @@ void BulletStateMachine::ChangeRequest(std::unique_ptr<ITrackingState> state)
 	if (currentState_) {
 		currentState_->Exit();
 	}
+
+	changeCount_++;
+
 	state->SetBullet(bullet_);
 	state->Enter();
 	currentState_ = std::move(state);
@@ -29,6 +32,8 @@ void BulletStateMachine::ChangeRequest(TrackingState state)
 		currentState_->Exit();
 	}
 	std::unique_ptr<ITrackingState> newState = BuildState(state);
+
+	changeCount_++;
 
 	newState->SetBullet(bullet_);
 	newState->Enter();
@@ -56,7 +61,7 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 }
 
 
-void BulletStateMachine::Update()
+void BulletStateMachine::Update(bool isActive)
 {
 	// 切り替えの受付
 	if (currentState_->GetChangeRequest()) {
@@ -65,6 +70,9 @@ void BulletStateMachine::Update()
 		currentState_->RequestReset();
 	}
 
-	// ステートの処理
-	currentState_->Update(*this);
+	// フラグで更新の選択を
+	if (isActive) {
+		// ステートの処理
+		currentState_->Update(*this);
+	}
 }

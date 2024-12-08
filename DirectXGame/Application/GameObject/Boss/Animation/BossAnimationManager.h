@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/3D/Drawer/Model.h"
-#include "Engine/LwLib/Utillity/FrameTimer.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include <utility>
 #include <unordered_map>
 
@@ -26,6 +26,40 @@ namespace BossSystemContext
 			// イージングの始点終点
 			std::pair<Vector3, Vector3> easePoint;
 		};
+
+		// ヒットエフェクト
+		struct HitEffect
+		{
+			FrameTimer timer;	// それぞれの状態
+			int32_t state = 0u;	// 0:0に向かっていく 1:1に戻ってくる
+			float alpha = 0.0f;		// アルファ
+			float returnFrame = 6.0f;	// 1~0~1のフレーム
+			// セットアップ関数
+			void StartSetup() {
+				timer.Start(returnFrame);
+				state = 0;
+				alpha = 1.0f;
+			}
+			// 更新処理
+			void Update() {
+				// タイマーの更新
+				timer.Update();
+				// 状態ごとのアルファの値
+				if (state == 0) {
+					alpha = Ease::Easing(1.0f, 0.0f, timer.GetElapsedFrame());
+				}
+				else {
+					alpha = Ease::Easing(0.0f, 1.0f, timer.GetElapsedFrame());
+				}
+				if (timer.IsEnd()) {
+					if (state == 0) {
+						state++;
+						timer.Start(returnFrame);
+					}
+				}
+			}
+		};
+
 		// アニメーションの種類
 		enum class AnimType : uint32_t
 		{
@@ -48,10 +82,24 @@ namespace BossSystemContext
 		void Update();
 		// 描画
 		void Draw(ICamera* camera, DrawDesc::LightDesc lightDesc);
+		// ImGui
+		void ImGuiDraw();
 	public:
 		// 受付
 		void AnimationExecute(AnimType type);
 		void AnimationExecute(AnimType type, float easeFrame);
+
+		// ダメージを食らった時の点滅
+		void AnimationDamageExecute() {
+			// アクティブならスキップ
+			if (hitEffect_.timer.IsActive()) {
+				return;
+			}
+			hitEffect_.StartSetup();
+		}
+		// オープン状態
+		bool IsOpen() { return animType_ == AnimType::kOpen && !animTimer_.IsActive(); }
+
 	private:
 		// ヒエラルキー作成
 		void CreateHierarchy(std::string hierarchyName, std::string modelTag, const EulerTransform& transform);
@@ -67,11 +115,15 @@ namespace BossSystemContext
 		AnimState animState_;
 		// どのアニメーション状態か
 		AnimType animType_;
-
+		// 死亡用のタイマー
 		FrameTimer deathTimer_;
 
-	public:
-		// オープン状態
-		bool IsOpen() { return animType_ == AnimType::kOpen && !animTimer_.IsActive(); }
+		// 食らったときのエフェクト処理
+		HitEffect hitEffect_;
+
+
+		// 共通のマテリアル
+		std::unique_ptr<Material> commonMaterial_;
+
 	};
 }

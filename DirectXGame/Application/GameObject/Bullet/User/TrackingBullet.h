@@ -34,6 +34,7 @@ public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
 	void SetIsBarrage(bool isFlag) { isBarrage_ = isFlag; }
 
+	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 	TrackingAttribute GetTrackingType() const { return trackingType_; }
 	TrackingData GetTrackingData() const { return data_; }
 private:
@@ -45,13 +46,17 @@ private:
 	FrameTimer straightTimer_;
 	// 曲がる軌道用のタイマー
 	FrameTimer waveTimer_;
-
-	// 狙いがボスなら
-	bool isTargetBoss_ = false;
+	// 追従をしないフレーム
+	FrameTimer trackCoolTime_;
+	// 追従するフレーム
+	FrameTimer trackingTime_;
 
 	// 直進のフレーム数
 	float straightFrame_;
+	// 狙いがボスなら
+	bool isTargetBoss_ = false;
 	bool isBarrage_ = false;
+	bool isCount = false;
 
 	// ステートの管理
 	TrackingState nowState_ = TrackingState::kStraight;
@@ -59,6 +64,11 @@ private:
 
 	// 追従のデータ構造体
 	TrackingData data_{};
+
+	// ステートの変更回数
+	int32_t changeCount_ = 0;
+	// ステートマシン
+	std::unique_ptr<BulletStateMachine> stateMachine_;
 
 private:
 	void ChangeSelecter();

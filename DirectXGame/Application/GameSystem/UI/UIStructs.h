@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Math/MathLib.h"
 #include "Engine/2D/Drawer/Sprite.h"
+#include "Engine/3D/Drawer/Model.h"
 #include <string>
 #include <vector>
 #include <memory>
@@ -48,5 +49,19 @@ namespace GameUI
 		Vector2 position;	// 座標
 		Vector2 maxScale;	// 最大スケール
 		Vector2 currentScale;	// 現在のスケール
+	};
+
+	// 
+	struct BillBoardRenderInfo {
+		Model* model;
+		std::unique_ptr<Material> material;
+		WorldTransform worldTransform;
+		Vector3 maxScale{};
+		uint32_t texture;
+		Vector3 offset{};
+		bool isInvisible_ = false;
+		void Update() {
+			worldTransform.transform_.translate += offset;
+		}
 	};
 }

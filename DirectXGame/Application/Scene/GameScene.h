@@ -7,14 +7,26 @@
 #include "Engine/Camera/CameraList.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
-#include "../GameObject/GameObjectLists.h"
+
+#include "Application/GameObject/GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameSystem/UI/GameUIManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
 #include "Application/GameSystem/Camera/CameraManager.h"
 
+#include <optional>
+
+/// <summary>
+/// ゲームシーン
+/// </summary>
 class GameScene : public IScene
 {
+private:
+
+	// 変更リクエスト
+	GameSceneState nowState_ = GameSceneState::kWait;
+	std::optional<GameSceneState> stateRequest_ = std::nullopt;
+
 public:
 	/// <summary>
 	/// 初期化
@@ -68,6 +80,9 @@ private:
 	/// </summary>
 	void CollisionUpdate();
 
+	void SceneStateRequest(GameSceneState state) { stateRequest_ = state; }
+	void ChangeState();
+
 private: // アプリ
 	// ゲーム
 	std::unique_ptr<GameObjectManager> gameObjectManager_;	// オブジェクト
@@ -81,7 +96,6 @@ private: // アプリ
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
 private: // システム関係
-	// ライト君
 	std::unique_ptr<DirectionalLight> directionalLight_;
 	CBufferDataDirectionalLight lightData_ = {};
 	std::unique_ptr<SpotLight> spotLight_;

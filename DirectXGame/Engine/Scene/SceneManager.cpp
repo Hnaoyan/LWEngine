@@ -1,25 +1,50 @@
 #include "SceneManager.h"
+#include "Transition/SceneTransitionManager.h"
 #include <cassert>
+#include <imgui.h>
 
 void SceneManager::Update()
 {
 	// 切り替え
 	if (nextScene_ && nextScene_->GetSceneReady()) {
-		if (nowScene_) {
-			delete nowScene_;
-		}
+		// スレッドを使った切り替えの場合
 		if (isThread_) {
-			nextInitialize_.join();
-			nextScene_->Initialize();
-		}
-		isThread_ = false;
-		// シーン切り替え
-		nowScene_ = nextScene_;
-		nextScene_ = nullptr;
-		isChangeActive_ = false;
+			if (!transitionManager_->ChangeTiming()) {
+				if (nowScene_) {
+					delete nowScene_;
+				}
+				nextInitialize_.join();
+				nextScene_->Initialize();
+				isThread_ = false;
+				// シーン切り替え
+				nowScene_ = nextScene_;
+				nextScene_ = nullptr;
+				isChangeActive_ = false;
 
-		// シーンマネージャー設定
-		nowScene_->SetSceneManager(this);
+				transitionManager_->ExecuteReturn();
+
+				// シーンマネージャー設定
+				nowScene_->SetSceneManager(this);
+			}
+		}
+		// 通常の切り替え
+		else {
+			if (nowScene_) {
+				delete nowScene_;
+			}
+			isThread_ = false;
+			// シーン切り替え
+			nowScene_ = nextScene_;
+			nextScene_ = nullptr;
+			isChangeActive_ = false;
+
+			transitionManager_->ExecuteReturn();
+
+			// シーンマネージャー設定
+			nowScene_->SetSceneManager(this);
+		}
+
+
 		// 次のシーンの初期化
 		//nowScene_->Initialize();
 	}
@@ -54,6 +79,10 @@ void SceneManager::ImGuiDraw()
 	if (nowScene_) {
 		nowScene_->ImGuiDraw();
 	}
+	// シーンマネージャ
+	ImGui::Begin("SceneManager");
+	ImGui::ColorEdit4("TransitionColor", &transitionManager_->sColor.x);
+	ImGui::End();
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)
@@ -72,6 +101,8 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 
 	nextSceneName_ = sceneName;
 	isChangeActive_ = true;
+	//// 遷移開始
+	//transitionManager_->ExecuteStart(120.0f);
 }
 
 void SceneManager::ChangeThreadScene(const std::string& sceneName)
@@ -88,6 +119,7 @@ void SceneManager::ChangeThreadScene(const std::string& sceneName)
 	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
 	isThread_ = true;
 	nextSceneName_ = sceneName;
-
 	isChangeActive_ = true;
+	// 遷移開始
+	transitionManager_->ExecuteStart(120.0f);
 }

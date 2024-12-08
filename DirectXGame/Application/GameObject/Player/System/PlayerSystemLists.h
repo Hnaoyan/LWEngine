@@ -12,3 +12,4 @@
 #include "Energy/EnergyManager.h"
 #include "Health/HealthManager.h"
 #include "UI/PlayerUI.h"
+#include "Dodge/JustDudgeManager.h"

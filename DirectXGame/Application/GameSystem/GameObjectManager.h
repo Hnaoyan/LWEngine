@@ -3,6 +3,7 @@
 
 class CollisionManager;
 class CameraManager;
+class GameSystem;
 
 /// <summary>
 /// ゲームのオブジェクト管理クラス
@@ -10,7 +11,7 @@ class CameraManager;
 class GameObjectManager
 {
 public:
-	GameObjectManager();
+	GameObjectManager(GameSystem* system);
 	~GameObjectManager() = default;
 public:
 	/// <summary>
@@ -45,23 +46,33 @@ public:
 	/// ゲーム開始準備
 	/// </summary>
 	void GameSetUp();
-
+	
+	void UpdateObject();
 public:
 	// プレイヤー
 	Player* GetPlayer() { return player_.get(); }
+	Boss* GetBoss() { return boss_.get(); }
 
 	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
 	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
-	bool IsGameClear() const { return isGameClear_; }
-	bool IsGameOver() const { return isGameOver_; }
+	bool IsSceneChange() const { return isSceneChange_; }
+	bool IsSceneReplay() const { return isSceneReplay_; }
+	bool IsChange() const { return isChangeInput_; }
+
+	void SetGameSystem(GameSystem* system) { gameSystem_ = system; }
 private: // ゲームクリアなどの部分
-	bool isGameOver_ = false;	// ゲームオーバー
-	bool isGameClear_ = false;	// ゲームクリア
+	bool isSceneChange_ = false;	// シーンの切り替わりフラグ
+	bool isSceneReplay_ = false;	// リプレイに行くフラグ
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
+	bool isChangeInput_ = false;	// シーン変更の受付フラグ
+
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
-
+	FrameTimer waitingTimer_;	// ゲーム終了後の待機時間
+	FrameTimer gameWaitTimer_;
+	bool isGame = false;
+	GameSystem* gameSystem_ = nullptr;
 private:
 	// ゲームのユニット
 	std::unique_ptr<Player> player_;

@@ -609,6 +609,15 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1178,9 +1187,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h">
       <Filter>Application\GameObject\Boss\State</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.h">
       <Filter>Application\GameSystem</Filter>
     </ClInclude>
@@ -1194,6 +1200,17 @@
       <Filter>Engine\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
+    <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
@@ -1316,6 +1333,8 @@
     <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\shaders\PostEffect\BloomVignetteBlurPS.hlsl" />
+    <FxCompile Include="Resources\shaders\PostEffect\GrayscaleBloomPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
@@ -1500,5 +1519,6 @@
     <None Include="Resources\shaders\Instanced\Instanced.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
+    <None Include="Resources\shaders\Utility\MathCalc.hlsli" />
   </ItemGroup>
 </Project>
