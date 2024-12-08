@@ -13,10 +13,7 @@ void FollowCamera::Initialize()
 	ICamera::Initialize();
 	defaultOffset_ = { 0.0f,3.0f,-10.0f };
 	destinationAngle_ = {};
-}
 
-void FollowCamera::Update()
-{
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	rRotateSpeed_ = instance->GetValue<Vector2>("Camera", "RotateSpeed");
 	rStickLerpRate_ = instance->GetValue<float>("Camera", "LerpRate");
@@ -24,6 +21,10 @@ void FollowCamera::Update()
 	xSpinLimit_ = instance->GetValue<float>("Camera", "XSpinLimit");
 	defaultOffset_ = instance->GetValue<Vector3>("Camera", "Offset");
 
+}
+
+void FollowCamera::Update()
+{
 	// コントローラー
 	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
 
