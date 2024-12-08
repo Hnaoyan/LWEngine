@@ -8,7 +8,9 @@ class Player;
 
 namespace PlayerContext
 {
-
+	/// <summary>
+	/// ジャスト回避管理
+	/// </summary>
 	class JustDodgeManager
 	{
 	private:

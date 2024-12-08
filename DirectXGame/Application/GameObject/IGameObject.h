@@ -5,6 +5,9 @@
 
 class CollisionManager;
 
+/// <summary>
+/// ゲームオブジェクトの基底クラス
+/// </summary>
 class IGameObject
 {
 public:

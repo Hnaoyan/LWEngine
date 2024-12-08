@@ -15,7 +15,9 @@ class GPUParticleEmitter;
 
 namespace BossSystemContext
 {
-
+	/// <summary>
+	/// 体力
+	/// </summary>
 	class HealthManager {
 	public:
 		void Initialize(float maxHealth)
@@ -38,7 +40,9 @@ namespace BossSystemContext
 		float currentHealth_ = 0;
 		bool isDead_ = false;
 	};
-
+	/// <summary>
+	/// パーティクル管理
+	/// </summary>
 	class ParticleManager {
 	public:
 		// 初期化

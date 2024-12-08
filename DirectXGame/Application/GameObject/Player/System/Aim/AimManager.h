@@ -7,6 +7,9 @@ class Player;
 class ICamera;
 
 namespace PlayerContext {
+	/// <summary>
+	/// エイムマネージャ
+	/// </summary>
 	class AimManager
 	{
 	public:

@@ -3,6 +3,9 @@
 
 class GameSystem;
 
+/// <summary>
+/// ゲーム内でのポストエフェクト管理クラス
+/// </summary>
 class PostEffectManager
 {
 public:

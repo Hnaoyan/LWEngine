@@ -2,6 +2,9 @@
 #include "../IBullet.h"
 #include "../IBulletCluster.h"
 
+/// <summary>
+/// コンテナ弾
+/// </summary>
 class ContainerBullet : public IBullet
 {
 public:

@@ -8,6 +8,9 @@ class Boss;
 
 namespace BossSystemContext
 {
+	/// <summary>
+	/// バリア管理クラス
+	/// </summary>
 	class BarrierManager
 	{
 	private:

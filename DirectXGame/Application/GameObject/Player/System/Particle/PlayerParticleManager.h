@@ -7,6 +7,9 @@
 class Player;
 class GPUParticleManager;
 
+/// <summary>
+/// プレイヤーのパーティクル関係
+/// </summary>
 namespace PlayerContext {
 
 	class MoveTrail;

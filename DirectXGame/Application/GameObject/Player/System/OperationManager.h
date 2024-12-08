@@ -7,6 +7,9 @@ class Player;
 class Input;
 class BulletManager;
 
+/// <summary>
+/// 操作管理
+/// </summary>
 class OparationManager
 {
 public:

@@ -5,6 +5,9 @@
 class Player;
 class BulletManager;
 
+/// <summary>
+/// 射撃処理
+/// </summary>
 namespace PlayerContext
 {
 	enum class ShootType : uint32_t

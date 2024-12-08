@@ -16,6 +16,9 @@
 
 #include <optional>
 
+/// <summary>
+/// ゲームシーン
+/// </summary>
 class GameScene : public IScene
 {
 private:

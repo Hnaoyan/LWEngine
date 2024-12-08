@@ -4,6 +4,9 @@
 
 class CollisionManager;
 
+/// <summary>
+/// 地形マネージャ
+/// </summary>
 class TerrainManager
 {
 public:

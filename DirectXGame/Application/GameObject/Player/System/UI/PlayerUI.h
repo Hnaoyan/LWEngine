@@ -5,6 +5,9 @@
 class Player;
 class Sprite;
 
+/// <summary>
+/// プレイヤーに直接関係するＵＩ
+/// </summary>
 namespace PlayerContext
 {
 	class PlayerUIManager

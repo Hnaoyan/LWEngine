@@ -15,6 +15,9 @@
 
 class Player;
 
+/// <summary>
+/// ボス本体
+/// </summary>
 class Boss : public IGameObject
 {
 public:

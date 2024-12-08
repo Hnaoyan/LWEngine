@@ -3,6 +3,9 @@
 
 class CollisionManager;
 
+/// <summary>
+/// 地形オブジェクト管理
+/// </summary>
 class TerrainCluster : public InstancedGroup
 {
 public:

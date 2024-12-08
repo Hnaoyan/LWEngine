@@ -3,6 +3,9 @@
 
 class Player;
 
+/// <summary>
+/// プレイヤーのシステム管理
+/// </summary>
 class PlayerFacade
 {
 public:

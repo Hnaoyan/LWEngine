@@ -7,6 +7,9 @@
 
 class SampleBulletManager;
 
+/// <summary>
+/// プレイヤー
+/// </summary>
 class Player : public IGameObject
 {
 public:

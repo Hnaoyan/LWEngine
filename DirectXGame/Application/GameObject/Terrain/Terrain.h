@@ -3,6 +3,9 @@
 #include "../../Collision/ColliderObject.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
 
+/// <summary>
+/// 地形オブジェクト
+/// </summary>
 class Terrain : public InstancedUnit
 {
 public:
