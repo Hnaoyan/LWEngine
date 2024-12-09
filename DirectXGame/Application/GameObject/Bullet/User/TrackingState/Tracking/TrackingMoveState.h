@@ -13,6 +13,10 @@ public:
 private:
 	// 劣等型用のオフセット
 	Vector3 inferiorOffset_{};
+	// 親となる加速度
+	Vector3 parentAcceleration_{};
+	// 子となる加速度
+	Vector3 childAcceleration_{};
 
 	FrameTimer looseTimer_;	// 追従解除が緩くなるまでのタイマー
 
