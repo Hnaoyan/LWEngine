@@ -7,6 +7,7 @@
 #include <thread>
 #include <functional>
 #include <mutex>
+#include <cstring>
 
 void TitleScene::Initialize()
 {
@@ -115,7 +116,9 @@ void TitleScene::ImGuiDraw()
 	ImGui::InputText("SpriteTag", spriteTag, 256);
 
 	if (ImGui::Button("AddTexture")) {
-		AddSprite(texturePath, spriteTag);
+		char path[256] = "TL2/";
+		strcat_s(path, sizeof(path), texturePath);
+		AddSprite(path, spriteTag);
 	}
 	if (ImGui::Button("Clear")) {
 		textures_.clear();
