@@ -40,9 +40,9 @@ private:
     void SaveDDSTextureToFile(int numOptions, char* options[]);
 private:
     // 画像情報
-    DirectX::TexMetadata metaData_;
+    DirectX::TexMetadata metaData_{};
     // 画像イメージのコンテナ
-    DirectX::ScratchImage scratchImage_;
+    DirectX::ScratchImage scratchImage_{};
 
     // ディレクトリパス
     std::wstring directoryPath_;
