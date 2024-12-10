@@ -7,6 +7,7 @@
 #include <thread>
 #include <functional>
 #include <mutex>
+#include <cstring>
 
 void TitleScene::Initialize()
 {
@@ -72,6 +73,11 @@ void TitleScene::Draw()
 
 	//uiSprites_[0]->Draw();
 
+	for (std::vector<std::pair<Vector2, Sprite*>>::iterator it = textures_.begin(); it != textures_.end(); ++it) {
+		(*it).second->Draw();
+	}
+
+
 	Sprite::PostDraw();
 #pragma endregion
 	// 深度クリア
@@ -91,9 +97,9 @@ void TitleScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 
-	SpriteManager::GetSprite("TitleButtonText")->Draw();
-	SpriteManager::GetSprite("TitleText")->Draw();
-	SpriteManager::GetSprite("BackGroundImage")->Draw();
+	//SpriteManager::GetSprite("TitleButtonText")->Draw();
+	//SpriteManager::GetSprite("TitleText")->Draw();
+	//SpriteManager::GetSprite("BackGroundImage")->Draw();
 
 	Sprite::PostDraw();
 
@@ -103,6 +109,30 @@ void TitleScene::UIDraw()
 void TitleScene::ImGuiDraw()
 {
 	ImGui::Begin("Title");
+
+	static char texturePath[256];
+	static char spriteTag[256];
+	ImGui::InputText("TexturePath", texturePath, 256);
+	ImGui::InputText("SpriteTag", spriteTag, 256);
+
+	if (ImGui::Button("AddTexture")) {
+		char path[256] = "TL2/";
+		strcat_s(path, sizeof(path), texturePath);
+		AddSprite(path, spriteTag);
+	}
+	if (ImGui::Button("Clear")) {
+		textures_.clear();
+	}
+	if (ImGui::TreeNode("Textures")) {
+		int num = 0;
+		for (std::vector<std::pair<Vector2, Sprite*>>::iterator it = textures_.begin(); it != textures_.end(); ++it) {
+			std::string name = "Pos" + std::to_string(num);
+			ImGui::DragFloat2(name.c_str(), &(*it).first.x, 1.0f);
+			(*it).second->SetPosition((*it).first);
+			num++;
+		}
+		ImGui::TreePop();
+	}
 
 	ImGui::End();
 
@@ -119,4 +149,11 @@ void TitleScene::LoadTexture()
 {
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 	//clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
+}
+
+void TitleScene::AddSprite(const std::string& texturePath, const std::string& spriteTag)
+{
+	std::string path = "Resources/" + texturePath;
+	uint32_t texture = TextureManager::Load(path);
+	textures_.push_back(std::pair(Vector2(), SpriteManager::LoadSprite(spriteTag, texture)));
 }

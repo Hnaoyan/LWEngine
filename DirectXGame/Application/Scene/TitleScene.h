@@ -64,4 +64,11 @@ private: // システム関係
 	CBufferDataSpotLight spLightData_ = {};
 	std::unique_ptr<PointLight> pointLight_;
 	CBufferDataPointLight ptLightData_ = {};
+
+	// テクスチャの表示用スプライト
+	//std::vector<Sprite*> textures_;
+	std::vector<std::pair<Vector2, Sprite*>> textures_;
+
+	void AddSprite(const std::string& texturePath, const std::string& spriteTag);
+
 };
