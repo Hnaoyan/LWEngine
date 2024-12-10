@@ -20,6 +20,8 @@ private:
 
 	FrameTimer looseTimer_;	// 追従解除が緩くなるまでのタイマー
 
+	float elapsedTime_ = 0.0f;
+
 private: // 計算関数
 	// 優等（完全追尾
 	Vector3 CalcSuperiorAcceleration();

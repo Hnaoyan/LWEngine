@@ -24,6 +24,8 @@ void TrackingMoveState::Enter()
 
 	// 1.5秒で追従を緩くする（仮
 	looseTimer_.Start(90.0f);
+
+	elapsedTime_ = 0.0f;
 }
 
 void TrackingMoveState::Update(BulletStateMachine& stateMachine)
@@ -60,21 +62,39 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		// 種類の受け取り
 		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
 		
+		elapsedTime_ += 1.0f / 5.0f;
+		float frequency = 1.0f;
+		float amplitude = 10.0f;
+		if (elapsedTime_ >= 1.0e6f) {
+			elapsedTime_ = 0.0f;
+		}
+		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
+		Vector3 crossDirect = Vector3::Cross(bullet_->GetVelocity().Normalize(), Vector3::Right());
+
 		// 種類ごとの計算
 		switch (type)
 		{
 		case TrackingAttribute::kSuperior:
-			bullet_->SetAccelerate(CalcSuperiorAcceleration());
+			// 親加速度計算
+			parentAcceleration_ = CalcSuperiorAcceleration();
+			// 子加速度計算
+			childAcceleration_ = crossDirect.Normalize() * offset;
+			parentAcceleration_ += childAcceleration_;
+			parentAcceleration_ *= 0.75f;
 			break;
 		case TrackingAttribute::kInferior:
-			bullet_->SetAccelerate(CalcInferiorAcceleration());
+			parentAcceleration_ = CalcInferiorAcceleration();
 			break;
 		case TrackingAttribute::kGenius:
-			bullet_->SetAccelerate(CalcGeniusAcceleration());
+			parentAcceleration_ = CalcGeniusAcceleration();
 			break;
 		default:
 			break;
 		}
+
+
+		// 加速度の設定
+		bullet_->SetAccelerate(parentAcceleration_);
 	}
 
 }
