@@ -40,3 +40,4 @@
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/T_MissileInferior.gif?raw=true" alt = Title Image width="720">
 
 [![DebugBuild](https://github.com/Hnaoyan/LWEngine/actions/workflows/DebugBuild.yml/badge.svg)](https://github.com/Hnaoyan/LWEngine/actions/workflows/DebugBuild.yml)
+[![ReleaseBuild](https://github.com/Hnaoyan/LWEngine/actions/workflows/ReleaseBuild.yml/badge.svg)](https://github.com/Hnaoyan/LWEngine/actions/workflows/ReleaseBuild.yml)
