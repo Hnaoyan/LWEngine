@@ -5,7 +5,7 @@ on:
       - master
 env:
     # リポジトリのルートを基点としたソリューションのパス
-    SOLUTION_FILE_PATH: project/LWEngine.sln
+    SOLUTION_FILE_PATH: LWEngine.sln
 
     CONFIGURATION: Debug
 
