@@ -38,3 +38,5 @@
 ### 劣等型
 対象の位置から離れた位置に向けて追従してくる属性  
 <img src="https://github.com/Hnaoyan/ReadMeAsset/blob/main/gifs/T_MissileInferior.gif?raw=true" alt = Title Image width="720">
+
+[![DebugBuild](https://github.com/Hnaoyan/LWEngine/actions/workflows/DebugBuild.yml/badge.svg)](https://github.com/Hnaoyan/LWEngine/actions/workflows/DebugBuild.yml)
