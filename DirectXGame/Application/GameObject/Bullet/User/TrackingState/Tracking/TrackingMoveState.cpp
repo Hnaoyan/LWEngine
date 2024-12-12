@@ -65,21 +65,24 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		// 種類の受け取り
 		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
 		// 時間
-		elapsedTime_ += 1.0f / 5.0f;
+		float addTime = 1.0f / 5.0f; // 毎フレーム加算する時間
+		elapsedTime_ += addTime;
 		float frequency = 1.0f;	// 間隔
 		float amplitude = 10.0f;	// 振幅
 		float damping = 0.75f;	// 速度の減衰率
-		float maxTime = 1.0e6f;
+		float maxTime = 1.0e6f;	// バグ回避用の最大時間
 		if (elapsedTime_ >= maxTime) {
 			elapsedTime_ = 0.0f;
 		}
+		// オフセット
 		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
+		// 垂直ベクトル
 		Vector3 crossDirect = Vector3::Cross(bullet_->GetVelocity().Normalize(), Vector3::Right());
 
 		// 種類ごとの計算
 		switch (type)
 		{
-		case TrackingAttribute::kSuperior:
+		case TrackingAttribute::kSuperior:	// 優等
 			// 親加速度計算
 			parentAcceleration_ = CalcSuperiorAcceleration();
 			// 子加速度計算
@@ -87,10 +90,10 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			parentAcceleration_ += childAcceleration_;
 			parentAcceleration_ *= damping;
 			break;
-		case TrackingAttribute::kInferior:
+		case TrackingAttribute::kInferior:	// 劣等
 			parentAcceleration_ = CalcInferiorAcceleration();
 			break;
-		case TrackingAttribute::kGenius:
+		case TrackingAttribute::kGenius:	// 秀才
 			parentAcceleration_ = CalcGeniusAcceleration();
 			break;
 		default:
