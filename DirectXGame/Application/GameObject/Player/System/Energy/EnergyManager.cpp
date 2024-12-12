@@ -66,7 +66,8 @@ void PlayerContext::EnergyManager::ImGuiDraw()
 	// ダッシュ後の回復までの時間
 	ImGui::DragFloat("RecoveryFrame", &energy_.recoveryFrame, bar);
 	if (ImGui::Button("Overheat")) {
-		overheatTimer_.Start(60.0f * 3.0f);
+		const int32_t second = 3;	// 秒数
+		overheatTimer_.Start(60.0f * (float)second);
 		energy_.currentEnergy = 0.0f;
 	}
 }
@@ -77,8 +78,9 @@ void PlayerContext::EnergyManager::DecrementProcess(float value)
 	// 0を切った場合オーバーヒート
 	if (energy_.currentEnergy <= 0.0f) {
 		energy_.currentEnergy = 0.0f;
-		// ３秒オーバーヒート
-		overheatTimer_.Start(60.0f * 3.0f);
+		// オーバーヒート
+		int32_t second = 3;	// 秒数
+		overheatTimer_.Start(60.0f * (float)second);
 	}
 	// 回復するまでのクールタイム
 	quickBoostRecoveryCoolTime_.Start(energy_.recoveryFrame);

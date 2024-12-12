@@ -2,6 +2,9 @@
 #include "../IPlayerState.h"
 #include "Engine/LwLib/LwEnginePaths.h"
 
+/// <summary>
+/// 小ダッシュ状態
+/// </summary>
 class QuickBoostState : public IPlayerState
 {
 public: // 継承部

@@ -51,6 +51,8 @@ void BulletTrail::Update(ICamera* camera)
 	}
 
 	//polygon_->VertexDataReset();
+	// 削除するまでの時間
+	float deleteFrame = 1.0f;
 
 	// 弾がある場合
 	if (unit_) {
@@ -59,7 +61,7 @@ void BulletTrail::Update(ICamera* camera)
 		// 死亡処理
 		if (unit_.value()->IsDead()) {
 			unit_ = std::nullopt;
-			deleteTimer_.Start(1.0f);
+			deleteTimer_.Start(deleteFrame);
 			return;
 		}
 	}
@@ -78,7 +80,7 @@ void BulletTrail::Update(ICamera* camera)
 			for (int i = 0; i < deleteCount; ++i) {
 				trailPoints_.erase(trailPoints_.begin());
 			}
-			deleteTimer_.Start(1.0f);
+			deleteTimer_.Start(deleteFrame);
 		}
 	}
 

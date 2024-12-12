@@ -96,7 +96,8 @@ void PlayerContext::PlayerUIManager::EnergyUI()
 	Vector4 color = { 0.0f,1.0f,0.0f,1.0f };
 	// オーバーヒートしているなら色を赤に
 	if (player_->GetSystemFacede()->GetEnergy()->IsOverheat()) {
-		color = { 1.0f,0.0f,0.0f,1.0f };
+		Vector4 red = { 1.0f,0.0f,0.0f,1.0f };
+		color = red;
 	}
 	energyUI_.currentScale = Vector2::Lerp({ energyUI_.maxScale.x, 0.0f }, energyUI_.maxScale, t);
 	energyUI_.currentHP.sprite->SetSize(energyUI_.currentScale);

@@ -5,6 +5,9 @@
 class Player;
 class PlayerStateMachine;
 
+/// <summary>
+/// プレイヤーの基底ステート
+/// </summary>
 class IPlayerState
 {
 public:
@@ -44,10 +47,8 @@ public:
 	}
 
 protected:
-
+	// 現在のステート
 	PlayerState nowState_;
-
-protected:
 	// プレイヤー
 	Player* player_ = nullptr;
 	PlayerStateMachine* stateMachine_ = nullptr;

@@ -27,11 +27,8 @@ namespace PlayerContext {
 		/// </summary>
 		void ImGuiDraw();
 
-		Vector2 GetReticlePosition() { return screenPosition_; }
-
-	private: // ユーザー
-
 	public: // アクセッサ
+		Vector2 GetReticlePosition() { return screenPosition_; }
 		Vector3 GetWorldPosition() { return targetPosition_; }
 
 	private: // 

@@ -2,6 +2,9 @@
 #include "../IPlayerState.h"
 #include "Engine/LwLib/LwEnginePaths.h"
 
+/// <summary>
+/// ジャンプの上り状態
+/// </summary>
 class JumpingState : public IPlayerState
 {
 public: // 継承部

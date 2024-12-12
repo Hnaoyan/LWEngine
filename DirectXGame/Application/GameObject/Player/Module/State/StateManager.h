@@ -19,7 +19,7 @@ public:
 	/// </summary>
 	void Update();
 
-public:
+public: // アクセッサ
 	PlayerStateMachine* GetHorizontal() { return horizontalState_.get(); }
 	PlayerStateMachine* GetVertical() { return verticalState_.get(); }
 private:

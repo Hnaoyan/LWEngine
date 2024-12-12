@@ -14,7 +14,8 @@ void TrackingWaveringState::Enter()
 	curveDirect_ = 0;
 	curveProcess_ = std::bind(&TrackingWaveringState::LeftCurve, this);
 	//curveProcess_ = [&]() {LeftCurve(); };
-	curveFrame_ = 60.0f;
+	float curveMaxFrame = 60.0f;	// カーブタイマーのフレーム数
+	curveFrame_ = curveMaxFrame;
 	curveTimer_.Start(curveFrame_);
 
 }

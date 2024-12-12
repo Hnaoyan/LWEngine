@@ -46,7 +46,7 @@ private:
 	// 入力による切り替え
 	void InputSwitch();
 
-public:
+public: // アクセッサ
 	ICamera* GetCamera();
 	FollowCamera* GetFollowCamera() { return followCamera_.get(); }
 
@@ -63,11 +63,11 @@ private:
 	std::unique_ptr<FocusCamera> focusCamera_;
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
-	// 
+	// 半周カメラ
 	std::unique_ptr<OrbitCamera> orbitCamera_;
 	// サイドカメラ
 	std::unique_ptr<SideCamera> sideCamera_;
-
+	// 遷移カメラ
 	std::unique_ptr<TransitionCamera> transitionCamera_;
 
 	// カメラのリスト

@@ -9,7 +9,7 @@ void PlayerParticle::BulletEffect::Initialize(Model* model, uint32_t textureHand
 	data_.translate = {};
 	data_.radius = 1.0f;
 	data_.emit = 0;
-	data_.emitPattern = 2;
+	data_.emitPattern = kPlayerBullet;
 
 	RefreshData(data_);
 }

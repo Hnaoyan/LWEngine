@@ -10,9 +10,23 @@ class Player;
 class PlayerFootCollider
 {
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="player"></param>
 	void Initialize(Player* player);
+	/// <summary>
+	/// 更新
+	/// </summary>
 	void Update();
+	/// <summary>
+	/// 衝突
+	/// </summary>
+	/// <param name="target"></param>
 	void OnCollision(ColliderObject target);
+	/// <summary>
+	/// ImGui
+	/// </summary>
 	void ImGuiDraw();
 public: // アクセッサ
 	AABB* GetCollider() { return &collider_; }

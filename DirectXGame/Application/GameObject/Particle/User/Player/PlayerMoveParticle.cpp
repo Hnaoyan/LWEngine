@@ -4,13 +4,14 @@
 void PlayerParticle::MoveEffect::Initialize(Model* model, uint32_t textureHandle)
 {
 	GPUParticleEmitter::Initialize(model, textureHandle);
+
 	data_.count = 1;
 	data_.frequency = 0.1f;
 	data_.frequencyTime = 0.0f;
 	data_.translate = {};
 	data_.radius = 1.0f;
 	data_.emit = 0;
-	data_.emitPattern = 1;
+	data_.emitPattern = kPlayerMove;
 
 	RefreshData(data_);
 

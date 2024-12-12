@@ -18,7 +18,8 @@ void PlayerContext::AimManager::Initialize(Player* player)
 	// 親の設定
 	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.parentMatrix_ = &parentMatrix_;
-	offSetTransform_.transform_.translate = { 0.0f,0.0f,50.0f };
+	Vector3 offset = { 0.0f,0.0f,50.0f };
+	offSetTransform_.transform_.translate = offset;
 	offSetTransform_.UpdateMatrix();
 
 }

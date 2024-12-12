@@ -19,11 +19,16 @@ void TrackingMoveState::Enter()
 	// オフセット
 	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
-	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (1.0f / 300.0f);
+	// 減衰率
+	float damping = 1.0f / 300.0f;
+	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (damping);
 	bullet_->SetVelocity(newVelocity);
 
 	// 1.5秒で追従を緩くする（仮
-	looseTimer_.Start(90.0f);
+	float looseFrame = 90.0f;	// 緩くなるまでの時間
+	looseTimer_.Start(looseFrame);
+
+	elapsedTime_ = 0.0f;
 }
 
 void TrackingMoveState::Update(BulletStateMachine& stateMachine)
@@ -59,22 +64,45 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 		// 種類の受け取り
 		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
-		
+		// 時間
+		float addTime = 1.0f / 5.0f; // 毎フレーム加算する時間
+		elapsedTime_ += addTime;
+		float frequency = 1.0f;	// 間隔
+		float amplitude = 10.0f;	// 振幅
+		float damping = 0.75f;	// 速度の減衰率
+		float maxTime = 1.0e6f;	// バグ回避用の最大時間
+		if (elapsedTime_ >= maxTime) {
+			elapsedTime_ = 0.0f;
+		}
+		// オフセット
+		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
+		// 垂直ベクトル
+		Vector3 crossDirect = Vector3::Cross(bullet_->GetVelocity().Normalize(), Vector3::Right());
+
 		// 種類ごとの計算
 		switch (type)
 		{
-		case TrackingAttribute::kSuperior:
-			bullet_->SetAccelerate(CalcSuperiorAcceleration());
+		case TrackingAttribute::kSuperior:	// 優等
+			// 親加速度計算
+			parentAcceleration_ = CalcSuperiorAcceleration();
+			// 子加速度計算
+			childAcceleration_ = crossDirect.Normalize() * offset;
+			parentAcceleration_ += childAcceleration_;
+			parentAcceleration_ *= damping;
 			break;
-		case TrackingAttribute::kInferior:
-			bullet_->SetAccelerate(CalcInferiorAcceleration());
+		case TrackingAttribute::kInferior:	// 劣等
+			parentAcceleration_ = CalcInferiorAcceleration();
 			break;
-		case TrackingAttribute::kGenius:
-			bullet_->SetAccelerate(CalcGeniusAcceleration());
+		case TrackingAttribute::kGenius:	// 秀才
+			parentAcceleration_ = CalcGeniusAcceleration();
 			break;
 		default:
 			break;
 		}
+
+
+		// 加速度の設定
+		bullet_->SetAccelerate(parentAcceleration_);
 	}
 
 }

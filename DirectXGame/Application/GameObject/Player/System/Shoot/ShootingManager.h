@@ -30,12 +30,12 @@ namespace PlayerContext
 		void TrackingFire();
 		// 誘導の生成
 		void GenerateTracking(const Vector3& direct, TrackingAttribute type);
-
+		// 発射処理
 		void FireContainer();
 
-	public:
+	public: // アクセッサ
 		void SetAttackPattern(bool isAttack) { isChangeAttack_ = isAttack; }
-
+		void SetManager(BulletManager* manager) { bulletManager_ = manager; }
 	private:
 		// 撃つ種類
 		ShootType type_ = ShootType::kDefault;
@@ -44,8 +44,6 @@ namespace PlayerContext
 	private:
 		Player* player_ = nullptr;
 		BulletManager* bulletManager_ = nullptr;
-	public:
-		void SetManager(BulletManager* manager) { bulletManager_ = manager; }
 	};
 
 }

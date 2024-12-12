@@ -8,6 +8,8 @@
 
 GameObjectManager::GameObjectManager(GameSystem* system)
 {
+	// チェック
+	assert(system);
 	// ゲームオブジェクト
 	player_ = std::make_unique<Player>();
 	boss_ = std::make_unique<Boss>();
@@ -15,8 +17,6 @@ GameObjectManager::GameObjectManager(GameSystem* system)
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
-
-	gameSystem_ = system;
 }
 
 void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
@@ -56,23 +56,24 @@ void GameObjectManager::Update()
 {
 	// ゲームの判断
 #ifdef RELEASE
+	float waitFrame = 120.0f;
 	if (gameSystem_->IsReplayMode()) {
 		if ((player_->IsDead() || boss_->IsDead()) && isInGame_) {
 			isInGame_ = false;
-			waitingTimer_.Start(120.0f);
+			waitingTimer_.Start(waitFrame);
 		}
 	}
 	else {
 		// クリアしたタイミングの処理
 		if (player_->IsDead() && isInGame_) {
 			isInGame_ = false;
-			waitingTimer_.Start(120.0f);
-			gameOverTimer_.Start(120.0f);
+			waitingTimer_.Start(waitFrame);
+			gameOverTimer_.Start(waitFrame);
 		}
 		if (boss_->IsDead() && isInGame_) {
 			isInGame_ = false;
-			waitingTimer_.Start(120.0f);
-			gameClearTimer_.Start(120.0f);
+			waitingTimer_.Start(waitFrame);
+			gameClearTimer_.Start(waitFrame);
 		}
 	}
 
