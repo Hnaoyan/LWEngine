@@ -34,6 +34,11 @@ void TitleScene::Initialize()
 	SpriteManager::GetSprite("TitleButtonText")->SetSize(Vector2(240.0f, 120.0f) * 1.5f);
 	SpriteManager::GetSprite("TitleText")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 3.0f));
 
+	AddSprite("TL2/noise0.dds", "DDSNoise");
+	AddSprite("TL2/noise0.png", "PNGNoise");
+
+	SpriteManager::GetSprite("PNGNoise")->SetPosition(Vector2(520.0f, 0.0f));
+
 	//loaderThread.join();  // スレッドの完了を待つ
 	// 準備完了
 	isSceneReady_ = true;
