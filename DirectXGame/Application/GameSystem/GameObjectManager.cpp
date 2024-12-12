@@ -10,6 +10,7 @@ GameObjectManager::GameObjectManager(GameSystem* system)
 {
 	// チェック
 	assert(system);
+	gameSystem_ = system;
 	// ゲームオブジェクト
 	player_ = std::make_unique<Player>();
 	boss_ = std::make_unique<Boss>();
