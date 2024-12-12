@@ -27,12 +27,13 @@ namespace PlayerContext
 			bool isActive_ = false;
 			// 開始値
 			float start_ = 0.0f;
-
+			// 初期化
 			void Initialize() {
 				parameter = 0.0f;
 				width = 0.25f;
 				period = 60;
 			}
+			// 更新
 			void Update() {
 				// 1フレームでのパラメータ加算値
 				const float step = 2.0f * float(3.14f) / period;
@@ -45,8 +46,18 @@ namespace PlayerContext
 		};
 
 	public:
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="player"></param>
 		void Initialize(Player* player);
+		/// <summary>
+		/// 更新
+		/// </summary>
 		void Update();
+		/// <summary>
+		/// リセット
+		/// </summary>
 		void Reset();
 
 		WorldTransform bodyTransform_;

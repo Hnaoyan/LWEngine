@@ -27,7 +27,7 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 	followCamera_->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
 	// 注視点カメラ
 	focusCamera_->Initialize();
-	Vector3 focusCameraPosition = { 50.0f,0.0f,0.0f };
+	Vector3 focusCameraPosition = { 50.0f,0.0f,0.0f };	// カメラの座標
 	focusCamera_->transform_.translate = focusCameraPosition;
 	focusCamera_->SetFocusPoint(&gameManager->GetPlayer()->worldTransform_.transform_.translate);
 	// 半円カメラ
@@ -186,7 +186,8 @@ void CameraManager::ReplayCameraSwitcher()
 		// 入力による切り替わり
 		InputSwitch();
 		// 長押しの重なりを回避するためのタイマー
-		durationTimer_.Start(10.0f);
+		float durationFrame = 10.0f;
+		durationTimer_.Start(durationFrame);
 	}
 }
 

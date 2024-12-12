@@ -1,6 +1,9 @@
 #pragma once
 #include "../IPlayerState.h"
 
+/// <summary>
+/// 待機状態（Y軸
+/// </summary>
 class IdleVertical : public IPlayerState
 {
 public: // 継承部

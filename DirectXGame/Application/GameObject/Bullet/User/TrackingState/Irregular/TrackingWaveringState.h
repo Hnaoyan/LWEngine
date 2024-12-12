@@ -26,7 +26,7 @@ private:
 	// 揺らす基準のベクトル
 	Vector3 defaultDirect_{};
 	float waveCount_ = 0.0f;
-	float curveFrame_ = 60.0f;
+	float curveFrame_ = 0.0f;
 
 	// 正なら右 負なら左
 	int32_t curveDirect_ = 0;

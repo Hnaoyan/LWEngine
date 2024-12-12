@@ -20,7 +20,7 @@ private:
 	// シリアル番号
 	uint32_t serialNumber_ = 0u;
 	// ダメージ量
-	float damageRatio_ = 1.0f;
+	float damageRatio_ = 0.0f;
 
 public:
 	/// <summary>

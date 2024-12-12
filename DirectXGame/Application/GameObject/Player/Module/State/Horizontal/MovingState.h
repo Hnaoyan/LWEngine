@@ -2,6 +2,9 @@
 #include "../IPlayerState.h"
 #include "Engine/LwLib/LwEnginePaths.h"
 
+/// <summary>
+/// 通常移動状態
+/// </summary>
 class MovingState : public IPlayerState
 {
 public: // 継承部

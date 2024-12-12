@@ -1,6 +1,9 @@
 #pragma once
 #include "../IPlayerState.h"
 
+/// <summary>
+/// 落下状態
+/// </summary>
 class FallingState : public IPlayerState
 {
 public: // 継承部

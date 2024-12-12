@@ -14,27 +14,30 @@ public:
 	GameUIManager(GameSystem* gameSystem);
 	void Initialize();
 	void Draw(GameObjectManager* gameObjectManager);
-
+public:	// アクセッサ
 	void SetIsHudHide(bool isHide) { isHUDHide_ = isHide; }
 	bool IsHUDHide() { return isHUDHide_; }
-private:
-	// HUD
-	std::vector<GameUI::UIData> hudElements_;
-
+private:// SYSTEM
+	// HUDの追加
 	void AddHUD(std::string name, uint32_t texture);
-
-	GameUI::TextUI gameClear_ = {};
-	GameUI::TextUI gameOver_ = {};
-
-	GameUI::TextUI titleBack_ = {};
-	GameUI::TextUI replay_ = {};
-
-	GameUI::TextUI cameraChange_ = {};
-
+	// ゲームシステム
 	GameSystem* gameSystem_ = nullptr;
-
 	// HUDを消しておくかのフラグ
 	bool isHUDHide_ = false;
+
+private: // UI
+	// HUD
+	std::vector<GameUI::UIData> hudElements_;
+	// クリアテキスト
+	GameUI::TextUI gameClear_ = {};
+	// オーバーテキスト
+	GameUI::TextUI gameOver_ = {};
+	// タイトルに戻るテキスト
+	GameUI::TextUI titleBack_ = {};
+	// リプレイテキスト
+	GameUI::TextUI replay_ = {};
+	// カメラ変更テキスト
+	GameUI::TextUI cameraChange_ = {};
 
 private:
 	/// <summary>

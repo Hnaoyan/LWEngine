@@ -7,6 +7,9 @@ class Player;
 
 namespace PlayerParticle
 {
+	/// <summary>
+	/// プレイヤー用のコンポーネント
+	/// </summary>
 	class EmitterComponent
 	{
 	public:
@@ -14,7 +17,9 @@ namespace PlayerParticle
 	protected:
 		Player* player_ = nullptr;
 	};
-
+	/// <summary>
+	/// 移動エフェクト
+	/// </summary>
 	class MoveEffect : public GPUParticleEmitter, public EmitterComponent
 	{
 	public:
@@ -25,7 +30,9 @@ namespace PlayerParticle
 	private:
 
 	};
-
+	/// <summary>
+	/// 弾のエフェクト
+	/// </summary>
 	class BulletEffect : public GPUParticleEmitter, public EmitterComponent
 	{
 	public:

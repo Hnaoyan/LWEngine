@@ -42,10 +42,10 @@ public:
 	void SetBullet(IBullet* bullet) { bullet_ = bullet; }
 	std::optional<TrackingState> GetChangeRequest() { return request_; }
 protected:
+	// 弾のポインタ
 	IBullet* bullet_ = nullptr;
 	// ステート変更先＋リクエストフラグ
 	std::optional<TrackingState> request_ = std::nullopt;
-
-	// 変更タイマー
+	// 変更用のタイマー
 	FrameTimer timer_;
 };

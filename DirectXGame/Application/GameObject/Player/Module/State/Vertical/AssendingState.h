@@ -1,6 +1,9 @@
 #pragma once
 #include "../IPlayerState.h"
 
+/// <summary>
+/// 上昇状態
+/// </summary>
 class AssendingState : public IPlayerState
 {
 public: // 継承部

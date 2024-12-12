@@ -2,7 +2,8 @@
 
 void PlayerFacade::Initialize(Player* player)
 {
-	healthManager_.Initialize(player, 20);
+	int32_t maxHP = 20;
+	healthManager_.Initialize(player, maxHP);
 	particleManager_.Initialize(player);
 	energyManager_.Initialize(player);
 	uiManager_.Initialize(player);

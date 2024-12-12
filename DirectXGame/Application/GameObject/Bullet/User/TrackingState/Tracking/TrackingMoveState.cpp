@@ -19,11 +19,14 @@ void TrackingMoveState::Enter()
 	// オフセット
 	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
-	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (1.0f / 300.0f);
+	// 減衰率
+	float damping = 1.0f / 300.0f;
+	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (damping);
 	bullet_->SetVelocity(newVelocity);
 
 	// 1.5秒で追従を緩くする（仮
-	looseTimer_.Start(90.0f);
+	float looseFrame = 90.0f;	// 緩くなるまでの時間
+	looseTimer_.Start(looseFrame);
 
 	elapsedTime_ = 0.0f;
 }
@@ -61,11 +64,13 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 		// 種類の受け取り
 		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
-		
+		// 時間
 		elapsedTime_ += 1.0f / 5.0f;
-		float frequency = 1.0f;
-		float amplitude = 10.0f;
-		if (elapsedTime_ >= 1.0e6f) {
+		float frequency = 1.0f;	// 間隔
+		float amplitude = 10.0f;	// 振幅
+		float damping = 0.75f;	// 速度の減衰率
+		float maxTime = 1.0e6f;
+		if (elapsedTime_ >= maxTime) {
 			elapsedTime_ = 0.0f;
 		}
 		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
@@ -80,7 +85,7 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			// 子加速度計算
 			childAcceleration_ = crossDirect.Normalize() * offset;
 			parentAcceleration_ += childAcceleration_;
-			parentAcceleration_ *= 0.75f;
+			parentAcceleration_ *= damping;
 			break;
 		case TrackingAttribute::kInferior:
 			parentAcceleration_ = CalcInferiorAcceleration();

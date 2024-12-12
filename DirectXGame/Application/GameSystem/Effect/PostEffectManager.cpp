@@ -14,11 +14,15 @@ PostEffectManager::PostEffectManager()
 	InitializeGlobalValue();
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	// ブルーム
-	bloomData_.sigma = 1.5f;
-	bloomData_.threshold = 0.75f;
+	float sigma = 1.5f;	// シグマの値
+	float threshold = 0.75f;	// 閾値
+	bloomData_.sigma = sigma;
+	bloomData_.threshold = threshold;
 	// ブラー
-	sDashEffect.data.centerPoint = { 0.5f,0.5f };
-	sDashEffect.data.samplesNum = 4;
+	Vector2 center = { 0.5f,0.5f };	// センターの値
+	int32_t sampleNumber = 4;	// サンプル数
+	sDashEffect.data.centerPoint = center;
+	sDashEffect.data.samplesNum = sampleNumber;
 	// ビネット
 	sDamageEffect.data.color = instance->GetValue<Vector3>("PostEffect", "VigColor");
 	sDamageEffect.data.powValue = instance->GetValue<float>("PostEffect", "VigPow");
@@ -34,10 +38,12 @@ void PostEffectManager::Initialize(GameSystem* system)
 
 void PostEffectManager::Update()
 {
+	// リプレイ中なら
 	if (gameSystem_->GetReplayManager()->IsReplayNow()) {
 		return;
 	}
 
+	// スローモーション
 	if (sSlowEffect.timer.IsActive()) {
 		sSlowEffect.Update();
 		nowEffect = Pipeline::PostEffectType::kGrayscaleBloom;
@@ -65,6 +71,7 @@ void PostEffectManager::Update()
 	{
 		nowEffect = Pipeline::PostEffectType::kBloom;
 	}
+	// 現在のエフェクトの種類設定
 	PostEffectRender::sPostEffect = nowEffect;
 
 	// 値の渡す処理
@@ -74,7 +81,6 @@ void PostEffectManager::Update()
 	desc.vignette = sDamageEffect.data;
 	desc.grayscale = sSlowEffect.data;
 	PostEffectRender::GetInstance()->Update(desc);
-
 }
 
 void PostEffectManager::ImGuiDraw()

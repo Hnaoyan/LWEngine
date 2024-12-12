@@ -58,6 +58,9 @@ public:
 private:
 	// システムファサードクラス
 	std::unique_ptr<PlayerFacade> facadeSystem_;
+	// ステート
+	std::unique_ptr<PlayerStateManager> stateManager_;
+	// マテリアル
 	std::unique_ptr<Material> material_;
 	// 操作関係
 	OparationManager oparationManager_;
@@ -66,9 +69,7 @@ private:
 	// AABBコライダー
 	AABB collider_;
 
-	// ステート
-	std::unique_ptr<PlayerStateManager> stateManager_;
-	
+	// 読み込み用パス
 	char path[256];
 	std::string filePath;
 
@@ -76,7 +77,9 @@ private:
 	float energyRecover_ = 10.0f;
 
 public:
+	// 無敵時間
 	float invisibleFrame_ = 30.0f;
+	// 追従キャンセルの距離
 	float trackCancelDistance = 75.0f;
 
 public: // アクセッサ
@@ -107,9 +110,9 @@ public: // アクセッサ
 private: // USER
 	// グローバル変数関係の初期化
 	void InitializeGlobalValue() override;
-
+	// 衝突の座標修正
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
-
+	// 現在のステート
 	void NowState();
 
 public:

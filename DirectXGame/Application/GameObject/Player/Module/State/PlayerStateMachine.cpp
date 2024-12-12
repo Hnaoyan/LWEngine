@@ -10,6 +10,7 @@ void PlayerStateMachine::Initialize(Player* player)
 
 void PlayerStateMachine::Update()
 {
+	// 変更処理
 	if (request_) {
 		// 元の終了
 		if (currentState_) {
@@ -24,6 +25,7 @@ void PlayerStateMachine::Update()
 		// リクエストリセット
 		request_ = std::nullopt;
 	}
+	// 通常処理
 	if (currentState_) {
 		currentState_->InputHandle();
 		currentState_->Update();

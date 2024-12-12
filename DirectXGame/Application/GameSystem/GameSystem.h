@@ -16,7 +16,7 @@ class GameSystem : public Singleton<GameSystem>
 public:
 	// ゲームの速さ
 	static float sSpeedFactor;
-	inline static constexpr float sDefaultGameSpeed = 1.0f;
+	inline static constexpr float sDefaultGameSpeed = 1.0f;	// 本来の速度の値
 	/// <summary>
 	/// ゲームの速さとデルタタイムでの値計算
 	/// </summary>

@@ -217,7 +217,8 @@ void Player::OnCollision(ColliderObject target)
 		{
 			facadeSystem_->GetDudgeManager()->InvisibleExcept(invisibleFrame_);
 			facadeSystem_->GetEnergy()->RecoverGage(energyRecover_);
-			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_ + 45.0f);
+			float returnFrame = 45.0f;
+			PostEffectManager::sSlowEffect.Initialize(invisibleFrame_ + returnFrame);
 		}
 		// ジャスト回避後の猶予
 		else if (facadeSystem_->GetDudgeManager()->IsInvisibleAfter()) {
@@ -350,7 +351,7 @@ void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& mi
 	float correctValue = 0.025f;
 
 	Vector3 playerScale = worldTransform_.transform_.scale;
-	playerScale.x += correctValue + 0.025f;
+	playerScale.x += (correctValue + correctValue);
 	playerScale.y += correctValue;
 	playerScale.z += correctValue;
 

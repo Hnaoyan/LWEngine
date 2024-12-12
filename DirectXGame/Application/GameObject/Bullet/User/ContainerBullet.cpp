@@ -9,7 +9,8 @@ void ContainerBullet::Initialize()
 	// 基底の初期化・コライダーのマスク設定
 	IBullet::Initialize();
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
-	fireTimer_.Start(30.0f);
+	const float fireDuration = 30.0f;	// 発射間隔の初期値
+	fireTimer_.Start(fireDuration);
 	
 }
 
@@ -20,12 +21,14 @@ void ContainerBullet::Update()
 	// 発射処理
 	if (fireTimer_.IsEnd()) {
 		GenerateBullet();
-		fireTimer_.Start(60.0f);
+		const float fireDuration = 60.0f;
+		fireTimer_.Start(fireDuration);
 		deleteCount_++;
 	}
 
 	// 削除処理
-	if (deleteCount_ > 5) {
+	const int32_t maxCount = 5;
+	if (deleteCount_ > maxCount) {
 		isDead_ = true;
 	}
 
@@ -69,7 +72,7 @@ void ContainerBullet::GenerateBullet()
 		//transform.translate += Vector3::Normalize(Vector3(0.0f, 0.0f, -1.0f)) * offsetValue;
 		// 生成部分
 		BulletBuilder builder;
-		builder.SetTargetObject(player->GetBoss()).SetDirect(Vector3(0.0f, 0.0f, -1.0f)).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
+		builder.SetTargetObject(player->GetBoss()).SetDirect(Vector3::Backward()).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
 		builder.SetParentAttribute(1);
 		cluster_->AddBullet(builder, BulletType::kTracking);
 	}
@@ -81,7 +84,7 @@ void ContainerBullet::GenerateBullet()
 		//transform.translate += Vector3::Normalize(Vector3(0.0f,0.0f,-1.0f)) * offsetValue;
 		// 生成部分
 		BulletBuilder builder;
-		builder.SetTargetObject(boss->GetPlayer()).SetDirect(Vector3(0.0f, 0.0f, -1.0f)).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
+		builder.SetTargetObject(boss->GetPlayer()).SetDirect(Vector3::Backward()).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
 		builder.SetParentAttribute(0);
 		cluster_->AddBullet(builder, BulletType::kTracking);
 	}

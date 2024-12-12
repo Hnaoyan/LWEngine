@@ -22,7 +22,7 @@ public:
 	/// </summary>
 	/// <param name="newState"></param>
 	void ChangeRequest(PlayerStateLists request);
-
+public:	// アクセッサ
 	IPlayerState* GetState() { return currentState_.get(); }
 	PlayerState GetVariant() { return currentState_->GetNowState(); }
 private:

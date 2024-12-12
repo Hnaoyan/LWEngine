@@ -41,8 +41,8 @@ void PlayerContext::ShootingManager::TrackingFire()
 	GenerateTracking({ 1.0f,0.5f,0.0f }, TrackingAttribute::kSuperior);
 	GenerateTracking({ -1.0f,0.5f,0.0f }, TrackingAttribute::kSuperior);
 
-	GenerateTracking({ 1.0f,0.0f,0.0f }, TrackingAttribute::kSuperior);
-	GenerateTracking({ -1.0f,0.0f,0.0f }, TrackingAttribute::kSuperior);
+	GenerateTracking(Vector3::Right(), TrackingAttribute::kSuperior);
+	GenerateTracking(Vector3::Left(), TrackingAttribute::kSuperior);
 }
 
 void PlayerContext::ShootingManager::GenerateTracking(const Vector3& direct, TrackingAttribute type)
@@ -74,7 +74,8 @@ void PlayerContext::ShootingManager::FireContainer()
 	transform.scale = { 0.2f,0.2f,0.2f };
 	// 生成処理
 	BulletBuilder builder;
-	builder.SetTargetObject(player_).SetDirect(direct).SetSpeed(10.0f).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
+	float containerSpeed = 10.0f;
+	builder.SetTargetObject(player_).SetDirect(direct).SetSpeed(containerSpeed).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
 	builder.SetParentAttribute(1);
 	builder.SetCluster(bulletManager_->FindCluster("Player:TrackingBullet"));
 	bulletManager_->FindCluster("Player:ContainerBullet")->AddBullet(builder, BulletType::kContainer);
