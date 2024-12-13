@@ -9,6 +9,7 @@
 ## 開発環境
 - 環境
   - DirectX12
+  - WindowsSDKバージョン:10.0 (最新のインストールされているバージョン)
 - 外部ライブラリ
   - DirectXTex
   - Assimp
