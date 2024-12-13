@@ -21,7 +21,7 @@ void JumpingState::Update()
 		return;
 	}
 	// 落下処理
-	float gravity = GlobalVariables::GetInstance()->GetValue<float>("Player", "FallGravity");
+	const float gravity = GlobalVariables::GetInstance()->GetValue<float>("Player", "FallGravity");
 	player_->velocity_.y += gravity * GameSystem::GameSpeedFactor();
 }
 

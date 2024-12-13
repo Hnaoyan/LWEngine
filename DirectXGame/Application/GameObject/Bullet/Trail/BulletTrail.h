@@ -36,6 +36,7 @@ public:
 public:
 	// ポリゴン
 	std::unique_ptr<Trail3D> polygon_;
+public: // アクセッサ
 	// 長さ設定
 	void SetLength(int32_t length) { maxLength = length; }
 	// 弾
@@ -66,6 +67,9 @@ public:
 	void SetAttribute(TrackingAttribute type) { attribute_ = type; }
 	TrackingAttribute GetAttribute() const { return attribute_; }
 private:
+	/// <summary>
+	/// グローバル変数の初期化
+	/// </summary>
 	void InitializeGlobalValue();
 
 private: // SYSTEM

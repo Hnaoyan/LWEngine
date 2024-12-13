@@ -71,5 +71,8 @@ private:
 	std::unique_ptr<BulletStateMachine> stateMachine_;
 
 private:
+	/// <summary>
+	/// セレクターの変更
+	/// </summary>
 	void ChangeSelecter();
 };

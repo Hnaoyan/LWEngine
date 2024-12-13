@@ -45,8 +45,6 @@ public:
 	virtual void AddBullet(std::unique_ptr<IBullet> bullet);
 	virtual void AddBullet(const BulletBuilder& builder, BulletType type);
 
-	void SetBombCluster(BulletBombCluster* bombCluster) { bombCluster_ = bombCluster; }
-
 protected:
 	// 軌跡の色
 	Vector3 trailColor_{ 1.0f,1.0f,1.0f };
@@ -69,5 +67,6 @@ public: // アクセッサ系
 	void SetGPUParticle(GPUParticleManager* gpuParticle) { gpuParticle_ = gpuParticle; }
 	void SetColor(const Vector4& color) { material_->color_ = color; }
 	void SetTrailColor(const Vector3& color) { trailColor_ = color; }
+	void SetBombCluster(BulletBombCluster* bombCluster) { bombCluster_ = bombCluster; }
 
 };

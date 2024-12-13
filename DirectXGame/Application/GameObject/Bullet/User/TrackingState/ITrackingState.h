@@ -36,10 +36,10 @@ public:
 public:
 	// リクエストのリセット処理
 	void RequestReset() { request_ = std::nullopt; }
-	void SetRequeset(TrackingState state) { request_ = state; }
 
-public:
+public: // アクセッサ
 	void SetBullet(IBullet* bullet) { bullet_ = bullet; }
+	void SetRequeset(TrackingState state) { request_ = state; }
 	std::optional<TrackingState> GetChangeRequest() { return request_; }
 protected:
 	// 弾のポインタ
