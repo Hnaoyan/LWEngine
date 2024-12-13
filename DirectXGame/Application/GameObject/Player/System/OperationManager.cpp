@@ -109,7 +109,8 @@ void OparationManager::InputUpdate()
 		bool isEnergy = /*player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost() && */!player_->GetSystemFacede()->GetEnergy()->IsOverheat();
 		// ロングダッシュにするかどうか
 		if (isEnergy && !longDashTimer_.IsActive()) {
-			longDashTimer_.Start(12.0f);
+			float dashFrame = 12.0f;
+			longDashTimer_.Start(dashFrame);
 		}
 	}
 

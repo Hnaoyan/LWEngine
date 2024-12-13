@@ -29,32 +29,32 @@ public:
 	struct ChunkHeader
 	{
 		char id[4];	// チャンク毎のID
-		int32_t size;	// チャンクサイズ
+		int32_t size = 0;	// チャンクサイズ
 	};
 
 	// RIFFヘッダチャンク
 	struct RiffHeader
 	{
-		ChunkHeader chunk;	// "RIFF"
+		ChunkHeader chunk{};	// "RIFF"
 		char type[4];
 	};
 
 	// FMTチャンク
 	struct FormaChunk
 	{
-		ChunkHeader chunk;	// "fmt"
-		WAVEFORMATEX fmt;	// 波形フォーマット
+		ChunkHeader chunk{};	// "fmt"
+		WAVEFORMATEX fmt{};	// 波形フォーマット
 	};
 
 	// 音声データ
 	struct SoundData
 	{
 		// 波形フォーマット
-		WAVEFORMATEX wfex;
+		WAVEFORMATEX wfex{};
 		// バッファの先頭アドレス
-		BYTE* pBuffer;
+		BYTE* pBuffer = nullptr;
 		// バッファのサイズ
-		unsigned int bufferSize;
+		unsigned int bufferSize = 0;
 		// 名前
 		std::string name_;
 	};
