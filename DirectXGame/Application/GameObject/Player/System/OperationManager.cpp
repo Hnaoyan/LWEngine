@@ -78,7 +78,7 @@ void OparationManager::InputUpdate()
 	}
 	direct = Vector3::Normalize(direct);
 	// 速度の計算
-	float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");
+	const float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");
 	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, velocityDecay);
 	player_->velocity_.z = LwLib::Lerp(player_->velocity_.z, 0, velocityDecay);
 
@@ -109,7 +109,7 @@ void OparationManager::InputUpdate()
 		bool isEnergy = /*player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost() && */!player_->GetSystemFacede()->GetEnergy()->IsOverheat();
 		// ロングダッシュにするかどうか
 		if (isEnergy && !longDashTimer_.IsActive()) {
-			float dashFrame = 12.0f;
+			const float dashFrame = 12.0f;
 			longDashTimer_.Start(dashFrame);
 		}
 	}

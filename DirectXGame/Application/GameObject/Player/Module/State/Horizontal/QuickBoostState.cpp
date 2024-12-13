@@ -16,7 +16,7 @@ void QuickBoostState::Initialize()
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ leftStick_.x,0,leftStick_.y }, rotateY);
 	direct = rotateVector;
 
-	float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "DashPower");
+	const float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "DashPower");
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
 	changeTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "QuickBoostEndTime"));

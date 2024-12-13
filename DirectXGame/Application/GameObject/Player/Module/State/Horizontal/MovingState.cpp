@@ -23,7 +23,7 @@ void MovingState::Update()
 		player_->worldTransform_.transform_.rotate.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 	}
 
-	float speed = 10.0f;
+	const float speed = 10.0f;
 	//float slowFactor = 0.2f;
 
 	// 入力しているかどうか

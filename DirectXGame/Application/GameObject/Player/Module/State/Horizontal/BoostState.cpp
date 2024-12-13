@@ -18,7 +18,7 @@ void BoostState::Initialize()
 	direct = rotateVector;
 
 	// 速度の計算
-	float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "BoostDashPower");
+	const float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "BoostDashPower");
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
 	changeTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "BoostEndTime"));
