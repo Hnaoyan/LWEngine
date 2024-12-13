@@ -46,11 +46,20 @@ public: // USER
 	void AddCluster(const std::string& tag);
 	void AddCluster(const std::string& tag, Model* model);
 	void AddCluster(const std::string& tag, Model* model, uint32_t texture);
-	//void AddCluster();
+
+	/// <summary>
+	/// クラスターの検索
+	/// </summary>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	IBulletCluster* FindCluster(const std::string& tag);
+	/// <summary>
+	/// クラスターの削除
+	/// </summary>
+	/// <param name="tag"></param>
+	void DeleteCluster(const std::string& tag);
 public: // アクセッサ
 
-	IBulletCluster* FindCluster(const std::string& tag);
-	void DeleteCluster(const std::string& tag);
 
 	// セッター
 	void SetPlayer(Player* player) { player_ = player; }

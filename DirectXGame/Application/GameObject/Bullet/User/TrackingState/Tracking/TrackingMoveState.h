@@ -17,9 +17,9 @@ private:
 	Vector3 parentAcceleration_{};
 	// 子となる加速度
 	Vector3 childAcceleration_{};
-
-	FrameTimer looseTimer_;	// 追従解除が緩くなるまでのタイマー
-
+	// 追従解除が緩くなるまでのタイマー
+	FrameTimer looseTimer_;	
+	//　現在の時間
 	float elapsedTime_ = 0.0f;
 
 private: // 計算関数
