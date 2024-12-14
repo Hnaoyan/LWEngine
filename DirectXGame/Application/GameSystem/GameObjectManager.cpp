@@ -12,8 +12,6 @@ GameObjectManager::GameObjectManager(GameSystem* system)
 	assert(system);
 	gameSystem_ = system;
 	// ゲームオブジェクト
-	player_ = std::make_unique<Player>();
-	boss_ = std::make_unique<Boss>();
 	bulletManager_ = std::make_unique<BulletManager>();
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
@@ -24,26 +22,35 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 {
 	// チェック
 	assert(gpuManager);
+	gameObjects_.clear();	// オブジェクトリセット
 	gpuManager_ = gpuManager;
 
 	skyDome_->Initialize(ModelManager::GetModel("SkyDome"));
+
+	std::unique_ptr<Player> player = std::make_unique<Player>();
+	std::unique_ptr<Boss> boss = std::make_unique<Boss>();
+
 	// 弾
-	bulletManager_->SetPlayer(player_.get());
-	bulletManager_->SetBoss(boss_.get());
+	bulletManager_->SetPlayer(player.get());
+	bulletManager_->SetBoss(boss.get());
 	bulletManager_->SetGPUParticle(gpuManager_);
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	// プレイヤー
-	player_->PreInitialize(camera, gpuManager_);
-	player_->Initialize(ModelManager::GetModel("Player"));
-	player_->PointerInitialize(bulletManager_.get(), boss_.get(), nullptr);
+	player->PreInitialize(camera, gpuManager_);
+	player->Initialize(ModelManager::GetModel("Player"));
+	player->PointerInitialize(bulletManager_.get(), boss.get(), nullptr);
+
 
 	// ボス
-	boss_->SetGPUParticle(gpuManager_);
-	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
-	boss_->SetPlayer(player_.get());
-	boss_->SetBulletManager(bulletManager_.get());
-	boss_->SetCamera(camera);
+	boss->SetGPUParticle(gpuManager_);
+	boss->Initialize(ModelManager::GetModel("BossEnemy"));
+	boss->SetPlayer(player.get());
+	boss->SetBulletManager(bulletManager_.get());
+	boss->SetCamera(camera);
+
+	gameObjects_.emplace("Boss", std::move(boss));
+	gameObjects_.emplace("Player", std::move(player));
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -52,6 +59,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	isChangeInput_ = false;
 	isInGame_ = true;
 	isGameEnd_ = false;
+	isClear_ = false;
 }
 
 void GameObjectManager::Update()
@@ -60,38 +68,32 @@ void GameObjectManager::Update()
 #ifdef RELEASE
 	float waitFrame = 120.0f;
 	if (gameSystem_->IsReplayMode()) {
-		if ((player_->IsDead() || boss_->IsDead()) && isInGame_) {
+		if ((gameObjects_["Player"]->IsDead() || gameObjects_["Boss"]->IsDead()) && isInGame_) {
 			isInGame_ = false;
 			waitingTimer_.Start(waitFrame);
 		}
 	}
 	else {
 		// クリアしたタイミングの処理
-		if (player_->IsDead() && isInGame_) {
+		if (gameObjects_["Player"]->IsDead() && isInGame_) {
 			//isInGame_ = false;
 			if (!waitingTimer_.IsActive()) {
 				waitingTimer_.Start(waitFrame);
 				isGameEnd_ = true;
-			}
-			if (!gameOverTimer_.IsActive()) {
-				gameOverTimer_.Start(waitFrame);
+				isClear_ = true;
 			}
 		}
-		if (boss_->IsDead() && isInGame_) {
+		if (gameObjects_["Boss"]->IsDead() && isInGame_) {
 			//isInGame_ = false;
 			if (!waitingTimer_.IsActive()) {
 				waitingTimer_.Start(waitFrame);
 				isGameEnd_ = true;
-			}
-			if (!gameClearTimer_.IsActive()) {
-				gameClearTimer_.Start(waitFrame);
+				isClear_ = false;
 			}
 		}
 	}
 
 	// UIが出ている時間
-	gameClearTimer_.Update();
-	gameOverTimer_.Update();
 	waitingTimer_.Update();
 
 	// ゲーム終了のタイミング
@@ -123,15 +125,6 @@ void GameObjectManager::Update()
 	}
 
 #endif // RELEASE
-	//if (!gameSystem_->IsReplayMode()) {
-	//	if (PostEffectManager::sGameVigenette.timer.IsEnd()) {
-	//		isGame = true;
-	//		gameSystem_->GetReplayManager()->RecordSetUp();
-	//	}
-	//	if (!isGame) {
-	//		return;
-	//	}
-	//}
 
 	// オブジェクトの更新
 	UpdateObject();
@@ -151,21 +144,20 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	terrainManager_->Draw(drawDesc);
 	// 弾
 	bulletManager_->Draw(drawDesc);
-	// ボス
-	boss_->Draw(drawDesc);
-	// プレイヤー
-	player_->Draw(drawDesc);
+	// 描画
+	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it).second->Draw(drawDesc);
+	}
 }
 
 void GameObjectManager::UIDraw()
 {
 	// それぞれのUI
 	if (!gameSystem_->GetReplayManager()->IsReplayNow()) {
-		player_->UISpriteDraw();
-	}
-
-	if (boss_) {
-		boss_->UIDraw();
+		// UI描画
+		for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+			(*it).second->UIDraw();
+		}
 	}
 }
 
@@ -190,11 +182,9 @@ void GameObjectManager::ImGuiDraw()
 	}
 
 	ImGui::End();
-
-	// 地形
-	// ゲームオブジェクト
-	player_->ImGuiDraw();
-	boss_->ImGuiDraw();
+	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it).second->ImGuiDraw();
+	}
 }
 
 void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
@@ -203,8 +193,9 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	assert(collisionManager);
 
 	// 全ての衝突設定
-	player_->SetCollier(collisionManager);
-	boss_->SetCollier(collisionManager);
+	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it).second->SetCollier(collisionManager);
+	}
 
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);
@@ -216,8 +207,9 @@ void GameObjectManager::GameSetUp()
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 	// 速度の初期化
 	gameSystem_->sSpeedFactor = 1.0f;
-	boss_->SetIsAction(true);
-	boss_->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+	// ボスのセットアップ
+	GetBoss()->SetIsAction(true);
+	GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }
 
 void GameObjectManager::UpdateObject()
@@ -226,9 +218,10 @@ void GameObjectManager::UpdateObject()
 	skyDome_->Update();
 	// ゲームのオブジェクト
 	if (isInGame_) {
-		// オブジェクト
-		player_->Update();
-		boss_->Update();
+		// 更新
+		for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+			(*it).second->Update();
+		}
 	}
 
 	// 地形

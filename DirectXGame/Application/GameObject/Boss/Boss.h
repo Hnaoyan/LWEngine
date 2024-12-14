@@ -53,7 +53,7 @@ public:
 	/// <summary>
 	/// UI描画
 	/// </summary>
-	void UIDraw();
+	void UIDraw() override;
 	/// <summary>
 	/// リセット
 	/// </summary>

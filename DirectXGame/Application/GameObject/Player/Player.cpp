@@ -231,7 +231,7 @@ void Player::OnCollision(ColliderObject target)
 	}
 }
 
-void Player::UISpriteDraw()
+void Player::UIDraw()
 {
 	facadeSystem_->GetUI()->Draw();
 }

@@ -67,6 +67,8 @@ public:
 	/// </summary>
 	/// <param name="collisionManager"></param>
 	virtual void SetCollier(CollisionManager* collisionManager) = 0;
+
+	virtual void UIDraw() {};
 protected:
 	/// <summary>
 	/// グローバル変数の初期化

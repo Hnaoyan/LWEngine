@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// UI描画
 	/// </summary>
-	void UISpriteDraw();
+	void UIDraw() override;
 	/// <summary>
 	/// コライダーの設定関数
 	/// </summary>

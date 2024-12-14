@@ -51,12 +51,12 @@ public:
 	void UpdateObject();
 public:
 	// プレイヤー
-	Player* GetPlayer() { return player_.get(); }
-	Boss* GetBoss() { return boss_.get(); }
+	Player* GetPlayer() { return dynamic_cast<Player*>(gameObjects_["Player"].get()); }
+	Boss* GetBoss() { return dynamic_cast<Boss*>(gameObjects_["Boss"].get()); }
 
 	// ゲームシーンベタ書き部分用のフラグ
-	bool IsUIGameClear() { return gameClearTimer_.IsActive(); }
-	bool IsUIGameOver() { return gameOverTimer_.IsActive(); }
+	bool IsUIGameClear() { return waitingTimer_.IsActive() && isClear_; }
+	bool IsUIGameOver() { return waitingTimer_.IsActive() && !isClear_; }
 	bool IsSceneChange() const { return isSceneChange_; }
 	bool IsSceneReplay() const { return isSceneReplay_; }
 	bool IsChange() const { return isChangeInput_; }
@@ -70,18 +70,15 @@ private: // ゲームクリアなどの部分
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	bool isChangeInput_ = false;	// シーン変更の受付フラグ
 	bool isGameEnd_ = false;	// ゲーム終了確認フラグ
+	bool isClear_ = false;	// クリアならtrue・ゲームオーバーならfalse
 
-	FrameTimer gameOverTimer_;
-	FrameTimer gameClearTimer_;
 	FrameTimer waitingTimer_;	// ゲーム終了後の待機時間
-	FrameTimer gameWaitTimer_;
+
 	GameSystem* gameSystem_ = nullptr;
 private:
 	//std::vector<IGameObject> gameObjects_;
 	std::unordered_map<std::string, std::unique_ptr<IGameObject>> gameObjects_;
 	// ゲームのユニット
-	std::unique_ptr<Player> player_;
-	std::unique_ptr<Boss> boss_;
 	std::unique_ptr<BulletManager> bulletManager_;
 
 	// 地形や背景
