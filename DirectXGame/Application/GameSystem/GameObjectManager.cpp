@@ -51,6 +51,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	isSceneChange_ = false;
 	isChangeInput_ = false;
 	isInGame_ = true;
+	isGameEnd_ = false;
 }
 
 void GameObjectManager::Update()
@@ -67,14 +68,24 @@ void GameObjectManager::Update()
 	else {
 		// クリアしたタイミングの処理
 		if (player_->IsDead() && isInGame_) {
-			isInGame_ = false;
-			waitingTimer_.Start(waitFrame);
-			gameOverTimer_.Start(waitFrame);
+			//isInGame_ = false;
+			if (!waitingTimer_.IsActive()) {
+				waitingTimer_.Start(waitFrame);
+				isGameEnd_ = true;
+			}
+			if (!gameOverTimer_.IsActive()) {
+				gameOverTimer_.Start(waitFrame);
+			}
 		}
 		if (boss_->IsDead() && isInGame_) {
-			isInGame_ = false;
-			waitingTimer_.Start(waitFrame);
-			gameClearTimer_.Start(waitFrame);
+			//isInGame_ = false;
+			if (!waitingTimer_.IsActive()) {
+				waitingTimer_.Start(waitFrame);
+				isGameEnd_ = true;
+			}
+			if (!gameClearTimer_.IsActive()) {
+				gameClearTimer_.Start(waitFrame);
+			}
 		}
 	}
 
@@ -91,6 +102,7 @@ void GameObjectManager::Update()
 		else {
 			isChangeInput_ = true;
 		}
+		isInGame_ = false;
 	}
 	
 	// タイトルかリプレイかを選択できるように
@@ -140,9 +152,7 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	// 弾
 	bulletManager_->Draw(drawDesc);
 	// ボス
-	if (boss_) {
-		boss_->Draw(drawDesc);
-	}
+	boss_->Draw(drawDesc);
 	// プレイヤー
 	player_->Draw(drawDesc);
 }
@@ -184,9 +194,7 @@ void GameObjectManager::ImGuiDraw()
 	// 地形
 	// ゲームオブジェクト
 	player_->ImGuiDraw();
-	if (boss_) {
-		boss_->ImGuiDraw();
-	}
+	boss_->ImGuiDraw();
 }
 
 void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
@@ -195,12 +203,9 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	assert(collisionManager);
 
 	// 全ての衝突設定
-	if (player_) {
-		player_->SetCollier(collisionManager);
-	}
-	if (boss_) {
-		boss_->SetCollier(collisionManager);
-	}
+	player_->SetCollier(collisionManager);
+	boss_->SetCollier(collisionManager);
+
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);
 }
@@ -217,20 +222,17 @@ void GameObjectManager::GameSetUp()
 
 void GameObjectManager::UpdateObject()
 {
-	// 地形関係
+	// 天球
 	skyDome_->Update();
-	terrainManager_->Update();
+	// ゲームのオブジェクト
 	if (isInGame_) {
 		// オブジェクト
 		player_->Update();
-		if (boss_) {
-			boss_->Update();
-		}
+		boss_->Update();
 	}
-	// アニメーションの処理
-	if (boss_) {
-		boss_->AnimationUpdate();
-	}
+
+	// 地形
+	terrainManager_->Update();
 	// 弾
 	bulletManager_->Update();
 }

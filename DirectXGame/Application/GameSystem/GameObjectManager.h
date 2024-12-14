@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/GameObject/GameObjectLists.h"
+#include <unordered_map>
 
 class CollisionManager;
 class CameraManager;
@@ -59,21 +60,25 @@ public:
 	bool IsSceneChange() const { return isSceneChange_; }
 	bool IsSceneReplay() const { return isSceneReplay_; }
 	bool IsChange() const { return isChangeInput_; }
+	bool IsGameEnd()const { return isGameEnd_; }
 
 	void SetGameSystem(GameSystem* system) { gameSystem_ = system; }
+	void SetGameEnd(bool isGameEnd) { isGameEnd_ = isGameEnd; }
 private: // ゲームクリアなどの部分
 	bool isSceneChange_ = false;	// シーンの切り替わりフラグ
 	bool isSceneReplay_ = false;	// リプレイに行くフラグ
 	bool isInGame_ = false;	// ゲーム内のプレイ中フラグ
 	bool isChangeInput_ = false;	// シーン変更の受付フラグ
+	bool isGameEnd_ = false;	// ゲーム終了確認フラグ
 
 	FrameTimer gameOverTimer_;
 	FrameTimer gameClearTimer_;
 	FrameTimer waitingTimer_;	// ゲーム終了後の待機時間
 	FrameTimer gameWaitTimer_;
-	bool isGame = false;
 	GameSystem* gameSystem_ = nullptr;
 private:
+	//std::vector<IGameObject> gameObjects_;
+	std::unordered_map<std::string, std::unique_ptr<IGameObject>> gameObjects_;
 	// ゲームのユニット
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Boss> boss_;

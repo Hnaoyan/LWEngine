@@ -80,6 +80,11 @@ private:
 	/// </summary>
 	void CollisionUpdate();
 
+	/// <summary>
+	/// ゲームの開始
+	/// </summary>
+	void BeginGame();
+
 	void SceneStateRequest(GameSceneState state) { stateRequest_ = state; }
 	void ChangeState();
 

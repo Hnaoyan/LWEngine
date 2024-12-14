@@ -57,10 +57,12 @@ void GameScene::Update()
 	if (gameObjectManager_->IsSceneChange()) {
 		sceneManager_->ChangeScene("TITLE");
 	}
-
-	if (gameObjectManager_->IsSceneReplay()) {
+	if (gameObjectManager_->IsGameEnd()) {
 		// プレイの保存
 		gameSystem_->GetReplayManager()->ExportReplay();
+		gameObjectManager_->SetGameEnd(false);
+	}
+	if (gameObjectManager_->IsSceneReplay()) {
 		// リプレイモードに移行
 		stateRequest_ = GameSceneState::kReplay;
 	}
@@ -324,6 +326,18 @@ void GameScene::CollisionUpdate()
 	collisionManager_->CheckAllCollisions();
 }
 
+void GameScene::BeginGame()
+{
+	// ゲームオブジェクト生成
+	gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
+	// オブジェクト類の初期化
+	gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+	gameObjectManager_->GameSetUp();	// ゲームの準備
+	cameraManager_->Initialize(gameObjectManager_.get());
+	cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+}
+
 void GameScene::ChangeState()
 {
 	if (stateRequest_) {
@@ -334,12 +348,7 @@ void GameScene::ChangeState()
 
 			break;
 		case GameSceneState::kGameRestart:
-			// オブジェクト類の初期化
-			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-			gameObjectManager_->GameSetUp();	// ゲームの準備
-			cameraManager_->Initialize(gameObjectManager_.get());
-			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			BeginGame();
 			break;
 		case GameSceneState::kGamePlay:
 
@@ -348,25 +357,11 @@ void GameScene::ChangeState()
 			gameSystem_->GetReplayManager()->ImportReplay();
 			// UIを隠すフラグ
 			uiManager_->SetIsHudHide(true);
-			// ゲームオブジェクト生成
-			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
-			// オブジェクト類の初期化
-			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-			gameObjectManager_->GameSetUp();	// ゲームの準備
-			cameraManager_->Initialize(gameObjectManager_.get());
-			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			BeginGame();
 			gameSystem_->LaunchReplay();
 			break;
 		case GameSceneState::kRecord:
-			// ゲームオブジェクト生成
-			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
-			// オブジェクト類の初期化
-			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-			gameObjectManager_->GameSetUp();	// ゲームの準備
-			cameraManager_->Initialize(gameObjectManager_.get());
-			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			BeginGame();
 			gameSystem_->GetReplayManager()->RecordSetUp();	// 記録のスタート処理
 			break;
 		}

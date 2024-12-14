@@ -66,6 +66,8 @@ void Boss::Update()
 
 	// 正面の方向ベクトル
 	frontVector_ = Matrix4x4::TransformVector3(Vector3::Backward(), Matrix4x4::MakeRotateXYZMatrix(worldTransform_.transform_.rotate));
+
+	AnimationUpdate();
 }
 
 void Boss::Draw(ModelDrawDesc desc)

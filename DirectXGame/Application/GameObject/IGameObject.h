@@ -25,6 +25,9 @@ public:
 public:
 	// 共通のシリアル
 	static int32_t sSerialNumber;
+	// デストラクタ
+	virtual ~IGameObject() = default;
+
 protected:
 	// 個体のシリアル
 	int32_t commonSerialNumber_ = 0u;
