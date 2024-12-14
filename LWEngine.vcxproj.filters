@@ -618,6 +618,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1211,6 +1212,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

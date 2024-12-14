@@ -1,5 +1,6 @@
 #pragma once
 #include "OperationManager.h"
+#include "IPlayerSystem.h"
 #include "../Module/State/StateManager.h"
 #include "../Module/State/PlayerStateMachine.h"
 

@@ -181,6 +181,7 @@
     <ClCompile Include="DirectXGame\Engine\Input\Input.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectXCommon.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.h" />
@@ -388,6 +389,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix4x4.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectXCommon.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Graphics\GraphicsPSO.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="externals\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

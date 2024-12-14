@@ -1,7 +1,11 @@
 #pragma once
 #include "PlayerSystemLists.h"
+#include <unordered_map>
 
 class Player;
+namespace PlayerContext {};
+
+using namespace PlayerContext;
 
 /// <summary>
 /// プレイヤーのシステム管理
@@ -9,6 +13,7 @@ class Player;
 class PlayerFacade
 {
 public:
+	PlayerFacade();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -22,38 +27,40 @@ public:
 public: // アクセッサ
 #pragma region アクセッサ
 	// Hp関係
-	PlayerContext::HealthManager* GetHealth() { return &healthManager_; }
+	HealthManager* GetHealth() { return healthManager_.get(); }
 	// パーティクル
-	PlayerContext::ParticleManager* GetParticleManager() { return &particleManager_; }
+	ParticleManager* GetParticleManager() { return particleManager_.get(); }
 	// エネルギー
-	PlayerContext::EnergyManager* GetEnergy() { return &energyManager_; }
+	EnergyManager* GetEnergy() { return energyManager_.get(); }
 	// UI
-	PlayerContext::PlayerUIManager* GetUI() { return &uiManager_; }
+	PlayerUIManager* GetUI() { return uiManager_.get(); }
 	// Animation
-	PlayerContext::AnimationManager* GetAnimation() { return &animationManager_; }
-	PlayerContext::ShootingManager* GetShootingManager() { return &shootingManager_; }
-
+	AnimationManager* GetAnimation() { return animationManager_.get(); }
+	ShootingManager* GetShootingManager() { return shootingManager_.get(); }
 	// 回避用
-	PlayerContext::JustDodgeManager* GetDudgeManager() { return &justDodgeManager_; }
+	JustDodgeManager* GetDudgeManager() { return justDodgeManager_.get(); }
 #pragma endregion
 
 private:
 	// Hp関係
-	PlayerContext::HealthManager healthManager_;
+	std::unique_ptr<HealthManager> healthManager_;
 	// パーティクル
-	PlayerContext::ParticleManager particleManager_;
+	std::unique_ptr<ParticleManager> particleManager_;
 	// エネルギー
-	PlayerContext::EnergyManager energyManager_;
+	std::unique_ptr<EnergyManager> energyManager_;
 	// UI
-	PlayerContext::PlayerUIManager uiManager_;
+	std::unique_ptr<PlayerUIManager> uiManager_;
 	// Animation
-	PlayerContext::AnimationManager animationManager_;
+	std::unique_ptr<AnimationManager> animationManager_;
 	// 射撃関係のマネージャー
-	PlayerContext::ShootingManager shootingManager_;
+	std::unique_ptr<ShootingManager> shootingManager_;
 	// ジャスト回避などの無敵処理関係
-	PlayerContext::JustDodgeManager justDodgeManager_;
+	std::unique_ptr<JustDodgeManager> justDodgeManager_;
 	//// Aim
 	//PlayerContext::AimManager aimManager_;
 	//// LockOn
 	//PlayerContext::LockOn lockOn_;
+
+
+	
 };

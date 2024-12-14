@@ -3,6 +3,7 @@
 #include <memory>
 #include "Application/GameObject/Particle/User/ParticlePaths.h"
 #include "Engine/3D/Drawer/Triangle3D.h"
+#include "../IPlayerSystem.h"
 
 class Player;
 class GPUParticleManager;
@@ -24,11 +25,11 @@ namespace PlayerContext {
 	/// <summary>
 	/// マネージャ
 	/// </summary>
-	class ParticleManager
+	class ParticleManager : public ISystem
 	{
 	public:
-		void Initialize(Player* player);
-		void Update();
+		void Initialize(Player* player) override;
+		void Update() override;
 		void Draw(ICamera* camera);
 
 	private: // 移動
