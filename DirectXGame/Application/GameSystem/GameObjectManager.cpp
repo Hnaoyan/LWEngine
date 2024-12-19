@@ -124,6 +124,10 @@ void GameObjectManager::Update()
 		}
 	}
 
+	if (gameSystem_->GetReplayManager()->IsReplayEnd()) {
+		isSceneChange_ = true;
+	}
+
 #endif // RELEASE
 
 	// オブジェクトの更新

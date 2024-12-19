@@ -194,24 +194,31 @@ void ReplayManager::ImGuiDraw()
 void ReplayManager::RecordSetUp()
 {
     isRecord_ = true;
+    isReplayEnd_ = false;
+
     replayDatas_.clear();
     recordNowFrame_ = 0;
-    isReplayEnd_ = false;
 }
 
 void ReplayManager::ReplaySetUp()
 {
     isReplayNow_ = true;
-    replayNowFrame_ = 0;
     isReplayEnd_ = false;
+
+    replayNowFrame_ = 0;
 }
 
 void ReplayManager::ReplayCount()
 {
     replayNowFrame_++;
     if (replayNowFrame_ >= GetReplayDataSize()) {
+        // リプレイ中か
         isReplayNow_ = false;
+        // 終了か
         isReplayEnd_ = true;
+        // 保存するか
+        isRecord_ = false;
+        // リプレイ再生フレーム
         replayNowFrame_ = 0;
     }
 }

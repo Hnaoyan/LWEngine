@@ -25,7 +25,12 @@ public: // メンバ
 	void ClearReplayData();
 	// ImGui
 	void ImGuiDraw();
-
+	// リプレイの記録準備（スタート
+	void RecordSetUp();
+	void ReplaySetUp();
+	// カウント
+	void ReplayCount();
+public: // アクセッサ
 	size_t GetReplayDataSize() {
 		return replayDatas_.size();
 	}
@@ -34,13 +39,9 @@ public: // メンバ
 		return replayDatas_[num];
 	}
 
-	// リプレイの記録準備（スタート
-	void RecordSetUp();
-	void ReplaySetUp();
 	int32_t GetReplayFrame() { return replayNowFrame_; }
 	bool IsReplayNow() { return isReplayNow_; }
 	bool IsReplayEnd() { return isReplayEnd_; }
-	void ReplayCount();
 private:
 	// ディレクトリパス
 	std::string directoryPath_;
