@@ -170,6 +170,9 @@ void ReplayManager::ClearReplayData()
 
 void ReplayManager::ImGuiDraw()
 {
+    ImGui::InputInt("ReplayFrame", &this->replayNowFrame_);
+    ImGui::Checkbox("ReplayEnd", &isReplayEnd_);
+
     // 保存中かのフラグ
     ImGui::Checkbox("RecordingNow", &isRecord_);
     // 書き出し名
@@ -219,6 +222,6 @@ void ReplayManager::ReplayCount()
         // 保存するか
         isRecord_ = false;
         // リプレイ再生フレーム
-        replayNowFrame_ = 0;
+        //replayNowFrame_ = 0;
     }
 }
