@@ -31,15 +31,11 @@ void JumpingState::Exit()
 
 void JumpingState::InputHandle()
 {
-	//float energyRatio = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
-	//if (GameSystem::sKeyConfigManager.GetPlayerKey().pressJump && energyRatio >= 0.5f)
-	//{
-	//	player_->VerticalState()->ChangeRequest(PlayerStateLists::kAssending);
-	//}
-
+	// ジャンプのクールタイムか
 	if (jumpCooltime_.IsActive()) {
 		return;
 	}
+	// 入力で切り替える受付
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->IsDoubleJump()) {
 		player_->SetIsDoubleJump(true);
 		JumpActionExecute();

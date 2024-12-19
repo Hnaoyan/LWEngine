@@ -2,33 +2,25 @@
 
 PlayerFacade::PlayerFacade()
 {
-	healthManager_ = std::make_unique<HealthManager>();
-	particleManager_ = std::make_unique<ParticleManager>();
-	energyManager_ = std::make_unique<EnergyManager>();
-	uiManager_ = std::make_unique<PlayerUIManager>();
-	animationManager_ = std::make_unique<AnimationManager>();
-	shootingManager_ = std::make_unique<ShootingManager>();
-	justDodgeManager_ = std::make_unique<JustDodgeManager>();
+	managers_.emplace("Health", std::move(std::make_unique<HealthManager>()));
+	managers_.emplace("Particle", std::move(std::make_unique<ParticleManager>()));
+	managers_.emplace("Energy", std::move(std::make_unique<EnergyManager>()));
+	managers_.emplace("UI", std::move(std::make_unique<PlayerUIManager>()));
+	managers_.emplace("Animation", std::move(std::make_unique<AnimationManager>()));
+	managers_.emplace("Shooting", std::move(std::make_unique<ShootingManager>()));
+	managers_.emplace("JustDodge", std::move(std::make_unique<JustDodgeManager>()));
 }
 
 void PlayerFacade::Initialize(Player* player)
 {
-	healthManager_->Initialize(player);
-	particleManager_->Initialize(player);
-	energyManager_->Initialize(player);
-	uiManager_->Initialize(player);
-	animationManager_->Initialize(player);
-	// 射撃の管理
-	shootingManager_->Initialize(player);
-	justDodgeManager_->Initialize(player);
+	for (auto it = managers_.begin(); it != managers_.end(); it++) {
+		(*it).second->Initialize(player);
+	}
 }
 
 void PlayerFacade::Update()
 {
-	healthManager_->Update();
-	particleManager_->Update();
-	energyManager_->Update();
-	animationManager_->Update();
-	shootingManager_->Update();
-	justDodgeManager_->Update();
+	for (auto it = managers_.begin(); it != managers_.end(); it++) {
+		(*it).second->Update();
+	}
 }

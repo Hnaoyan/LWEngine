@@ -1,6 +1,8 @@
 #pragma once
 #include "PlayerSystemLists.h"
 #include <unordered_map>
+#include <string>
+#include <memory>
 
 class Player;
 namespace PlayerContext {};
@@ -27,40 +29,43 @@ public:
 public: // アクセッサ
 #pragma region アクセッサ
 	// Hp関係
-	HealthManager* GetHealth() { return healthManager_.get(); }
+	HealthManager* GetHealth() 
+	{ 
+		return dynamic_cast<HealthManager*>(managers_.find("Health")->second.get());
+	}
 	// パーティクル
-	ParticleManager* GetParticleManager() { return particleManager_.get(); }
+	ParticleManager* GetParticleManager() {
+		return dynamic_cast<ParticleManager*>(managers_.find("Particle")->second.get());
+	}
 	// エネルギー
-	EnergyManager* GetEnergy() { return energyManager_.get(); }
+	EnergyManager* GetEnergy()
+	{
+		return dynamic_cast<EnergyManager*>(managers_.find("Energy")->second.get());
+	}
 	// UI
-	PlayerUIManager* GetUI() { return uiManager_.get(); }
+	PlayerUIManager* GetUI() 
+	{
+		return dynamic_cast<PlayerUIManager*>(managers_.find("UI")->second.get());
+	}
+
 	// Animation
-	AnimationManager* GetAnimation() { return animationManager_.get(); }
-	ShootingManager* GetShootingManager() { return shootingManager_.get(); }
+	AnimationManager* GetAnimation()
+	{ 
+		return dynamic_cast<AnimationManager*>(managers_.find("Animation")->second.get());
+	}
+	ShootingManager* GetShootingManager() 
+	{
+		return dynamic_cast<ShootingManager*>(managers_.find("Shooting")->second.get());
+	}
 	// 回避用
-	JustDodgeManager* GetDudgeManager() { return justDodgeManager_.get(); }
+	JustDodgeManager* GetDudgeManager()
+	{ 
+		return dynamic_cast<JustDodgeManager*>(managers_.find("JustDodge")->second.get());
+	}
 #pragma endregion
 
 private:
-	// Hp関係
-	std::unique_ptr<HealthManager> healthManager_;
-	// パーティクル
-	std::unique_ptr<ParticleManager> particleManager_;
-	// エネルギー
-	std::unique_ptr<EnergyManager> energyManager_;
-	// UI
-	std::unique_ptr<PlayerUIManager> uiManager_;
-	// Animation
-	std::unique_ptr<AnimationManager> animationManager_;
-	// 射撃関係のマネージャー
-	std::unique_ptr<ShootingManager> shootingManager_;
-	// ジャスト回避などの無敵処理関係
-	std::unique_ptr<JustDodgeManager> justDodgeManager_;
-	//// Aim
-	//PlayerContext::AimManager aimManager_;
-	//// LockOn
-	//PlayerContext::LockOn lockOn_;
-
-
+	// システムのリスト
+	std::unordered_map<std::string, std::unique_ptr<ISystem>> managers_;
 	
 };

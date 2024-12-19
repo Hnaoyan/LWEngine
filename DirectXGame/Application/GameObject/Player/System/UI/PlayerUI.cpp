@@ -65,6 +65,10 @@ void PlayerContext::PlayerUIManager::Initialize(Player* player)
 	justDodgeUI_.maxScale = { 2.0f,0.2f,1.0f };
 }
 
+void PlayerContext::PlayerUIManager::Update()
+{
+}
+
 void PlayerContext::PlayerUIManager::Draw()
 {
 	reticle_->SetPosition(player_->GetOperation()->GetAimManager()->GetReticlePosition());

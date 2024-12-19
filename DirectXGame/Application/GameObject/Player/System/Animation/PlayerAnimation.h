@@ -64,7 +64,6 @@ namespace PlayerContext
 		WorldTransform bodyTransform_;
 
 	private:
-		Player* player_ = nullptr;
 		// 移動時のアニメーションの値
 		FloatingData animParms_;
 	};
