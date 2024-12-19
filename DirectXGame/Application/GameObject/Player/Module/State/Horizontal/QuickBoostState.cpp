@@ -11,7 +11,7 @@ void QuickBoostState::Initialize()
 	InputHandle();
 	// 方向設定
 	Vector3 direct{};
-	float playerYaw = player_->camera_->transform_.rotate.y;
+	float playerYaw = player_->GetCamera()->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ leftStick_.x,0,leftStick_.y }, rotateY);
 	direct = rotateVector;

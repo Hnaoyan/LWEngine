@@ -23,13 +23,13 @@ void PlayerFootCollider::Update()
 	worldTransform_.UpdateMatrix();
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// フラグ初期化
-	player_->isGround_ = false;
+	player_->SetIsGround(false);
 }
 
 void PlayerFootCollider::OnCollision(ColliderObject target)
 {
 	if (std::holds_alternative<Terrain*>(target)) {
-		player_->isGround_ = true;
+		player_->SetIsGround(true);
 	}
 }
 

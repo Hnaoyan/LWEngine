@@ -123,7 +123,7 @@ void TrackingBullet::ChangeSelecter()
 		Player* player = dynamic_cast<Player*>(object_);
 
 		if (player->GetSystemFacede()->GetDudgeManager()->IsInvisibleActive()) {
-			float maxDistance = player->trackCancelDistance;
+			float maxDistance = player->GetTrackCancelDistance();
 			float bulletToPlayer = Vector3::Distance(GetWorldPosition(), player->worldTransform_.GetWorldPosition());
 			if (bulletToPlayer <= maxDistance) {
 				straightTimer_.End();

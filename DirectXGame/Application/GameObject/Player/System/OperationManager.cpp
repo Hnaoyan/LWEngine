@@ -28,7 +28,7 @@ void OparationManager::Update()
 	// ターゲットが死んだ場合解除するための更新
 	lockOn_.Update();
 	// Aimの処理
-	aimManager_.Update(player_->camera_);
+	aimManager_.Update(player_->GetCamera());
 	// クールタイム
 	shotTimer_.Update(GameSystem::sSpeedFactor);
 	lockOnCooltime_.Update(GameSystem::sSpeedFactor);
@@ -65,12 +65,12 @@ void OparationManager::InputUpdate()
 
 	// カメラの処理
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon && !lockOnCooltime_.IsActive()) {
-		lockOn_.ToggleLockOn(player_->camera_);
+		lockOn_.ToggleLockOn(player_->GetCamera());
 		lockOnCooltime_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration"));
 	}
 	// スティックでロックオン対象を変更
 	if (lockOn_.ExistTarget() && (sThumbR.x != 0 || sThumbR.y != 0) && !lockOnCooltime_.IsActive()) {
-		lockOn_.ChangeLockOnTarget(player_->camera_);
+		lockOn_.ChangeLockOnTarget(player_->GetCamera());
 		lockOnCooltime_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration"));
 	}
 	if (lockOn_.ExistTarget()) {

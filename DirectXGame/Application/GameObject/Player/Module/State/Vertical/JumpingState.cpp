@@ -40,8 +40,8 @@ void JumpingState::InputHandle()
 	if (jumpCooltime_.IsActive()) {
 		return;
 	}
-	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->isDoubleJump_) {
-		player_->isDoubleJump_ = true;
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->IsDoubleJump()) {
+		player_->SetIsDoubleJump(true);
 		JumpActionExecute();
 	}
 
@@ -50,7 +50,7 @@ void JumpingState::InputHandle()
 void JumpingState::JumpActionExecute()
 {
 	float jumpPower = 0.0f;
-	if (!player_->isDoubleJump_) {
+	if (!player_->IsDoubleJump()) {
 		jumpPower = (GlobalVariables::GetInstance()->GetValue<float>("Player", "FirstJumpPower"));
 	}
 	else {

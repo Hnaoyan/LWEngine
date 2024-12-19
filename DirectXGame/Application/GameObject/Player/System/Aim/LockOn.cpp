@@ -67,8 +67,8 @@ void PlayerContext::LockOn::SearchTarget(ICamera* camera)
 	//	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_->begin();
 	//		it != enemys_->end(); ++it) {
 
-	//		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
-	//		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+	//		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
+	//		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
 
 	//		Vector3 enemyViewVector = Matrix4x4::TransformVector3((*it)->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
 
@@ -92,8 +92,8 @@ void PlayerContext::LockOn::SearchTarget(ICamera* camera)
 	//}
 	// ボスがいれば
 	if (boss_) {
-		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
-		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
+		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
 
 		Vector3 enemyViewVector = Matrix4x4::TransformVector3(boss_->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
 
@@ -123,8 +123,8 @@ void PlayerContext::LockOn::ChangeTarget(ICamera* camera)
 	//	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_->begin();
 	//		it != enemys_->end(); ++it) {
 
-	//		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
-	//		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+	//		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
+	//		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
 
 	//		Vector3 enemyViewVector = Matrix4x4::TransformVector3((*it)->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
 
@@ -153,8 +153,8 @@ void PlayerContext::LockOn::ChangeTarget(ICamera* camera)
 	//}
 
 	if (boss_) {
-		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
-		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->camera_->transform_.translate;
+		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
+		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
 
 		Vector3 enemyViewVector = Matrix4x4::TransformVector3(boss_->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
 

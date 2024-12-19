@@ -69,14 +69,8 @@ private:
 	// AABBコライダー
 	AABB collider_;
 
-	// 読み込み用パス
-	char path[256];
-	std::string filePath;
-
 	// 無敵時間のフレーム
 	float energyRecover_ = 10.0f;
-
-public:
 	// 無敵時間
 	float invisibleFrame_ = 30.0f;
 	// 追従キャンセルの距離
@@ -89,6 +83,9 @@ public: // アクセッサ
 	PlayerStateMachine* VerticalState() { return stateManager_->GetVertical(); }
 	Boss* GetBoss() { return boss_; }
 	Material* GetMaterial() { return material_.get(); }
+	
+	float GetTrackCancelDistance() { return trackCancelDistance; }
+
 	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
@@ -106,7 +103,11 @@ public: // アクセッサ
 		boss_ = boss;
 		oparationManager_.GetLockOn()->SetBoss(boss);
 	}
-
+	bool IsGround() const { return isGround_; }
+	void SetIsGround(bool isGround) { isGround_ = isGround; }
+	bool IsDoubleJump()const { return isDoubleJump_; }
+	void SetIsDoubleJump(bool isDouble) { isDoubleJump_ = isDouble; }
+	ICamera* GetCamera() { return camera_; }
 private: // USER
 	// グローバル変数関係の初期化
 	void InitializeGlobalValue() override;
@@ -118,15 +119,15 @@ private: // USER
 public:
 	// 移動速度
 	Vector3 velocity_ = {};
+
+private:
+	// ボス
+	Boss* boss_ = nullptr;
 	// カメラ
 	ICamera* camera_ = nullptr;
 	// 落下フラグ
 	bool isGround_ = false;
 	bool isDoubleJump_ = false;
-
-private:
-	// ボス
-	Boss* boss_ = nullptr;
 
 	// アウトライン用のモデル
 	WorldTransform outlineTransform_{};

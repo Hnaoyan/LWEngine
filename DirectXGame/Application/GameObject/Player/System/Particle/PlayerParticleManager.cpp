@@ -68,7 +68,7 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 	// ポリゴンの初期化
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
-	triangle_->SetCamera(player_->camera_);
+	triangle_->SetCamera(player_->GetCamera());
 	triangle_->SetMaxWidth(0.5f);
 
 	// 保存数の最大値
