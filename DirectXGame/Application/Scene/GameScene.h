@@ -107,4 +107,8 @@ private: // システム関係
 	CBufferDataSpotLight spLightData_ = {};
 	std::unique_ptr<PointLight> pointLight_;
 	CBufferDataPointLight ptLightData_ = {};
+
+	Vector2 size_{256.0f,258.0f};
+	Vector2 position_{160.0f,150.0f};
+	Vector4 color_{ 0.0f,0.0f,0.0f,0.65f };
 };

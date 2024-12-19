@@ -131,9 +131,14 @@ void GameScene::UIDraw()
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 	Sprite::PreDraw(commandList);
-
 	// UI全般
 	uiManager_->Draw(gameObjectManager_.get());
+	if (!gameSystem_->IsReplayMode()) {
+		SpriteManager::GetSprite("UIBGTexture")->SetPosition(position_);
+		SpriteManager::GetSprite("UIBGTexture")->SetSize(size_);
+		SpriteManager::GetSprite("UIBGTexture")->SetColor(color_);
+		SpriteManager::GetSprite("UIBGTexture")->Draw();
+	}
 
 	Sprite::PostDraw();
 
@@ -149,6 +154,7 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 
 	ImGui::Begin("GameScene");
+
 	if (ImGui::TreeNode("Replayer")) {
 		if (ImGui::Button("Restart")) {
 			stateRequest_ = GameSceneState::kGameRestart;
@@ -235,32 +241,28 @@ void GameScene::LoadModel()
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
-	TextureManager::Load("Resources/UI/ClearText.png");
-	TextureManager::Load("Resources/UI/DashUI.png");
-	TextureManager::Load("Resources/UI/JumpUI.png");
-	TextureManager::Load("Resources/UI/LockonUI.png");
-	TextureManager::Load("Resources/UI/ShotUIt.png");
 	TextureManager::Load("Resources/crossHair.png");
 	TextureManager::Load("Resources/default/testGage.png");
-	TextureManager::Load("Resources/UI/GameOver.png");
 	TextureManager::Load("Resources/default/BackGround.png");
 
 	// スプライトのロード
-	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));
-	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));
-	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));	// クロスへア
+	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));	// ゲージ
+	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));	// 
 	SpriteManager::LoadSprite("PlayerDodgeGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("HPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
+	// テキスト関係
 	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/GameClearText.png"));
 	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOverText.png"));
 	SpriteManager::LoadSprite("ResultTitleUI", TextureManager::Load("Resources/UI/TitleBackUI.png"));
 	SpriteManager::LoadSprite("ResultReplayUI", TextureManager::Load("Resources/UI/ReplayUI.png"));
 	SpriteManager::LoadSprite("CameraChangeUI", TextureManager::Load("Resources/UI/CameraChangeUI.png"));
 
+	SpriteManager::LoadSprite("UIBGTexture", TextureManager::Load("Resources/default/white2x2.png"));
 }
 
 void GameScene::CameraUpdate()
