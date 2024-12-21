@@ -200,7 +200,11 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
-	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+	
+	// 直進の時間
+	float straightTime = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame");
+	straightTime = LwLib::GetRandomValue(straightTime, straightTime + 60.0f);
+	builder.SetStraightFrame(straightTime);
 
 	switch (type)
 	{

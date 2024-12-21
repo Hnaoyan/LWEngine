@@ -32,11 +32,6 @@ void TrackingBullet::Initialize()
 		isTargetBoss_ = true;
 	}
 
-	// 直進の時間をランダムにする処理
-	if (!isBarrage_) {
-		straightFrame_ = LwLib::GetRandomValue(straightFrame_, straightFrame_ + 60.0f);
-	}
-
 	transitionTimer_.Start(straightFrame_);
 	// ステートの設定
 	stateMachine_ = std::make_unique<BulletStateMachine>(this);
@@ -54,16 +49,16 @@ void TrackingBullet::Update()
 	ChangeSelecter();
 
 	// ステートの処理
-	stateMachine_->Update(trackingTime_.IsActive());
+	stateMachine_->Update(true);
 
-	// 追従の時間関係
-	if (trackingTime_.IsEnd()) {
-		float randomCoolTime = LwLib::GetRandomValue(5.0f, 10.0f);
-		trackCoolTime_.Start(randomCoolTime);
-	}
-	if (trackCoolTime_.IsEnd()) {
-		trackingTime_.Start();
-	}
+	//// 追従の時間関係
+	//if (trackingTime_.IsEnd()) {
+	//	float randomCoolTime = LwLib::GetRandomValue(5.0f, 10.0f);
+	//	trackCoolTime_.Start(randomCoolTime);
+	//}
+	//if (trackCoolTime_.IsEnd()) {
+	//	trackingTime_.Start();
+	//}
 
 	// 移動
 	velocity_ += accelerate_ * GameSystem::GameSpeedFactor();

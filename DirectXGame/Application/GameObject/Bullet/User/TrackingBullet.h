@@ -32,7 +32,7 @@ public:
 
 public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
-	void SetIsBarrage(bool isFlag) { isBarrage_ = isFlag; }
+	void SetIsBarrage(bool isFlag) { isFlag; }
 	void SetStraightFrame(const float& frame) { straightFrame_ = frame; }
 	
 	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
@@ -53,7 +53,6 @@ private:
 	float straightFrame_;
 	// 狙いがボスなら
 	bool isTargetBoss_ = false;
-	bool isBarrage_ = false;
 	bool isCount = false;
 
 	// ステートの管理

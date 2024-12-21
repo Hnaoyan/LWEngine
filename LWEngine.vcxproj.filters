@@ -1213,6 +1213,7 @@
     <ClInclude Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingCalc.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
