@@ -23,6 +23,7 @@ std::unique_ptr<IBullet> BulletBuilder::Build(BulletType bulletType) const
 		static_cast<TrackingBullet*>(instance.get())->SetGameObject(object_);
 		static_cast<TrackingBullet*>(instance.get())->SetTrackType(trackAttribute_);	// 属性の設定
 		static_cast<TrackingBullet*>(instance.get())->SetIsBarrage(isRandStraight_);	// 直進時間ランダムフラグ
+		static_cast<TrackingBullet*>(instance.get())->SetStraightFrame(straightFrame_);
 		transform.scale = global->GetValue<Vector3>("BossTrackingBullet", "Scale");
 		break;
 	case BulletType::kContainer:

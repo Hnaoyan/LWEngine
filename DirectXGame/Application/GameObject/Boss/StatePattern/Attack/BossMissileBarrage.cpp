@@ -111,7 +111,8 @@ void BossState::MissileBarrageState::GenerateMissile(const Vector3& direct, Trac
 	// 生成部分
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type).SetIsRandStraight(true);
-	
+	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+
 	switch (type)
 	{
 	case TrackingAttribute::kSuperior:

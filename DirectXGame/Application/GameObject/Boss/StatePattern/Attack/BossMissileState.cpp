@@ -200,7 +200,8 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
-	
+	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+
 	switch (type)
 	{
 	case TrackingAttribute::kSuperior:
@@ -225,7 +226,7 @@ void BossState::MissileAttackState::GenerateMissile(const Vector3& direct, Track
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
-
+	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
 	switch (type)
 	{
 	case TrackingAttribute::kSuperior:

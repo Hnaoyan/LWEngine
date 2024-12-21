@@ -23,14 +23,15 @@ public:
 	/// 更新
 	/// </summary>
 	void Update(bool isActive);
-public:	// アクセッサ
 	// リクエストの作成
-	void RequestState(TrackingState state) { currentState_->SetRequeset(state); }
-	// 現在のステートのゲッター
+	void RequestState(TrackingState state) {
+		currentState_->SetRequeset(state);
+		nowState_ = state;
+	}
+public:	// アクセッサ
 	ITrackingState* GetCurrentState() { return currentState_.get(); }
-	// 変更回数
-	int32_t GetChangeCount() { return changeCount_; }
-
+	int32_t GetChangeCount() const { return changeCount_; }
+	TrackingState GetNowState() const { return nowState_; }
 private: // メンバ関数
 	/// <summary>
 	/// ステートの作成
@@ -45,10 +46,11 @@ private: // メンバ関数
 	void ChangeRequest(std::unique_ptr<ITrackingState> state);
 	void ChangeRequest(TrackingState state);
 
-
 private:
 	// ステート
 	std::unique_ptr<ITrackingState> currentState_;
+	// 現在の状態
+	TrackingState nowState_;
 	// 弾のポインタ
 	IBullet* bullet_ = nullptr;
 	// 変更回数

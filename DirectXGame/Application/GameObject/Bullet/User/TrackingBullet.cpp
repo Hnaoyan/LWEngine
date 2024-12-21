@@ -20,7 +20,7 @@ void TrackingBullet::Initialize()
 	if (player) {
 		data_.LoadGlobalData("BossTrackingBullet");
 		// 直進の時間設定
-		straightFrame_ = instance->GetValue<float>("BossTrackingBullet", "StraightFrame");
+		//straightFrame_ = instance->GetValue<float>("BossTrackingBullet", "StraightFrame");
 		// 対象がボスか
 		isTargetBoss_ = false;
 	}
@@ -37,8 +37,7 @@ void TrackingBullet::Initialize()
 		straightFrame_ = LwLib::GetRandomValue(straightFrame_, straightFrame_ + 60.0f);
 	}
 
-	straightTimer_.Start(straightFrame_);
-
+	transitionTimer_.Start(straightFrame_);
 	// ステートの設定
 	stateMachine_ = std::make_unique<BulletStateMachine>(this);
 	stateMachine_->RequestState(TrackingState::kStraight);
@@ -46,10 +45,8 @@ void TrackingBullet::Initialize()
 
 void TrackingBullet::Update()
 {
-	// それぞれのタイマー
-	straightTimer_.Update();
-	trackTimer_.Update();
-	waveTimer_.Update();
+	// 遷移時間
+	transitionTimer_.Update();
 
 	trackCoolTime_.Update();	// 追従しない時間
 	trackingTime_.Update();	// 追従する時間
@@ -58,6 +55,7 @@ void TrackingBullet::Update()
 
 	// ステートの処理
 	stateMachine_->Update(trackingTime_.IsActive());
+
 	// 追従の時間関係
 	if (trackingTime_.IsEnd()) {
 		float randomCoolTime = LwLib::GetRandomValue(5.0f, 10.0f);
@@ -66,6 +64,7 @@ void TrackingBullet::Update()
 	if (trackCoolTime_.IsEnd()) {
 		trackingTime_.Start();
 	}
+
 	// 移動
 	velocity_ += accelerate_ * GameSystem::GameSpeedFactor();
 	// 回転
@@ -99,38 +98,37 @@ void TrackingBullet::OnCollision(ColliderObject object)
 
 void TrackingBullet::ChangeSelecter()
 {
-	// 進行方向とターゲット方向の向き
-	// 直接的な距離
-	// 加速度と速度を
-
-	if (straightTimer_.IsEnd()) {
-		requestState_ = TrackingState::kTracking;
-	}
-	if (waveTimer_.IsEnd()) {
-		requestState_ = TrackingState::kTracking;
-	}
-	// ボスなら
-	if (isTargetBoss_) {
-		if (trackTimer_.IsEnd()) {
-			requestState_ = TrackingState::kWave;
+	// 遷移タイマーで変更
+	if (transitionTimer_.IsEnd()) {
+		TrackingState state = stateMachine_->GetNowState();
+		switch (state)
+		{
+		case TrackingState::kStraight:
+			requestState_ = TrackingState::kTracking;
+			break;
+		case TrackingState::kWave:
+			requestState_ = TrackingState::kTracking;
+			break;
+		case TrackingState::kTracking:
+			if (isTargetBoss_) {
+				requestState_ = TrackingState::kWave;
+			}
+			else {
+				requestState_ = TrackingState::kStraight;
+			}
+			break;
 		}
 	}
-	// プレイヤーなら
-	else {
-		if (trackTimer_.IsEnd()) {
-			requestState_ = TrackingState::kStraight;
-		}
+	// プレイヤーへ移動
+	if (!isTargetBoss_) {
 		Player* player = dynamic_cast<Player*>(object_);
-
 		if (player->GetSystemFacede()->GetDudgeManager()->IsInvisibleActive()) {
 			float maxDistance = player->GetTrackCancelDistance();
 			float bulletToPlayer = Vector3::Distance(GetWorldPosition(), player->worldTransform_.GetWorldPosition());
 			if (bulletToPlayer <= maxDistance) {
-				straightTimer_.End();
-				waveTimer_.End();
-				trackTimer_.End();
+				transitionTimer_.End();
 				// ジャスト回避時のみ例外処理
-				straightTimer_.Start(data_.straightFrame * 2.5f);
+				transitionTimer_.Start(data_.straightFrame * 2.5f);
 				stateMachine_->RequestState(TrackingState::kStraight);
 				if (!isCount) {
 					// 振り切りカウント
@@ -146,15 +144,14 @@ void TrackingBullet::ChangeSelecter()
 
 	// リクエスト処理
 	if (requestState_) {
-
 		switch (requestState_.value())
 		{
 		case TrackingState::kStraight:
-			straightTimer_.Start(data_.straightFrame);
+			transitionTimer_.Start(data_.straightFrame);
 			stateMachine_->RequestState(TrackingState::kStraight);
 			break;
 		case TrackingState::kWave:
-			waveTimer_.Start(90.0f);
+			transitionTimer_.Start(90.0f);
 			stateMachine_->RequestState(TrackingState::kWave);
 			break;
 		case TrackingState::kTracking:
@@ -165,22 +162,22 @@ void TrackingBullet::ChangeSelecter()
 				float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
 				// 追従しないのに切り替えの場合
 				if (dot < limitDot + 0.025f) {
-					straightTimer_.Start(data_.straightFrame);
+					transitionTimer_.Start(data_.straightFrame);
 					stateMachine_->RequestState(TrackingState::kStraight);
 				}
 				// 変わらず追従
 				else {
 					if (stateMachine_->GetChangeCount() > 5) {
-						straightTimer_.Start(data_.straightFrame);
+						transitionTimer_.Start(data_.straightFrame);
 						stateMachine_->RequestState(TrackingState::kStraight);
 					}
-					trackTimer_.Start(data_.trackFrame);
+					transitionTimer_.Start(data_.trackFrame);
 					stateMachine_->RequestState(TrackingState::kTracking);
 				}
 			}
 			// ない場合
 			else {
-				trackTimer_.Start(data_.trackFrame);
+				transitionTimer_.Start(data_.trackFrame);
 				stateMachine_->RequestState(TrackingState::kTracking);
 			}
 			trackingTime_.Start();

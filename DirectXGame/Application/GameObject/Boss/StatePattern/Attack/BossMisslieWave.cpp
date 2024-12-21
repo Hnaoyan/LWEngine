@@ -112,6 +112,7 @@ void BossState::MissileWaveState::GenerateMissile(const Vector3& direct, Trackin
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossAction", "WaveAttackInitSpeed")).SetTransform(transform).SetAttribute(type);
+	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
 
 	switch (type)
 	{
