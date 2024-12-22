@@ -57,6 +57,8 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
+	// ステートの切り替わり処理
+	ChangeState();
 	// チュートリアルの状態から変更する処理
 	if (this->nowState_ == GameSceneState::kGameTutorial) {
 		if (input_->TriggerKey(DIK_SPACE)) {
@@ -82,8 +84,6 @@ void GameScene::Update()
 		// リプレイモードに移行
 		stateRequest_ = GameSceneState::kReplay;
 	}
-	// ステートの切り替わり処理
-	ChangeState();
 
 	//---ゲームのシステム更新---//
 	gameSystem_->Update();

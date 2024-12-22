@@ -145,6 +145,15 @@ void GameObjectManager::UIDraw()
 void GameObjectManager::ImGuiDraw()
 {	
 	ImGui::Begin("GameObjectManager");
+	if (ImGui::TreeNode("Flags")) {
+		ImGui::Checkbox("SceneChange", &isSceneChange_);
+		ImGui::Checkbox("SceneReplay", &isSceneReplay_);
+		ImGui::Checkbox("ChangeInput", &isChangeInput_);
+		ImGui::Checkbox("InGame", &isInGame_);
+		ImGui::Checkbox("GameEnd", &isGameEnd_);
+		ImGui::Checkbox("Clear", &isClear_);
+		ImGui::TreePop();
+	}
 	if (ImGui::BeginTabBar("Object"))
 	{
 		if (ImGui::BeginTabItem("BulletManager")) {
@@ -246,6 +255,7 @@ void GameObjectManager::TutorialSetUp()
 
 void GameObjectManager::FlagReset()
 {
+	isSceneReplay_ = false;
 	isSceneChange_ = false;
 	isChangeInput_ = false;
 	isInGame_ = true;
