@@ -35,7 +35,7 @@ void GameScene::Initialize()
 	// 準備完了
 	isSceneReady_ = true;
 	
-
+	// オブジェクトマネージャ
 	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 	cameraManager_->Initialize(gameObjectManager_.get());
 
@@ -169,6 +169,16 @@ void GameScene::ImGuiDraw()
 		if (ImGui::Button("RecordingEnd")) {
 			gameSystem_->GetReplayManager()->ExportReplay();
 		}
+
+		if (ImGui::Button("GameSetUp")) {
+			gameObjectManager_->GameSetUp();
+			cameraManager_->GameSetUp();
+		}
+		if (ImGui::Button("TutorialSetUp")) {
+			gameObjectManager_->TutorialSetUp();
+			cameraManager_->TutorialSetUp();
+		}
+
 		ImGui::TreePop();
 	}
 	ImGui::Separator();

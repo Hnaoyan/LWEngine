@@ -37,6 +37,9 @@ public:
 	/// <param name="mode"></param>
 	void ChangeCamera(ActiveCameraMode mode);
 
+	void GameSetUp();
+	void TutorialSetUp();
+
 private:
 	// ゲーム中のカメラ切り替わり
 	void InGameCameraSwitcher();

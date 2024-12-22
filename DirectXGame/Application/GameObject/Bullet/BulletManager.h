@@ -39,14 +39,38 @@ public:
 	/// ImGui
 	/// </summary>
 	void ImGuiDraw();
-public: // USER
+
+	void PlayerCluster() {
+		AddCluster("Player:NormalBullet");
+		AddCluster("Player:TrackingBullet");
+		AddCluster("Player:TInferior");
+		AddCluster("Player:TSuperior");
+		AddCluster("Player:TGenius");
+		AddCluster("Player:DivisionBullet");
+		AddCluster("Player:ContainerBullet");
+	}
+	void BossCluster() {
+		AddCluster("Boss:TrackingBullet");	// 追従弾
+		AddCluster("Boss:Inferior");	// 劣等弾
+		AddCluster("Boss:Superior");	// 優等弾
+		AddCluster("Boss:Genius");		// 秀才弾
+		AddCluster("Boss:NormalBullet");	// 通常弾
+		AddCluster("Boss:ContainerBullet");	// コンテナ弾
+	}
+
+	void ClusterClear() {
+		clusters_.clear();
+		trailManager_->ClearTrail();
+	}
+
+private: // USER
 	/// <summary>
 	/// クラスター作成
 	/// </summary>
 	void AddCluster(const std::string& tag);
 	void AddCluster(const std::string& tag, Model* model);
 	void AddCluster(const std::string& tag, Model* model, uint32_t texture);
-
+public:
 	/// <summary>
 	/// クラスターの検索
 	/// </summary>

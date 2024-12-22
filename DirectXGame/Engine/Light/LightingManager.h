@@ -19,7 +19,6 @@ public:
 	void Initialize();
 	void Update();
 	void ImGuiDraw();
-	//void StaticInitialize(ID3D12Device* device);
 public:	// アクセッサ
 	DirectionalLight* GetDirectional() { return drLight_.get(); }
 	SpotLight* GetSpot() { return spLight_.get(); }

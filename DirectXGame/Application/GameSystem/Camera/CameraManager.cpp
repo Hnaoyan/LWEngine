@@ -23,24 +23,24 @@ void CameraManager::Initialize(GameObjectManager* gameManager)
 
 	// 追従カメラ
 	followCamera_->Initialize();
-	followCamera_->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
-	followCamera_->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
 	// 注視点カメラ
 	focusCamera_->Initialize();
 	Vector3 focusCameraPosition = { 50.0f,0.0f,0.0f };	// カメラの座標
 	focusCamera_->transform_.translate = focusCameraPosition;
-	focusCamera_->SetFocusPoint(&gameManager->GetPlayer()->worldTransform_.transform_.translate);
 	// 半円カメラ
 	orbitCamera_->Initialize();
-	orbitCamera_->SetObject(&gameManager->GetPlayer()->worldTransform_.transform_.translate, &gameManager->GetBoss()->worldTransform_.transform_.translate);
-	
-	// 選択
-	activeCamera_ = ActiveCameraMode::kFollow;
 
 	sideCamera_->Initialize();
-	sideCamera_->SetParent(&gameManager->GetPlayer()->worldTransform_);
 
 	transitionCamera_->Initialize();
+
+	// 選択
+	activeCamera_ = ActiveCameraMode::kFollow;
+#ifdef IMGUI_ENABLED
+	activeCamera_ = ActiveCameraMode::kDebug;
+#endif // IMGUI_ENABLED
+
+
 }
 
 void CameraManager::Update(GameSystem* gameSystem)
@@ -164,6 +164,35 @@ void CameraManager::ChangeCamera(ActiveCameraMode mode)
 		break;
 	}
 
+}
+
+void CameraManager::GameSetUp()
+{
+	// 追従カメラ
+	followCamera_->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
+	followCamera_->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
+	// 注視
+	focusCamera_->SetFocusPoint(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate);
+	// 半円
+	orbitCamera_->SetObject(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate, &gameObjManager_->GetBoss()->worldTransform_.transform_.translate);
+	// サイド
+	sideCamera_->SetParent(&gameObjManager_->GetPlayer()->worldTransform_);
+
+	// 追従カメラに変更
+	this->activeCamera_ = ActiveCameraMode::kFollow;
+}
+
+void CameraManager::TutorialSetUp()
+{
+	// 追従カメラ
+	followCamera_->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
+	followCamera_->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
+	// 注視
+	focusCamera_->SetFocusPoint(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate);
+	// サイド
+	sideCamera_->SetParent(&gameObjManager_->GetPlayer()->worldTransform_);
+	// 追従カメラに変更
+	this->activeCamera_ = ActiveCameraMode::kFollow;
 }
 
 void CameraManager::InGameCameraSwitcher()

@@ -48,8 +48,19 @@ public:
 	/// </summary>
 	void GameSetUp();
 	
+	/// <summary>
+	/// tutorialセットアップ
+	/// </summary>
+	void TutorialSetUp();
+
 	void UpdateObject();
 public:
+	bool IsObject() {
+		if (gameObjects_.empty()) {
+			return false;
+		}
+		return true;
+	}
 	// プレイヤー
 	Player* GetPlayer() { return dynamic_cast<Player*>(gameObjects_["Player"].get()); }
 	Boss* GetBoss() { return dynamic_cast<Boss*>(gameObjects_["Boss"].get()); }
@@ -87,5 +98,6 @@ private:
 
 	// マネージャーポインタ
 	GPUParticleManager* gpuManager_ = nullptr;
+	ICamera* camera_ = nullptr;
 	
 };

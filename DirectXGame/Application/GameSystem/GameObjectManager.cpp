@@ -24,33 +24,13 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	assert(gpuManager);
 	gameObjects_.clear();	// オブジェクトリセット
 	gpuManager_ = gpuManager;
+	camera_ = camera;
 
 	skyDome_->Initialize(ModelManager::GetModel("SkyDome"));
 
-	std::unique_ptr<Player> player = std::make_unique<Player>();
-	std::unique_ptr<Boss> boss = std::make_unique<Boss>();
-
 	// 弾
-	bulletManager_->SetPlayer(player.get());
-	bulletManager_->SetBoss(boss.get());
 	bulletManager_->SetGPUParticle(gpuManager_);
 	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
-
-	// プレイヤー
-	player->PreInitialize(camera, gpuManager_);
-	player->Initialize(ModelManager::GetModel("Player"));
-	player->PointerInitialize(bulletManager_.get(), boss.get(), nullptr);
-
-
-	// ボス
-	boss->SetGPUParticle(gpuManager_);
-	boss->Initialize(ModelManager::GetModel("BossEnemy"));
-	boss->SetPlayer(player.get());
-	boss->SetBulletManager(bulletManager_.get());
-	boss->SetCamera(camera);
-
-	gameObjects_.emplace("Boss", std::move(boss));
-	gameObjects_.emplace("Player", std::move(player));
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
@@ -207,24 +187,76 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 
 void GameObjectManager::GameSetUp()
 {
+	// リストクリア
+	gameObjects_.clear();
 	// ポストエフェクト解除
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 	// 速度の初期化
 	gameSystem_->sSpeedFactor = 1.0f;
+	// 
+	std::unique_ptr<Player> player = std::make_unique<Player>();
+	std::unique_ptr<Boss> boss = std::make_unique<Boss>();
+	bulletManager_->SetPlayer(player.get());
+	bulletManager_->SetBoss(boss.get());
+	// プレイヤー
+	player->PreInitialize(camera_, gpuManager_);
+	player->Initialize(ModelManager::GetModel("Player"));
+	player->PointerInitialize(bulletManager_.get(), boss.get(), nullptr);
+
+
+	// ボス
+	boss->SetGPUParticle(gpuManager_);
+	boss->Initialize(ModelManager::GetModel("BossEnemy"));
+	boss->SetPlayer(player.get());
+	boss->SetBulletManager(bulletManager_.get());
+	boss->SetCamera(camera_);
+
+	gameObjects_.emplace("Boss", std::move(boss));
+	gameObjects_.emplace("Player", std::move(player));
+
+	bulletManager_->ClusterClear();
+	bulletManager_->PlayerCluster();
+	bulletManager_->BossCluster();
+
 	// ボスのセットアップ
-	GetBoss()->SetIsAction(true);
-	GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+	//GetBoss()->SetIsAction(true);
+	//GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+}
+
+void GameObjectManager::TutorialSetUp()
+{
+	// リストクリア
+	gameObjects_.clear();
+	// ポストエフェクト解除
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+	// 速度の初期化
+	gameSystem_->sSpeedFactor = 1.0f;
+	// 
+	std::unique_ptr<Player> player = std::make_unique<Player>();
+	bulletManager_->SetPlayer(player.get());
+	// プレイヤー
+	player->PreInitialize(camera_, gpuManager_);
+	player->Initialize(ModelManager::GetModel("Player"));
+	player->PointerInitialize(bulletManager_.get(), nullptr, nullptr);
+	gameObjects_.emplace("Player", std::move(player));
+
+	bulletManager_->ClusterClear();
+	bulletManager_->PlayerCluster();
+
 }
 
 void GameObjectManager::UpdateObject()
 {
 	// 天球
 	skyDome_->Update();
+
 	// ゲームのオブジェクト
 	if (isInGame_) {
 		// 更新
 		for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
-			(*it).second->Update();
+			if ((*it).second) {
+				(*it).second->Update();
+			}
 		}
 	}
 
