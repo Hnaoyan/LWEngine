@@ -12,6 +12,7 @@ enum class GameSceneState
 {
 	kWait,
 	kGameRestart,	// 再スタート
+	kGameTutorial, // チュートリアル
 	kGamePlay,	// スタート
 	kReplay,	// リプレイ
 	kRecord,	// 保存

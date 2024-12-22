@@ -39,11 +39,14 @@ void GameScene::Initialize()
 	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 	cameraManager_->Initialize(gameObjectManager_.get());
 
+	stateRequest_ = GameSceneState::kGameTutorial;
+
 #ifdef RELEASE
 	stateRequest_ = GameSceneState::kRecord;
 	//nowState_ = GameSceneState::kGamePlay;
 #endif // RELEASE
 
+	this->ChangeState();
 
 }
 
@@ -54,6 +57,18 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
+	// チュートリアルの状態から変更する処理
+	if (this->nowState_ == GameSceneState::kGameTutorial) {
+		if (input_->TriggerKey(DIK_SPACE)) {
+
+#ifdef IMGUI_ENABLED
+			stateRequest_ = GameSceneState::kGamePlay;
+#endif // IMGUI_ENABLED
+#ifdef RELEASE
+			stateRequest_ = GameSceneState::kRecord;
+#endif // RELEASE
+		}
+	}
 	// シーンの切り替え処理
 	if (gameObjectManager_->IsSceneChange()) {
 		sceneManager_->ChangeScene("TITLE");
@@ -171,12 +186,10 @@ void GameScene::ImGuiDraw()
 		}
 
 		if (ImGui::Button("GameSetUp")) {
-			gameObjectManager_->GameSetUp();
-			cameraManager_->GameSetUp();
+			BeginGame();
 		}
 		if (ImGui::Button("TutorialSetUp")) {
-			gameObjectManager_->TutorialSetUp();
-			cameraManager_->TutorialSetUp();
+			BeginTutorial();
 		}
 
 		ImGui::TreePop();
@@ -268,13 +281,18 @@ void GameScene::CollisionUpdate()
 
 void GameScene::BeginGame()
 {
-	// ゲームオブジェクト生成
-	gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
 	// オブジェクト類の初期化
 	gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 	gameObjectManager_->GameSetUp();	// ゲームの準備
-	cameraManager_->Initialize(gameObjectManager_.get());
+	cameraManager_->GameSetUp();
+	cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+}
+
+void GameScene::BeginTutorial()
+{
+	gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+	gameObjectManager_->TutorialSetUp();	// チュートリアルの準備
+	cameraManager_->TutorialSetUp();
 	cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
 }
 
@@ -291,7 +309,10 @@ void GameScene::ChangeState()
 			BeginGame();
 			break;
 		case GameSceneState::kGamePlay:
-
+			BeginGame();
+			break;
+		case GameSceneState::kGameTutorial:
+			BeginTutorial();
 			break;
 		case GameSceneState::kReplay:
 			gameSystem_->GetReplayManager()->ImportReplay();

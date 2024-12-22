@@ -77,6 +77,7 @@ private:
 	/// ゲームの開始
 	/// </summary>
 	void BeginGame();
+	void BeginTutorial();
 
 	void SceneStateRequest(GameSceneState state) { stateRequest_ = state; }
 	void ChangeState();

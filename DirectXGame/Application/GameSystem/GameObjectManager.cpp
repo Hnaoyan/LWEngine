@@ -35,11 +35,8 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-	isSceneChange_ = false;
-	isChangeInput_ = false;
-	isInGame_ = true;
-	isGameEnd_ = false;
-	isClear_ = false;
+	// フラグの初期化
+	FlagReset();
 }
 
 void GameObjectManager::Update()
@@ -202,25 +199,27 @@ void GameObjectManager::GameSetUp()
 	player->PreInitialize(camera_, gpuManager_);
 	player->Initialize(ModelManager::GetModel("Player"));
 	player->PointerInitialize(bulletManager_.get(), boss.get(), nullptr);
-
-
 	// ボス
 	boss->SetGPUParticle(gpuManager_);
 	boss->Initialize(ModelManager::GetModel("BossEnemy"));
 	boss->SetPlayer(player.get());
 	boss->SetBulletManager(bulletManager_.get());
 	boss->SetCamera(camera_);
-
+	// リストに追加
 	gameObjects_.emplace("Boss", std::move(boss));
 	gameObjects_.emplace("Player", std::move(player));
 
+	// クラスターの処理
 	bulletManager_->ClusterClear();
 	bulletManager_->PlayerCluster();
 	bulletManager_->BossCluster();
 
+	// フラグの初期化
+	FlagReset();
+
 	// ボスのセットアップ
-	//GetBoss()->SetIsAction(true);
-	//GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+	GetBoss()->SetIsAction(true);
+	GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }
 
 void GameObjectManager::TutorialSetUp()
@@ -243,6 +242,15 @@ void GameObjectManager::TutorialSetUp()
 	bulletManager_->ClusterClear();
 	bulletManager_->PlayerCluster();
 
+}
+
+void GameObjectManager::FlagReset()
+{
+	isSceneChange_ = false;
+	isChangeInput_ = false;
+	isInGame_ = true;
+	isGameEnd_ = false;
+	isClear_ = false;
 }
 
 void GameObjectManager::UpdateObject()

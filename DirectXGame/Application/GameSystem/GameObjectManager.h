@@ -47,12 +47,18 @@ public:
 	/// ゲーム開始準備
 	/// </summary>
 	void GameSetUp();
-	
 	/// <summary>
 	/// tutorialセットアップ
 	/// </summary>
 	void TutorialSetUp();
-
+	/// <summary>
+	/// フラグの初期化
+	/// </summary>
+	void FlagReset();
+private:
+	/// <summary>
+	/// オブジェクトの更新
+	/// </summary>
 	void UpdateObject();
 public:
 	bool IsObject() {
