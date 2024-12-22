@@ -10,7 +10,8 @@ void GameScene::Initialize()
 	// 基底クラス初期化
 	IScene::Initialize();
 	// ライト初期化
-	LightingInitialize();
+	lightManager_ = std::make_unique<LightingManager>();
+	lightManager_->Initialize();
 
 #pragma region インスタンス化
 	cameraManager_ = std::make_unique<CameraManager>();
@@ -77,7 +78,7 @@ void GameScene::Update()
 	// カメラの更新
 	CameraUpdate();
 	// ライトの更新
-	LightingUpdate();
+	lightManager_->Update();
 
 	gpuParticleManager_->Update();
 
@@ -103,9 +104,9 @@ void GameScene::Draw()
 
 	// ライトの情報
 	DrawDesc::LightDesc lightDesc{};
-	lightDesc.directionalLight = directionalLight_.get();
-	lightDesc.pointLight = pointLight_.get();
-	lightDesc.spotLight = spotLight_.get();
+	lightDesc.directionalLight = lightManager_->GetDirectional();
+	lightDesc.pointLight = lightManager_->GetPoint();
+	lightDesc.spotLight = lightManager_->GetSpot();
 
 	// オブジェクト
 	gameObjectManager_->Draw(&camera_, lightDesc);
@@ -178,42 +179,8 @@ void GameScene::ImGuiDraw()
 	ImGui::DragFloat2("right", &rightStick.x);
 
 	ImGui::Text("");
-	// ライティング
-	if (ImGui::BeginTabBar("Lighting"))
-	{
-		float defaultSpeed = 0.01f;
-		if (ImGui::BeginTabItem("DirectionalLight"))
-		{
-			ImGui::ColorEdit4("Color", &lightData_.color.x);
-			ImGui::DragFloat3("Direction", &lightData_.direction.x, defaultSpeed);
-			lightData_.direction = Vector3::Normalize(lightData_.direction);
-			ImGui::DragFloat("Intensity", &lightData_.intensity, defaultSpeed);
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("PointLight"))
-		{
-			ImGui::ColorEdit4("ptColor", &ptLightData_.color.x);
-			ImGui::DragFloat("ptDecay", &ptLightData_.decay, defaultSpeed);
-			ImGui::DragFloat("ptIntensity", &ptLightData_.intensity, defaultSpeed);
-			ImGui::DragFloat("ptRadius", &ptLightData_.radius, defaultSpeed);
-			ImGui::DragFloat3("ptPosition", &ptLightData_.position.x, defaultSpeed);
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("SpotLight"))
-		{
-			ImGui::ColorEdit4("spColor", &spLightData_.color.x);
-			ImGui::DragFloat("spDecay", &spLightData_.decay, defaultSpeed);
-			ImGui::DragFloat("spIntensity", &spLightData_.intensity, defaultSpeed);
-			ImGui::DragFloat("spCosAngle", &spLightData_.cosAngle, defaultSpeed);
-			ImGui::DragFloat("spCosFalloffStart", &spLightData_.cosFalloffStart, defaultSpeed);
-			ImGui::DragFloat("spDistance", &spLightData_.distance, defaultSpeed);
-			ImGui::DragFloat3("spPosition", &spLightData_.position.x, defaultSpeed);
-			ImGui::DragFloat3("spDirection", &spLightData_.direction.x, defaultSpeed);
-			spLightData_.direction = Vector3::Normalize(spLightData_.direction);
-			ImGui::EndTabItem();
-		}
-		ImGui::EndTabBar();
-	}
+	// ライト
+	lightManager_->ImGuiDraw();
 
 	ImGui::End();
 
@@ -275,45 +242,6 @@ void GameScene::CameraUpdate()
 	camera_.projectionMatrix_ = cameraManager_->GetCamera()->projectionMatrix_;
 	camera_.transform_ = cameraManager_->GetCamera()->transform_;
 	camera_.TransferMatrix();
-}
-
-void GameScene::LightingInitialize()
-{
-	// ライト作成
-	directionalLight_.reset(DirectionalLight::CreateLight());
-	pointLight_.reset(PointLight::CreateLight());
-	spotLight_.reset(SpotLight::CreateLight());
-
-	// 平行光源データ
-	lightData_.color = { 1.0f,1.0f,1.0f,1.0f };
-	lightData_.direction = { 0.0f,1.0f,0.0f };
-	lightData_.intensity = 1.2f;
-
-	// 点光源データ
-	ptLightData_.intensity = 0.5f;
-	ptLightData_.position = { 0,50.0f,0 };
-	ptLightData_.color = { 1,1,1,1 };
-	ptLightData_.decay = 10.0f;
-	ptLightData_.radius = 300.0f;
-
-	// 照光源データ
-	spLightData_.color = { 1,1,1,1 };
-	spLightData_.position = { 2.0f,200.0f,0.0f };
-	spLightData_.distance = 300.0f;
-	spLightData_.direction = Vector3(-0.707f, -0.707f, 0.0f);
-	spLightData_.intensity = 12.5f;
-	spLightData_.decay = 3.0f;
-	//spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
-	spLightData_.cosAngle = 0.3f;
-	spLightData_.cosFalloffStart = 0.5f;
-}
-
-void GameScene::LightingUpdate()
-{
-	// ライトの更新
-	directionalLight_->Update(lightData_);
-	spotLight_->Update(spLightData_);
-	pointLight_->Update(ptLightData_);
 }
 
 void GameScene::CollisionUpdate()
