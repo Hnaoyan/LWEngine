@@ -50,18 +50,14 @@ private: // システム関係
 	// カメラ
 	// デバッグカメラ
 	std::unique_ptr<DebugCamera> debugCamera_;
-	// 追従カメラ
-	std::unique_ptr<FollowCamera> followCamera_;
-	bool isDebugCamera_ = false;
 	// マップデータ
 	std::unique_ptr<LevelLoader> levelLoader_;
 	// 箱
 	std::unique_ptr<Skybox> skybox_;
-	// ライト
-	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_ = {};
-	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_ = {};
-	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_ = {};
+	// タイトルテキスト
+	Vector2 titleTextPosition_{};
+	// 経過時間
+	float elapsedTime_ = 0.0f;
+
+	bool isLoad_ = false;
 };
