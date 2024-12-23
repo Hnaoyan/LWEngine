@@ -29,7 +29,9 @@ BulletTrail::BulletTrail(IBullet* unit)
 
 BulletTrail::~BulletTrail()
 {
-
+	unit_ = std::nullopt;
+	moveEmitter_ = nullptr;
+	trailPoints_.clear();
 }
 
 void BulletTrail::UpdateTrail(const Vector3& newPoint)

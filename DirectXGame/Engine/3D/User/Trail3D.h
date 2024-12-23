@@ -14,6 +14,8 @@ class Trail3D
 public:
 	// コンストラクタ
 	Trail3D();
+	// デストラクタ
+	~Trail3D();
 	/// <summary>
 	/// 更新
 	/// </summary>

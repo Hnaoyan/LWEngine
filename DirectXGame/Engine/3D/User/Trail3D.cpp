@@ -33,6 +33,15 @@ Trail3D::Trail3D()
 	VertexDataReset();
 }
 
+Trail3D::~Trail3D()
+{
+	vertex_.Release();
+	index_.Release();
+	vertexData_.clear();
+	indices_.clear();
+	camera_ = std::nullopt;
+}
+
 void Trail3D::Update()
 {
 	// 頂点送信
