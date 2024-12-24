@@ -43,22 +43,10 @@ void TrackingBullet::Update()
 	// 遷移時間
 	transitionTimer_.Update();
 
-	trackCoolTime_.Update();	// 追従しない時間
-	trackingTime_.Update();	// 追従する時間
-
 	ChangeSelecter();
 
 	// ステートの処理
 	stateMachine_->Update(true);
-
-	//// 追従の時間関係
-	//if (trackingTime_.IsEnd()) {
-	//	float randomCoolTime = LwLib::GetRandomValue(5.0f, 10.0f);
-	//	trackCoolTime_.Start(randomCoolTime);
-	//}
-	//if (trackCoolTime_.IsEnd()) {
-	//	trackingTime_.Start();
-	//}
 
 	// 移動
 	velocity_ += accelerate_ * GameSystem::GameSpeedFactor();
@@ -175,7 +163,6 @@ void TrackingBullet::ChangeSelecter()
 				transitionTimer_.Start(data_.trackFrame);
 				stateMachine_->RequestState(TrackingState::kTracking);
 			}
-			trackingTime_.Start();
 			break;
 		default:
 			break;

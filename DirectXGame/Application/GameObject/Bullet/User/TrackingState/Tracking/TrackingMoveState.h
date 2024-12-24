@@ -1,5 +1,6 @@
 #pragma once
 #include "../ITrackingState.h"
+#include "../../../Calc/TrackingAccelerater.h"
 
 /// <summary>
 /// 追従移動状態
@@ -19,14 +20,15 @@ private:
 	Vector3 childAcceleration_{};
 	// 追従解除が緩くなるまでのタイマー
 	FrameTimer looseTimer_;	
+	// 加速タイマー
+	FrameTimer accelerationTime_;
 	//　現在の時間
 	float elapsedTime_ = 0.0f;
+	// 加速度計算用クラス
+	std::unique_ptr<TrackingAccelerater> accelerater_;
+	
 
 private: // 計算関数
 	// 優等（完全追尾
 	Vector3 CalcSuperiorAcceleration();
-	// 劣等（ずれ追尾
-	Vector3 CalcInferiorAcceleration();
-	// 秀才（先読み追尾
-	Vector3 CalcGeniusAcceleration();
 };

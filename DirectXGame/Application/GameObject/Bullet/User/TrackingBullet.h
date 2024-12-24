@@ -41,11 +41,6 @@ public: // アクセッサ
 private:
 	// 追尾の種類
 	TrackingAttribute trackingType_ = TrackingAttribute::kSuperior;
-	// 追従をしないフレーム
-	FrameTimer trackCoolTime_;
-	// 追従するフレーム
-	FrameTimer trackingTime_;
-
 	// 変更時間
 	FrameTimer transitionTimer_;
 
