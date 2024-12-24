@@ -47,6 +47,11 @@ void Player::Initialize(Model* model)
 	// ステート系の初期化
 	stateManager_ = std::make_unique<PlayerStateManager>();
 	stateManager_->Initialize(this);
+
+	// 武器系
+	weaponManager_ = std::make_unique<WeaponManager>(this);
+	weaponManager_->Initialize();
+
 }
 
 void Player::Update()
@@ -57,9 +62,10 @@ void Player::Update()
 	facadeSystem_->Update();
 	// システム関係
 	oparationManager_.Update();
-
 	// それぞれの軸のマネージャ
 	stateManager_->Update();
+	// 武器
+	weaponManager_->Update();
 
 	// 画角に応じて透明化するように
 	if (camera_) {

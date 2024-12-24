@@ -1,8 +1,7 @@
 #pragma once
 #include "../IGameObject.h"
+#include "Module/PlayerModulePaths.h"
 #include "System/PlayerSystemLists.h"
-#include "Module/Foot/PlayerFootCollider.h"
-#include "Module/State/IPlayerState.h"
 #include "System/PlayerFacade.h"
 
 class SampleBulletManager;
@@ -60,6 +59,8 @@ private:
 	std::unique_ptr<PlayerFacade> facadeSystem_;
 	// ステート
 	std::unique_ptr<PlayerStateManager> stateManager_;
+	// 武器の管理クラス
+	std::unique_ptr<WeaponManager> weaponManager_;
 	// マテリアル
 	std::unique_ptr<Material> material_;
 	// 操作関係
@@ -79,6 +80,7 @@ private:
 public: // アクセッサ
 	OparationManager* GetOperation() { return &oparationManager_; }
 	PlayerFacade* GetSystemFacede() { return facadeSystem_.get(); }
+	WeaponManager* GetWeaponManager() { return weaponManager_.get(); }
 	PlayerStateMachine* HorizontalState() { return stateManager_->GetHorizontal(); }
 	PlayerStateMachine* VerticalState() { return stateManager_->GetVertical(); }
 	Boss* GetBoss() { return boss_; }

@@ -43,6 +43,8 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Camera\CameraManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.cpp" />
@@ -240,6 +242,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerModulePaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
@@ -247,6 +250,9 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h" />

@@ -620,6 +620,8 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1216,6 +1218,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingCalc.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponPaths.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerModulePaths.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

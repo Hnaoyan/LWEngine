@@ -41,5 +41,5 @@ private:
 	// 弾本体
 	TrackingBullet* bullet_ = nullptr;
 	// 追従データ
-	TrackingData data_;
+	TrackingData data_ = {};
 };

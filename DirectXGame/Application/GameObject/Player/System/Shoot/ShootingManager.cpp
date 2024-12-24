@@ -17,7 +17,7 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	EulerTransform transform{};
 	transform.scale = { 1.0f,1.0f,1.0f };
 	transform.scale *= 0.5f;
-	transform.translate = player_->worldTransform_.GetWorldPosition();
+	transform.translate = player_->GetWeaponManager()->weapon_->worldTransform_.GetWorldPosition();
 	float speed = 300.0f;
 	std::unique_ptr<IBullet> bullet = std::make_unique<IBullet>();
 	bullet->Initialize();
