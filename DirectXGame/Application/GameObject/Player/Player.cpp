@@ -61,6 +61,17 @@ void Player::Update()
 	// それぞれの軸のマネージャ
 	stateManager_->Update();
 
+	// 画角に応じて透明化するように
+	if (camera_) {
+		float min = -0.1f;
+		float max = -0.3f;
+		float rotX = camera_->transform_.rotate.x;
+		float v = (rotX - min) / (max - min);
+		v = std::clamp(v, 0.0f, 1.0f);
+
+		material_->color_.w = Ease::Easing(1.0f, 0.2f, v);
+	}
+
 	// 基底クラスの更新
 	IGameObject::Update();
 
