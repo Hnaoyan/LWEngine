@@ -148,6 +148,7 @@ void GameScene::UIDraw()
 
 	Sprite::PreDraw(commandList);
 	// UI全般
+	uiManager_->Update(this->nowState_);
 	uiManager_->Draw(gameObjectManager_.get());
 	if (!gameSystem_->IsReplayMode()) {
 		SpriteManager::GetSprite("UIBGTexture")->SetPosition(position_);
@@ -251,6 +252,8 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("ResultTitleUI", TextureManager::Load("Resources/UI/TitleBackUI.png"));
 	SpriteManager::LoadSprite("ResultReplayUI", TextureManager::Load("Resources/UI/ReplayUI.png"));
 	SpriteManager::LoadSprite("CameraChangeUI", TextureManager::Load("Resources/UI/CameraChangeUI.png"));
+	// 
+	SpriteManager::LoadSprite("GameStartText", TextureManager::Load("Resources/UI/GameStart.png"));
 
 	SpriteManager::LoadSprite("UIBGTexture", TextureManager::Load("Resources/default/white2x2.png"));
 }

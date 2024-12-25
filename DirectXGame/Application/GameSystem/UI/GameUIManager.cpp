@@ -30,12 +30,20 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 	cameraChange_.sprite = SpriteManager::GetSprite("CameraChangeUI");
 	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
 
+	gameStart_.sprite = SpriteManager::GetSprite("GameStartText");
+	gameStart_.position = Vector2(1280.0f / 2.0f, 720.0f / 2.0f);
+
 	gameSystem_ = gameSystem;
 }
 
 void GameUIManager::Initialize()
 {
 
+}
+
+void GameUIManager::Update(GameSceneState state)
+{
+	sceneState_ = state;
 }
 
 void GameUIManager::Draw(GameObjectManager* gameObjectManager)
@@ -77,6 +85,12 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		replay_.sprite->SetPosition(replay_.position);
 		replay_.sprite->Draw();
 	}
+	
+	if (sceneState_ == GameSceneState::kGameTutorial) {
+		gameStart_.sprite->SetPosition(gameStart_.position);
+		gameStart_.sprite->Draw();
+	}
+
 #ifdef _DEBUG
 	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
 	titleBack_.sprite->SetPosition(titleBack_.position);

@@ -1,5 +1,6 @@
 #pragma once
 #include "UIStructs.h"
+#include "../GameSystemStructs.h"
 #include <vector>
 
 class GameObjectManager;
@@ -13,6 +14,7 @@ class GameUIManager
 public:
 	GameUIManager(GameSystem* gameSystem);
 	void Initialize();
+	void Update(GameSceneState state);
 	void Draw(GameObjectManager* gameObjectManager);
 public:	// アクセッサ
 	void SetIsHudHide(bool isHide) { isHUDHide_ = isHide; }
@@ -24,6 +26,8 @@ private:// SYSTEM
 	GameSystem* gameSystem_ = nullptr;
 	// HUDを消しておくかのフラグ
 	bool isHUDHide_ = false;
+
+	GameSceneState sceneState_ = GameSceneState::kWait;
 
 private: // UI
 	// HUD
@@ -38,6 +42,9 @@ private: // UI
 	GameUI::TextUI replay_ = {};
 	// カメラ変更テキスト
 	GameUI::TextUI cameraChange_ = {};
+
+	// ゲームの開始テキスト
+	GameUI::TextUI gameStart_ = {};
 
 private:
 	/// <summary>
