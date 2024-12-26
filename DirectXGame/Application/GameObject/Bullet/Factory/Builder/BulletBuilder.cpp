@@ -35,10 +35,10 @@ std::unique_ptr<IBullet> BulletBuilder::Build(BulletType bulletType) const
 	default:
 		break;
 	}
-	// 初期化
-	instance->Initialize();
 	// 速度の設定
 	instance->SetVelocity(direct_ * speed_);
+	// 初期化
+	instance->Initialize();
 	instance->transform_ = transform;
 	if (parentAttribute_ == 0) {
 		instance->GetCollider()->SetAttribute(kCollisionAttributeEnemyBullet);

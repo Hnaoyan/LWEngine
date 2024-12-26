@@ -22,10 +22,10 @@ void TrackingMoveState::Enter()
 	// オフセット
 	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
-	// 減衰率
-	float damping = 1.0f / 300.0f;
-	Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (damping);
-	bullet_->SetVelocity(newVelocity);
+	//// 減衰率
+	//float damping = 1.0f / 300.0f;
+	//Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (damping);
+	//bullet_->SetVelocity(newVelocity);
 
 	// 1.5秒で追従を緩くする（仮
 	float looseFrame = 90.0f;	// 緩くなるまでの時間

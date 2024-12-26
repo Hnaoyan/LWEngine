@@ -33,6 +33,15 @@ void TrackingBullet::Initialize()
 		isTargetBoss_ = true;
 	}
 
+	// 速度を距離に応じて
+	float reductionRate = 0.5f;	// 減速するレート
+	float reductionDistance = 150.0f;	// 制限距離
+	if (TargetToDistance() <= reductionDistance) {
+		//data_.initSpeed *= reductionRate;
+		//data_.baseSpeed *= reductionRate;
+		velocity_ *= reductionRate;
+	}
+
 	transitionTimer_.Start(straightFrame_);
 	// ステートの設定
 	stateMachine_ = std::make_unique<BulletStateMachine>(this);
