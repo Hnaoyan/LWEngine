@@ -26,6 +26,7 @@ namespace GameUI
 		Sprite* sprite = nullptr;
 		Vector2 position = {};
 		Vector2 size = {};
+		Vector4 color = {};
 	};
 
 	// スプライトのデータ

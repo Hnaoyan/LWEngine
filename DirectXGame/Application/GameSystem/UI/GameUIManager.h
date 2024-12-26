@@ -46,6 +46,16 @@ private: // UI
 	// ゲームの開始テキスト
 	GameUI::TextUI gameStart_ = {};
 
+	struct TextComp
+	{
+		FrameTimer upper;
+		FrameTimer lower;
+		bool isAlpha;	// true:0→1 false:1→0
+		GameUI::TextUI text;
+	};
+
+	TextComp gameStart = {};
+
 private:
 	/// <summary>
 	/// グローバル変数の初期化

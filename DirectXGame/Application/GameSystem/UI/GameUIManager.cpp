@@ -32,6 +32,7 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 
 	gameStart_.sprite = SpriteManager::GetSprite("GameStartText");
 	gameStart_.position = Vector2(1280.0f / 2.0f, 720.0f / 2.0f);
+	gameStart_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	gameSystem_ = gameSystem;
 }
@@ -88,6 +89,7 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	
 	if (sceneState_ == GameSceneState::kGameTutorial) {
 		gameStart_.sprite->SetPosition(gameStart_.position);
+		gameStart_.sprite->SetColor(gameStart_.color);
 		gameStart_.sprite->Draw();
 	}
 
