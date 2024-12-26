@@ -36,6 +36,12 @@ public:
 	Vector3 CalcGeniusAcceleration();
 
 public:
+	/// <summary>
+	/// 追従の計算
+	/// </summary>
+	/// <param name="toDirect"></param>
+	/// <param name="timer"></param>
+	/// <returns></returns>
 	Vector3 CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer);
 
 private:

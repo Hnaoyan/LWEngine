@@ -50,7 +50,7 @@ private: // UI
 		FrameTimer timer;
 		float returnFrame;
 		void Initialize() {
-			backColor = Vector4(0.0f, 0.0f, 0.0f, 0.5f);
+			backColor = Vector4(0.0f, 0.0f, 0.0f, 0.95f);
 			Start();
 		}
 		void Start() {
