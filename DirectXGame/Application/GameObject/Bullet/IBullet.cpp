@@ -2,8 +2,7 @@
 #include "Application/Collision/ColliderFilter.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/Particle/User/ParticlePaths.h"
-
-#include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Application/GameObject/IGameObject.h"
 
 #include <imgui.h>
 
@@ -53,4 +52,14 @@ void IBullet::OnCollision(ColliderObject object)
 	//	static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetPosition(GetWorldPosition());
 	//	static_cast<BulletParticle::BreakEffect*>(breakEmitter_)->SetEmitFlag(true);
 	//}
+}
+
+float IBullet::TargetToDistance()
+{
+	// ターゲットいなかったら
+	assert(targetObject_);
+	// 距離概算
+	Vector3 bullet = GetWorldPosition();
+	Vector3 target = targetObject_->worldTransform_.GetWorldPosition();
+	return Vector3::Distance(bullet, target);
 }

@@ -14,16 +14,17 @@ void TrackingBullet::Initialize()
 	collider_.SetAttribute(kCollisionAttributeEnemyBullet);
 
 	//if (object_->GetTag());
-	Boss* boss = dynamic_cast<Boss*>(object_);
-	Player* player = dynamic_cast<Player*>(object_);
+	Boss* boss = dynamic_cast<Boss*>(targetObject_);
+	Player* player = dynamic_cast<Player*>(targetObject_);
 	GlobalVariables* instance = GlobalVariables::GetInstance();
+	// 追従対象がプレイヤー
 	if (player) {
 		data_.LoadGlobalData("BossTrackingBullet");
 		// 直進の時間設定
 		//straightFrame_ = instance->GetValue<float>("BossTrackingBullet", "StraightFrame");
-		// 対象がボスか
 		isTargetBoss_ = false;
 	}
+	// 追従対象がボス
 	else if (boss) {
 		data_.LoadGlobalData("PlayerTrackingBullet");
 		// 直進の時間設定
@@ -104,10 +105,11 @@ void TrackingBullet::ChangeSelecter()
 	}
 	// プレイヤーへ移動
 	if (!isTargetBoss_) {
-		Player* player = dynamic_cast<Player*>(object_);
+		Player* player = dynamic_cast<Player*>(targetObject_);
 		if (player->GetSystemFacede()->GetDudgeManager()->IsInvisibleActive()) {
+			// 追従解除処理
 			float maxDistance = player->GetTrackCancelDistance();
-			float bulletToPlayer = Vector3::Distance(GetWorldPosition(), player->worldTransform_.GetWorldPosition());
+			float bulletToPlayer = TargetToDistance();
 			if (bulletToPlayer <= maxDistance) {
 				transitionTimer_.End();
 				// ジャスト回避時のみ例外処理
@@ -139,8 +141,8 @@ void TrackingBullet::ChangeSelecter()
 			break;
 		case TrackingState::kTracking:
 			// 対象がある場合
-			if (object_) {
-				float dot = Vector3::Dot(Vector3::Normalize(GetVelocity()), Vector3::Normalize(object_->worldTransform_.GetWorldPosition() - GetWorldPosition()));
+			if (targetObject_) {
+				float dot = Vector3::Dot(Vector3::Normalize(GetVelocity()), Vector3::Normalize(targetObject_->worldTransform_.GetWorldPosition() - GetWorldPosition()));
 				// 向きが過度に離れていたら追尾しない
 				float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
 				// 追従しないのに切り替えの場合

@@ -38,6 +38,7 @@ public: // アクセッサ
 	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 	TrackingAttribute GetTrackingType() const { return trackingType_; }
 	TrackingData GetTrackingData() const { return data_; }
+
 private:
 	// 追尾の種類
 	TrackingAttribute trackingType_ = TrackingAttribute::kSuperior;

@@ -61,8 +61,8 @@ void ContainerBullet::OnCollision(ColliderObject object)
 
 void ContainerBullet::GenerateBullet()
 {
-	Boss* boss = dynamic_cast<Boss*>(object_);
-	Player* player = dynamic_cast<Player*>(object_);
+	Boss* boss = dynamic_cast<Boss*>(targetObject_);
+	Player* player = dynamic_cast<Player*>(targetObject_);
 
 	// 親がプレイヤーなら
 	if (player) {
