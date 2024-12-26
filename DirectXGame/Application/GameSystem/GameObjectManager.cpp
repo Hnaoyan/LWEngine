@@ -39,7 +39,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	FlagReset();
 }
 
-void GameObjectManager::Update()
+void GameObjectManager::Update(GameSceneState state)
 {
 	// ゲームの判断
 #ifdef RELEASE
@@ -51,21 +51,23 @@ void GameObjectManager::Update()
 		}
 	}
 	else {
-		// クリアしたタイミングの処理
-		if (gameObjects_["Player"]->IsDead() && isInGame_) {
-			//isInGame_ = false;
-			if (!waitingTimer_.IsActive()) {
-				waitingTimer_.Start(waitFrame);
-				isGameEnd_ = true;
-				isClear_ = true;
+		if (state != GameSceneState::kGameTutorial) {
+			// クリアしたタイミングの処理
+			if (gameObjects_["Player"]->IsDead() && isInGame_) {
+				//isInGame_ = false;
+				if (!waitingTimer_.IsActive()) {
+					waitingTimer_.Start(waitFrame);
+					isGameEnd_ = true;
+					isClear_ = true;
+				}
 			}
-		}
-		if (gameObjects_["Boss"]->IsDead() && isInGame_) {
-			//isInGame_ = false;
-			if (!waitingTimer_.IsActive()) {
-				waitingTimer_.Start(waitFrame);
-				isGameEnd_ = true;
-				isClear_ = false;
+			if (gameObjects_["Boss"]->IsDead() && isInGame_) {
+				//isInGame_ = false;
+				if (!waitingTimer_.IsActive()) {
+					waitingTimer_.Start(waitFrame);
+					isGameEnd_ = true;
+					isClear_ = false;
+				}
 			}
 		}
 	}

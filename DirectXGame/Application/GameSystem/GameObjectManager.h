@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/GameObject/GameObjectLists.h"
+#include "Application/GameSystem/GameSystemStructs.h"
 #include <unordered_map>
 
 class CollisionManager;
@@ -23,7 +24,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update();
+	void Update(GameSceneState state);
 	/// <summary>
 	/// 描画
 	/// </summary>

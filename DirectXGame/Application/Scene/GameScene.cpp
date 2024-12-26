@@ -42,7 +42,7 @@ void GameScene::Initialize()
 	stateRequest_ = GameSceneState::kGameTutorial;
 
 #ifdef RELEASE
-	stateRequest_ = GameSceneState::kRecord;
+	//stateRequest_ = GameSceneState::kRecord;
 	//nowState_ = GameSceneState::kGamePlay;
 #endif // RELEASE
 
@@ -87,7 +87,7 @@ void GameScene::Update()
 
 	//---ゲームのシステム更新---//
 	gameSystem_->Update();
-	gameObjectManager_->Update();
+	gameObjectManager_->Update(nowState_);
 	// 衝突処理
 	CollisionUpdate();
 	// カメラの更新
