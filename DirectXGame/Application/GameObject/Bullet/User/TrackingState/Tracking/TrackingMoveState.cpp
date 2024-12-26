@@ -84,32 +84,62 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		offset *= 3.0f;
 		// 垂直ベクトル
 		Vector3 crossDirect = Vector3::Cross(bullet_->GetVelocity().Normalize(), Vector3::Right());
+		// 方向ベクトル
+		Vector3 toDirect = bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition();
+
+		//---劣等---//
+		Vector3 offsetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition() + inferiorOffset_;
+
+
+		//---秀才---//
+		// プレイヤーの現在の位置と速度
+		Vector3 targetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition();
+		Vector3 playerDirection = bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetTarget()->prevPosition_;
+		Vector3 predictedPosition{};	// 予測先の座標
+		// 予測位置を計算
+		float predictionTime = GlobalVariables::GetInstance()->GetValue<float>("TrackSuperior", "PredictionTime"); // ミサイルが向かう予測時間
 
 		// 種類ごとの計算
 		switch (type)
 		{
 		case TrackingAttribute::kSuperior:	// 優等
-			// 親加速度計算
-			parentAcceleration_ = CalcSuperiorAcceleration();
-			// 子加速度計算
-			childAcceleration_ = crossDirect.Normalize() * offset;
+			//// 親加速度計算
+			//parentAcceleration_ = CalcSuperiorAcceleration();
+			//// 子加速度計算
+			//childAcceleration_ = crossDirect.Normalize() * offset;
 			//parentAcceleration_ += childAcceleration_;
 			//parentAcceleration_ *= damping;
 			//parentAcceleration_ *= 5.0f;
-			parentAcceleration_ = accelerater_->CalcSuperiorAcceleration();
+			//parentAcceleration_ = accelerater_->CalcSuperiorAcceleration();
+
+			//parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect);
+
 			break;
 		case TrackingAttribute::kInferior:	// 劣等
 			//parentAcceleration_ = CalcInferiorAcceleration();
-			parentAcceleration_ = accelerater_->CalcInferiorAcceleration(this->inferiorOffset_);
+			//parentAcceleration_ = accelerater_->CalcInferiorAcceleration(this->inferiorOffset_);
+
+			toDirect = offsetPoint - bullet_->GetWorldPosition();
+
 			break;
 		case TrackingAttribute::kGenius:	// 秀才
 			//parentAcceleration_ = CalcGeniusAcceleration();
-			parentAcceleration_ = accelerater_->CalcGeniusAcceleration();
+			// 予測先の計算
+			if (playerDirection.x == 0.0f && playerDirection.y == 0.0f && playerDirection.z == 0.0f) {
+				predictedPosition = targetPoint;
+			}
+			else {
+				predictedPosition = targetPoint + (playerDirection * predictionTime);
+			}
+
+			toDirect = predictedPosition - bullet_->GetWorldPosition();
+			//parentAcceleration_ = accelerater_->CalcGeniusAcceleration();
 			break;
 		default:
 			break;
 		}
-
+		toDirect.Normalize();
+		parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
 
 		// 加速度の設定
 		bullet_->SetAccelerate(parentAcceleration_);

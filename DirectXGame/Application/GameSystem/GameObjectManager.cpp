@@ -108,7 +108,7 @@ void GameObjectManager::Update(GameSceneState state)
 	}
 
 #endif // RELEASE
-
+	state;
 	// オブジェクトの更新
 	UpdateObject();
 }

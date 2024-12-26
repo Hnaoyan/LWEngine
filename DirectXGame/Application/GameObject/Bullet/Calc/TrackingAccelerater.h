@@ -1,5 +1,6 @@
 #pragma once
 #include "../BulletEnums.h"
+#include "Engine/LwLib/Utillity/FrameTimer.h"
 
 class TrackingBullet;
 
@@ -35,7 +36,7 @@ public:
 	Vector3 CalcGeniusAcceleration();
 
 public:
-	Vector3 CalcTrackingAcceleration(const Vector3& toDirect);
+	Vector3 CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer);
 
 private:
 	// 弾本体

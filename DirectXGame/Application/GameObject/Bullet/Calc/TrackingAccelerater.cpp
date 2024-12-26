@@ -119,8 +119,17 @@ Vector3 TrackingAccelerater::CalcGeniusAcceleration()
 	return Vector3(force);
 }
 
-Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect)
+Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer)
 {
+	float speed = bullet_->GetTrackingData().baseSpeed;
+	float maxSpeed = bullet_->GetTrackingData().baseSpeed + 250.0f;
+	if (timer.IsActive()) {
+		speed = Ease::Easing(speed, maxSpeed, timer.GetElapsedFrame());
+	}
+	else {
+		speed = maxSpeed;
+	}
+
 	Vector3 bulletVelocity = bullet_->GetVelocity();
 	Vector3 nowDirect = Vector3::Normalize(bulletVelocity);
 	float dot = Vector3::Dot(toDirect, nowDirect);
@@ -134,11 +143,11 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect)
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 
-	float maxCentripetalForce = std::powf(bullet_->GetTrackingData().baseSpeed, 2) / bullet_->GetTrackingData().lerpRadius;
+	float maxCentripetalForce = std::powf(speed, 2) / bullet_->GetTrackingData().lerpRadius;
 
 	Vector3 force = centripetalAccel * maxCentripetalForce;
 
-	float propulsion = bullet_->GetTrackingData().baseSpeed * bullet_->GetTrackingData().damping;
+	float propulsion = speed * bullet_->GetTrackingData().damping;
 
 	force += nowDirect * propulsion;
 	force -= bulletVelocity * bullet_->GetTrackingData().damping;
