@@ -61,7 +61,7 @@ void GameScene::Update()
 	ChangeState();
 	// チュートリアルの状態から変更する処理
 	if (this->nowState_ == GameSceneState::kGameTutorial) {
-		if (input_->TriggerKey(DIK_SPACE)) {
+		if (input_->TriggerKey(DIK_SPACE) || input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
 
 #ifdef IMGUI_ENABLED
 			stateRequest_ = GameSceneState::kGamePlay;
@@ -246,6 +246,7 @@ void GameScene::LoadTexture()
 	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
+	SpriteManager::LoadSprite("UIBack", TextureManager::Load("Resources/default/white2x2.png"));
 	// テキスト関係
 	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/GameClearText.png"));
 	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOverText.png"));

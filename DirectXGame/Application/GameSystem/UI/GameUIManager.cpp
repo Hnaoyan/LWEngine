@@ -30,9 +30,15 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 	cameraChange_.sprite = SpriteManager::GetSprite("CameraChangeUI");
 	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
 
-	gameStart_.sprite = SpriteManager::GetSprite("GameStartText");
-	gameStart_.position = Vector2(1280.0f / 2.0f, 720.0f / 2.0f);
-	gameStart_.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	gameStart_.text.sprite = SpriteManager::GetSprite("GameStartText");
+	gameStart_.backSprite = SpriteManager::GetSprite("UIBack");
+	gameStart_.text.position = Vector2(1280.0f / 2.0f, 720.0f * (1.0f / 4.0f));
+	gameStart_.defaultSize = gameStart_.text.sprite->GetSize();
+	gameStart_.text.size = gameStart_.defaultSize * 1.5f;
+	gameStart_.text.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	gameStart_.isAlpha = false;
+	gameStart_.returnFrame = 60.0f;
+	gameStart_.Initialize();
 
 	gameSystem_ = gameSystem;
 }
@@ -45,6 +51,7 @@ void GameUIManager::Initialize()
 void GameUIManager::Update(GameSceneState state)
 {
 	sceneState_ = state;
+
 }
 
 void GameUIManager::Draw(GameObjectManager* gameObjectManager)
@@ -88,9 +95,14 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 	}
 	
 	if (sceneState_ == GameSceneState::kGameTutorial) {
-		gameStart_.sprite->SetPosition(gameStart_.position);
-		gameStart_.sprite->SetColor(gameStart_.color);
-		gameStart_.sprite->Draw();
+		// テキストの処理
+		gameStart_.Update();
+		gameStart_.text.sprite->Draw();
+		Vector2 size = gameStart_.defaultSize;
+		size.x *= 1.5f;
+		size.y *= 0.8f;
+		gameStart_.backSprite->SetSize(size);
+		gameStart_.backSprite->Draw();
 	}
 
 #ifdef _DEBUG

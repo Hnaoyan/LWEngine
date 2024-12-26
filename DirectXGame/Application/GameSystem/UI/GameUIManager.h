@@ -1,6 +1,7 @@
 #pragma once
 #include "UIStructs.h"
 #include "../GameSystemStructs.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 #include <vector>
 
 class GameObjectManager;
@@ -44,17 +45,53 @@ private: // UI
 	GameUI::TextUI cameraChange_ = {};
 
 	// ゲームの開始テキスト
-	GameUI::TextUI gameStart_ = {};
-
 	struct TextComp
 	{
-		FrameTimer upper;
-		FrameTimer lower;
+		FrameTimer timer;
+		float returnFrame;
+		void Initialize() {
+			backColor = Vector4(0.0f, 0.0f, 0.0f, 0.5f);
+			Start();
+		}
+		void Start() {
+			timer.Start(returnFrame);
+		}
+		void Update() {
+			// タイマー更新
+			timer.Update();
+			if (timer.IsEnd()) {
+				if (isAlpha) {
+					isAlpha = false;
+				}
+				else {
+					isAlpha = true;
+				}
+				Start();
+			}
+			float min = 0.6f;
+			float max = 1.0f;
+			if (isAlpha) {
+				text.color.w = Ease::Easing(min, max, timer.GetElapsedFrame());
+			}
+			else {
+				text.color.w = Ease::Easing(max, min, timer.GetElapsedFrame());
+			}
+			// スプライトへの適応
+			text.sprite->SetColor(text.color);
+			text.sprite->SetSize(text.size);
+			text.sprite->SetPosition(text.position);
+			// 背景
+			backSprite->SetColor(backColor);
+			backSprite->SetPosition(text.position);
+		}
 		bool isAlpha;	// true:0→1 false:1→0
 		GameUI::TextUI text;
+		Sprite* backSprite = nullptr;
+		Vector4 backColor = {};
+		Vector2 defaultSize = {};
 	};
 
-	TextComp gameStart = {};
+	TextComp gameStart_ = {};
 
 private:
 	/// <summary>
