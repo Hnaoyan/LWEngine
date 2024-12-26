@@ -122,7 +122,8 @@ Vector3 TrackingAccelerater::CalcGeniusAcceleration()
 Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer)
 {
 	float speed = bullet_->GetTrackingData().baseSpeed;
-	float maxSpeed = bullet_->GetTrackingData().baseSpeed + 250.0f;
+	float maxOffset = 200.0f;
+	float maxSpeed = bullet_->GetTrackingData().baseSpeed + maxOffset;
 	if (timer.IsActive()) {
 		speed = Ease::Easing(speed, maxSpeed, timer.GetElapsedFrame());
 	}

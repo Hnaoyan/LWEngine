@@ -30,7 +30,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 
 	// 弾
 	bulletManager_->SetGPUParticle(gpuManager_);
-	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
+	bulletManager_->Initialize(ModelManager::GetModel("BulletCube"));
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));

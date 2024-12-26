@@ -227,6 +227,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
 	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
 	ModelManager::LoadNormalModel("Plane", "plane");
+	ModelManager::LoadNormalModel("BulletCube", "ICO");
 }
 
 void GameScene::LoadTexture()
