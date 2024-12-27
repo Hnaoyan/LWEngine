@@ -33,7 +33,7 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 	gameStart_.text.sprite = SpriteManager::GetSprite("GameStartText");
 	gameStart_.backSprite = SpriteManager::GetSprite("UIBack");
 	gameStart_.text.position = Vector2(1280.0f / 2.0f, 720.0f * (1.0f / 4.0f));
-	gameStart_.defaultSize = gameStart_.text.sprite->GetSize();
+	gameStart_.defaultSize = Vector2(240.0f, 120.0f);
 	gameStart_.text.size = gameStart_.defaultSize * 1.5f;
 	gameStart_.text.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	gameStart_.isAlpha = false;

@@ -214,7 +214,7 @@ void ReplayManager::ReplaySetUp()
 void ReplayManager::ReplayCount()
 {
     replayNowFrame_++;
-    if (replayNowFrame_ >= GetReplayDataSize()) {
+    if (replayNowFrame_ >= GetReplayDataSize() - 60) {
         // リプレイ中か
         isReplayNow_ = false;
         // 終了か

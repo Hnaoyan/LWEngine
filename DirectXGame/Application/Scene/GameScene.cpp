@@ -71,6 +71,14 @@ void GameScene::Update()
 #endif // RELEASE
 		}
 	}
+
+#ifdef RELEASE
+	if (gameSystem_->GetReplayManager()->IsReplayEnd()) {
+		sceneManager_->ChangeScene("TITLE");
+	}
+#endif // RELEASE
+
+
 	// シーンの切り替え処理
 	if (gameObjectManager_->IsSceneChange()) {
 		sceneManager_->ChangeScene("TITLE");

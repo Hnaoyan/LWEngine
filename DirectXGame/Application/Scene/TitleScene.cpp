@@ -112,6 +112,7 @@ void TitleScene::UIDraw()
 	SpriteManager::GetSprite("TitleButtonText")->Draw();
 	SpriteManager::GetSprite("TitleText")->Draw();
 	//SpriteManager::GetSprite("BackGroundTexture")->Draw();
+	SpriteManager::GetSprite("BackGroundImage")->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.85f));
 	SpriteManager::GetSprite("BackGroundImage")->Draw();
 
 	Sprite::PostDraw();
@@ -139,7 +140,7 @@ void TitleScene::LoadTexture()
 	skybox_.reset(Skybox::CreateSkybox("rostock_laage_airport_4k.dds"));
 	SpriteManager::LoadSprite("BackGroundImage", TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
 	SpriteManager::LoadSprite("BackGroundTexture", TextureManager::GetInstance()->Load("Resources/default/white2x2.png"));
-	SpriteManager::LoadSprite("TitleButtonText", TextureManager::GetInstance()->Load("Resources/UI/Button.png"));
+	SpriteManager::LoadSprite("TitleButtonText", TextureManager::GetInstance()->Load("Resources/UI/GameStart.png"));
 	SpriteManager::LoadSprite("TitleText", TextureManager::GetInstance()->Load("Resources/UI/TitleText.png"));
 	
 	//clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
