@@ -47,7 +47,7 @@ void Boss::Update()
 	// システム
 	systemManager_->Update();
 	// ステート
-	if (state_ && isAction_) {
+	if (state_ && isAction_ && !isDead_) {
 		state_->Update();
 
 	}
