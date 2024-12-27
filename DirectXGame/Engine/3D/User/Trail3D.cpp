@@ -95,6 +95,9 @@ void Trail3D::BuildVertexFromPoints(const std::vector<Vector3>& points)
 	// インデックス用のIndex
 	int32_t indexId = 0;
 
+	vertexData_.clear();
+	indices_.clear();
+
 	for (size_t i = 0; i < numPoints - 1; ++i) {
 		// 始点と終点
 		Vector3 startPoint = points[i];

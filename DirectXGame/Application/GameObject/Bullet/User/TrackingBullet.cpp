@@ -35,8 +35,13 @@ void TrackingBullet::Initialize()
 
 	// 速度を距離に応じて
 	float reductionRate = 0.5f;	// 減速するレート
-	float reductionDistance = 150.0f;	// 制限距離
+	float reductionDistance = 175.0f;	// 制限距離
+	float redMinDistance = 75.0f;
+	float toDistance = TargetToDistance();
 	if (TargetToDistance() <= reductionDistance) {
+		float v = (toDistance - redMinDistance) / (reductionDistance - redMinDistance);
+		v = std::clamp(v, 0.0f, 1.0f);
+		reductionRate = Ease::Easing(0.5f, 1.0f, v);
 		//data_.initSpeed *= reductionRate;
 		//data_.baseSpeed *= reductionRate;
 		velocity_ *= reductionRate;

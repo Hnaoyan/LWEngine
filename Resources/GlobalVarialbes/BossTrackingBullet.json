@@ -5,16 +5,16 @@
         "InitSpeed": 80.0,
         "LerpRadius": 100.0,
         "Scale": [
-            0.5,
-            0.5,
-            0.5
+            0.6000000238418579,
+            0.6000000238418579,
+            0.6000000238418579
         ],
         "StraightFrame": 45.0,
         "TrackFrame": 300.0,
         "TrackingDot": -0.949999988079071,
         "TrackingDotLoose": -0.05000000074505806,
-        "TrailMaxWidth": 0.44999998807907104,
-        "TrailMinWidth": 0.05000000074505806,
+        "TrailMaxWidth": 1.149999976158142,
+        "TrailMinWidth": 0.009999999776482582,
         "TrailSaveFrame": 80
     }
 }
