@@ -62,6 +62,18 @@ namespace LwLib
 #pragma endregion
 
 	/// <summary>
+	/// 最小と最大で0~1に正規化する関数
+	/// </summary>
+	/// <param name="nowValue"></param>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	inline static float Normalize(const float& nowValue, const float& min, const float& max) {
+		float v = (nowValue - min) / (max - min);
+		return std::clamp(v, 0.0f, 0.0f);
+	}
+
+	/// <summary>
 	/// ワールドからスクリーン
 	/// </summary>
 	/// <param name="world"></param>

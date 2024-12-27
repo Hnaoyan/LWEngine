@@ -39,8 +39,7 @@ void TrackingBullet::Initialize()
 	float redMinDistance = 100.0f;
 	float toDistance = TargetToDistance();
 	if (TargetToDistance() <= reductionDistance) {
-		float v = (toDistance - redMinDistance) / (reductionDistance - redMinDistance);
-		v = std::clamp(v, 0.0f, 1.0f);
+		float v = LwLib::Normalize(toDistance, redMinDistance, reductionDistance);
 		reductionRate = Ease::Easing(0.65f, 1.0f, v);
 		//data_.initSpeed *= reductionRate;
 		//data_.baseSpeed *= reductionRate;
