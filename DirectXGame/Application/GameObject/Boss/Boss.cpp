@@ -355,6 +355,11 @@ void Boss::InitializeGlobalValue()
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "MinOffset", float(15.0f));	// ずらしの最小
 	instance->AddValue(groupName, "MaxOffset", float(25.0f));	// ずらしの最大
+
+	groupName = "TrackingData";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "TrackingAccuracy", float(1.0f));
+
 }
 
 Vector3 Boss::HitEffectPosition()

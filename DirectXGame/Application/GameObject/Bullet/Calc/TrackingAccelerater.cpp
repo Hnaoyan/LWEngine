@@ -106,13 +106,13 @@ Vector3 TrackingAccelerater::CalcGeniusAcceleration()
 	if (centripetalAccelMagnitude > maxCentripetalAccel) {
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
-
+	// 最大向心力
 	float maxCentripetalForce = std::powf(bullet_->GetTrackingData().baseSpeed, 2) / bullet_->GetTrackingData().lerpRadius;
-
+	// 力の向き
 	Vector3 force = centripetalAccel * maxCentripetalForce;
-
+	// 推進力計算
 	float propulsion = bullet_->GetTrackingData().baseSpeed * bullet_->GetTrackingData().damping;
-
+	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
 	force -= bulletVelocity * bullet_->GetTrackingData().damping;
 
@@ -121,37 +121,56 @@ Vector3 TrackingAccelerater::CalcGeniusAcceleration()
 
 Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer)
 {
+	// 速度
 	float speed = bullet_->GetTrackingData().baseSpeed;
-	float maxOffset = 200.0f;
+	// オフセット
+	float maxOffset = 100.0f;
+	// 最大速度
 	float maxSpeed = bullet_->GetTrackingData().baseSpeed + maxOffset;
+	// 調整
 	if (timer.IsActive()) {
 		speed = Ease::Easing(speed, maxSpeed, timer.GetElapsedFrame());
 	}
 	else {
 		speed = maxSpeed;
 	}
+	// 命中率の割合変数（0.0 = 完全に外れる, 1.0 = 完全に命中）
+	float trackingAccuracy = GlobalVariables::GetInstance()->GetValue<float>("TrackingData","TrackingAccuracy");
 
+	// 弾の速度
 	Vector3 bulletVelocity = bullet_->GetVelocity();
+	// 方向
 	Vector3 nowDirect = Vector3::Normalize(bulletVelocity);
+	// 方向内積
 	float dot = Vector3::Dot(toDirect, nowDirect);
-
+	// 向心加速力の計算
 	Vector3 centripetalAccel = toDirect - (nowDirect * dot);
 	float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
 
+	// 大きさの調整
 	// 最大値
 	float maxCentripetalAccel = 2.0f;
 	if (centripetalAccelMagnitude > maxCentripetalAccel) {
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
-
+	// 最大向心力
 	float maxCentripetalForce = std::powf(speed, 2) / bullet_->GetTrackingData().lerpRadius;
 
+	// 最大向心力に命中率を適用（命中率が低いほど追従力を弱くする）
+	maxCentripetalForce *= trackingAccuracy;
+	// 力の向き
 	Vector3 force = centripetalAccel * maxCentripetalForce;
 
+	// 推進力計算
 	float propulsion = speed * bullet_->GetTrackingData().damping;
 
+	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
 	force -= bulletVelocity * bullet_->GetTrackingData().damping;
+
+	// 目標方向から完全に一致しないように、少しだけ力を調整
+	// 弾がターゲット方向に近づきつつも、完全には収束しないように
+	force += (Vector3::Normalize(toDirect - bulletVelocity) - nowDirect) * (1.0f - trackingAccuracy);
 
 	return Vector3(force);
 }
