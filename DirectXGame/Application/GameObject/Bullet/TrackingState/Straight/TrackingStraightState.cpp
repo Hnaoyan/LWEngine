@@ -1,5 +1,5 @@
 #include "TrackingStraightState.h"
-#include "../../../BulletsPaths.h"
+#include "../../BulletsPaths.h"
 #include "../StateMachine/BulletStateMachine.h"
 #include "Engine/Input/Input.h"
 

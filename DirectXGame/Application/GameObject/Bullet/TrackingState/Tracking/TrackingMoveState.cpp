@@ -3,7 +3,7 @@
 #include "Application/GameObject/IGameObject.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
-#include "../../../BulletsPaths.h"
+#include "../../BulletsPaths.h"
 #include "../StateMachine/BulletStateMachine.h"
 
 void TrackingMoveState::Enter()
