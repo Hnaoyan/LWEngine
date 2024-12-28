@@ -19,6 +19,7 @@ void TrackingBullet::Initialize()
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	// 追従対象がプレイヤー
 	if (player) {
+		// 
 		data_.LoadGlobalData("BossTrackingBullet");
 		// 直進の時間設定
 		//straightFrame_ = instance->GetValue<float>("BossTrackingBullet", "StraightFrame");
@@ -26,6 +27,7 @@ void TrackingBullet::Initialize()
 	}
 	// 追従対象がボス
 	else if (boss) {
+		// 
 		data_.LoadGlobalData("PlayerTrackingBullet");
 		// 直進の時間設定
 		straightFrame_ = (instance->GetValue<float>("PlayerTrackingBullet", "StraightFrame"));
