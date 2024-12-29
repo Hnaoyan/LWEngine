@@ -276,16 +276,17 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "DashCooltime", float(30.0f));
 	instance->AddValue(groupName, "DashExceptTime", float(12.0f));
 
-	// エネルギー関係
-	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));
-	instance->AddValue(groupName, "VelocityDecay", float(0.2f));
-	instance->AddValue(groupName, "ShotDuration", float(30.0f));
-	instance->AddValue(groupName, "LockDuration", float(25.0f));
-	instance->AddValue(groupName, "HitPoint", int32_t(20));
-	instance->AddValue(groupName, "AimOffset", Vector3(0.0f, 0.0f, 50.0f));
-	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));
-	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));
-	instance->AddValue(groupName, "FallGravity", float(-3.0f));
+	// 基本部分
+	instance->AddValue(groupName, "InitPosition", Vector3(0.0f, -35.0f, 0.0f));	// 初期座標
+	instance->AddValue(groupName, "VelocityDecay", float(0.2f));	// 減速割合
+	instance->AddValue(groupName, "MoveSpeed", float(10.0f));	// 移動速度
+	instance->AddValue(groupName, "ShotDuration", float(30.0f));	// 撃つ間隔
+	instance->AddValue(groupName, "LockDuration", float(25.0f));	// ロックオン切り替え間隔
+	instance->AddValue(groupName, "HitPoint", int32_t(20));	// HP
+	instance->AddValue(groupName, "AimOffset", Vector3(0.0f, 0.0f, 50.0f));	// オフセット距離
+	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));	// 初期ジャンプ力
+	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));	// 2段目ジャンプ力
+	instance->AddValue(groupName, "FallGravity", float(-3.0f));	// 落下の重力
 
 	//---（仮）弾---//
 	groupName = "Bullet";

@@ -35,9 +35,9 @@ void QuickBoostState::Update()
 	// 減速処理
 	dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, changeTimer_.GetElapsedFrame());
 	dashVelocity_.z = LwLib::Lerp(dashVelocity_.z, 0, changeTimer_.GetElapsedFrame());
-
-	player_->velocity_.x += dashVelocity_.x * GameSystem::GameSpeedFactor();
-	player_->velocity_.z += dashVelocity_.z * GameSystem::GameSpeedFactor();
+	// フレーム内の速度計算
+	player_->acceleration_.x = dashVelocity_.x * GameSystem::GameSpeedFactor();
+	player_->acceleration_.z = dashVelocity_.z * GameSystem::GameSpeedFactor();
 
 	// 変更処理
 	if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {

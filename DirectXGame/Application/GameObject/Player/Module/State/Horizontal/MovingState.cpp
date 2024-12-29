@@ -23,16 +23,16 @@ void MovingState::Update()
 		player_->worldTransform_.transform_.rotate.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
 	}
 
-	const float speed = 10.0f;
+	const float speed = GlobalVariables::GetInstance()->GetValue<float>("Player", "MoveSpeed");
 	//float slowFactor = 0.2f;
 
 	// 入力しているかどうか
 	if (direct.x != 0)
 	{
-		player_->velocity_.x += (direct.x * GameSystem::GameSpeedFactor() * speed);
+		player_->acceleration_.x = (direct.x * GameSystem::GameSpeedFactor() * speed);
 	}
 	if (direct.z != 0) {
-		player_->velocity_.z += (direct.z * GameSystem::GameSpeedFactor() * speed);
+		player_->acceleration_.z = (direct.z * GameSystem::GameSpeedFactor() * speed);
 	}
 
 	if (!isLeftStickActive_) {

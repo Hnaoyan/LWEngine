@@ -72,6 +72,9 @@ void OparationManager::InputUpdate()
 
 	}
 	direct = Vector3::Normalize(direct);
+	// 加速度による速度計算
+	player_->velocity_ += player_->acceleration_;
+
 	// 速度の計算
 	const float velocityDecay = GlobalVariables::GetInstance()->GetValue<float>("Player", "VelocityDecay");
 	player_->velocity_.x = LwLib::Lerp(player_->velocity_.x, 0, velocityDecay);

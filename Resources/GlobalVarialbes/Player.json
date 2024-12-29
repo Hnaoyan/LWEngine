@@ -8,6 +8,7 @@
         "BoostDashPower": 120.0,
         "BoostEndTime": 25.0,
         "DashCooltime": 30.0,
+        "DashExceptTime": 12.0,
         "DashPower": 110.0,
         "FallGravity": -3.0,
         "FirstJumpPower": 65.0,
@@ -18,9 +19,10 @@
             -35.0
         ],
         "LockDuration": 25.0,
+        "MoveSpeed": 5.0,
         "QuickBoostEndTime": 20.0,
         "SecondJumpPower": 65.0,
         "ShotDuration": 30.0,
-        "VelocityDecay": 0.20000000298023224
+        "VelocityDecay": 0.05000000074505806
     }
 }
