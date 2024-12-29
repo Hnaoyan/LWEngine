@@ -91,8 +91,6 @@ public: // アクセッサ
 	// コライダー
 	AABB* GetCollider() { return &collider_; }
 	AABB* GetFootCollider() { return footCollider_.GetCollider(); }
-	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-	Vector3 GetVelocity() const { return velocity_; }
 	void SetColor(const Vector4& color) { material_->color_ = color; }
 	// ポインタ関係
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
@@ -117,10 +115,6 @@ private: // USER
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 	// 現在のステート
 	void NowState();
-
-public:
-	// 移動速度
-	Vector3 velocity_ = {};
 
 private:
 	// ボス

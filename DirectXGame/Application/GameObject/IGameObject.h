@@ -82,6 +82,8 @@ protected:
 public: // アクセッサ
 	bool IsDead() const{ return isDead_; }
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
+	Vector3 GetVelocity() const { return velocity_; }
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 
 protected:
 	// モデル
@@ -92,5 +94,9 @@ public:
 	WorldTransform worldTransform_;
 	// 前フレームの位置
 	Vector3 prevPosition_ = {};
+	// 速度ベクトル
+	Vector3 velocity_ = {};
+	// 加速度ベクトル
+	Vector3 acceleration_ = {};
 
 };

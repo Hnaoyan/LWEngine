@@ -129,7 +129,6 @@ public:
 	void SetIsAction(bool isAction) { isAction_ = isAction; }
 	// 外部
 	GPUParticleManager* GetGPUParticle() { return gpuParticle_; }
-	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	Sphere* GetCollider() { return &collider_; }
 	Player* GetPlayer() { return player_; }
 

@@ -49,19 +49,19 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 	// 誘導弾なら
 	if (dynamic_cast<TrackingBullet*>(bullet_)) {
-
+		// 対象が居なければ
 		if (!bullet_->GetTarget()) {
 			return;
 		}
 
-		float dot = Vector3::Dot(Vector3::Normalize(bullet_->GetVelocity()), Vector3::Normalize(bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition()));
 		// 向きが過度に離れていたら追尾しない
+		float dot = Vector3::Dot(Vector3::Normalize(bullet_->GetVelocity()), Vector3::Normalize(bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition()));
 		float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
-
+		// 追従が緩ければ
 		if (!looseTimer_.IsActive()) {
 			limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDotLoose");
 		}
-
+		// 追従をキャンセル
 		if (dot < limitDot) {
 			stateMachine.RequestState(TrackingState::kStraight);
 			return;
@@ -69,6 +69,7 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 		// 種類の受け取り
 		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
+		//---揺れる処理---//
 		// 時間
 		float addTime = 1.0f / 5.0f; // 毎フレーム加算する時間
 		elapsedTime_ += addTime;
@@ -82,6 +83,8 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		// オフセット
 		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
 		offset *= 3.0f;
+
+
 		// 垂直ベクトル
 		Vector3 crossDirect = Vector3::Cross(bullet_->GetVelocity().Normalize(), Vector3::Right());
 		// 方向ベクトル
@@ -89,7 +92,6 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 		//---劣等---//
 		Vector3 offsetPoint = bullet_->GetTarget()->worldTransform_.GetWorldPosition() + inferiorOffset_;
-
 
 		//---秀才---//
 		// プレイヤーの現在の位置と速度
@@ -103,27 +105,12 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		switch (type)
 		{
 		case TrackingAttribute::kSuperior:	// 優等
-			//// 親加速度計算
-			//parentAcceleration_ = CalcSuperiorAcceleration();
-			//// 子加速度計算
-			//childAcceleration_ = crossDirect.Normalize() * offset;
-			//parentAcceleration_ += childAcceleration_;
-			//parentAcceleration_ *= damping;
-			//parentAcceleration_ *= 5.0f;
-			//parentAcceleration_ = accelerater_->CalcSuperiorAcceleration();
-
-			//parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect);
 
 			break;
 		case TrackingAttribute::kInferior:	// 劣等
-			//parentAcceleration_ = CalcInferiorAcceleration();
-			//parentAcceleration_ = accelerater_->CalcInferiorAcceleration(this->inferiorOffset_);
-
 			toDirect = offsetPoint - bullet_->GetWorldPosition();
-
 			break;
 		case TrackingAttribute::kGenius:	// 秀才
-			//parentAcceleration_ = CalcGeniusAcceleration();
 			// 予測先の計算
 			if (playerDirection.x == 0.0f && playerDirection.y == 0.0f && playerDirection.z == 0.0f) {
 				predictedPosition = targetPoint;
@@ -131,20 +118,21 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			else {
 				predictedPosition = targetPoint + (playerDirection * predictionTime);
 			}
-
+			// 予測先に対するベクトル
 			toDirect = predictedPosition - bullet_->GetWorldPosition();
-			//parentAcceleration_ = accelerater_->CalcGeniusAcceleration();
 			break;
 		default:
 			break;
 		}
+
+		// ベクトルの正規化
 		toDirect.Normalize();
+		// 加速度の計算
 		parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
 
 		// 加速度の設定
 		bullet_->SetAccelerate(parentAcceleration_);
 	}
-
 }
 
 void TrackingMoveState::Exit()
