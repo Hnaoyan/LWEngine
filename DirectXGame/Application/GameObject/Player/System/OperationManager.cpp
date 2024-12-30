@@ -48,6 +48,8 @@ void OparationManager::InputUpdate()
 	//---射撃入力---//
 	// 通常
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().shot && !shotTimer_.IsActive()) {
+		// 武器マネージャにリクエストを送るようにする（メモ
+		player_->GetWeaponManager()->AttackReception();
 		Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
 		player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
 		shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));

@@ -622,6 +622,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1222,7 +1223,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerModulePaths.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\System\BulletSpeedController.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

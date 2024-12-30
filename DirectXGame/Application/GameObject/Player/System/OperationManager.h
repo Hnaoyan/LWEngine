@@ -29,8 +29,6 @@ private:
 
 public:
 	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
-	PlayerContext::AimManager* GetAimManager() { return &aimManager_; }
-	PlayerContext::LockOn* GetLockOn() { return &lockOn_; }
 	void SetCooltime(float cooltime){
 		if (!longDashCoolTimer_.IsActive()) {
 			longDashCoolTimer_.Start(cooltime);
