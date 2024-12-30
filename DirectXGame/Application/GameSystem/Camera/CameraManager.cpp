@@ -157,7 +157,7 @@ void CameraManager::GameSetUp()
 {
 	// 追従カメラ
 	GetTypeCamera<FollowCamera>("Follow")->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
-	GetTypeCamera<FollowCamera>("Follow")->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
+	GetTypeCamera<FollowCamera>("Follow")->SetLockOn(gameObjManager_->GetPlayer()->GetWeaponManager()->GetLockOn());
 	GetTypeCamera<FollowCamera>("Follow")->Initialize();
 	// 注視
 	GetTypeCamera<FocusCamera>("Focus")->SetFocusPoint(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate);
@@ -174,7 +174,7 @@ void CameraManager::TutorialSetUp()
 {	
 	// 追従カメラ
 	GetTypeCamera<FollowCamera>("Follow")->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
-	GetTypeCamera<FollowCamera>("Follow")->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
+	GetTypeCamera<FollowCamera>("Follow")->SetLockOn(gameObjManager_->GetPlayer()->GetWeaponManager()->GetLockOn());
 	// 注視
 	GetTypeCamera<FocusCamera>("Focus")->SetFocusPoint(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate);
 	// サイド

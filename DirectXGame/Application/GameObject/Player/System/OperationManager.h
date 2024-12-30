@@ -28,7 +28,6 @@ private:
 	void InputUpdate();
 
 public:
-	void SetEnemyList(std::vector<std::unique_ptr<SampleEnemy>>* lists) { lockOn_.SetEnemyList(lists); }
 	void SetCooltime(float cooltime){
 		if (!longDashCoolTimer_.IsActive()) {
 			longDashCoolTimer_.Start(cooltime);
@@ -44,18 +43,9 @@ private: // USER
 	bool isDash_ = false;
 	int resetTime_ = 0;
 	
-	FrameTimer shotTimer_;
-	FrameTimer lockOnCooltime_;
-
 	Vector3 dashVelocity_{};
 	// 長押しダッシュ用
 	FrameTimer longDashTimer_;
 	FrameTimer longDashCoolTimer_;
-
-private: // SYSTEM
-	// ロックオンシステム
-	PlayerContext::LockOn lockOn_;
-	// エイム関係
-	PlayerContext::AimManager aimManager_;
 
 };

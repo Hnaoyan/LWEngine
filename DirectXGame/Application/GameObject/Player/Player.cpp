@@ -178,11 +178,11 @@ void Player::ImGuiDraw()
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Aim")) {
-			oparationManager_.GetAimManager()->ImGuiDraw();
+			weaponManager_->GetAimManager()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("LockOn")) {
-			oparationManager_.GetLockOn()->ImGuiDraw();
+			weaponManager_->GetLockOn()->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("FootCollider")) {

@@ -96,12 +96,12 @@ public: // アクセッサ
 	void PointerInitialize(BulletManager* manager, Boss* boss, std::vector<std::unique_ptr<SampleEnemy>>* lists) {
 		facadeSystem_->GetShootingManager()->SetManager(manager);
 		boss_ = boss;
-		oparationManager_.GetLockOn()->SetBoss(boss);
-		oparationManager_.SetEnemyList(lists);
+		weaponManager_->GetLockOn()->SetBoss(boss);
+		weaponManager_->GetLockOn()->SetEnemyList(lists);
 	}
 	void SetBoss(Boss* boss) { 
 		boss_ = boss;
-		oparationManager_.GetLockOn()->SetBoss(boss);
+		weaponManager_->GetLockOn()->SetBoss(boss);
 	}
 	bool IsGround() const { return isGround_; }
 	void SetIsGround(bool isGround) { isGround_ = isGround; }

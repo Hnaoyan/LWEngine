@@ -71,7 +71,7 @@ void PlayerContext::PlayerUIManager::Update()
 
 void PlayerContext::PlayerUIManager::Draw()
 {
-	reticle_->SetPosition(player_->GetOperation()->GetAimManager()->GetReticlePosition());
+	reticle_->SetPosition(player_->GetWeaponManager()->GetAimManager()->GetReticlePosition());
 	reticle_->Draw();
 
 	HPUI();
