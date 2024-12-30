@@ -19,7 +19,7 @@
             -35.0
         ],
         "LockDuration": 25.0,
-        "MoveSpeed": 7.5,
+        "MoveSpeed": 6.0,
         "QuickBoostEndTime": 15.0,
         "SecondJumpPower": 65.0,
         "ShotDuration": 30.0,

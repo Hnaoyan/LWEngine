@@ -307,6 +307,19 @@ namespace LwLib
 #pragma endregion
 
 	/// <summary>
+	/// 親のオイラーYと新しいベクトルでYawを求める関数
+	/// </summary>
+	/// <param name="newDirect"></param>
+	/// <param name="yaw"></param>
+	/// <returns></returns>
+	inline static float ParentRotateY(const Vector3& newDirect, const float& yaw)
+	{
+		Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(yaw);
+		Vector3 rotateVector = Matrix4x4::TransformVector3({ newDirect.x,0.0f,newDirect.y }, rotateY);
+		return LwLib::CalculateYawFromVector(Vector3(rotateVector.x, 0.0f, rotateVector.z));
+	}
+
+	/// <summary>
 	/// 誘導用の加速度計算
 	/// </summary>
 	/// <param name="position"></param>

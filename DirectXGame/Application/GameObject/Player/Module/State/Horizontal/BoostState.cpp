@@ -53,6 +53,11 @@ void BoostState::Update()
 
 void BoostState::Exit()
 {
+	PostEffectManager::sDashEffect.Finalize();
+
+	player_->acceleration_ = {};
+	player_->velocity_ = {};
+
 	player_->GetSystemFacede()->GetAnimation()->Reset();
 	player_->GetOperation()->SetCooltime(GlobalVariables::GetInstance()->GetValue<float>("Player", "DashCooltime"));
 }

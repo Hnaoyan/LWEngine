@@ -12,34 +12,30 @@ void MovingState::Initialize()
 void MovingState::Update()
 {
 	// 方向ベクトル
-	Vector3 direct{};
 	float playerYaw = player_->GetCamera()->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ leftStick_.x,0,leftStick_.y }, rotateY);
-	direct = rotateVector;
 
-	Vector3 sub = Vector3::Normalize({ leftStick_.x,leftStick_.y ,0 });
-	if (sub.x != 0.0f || sub.y != 0.0f) {
-		sub = Matrix4x4::TransformVector3({ sub.x,0,sub.y }, rotateY);
-		player_->worldTransform_.transform_.rotate.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
+	if (leftStick_.x != 0.0f || leftStick_.y != 0.0f) {
+		player_->worldTransform_.transform_.rotate.y = LwLib::ParentRotateY(Vector3(leftStick_.x, leftStick_.y, 0.0f), player_->GetCamera()->transform_.rotate.y);
 	}
 
 	const float speed = GlobalVariables::GetInstance()->GetValue<float>("Player", "MoveSpeed");
 	//float slowFactor = 0.2f;
 	this->activeFrame_++;
 	// 入力時間に応じて
-	float maxFrame = 120.0f;	// 時間
+	float maxFrame = 75.0f;	// 時間
 	// レート(0 ~ 1)(speed/2 ~ speed)
 	float rate = LwLib::Normalize(activeFrame_, 0.0f, maxFrame);
-	float activeSpeed = Ease::Easing(speed / 2.0f, speed, rate);
+	float activeSpeed = Ease::Easing(speed * (3.0f / 4.0f), speed, rate);
 
 	// 入力しているかどうか
-	if (direct.x != 0)
+	if (rotateVector.x != 0)
 	{
-		player_->acceleration_.x = (direct.x * GameSystem::GameSpeedFactor() * activeSpeed);
+		player_->acceleration_.x = (rotateVector.x * GameSystem::GameSpeedFactor() * activeSpeed);
 	}
-	if (direct.z != 0) {
-		player_->acceleration_.z = (direct.z * GameSystem::GameSpeedFactor() * activeSpeed);
+	if (rotateVector.z != 0) {
+		player_->acceleration_.z = (rotateVector.z * GameSystem::GameSpeedFactor() * activeSpeed);
 	}
 
 	if (!isLeftStickActive_) {
