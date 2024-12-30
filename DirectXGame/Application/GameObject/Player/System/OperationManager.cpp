@@ -39,9 +39,6 @@ void OparationManager::InputUpdate()
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().shot) {
 		// 武器マネージャにリクエストを送るようにする（メモ
 		player_->GetWeaponManager()->AttackReception();
-		//Vector3 velocity = Vector3::Normalize(aimManager_.GetWorldPosition() - player_->worldTransform_.GetWorldPosition());
-		//player_->GetSystemFacede()->GetShootingManager()->OnFire(velocity);
-		//shotTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "ShotDuration"));
 	}
 	//// 追従（強化弾として扱う
 	//else if (GameSystem::sKeyConfigManager.GetPlayerKey().homingShot && !shotTimer_.IsActive()) {
@@ -52,16 +49,11 @@ void OparationManager::InputUpdate()
 	// カメラの処理
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().lockon) {
 		player_->GetWeaponManager()->LockOnReception();
-		//lockOn_.ToggleLockOn(player_->GetCamera());
-		//lockOnCooltime_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration"));
 	}
 	//// スティックでロックオン対象を変更
 	//if (lockOn_.ExistTarget() && (sThumbR.x != 0 || sThumbR.y != 0) && !lockOnCooltime_.IsActive()) {
 	//	lockOn_.ChangeLockOnTarget(player_->GetCamera());
 	//	lockOnCooltime_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration"));
-	//}
-	//if (lockOn_.ExistTarget()) {
-
 	//}
 	direct = Vector3::Normalize(direct);
 	// 加速度による速度計算

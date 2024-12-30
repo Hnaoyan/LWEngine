@@ -19,7 +19,11 @@ void QuickBoostState::Initialize()
 	const float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "DashPower");
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
+
 	changeTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "QuickBoostEndTime"));
+
+	// 初速度計算
+	player_->velocity_ += dashVelocity_ * GameSystem::GameSpeedFactor();
 	// ゲージ減少
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 	// ジャスト回避受付開始

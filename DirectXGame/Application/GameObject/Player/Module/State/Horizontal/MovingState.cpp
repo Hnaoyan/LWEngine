@@ -6,6 +6,7 @@
 void MovingState::Initialize()
 {
 	nowState_ = this;
+	activeFrame_ = 0.0f;
 }
 
 void MovingState::Update()
@@ -25,14 +26,20 @@ void MovingState::Update()
 
 	const float speed = GlobalVariables::GetInstance()->GetValue<float>("Player", "MoveSpeed");
 	//float slowFactor = 0.2f;
+	this->activeFrame_++;
+	// 入力時間に応じて
+	float maxFrame = 120.0f;	// 時間
+	// レート(0 ~ 1)(speed/2 ~ speed)
+	float rate = LwLib::Normalize(activeFrame_, 0.0f, maxFrame);
+	float activeSpeed = Ease::Easing(speed / 2.0f, speed, rate);
 
 	// 入力しているかどうか
 	if (direct.x != 0)
 	{
-		player_->acceleration_.x = (direct.x * GameSystem::GameSpeedFactor() * speed);
+		player_->acceleration_.x = (direct.x * GameSystem::GameSpeedFactor() * activeSpeed);
 	}
 	if (direct.z != 0) {
-		player_->acceleration_.z = (direct.z * GameSystem::GameSpeedFactor() * speed);
+		player_->acceleration_.z = (direct.z * GameSystem::GameSpeedFactor() * activeSpeed);
 	}
 
 	if (!isLeftStickActive_) {
