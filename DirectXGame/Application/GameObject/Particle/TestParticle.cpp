@@ -20,10 +20,10 @@ void TestParticle::Update()
 		isInvisible_ = false;
 		Vector3 maxScale = Vector3(10.0f, 10.0f, 1.0f);
 		eulerTransform_.scale = Ease::Easing(Vector3(1.0f, 1.0f, 1.0f), maxScale, actionTimer_.GetElapsedFrame());
-
+		alpha_ = Ease::Easing(1.0f, 0.0f, actionTimer_.GetElapsedFrame());
 	}
 	else {
-		//isInvisible_ = true;
+		isInvisible_ = true;
 	}
 
 	worldTransform_.UpdateMatrix();
@@ -36,10 +36,18 @@ void TestParticle::Draw(ModelDrawDesc desc)
 	if (isInvisible_) {
 		return;
 	}
-
+	// 行列計算
 	worldTransform_.worldMatrix_ = Matrix4x4::MakeBillBoardMatrix(eulerTransform_.translate, desc.camera->transform_.translate, eulerTransform_.scale, Vector3::Up());
+	if (parent_) {
+		//worldTransform_.worldMatrix_.m[3][0] += parent_->GetWorldPosition().x;
+		//worldTransform_.worldMatrix_.m[3][1] += parent_->GetWorldPosition().y;
+		//worldTransform_.worldMatrix_.m[3][2] += parent_->GetWorldPosition().z;
+		worldTransform_.worldMatrix_ = Matrix4x4::MakeBillBoardMatrix(parent_->GetWorldPosition(), desc.camera->transform_.translate, eulerTransform_.scale, Vector3::Up());
+		//worldTransform_.worldMatrix_ = Matrix4x4::Multiply(worldTransform_.worldMatrix_, parent_->worldMatrix_);
+	}
 	worldTransform_.TransferMatrix();
-
+	material_->color_.w = alpha_;
+	material_->Update();
 	DrawDesc::LightDesc lightDesc{};
 	lightDesc.directionalLight = desc.directionalLight;
 	lightDesc.pointLight = desc.pointLight;
@@ -58,5 +66,5 @@ void TestParticle::ActiveAception(const float& frame)
 {
 	actionTimer_.Start(frame);
 	isInvisible_ = false;
-
+	
 }

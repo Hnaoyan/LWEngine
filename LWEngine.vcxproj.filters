@@ -624,6 +624,9 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\TestParticle.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Unit\CPUParticleUnit.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1202,9 +1205,6 @@
     <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Particle\Emitter\CPUParticleEmitter.h">
-      <Filter>Engine\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
@@ -1226,6 +1226,10 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerModulePaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\TestParticle.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPU\Unit\CPUParticleUnit.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\ParticleStructs.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

@@ -39,6 +39,7 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 
 	// パーティクル
 	particleUnit_->Initialie(ModelManager::GetModel("TestPlane"));
+	particleUnit_->ActiveAception(300.0f);
 	// フラグの初期化
 	FlagReset();
 }
@@ -116,7 +117,10 @@ void GameObjectManager::Update(GameSceneState state)
 	// オブジェクトの更新
 	UpdateObject();
 
-	//particleUnit_->Update();
+	if (this->GetPlayer()) {
+		particleUnit_->SetParent(GetPlayer()->GetWorldTransform());
+	}
+	particleUnit_->Update();
 }
 
 void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
@@ -131,6 +135,8 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	skyDome_->Draw(drawDesc);
 	// 地形
 	terrainManager_->Draw(drawDesc);
+	// パーティクル
+	particleUnit_->Draw(drawDesc);
 	// 弾
 	bulletManager_->Draw(drawDesc);
 	// 描画
@@ -138,7 +144,6 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 		(*it).second->Draw(drawDesc);
 	}
 
-	//particleUnit_->Draw(drawDesc);
 }
 
 void GameObjectManager::UIDraw()
@@ -163,6 +168,9 @@ void GameObjectManager::ImGuiDraw()
 		ImGui::Checkbox("GameEnd", &isGameEnd_);
 		ImGui::Checkbox("Clear", &isClear_);
 		ImGui::TreePop();
+	}
+	if (ImGui::Button("Paticle")) {
+		particleUnit_->ActiveAception(300.0f);
 	}
 	if (ImGui::BeginTabBar("Object"))
 	{
