@@ -236,6 +236,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
 	ModelManager::LoadNormalModel("Plane", "plane");
 	ModelManager::LoadNormalModel("BulletCube", "ICO");
+	ModelManager::LoadNormalModel("TestPlane", "plane");
 }
 
 void GameScene::LoadTexture()

@@ -45,13 +45,14 @@ private:
 	/// </summary>
 	void CreateConstBuffer();
 	/// <summary>
-	/// バッファに転送
-	/// </summary>
-	void TransferMatrix();
-	/// <summary>
 	/// マッピング
 	/// </summary>
 	void Map();
+public:
+	/// <summary>
+	/// バッファに転送
+	/// </summary>
+	void TransferMatrix();
 
 public:
 	// トランスフォーム

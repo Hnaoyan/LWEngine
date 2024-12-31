@@ -16,6 +16,8 @@ GameObjectManager::GameObjectManager(GameSystem* system)
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
+
+	particleUnit_ = std::make_unique<TestParticle>();
 }
 
 void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
@@ -35,6 +37,8 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
+	// パーティクル
+	particleUnit_->Initialie(ModelManager::GetModel("TestPlane"));
 	// フラグの初期化
 	FlagReset();
 }
@@ -111,6 +115,8 @@ void GameObjectManager::Update(GameSceneState state)
 	state;
 	// オブジェクトの更新
 	UpdateObject();
+
+	//particleUnit_->Update();
 }
 
 void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
@@ -131,6 +137,8 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		(*it).second->Draw(drawDesc);
 	}
+
+	//particleUnit_->Draw(drawDesc);
 }
 
 void GameObjectManager::UIDraw()

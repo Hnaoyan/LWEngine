@@ -34,6 +34,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\StateMachine\BulletStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Straight\TrackingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Tracking\TrackingMoveState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\TestParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\TestParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.h" />

@@ -191,4 +191,5 @@ public: // その他計算関数
 	/// <returns></returns>
 	static Matrix4x4 MakeBillBoardMatrix(const Matrix4x4& cameraMatrix);
 	static Matrix4x4 MakeBillBoardMatrix(const Vector3& target, const Vector3& eye, const Vector3& up);
+	static Matrix4x4 MakeBillBoardMatrix(const Vector3& target, const Vector3& eye, const Vector3& scale, const Vector3& up);
 };

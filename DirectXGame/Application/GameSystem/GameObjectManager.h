@@ -98,6 +98,8 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<IGameObject>> gameObjects_;
 	// ゲームのユニット
 	std::unique_ptr<BulletManager> bulletManager_;
+	// 試しのパーティクルオブジェクト
+	std::unique_ptr<TestParticle> particleUnit_;
 
 	// 地形や背景
 	std::unique_ptr<TerrainManager> terrainManager_;
