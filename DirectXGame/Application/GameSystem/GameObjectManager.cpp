@@ -39,7 +39,6 @@ void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* came
 
 	// パーティクル
 	particleUnit_->Initialie(ModelManager::GetModel("TestPlane"));
-	particleUnit_->ActiveAception(300.0f);
 	// フラグの初期化
 	FlagReset();
 }
