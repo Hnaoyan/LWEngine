@@ -115,7 +115,8 @@ private: // USER
 	void CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max);
 	// 現在のステート
 	void NowState();
-
+	// 回転に合わせた透明処理
+	void RotateCleanness();
 private:
 	// ボス
 	Boss* boss_ = nullptr;

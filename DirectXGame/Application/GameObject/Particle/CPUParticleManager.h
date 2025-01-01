@@ -6,6 +6,8 @@
 class CPUParticleManager
 {
 public:
+	CPUParticleManager();
+	~CPUParticleManager() = default;
 	void Update();
 	void Draw(ModelDrawDesc desc);
 

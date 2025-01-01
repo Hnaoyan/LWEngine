@@ -67,20 +67,10 @@ void Player::Update()
 	stateManager_->Update();
 	// 武器
 	weaponManager_->Update();
-
-	// 画角に応じて透明化するように
-	if (camera_) {
-		float min = -0.1f;
-		float max = -0.3f;
-		float rotX = camera_->transform_.rotate.x;
-		float v = (rotX - min) / (max - min);
-		v = std::clamp(v, 0.0f, 1.0f);
-
-		material_->color_.w = Ease::Easing(1.0f, 0.2f, v);
-	}
-
 	// 基底クラスの更新
 	IGameObject::Update();
+	// 角度に合わせて透明化する処理
+	RotateCleanness();
 
 	// コライダー更新
 	collider_.Update(worldTransform_.GetWorldPosition());
@@ -122,32 +112,6 @@ void Player::ImGuiDraw()
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
 	ImGui::DragFloat("Discard", &material_->discardThreshold_, 0.01f);
-	//if (ImGui::TreeNode("TrailTexture")) {
-	//	ImGui::InputText("TexturePath", path, 32);
-	//	std::string debugText = "Text:" + filePath;
-
-	//	if (ImGui::Button("SavePath")) {
-	//		filePath = "Resources/";
-	//		filePath += path;
-	//		filePath += ".png";
-	//		BulletTrail::sTexture = TextureManager::Load(filePath);
-	//	}
-
-	//	ImGui::Text(debugText.c_str());
-	//	if (ImGui::Button("TrailUV")) {
-	//		BulletTrail::sTexture = TextureManager::Load("Resources/default/white2x2.png");
-	//	}
-	//	if (ImGui::Button("Noise1")) {
-	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/trailSmoke.png");
-	//	}
-	//	if (ImGui::Button("BlackTrail")) {
-	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/TestSmoke.png");
-	//	}
-	//	if (ImGui::Button("WhiteTrail")) {
-	//		BulletTrail::sTexture = TextureManager::Load("Resources/Effect/WhiteTrail.png");
-	//	}
-	//	ImGui::TreePop();
-	//}
 	//---基本情報---//
 	ImGui::SeparatorText("StatusInfo");
 	NowState();	// ステート
@@ -356,6 +320,20 @@ void Player::NowState()
 
 	ImGui::Text(verticalName.c_str());
 	ImGui::Text(horizonName.c_str());
+}
+
+void Player::RotateCleanness()
+{
+	// 画角に応じて透明化するように
+	if (camera_) {
+		float min = -0.1f;
+		float max = -0.3f;
+		float rotX = camera_->transform_.rotate.x;
+		float v = (rotX - min) / (max - min);
+		v = std::clamp(v, 0.0f, 1.0f);
+
+		material_->color_.w = Ease::Easing(1.0f, 0.2f, v);
+	}
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)

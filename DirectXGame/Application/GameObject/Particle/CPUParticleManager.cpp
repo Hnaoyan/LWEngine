@@ -1,5 +1,10 @@
 #include "CPUParticleManager.h"
 
+CPUParticleManager::CPUParticleManager()
+{
+	emitters_.clear();
+}
+
 void CPUParticleManager::Update()
 {
 	// 削除処理
