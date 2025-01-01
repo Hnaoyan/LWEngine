@@ -19,4 +19,5 @@ private:
 	EulerTransform uvTransform_;
 	// 色
 	Vector4 color_;
+	float discardThreshold_;
 };

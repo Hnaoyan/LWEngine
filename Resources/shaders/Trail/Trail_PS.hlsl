@@ -16,7 +16,7 @@ PixelShaderOutput main(VSOutput input)
     PixelShaderOutput output;
     float32_t4 transformedUV = mul(float32_t4(input.texcoord, 0.0f, 1.0f), gMaterial.uvTransform);
     output.color = tex.Sample(smp, transformedUV.xy) * input.color;
-    if (output.color.a <= 0.01f)
+    if (output.color.a <= gMaterial.discardThreshold)
     {
         discard;
     }

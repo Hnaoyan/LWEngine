@@ -71,12 +71,14 @@ struct CBufferDataMaterial {
 	// Dissolve用
 	Vector3 dissolveColor;	// エッジの色
 	float dissolveThreshold;	// Dissolveの閾値
+	float discardThreshold;	// ディスカードの閾値
 };
 
 // 軌跡用のマテリアル
 struct CBufferDataTrailMaterial {
 	Vector4 color;			// 色
 	Matrix4x4 uvTransform;	// UV
+	float discardThreshold_;	// ディスカード
 };
 
 // インスタンシング用

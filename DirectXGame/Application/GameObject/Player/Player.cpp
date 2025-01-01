@@ -52,6 +52,7 @@ void Player::Initialize(Model* model)
 	weaponManager_ = std::make_unique<WeaponManager>(this);
 	weaponManager_->Initialize();
 
+	material_->discardThreshold_ = 0.075f;
 }
 
 void Player::Update()
@@ -120,6 +121,7 @@ void Player::ImGuiDraw()
 {
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
+	ImGui::DragFloat("Discard", &material_->discardThreshold_, 0.01f);
 	//if (ImGui::TreeNode("TrailTexture")) {
 	//	ImGui::InputText("TexturePath", path, 32);
 	//	std::string debugText = "Text:" + filePath;

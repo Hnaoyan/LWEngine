@@ -42,6 +42,8 @@ public:
 	Vector3 dissolveColor_ = { 1.0f,1.0f,1.0f };
 	// ディゾルブのテクスチャ
 	uint32_t dissolveTexture_ = 0u;
+	// 透過閾値
+	float discardThreshold_ = 0.0f;
 	// UVトランスフォーム
 	EulerTransform uvTransform_ = {
 		{1.0f,1.0f,1.0f},

@@ -132,7 +132,7 @@ PixelShaderOutput main(VSOutput input)
     output.color.a = textureColor.a;
     //output.color = input.color;
     
-    if (output.color.a <= 0.05f)
+    if (output.color.a <= gMaterial.discardThreshold)
     {
         discard;
     }
