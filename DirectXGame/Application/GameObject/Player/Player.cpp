@@ -43,6 +43,7 @@ void Player::Initialize(Model* model)
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
+	roundShadow_.Initialize(this);
 
 	// ステート系の初期化
 	stateManager_ = std::make_unique<PlayerStateManager>();
@@ -76,6 +77,7 @@ void Player::Update()
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// 足場コライダー
 	footCollider_.Update();
+	roundShadow_.Update();
 }
 
 void Player::Draw(ModelDrawDesc desc)
@@ -101,6 +103,7 @@ void Player::Draw(ModelDrawDesc desc)
 		//facadeSystem_->GetDudgeManager()->Draw(desc);
 
 		facadeSystem_->GetUI()->Draw(desc);
+		roundShadow_.Draw(desc);
 	}
 
 	// パーティクル
@@ -153,6 +156,7 @@ void Player::ImGuiDraw()
 		}
 		if (ImGui::BeginTabItem("FootCollider")) {
 			footCollider_.ImGuiDraw();
+			roundShadow_.ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Energy")) {

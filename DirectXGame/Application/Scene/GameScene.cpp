@@ -237,6 +237,7 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("Plane", "plane");
 	ModelManager::LoadNormalModel("BulletCube", "ICO");
 	ModelManager::LoadNormalModel("TestPlane", "plane");
+	ModelManager::LoadNormalModel("RoundShadow", "plane");
 }
 
 void GameScene::LoadTexture()

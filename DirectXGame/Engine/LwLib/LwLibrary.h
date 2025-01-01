@@ -70,7 +70,7 @@ namespace LwLib
 	/// <returns></returns>
 	inline static float Normalize(const float& nowValue, const float& min, const float& max) {
 		float v = (nowValue - min) / (max - min);
-		return std::clamp(v, 0.0f, 0.0f);
+		return std::clamp(v, 0.0f, 1.0f);
 	}
 
 	/// <summary>
