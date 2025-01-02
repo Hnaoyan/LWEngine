@@ -629,6 +629,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Irregular\TurnToTargetState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Common\RoundShadow.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1235,6 +1236,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Irregular\TurnToTargetState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Common\RoundShadow.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\TrackingData.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
