@@ -17,10 +17,16 @@ void IGameObject::Initialize(Model* model)
 	sSerialNumber++;
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
+
+	// 丸影の初期化
+	roundShadow_ = std::make_unique<RoundShadow>();
+	roundShadow_->Initialize(this);
 }
 
 void IGameObject::Update()
 {
 	// 行列の更新
 	worldTransform_.UpdateMatrix();
+	// 丸影の更新
+	roundShadow_->Update();
 }

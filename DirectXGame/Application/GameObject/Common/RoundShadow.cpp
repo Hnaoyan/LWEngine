@@ -1,23 +1,24 @@
-#include "PlayerRoundShadow.h"
-#include "Application/GameObject/Player/Player.h"
+#include "RoundShadow.h"
+#include "Application/GameObject/IGameObject.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/LwLib/LwEnginePaths.h"
 
 #include <imgui.h>
 #include <cassert>
 
-void PlayerRoundShadow::Initialize(Player* player)
+void RoundShadow::Initialize(IGameObject* gameObject)
 {
-	assert(player);
+	assert(gameObject);
 
-	player_ = player;
+	object_ = gameObject;
 	model_ = ModelManager::GetModel("RoundShadow");
-	
+
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
 	material_->color_ = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-	
+
 	texture_ = TextureManager::Load("Resources/Effect/effect.png");
 
 	worldTransform_.Initialize();
@@ -26,24 +27,27 @@ void PlayerRoundShadow::Initialize(Player* player)
 	worldTransform_.transform_.rotate.x = 1.57f;
 	worldTransform_.UpdateMatrix();
 
+	defaultScale_ = Vector2(1.0f, 1.0f);
+
 	isInvisible_ = false;
 }
 
-void PlayerRoundShadow::Update()
+void RoundShadow::Update()
 {
 	material_->Update();
 	// プレイヤーの情報を適応
 	Vector2 scale = Vector2(worldTransform_.transform_.scale.x, worldTransform_.transform_.scale.y);
-	float t = LwLib::Normalize(player_->worldTransform_.GetWorldPosition().y, -1.0f, 26.0f);
-	scale = Ease::Easing(Vector2(3.0f, 3.0f), Vector2(8.0f, 8.0f), t);
+	float t = LwLib::Normalize(object_->worldTransform_.GetWorldPosition().y, -1.0f, 26.0f);
+	float offset = 5.0f;
+	scale = Ease::Easing(Vector2(defaultScale_.x, defaultScale_.y), Vector2(defaultScale_.x + offset, defaultScale_.y + offset), t);
 
 	worldTransform_.transform_.scale = Vector3(scale.x, scale.y, 1.0f);
-	worldTransform_.transform_.translate.x = player_->worldTransform_.GetWorldPosition().x;
-	worldTransform_.transform_.translate.z = player_->worldTransform_.GetWorldPosition().z;
+	worldTransform_.transform_.translate.x = object_->worldTransform_.GetWorldPosition().x;
+	worldTransform_.transform_.translate.z = object_->worldTransform_.GetWorldPosition().z;
 	worldTransform_.UpdateMatrix();
 }
 
-void PlayerRoundShadow::Draw(ModelDrawDesc desc)
+void RoundShadow::Draw(ModelDrawDesc desc)
 {
 	// 早期リターン
 	if (isInvisible_) {
@@ -65,7 +69,7 @@ void PlayerRoundShadow::Draw(ModelDrawDesc desc)
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
 
-void PlayerRoundShadow::ImGuiDraw()
+void RoundShadow::ImGuiDraw()
 {
 	ImGui::SeparatorText("RoundShadow");
 	ImGui::DragFloat3("T", &worldTransform_.transform_.translate.x, 0.1f);

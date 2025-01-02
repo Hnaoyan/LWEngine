@@ -22,6 +22,9 @@ void Boss::Initialize(Model* model)
 
 	// 基底
 	IGameObject::Initialize(model);
+	// 丸影
+	roundShadow_->SetDefaultScale(Vector2(8.0f, 8.0f));
+
 	// システム
 	systemManager_ = std::make_unique<BossFacade>();
 	systemManager_->Initialize(this);
@@ -86,6 +89,8 @@ void Boss::Draw(ModelDrawDesc desc)
 	if (!isInvisible_) {
 		// アニメーション
 		animationManager_->Draw(desc.camera, lightDesc);
+		// 丸影
+		roundShadow_->Draw(desc);
 		// バリア
 		systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
 	}

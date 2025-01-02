@@ -29,6 +29,9 @@ void Player::Initialize(Model* model)
 	// マテリアル
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
+	material_->discardThreshold_ = 0.075f;
+	// 影
+	roundShadow_->SetDefaultScale(Vector2(3.0f, 3.0f));
 	// トランスフォーム
 	worldTransform_.transform_.rotate = {};
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
@@ -43,7 +46,6 @@ void Player::Initialize(Model* model)
 
 	// 足場コライダー
 	footCollider_.Initialize(this);
-	roundShadow_.Initialize(this);
 
 	// ステート系の初期化
 	stateManager_ = std::make_unique<PlayerStateManager>();
@@ -53,7 +55,6 @@ void Player::Initialize(Model* model)
 	weaponManager_ = std::make_unique<WeaponManager>(this);
 	weaponManager_->Initialize();
 
-	material_->discardThreshold_ = 0.075f;
 }
 
 void Player::Update()
@@ -77,7 +78,6 @@ void Player::Update()
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// 足場コライダー
 	footCollider_.Update();
-	roundShadow_.Update();
 }
 
 void Player::Draw(ModelDrawDesc desc)
@@ -103,7 +103,7 @@ void Player::Draw(ModelDrawDesc desc)
 		//facadeSystem_->GetDudgeManager()->Draw(desc);
 
 		facadeSystem_->GetUI()->Draw(desc);
-		roundShadow_.Draw(desc);
+		roundShadow_->Draw(desc);
 	}
 
 	// パーティクル
@@ -156,7 +156,7 @@ void Player::ImGuiDraw()
 		}
 		if (ImGui::BeginTabItem("FootCollider")) {
 			footCollider_.ImGuiDraw();
-			roundShadow_.ImGuiDraw();
+			roundShadow_->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Energy")) {

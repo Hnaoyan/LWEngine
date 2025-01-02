@@ -35,6 +35,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\StateMachine\BulletStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Straight\TrackingStraightState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Tracking\TrackingMoveState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Common\RoundShadow.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Unit\CPUParticleUnit.cpp" />
@@ -47,7 +48,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerRoundShadow.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.cpp" />
@@ -236,6 +236,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\StateMachine\BulletStateMachine.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\TrackingStates.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Tracking\TrackingMoveState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Common\RoundShadow.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.h" />
@@ -257,7 +258,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerRoundShadow.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerModulePaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h" />

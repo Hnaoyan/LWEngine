@@ -103,8 +103,8 @@ void TrackingBullet::ChangeSelecter()
 		switch (state)
 		{
 		case TrackingState::kStraight:
-			requestState_ = TrackingState::kTurnToTarget;
-			//requestState_ = TrackingState::kTracking;
+			//requestState_ = TrackingState::kTurnToTarget;
+			requestState_ = TrackingState::kTracking;
 			break;
 		case TrackingState::kWave:
 			requestState_ = TrackingState::kTracking;

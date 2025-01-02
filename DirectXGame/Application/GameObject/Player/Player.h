@@ -67,8 +67,6 @@ private:
 	OparationManager oparationManager_;
 	// 足場コライダー
 	PlayerFootCollider footCollider_;
-	// 丸影
-	PlayerRoundShadow roundShadow_;
 	// AABBコライダー
 	AABB collider_;
 

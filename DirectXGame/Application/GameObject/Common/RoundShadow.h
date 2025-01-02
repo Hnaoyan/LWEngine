@@ -2,28 +2,29 @@
 #include "Engine/3D/Drawer/Model.h"
 #include <memory>
 
-class Player;
+class IGameObject;
 
-class PlayerRoundShadow
+class RoundShadow
 {
 public:
-	PlayerRoundShadow() {};
-	void Initialize(Player* player);
+	RoundShadow() {};
+	~RoundShadow() = default;
+	
+	void Initialize(IGameObject* gameObject);
 	void Update();
 	void Draw(ModelDrawDesc desc);
 	void ImGuiDraw();
 
-private:
-	// プレイヤー
-	Player* player_ = nullptr;
-	// トランスフォーム
-	WorldTransform worldTransform_;
-	// 影用の板ポリ
-	Model* model_ = nullptr;
-	// マテリアル
-	std::unique_ptr<Material> material_;
+public:
+	void SetDefaultScale(const Vector2& scale) { defaultScale_ = scale; }
 
+private:
+	IGameObject* object_ = nullptr;
+	WorldTransform worldTransform_;
+	Model* model_ = nullptr;
+	std::unique_ptr<Material> material_;
 	bool isInvisible_ = false;
 	uint32_t texture_ = 0u;
-
+private:
+	Vector2 defaultScale_ = {};
 };

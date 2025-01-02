@@ -2,6 +2,7 @@
 #include "../../Engine/3D/Drawer/Model.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "../Collision/ColliderFilter.h"
+#include "Common/RoundShadow.h"
 
 class CollisionManager;
 
@@ -88,6 +89,8 @@ public: // アクセッサ
 protected:
 	// モデル
 	Model* model_ = nullptr;
+	// 丸影
+	std::unique_ptr<RoundShadow> roundShadow_;
 
 public:
 	// ワールドトランスフォーム
