@@ -1,6 +1,7 @@
 #pragma once
 #include "../ITrackingState.h"
 #include "Application/GameObject/Bullet/BulletEnums.h"
+#include "../Transition/StateTransitionManager.h"
 
 #include <memory>
 
@@ -25,8 +26,8 @@ public:
 	void Update(bool isActive);
 	// リクエストの作成
 	void RequestState(TrackingState state) {
-		currentState_->SetRequeset(state);
 		nowState_ = state;
+		ChangeRequest(state);
 	}
 public:	// アクセッサ
 	ITrackingState* GetCurrentState() { return currentState_.get(); }

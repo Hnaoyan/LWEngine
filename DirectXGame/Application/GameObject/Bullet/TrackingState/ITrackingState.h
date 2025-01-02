@@ -32,20 +32,11 @@ public:
 	/// 終了
 	/// </summary>
 	virtual void Exit() {};
-
-public:
-	// リクエストのリセット処理
-	void RequestReset() { request_ = std::nullopt; }
-
 public: // アクセッサ
 	void SetBullet(IBullet* bullet) { bullet_ = bullet; }
-	void SetRequeset(TrackingState state) { request_ = state; }
-	std::optional<TrackingState> GetChangeRequest() { return request_; }
 protected:
 	// 弾のポインタ
 	IBullet* bullet_ = nullptr;
-	// ステート変更先＋リクエストフラグ
-	std::optional<TrackingState> request_ = std::nullopt;
 	// 変更用のタイマー
 	FrameTimer timer_;
 };

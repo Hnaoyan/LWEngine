@@ -66,13 +66,12 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 
 void BulletStateMachine::Update(bool isActive)
 {
-	// 切り替えの受付
-	if (currentState_->GetChangeRequest()) {
-		TrackingState newState = currentState_->GetChangeRequest().value();
-		ChangeRequest(newState);
-		currentState_->RequestReset();
-	}
-
+	//// 切り替えの受付
+	//if (currentState_->GetChangeRequest()) {
+	//	TrackingState newState = currentState_->GetChangeRequest().value();
+	//	ChangeRequest(newState);
+	//	currentState_->RequestReset();
+	//}
 	// フラグで更新の選択を
 	if (isActive) {
 		// ステートの処理

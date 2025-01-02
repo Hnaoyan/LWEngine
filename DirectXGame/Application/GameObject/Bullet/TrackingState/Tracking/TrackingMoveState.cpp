@@ -84,7 +84,6 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
 		offset *= 3.0f;
 
-
 		// 垂直ベクトル
 		Vector3 crossDirect = Vector3::Cross(bullet_->GetVelocity().Normalize(), Vector3::Right());
 		// 方向ベクトル
