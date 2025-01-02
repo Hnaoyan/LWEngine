@@ -66,7 +66,7 @@ void BossState::MissileAttackState::MissileAttack()
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
 	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 	
-	const int maxSize = 10;
+	const int maxSize = 3;
 	std::vector<Vector3> rightSide;
 	std::vector<Vector3> leftSide;
 	rightSide.resize(maxSize);

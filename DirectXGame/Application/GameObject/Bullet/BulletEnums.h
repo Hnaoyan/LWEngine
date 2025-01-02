@@ -25,6 +25,7 @@ enum class TrackingState : uint32_t
 	kStraight,	// 直進
 	kWave,		// 波
 	kTracking,	// 追従
+	kTurnToTarget,	// 急旋回
 };
 
 struct TrackingData

@@ -97,24 +97,8 @@ void Boss::ImGuiDraw()
 	ImGui::Begin("Boss");
 	if (ImGui::BeginTabBar("System"))
 	{
-		// ボス自体の状態
-		if (ImGui::BeginTabItem("MAIN")) {
-			ImGui::Checkbox("IsInvisible", &isInvisible_);
-			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
-			ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
-			ImGui::DragFloat3("FrontVector", &frontVector_.x);
-			ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-			collider_.radius_ = worldTransform_.transform_.scale.x;
-			Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
-			Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
-			float distance = Vector2::Distance(boss, player);
-			ImGui::DragFloat("PlayerDistance", &distance);
-			ImGui::EndTabItem();
-		}
-
 		// 行動
 		if (ImGui::BeginTabItem("ACTION")) {
-			ImGui::Text("");
 			if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
 				stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 			}
@@ -139,6 +123,20 @@ void Boss::ImGuiDraw()
 				}
 			}
 			ImGui::Checkbox("IsAction", &isAction_);
+			ImGui::EndTabItem();
+		}
+		// ボス自体の状態
+		if (ImGui::BeginTabItem("MAIN")) {
+			ImGui::Checkbox("IsInvisible", &isInvisible_);
+			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
+			ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+			ImGui::DragFloat3("FrontVector", &frontVector_.x);
+			ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+			collider_.radius_ = worldTransform_.transform_.scale.x;
+			Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
+			Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
+			float distance = Vector2::Distance(boss, player);
+			ImGui::DragFloat("PlayerDistance", &distance);
 			ImGui::EndTabItem();
 		}
 

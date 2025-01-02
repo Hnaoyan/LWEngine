@@ -17,7 +17,7 @@ void TrackingStraightState::Update(BulletStateMachine& stateMachine)
 	bullet_->SetAccelerate(bullet_->GetVelocity() * damping);
 
 	if (Input::GetInstance()->TriggerKey(DIK_O)) {
-		stateMachine.RequestState(TrackingState::kWave);
+		stateMachine.RequestState(TrackingState::kTurnToTarget);
 	}
 }
 

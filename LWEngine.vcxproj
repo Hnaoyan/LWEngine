@@ -24,6 +24,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Irregular\TurnToTargetState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
@@ -219,6 +220,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Irregular\TurnToTargetState.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h" />

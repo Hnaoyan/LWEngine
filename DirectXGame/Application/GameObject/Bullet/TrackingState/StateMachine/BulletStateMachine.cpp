@@ -55,6 +55,9 @@ std::unique_ptr<ITrackingState> BulletStateMachine::BuildState(TrackingState new
 	case TrackingState::kTracking: // 追尾
 		instance = std::make_unique<TrackingMoveState>();
 		break;
+	case TrackingState::kTurnToTarget:
+		instance = std::make_unique<TurnToTargetState>();
+		break;
 	}
 
 	return std::move(instance);
