@@ -67,8 +67,6 @@ namespace PlayerContext
 		// 無敵表現
 		InvisibleEffect invisibleEffect_;
 
-		Player* player_ = nullptr;
-
 	};
 
 }

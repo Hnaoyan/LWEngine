@@ -11,7 +11,7 @@
 void PlayerContext::ParticleManager::Initialize(Player* player)
 {
 	assert(player);
-	player_ = player;
+	ISystem::Initialize(player);
 
 	// 移動のエミッター作成
 	CreateMoveEmitter();

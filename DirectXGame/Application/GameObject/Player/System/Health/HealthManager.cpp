@@ -6,7 +6,7 @@
 
 void PlayerContext::HealthManager::Initialize(Player* player)
 {
-	player_ = player;
+	ISystem::Initialize(player);
 
 	const int32_t maxHP = 20;
 	Setup(maxHP);

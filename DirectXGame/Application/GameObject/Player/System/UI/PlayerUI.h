@@ -55,9 +55,6 @@ namespace PlayerContext
 		// ジャスト回避コンボのUI
 		GameUI::BillBoardRenderInfo justDodgeUI_{};
 
-	private:
-		GlobalVariables* globalVariables_ = nullptr;
-
 	};
 }
 

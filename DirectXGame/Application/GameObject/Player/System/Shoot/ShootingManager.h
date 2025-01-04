@@ -43,7 +43,6 @@ namespace PlayerContext
 		// 射撃の変化
 		bool isChangeAttack_ = false;
 	private:
-		Player* player_ = nullptr;
 		BulletManager* bulletManager_ = nullptr;
 	};
 

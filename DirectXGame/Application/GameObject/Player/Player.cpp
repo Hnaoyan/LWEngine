@@ -238,6 +238,7 @@ void Player::InitializeGlobalValue()
 	GlobalVariables* instance = GlobalVariables::GetInstance();
 	//---プレイヤー基本情報---//
 	std::string groupName = "Player";
+#pragma region Player
 	instance->CreateGroup(groupName);
 	// ダッシュ関係
 	instance->AddValue(groupName, "DashPower", float(0.0f));
@@ -258,12 +259,16 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));	// 初期ジャンプ力
 	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));	// 2段目ジャンプ力
 	instance->AddValue(groupName, "FallGravity", float(-3.0f));	// 落下の重力
+#pragma endregion
 
+#pragma region PlayerBasic
 	groupName = "PlayerBasic";
 
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 	instance->AddValue(groupName, "FootOffset", float(-0.4f));
+#pragma endregion
 
+#pragma region Bullet
 	//---（仮）弾---//
 	groupName = "Bullet";
 	// 弾本体
@@ -278,7 +283,9 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "GeniusTrailColor", Vector3(0.0f, 0.0f, 0.0f));
 	instance->AddValue(groupName, "ContainerTrailColor", Vector3(0.0f, 0.0f, 0.0f));
 	instance->AddValue(groupName, "NormalTrailColor", Vector3(0.2f, 0.2f, 0.2f));
+#pragma endregion
 
+#pragma region PlayerTracking
 	//---プレイヤーの追従弾---//
 	groupName = "PlayerTrackingBullet";
 	instance->CreateGroup(groupName);
@@ -292,6 +299,16 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
+#pragma endregion
+
+#pragma region PlayerAttack
+	//---プレイヤーの攻撃関係---//
+	groupName = "PlayerAttack";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "DefaultSpeed", float(300.0f));
+
+#pragma endregion
+
 }
 
 void Player::NowState()

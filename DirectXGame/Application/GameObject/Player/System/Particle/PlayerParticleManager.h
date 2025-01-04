@@ -40,7 +40,6 @@ namespace PlayerContext {
 	private: // ポインタ関係
 		std::unique_ptr<MoveTrail> moveTrail_;
 		GPUParticleManager* gpuParticle_ = nullptr;
-		Player* player_ = nullptr;
 
 	public: // アクセッサ
 		void SetGPUParticleSystem(GPUParticleManager* ptr) { gpuParticle_ = ptr; }

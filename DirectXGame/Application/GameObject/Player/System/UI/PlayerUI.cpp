@@ -8,12 +8,10 @@
 
 void PlayerContext::PlayerUIManager::Initialize(Player* player)
 {
-	player_ = player;
-
+	assert(player);
+	// 基底
+	ISystem::Initialize(player);
 	reticle_ = SpriteManager::GetSprite("CrossHair");
-
-	globalVariables_ = GlobalVariables::GetInstance();
-
 	// HP系
 	std::string groupName = "PlayerUI";
 	hpUI_.position = globalVariables_->GetValue<Vector2>(groupName, "HPPosition");
