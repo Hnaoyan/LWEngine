@@ -82,7 +82,7 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		gameClear_.sprite->SetPosition(gameClear_.position);
 		gameClear_.sprite->Draw();
 	}
-	if (gameObjectManager->IsUIGameOver()) {
+	else if (gameObjectManager->IsUIGameOver()) {
 		gameOver_.sprite->SetPosition(gameOver_.position);
 		gameOver_.sprite->Draw();
 	}

@@ -70,6 +70,7 @@ void Player::Update()
 	// 武器
 	weaponManager_->Update();
 	// 基底クラスの更新
+	worldTransform_.transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("PlayerBasic", "Scale");
 	IGameObject::Update();
 	// 角度に合わせて透明化する処理
 	RotateCleanness();
@@ -257,6 +258,11 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "FirstJumpPower", float(65.0f));	// 初期ジャンプ力
 	instance->AddValue(groupName, "SecondJumpPower", float(65.0f));	// 2段目ジャンプ力
 	instance->AddValue(groupName, "FallGravity", float(-3.0f));	// 落下の重力
+
+	groupName = "PlayerBasic";
+
+	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
+	instance->AddValue(groupName, "FootOffset", float(-0.4f));
 
 	//---（仮）弾---//
 	groupName = "Bullet";

@@ -62,7 +62,7 @@ void GameObjectManager::Update(GameSceneState state)
 				if (!waitingTimer_.IsActive()) {
 					waitingTimer_.Start(waitFrame);
 					isGameEnd_ = true;
-					isClear_ = true;
+					isClear_ = false;
 				}
 			}
 			if (gameObjects_["Boss"]->IsDead() && isInGame_) {
@@ -70,7 +70,7 @@ void GameObjectManager::Update(GameSceneState state)
 				if (!waitingTimer_.IsActive()) {
 					waitingTimer_.Start(waitFrame);
 					isGameEnd_ = true;
-					isClear_ = false;
+					isClear_ = true;
 				}
 			}
 		}

@@ -10,7 +10,7 @@ void PlayerFootCollider::Initialize(Player* player)
 
 	worldTransform_.Initialize();
 	worldTransform_.parent_ = player_->GetWorldTransform();
-	const float yOffset = -0.2f;
+	const float yOffset = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "FootOffset");
 	worldTransform_.transform_.translate = { 0,yOffset,0 };
 	scale_ = { 1.0f,1.0f,1.0f };
 	collider_.Initialize(scale_, this);

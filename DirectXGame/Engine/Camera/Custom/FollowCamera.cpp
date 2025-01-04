@@ -28,6 +28,12 @@ void FollowCamera::Update()
 	// コントローラー
 	Vector2 rightStick = GameSystem::sKeyConfigManager.GetKeyConfig()->rightStick;
 
+#ifdef IMGUI_ENABLED
+	// デバッグ中は更新し続けるように
+	InitializeGlobalValue();
+#endif // IMGUI_ENABLED
+
+
 	// 追尾
 	if (target_) {
 		// 入力クラス

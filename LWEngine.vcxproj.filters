@@ -1221,7 +1221,6 @@
     <ClInclude Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingCalc.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.h" />
