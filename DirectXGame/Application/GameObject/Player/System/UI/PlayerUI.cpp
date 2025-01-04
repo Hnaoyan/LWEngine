@@ -61,7 +61,7 @@ void PlayerContext::PlayerUIManager::Initialize(Player* player)
 	justDodgeUI_.material->shininess_ = 100.0f;
 	justDodgeUI_.texture = TextureManager::Load("Resources/default/white2x2.png");
 	justDodgeUI_.worldTransform.Initialize();
-	justDodgeUI_.offset = { 0.0f,3.0f,0.0f };
+	justDodgeUI_.offset = { 0.0f,5.0f,0.0f };
 	justDodgeUI_.maxScale = { 2.0f,0.2f,1.0f };
 }
 
