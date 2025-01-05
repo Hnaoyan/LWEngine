@@ -85,35 +85,40 @@ void BulletManager::AddCluster(const std::string& tag)
 	if (position != std::string::npos) {
 		std::string zokusei = tag.substr(0, position);
 		// グローバル変数用のポインタ
-		GlobalVariables* globalValue = GlobalVariables::GetInstance();	
+		GlobalVariables* globalValue = GlobalVariables::GetInstance();
+		IBulletCluster* cluster = dynamic_cast<IBulletCluster*>(instance.get());
+		if (!cluster) {
+			return;
+		}
 		if ("Player" == zokusei) {
-			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+			cluster->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 		}
 		else if ("Boss" == zokusei) {
 			std::string colorName = tag.substr(position + 1);
 			// 劣等
 			if (colorName == "Inferior") {
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet","InferiorColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "InferiorTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet","InferiorColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "InferiorTrailColor"));
 			}
 			// 優等
 			else if (colorName == "Superior") {
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet", "SuperirorColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "SuperirorTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet", "SuperirorColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "SuperirorTrailColor"));
 			}
 			// 秀才
 			else if (colorName == "Genius") {
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet", "GeniusColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "GeniusTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet", "GeniusColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "GeniusTrailColor"));
 			}
 			// コンテナ
 			else if (colorName == "ContainerBullet"){
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet", "ContainerColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "ContainerTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet", "ContainerColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "ContainerTrailColor"));
 			}
+			// 通常弾
 			else {
-				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,0.0f,0.0f,1.0f });
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.2f,0.2f,0.2f });
+				cluster->SetColor({ 1.0f,0.3f,0.0f,1.0f });
+				cluster->SetTrailColor({ 0.8f,0.2f,0.0f });
 			}
 		}
 	}

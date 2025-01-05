@@ -268,6 +268,15 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "FootOffset", float(-0.4f));
 #pragma endregion
 
+#pragma region PlayerAttack
+	//---プレイヤーの攻撃関係---//
+	groupName = "PlayerAttack";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "DefaultSpeed", float(300.0f));
+	instance->AddValue(groupName, "NotLockSpeed", float(500.0f));
+
+#pragma endregion
+
 #pragma region Bullet
 	//---（仮）弾---//
 	groupName = "Bullet";
@@ -299,14 +308,6 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "TrailMaxWidth", float(1.0f));
 	instance->AddValue(groupName, "TrailMinWidth", float(0.25f));
 	instance->AddValue(groupName, "StraightFrame", float(60.0f));
-#pragma endregion
-
-#pragma region PlayerAttack
-	//---プレイヤーの攻撃関係---//
-	groupName = "PlayerAttack";
-	instance->CreateGroup(groupName);
-	instance->AddValue(groupName, "DefaultSpeed", float(300.0f));
-
 #pragma endregion
 
 }

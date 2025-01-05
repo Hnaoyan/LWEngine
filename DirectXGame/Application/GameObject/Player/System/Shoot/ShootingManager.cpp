@@ -24,6 +24,10 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 	bullet->Initialize();
 	bullet->transform_ = transform;
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
+	// 対象がいるか
+	if (!player_->GetWeaponManager()->GetLockOn()->ExistTarget()) {
+		speed = globalVariables_->GetValue<float>("PlayerAttack", "NotLockSpeed");
+	}
 	// ダメージの違い
 	if (isChangeAttack_) {
 		isChangeAttack_ = false;
@@ -38,13 +42,7 @@ void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 		bullet->transform_.scale *= 0.75f;
 	}
 
-	// 対象がいるか
-	if (player_->GetWeaponManager()->GetLockOn()->ExistTarget()) {
-		bullet->SetVelocity(direct * speed);
-	}
-	else {
-		bullet->SetVelocity(direct * speed);
-	}
+	bullet->SetVelocity(direct * speed);
 
 	bulletManager_->FindCluster("Player:NormalBullet")->AddBullet(std::move(bullet));
 }
