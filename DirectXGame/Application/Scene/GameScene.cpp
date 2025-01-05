@@ -243,12 +243,12 @@ void GameScene::LoadModel()
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
-	TextureManager::Load("Resources/crossHair.png");
+	TextureManager::Load("Resources/default/crossHair.png");
 	TextureManager::Load("Resources/default/testGage.png");
 	TextureManager::Load("Resources/default/BackGround.png");
 
 	// スプライトのロード
-	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));	// クロスへア
+	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/default/crossHair.png"));	// クロスへア
 	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));	// ゲージ
 	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));	// 
 	SpriteManager::LoadSprite("PlayerDodgeGage", TextureManager::Load("Resources/default/white2x2.png"));
