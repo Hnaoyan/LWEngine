@@ -38,8 +38,8 @@ void RoundShadow::Update()
 	// プレイヤーの情報を適応
 	Vector2 scale = Vector2(worldTransform_.transform_.scale.x, worldTransform_.transform_.scale.y);
 	float t = LwLib::Normalize(object_->worldTransform_.GetWorldPosition().y, -1.0f, 26.0f);
-	float offset = 5.0f;
-	scale = Ease::Easing(Vector2(defaultScale_.x, defaultScale_.y), Vector2(defaultScale_.x + offset, defaultScale_.y + offset), t);
+	float offset = 3.0f;
+	scale = Ease::Easing(Vector2(defaultScale_.x + offset, defaultScale_.y + offset), Vector2(defaultScale_.x, defaultScale_.y), t);
 
 	worldTransform_.transform_.scale = Vector3(scale.x, scale.y, 1.0f);
 	worldTransform_.transform_.translate.x = object_->worldTransform_.GetWorldPosition().x;
