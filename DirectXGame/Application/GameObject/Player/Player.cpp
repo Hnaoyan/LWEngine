@@ -76,6 +76,13 @@ void Player::Update()
 	RotateCleanness();
 
 	// コライダー更新
+	// 無敵中の処理
+	if (facadeSystem_->GetDudgeManager()->IsActive()) {
+		collider_.SetRadius(worldTransform_.transform_.scale * GlobalVariables::GetInstance()->GetValue<float>("PlayerAction", "DodgeSize"));
+	}
+	else {
+		collider_.SetRadius(worldTransform_.transform_.scale);
+	}
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// 足場コライダー
 	footCollider_.Update();
@@ -276,6 +283,16 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "NotLockSpeed", float(500.0f));
 
 #pragma endregion
+
+#pragma region PlayerAction
+	//---プレイヤーのアクション---//
+	groupName = "PlayerAction";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "DodgeSize", float(1.25f));
+
+#pragma endregion
+
+
 
 #pragma region Bullet
 	//---（仮）弾---//

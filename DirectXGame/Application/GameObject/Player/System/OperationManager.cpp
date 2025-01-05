@@ -69,26 +69,29 @@ void OparationManager::InputUpdate()
 	longDashCoolTimer_.Update();
 	// ダッシュ入力
 	bool isQuickBoost = std::holds_alternative<QuickBoostState*>(player_->HorizontalState()->GetVariant()) || std::holds_alternative<BoostState*>(player_->HorizontalState()->GetVariant());
+	bool isLeftStick = (sThumbL.x != 0.0f || sThumbL.y != 0.0f);
 	// ダッシュ中かクールタイムなら早期
-	if (isQuickBoost || longDashCoolTimer_.IsActive()) {
+	if ((isQuickBoost) || longDashCoolTimer_.IsActive()) {
 		return;
 	}
 
-	// 長めのダッシュの場合
-	if (longDashTimer_.IsEnd()) {
-		player_->HorizontalState()->ChangeRequest(PlayerStateLists::kBoost);
-		return;
-	}
-	// 小ダッシュの場合
-	if (!GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost && longDashTimer_.IsActive()) {
-		player_->HorizontalState()->ChangeRequest(PlayerStateLists::kQuickBoost);
-		return;
+	if (isLeftStick) {
+		// 長めのダッシュの場合
+		if (longDashTimer_.IsEnd()) {
+			player_->HorizontalState()->ChangeRequest(PlayerStateLists::kBoost);
+			return;
+		}
+		// 小ダッシュの場合
+		if (!GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost && longDashTimer_.IsActive()) {
+			player_->HorizontalState()->ChangeRequest(PlayerStateLists::kQuickBoost);
+			return;
+		}
 	}
 
 	// ダッシュ入力の受付
 	if (GameSystem::sKeyConfigManager.GetPlayerKey().quickBoost) {
 		// エネルギー側でこの入力が可能か
-		bool isEnergy = /*player_->GetSystemFacede()->GetEnergy()->CheckQuickBoost() && */!player_->GetSystemFacede()->GetEnergy()->IsOverheat();
+		bool isEnergy = !player_->GetSystemFacede()->GetEnergy()->IsOverheat();
 		// ロングダッシュにするかどうか
 		if (isEnergy && !longDashTimer_.IsActive()) {
 			const float dashFrame = 12.0f;

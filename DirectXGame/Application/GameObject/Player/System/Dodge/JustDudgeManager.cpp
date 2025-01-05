@@ -9,7 +9,7 @@
 PlayerContext::JustDodgeManager::JustDodgeManager(Player* player)
 {
 	// 設定
-	player_ = player;
+	ISystem::Initialize(player);
 	// 残像用コライダー
 	collider_.Initialize(player_->worldTransform_.transform_.scale.x, player_);
 	collider_.SetAttribute(kCollisionAttributePlayer);
@@ -67,15 +67,6 @@ void PlayerContext::JustDodgeManager::InvisibleExcept(const float& frame)
 
 void PlayerContext::JustDodgeManager::Update()
 {
-	//if (invisible_.receptionFlag) {
-	//	invisible_.delayFrame += 1.0f;
-	//	if (invisible_.delayFrame >= 2.0f) {
-	//		invisible_.receptionFlag = false;
-	//		invisible_.delayFrame = 0.0f;
-	//		invisible_.activeTimer.Start(player_->invisibleFrame_);
-	//	}
-	//}
-
 	// 
 	dodgeColliderObject.Update();
 	// 無敵時間の処理（ジャスト回避
@@ -98,7 +89,7 @@ void PlayerContext::JustDodgeManager::Update()
 		dodgeCount_ = 0;
 		invisible_.afterTimer.Start(30.0f);
 	}
-
+	// コンボ中の色
 	if (comboData_.keepTimer.IsActive()) {
 		// コンボ
 		switch (comboData_.nowCombo)
@@ -124,10 +115,6 @@ void PlayerContext::JustDodgeManager::Update()
 		default:
 			break;
 		}
-
-		//Vector3 playerColor = { player_->GetMaterial()->color_.x,player_->GetMaterial()->color_.y,player_->GetMaterial()->color_.z };
-		//Vector3 color = Ease::Easing(playerColor, Vector3(1.0f, 1.0f, 1.0f), comboData_.keepTimer.GetElapsedFrame());
-		//player_->SetColor(Vector4(color.x, color.y, color.z, player_->GetMaterial()->color_.w));
 	}
 	if (comboData_.keepTimer.IsEnd()) {
 		player_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -144,6 +131,12 @@ void PlayerContext::JustDodgeManager::Update()
 	// 無敵関係のタイマー
 	invisible_.Update();
 	// コライダーの更新
+	if (IsActive()) {
+		collider_.radius_ = player_->worldTransform_.transform_.scale.x * globalVariables_->GetValue<float>("PlayerAction", "DodgeSize");
+	}
+	else {
+		collider_.radius_ = player_->worldTransform_.transform_.scale.x;
+	}
 	collider_.Update(colliderPosition_);
 }
 

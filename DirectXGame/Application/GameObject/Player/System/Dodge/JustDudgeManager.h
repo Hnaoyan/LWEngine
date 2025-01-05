@@ -59,9 +59,6 @@ namespace PlayerContext
 			float delayFrame = 0.0f;
 		};
 
-		// プレイヤー
-		Player* player_ = nullptr;
-
 	public:
 		JustDodgeManager() {};
 		JustDodgeManager(Player* player);
