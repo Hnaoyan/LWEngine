@@ -4,8 +4,6 @@
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include <algorithm>
 
-uint32_t BossState::MissileAttackState::sMissileClusterSerial = 0;
-
 void BossState::MissileAttackState::Initialize()
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
@@ -16,10 +14,6 @@ void BossState::MissileAttackState::Initialize()
 
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
-	// クラスター
-	//cluster_ = boss_->GetBulletManager()->GetMissileCluster();
-	clusterSerial = sMissileClusterSerial;
-	sMissileClusterSerial++;
 }
 
 void BossState::MissileAttackState::Update()
@@ -230,7 +224,11 @@ void BossState::MissileAttackState::GenerateMissile(const Vector3& direct, Track
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
-	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+	//float minFrame = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame");
+	float minFrame = 0;
+	float maxFrame = minFrame + 200.0f;
+	builder.SetStraightFrame(LwLib::GetRandomValue(minFrame, maxFrame));
+	
 	switch (type)
 	{
 	case TrackingAttribute::kSuperior:

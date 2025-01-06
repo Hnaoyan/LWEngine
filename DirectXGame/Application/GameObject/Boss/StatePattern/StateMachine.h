@@ -126,10 +126,6 @@ namespace BossState
 	class MissileAttackState : public IState
 	{
 	public:
-		static uint32_t sMissileClusterSerial;
-		uint32_t clusterSerial = 0u;
-
-	public:
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
