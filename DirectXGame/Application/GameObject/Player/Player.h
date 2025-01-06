@@ -130,4 +130,6 @@ private:
 	WorldTransform outlineTransform_{};
 	Model* outlineModel_ = nullptr;
 	std::unique_ptr<Material> outlineMaterial_;
+	// 前方
+	Vector2 frontVector_ = {};
 };

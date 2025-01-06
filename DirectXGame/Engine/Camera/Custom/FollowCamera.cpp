@@ -75,7 +75,7 @@ void FollowCamera::Update()
 		if (dot >= 0.1f) {
 			float dotMax = 0.85f;
 			float dotMin = 0.0f;
-			float limitRate = 0.5f;
+			float limitRate = 0.3f;
 			delayRate_ = Ease::Easing(delayRate, limitRate, LwLib::Normalize(dot, dotMin, dotMax));
 		}
 		else {

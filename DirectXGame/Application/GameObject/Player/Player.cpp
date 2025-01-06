@@ -76,6 +76,12 @@ void Player::Update()
 	// 角度に合わせて透明化する処理
 	RotateCleanness();
 
+	// 前方方向
+	Vector2 newFront = {};
+	newFront.x = 1.0f * std::sinf(worldTransform_.transform_.rotate.y);
+	newFront.y = 1.0f * std::cosf(worldTransform_.transform_.rotate.y);
+	frontVector_ = newFront;
+
 	// コライダー更新
 	// 無敵中の処理
 	if (facadeSystem_->GetDudgeManager()->IsActive()) {
@@ -123,6 +129,7 @@ void Player::ImGuiDraw()
 {
 	std::string name = "Player";
 	ImGui::Begin(name.c_str());
+	ImGui::DragFloat2("Front", &frontVector_.x);
 	ImGui::DragFloat("Discard", &material_->discardThreshold_, 0.01f);
 	//---基本情報---//
 	ImGui::SeparatorText("StatusInfo");
