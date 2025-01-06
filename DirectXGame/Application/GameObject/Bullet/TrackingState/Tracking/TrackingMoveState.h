@@ -26,7 +26,7 @@ private:
 	float elapsedTime_ = 0.0f;
 	// 加速度計算用クラス
 	std::unique_ptr<TrackingAccelerater> accelerater_;
-	
+	float currentFrame_ = 0.0f;
 
 private: // 計算関数
 	// 優等（完全追尾

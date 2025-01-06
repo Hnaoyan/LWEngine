@@ -124,7 +124,7 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 	// 速度
 	float speed = bullet_->GetTrackingData().baseSpeed;
 	// オフセット
-	float maxOffset = 100.0f;
+	float maxOffset = 150.0f;
 	// 最大速度
 	float maxSpeed = bullet_->GetTrackingData().baseSpeed + maxOffset;
 	// 調整
@@ -154,7 +154,7 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalForce = std::powf(speed, 2) / bullet_->GetTrackingData().lerpRadius;
+	float maxCentripetalForce = std::min(std::powf(speed, 2) / bullet_->GetTrackingData().lerpRadius, 500.0f);
 
 	// 最大向心力に命中率を適用（命中率が低いほど追従力を弱くする）
 	maxCentripetalForce *= trackingAccuracy;
@@ -166,7 +166,7 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
-	force -= bulletVelocity * bullet_->GetTrackingData().damping;
+	force -= bulletVelocity * 0.1f;
 
 	// 目標方向から完全に一致しないように、少しだけ力を調整
 	// 弾がターゲット方向に近づきつつも、完全には収束しないように

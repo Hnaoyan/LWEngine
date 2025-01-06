@@ -19,7 +19,7 @@ void BossState::MissileBarrageState::Update()
 {
 	// 攻撃の処理
 	attackTimer_.Update();
-	float attackDuration = 5.0f;
+	float attackDuration = 15.0f;
 	if (attackTimer_.IsEnd()) {
 		attackTimer_.Start(attackDuration);
 		// 攻撃処理

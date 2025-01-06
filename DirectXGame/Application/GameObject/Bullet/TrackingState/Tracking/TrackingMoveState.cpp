@@ -30,9 +30,10 @@ void TrackingMoveState::Enter()
 	// 1.5秒で追従を緩くする（仮
 	float looseFrame = 90.0f;	// 緩くなるまでの時間
 	looseTimer_.Start(looseFrame);
-	accelerationTime_.Start(240.0f);
+	accelerationTime_.Start(100.0f);
 
 	elapsedTime_ = 0.0f;
+	currentFrame_ = 0.0f;
 }
 
 void TrackingMoveState::Update(BulletStateMachine& stateMachine)
@@ -122,9 +123,13 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		toDirect.Normalize();
 		// 加速度の計算
 		parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
-
-		// 加速度の設定
-		bullet_->SetAccelerate(parentAcceleration_);
+		// 一定フレームでのみ更新
+		currentFrame_++;
+		if (currentFrame_ >= 5.0f) {
+			// 加速度の設定
+			bullet_->SetAccelerate(parentAcceleration_);
+			currentFrame_ = 0.0f;
+		}
 	}
 }
 
