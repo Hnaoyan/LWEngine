@@ -41,12 +41,6 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 	timer_.Update();
 	accelerationTime_.Update();
 
-	// 変更
-	if (timer_.IsEnd()) {
-		stateMachine.RequestState(TrackingState::kWave);
-		//stateMachine.ChangeRequest(TrackingState::kWave);
-	}
-
 	// 誘導弾なら
 	if (dynamic_cast<TrackingBullet*>(bullet_)) {
 		// 対象が居なければ

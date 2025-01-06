@@ -41,6 +41,9 @@ struct TrackingData
 	float waveFrame;		// 波軌道の時間
 	float trackingFrame;	// 追従している時間
 
+	//---種類---//
+	int32_t transitionType = 0;	// 切り替わりの種類
+
 	/// <summary>
 	/// 読み込み関数
 	/// </summary>

@@ -53,6 +53,10 @@ public: // 設定
 		straightFrame_ = frame;
 		return *this;
 	}
+	BulletBuilder& SetTransitionType(int32_t type) {
+		transitionType_ = type;
+		return *this;
+	}
 
 	//// 直進の時間設定
 	//BulletBuilder& SetStraightFrame(const float& frame) {
@@ -91,4 +95,7 @@ private:
 	int32_t parentAttribute_ = 0u;
 	// 追従までの時間
 	float straightFrame_ = 0.0f;
+	// 種類
+	int32_t transitionType_ = 0;
+
 };

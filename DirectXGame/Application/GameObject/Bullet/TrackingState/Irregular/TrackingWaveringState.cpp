@@ -22,6 +22,7 @@ void TrackingWaveringState::Enter()
 
 void TrackingWaveringState::Update(BulletStateMachine& stateMachine)
 {
+	stateMachine;
 	// カーブ用のタイマー
 	curveTimer_.Update();
 	timer_.Update();
@@ -48,11 +49,6 @@ void TrackingWaveringState::Update(BulletStateMachine& stateMachine)
 	}
 
 	curveProcess_();
-
-	if (timer_.IsEnd()) {
-		stateMachine.RequestState(TrackingState::kStraight);
-	}
-
 }
 
 void TrackingWaveringState::Exit()
