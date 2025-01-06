@@ -73,7 +73,10 @@ void FollowCamera::Update()
 		float delayRate = GlobalVariables::GetInstance()->GetValue<float>("Camera", "DelayRate");
 		// 手前に進む際の制限
 		if (dot >= 0.1f) {
-			delayRate_ = Ease::Easing(delayRate, 0.5f, LwLib::Normalize(dot, 0.0f, 0.85f));
+			float dotMax = 0.85f;
+			float dotMin = 0.0f;
+			float limitRate = 0.5f;
+			delayRate_ = Ease::Easing(delayRate, limitRate, LwLib::Normalize(dot, dotMin, dotMax));
 		}
 		else {
 			delayRate_ = delayRate;
