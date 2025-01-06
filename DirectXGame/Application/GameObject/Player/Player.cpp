@@ -71,6 +71,7 @@ void Player::Update()
 	weaponManager_->Update();
 	// 基底クラスの更新
 	worldTransform_.transform_.scale = GlobalVariables::GetInstance()->GetValue<Vector3>("PlayerBasic", "Scale");
+	roundShadow_->SetPosition(Vector2(facadeSystem_->GetAnimation()->bodyTransform_.GetWorldPosition().x, facadeSystem_->GetAnimation()->bodyTransform_.GetWorldPosition().z));
 	IGameObject::Update();
 	// 角度に合わせて透明化する処理
 	RotateCleanness();

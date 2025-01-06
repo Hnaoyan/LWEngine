@@ -6,26 +6,10 @@
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include <imgui.h>
 
-PlayerContext::JustDodgeManager::JustDodgeManager(Player* player)
-{
-	// 設定
-	ISystem::Initialize(player);
-	// 残像用コライダー
-	collider_.Initialize(player_->worldTransform_.transform_.scale.x, player_);
-	collider_.SetAttribute(kCollisionAttributePlayer);
-
-	dodgeColliderObject.material = std::make_unique<Material>();
-	dodgeColliderObject.material->CreateMaterial();
-	dodgeColliderObject.material->color_.w = 0.05f;
-	dodgeColliderObject.transform.Initialize();
-	dodgeColliderObject.transform.parent_ = &player_->worldTransform_;
-	dodgeColliderObject.texture = TextureManager::Load("Resources/default/white2x2.png");
-}
-
 void PlayerContext::JustDodgeManager::Initialize(Player* player)
 {
 	// 設定
-	player_ = player;
+	ISystem::Initialize(player);
 	// 残像用コライダー
 	collider_.Initialize(player_->worldTransform_.transform_.scale.x, player_);
 	collider_.SetAttribute(kCollisionAttributePlayer);

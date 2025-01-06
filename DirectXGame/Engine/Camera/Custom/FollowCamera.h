@@ -77,4 +77,13 @@ private: // UserMethod
 
 	bool isAtan_ = false;
 
+	struct ShiftData
+	{
+		FrameTimer actionTimer;	// タイマー
+		float shiftDistance;	// シフトする距離
+
+	};
+	// ダッシュエフェクト用
+	ShiftData dashEffect_;
+
 };

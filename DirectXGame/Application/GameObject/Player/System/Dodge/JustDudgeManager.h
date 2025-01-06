@@ -61,7 +61,6 @@ namespace PlayerContext
 
 	public:
 		JustDodgeManager() {};
-		JustDodgeManager(Player* player);
 		// 初期化
 		void Initialize(Player* player) override;
 		// 更新

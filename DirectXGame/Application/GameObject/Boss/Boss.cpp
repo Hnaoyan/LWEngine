@@ -55,6 +55,7 @@ void Boss::Update()
 
 	}
 	// 座標更新
+	roundShadow_->SetPosition(Vector2(worldTransform_.GetWorldPosition().x, worldTransform_.GetWorldPosition().z));
 	IGameObject::Update();
 
 	// バリア時の当たり判定

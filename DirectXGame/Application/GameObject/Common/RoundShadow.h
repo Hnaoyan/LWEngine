@@ -17,9 +17,12 @@ public:
 
 public:
 	void SetDefaultScale(const Vector2& scale) { defaultScale_ = scale; }
-
+	void SetOffset(const float& offset) { offset_ = offset; }
+	void SetPosition(const Vector2& position) { targetPosition_ = position; }
 private:
 	IGameObject* object_ = nullptr;
+	Vector2 targetPosition_ = {};	//X-Z座標
+	float offset_ = 0.0f;
 	WorldTransform worldTransform_;
 	Model* model_ = nullptr;
 	std::unique_ptr<Material> material_;

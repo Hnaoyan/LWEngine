@@ -27,6 +27,8 @@ void RoundShadow::Initialize(IGameObject* gameObject)
 	worldTransform_.transform_.rotate.x = 1.57f;
 	worldTransform_.UpdateMatrix();
 
+	offset_ = 3.0f;
+
 	defaultScale_ = Vector2(1.0f, 1.0f);
 
 	isInvisible_ = false;
@@ -38,12 +40,11 @@ void RoundShadow::Update()
 	// プレイヤーの情報を適応
 	Vector2 scale = Vector2(worldTransform_.transform_.scale.x, worldTransform_.transform_.scale.y);
 	float t = LwLib::Normalize(object_->worldTransform_.GetWorldPosition().y, -1.0f, 26.0f);
-	float offset = 3.0f;
-	scale = Ease::Easing(Vector2(defaultScale_.x + offset, defaultScale_.y + offset), Vector2(defaultScale_.x, defaultScale_.y), t);
+	scale = Ease::Easing(Vector2(defaultScale_.x + offset_, defaultScale_.y + offset_), Vector2(defaultScale_.x, defaultScale_.y), t);
 
 	worldTransform_.transform_.scale = Vector3(scale.x, scale.y, 1.0f);
-	worldTransform_.transform_.translate.x = object_->worldTransform_.GetWorldPosition().x;
-	worldTransform_.transform_.translate.z = object_->worldTransform_.GetWorldPosition().z;
+	worldTransform_.transform_.translate.x = targetPosition_.x;
+	worldTransform_.transform_.translate.z = targetPosition_.y;
 	worldTransform_.UpdateMatrix();
 }
 

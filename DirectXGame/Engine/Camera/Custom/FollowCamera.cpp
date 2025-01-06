@@ -52,15 +52,31 @@ void FollowCamera::Update()
 			// 追尾してるオブジェクトの座標
 			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
 			sub = Vector3::Normalize(sub);
+			// 角度設定
 			destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
-			// Y軸角度
 			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
 			transform_.rotate.y = destinationAngle_.y;
 			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 		}
 		else {
+			// 角度設定
 			transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
 			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
+		}
+		// プレイヤーの方向
+		Vector3 playerMoveDirect = lockOn_->GetPlayer()->GetVelocity().Normalize();
+		// プレイヤーからカメラ
+		Vector3 playerToCamera = transform_.translate - lockOn_->GetPlayer()->worldTransform_.GetWorldPosition();
+		playerToCamera.Normalize();
+
+		float dot = Vector2::Dot(Vector2::Normalize(Vector2(playerMoveDirect.x, playerMoveDirect.z)), Vector2::Normalize(Vector2(playerToCamera.x, playerToCamera.z)));
+		float delayRate = GlobalVariables::GetInstance()->GetValue<float>("Camera", "DelayRate");
+		// 手前に進む際の制限
+		if (dot >= 0.1f) {
+			delayRate_ = Ease::Easing(delayRate, 0.5f, LwLib::Normalize(dot, 0.0f, 0.85f));
+		}
+		else {
+			delayRate_ = delayRate;
 		}
 
 		// 回転の速度調節
