@@ -49,6 +49,8 @@ private:
 	bool isTargetBoss_ = false;
 	// 追従のデータ構造体
 	TrackingData data_{};
+	// 初期の向き
+	Vector3 defaultTargetDirection_ = {};
 
 	// ステートマシン
 	std::unique_ptr<BulletStateMachine> stateMachine_;

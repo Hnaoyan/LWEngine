@@ -1,6 +1,7 @@
 #include "TrackingMoveState.h"
 #include "Application/GameSystem/GameSystem.h"
 #include "Application/GameObject/IGameObject.h"
+#include "../../BulletManager.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
 #include "../../BulletsPaths.h"
@@ -121,20 +122,39 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 
 		// ベクトルの正規化
 		toDirect.Normalize();
-		// 加速度の計算
-		parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
-		// 一定フレームでのみ更新
-		currentFrame_++;
-		if (currentFrame_ >= 5.0f) {
-			// 加速度の設定
-			bullet_->SetAccelerate(parentAcceleration_);
-			currentFrame_ = 0.0f;
+		//// 一定フレームでのみ更新
+		//currentFrame_++;
+		////float refreshFrame = 15.0f;
+		//if (currentFrame_ >= BulletManager::sTrackingRefreshFrame) {
+		//	// 加速度の計算
+		//	parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
+		//	// 加速度の設定
+		//	bullet_->SetAccelerate(parentAcceleration_);
+		//	currentFrame_ = 0.0f;
+		//}
+
+		if (frameCount_ >= 1024) {
+			frameCount_ = 0;
 		}
+		else if ((frameCount_ > 0) && ((frameCount_ & (frameCount_ - 1)) == 0)) {
+			// 加速度の計算
+			parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
+			bullet_->SetAccelerate(parentAcceleration_);
+		}
+		frameCount_++;
+
 	}
 }
 
 void TrackingMoveState::Exit()
 {
+
+}
+
+void TrackingMoveState::CheckPassing()
+{
+
+	
 
 }
 

@@ -19,6 +19,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemLists.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />

@@ -4,6 +4,13 @@
 #include <cassert>
 #include <imgui.h>
 
+float BulletManager::sTrackingRefreshFrame = 15.0f;
+float BulletManager::sTrackingMaxCentripetal = 2.0f;
+float BulletManager::sSmoothFactor = 0.1f;
+float BulletManager::sMaxCentripetalForce = 500.0f;
+float BulletManager::sForceDamping = 0.1f;
+float BulletManager::sSpeedLimitOffset = 150.0f;
+
 void BulletManager::Initialize(Model* model)
 {
 	//models_ = models;
@@ -47,6 +54,14 @@ void BulletManager::CollisionUpdate(CollisionManager* manager)
 
 void BulletManager::ImGuiDraw()
 {
+	ImGui::SeparatorText("TrackingTestData");
+	ImGui::DragFloat("sRefreshrate", &sTrackingRefreshFrame, 0.01f);
+	ImGui::DragFloat("sMaxCentripetal", &sTrackingMaxCentripetal, 0.01f);
+	ImGui::DragFloat("sSmoothFactor", &sSmoothFactor, 0.01f);
+	ImGui::DragFloat("sMaxCentripetalForce", &sMaxCentripetalForce, 0.1f);
+	ImGui::DragFloat("sForceDamping", &sForceDamping, 0.01f);
+	ImGui::DragFloat("sSpeedLimitOffset", &sSpeedLimitOffset, 0.01f);
+	ImGui::Text("");
 	// 描画チェック
 	if (ImGui::TreeNode("DrawFlags")) {
 		bool isCheck = isDrawCheck_[uint32_t(TrackingAttribute::kGenius)];

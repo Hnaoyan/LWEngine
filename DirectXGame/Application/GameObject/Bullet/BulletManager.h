@@ -16,6 +16,19 @@ class GPUParticleManager;
 class BulletManager
 {
 public:
+	// 更新フレーム
+	static float sTrackingRefreshFrame;
+	// 最大向心力
+	static float sTrackingMaxCentripetal;
+	// 向心力計算の最大値
+	static float sMaxCentripetalForce;
+	// 力の減衰率
+	static float sForceDamping;
+	// 平滑化レート
+	static float sSmoothFactor;
+	// 速度の最大値オフセット
+	static float sSpeedLimitOffset;
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>

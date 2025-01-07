@@ -4,18 +4,15 @@
 
 namespace BossState
 {
-	class MissileBarrageState : public IState
+
+	class TurnMissileState : public IState
 	{
 	public:
 		void Initialize() override;
 		void Update() override;
 		void Exit() override;
-	private:
-		void Attack();
-	private:
-		// 発射間隔
-		FrameTimer attackTimer_;
+
+
 	};
 
 }
-

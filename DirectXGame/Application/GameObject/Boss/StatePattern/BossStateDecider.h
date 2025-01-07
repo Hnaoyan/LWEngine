@@ -10,17 +10,18 @@ class Boss;
 class Player;
 namespace BossState {
 	// ステート
-	class AttackState;
-	class MoveState;
-	class OrbitMoveState;
-	class UpDownState;
-	class WaitState;
-	class TeleportState;
-	class MissileAttackState;
-	class SystemDownState;
-	class MissileBarrageState;
-	class MissileWaveState;
-	class MissileContainerState;
+	class AttackState;	// 通常射撃
+	class MoveState;	// 移動
+	class OrbitMoveState;	// 半円
+	class UpDownState;	// 上下
+	class WaitState;	// 待機
+	class TeleportState;	// 瞬間移動
+	class TurnMissileState;		// 急旋回攻撃
+	class MissileAttackState;	// 追従攻撃
+	class SystemDownState;	// ダウン状態
+	class MissileBarrageState;	// 順にミサイル
+	class MissileWaveState;		// 波ミサイル
+	class MissileContainerState;	// デンドロビウム
 	// 
 	class PreDecide;
 }
@@ -30,7 +31,7 @@ namespace BossState
 	// クラスのリスト
 	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*,
 		WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*,
-		SystemDownState*, MissileBarrageState*, MissileWaveState*,
+		SystemDownState*, MissileBarrageState*, MissileWaveState*, TurnMissileState*,
 		MissileContainerState*>;
 
 	/// <summary>
@@ -49,6 +50,7 @@ namespace BossState
 			kMissileBarrage,
 			kMissileWave,
 			kMissileContainer,
+			kMissileTurn,
 			kMax,
 		};
 		struct StateObject {

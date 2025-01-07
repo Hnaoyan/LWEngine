@@ -1,7 +1,6 @@
 #include "BossStateDecider.h"
 #include "Application/GameObject/GameObjectLists.h"
-#include "Attack/BossMisslieWave.h"
-#include "Attack/BossMissileContainer.h"
+#include "BossStateLists.h"
 
 void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 {
@@ -185,6 +184,9 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 		break;
 	case BossState::StateDecider::StatePattern::kMissileContainer:
 		newState = std::make_unique<MissileContainerState>();
+		break;
+	case BossState::StateDecider::StatePattern::kMissileTurn:
+		newState = std::make_unique<TurnMissileState>();
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;

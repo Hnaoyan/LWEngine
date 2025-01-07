@@ -16,6 +16,8 @@
 /// </summary>
 class Boss;
 class Player;
+class BulletBuilder;
+
 namespace BossState {
 	class AttackState;
 	class MoveState;
@@ -24,6 +26,7 @@ namespace BossState {
 	class WaitState;
 	class TeleportState;
 	class MissileAttackState;
+	class TurnMissileState;
 	class SystemDownState;
 	class MissileBarrageState;
 	class MissileWaveState;
@@ -42,8 +45,23 @@ namespace BossState
 	// クラスのリスト
 	using StateVariant = std::variant<AttackState*, MoveState*, UpDownState*,
 		WaitState*, TeleportState*, MissileAttackState*, OrbitMoveState*,
-		SystemDownState*, MissileBarrageState*, MissileWaveState*,
+		SystemDownState*, MissileBarrageState*, MissileWaveState*, TurnMissileState*,
 		MissileContainerState*>;
+
+	/// <summary>
+	/// 発射関係の処理をまとめたコンポーネント
+	/// </summary>
+	class BulletComponent
+	{
+	public:
+		void Initialize(Boss* boss);
+		void GenerateTracking(const Vector3& direct, TrackingAttribute type);
+		void Fire(BulletBuilder builder, TrackingAttribute type);
+
+	private:
+		Boss* boss_ = nullptr;
+
+	};
 
 	/// <summary>
 	/// 基のステートクラス
@@ -64,7 +82,7 @@ namespace BossState
 		// 先行の予備動作
 		virtual void PreAction() {};
 		// 初期化
-		virtual void Initialize() = 0;
+		virtual void Initialize();
 		// 更新
 		virtual void Update() = 0;
 		// 終了処理
@@ -85,8 +103,11 @@ namespace BossState
 		FrameTimer changeTimer_;
 		// 予備動作の時間
 		FrameTimer preActionTimer_;
+		// 追従のコンポーネント
+		BulletComponent bulletComponent_;
 
 	};
+
 
 	/// <summary>
 	/// 管理クラス

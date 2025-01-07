@@ -1,6 +1,7 @@
 #include "TrackingAccelerater.h"
 #include "../BulletsPaths.h"
 #include "Application/GameObject/IGameObject.h"
+#include "Application/GameObject/Bullet/BulletManager.h"
 
 Vector3 TrackingAccelerater::CalcSuperiorAcceleration()
 {
@@ -124,7 +125,7 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 	// 速度
 	float speed = bullet_->GetTrackingData().baseSpeed;
 	// オフセット
-	float maxOffset = 150.0f;
+	float maxOffset = BulletManager::sSpeedLimitOffset;
 	// 最大速度
 	float maxSpeed = bullet_->GetTrackingData().baseSpeed + maxOffset;
 	// 調整
@@ -149,12 +150,12 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 
 	// 大きさの調整
 	// 最大値
-	float maxCentripetalAccel = 2.0f;
+	float maxCentripetalAccel = BulletManager::sTrackingMaxCentripetal;
 	if (centripetalAccelMagnitude > maxCentripetalAccel) {
 		centripetalAccel /= centripetalAccelMagnitude;
 	}
 	// 最大向心力
-	float maxCentripetalForce = std::min(std::powf(speed, 2) / bullet_->GetTrackingData().lerpRadius, 500.0f);
+	float maxCentripetalForce = std::min(std::powf(speed, 2) / bullet_->GetTrackingData().lerpRadius, BulletManager::sMaxCentripetalForce);
 
 	// 最大向心力に命中率を適用（命中率が低いほど追従力を弱くする）
 	maxCentripetalForce *= trackingAccuracy;
@@ -166,11 +167,17 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
-	force -= bulletVelocity * 0.1f;
+	force -= bulletVelocity * BulletManager::sForceDamping;
 
 	// 目標方向から完全に一致しないように、少しだけ力を調整
 	// 弾がターゲット方向に近づきつつも、完全には収束しないように
 	force += (Vector3::Normalize(toDirect - bulletVelocity) - nowDirect) * (1.0f - trackingAccuracy);
+
+	// 平滑化
+	float smoothFactor = BulletManager::sSmoothFactor;
+	force = Ease::Easing(force, prevAccelerate_, smoothFactor);
+	// 前フレ加速度保存
+	prevAccelerate_ = force;
 
 	return Vector3(force);
 }

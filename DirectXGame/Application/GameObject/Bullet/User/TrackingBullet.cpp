@@ -48,6 +48,8 @@ void TrackingBullet::Initialize()
 		//data_.baseSpeed *= reductionRate;
 		velocity_ *= reductionRate;
 	}
+	// 初期の向き
+	defaultTargetDirection_ = Vector3::Normalize(targetObject_->worldTransform_.GetWorldPosition() - GetWorldPosition());
 
 	// ステートの設定
 	stateMachine_ = std::make_unique<BulletStateMachine>(this);

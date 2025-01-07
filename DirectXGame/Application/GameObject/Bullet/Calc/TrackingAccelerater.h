@@ -44,9 +44,14 @@ public:
 	/// <returns></returns>
 	Vector3 CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer);
 
+	//Vector3 CalcTrackingAcceleration(const Vector3& toDirect, FrameTimer& timer);
+
 private:
 	// 弾本体
 	TrackingBullet* bullet_ = nullptr;
 	// 追従データ
 	TrackingData data_ = {};
+	// 前フレームの加速度
+	Vector3 prevAccelerate_ = {};
+
 };

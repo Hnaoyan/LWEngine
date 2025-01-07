@@ -630,6 +630,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Irregular\TurnToTargetState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Common\RoundShadow.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1236,6 +1237,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Common\RoundShadow.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\TrackingData.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
