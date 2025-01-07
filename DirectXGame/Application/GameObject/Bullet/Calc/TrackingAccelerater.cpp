@@ -167,7 +167,7 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 
 	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
 	force += nowDirect * propulsion;
-	force -= bulletVelocity * BulletManager::sForceDamping;
+	force -= bulletVelocity * BulletManager::sForceDamping;	// ここの減衰率を推進力と一致させないとずれる
 
 	// 目標方向から完全に一致しないように、少しだけ力を調整
 	// 弾がターゲット方向に近づきつつも、完全には収束しないように
