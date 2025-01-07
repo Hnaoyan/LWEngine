@@ -10,6 +10,7 @@ float BulletManager::sSmoothFactor = 0.1f;
 float BulletManager::sMaxCentripetalForce = 500.0f;
 float BulletManager::sForceDamping = 0.1f;
 float BulletManager::sSpeedLimitOffset = 150.0f;
+int32_t BulletManager::sTrackingProcessType = 0;
 
 void BulletManager::Initialize(Model* model)
 {
@@ -61,6 +62,7 @@ void BulletManager::ImGuiDraw()
 	ImGui::DragFloat("sMaxCentripetalForce", &sMaxCentripetalForce, 0.1f);
 	ImGui::DragFloat("sForceDamping", &sForceDamping, 0.01f);
 	ImGui::DragFloat("sSpeedLimitOffset", &sSpeedLimitOffset, 0.01f);
+	ImGui::InputInt("sTrackingProcessType", &sTrackingProcessType, 1);
 	ImGui::Text("");
 	// 描画チェック
 	if (ImGui::TreeNode("DrawFlags")) {

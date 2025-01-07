@@ -13,6 +13,8 @@ public:
 	void Exit() override;
 
 	void CheckPassing();
+private:
+	Vector3 CalculateDirection(TrackingAttribute type);
 
 private:
 	// 劣等型用のオフセット

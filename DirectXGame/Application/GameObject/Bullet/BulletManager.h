@@ -28,6 +28,8 @@ public:
 	static float sSmoothFactor;
 	// 速度の最大値オフセット
 	static float sSpeedLimitOffset;
+	// 0でディレイなし、1で
+	static int32_t sTrackingProcessType;
 public:
 	/// <summary>
 	/// 初期化
