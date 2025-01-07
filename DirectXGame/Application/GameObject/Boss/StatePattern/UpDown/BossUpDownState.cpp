@@ -5,10 +5,11 @@ void BossState::UpDownState::Initialize()
 {
 	boss_->SetNowVariantState(this);
 
-	float minY = 8.5f;
-	float maxY = 20.0f;
-	float floarJud = 8.5f;
-	if (boss_->worldTransform_.GetWorldPosition().y > floarJud) {
+	// 最大・最小
+	float minY = GlobalVariables::GetInstance()->GetValue<float>("Boss", "MinYPoint");
+	float maxY = GlobalVariables::GetInstance()->GetValue<float>("Boss", "MaxYPoint");
+
+	if (boss_->worldTransform_.GetWorldPosition().y > minY) {
 		startPosition_ = boss_->worldTransform_.GetWorldPosition();
 		endPosition_ = startPosition_;
 		endPosition_.y = minY;

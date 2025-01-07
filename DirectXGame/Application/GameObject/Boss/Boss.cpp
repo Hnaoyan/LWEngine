@@ -39,6 +39,9 @@ void Boss::Initialize(Model* model)
 
 	// 座標関係の初期化
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "ResPosition");
+	worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("Boss", "MinYPoint");
+	float scale = GlobalVariables::GetInstance()->GetValue<float>("Boss", "ScaleRate");
+	worldTransform_.transform_.scale = Vector3(scale, scale, scale);
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
 }
@@ -60,10 +63,10 @@ void Boss::Update()
 
 	// バリア時の当たり判定
 	if (systemManager_->barrierManager_.IsActive()) {
-		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale").x;
+		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale").x * worldTransform_.transform_.scale.x;
 	}
 	else {
-		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale").x;
+		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale").x * worldTransform_.transform_.scale.x;
 	}
 	// コライダーの更新
 	collider_.Update(worldTransform_.GetWorldPosition());
@@ -292,8 +295,14 @@ void Boss::InitializeGlobalValue()
 	std::string groupName = "Boss";
 	//---ボスの共通---//
 	instance->CreateGroup(groupName);
+	// 座標関係
 	instance->AddValue(groupName, "ResPosition", Vector3(0, 8.5f, 50.0f));
+	instance->AddValue(groupName, "MinYPoint", float(12.0f));	
+	instance->AddValue(groupName, "MaxYPoint", float(18.0f));
+	instance->AddValue(groupName, "ScaleRate", float(1.0f));
+	
 	instance->AddValue(groupName, "NormalScale", worldTransform_.transform_.scale);
+	// バリア
 	instance->AddValue(groupName, "BarrierScale", worldTransform_.transform_.scale * 2.0f);
 	instance->AddValue(groupName, "BarrierHP", 4.0f);
 	instance->AddValue(groupName, "BarrierVanishFrame", 45.0f);
