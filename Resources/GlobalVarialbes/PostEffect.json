@@ -2,6 +2,8 @@
     "PostEffect": {
         "BloomSigma": 1.5,
         "BloomThreshold": 0.75,
+        "BlurSampleNum": 2,
+        "BlurWidth": 0.25,
         "VigColor": [
             0.5,
             0.0,

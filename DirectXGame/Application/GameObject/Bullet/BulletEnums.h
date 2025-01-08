@@ -35,6 +35,17 @@ enum class TrackingStep : uint32_t
 	kUpSpeed,
 };
 
+// 命中関係の値
+struct AccuracyData
+{
+	float trackingAccuracy;	// 追従命中率の割合
+	float propulsionDamping; // 推進力減衰率
+	float forceDamping;	// 力に対しての減衰率
+	float smoothFactor;	// 平滑化のずらし率
+
+	float ratio;	// 全体を決める確率の割合
+};
+
 // 追従データ
 struct TrackingData
 {
@@ -49,7 +60,8 @@ struct TrackingData
 	// 追従ステート
 	float straightFrame;	// 直進の時間
 	float trackingFrame;	// 追従している時間
-
+	// 命中関係
+	AccuracyData accuracy;
 	// 波ステート
 	float waveFrame;		// 波軌道の時間
 
@@ -58,6 +70,7 @@ struct TrackingData
 
 	//---遷移種類---//
 	int32_t transitionType = 0;	// 切り替わりの種類
+	int32_t accuracyType = 0;	//0:命中,1:ちょい外れる,2:結構外れる
 
 	/// <summary>
 	/// 読み込み関数
@@ -76,3 +89,4 @@ struct TrackingData
 		
 	}
 };
+

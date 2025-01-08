@@ -281,6 +281,9 @@ void Player::InitializeGlobalValue()
 
 	instance->AddValue(groupName, "Scale", Vector3(1.0f, 1.0f, 1.0f));
 	instance->AddValue(groupName, "FootOffset", float(-0.4f));
+	instance->AddValue(groupName, "TrailColor", Vector3(0.0f, 0.0f, 0.0f));
+	instance->AddValue(groupName, "TrailY", float(-0.5f));
+
 #pragma endregion
 
 #pragma region PlayerAttack

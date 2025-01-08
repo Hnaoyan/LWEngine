@@ -63,13 +63,15 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	worldTransform_.parent_ = &player_->worldTransform_;
-	worldTransform_.transform_.translate.y = -0.5f;
+	worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "TrailY");
 
 	// ポリゴンの初期化
 	triangle_ = std::make_unique<Triangle3D>();
 	triangle_->Initialize();
 	triangle_->SetCamera(player_->GetCamera());
 	triangle_->SetMaxWidth(0.5f);
+	Vector3 rgb = GlobalVariables::GetInstance()->GetValue<Vector3>("PlayerBasic", "TrailColor");
+	triangle_->SetColor(Vector4(rgb.x, rgb.y, rgb.z, 1.0f));
 
 	// 保存数の最大値
 	// ここの値を内部で書き換えてもスムーズになるような処理も作る
@@ -78,6 +80,12 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 
 void PlayerContext::MoveTrail::Update()
 {
+#ifdef IMGUI_ENABLED
+	Vector3 rgb = GlobalVariables::GetInstance()->GetValue<Vector3>("PlayerBasic", "TrailColor");
+	triangle_->SetColor(Vector4(rgb.x, rgb.y, rgb.z, 1.0f));
+	worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "TrailY");
+#endif // IMGUI_ENABLED
+
 	// トランスフォームの更新
 	worldTransform_.UpdateMatrix();
 	// 要素追加

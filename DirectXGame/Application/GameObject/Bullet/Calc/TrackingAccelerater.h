@@ -17,23 +17,6 @@ public:
 	/// <param name="bullet"></param>
 	TrackingAccelerater(TrackingBullet* bullet) : bullet_(bullet) {}
 	TrackingAccelerater() {};
-public:
-	/// <summary>
-	/// 優等型
-	/// </summary>
-	/// <returns></returns>
-	Vector3 CalcSuperiorAcceleration();
-	/// <summary>
-	/// 劣等型
-	/// </summary>
-	/// <param name="offset"></param>
-	/// <returns></returns>
-	Vector3 CalcInferiorAcceleration(const Vector3& offset);
-	/// <summary>
-	/// 秀才型
-	/// </summary>
-	/// <returns></returns>
-	Vector3 CalcGeniusAcceleration();
 
 public:
 	/// <summary>
