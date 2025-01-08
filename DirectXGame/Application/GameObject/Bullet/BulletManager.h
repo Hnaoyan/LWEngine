@@ -30,6 +30,8 @@ public:
 	static float sSpeedLimitOffset;
 	// 0でディレイなし、1で
 	static int32_t sTrackingProcessType;
+
+	static float sSpeed;
 public:
 	/// <summary>
 	/// 初期化

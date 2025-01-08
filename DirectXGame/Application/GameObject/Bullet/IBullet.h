@@ -57,6 +57,7 @@ protected:
 	// 対象オブジェクト
 	IGameObject* targetObject_ = nullptr;
 
+	float moveSpeed_ = 1.0f;
 
 public: // アクセッサ
 	std::string GetTag() const { return tag_; }

@@ -68,9 +68,8 @@ void TrackingBullet::Update()
 
 	// ステートの処理
 	stateMachine_->Update(true);
-
 	// 移動
-	velocity_ += accelerate_ * GameSystem::GameSpeedFactor();
+	velocity_ += (accelerate_) * GameSystem::GameSpeedFactor();
 	// 回転
 	transform_.rotate.x += GameSystem::GameSpeedFactor();
 	transform_.rotate.y += GameSystem::GameSpeedFactor();

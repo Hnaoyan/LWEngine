@@ -62,6 +62,9 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			stateMachine.RequestState(TrackingState::kStraight);
 			return;
 		}
+		if (!accelerationTime_.IsActive()) {
+			//stateMachine.RequestState(TrackingState::kTurnToTarget);
+		}
 
 		// 種類の受け取り
 		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
@@ -70,12 +73,13 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		Vector3 toDirect = CalculateDirection(type).Normalize();
 		// 処理の種類
 		int number = BulletManager::sTrackingProcessType;
+		// 加速度初期化
+		parentAcceleration_ = {};
 		switch (number)
 		{
 		case 0:
 			// 加速度の計算
 			parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
-			bullet_->SetAccelerate(parentAcceleration_);
 			break;
 		case 1:
 			// 一定フレームでのみ更新
@@ -85,7 +89,6 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 				// 加速度の計算
 				parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
 				// 加速度の設定
-				bullet_->SetAccelerate(parentAcceleration_);
 				currentFrame_ = 0.0f;
 			}
 			break;
@@ -96,16 +99,16 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			else if ((frameCount_ > 0) && ((frameCount_ & (frameCount_ - 1)) == 0)) {
 				// 加速度の計算
 				parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
-				bullet_->SetAccelerate(parentAcceleration_);
 			}
 			frameCount_++;
 			break;
 		default:
 			// 加速度の計算
 			parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
-			bullet_->SetAccelerate(parentAcceleration_);
 			break;
 		}
+
+		bullet_->SetAccelerate(parentAcceleration_);
 	}
 }
 

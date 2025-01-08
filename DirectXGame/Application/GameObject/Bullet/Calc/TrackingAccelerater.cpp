@@ -28,6 +28,8 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 	else {
 		speed = maxSpeed;
 	}
+	//speed = speed * BulletManager::sSpeed;
+
 	// 命中率の割合変数（0.0 = 完全に外れる, 1.0 = 完全に命中）
 	float trackingAccuracy = accuracy.trackingAccuracy;
 
