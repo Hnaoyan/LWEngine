@@ -45,6 +45,9 @@ void BossState::AttackState::Initialize()
 	bulletScale_ = 1.0f;
 	// 進む方向
 	bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
+
+	// 初期化
+	IState::Initialize();
 }
 
 void BossState::AttackState::Update()

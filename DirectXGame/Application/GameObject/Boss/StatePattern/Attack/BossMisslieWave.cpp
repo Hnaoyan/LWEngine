@@ -14,6 +14,8 @@ void BossState::MissileWaveState::Initialize()
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
 
+	// 基底
+	IState::Initialize();
 }
 
 void BossState::MissileWaveState::Update()

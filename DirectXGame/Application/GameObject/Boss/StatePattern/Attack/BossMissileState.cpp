@@ -14,6 +14,9 @@ void BossState::MissileAttackState::Initialize()
 
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
+
+	// 
+	IState::Initialize();
 }
 
 void BossState::MissileAttackState::Update()
