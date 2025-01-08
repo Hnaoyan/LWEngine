@@ -195,5 +195,6 @@ public: // 複合演算子
 	/// <returns></returns>
 	static Vector3 RotateVector(const Vector3& vector, const Quaternion& quaternion);
 
+	static Vector3 RotateVector(const Vector3& from, const Vector3& to);
 };
 
