@@ -70,7 +70,7 @@ void BossState::MissileWaveState::SpawnMissile()
 	GenerateMissile(Matrix4x4::TransformVector3(referenceLeftAxis.Normalize(), rotateMatrix), attribute);
 	GenerateMissile(Matrix4x4::TransformVector3(referenceRightAxis.Normalize(), rotateMatrix), attribute);
 	// ずらし
-	float offsetValue = 0.2f;
+	float offsetValue = 0.5f;
 	//---左側---//
 	Vector3 direct = Matrix4x4::TransformVector3(Vector3::Normalize(referenceLeftAxis + Vector3(offsetValue,0.0f,0.0f)), rotateMatrix);
 	GenerateMissile(direct, attribute);

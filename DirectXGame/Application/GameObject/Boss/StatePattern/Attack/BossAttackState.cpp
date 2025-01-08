@@ -45,7 +45,8 @@ void BossState::AttackState::Initialize()
 	bulletScale_ = 1.0f;
 	// 進む方向
 	bulletDirect_ = Vector3::Normalize(boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition());
-
+	// クールタイム
+	fireCooltime_ = 5.0f;
 	// 初期化
 	IState::Initialize();
 }
@@ -151,7 +152,7 @@ void BossState::AttackState::RadialFireAttack()
 	float rotValue = LwLib::GetRandomValue(0.1f, 0.5f);
 	rotValue = 0.5f;
 	float addValue = 1.0f;
-	int max = 7;
+	int max = 6;
 	for (int i = 0; i < max; ++i) {
 		rotValue += addValue;
 		// 左回転

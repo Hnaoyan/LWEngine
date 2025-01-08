@@ -20,7 +20,7 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 	// オフセット
 	float maxOffset = BulletManager::sSpeedLimitOffset;
 	// 最大速度
-	float maxSpeed = bullet_->GetTrackingData().baseSpeed + maxOffset;
+	float maxSpeed = speed + maxOffset;
 	// 調整
 	if (timer.IsActive()) {
 		speed = Ease::Easing(speed, maxSpeed, timer.GetElapsedFrame());
