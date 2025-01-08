@@ -3,6 +3,7 @@
 #include "Engine/2D/TextureManager.h"
 #include "Engine/2D/SpriteManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
+#include "Engine/PostEffect/PostEffectRender.h"
 
 #include <imgui.h>
 #include <thread>
@@ -71,6 +72,7 @@ void TitleScene::Update()
 		sceneManager_->ChangeThreadScene("GAME");
 		//isLoad_ = true;
 	}
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 
 	playerObject_->Update();
 
