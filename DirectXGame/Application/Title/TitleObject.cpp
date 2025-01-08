@@ -10,14 +10,14 @@ void TitleObject::Initialize(Model* model)
 
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
-	material_->color_.w = 0.5f;
+	material_->color_.w = 0.75f;
 	material_->discardThreshold_ = 0.1f;
 
 }
 
 void TitleObject::Update()
 {
-	worldTransform_.transform_.rotate.y += (1.0f / 60.0f);
+	worldTransform_.transform_.rotate.y += (1.0f / 90.0f);
 
 	IGameObject::Update();
 }
