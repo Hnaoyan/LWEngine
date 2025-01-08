@@ -8,7 +8,7 @@ void TrackingStraightState::Enter()
 	bullet_->SetAccelerate(Vector3::Zero());
 }
 
-void TrackingStraightState::Update(BulletStateMachine& stateMachine)
+void TrackingStraightState::Update([[maybe_unused]]BulletStateMachine& stateMachine)
 {
 	timer_.Update();
 

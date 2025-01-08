@@ -29,7 +29,7 @@ void TrackingMoveState::Enter()
 	//bullet_->SetVelocity(newVelocity);
 
 	// 1.5秒で追従を緩くする（仮
-	float looseFrame = 90.0f;	// 緩くなるまでの時間
+	float looseFrame = 150.0f;	// 緩くなるまでの時間
 	looseTimer_.Start(looseFrame);
 	if (dynamic_cast<TrackingBullet*>(bullet_)) {
 		TrackingBullet* bullet = dynamic_cast<TrackingBullet*>(bullet_);
@@ -75,9 +75,9 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		}
 		// true = 緩い
 		else {
-			float supLimit = -0.45f;
-			float infLimit = -0.05f;
-			float genLimit = -0.65f;
+			float supLimit = 0.05f;
+			float infLimit = 0.2f;
+			float genLimit = -0.05f;
 			switch (type)
 			{
 			case TrackingAttribute::kSuperior:
