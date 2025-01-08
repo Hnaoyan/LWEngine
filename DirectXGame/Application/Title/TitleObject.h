@@ -24,6 +24,7 @@ public:
 	/// <param name="name"></param>
 	void ImGuiDraw() override;
 
-
+private:
+	std::unique_ptr<Material> material_;
 
 };

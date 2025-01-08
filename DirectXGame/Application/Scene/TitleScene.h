@@ -1,11 +1,14 @@
 #pragma once
-#include "../../Engine/Scene/IScene.h"
-#include "../../Engine/2D/Drawer/Sprite.h"
-#include "../../Engine/3D/Drawer/3DDrawers.h"
-#include "../../Engine/3D/ModelUtility/ModelManager.h"
-#include "../../Engine/Camera/CameraList.h"
+#include "Engine/Scene/IScene.h"
+#include "Engine/2D/Drawer/Sprite.h"
+#include "Engine/3D/Drawer/3DDrawers.h"
+#include "Engine/3D/ModelUtility/ModelManager.h"
+#include "Engine/Camera/CameraList.h"
+#include "Engine/Light/LightingManager.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/LevelEditor/LevelLoader.h"
+
+#include "Application/Title/TitleObject.h"
 
 /// <summary>
 /// タイトルシーン
@@ -59,5 +62,17 @@ private: // システム関係
 	// 経過時間
 	float elapsedTime_ = 0.0f;
 
+	std::unique_ptr<LightingManager> lightManager_;
+
+	// プレイヤーのキャラオブジェクト
+	std::unique_ptr<TitleObject> playerObject_;
+
 	bool isLoad_ = false;
+
+	struct TransitionData
+	{
+		FrameTimer transitionTimer;
+
+	};
+
 };

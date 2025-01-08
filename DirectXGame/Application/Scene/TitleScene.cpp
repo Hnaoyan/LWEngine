@@ -2,6 +2,7 @@
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/2D/TextureManager.h"
 #include "Engine/2D/SpriteManager.h"
+#include "Engine/3D/ModelUtility/ModelRenderer.h"
 
 #include <imgui.h>
 #include <thread>
@@ -11,13 +12,20 @@
 void TitleScene::Initialize()
 {
 	IScene::Initialize();
-	//std::mutex resourceMutex;
-	//std::thread loaderThread([this, &resourceMutex]() {
-	//	std::lock_guard<std::mutex> lock(resourceMutex);  // リソースへのアクセスをロック
-	//	this->LoadModel();
-	//	});	LoadModel();
+	// ライト初期化
+	lightManager_ = std::make_unique<LightingManager>();
+	lightManager_->Initialize();
+
 	LoadModel();
 	LoadTexture();
+
+	debugCamera_ = std::make_unique<DebugCamera>();
+	debugCamera_->Initialize();
+	debugCamera_->transform_.translate.y = 1.5f;
+	debugCamera_->transform_.translate.z = -10.0f;
+
+	playerObject_ = std::make_unique<TitleObject>();
+	playerObject_->Initialize(ModelManager::GetModel("Player"));
 
 	levelLoader_ = std::make_unique<LevelLoader>();
 	levelLoader_->LoadSceneData("01_10");
@@ -28,8 +36,8 @@ void TitleScene::Initialize()
 	SpriteManager::GetSprite("BackGroundTexture")->SetAnchorPoint(Vector2(0.5f, 0.5f));
 
 	SpriteManager::GetSprite("BackGroundImage")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 2.0f));
-	SpriteManager::GetSprite("TitleButtonText")->SetPosition(Vector2(1280.0f / 2.0f, 500.0f));
-	SpriteManager::GetSprite("TitleButtonText")->SetSize(Vector2(240.0f, 120.0f) * 1.5f);
+	SpriteManager::GetSprite("TitleButtonText")->SetPosition(Vector2(1280.0f / 2.0f, 550.0f));
+	SpriteManager::GetSprite("TitleButtonText")->SetSize(Vector2(240.0f, 120.0f) * 1.2f);
 	SpriteManager::GetSprite("TitleText")->SetPosition(Vector2(1280.0f / 2.0f, 720.0f / 3.0f));
 	titleTextPosition_ = Vector2(1280.0f / 2.0f, 720.0f / 3.0f);
 	//loaderThread.join();  // スレッドの完了を待つ
@@ -64,33 +72,45 @@ void TitleScene::Update()
 		//isLoad_ = true;
 	}
 
+	playerObject_->Update();
+
+	debugCamera_->Update();
+	// ライトの更新
+	lightManager_->Update();
+
 }
 
 void TitleScene::Draw()
 {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+
 #pragma region 背景
 	Sprite::PreDraw(commandList);
 
 	//uiSprites_[0]->Draw();
+	SpriteManager::GetSprite("BackGroundImage")->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.85f));
+	SpriteManager::GetSprite("BackGroundImage")->Draw();
+
 
 	Sprite::PostDraw();
 #pragma endregion
 	// 深度クリア
 	dxCommon_->ClearDepthBuffer();
 
-	Model::PreDraw(commandList);
+	ModelRenderer::PreDraw(commandList);
 
-	Model::PostDraw();
+	// 描画に使うもの
+	ModelDrawDesc drawDesc{};
+	drawDesc.camera = debugCamera_.get();
+	// ライトの情報
+	drawDesc.directionalLight = lightManager_->GetDirectional();
+	drawDesc.pointLight = lightManager_->GetPoint();
+	drawDesc.spotLight = lightManager_->GetSpot();
 
-}
+	playerObject_->Draw(drawDesc);
 
-void TitleScene::UIDraw()
-{
-#pragma region UI
-	// コマンドリストの取得
-	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+	ModelRenderer::PostDraw();
 
 	Sprite::PreDraw(commandList);
 	if (!isLoad_) {
@@ -112,8 +132,17 @@ void TitleScene::UIDraw()
 	SpriteManager::GetSprite("TitleButtonText")->Draw();
 	SpriteManager::GetSprite("TitleText")->Draw();
 	//SpriteManager::GetSprite("BackGroundTexture")->Draw();
-	SpriteManager::GetSprite("BackGroundImage")->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.85f));
-	SpriteManager::GetSprite("BackGroundImage")->Draw();
+	Sprite::PostDraw();
+
+}
+
+void TitleScene::UIDraw()
+{
+#pragma region UI
+	// コマンドリストの取得
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+
+	Sprite::PreDraw(commandList);
 
 	Sprite::PostDraw();
 
@@ -124,14 +153,17 @@ void TitleScene::ImGuiDraw()
 {
 	ImGui::Begin("Title");
 	ImGui::DragFloat2("TitleText", &titleTextPosition_.x, 0.01f);
+	ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);
+	ImGui::DragFloat3("CameraRot", &debugCamera_->transform_.rotate.x, 0.01f);
 	ImGui::End();
-
+	playerObject_->ImGuiDraw();
 }
 
 void TitleScene::LoadModel()
 {
 	//ModelManager::LoadObjModel("Plane", "plane");
 	//ModelManager::LoadObjModel("Axis", "BulletTest");
+	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
 
 }
 

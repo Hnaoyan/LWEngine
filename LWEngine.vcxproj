@@ -61,6 +61,7 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Replay\ReplayManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\UIStructs.cpp" />
+    <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\TrailMaterial.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp" />

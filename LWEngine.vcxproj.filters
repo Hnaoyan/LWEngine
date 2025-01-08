@@ -631,6 +631,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Common\RoundShadow.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.cpp" />
+    <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
