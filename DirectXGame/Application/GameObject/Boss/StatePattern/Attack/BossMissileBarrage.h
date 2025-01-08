@@ -15,6 +15,7 @@ namespace BossState
 	private:
 		// 発射間隔
 		FrameTimer attackTimer_;
+		int32_t fireCount_ = 0;
 	};
 
 }

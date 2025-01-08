@@ -54,7 +54,6 @@ void BossState::MissileBarrageState::Attack()
 {
 	// 回転
 	RotateUpdate();
-
 	// ここがコンテナの役割
 	// 始点ベクトルー終点ベクトルでSlerpした方向に飛ばす
 	// ベクトル
@@ -81,10 +80,19 @@ void BossState::MissileBarrageState::Attack()
 	start = LwLib::Slerp(defaultVector + Vector3(-0.1f, 0.1f, 0.0f), leftUp, 0.3f);
 	leftUp = LwLib::Slerp(start, leftUp, t);
 
+	//---生成処理開始---//
+	BulletBuilder builder;
+	if (fireCount_ > 4) {
+		builder.SetAccuracyType(2);
+	}
+	else {
+		builder.SetAccuracyType(0);
+	}
+
+
 	// 生成部分
 	EulerTransform transform = boss_->worldTransform_.transform_;
 	float offsetValue = 2.0f;
-	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
 	float stFrame = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame");
 	stFrame = LwLib::GetRandomValue(stFrame, stFrame + 60.0f);
@@ -118,4 +126,6 @@ void BossState::MissileBarrageState::Attack()
 	transform.translate += direction.Normalize() * offsetValue;
 	builder.SetTransform(transform).SetDirect(direction);
 	bulletComponent_.Fire(builder, TrackingAttribute::kSuperior);
+
+	fireCount_++;;
 }

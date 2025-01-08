@@ -66,6 +66,7 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		}
 		// 追従をキャンセル
 		if (dot < limitDot) {
+			dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
 			stateMachine.RequestState(TrackingState::kStraight);
 			return;
 		}
