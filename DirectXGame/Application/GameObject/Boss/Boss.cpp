@@ -320,6 +320,9 @@ void Boss::InitializeGlobalValue()
 	// コンテナ
 	instance->AddValue(groupName, "ContainerInitSpeed", float(10.0f));
 
+	groupName = "BossWaveAttack";
+	instance->AddValue(groupName, "StFrame", float(120.0f));
+
 	//---敵の弾のトレイル---//
 	groupName = "BossBulletTrail";
 	instance->CreateGroup(groupName);

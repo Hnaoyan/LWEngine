@@ -44,11 +44,11 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "UpDownMove";
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissileWave);
-	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissileBarrage);
-	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "NewBe";

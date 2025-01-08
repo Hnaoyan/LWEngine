@@ -12,7 +12,7 @@ void BossState::MissileWaveState::Initialize()
 	boss_->GetAnimManager()->AnimationExecute(AnimType::kOpen, global->GetValue<float>("BossAnimation", "OpenFrame"));
 
 	// アクション前の待機タイマー
-	preActionTimer_.Start(60.0f);
+	preActionTimer_.Start(30.0f);
 
 	// 基底
 	IState::Initialize();
@@ -63,8 +63,8 @@ void BossState::MissileWaveState::SpawnMissile()
 {
 
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
-	Vector3 referenceLeftAxis = Vector3(-0.75f, 0.75f, -2.0f);
-	Vector3 referenceRightAxis = Vector3(0.75f, 0.75f, -2.0f);
+	Vector3 referenceLeftAxis = Vector3(-0.75f, 1.0f, -2.0f);
+	Vector3 referenceRightAxis = Vector3(0.75f, 1.0f, -2.0f);
 	TrackingAttribute attribute = TrackingAttribute::kSuperior;
 	// 基準
 	GenerateMissile(Matrix4x4::TransformVector3(referenceLeftAxis.Normalize(), rotateMatrix), attribute);
@@ -114,7 +114,7 @@ void BossState::MissileWaveState::GenerateMissile(const Vector3& direct, Trackin
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossAction", "WaveAttackInitSpeed")).SetTransform(transform).SetAttribute(type);
-	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossWaveAttack", "StFrame"));
 
 	switch (type)
 	{
