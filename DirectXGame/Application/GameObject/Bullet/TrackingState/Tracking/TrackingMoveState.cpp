@@ -56,27 +56,66 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		if (!bullet_->GetTarget()) {
 			return;
 		}
+		// 種類の受け取り
+		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
 
 		// 向きが過度に離れていたら追尾しない
 		float dot = Vector3::Dot(Vector3::Normalize(bullet_->GetVelocity()), Vector3::Normalize(bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition()));
 		float limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
-		// 追従が緩ければ
-		if (!looseTimer_.IsActive()) {
-			limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDotLoose");
+		limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDotLoose");
+		// 追従を厳しくするタイマーがfalseなら
+		if (looseTimer_.IsActive()) {
+			limitDot = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "TrackingDot");
+			// 追従をキャンセル
+			if (dot < limitDot) {
+				dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
+				stateMachine.RequestState(TrackingState::kStraight);
+				return;
+			}
 		}
-		// 追従をキャンセル
-		if (dot < limitDot) {
-			dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
-			stateMachine.RequestState(TrackingState::kStraight);
-			return;
-		}
-		if (!accelerationTime_.IsActive()) {
-			//stateMachine.RequestState(TrackingState::kTurnToTarget);
-		}
+		// true = 緩い
+		else {
+			float supLimit = -0.45f;
+			float infLimit = -0.05f;
+			float genLimit = -0.65f;
+			switch (type)
+			{
+			case TrackingAttribute::kSuperior:
+				if (dot < supLimit) {
+					dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
+					stateMachine.RequestState(TrackingState::kStraight);
+					return;
+				}
+				break;
+			case TrackingAttribute::kInferior:
+				if (dot < infLimit) {
+					dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
+					stateMachine.RequestState(TrackingState::kStraight);
+					return;
+				}
+				break;
+			case TrackingAttribute::kGenius:
+				if (dot < genLimit) {
+					dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
+					stateMachine.RequestState(TrackingState::kStraight);
+					return;
+				}
+				break;
+			case TrackingAttribute::kNone:
+				break;
+			case TrackingAttribute::kMaxSize:
+				break;
+			default:
+				// 追従をキャンセル
+				if (dot < limitDot) {
+					dynamic_cast<TrackingBullet*>(bullet_)->SetStraightFrame(300.0f);
+					stateMachine.RequestState(TrackingState::kStraight);
+					return;
+				}
+				break;
+			}
 
-		// 種類の受け取り
-		TrackingAttribute type = dynamic_cast<TrackingBullet*>(bullet_)->GetTrackingType();
-
+		}
 		// ベクトルの正規化
 		Vector3 toDirect = CalculateDirection(type).Normalize();
 		// 処理の種類
