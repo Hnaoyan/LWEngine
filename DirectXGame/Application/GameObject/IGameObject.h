@@ -62,12 +62,12 @@ public:
 	/// </summary>
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
-	virtual void OnCollision(ColliderObject target) = 0;
+	virtual void OnCollision([[maybe_unused]] ColliderObject target) {};
 	/// <summary>
 	/// コライダーをマネージャに設定する関数
 	/// </summary>
 	/// <param name="collisionManager"></param>
-	virtual void SetCollier(CollisionManager* collisionManager) = 0;
+	virtual void SetCollier([[maybe_unused]] CollisionManager* collisionManager) {};
 
 	virtual void UIDraw() {};
 protected:

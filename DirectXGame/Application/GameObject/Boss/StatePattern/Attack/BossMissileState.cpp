@@ -60,7 +60,7 @@ void BossState::MissileAttackState::MissileAttack()
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
 	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 	
-	const int maxSize = 3;
+	const int maxSize = 5;
 	std::vector<Vector3> rightSide;
 	std::vector<Vector3> leftSide;
 	rightSide.resize(maxSize);
@@ -121,55 +121,6 @@ void BossState::MissileAttackState::MissileAttack()
 		GenerateMissile(direct, TrackingAttribute::kGenius);
 		// 左
 		direct = LwLib::Slerp(leftSide[4], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kGenius);
-
-		//---劣等---//
-		// 右
-		direct = LwLib::Slerp(rightSide[5], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-		// 左
-		direct = LwLib::Slerp(leftSide[5], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-		// 右
-		direct = LwLib::Slerp(rightSide[6], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-		// 左
-		direct = LwLib::Slerp(leftSide[6], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-
-		//---優等---//
-		// 右
-		direct = LwLib::Slerp(rightSide[7], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-		// 左
-		direct = LwLib::Slerp(leftSide[7], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-
-
-
-		//---優等---//
-		// 右
-		direct = LwLib::Slerp(rightSide[8], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-		// 左
-		direct = LwLib::Slerp(leftSide[8], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-		//---秀才---//
-		// 右
-		direct = LwLib::Slerp(rightSide[9], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kGenius);
-		// 左
-		direct = LwLib::Slerp(leftSide[9], Vector3::Forward(), t);
 		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 		GenerateMissile(direct, TrackingAttribute::kGenius);
 	}

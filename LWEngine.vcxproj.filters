@@ -1238,6 +1238,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Common\RoundShadow.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\TrackingData.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.h" />
+    <ClInclude Include="DirectXGame\Application\Title\TitleObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

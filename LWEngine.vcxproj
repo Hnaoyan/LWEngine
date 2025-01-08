@@ -309,6 +309,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\UIStructs.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
+    <ClInclude Include="DirectXGame\Application\Title\TitleObject.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\SpriteManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Drawer\Triangle3D.h" />
