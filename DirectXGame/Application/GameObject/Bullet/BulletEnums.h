@@ -55,6 +55,7 @@ struct TrackingData
 	float lerpRadius;	// 広がる半径
 	float baseSpeed;	// 基本速度
 	float initSpeed;	// 初速度
+	float accelFrame;	// 加速する時間
 
 	//---ステート関係---//
 	// 追従ステート

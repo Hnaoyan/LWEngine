@@ -34,6 +34,9 @@ public: // アクセッサ
 	void SetTrackType(TrackingAttribute type) { trackingType_ = type; }
 	void SetIsBarrage(bool isFlag) { isFlag; }
 	void SetStraightFrame(const float& frame) { straightFrame_ = frame; }
+	void SetAcType(const int32_t& type) { data_.accuracyType = type; }
+	void SetTransitionType(const int32_t& type) { data_.transitionType = type; }
+	void SetAccelFrame(const float& frame) { data_.accelFrame = frame; }
 	
 	BulletStateMachine* GetStateMachine() { return stateMachine_.get(); }
 	TrackingAttribute GetTrackingType() const { return trackingType_; }

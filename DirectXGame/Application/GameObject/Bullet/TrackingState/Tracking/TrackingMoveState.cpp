@@ -31,7 +31,14 @@ void TrackingMoveState::Enter()
 	// 1.5秒で追従を緩くする（仮
 	float looseFrame = 90.0f;	// 緩くなるまでの時間
 	looseTimer_.Start(looseFrame);
-	accelerationTime_.Start(100.0f);
+	if (dynamic_cast<TrackingBullet*>(bullet_)) {
+		TrackingBullet* bullet = dynamic_cast<TrackingBullet*>(bullet_);
+		accelerationTime_.Start(100.0f);
+		if (bullet->GetTrackingData().accelFrame > 10) {
+			accelerationTime_.Start(bullet->GetTrackingData().accelFrame);
+		}
+	}
+	
 
 	elapsedTime_ = 0.0f;
 	currentFrame_ = 0.0f;

@@ -14,6 +14,18 @@ Vector3 TrackingAccelerater::CalcTrackingAcceleration(const Vector3& toDirect, F
 		accuracy.trackingAccuracy = GlobalVariables::GetInstance()->GetValue<float>("TrackingData", "TrackingAccuracy");
 		accuracy.trackingAccuracy = 1.0f;
 	}
+	else if(bullet_->GetTrackingData().accuracyType == 1){
+		accuracy.forceDamping = bullet_->GetTrackingData().damping / 2.0f;
+		accuracy.propulsionDamping = bullet_->GetTrackingData().damping;
+		accuracy.smoothFactor = 0.1f;
+		accuracy.trackingAccuracy = GlobalVariables::GetInstance()->GetValue<float>("TrackingData", "TrackingAccuracy");
+	}
+	else {
+		accuracy.forceDamping = bullet_->GetTrackingData().damping / 5.0f;
+		accuracy.propulsionDamping = bullet_->GetTrackingData().damping;
+		accuracy.smoothFactor = 0.25f;
+		accuracy.trackingAccuracy = GlobalVariables::GetInstance()->GetValue<float>("TrackingData", "TrackingAccuracy");
+	}
 
 	// 速度
 	float speed = bullet_->GetTrackingData().baseSpeed;

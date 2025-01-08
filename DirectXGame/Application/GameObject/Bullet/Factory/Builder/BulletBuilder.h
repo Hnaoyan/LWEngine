@@ -57,7 +57,14 @@ public: // 設定
 		transitionType_ = type;
 		return *this;
 	}
-
+	BulletBuilder& SetAccuracyType(int32_t type) {
+		accuracyType_ = type;
+		return *this;
+	}
+	BulletBuilder& SetAccelFrame(float frame) {
+		data_.accelFrame = frame;
+		return *this;
+	}
 	//// 直進の時間設定
 	//BulletBuilder& SetStraightFrame(const float& frame) {
 	//	straightRandomer_ = frame; 
@@ -97,5 +104,8 @@ private:
 	float straightFrame_ = 0.0f;
 	// 種類
 	int32_t transitionType_ = 0;
-
+	// 命中タイプ
+	int32_t accuracyType_ = 0;
+	// 追従でーた
+	TrackingData data_;
 };
