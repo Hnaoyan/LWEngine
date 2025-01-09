@@ -132,5 +132,5 @@ void BossSystemContext::BarrierManager::BarrierBreakExcept()
 	param.isActive = false;	// バリアのアクティブ状態
 	param.isShattered = false;	// 割れたフラグ
 	//animParam.vanishTimer.Start(60.0f);
-	recoveryTime_.Start(600.0f);	// 修復タイマー
+	recoveryTime_.Start(750.0f);	// 修復タイマー
 }
