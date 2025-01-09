@@ -56,6 +56,11 @@ public:
 		Mapping();
 	}
 
+	void Release() {
+		cBuffer->Release();
+		cMap_ = nullptr;
+	}
+
 private:
 	/// <summary>
 	/// マッピング

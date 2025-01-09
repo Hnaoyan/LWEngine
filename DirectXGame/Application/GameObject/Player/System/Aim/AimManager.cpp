@@ -16,7 +16,7 @@ void PlayerContext::AimManager::Initialize(Player* player)
 	// 初期化
 	offSetTransform_.Initialize();
 	// 親の設定
-	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
+	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->GetCamera()->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.parentMatrix_ = &parentMatrix_;
 	Vector3 offset = { 0.0f,0.0f,50.0f };
 	offSetTransform_.transform_.translate = offset;
@@ -26,12 +26,12 @@ void PlayerContext::AimManager::Initialize(Player* player)
 
 void PlayerContext::AimManager::Update(ICamera* camera)
 {
-	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->camera_->transform_.rotate, player_->worldTransform_.transform_.translate);
+	parentMatrix_ = Matrix4x4::MakeAffineMatrix(player_->worldTransform_.transform_.scale, player_->GetCamera()->transform_.rotate, player_->worldTransform_.transform_.translate);
 	offSetTransform_.UpdateMatrix();
 	// ターゲットがいる場合ターゲットにAIM
-	if (player_->GetOperation()->GetLockOn()->ExistTarget()) {
-		screenPosition_ = LwLib::WorldToScreen(player_->GetOperation()->GetLockOn()->GetTarget()->worldTransform_.GetWorldPosition(), camera);
-		targetPosition_ = player_->GetOperation()->GetLockOn()->GetTarget()->worldTransform_.GetWorldPosition();
+	if (player_->GetWeaponManager()->GetLockOn()->ExistTarget()) {
+		screenPosition_ = LwLib::WorldToScreen(player_->GetWeaponManager()->GetLockOn()->GetTarget()->worldTransform_.GetWorldPosition(), camera);
+		targetPosition_ = player_->GetWeaponManager()->GetLockOn()->GetTarget()->worldTransform_.GetWorldPosition();
 	}
 	// ターゲットがいない場合オフセットに
 	else {

@@ -18,9 +18,6 @@ namespace BossState
 			kPhase5,
 			kPhase6,
 			kPhase7,
-			kPhase8,
-			kPhase9,
-			kPhase10,
 			kEndPhase,
 		};
 	public:

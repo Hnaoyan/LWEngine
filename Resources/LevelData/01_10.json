@@ -51,7 +51,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    500.0,
+                    400.0,
                     0.0
                 ],
                 "rotation": [
@@ -72,7 +72,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    -500.0,
+                    -400.0,
                     0.0
                 ],
                 "rotation": [
@@ -92,7 +92,7 @@
             "name": "立方体.003",
             "transform": {
                 "translation": [
-                    -500.0,
+                    -400.0,
                     0.0,
                     0.0
                 ],
@@ -113,7 +113,7 @@
             "name": "立方体.004",
             "transform": {
                 "translation": [
-                    500.0,
+                    400.0,
                     0.0,
                     0.0
                 ],

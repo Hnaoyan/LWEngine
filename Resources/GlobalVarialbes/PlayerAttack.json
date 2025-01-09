@@ -1,0 +1,6 @@
+{
+    "PlayerAttack": {
+        "DefaultSpeed": 300.0,
+        "NotLockSpeed": 400.0
+    }
+}

@@ -12,7 +12,7 @@ void BoostState::Initialize()
 	InputHandle();
 	// 方向設定
 	Vector3 direct{};
-	float playerYaw = player_->camera_->transform_.rotate.y;
+	float playerYaw = player_->GetCamera()->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ leftStick_.x,0,leftStick_.y }, rotateY);
 	direct = rotateVector;
@@ -37,8 +37,8 @@ void BoostState::Update()
 	// 速度の計算
 	dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, changeTimer_.GetElapsedFrame());
 	dashVelocity_.z = LwLib::Lerp(dashVelocity_.z, 0, changeTimer_.GetElapsedFrame());
-	player_->velocity_.x += dashVelocity_.x * GameSystem::GameSpeedFactor();
-	player_->velocity_.z += dashVelocity_.z * GameSystem::GameSpeedFactor();
+	player_->acceleration_.x = dashVelocity_.x * GameSystem::GameSpeedFactor();
+	player_->acceleration_.z = dashVelocity_.z * GameSystem::GameSpeedFactor();
 
 	if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {
 		if (leftStick_.x != 0 || leftStick_.y != 0) {
@@ -53,6 +53,11 @@ void BoostState::Update()
 
 void BoostState::Exit()
 {
+	PostEffectManager::sDashEffect.Finalize();
+
+	player_->acceleration_ = {};
+	player_->velocity_ = {};
+
 	player_->GetSystemFacede()->GetAnimation()->Reset();
 	player_->GetOperation()->SetCooltime(GlobalVariables::GetInstance()->GetValue<float>("Player", "DashCooltime"));
 }

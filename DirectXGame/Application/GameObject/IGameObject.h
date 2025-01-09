@@ -2,6 +2,7 @@
 #include "../../Engine/3D/Drawer/Model.h"
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "../Collision/ColliderFilter.h"
+#include "Common/RoundShadow.h"
 
 class CollisionManager;
 
@@ -25,6 +26,9 @@ public:
 public:
 	// 共通のシリアル
 	static int32_t sSerialNumber;
+	// デストラクタ
+	virtual ~IGameObject() = default;
+
 protected:
 	// 個体のシリアル
 	int32_t commonSerialNumber_ = 0u;
@@ -58,12 +62,14 @@ public:
 	/// </summary>
 	/// <param name="target"></param>
 	/// <param name="tag"></param>
-	virtual void OnCollision(ColliderObject target) = 0;
+	virtual void OnCollision([[maybe_unused]] ColliderObject target) {};
 	/// <summary>
 	/// コライダーをマネージャに設定する関数
 	/// </summary>
 	/// <param name="collisionManager"></param>
-	virtual void SetCollier(CollisionManager* collisionManager) = 0;
+	virtual void SetCollier([[maybe_unused]] CollisionManager* collisionManager) {};
+
+	virtual void UIDraw() {};
 protected:
 	/// <summary>
 	/// グローバル変数の初期化
@@ -77,15 +83,23 @@ protected:
 public: // アクセッサ
 	bool IsDead() const{ return isDead_; }
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
+	Vector3 GetVelocity() const { return velocity_; }
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 
 protected:
 	// モデル
 	Model* model_ = nullptr;
+	// 丸影
+	std::unique_ptr<RoundShadow> roundShadow_;
 
 public:
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	// 前フレームの位置
 	Vector3 prevPosition_ = {};
+	// 速度ベクトル
+	Vector3 velocity_ = {};
+	// 加速度ベクトル
+	Vector3 acceleration_ = {};
 
 };

@@ -12,6 +12,8 @@ void TrailMaterial::CreateMaterial()
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
+
+	discardThreshold_ = 0.01f;
 	// リソース作成
 	// デバイス
 	ID3D12Device* device = DirectXCommon::GetInstance()->GetDevice();
@@ -25,4 +27,5 @@ void TrailMaterial::Update()
 	// データの転送
 	buffer_.cMap_->color = color_;
 	buffer_.cMap_->uvTransform = Matrix4x4::MakeUvTransformMatirx(uvTransform_.scale, uvTransform_.rotate, uvTransform_.translate);
+	buffer_.cMap_->discardThreshold_ = discardThreshold_;
 }

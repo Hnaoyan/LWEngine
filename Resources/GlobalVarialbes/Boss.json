@@ -5,7 +5,7 @@
             1.0,
             1.0
         ],
-        "BarrierHP": 20.0,
+        "BarrierHP": 15.0,
         "BarrierReappearFrame": 30.0,
         "BarrierScale": [
             18.0,
@@ -13,15 +13,18 @@
             18.0
         ],
         "BarrierVanishFrame": 45.0,
+        "MaxYPoint": 30.0,
+        "MinYPoint": 20.0,
         "NormalScale": [
-            6.0,
-            6.0,
-            6.0
+            7.0,
+            7.0,
+            7.0
         ],
         "ResPosition": [
             0.0,
             8.5,
-            50.0
-        ]
+            150.0
+        ],
+        "ScaleRate": 2.0
     }
 }

@@ -10,7 +10,7 @@ void FallingState::Initialize()
 void FallingState::Update()
 {
 	// ステート変更
-	if (player_->isGround_) {
+	if (player_->IsGround()) {
 		stateMachine_->ChangeRequest(PlayerStateLists::kIdleVertical);
 		return;
 	}
@@ -31,8 +31,8 @@ void FallingState::InputHandle()
 	//	player_->VerticalState()->ChangeRequest(PlayerStateLists::kAssending);
 	//}
 
-	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->isDoubleJump_) {
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->IsDoubleJump()) {
 		player_->VerticalState()->ChangeRequest(PlayerStateLists::kJump);
-		player_->isDoubleJump_ = true;
+		player_->SetIsDoubleJump(true);
 	}
 }

@@ -12,6 +12,7 @@ enum class GameSceneState
 {
 	kWait,
 	kGameRestart,	// 再スタート
+	kGameTutorial, // チュートリアル
 	kGamePlay,	// スタート
 	kReplay,	// リプレイ
 	kRecord,	// 保存
@@ -66,12 +67,12 @@ struct DashBlur
 {
 	// ブラーの詳細情報
 	CBufferDataBlur data{};
-	float maxWidth = 0.2f;
+	float maxWidth = 0.15f;
 	FrameTimer timer;
 	// 初期化
 	void Initialize() {
 		data.blurWidth = maxWidth;
-		timer.Start(35.0f);
+		timer.Start(45.0f);
 	}
 	void Update() {
 		timer.Update();

@@ -4,6 +4,15 @@
 #include <cassert>
 #include <imgui.h>
 
+float BulletManager::sTrackingRefreshFrame = 15.0f;
+float BulletManager::sTrackingMaxCentripetal = 2.0f;
+float BulletManager::sSmoothFactor = 0.1f;
+float BulletManager::sMaxCentripetalForce = 500.0f;
+float BulletManager::sForceDamping = 0.1f;
+float BulletManager::sSpeedLimitOffset = 150.0f;
+float BulletManager::sSpeed = 1.0f;
+int32_t BulletManager::sTrackingProcessType = 0;
+
 void BulletManager::Initialize(Model* model)
 {
 	//models_ = models;
@@ -14,21 +23,6 @@ void BulletManager::Initialize(Model* model)
 
 	trailManager_ = std::make_unique<TrailManager>();
 	trailManager_->SetGPUParticle(gpuParticle_);
-
-	AddCluster("Player:NormalBullet");
-	AddCluster("Player:TrackingBullet");
-	AddCluster("Player:TInferior");
-	AddCluster("Player:TSuperior");
-	AddCluster("Player:TGenius");
-	AddCluster("Player:DivisionBullet");
-	AddCluster("Player:ContainerBullet");
-
-	AddCluster("Boss:TrackingBullet");	// 追従弾
-	AddCluster("Boss:Inferior");	// 劣等弾
-	AddCluster("Boss:Superior");	// 優等弾
-	AddCluster("Boss:Genius");		// 秀才弾
-	AddCluster("Boss:NormalBullet");	// 通常弾
-	AddCluster("Boss:ContainerBullet");	// コンテナ弾
 }
 
 void BulletManager::Update()
@@ -62,6 +56,16 @@ void BulletManager::CollisionUpdate(CollisionManager* manager)
 
 void BulletManager::ImGuiDraw()
 {
+	ImGui::SeparatorText("TrackingTestData");
+	ImGui::DragFloat("sRefreshrate", &sTrackingRefreshFrame, 0.01f);
+	ImGui::DragFloat("sMaxCentripetal", &sTrackingMaxCentripetal, 0.01f);
+	ImGui::DragFloat("sSmoothFactor", &sSmoothFactor, 0.01f);
+	ImGui::DragFloat("sMaxCentripetalForce", &sMaxCentripetalForce, 0.1f);
+	ImGui::DragFloat("sForceDamping", &sForceDamping, 0.01f);
+	ImGui::DragFloat("sSpeedLimitOffset", &sSpeedLimitOffset, 0.01f);
+	ImGui::InputInt("sTrackingProcessType", &sTrackingProcessType, 1);
+	ImGui::DragFloat("sSpeed", &sSpeed, 0.1f);
+	ImGui::Text("");
 	// 描画チェック
 	if (ImGui::TreeNode("DrawFlags")) {
 		bool isCheck = isDrawCheck_[uint32_t(TrackingAttribute::kGenius)];
@@ -100,35 +104,40 @@ void BulletManager::AddCluster(const std::string& tag)
 	if (position != std::string::npos) {
 		std::string zokusei = tag.substr(0, position);
 		// グローバル変数用のポインタ
-		GlobalVariables* globalValue = GlobalVariables::GetInstance();	
+		GlobalVariables* globalValue = GlobalVariables::GetInstance();
+		IBulletCluster* cluster = dynamic_cast<IBulletCluster*>(instance.get());
+		if (!cluster) {
+			return;
+		}
 		if ("Player" == zokusei) {
-			static_cast<IBulletCluster*>(instance.get())->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+			cluster->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 		}
 		else if ("Boss" == zokusei) {
 			std::string colorName = tag.substr(position + 1);
 			// 劣等
 			if (colorName == "Inferior") {
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet","InferiorColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "InferiorTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet","InferiorColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "InferiorTrailColor"));
 			}
 			// 優等
 			else if (colorName == "Superior") {
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet", "SuperirorColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "SuperirorTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet", "SuperirorColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "SuperirorTrailColor"));
 			}
 			// 秀才
 			else if (colorName == "Genius") {
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet", "GeniusColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "GeniusTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet", "GeniusColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "GeniusTrailColor"));
 			}
 			// コンテナ
 			else if (colorName == "ContainerBullet"){
-				static_cast<IBulletCluster*>(instance.get())->SetColor(globalValue->GetValue<Vector4>("Bullet", "ContainerColor"));
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "ContainerTrailColor"));
+				cluster->SetColor(globalValue->GetValue<Vector4>("Bullet", "ContainerColor"));
+				cluster->SetTrailColor(globalValue->GetValue<Vector3>("Bullet", "ContainerTrailColor"));
 			}
+			// 通常弾
 			else {
-				static_cast<IBulletCluster*>(instance.get())->SetColor({ 0.0f,0.0f,0.0f,1.0f });
-				static_cast<IBulletCluster*>(instance.get())->SetTrailColor({ 0.2f,0.2f,0.2f });
+				cluster->SetColor({ 1.0f,0.3f,0.0f,1.0f });
+				cluster->SetTrailColor({ 0.8f,0.2f,0.0f });
 			}
 		}
 	}

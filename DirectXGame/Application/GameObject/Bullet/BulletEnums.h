@@ -25,20 +25,53 @@ enum class TrackingState : uint32_t
 	kStraight,	// 直進
 	kWave,		// 波
 	kTracking,	// 追従
+	kTurnToTarget,	// 急旋回
 };
 
+// 追従の速度段階
+enum class TrackingStep : uint32_t
+{
+	kSlow,
+	kUpSpeed,
+};
+
+// 命中関係の値
+struct AccuracyData
+{
+	float trackingAccuracy;	// 追従命中率の割合
+	float propulsionDamping; // 推進力減衰率
+	float forceDamping;	// 力に対しての減衰率
+	float smoothFactor;	// 平滑化のずらし率
+
+	float ratio;	// 全体を決める確率の割合
+};
+
+// 追従データ
 struct TrackingData
 {
+	// 追従処理のパラメータ
 	float trackFrame;	// 追従フレーム
 	float damping;	// 減衰率
 	float lerpRadius;	// 広がる半径
 	float baseSpeed;	// 基本速度
 	float initSpeed;	// 初速度
+	float accelFrame;	// 加速する時間
 
 	//---ステート関係---//
+	// 追従ステート
 	float straightFrame;	// 直進の時間
-	float waveFrame;		// 波軌道の時間
 	float trackingFrame;	// 追従している時間
+	// 命中関係
+	AccuracyData accuracy;
+	// 波ステート
+	float waveFrame;		// 波軌道の時間
+
+	// 急旋回ステート
+	float turnFrame;	// 旋回時間
+
+	//---遷移種類---//
+	int32_t transitionType = 0;	// 切り替わりの種類
+	int32_t accuracyType = 0;	//0:命中,1:ちょい外れる,2:結構外れる
 
 	/// <summary>
 	/// 読み込み関数
@@ -57,3 +90,4 @@ struct TrackingData
 		
 	}
 };
+

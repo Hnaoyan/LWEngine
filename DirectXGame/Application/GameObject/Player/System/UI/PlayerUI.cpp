@@ -8,12 +8,10 @@
 
 void PlayerContext::PlayerUIManager::Initialize(Player* player)
 {
-	player_ = player;
-
+	assert(player);
+	// 基底
+	ISystem::Initialize(player);
 	reticle_ = SpriteManager::GetSprite("CrossHair");
-
-	globalVariables_ = GlobalVariables::GetInstance();
-
 	// HP系
 	std::string groupName = "PlayerUI";
 	hpUI_.position = globalVariables_->GetValue<Vector2>(groupName, "HPPosition");
@@ -61,13 +59,17 @@ void PlayerContext::PlayerUIManager::Initialize(Player* player)
 	justDodgeUI_.material->shininess_ = 100.0f;
 	justDodgeUI_.texture = TextureManager::Load("Resources/default/white2x2.png");
 	justDodgeUI_.worldTransform.Initialize();
-	justDodgeUI_.offset = { 0.0f,3.0f,0.0f };
+	justDodgeUI_.offset = { 0.0f,5.0f,0.0f };
 	justDodgeUI_.maxScale = { 2.0f,0.2f,1.0f };
+}
+
+void PlayerContext::PlayerUIManager::Update()
+{
 }
 
 void PlayerContext::PlayerUIManager::Draw()
 {
-	reticle_->SetPosition(player_->GetOperation()->GetAimManager()->GetReticlePosition());
+	reticle_->SetPosition(player_->GetWeaponManager()->GetAimManager()->GetReticlePosition());
 	reticle_->Draw();
 
 	HPUI();

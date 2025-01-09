@@ -4,8 +4,6 @@
 #include "Engine/GlobalVariables/GlobalVariables.h"
 #include <algorithm>
 
-uint32_t BossState::MissileAttackState::sMissileClusterSerial = 0;
-
 void BossState::MissileAttackState::Initialize()
 {
 	GlobalVariables* global = GlobalVariables::GetInstance();
@@ -16,10 +14,9 @@ void BossState::MissileAttackState::Initialize()
 
 	// アクション前の待機タイマー
 	preActionTimer_.Start(60.0f);
-	// クラスター
-	//cluster_ = boss_->GetBulletManager()->GetMissileCluster();
-	clusterSerial = sMissileClusterSerial;
-	sMissileClusterSerial++;
+
+	// 
+	IState::Initialize();
 }
 
 void BossState::MissileAttackState::Update()
@@ -66,7 +63,7 @@ void BossState::MissileAttackState::MissileAttack()
 	Matrix4x4 rotateMatrix = Matrix4x4::MakeRotateYMatrix(boss_->worldTransform_.transform_.rotate.y);
 	rotateMatrix = Matrix4x4::MakeRotateXYZMatrix(boss_->worldTransform_.transform_.rotate);
 	
-	const int maxSize = 10;
+	const int maxSize = 5;
 	std::vector<Vector3> rightSide;
 	std::vector<Vector3> leftSide;
 	rightSide.resize(maxSize);
@@ -129,55 +126,6 @@ void BossState::MissileAttackState::MissileAttack()
 		direct = LwLib::Slerp(leftSide[4], Vector3::Forward(), t);
 		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
 		GenerateMissile(direct, TrackingAttribute::kGenius);
-
-		//---劣等---//
-		// 右
-		direct = LwLib::Slerp(rightSide[5], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-		// 左
-		direct = LwLib::Slerp(leftSide[5], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-		// 右
-		direct = LwLib::Slerp(rightSide[6], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-		// 左
-		direct = LwLib::Slerp(leftSide[6], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kInferior);
-
-		//---優等---//
-		// 右
-		direct = LwLib::Slerp(rightSide[7], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-		// 左
-		direct = LwLib::Slerp(leftSide[7], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-
-
-
-		//---優等---//
-		// 右
-		direct = LwLib::Slerp(rightSide[8], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-		// 左
-		direct = LwLib::Slerp(leftSide[8], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kSuperior);
-		//---秀才---//
-		// 右
-		direct = LwLib::Slerp(rightSide[9], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kGenius);
-		// 左
-		direct = LwLib::Slerp(leftSide[9], Vector3::Forward(), t);
-		direct = Matrix4x4::TransformVector3(direct, rotateMatrix);
-		GenerateMissile(direct, TrackingAttribute::kGenius);
 	}
 }
 
@@ -201,6 +149,11 @@ void BossState::MissileAttackState::GenerateMissile(const Matrix4x4& rotateMatri
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
 	
+	// 直進の時間
+	float straightTime = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame");
+	straightTime = LwLib::GetRandomValue(straightTime, straightTime + 60.0f);
+	builder.SetStraightFrame(straightTime);
+
 	switch (type)
 	{
 	case TrackingAttribute::kSuperior:
@@ -225,7 +178,11 @@ void BossState::MissileAttackState::GenerateMissile(const Vector3& direct, Track
 
 	BulletBuilder builder;
 	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(type);
-
+	//float minFrame = GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame");
+	float minFrame = 0;
+	float maxFrame = minFrame + 200.0f;
+	builder.SetStraightFrame(LwLib::GetRandomValue(minFrame, maxFrame));
+	
 	switch (type)
 	{
 	case TrackingAttribute::kSuperior:

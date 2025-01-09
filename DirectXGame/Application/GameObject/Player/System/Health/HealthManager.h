@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "Engine/LwLib/LwEnginePaths.h"
 #include "Engine/Math/MathLib.h"
+#include "../IPlayerSystem.h"
 
 class Player;
 
@@ -10,7 +11,7 @@ namespace PlayerContext
 	/// <summary>
 	/// 体力のマネージャ
 	/// </summary>
-	class HealthManager
+	class HealthManager : public ISystem
 	{
 	public:
 		/// <summary>
@@ -18,11 +19,11 @@ namespace PlayerContext
 		/// </summary>
 		/// <param name="player"></param>
 		/// <param name="maxHP"></param>
-		void Initialize(Player* player, uint32_t maxHP);
+		void Initialize(Player* player) override;
 		/// <summary>
 		/// 更新処理
 		/// </summary>
-		void Update();
+		void Update() override;
 		/// <summary>
 		/// ダメージ処理
 		/// </summary>
@@ -33,6 +34,7 @@ namespace PlayerContext
 		/// </summary>
 		void ImGuiDraw();
 
+		void Setup(uint32_t maxHP);
 	public: // アクセッサ
 		bool IsInvisible() { return invisibleEffect_.activeTimer.IsActive(); }
 		bool EndInvisible() { return invisibleEffect_.activeTimer.IsEnd(); }
@@ -64,8 +66,6 @@ namespace PlayerContext
 		HealthData hitPoint_;
 		// 無敵表現
 		InvisibleEffect invisibleEffect_;
-
-		Player* player_ = nullptr;
 
 	};
 

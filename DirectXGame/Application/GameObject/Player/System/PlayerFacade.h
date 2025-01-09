@@ -1,7 +1,13 @@
 #pragma once
 #include "PlayerSystemLists.h"
+#include <unordered_map>
+#include <string>
+#include <memory>
 
 class Player;
+namespace PlayerContext {};
+
+using namespace PlayerContext;
 
 /// <summary>
 /// プレイヤーのシステム管理
@@ -9,6 +15,7 @@ class Player;
 class PlayerFacade
 {
 public:
+	PlayerFacade();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -22,38 +29,43 @@ public:
 public: // アクセッサ
 #pragma region アクセッサ
 	// Hp関係
-	PlayerContext::HealthManager* GetHealth() { return &healthManager_; }
+	HealthManager* GetHealth() 
+	{ 
+		return dynamic_cast<HealthManager*>(managers_.find("Health")->second.get());
+	}
 	// パーティクル
-	PlayerContext::ParticleManager* GetParticleManager() { return &particleManager_; }
+	ParticleManager* GetParticleManager() {
+		return dynamic_cast<ParticleManager*>(managers_.find("Particle")->second.get());
+	}
 	// エネルギー
-	PlayerContext::EnergyManager* GetEnergy() { return &energyManager_; }
+	EnergyManager* GetEnergy()
+	{
+		return dynamic_cast<EnergyManager*>(managers_.find("Energy")->second.get());
+	}
 	// UI
-	PlayerContext::PlayerUIManager* GetUI() { return &uiManager_; }
-	// Animation
-	PlayerContext::AnimationManager* GetAnimation() { return &animationManager_; }
-	PlayerContext::ShootingManager* GetShootingManager() { return &shootingManager_; }
+	PlayerUIManager* GetUI() 
+	{
+		return dynamic_cast<PlayerUIManager*>(managers_.find("UI")->second.get());
+	}
 
+	// Animation
+	AnimationManager* GetAnimation()
+	{ 
+		return dynamic_cast<AnimationManager*>(managers_.find("Animation")->second.get());
+	}
+	ShootingManager* GetShootingManager() 
+	{
+		return dynamic_cast<ShootingManager*>(managers_.find("Shooting")->second.get());
+	}
 	// 回避用
-	PlayerContext::JustDodgeManager* GetDudgeManager() { return &justDodgeManager_; }
+	JustDodgeManager* GetDudgeManager()
+	{ 
+		return dynamic_cast<JustDodgeManager*>(managers_.find("JustDodge")->second.get());
+	}
 #pragma endregion
 
 private:
-	// Hp関係
-	PlayerContext::HealthManager healthManager_;
-	// パーティクル
-	PlayerContext::ParticleManager particleManager_;
-	// エネルギー
-	PlayerContext::EnergyManager energyManager_;
-	// UI
-	PlayerContext::PlayerUIManager uiManager_;
-	// Animation
-	PlayerContext::AnimationManager animationManager_;
-	// 射撃関係のマネージャー
-	PlayerContext::ShootingManager shootingManager_;
-	// ジャスト回避などの無敵処理関係
-	PlayerContext::JustDodgeManager justDodgeManager_;
-	//// Aim
-	//PlayerContext::AimManager aimManager_;
-	//// LockOn
-	//PlayerContext::LockOn lockOn_;
+	// システムのリスト
+	std::unordered_map<std::string, std::unique_ptr<ISystem>> managers_;
+	
 };

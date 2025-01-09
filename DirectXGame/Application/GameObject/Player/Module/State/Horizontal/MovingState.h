@@ -14,6 +14,6 @@ public: // 継承部
 	void InputHandle() override;
 
 private:
-
+	float activeFrame_ = 0.0f;
 
 };

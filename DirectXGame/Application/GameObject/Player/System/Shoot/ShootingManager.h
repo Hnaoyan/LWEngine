@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Math/Vector/Vector3.h"
 #include "Application/GameObject/Bullet/BulletEnums.h"
+#include "../IPlayerSystem.h"
 
 class Player;
 class BulletManager;
@@ -17,13 +18,13 @@ namespace PlayerContext
 		kSpread,
 	};
 
-	class ShootingManager
+	class ShootingManager : public ISystem
 	{
 	public:
 		// 初期化
-		void Initialize(Player* player);
+		void Initialize(Player* player) override;
 		// 更新
-		void Update();
+		void Update() override;
 		// 通常射撃
 		void OnFire(const Vector3& direct);
 		// 誘導射撃
@@ -42,7 +43,6 @@ namespace PlayerContext
 		// 射撃の変化
 		bool isChangeAttack_ = false;
 	private:
-		Player* player_ = nullptr;
 		BulletManager* bulletManager_ = nullptr;
 	};
 

@@ -3,7 +3,7 @@
 
 void PlayerContext::ShootingManager::Initialize(Player* player)
 {
-	player_ = player;
+	ISystem::Initialize(player);
 
 }
 
@@ -15,22 +15,34 @@ void PlayerContext::ShootingManager::Update()
 void PlayerContext::ShootingManager::OnFire(const Vector3& direct)
 {
 	EulerTransform transform{};
+	// サイズ設定
 	transform.scale = { 1.0f,1.0f,1.0f };
-	transform.scale *= 0.5f;
-	transform.translate = player_->worldTransform_.GetWorldPosition();
-	float speed = 300.0f;
+	// 位置
+	transform.translate = player_->GetWeaponManager()->weapon_->worldTransform_.GetWorldPosition();
+	float speed = globalVariables_->GetValue<float>("PlayerAttack", "DefaultSpeed");
 	std::unique_ptr<IBullet> bullet = std::make_unique<IBullet>();
 	bullet->Initialize();
-	bullet->SetVelocity(direct * speed);
 	bullet->transform_ = transform;
 	bullet->GetCollider()->SetAttribute(kCollisionAttributeBullet);
+	// 対象がいるか
+	if (!player_->GetWeaponManager()->GetLockOn()->ExistTarget()) {
+		speed = globalVariables_->GetValue<float>("PlayerAttack", "NotLockSpeed");
+	}
 	// ダメージの違い
 	if (isChangeAttack_) {
 		isChangeAttack_ = false;
 		bullet->SetDamageRatio(5.0f);
+		// 弾のスケール
+		bullet->transform_.scale *= 1.5f;
 		// コンボのリセット
 		player_->GetSystemFacede()->GetDudgeManager()->ComboReset();
 	}
+	else {
+		// 弾のスケール
+		bullet->transform_.scale *= 0.75f;
+	}
+
+	bullet->SetVelocity(direct * speed);
 
 	bulletManager_->FindCluster("Player:NormalBullet")->AddBullet(std::move(bullet));
 }

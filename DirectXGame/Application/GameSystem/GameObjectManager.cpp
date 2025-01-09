@@ -12,75 +12,71 @@ GameObjectManager::GameObjectManager(GameSystem* system)
 	assert(system);
 	gameSystem_ = system;
 	// ゲームオブジェクト
-	player_ = std::make_unique<Player>();
-	boss_ = std::make_unique<Boss>();
 	bulletManager_ = std::make_unique<BulletManager>();
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
 	terrainManager_ = std::make_unique<TerrainManager>();
+
+	particleUnit_ = std::make_unique<TestParticle>();
 }
 
 void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
 {
 	// チェック
 	assert(gpuManager);
+	gameObjects_.clear();	// オブジェクトリセット
 	gpuManager_ = gpuManager;
+	camera_ = camera;
 
 	skyDome_->Initialize(ModelManager::GetModel("SkyDome"));
+
 	// 弾
-	bulletManager_->SetPlayer(player_.get());
-	bulletManager_->SetBoss(boss_.get());
 	bulletManager_->SetGPUParticle(gpuManager_);
-	bulletManager_->Initialize(ModelManager::GetModel("DefaultCube"));
-
-	// プレイヤー
-	player_->PreInitialize(camera, gpuManager_);
-	player_->Initialize(ModelManager::GetModel("Player"));
-	player_->PointerInitialize(bulletManager_.get(), boss_.get(), nullptr);
-
-	// ボス
-	boss_->SetGPUParticle(gpuManager_);
-	boss_->Initialize(ModelManager::GetModel("BossEnemy"));
-	boss_->SetPlayer(player_.get());
-	boss_->SetBulletManager(bulletManager_.get());
-	boss_->SetCamera(camera);
+	bulletManager_->Initialize(ModelManager::GetModel("BulletCube"));
 
 	// 地形
 	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
-	isSceneChange_ = false;
-	isChangeInput_ = false;
-	isInGame_ = true;
+	// パーティクル
+	particleUnit_->Initialie(ModelManager::GetModel("TestPlane"));
+	// フラグの初期化
+	FlagReset();
 }
 
-void GameObjectManager::Update()
+void GameObjectManager::Update(GameSceneState state)
 {
 	// ゲームの判断
 #ifdef RELEASE
 	float waitFrame = 120.0f;
 	if (gameSystem_->IsReplayMode()) {
-		if ((player_->IsDead() || boss_->IsDead()) && isInGame_) {
+		if ((gameObjects_["Player"]->IsDead() || gameObjects_["Boss"]->IsDead()) && isInGame_) {
 			isInGame_ = false;
 			waitingTimer_.Start(waitFrame);
 		}
 	}
 	else {
-		// クリアしたタイミングの処理
-		if (player_->IsDead() && isInGame_) {
-			isInGame_ = false;
-			waitingTimer_.Start(waitFrame);
-			gameOverTimer_.Start(waitFrame);
-		}
-		if (boss_->IsDead() && isInGame_) {
-			isInGame_ = false;
-			waitingTimer_.Start(waitFrame);
-			gameClearTimer_.Start(waitFrame);
+		if (state != GameSceneState::kGameTutorial) {
+			// クリアしたタイミングの処理
+			if (gameObjects_["Player"]->IsDead() && isInGame_) {
+				//isInGame_ = false;
+				if (!waitingTimer_.IsActive()) {
+					waitingTimer_.Start(waitFrame);
+					isGameEnd_ = true;
+					isClear_ = false;
+				}
+			}
+			if (gameObjects_["Boss"]->IsDead() && isInGame_) {
+				//isInGame_ = false;
+				if (!waitingTimer_.IsActive()) {
+					waitingTimer_.Start(waitFrame);
+					isGameEnd_ = true;
+					isClear_ = true;
+				}
+			}
 		}
 	}
 
 	// UIが出ている時間
-	gameClearTimer_.Update();
-	gameOverTimer_.Update();
 	waitingTimer_.Update();
 
 	// ゲーム終了のタイミング
@@ -91,6 +87,7 @@ void GameObjectManager::Update()
 		else {
 			isChangeInput_ = true;
 		}
+		isInGame_ = false;
 	}
 	
 	// タイトルかリプレイかを選択できるように
@@ -110,19 +107,19 @@ void GameObjectManager::Update()
 		}
 	}
 
-#endif // RELEASE
-	//if (!gameSystem_->IsReplayMode()) {
-	//	if (PostEffectManager::sGameVigenette.timer.IsEnd()) {
-	//		isGame = true;
-	//		gameSystem_->GetReplayManager()->RecordSetUp();
-	//	}
-	//	if (!isGame) {
-	//		return;
-	//	}
-	//}
+	if (gameSystem_->GetReplayManager()->IsReplayEnd()) {
+		isSceneChange_ = true;
+	}
 
+#endif // RELEASE
+	state;
 	// オブジェクトの更新
 	UpdateObject();
+
+	if (this->GetPlayer()) {
+		particleUnit_->SetParent(GetPlayer()->GetWorldTransform());
+	}
+	particleUnit_->Update();
 }
 
 void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
@@ -137,31 +134,43 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	skyDome_->Draw(drawDesc);
 	// 地形
 	terrainManager_->Draw(drawDesc);
+	// パーティクル
+	particleUnit_->Draw(drawDesc);
 	// 弾
 	bulletManager_->Draw(drawDesc);
-	// ボス
-	if (boss_) {
-		boss_->Draw(drawDesc);
+	// 描画
+	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it).second->Draw(drawDesc);
 	}
-	// プレイヤー
-	player_->Draw(drawDesc);
+
 }
 
 void GameObjectManager::UIDraw()
 {
 	// それぞれのUI
 	if (!gameSystem_->GetReplayManager()->IsReplayNow()) {
-		player_->UISpriteDraw();
-	}
-
-	if (boss_) {
-		boss_->UIDraw();
+		// UI描画
+		for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+			(*it).second->UIDraw();
+		}
 	}
 }
 
 void GameObjectManager::ImGuiDraw()
 {	
 	ImGui::Begin("GameObjectManager");
+	if (ImGui::TreeNode("Flags")) {
+		ImGui::Checkbox("SceneChange", &isSceneChange_);
+		ImGui::Checkbox("SceneReplay", &isSceneReplay_);
+		ImGui::Checkbox("ChangeInput", &isChangeInput_);
+		ImGui::Checkbox("InGame", &isInGame_);
+		ImGui::Checkbox("GameEnd", &isGameEnd_);
+		ImGui::Checkbox("Clear", &isClear_);
+		ImGui::TreePop();
+	}
+	if (ImGui::Button("Paticle")) {
+		particleUnit_->ActiveAception(300.0f);
+	}
 	if (ImGui::BeginTabBar("Object"))
 	{
 		if (ImGui::BeginTabItem("BulletManager")) {
@@ -180,12 +189,8 @@ void GameObjectManager::ImGuiDraw()
 	}
 
 	ImGui::End();
-
-	// 地形
-	// ゲームオブジェクト
-	player_->ImGuiDraw();
-	if (boss_) {
-		boss_->ImGuiDraw();
+	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it).second->ImGuiDraw();
 	}
 }
 
@@ -195,42 +200,103 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 	assert(collisionManager);
 
 	// 全ての衝突設定
-	if (player_) {
-		player_->SetCollier(collisionManager);
+	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+		(*it).second->SetCollier(collisionManager);
 	}
-	if (boss_) {
-		boss_->SetCollier(collisionManager);
-	}
+
 	bulletManager_->CollisionUpdate(collisionManager);
 	terrainManager_->CollisionUpdate(collisionManager);
 }
 
 void GameObjectManager::GameSetUp()
 {
+	// リストクリア
+	gameObjects_.clear();
 	// ポストエフェクト解除
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 	// 速度の初期化
 	gameSystem_->sSpeedFactor = 1.0f;
-	boss_->SetIsAction(true);
-	boss_->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+	// 
+	std::unique_ptr<Player> player = std::make_unique<Player>();
+	std::unique_ptr<Boss> boss = std::make_unique<Boss>();
+	bulletManager_->SetPlayer(player.get());
+	bulletManager_->SetBoss(boss.get());
+	// プレイヤー
+	player->PreInitialize(camera_, gpuManager_);
+	player->Initialize(ModelManager::GetModel("Player"));
+	player->PointerInitialize(bulletManager_.get(), boss.get(), nullptr);
+	// ボス
+	boss->SetGPUParticle(gpuManager_);
+	boss->Initialize(ModelManager::GetModel("BossEnemy"));
+	boss->SetPlayer(player.get());
+	boss->SetBulletManager(bulletManager_.get());
+	boss->SetCamera(camera_);
+	// リストに追加
+	gameObjects_.emplace("Boss", std::move(boss));
+	gameObjects_.emplace("Player", std::move(player));
+
+	// クラスターの処理
+	bulletManager_->ClusterClear();
+	bulletManager_->PlayerCluster();
+	bulletManager_->BossCluster();
+
+	// フラグの初期化
+	FlagReset();
+
+	// ボスのセットアップ
+	GetBoss()->SetIsAction(true);
+	GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
+}
+
+void GameObjectManager::TutorialSetUp()
+{
+	// リストクリア
+	gameObjects_.clear();
+	// ポストエフェクト解除
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
+	// 速度の初期化
+	gameSystem_->sSpeedFactor = 1.0f;
+	// 
+	std::unique_ptr<Player> player = std::make_unique<Player>();
+	bulletManager_->SetPlayer(player.get());
+	// プレイヤー
+	player->PreInitialize(camera_, gpuManager_);
+	player->Initialize(ModelManager::GetModel("Player"));
+	player->PointerInitialize(bulletManager_.get(), nullptr, nullptr);
+	gameObjects_.emplace("Player", std::move(player));
+
+	bulletManager_->ClusterClear();
+	bulletManager_->PlayerCluster();
+
+}
+
+void GameObjectManager::FlagReset()
+{
+	isSceneReplay_ = false;
+	isSceneChange_ = false;
+	isChangeInput_ = false;
+	isInGame_ = true;
+	isGameEnd_ = false;
+	isClear_ = false;
 }
 
 void GameObjectManager::UpdateObject()
 {
-	// 地形関係
+	// 天球
 	skyDome_->Update();
-	terrainManager_->Update();
+
+	// ゲームのオブジェクト
 	if (isInGame_) {
-		// オブジェクト
-		player_->Update();
-		if (boss_) {
-			boss_->Update();
+		// 更新
+		for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
+			if ((*it).second) {
+				(*it).second->Update();
+			}
 		}
 	}
-	// アニメーションの処理
-	if (boss_) {
-		boss_->AnimationUpdate();
-	}
+
+	// 地形
+	terrainManager_->Update();
 	// 弾
 	bulletManager_->Update();
 }

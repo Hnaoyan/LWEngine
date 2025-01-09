@@ -49,6 +49,22 @@ public: // 設定
 		parentAttribute_ = attribute;
 		return *this;
 	}
+	BulletBuilder& SetStraightFrame(float frame) {
+		straightFrame_ = frame;
+		return *this;
+	}
+	BulletBuilder& SetTransitionType(int32_t type) {
+		transitionType_ = type;
+		return *this;
+	}
+	BulletBuilder& SetAccuracyType(int32_t type) {
+		accuracyType_ = type;
+		return *this;
+	}
+	BulletBuilder& SetAccelFrame(float frame) {
+		data_.accelFrame = frame;
+		return *this;
+	}
 	//// 直進の時間設定
 	//BulletBuilder& SetStraightFrame(const float& frame) {
 	//	straightRandomer_ = frame; 
@@ -84,5 +100,12 @@ private:
 	IBulletCluster* cluster_ = nullptr;
 	// 親の属性（０なら敵・１ならプレイヤー
 	int32_t parentAttribute_ = 0u;
-
+	// 追従までの時間
+	float straightFrame_ = 0.0f;
+	// 種類
+	int32_t transitionType_ = 0;
+	// 命中タイプ
+	int32_t accuracyType_ = 0;
+	// 追従でーた
+	TrackingData data_;
 };

@@ -20,6 +20,7 @@ struct Material
     float32_t coefficient;
     float32_t3 dissolveColor;
     float32_t dissolveThreshold;
+    float32_t discardThreshold;
 };
 
 struct DirectionalLight

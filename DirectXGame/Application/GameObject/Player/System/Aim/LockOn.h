@@ -72,6 +72,8 @@ namespace PlayerContext {
 		void SetBoss(Boss* boss) { boss_ = boss; }
 		// ターゲットのポインタ
 		IGameObject* GetTarget() const { return target_; }
+		// 親（プレイヤー）のポインタ
+		Player* GetPlayer() const { return player_; }
 		// 対象があるかどうか
 		bool ExistTarget() const { return target_ ? true : false; }
 	private:

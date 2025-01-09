@@ -62,6 +62,18 @@ namespace LwLib
 #pragma endregion
 
 	/// <summary>
+	/// 最小と最大で0~1に正規化する関数
+	/// </summary>
+	/// <param name="nowValue"></param>
+	/// <param name="min"></param>
+	/// <param name="max"></param>
+	/// <returns></returns>
+	inline static float Normalize(const float& nowValue, const float& min, const float& max) {
+		float v = (nowValue - min) / (max - min);
+		return std::clamp(v, 0.0f, 1.0f);
+	}
+
+	/// <summary>
 	/// ワールドからスクリーン
 	/// </summary>
 	/// <param name="world"></param>
@@ -293,6 +305,19 @@ namespace LwLib
 		return Vector3(normalizeVector.x, newDirect.x, newDirect.y);
 	}
 #pragma endregion
+
+	/// <summary>
+	/// 親のオイラーYと新しいベクトルでYawを求める関数
+	/// </summary>
+	/// <param name="newDirect"></param>
+	/// <param name="yaw"></param>
+	/// <returns></returns>
+	inline static float ParentRotateY(const Vector3& newDirect, const float& yaw)
+	{
+		Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(yaw);
+		Vector3 rotateVector = Matrix4x4::TransformVector3({ newDirect.x,0.0f,newDirect.y }, rotateY);
+		return LwLib::CalculateYawFromVector(Vector3(rotateVector.x, 0.0f, rotateVector.z));
+	}
 
 	/// <summary>
 	/// 誘導用の加速度計算

@@ -54,5 +54,4 @@ void KeyConfigManager::Update(ReplayManager* replayManager)
 void KeyConfigManager::BeginReplay()
 {
     isReplay_ = true;
-    playFrame_ = 0;
 }

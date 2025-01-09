@@ -4,11 +4,12 @@
 #include "Engine/PostEffect/PostEffectRender.h"
 #include <imgui.h>
 
-void PlayerContext::HealthManager::Initialize(Player* player, uint32_t maxHP)
+void PlayerContext::HealthManager::Initialize(Player* player)
 {
-	player_ = player;
-	hitPoint_.maxHealth = maxHP;
-	hitPoint_.currentHealth = maxHP;
+	ISystem::Initialize(player);
+
+	const int32_t maxHP = 20;
+	Setup(maxHP);
 }
 
 void PlayerContext::HealthManager::Update()
@@ -69,7 +70,7 @@ void PlayerContext::HealthManager::TakeDamage(uint32_t damage)
 		hitPoint_.currentHealth = 0;
 	}
 	else {
-		player_->camera_->ExecuteShake(15.0f, 2.0f);
+		player_->GetCamera()->ExecuteShake(15.0f, 2.0f);
 	}
 
 }
@@ -80,4 +81,10 @@ void PlayerContext::HealthManager::ImGuiDraw()
 	ImGui::DragFloat("Bar", &bar, 0.01f);
 	ImGui::DragFloat("InviFrame", &hitPoint_.invisibleFrame, bar);
 	ImGui::DragFloat("returnFrame", &invisibleEffect_.returnFrame, bar);
+}
+
+void PlayerContext::HealthManager::Setup(uint32_t maxHP)
+{
+	hitPoint_.maxHealth = maxHP;
+	hitPoint_.currentHealth = maxHP;
 }

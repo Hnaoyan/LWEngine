@@ -20,14 +20,13 @@ PostEffectManager::PostEffectManager()
 	bloomData_.threshold = threshold;
 	// ブラー
 	Vector2 center = { 0.5f,0.5f };	// センターの値
-	int32_t sampleNumber = 4;	// サンプル数
 	sDashEffect.data.centerPoint = center;
-	sDashEffect.data.samplesNum = sampleNumber;
+	sDashEffect.data.samplesNum = instance->GetValue<int32_t>("PostEffect", "BlurSampleNum");	// サンプル数;
+	sDashEffect.maxWidth = instance->GetValue<float>("PostEffect", "BlurWidth");
 	// ビネット
 	sDamageEffect.data.color = instance->GetValue<Vector3>("PostEffect", "VigColor");
 	sDamageEffect.data.powValue = instance->GetValue<float>("PostEffect", "VigPow");
 	sDamageEffect.data.scale = instance->GetValue<float>("PostEffect", "VigScale");
-
 }
 
 void PostEffectManager::Initialize(GameSystem* system)
@@ -38,32 +37,42 @@ void PostEffectManager::Initialize(GameSystem* system)
 
 void PostEffectManager::Update()
 {
+#ifdef IMGUI_ENABLED
+	GlobalVariables* instance = GlobalVariables::GetInstance();
+	// ブラー
+	sDashEffect.data.samplesNum = instance->GetValue<int32_t>("PostEffect", "BlurSampleNum");	// サンプル数;
+	sDashEffect.maxWidth = instance->GetValue<float>("PostEffect", "BlurWidth");
+	// ビネット
+	sDamageEffect.data.color = instance->GetValue<Vector3>("PostEffect", "VigColor");
+	sDamageEffect.data.powValue = instance->GetValue<float>("PostEffect", "VigPow");
+	sDamageEffect.data.scale = instance->GetValue<float>("PostEffect", "VigScale");
+#endif // IMGUI_ENABLED
+
+
 	// リプレイ中なら
 	if (gameSystem_->GetReplayManager()->IsReplayNow()) {
 		return;
 	}
 
+	sSlowEffect.Update();
+	sDashEffect.Update();
+	sDamageEffect.Update();
 	// スローモーション
 	if (sSlowEffect.timer.IsActive()) {
-		sSlowEffect.Update();
 		nowEffect = Pipeline::PostEffectType::kGrayscaleBloom;
 	}
 	// ダメージとダッシュの両方
 	else if (sDashEffect.timer.IsActive() && sDamageEffect.timer.IsActive()) {
-		sDashEffect.Update();
-		sDamageEffect.Update();
 		PostEffectRender::sPostEffect = Pipeline::PostEffectType::kVignetteBlur;
 	}
 	// ダッシュ
 	else if (sDashEffect.timer.IsActive())
 	{
-		sDashEffect.Update();
 		nowEffect = Pipeline::PostEffectType::kRadialBlur;
 	}
 	// ダメージ
 	else if (sDamageEffect.timer.IsActive())
 	{
-		sDamageEffect.Update();
 		nowEffect = Pipeline::PostEffectType::kVignette;
 	}
 	// 通常状態
@@ -122,5 +131,6 @@ void PostEffectManager::InitializeGlobalValue()
 	instance->AddValue(groupName, "BloomSigma", float(1.5f));
 	instance->AddValue(groupName, "BloomThreshold", float(0.75f));
 	// ブラー
-
+	instance->AddValue(groupName, "BlurWidth", float(0.15f));
+	instance->AddValue(groupName, "BlurSampleNum", int32_t(4));
 }

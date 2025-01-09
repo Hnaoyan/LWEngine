@@ -36,20 +36,32 @@ public:
 	/// </summary>
 	/// <param name="mode"></param>
 	void ChangeCamera(ActiveCameraMode mode);
+	/// <summary>
+	/// ゲームのセットアップ
+	/// </summary>
+	void GameSetUp();
+	/// <summary>
+	/// チュートリアルのセットアップ
+	/// </summary>
+	void TutorialSetUp();
 
 private:
 	// ゲーム中のカメラ切り替わり
 	void InGameCameraSwitcher();
 	// リプレイのカメラ切り替わり
 	void ReplayCameraSwitcher();
-
 	// 入力による切り替え
 	void InputSwitch();
 
 public: // アクセッサ
 	ICamera* GetCamera();
-	FollowCamera* GetFollowCamera() { return followCamera_.get(); }
+	//FollowCamera* GetFollowCamera() { return followCamera_.get(); }
+	FollowCamera* GetFollowCamera() { return GetTypeCamera<FollowCamera>("Follow"); }
 
+	template<typename T>
+	T* GetTypeCamera(const std::string& tag) { return dynamic_cast<T*>(FindCamera(tag)); }
+private:
+	ICamera* FindCamera(std::string tag);
 private:
 	// オブジェクトマネージャ
 	GameObjectManager* gameObjManager_ = nullptr;
@@ -57,19 +69,6 @@ private:
 	FrameTimer durationTimer_;
 
 private:
-	// 追従カメラ
-	std::unique_ptr<FollowCamera> followCamera_;
-	// 注視カメラ
-	std::unique_ptr<FocusCamera> focusCamera_;
-	// デバッグカメラ
-	std::unique_ptr<DebugCamera> debugCamera_;
-	// 半周カメラ
-	std::unique_ptr<OrbitCamera> orbitCamera_;
-	// サイドカメラ
-	std::unique_ptr<SideCamera> sideCamera_;
-	// 遷移カメラ
-	std::unique_ptr<TransitionCamera> transitionCamera_;
-
 	// カメラのリスト
 	std::unordered_map<std::string, std::unique_ptr<ICamera>> cameras_;
 

@@ -10,7 +10,7 @@ void PlayerFootCollider::Initialize(Player* player)
 
 	worldTransform_.Initialize();
 	worldTransform_.parent_ = player_->GetWorldTransform();
-	const float yOffset = -0.2f;
+	const float yOffset = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "FootOffset");
 	worldTransform_.transform_.translate = { 0,yOffset,0 };
 	scale_ = { 1.0f,1.0f,1.0f };
 	collider_.Initialize(scale_, this);
@@ -23,13 +23,13 @@ void PlayerFootCollider::Update()
 	worldTransform_.UpdateMatrix();
 	collider_.Update(worldTransform_.GetWorldPosition());
 	// フラグ初期化
-	player_->isGround_ = false;
+	player_->SetIsGround(false);
 }
 
 void PlayerFootCollider::OnCollision(ColliderObject target)
 {
 	if (std::holds_alternative<Terrain*>(target)) {
-		player_->isGround_ = true;
+		player_->SetIsGround(true);
 	}
 }
 

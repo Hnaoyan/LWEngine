@@ -22,6 +22,9 @@ void Boss::Initialize(Model* model)
 
 	// 基底
 	IGameObject::Initialize(model);
+	// 丸影
+	roundShadow_->SetDefaultScale(Vector2(8.0f, 8.0f));
+
 	// システム
 	systemManager_ = std::make_unique<BossFacade>();
 	systemManager_->Initialize(this);
@@ -36,6 +39,9 @@ void Boss::Initialize(Model* model)
 
 	// 座標関係の初期化
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "ResPosition");
+	worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("Boss", "MinYPoint");
+	float scale = GlobalVariables::GetInstance()->GetValue<float>("Boss", "ScaleRate");
+	worldTransform_.transform_.scale = Vector3(scale, scale, scale);
 	collider_.Initialize(worldTransform_.transform_.scale.x, this);
 	collider_.SetAttribute(kCollisionAttributeEnemy);
 }
@@ -47,25 +53,28 @@ void Boss::Update()
 	// システム
 	systemManager_->Update();
 	// ステート
-	if (state_ && isAction_) {
+	if (state_ && isAction_ && !isDead_) {
 		state_->Update();
 
 	}
 	// 座標更新
+	roundShadow_->SetPosition(Vector2(worldTransform_.GetWorldPosition().x, worldTransform_.GetWorldPosition().z));
 	IGameObject::Update();
 
 	// バリア時の当たり判定
 	if (systemManager_->barrierManager_.IsActive()) {
-		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale").x;
+		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "BarrierScale").x * worldTransform_.transform_.scale.x;
 	}
 	else {
-		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale").x;
+		collider_.radius_ = GlobalVariables::GetInstance()->GetValue<Vector3>("Boss", "NormalScale").x * worldTransform_.transform_.scale.x;
 	}
 	// コライダーの更新
 	collider_.Update(worldTransform_.GetWorldPosition());
 
 	// 正面の方向ベクトル
 	frontVector_ = Matrix4x4::TransformVector3(Vector3::Backward(), Matrix4x4::MakeRotateXYZMatrix(worldTransform_.transform_.rotate));
+
+	AnimationUpdate();
 }
 
 void Boss::Draw(ModelDrawDesc desc)
@@ -84,6 +93,8 @@ void Boss::Draw(ModelDrawDesc desc)
 	if (!isInvisible_) {
 		// アニメーション
 		animationManager_->Draw(desc.camera, lightDesc);
+		// 丸影
+		roundShadow_->Draw(desc);
 		// バリア
 		systemManager_->barrierManager_.Draw(desc.camera, lightDesc);
 	}
@@ -95,24 +106,8 @@ void Boss::ImGuiDraw()
 	ImGui::Begin("Boss");
 	if (ImGui::BeginTabBar("System"))
 	{
-		// ボス自体の状態
-		if (ImGui::BeginTabItem("MAIN")) {
-			ImGui::Checkbox("IsInvisible", &isInvisible_);
-			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
-			ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
-			ImGui::DragFloat3("FrontVector", &frontVector_.x);
-			ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
-			collider_.radius_ = worldTransform_.transform_.scale.x;
-			Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
-			Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
-			float distance = Vector2::Distance(boss, player);
-			ImGui::DragFloat("PlayerDistance", &distance);
-			ImGui::EndTabItem();
-		}
-
 		// 行動
 		if (ImGui::BeginTabItem("ACTION")) {
-			ImGui::Text("");
 			if (ImGui::Button("MissileState") || Input::GetInstance()->TriggerKey(DIK_7)) {
 				stateManager_.ChangeRequest(std::make_unique<BossState::MissileAttackState>());
 			}
@@ -137,6 +132,20 @@ void Boss::ImGuiDraw()
 				}
 			}
 			ImGui::Checkbox("IsAction", &isAction_);
+			ImGui::EndTabItem();
+		}
+		// ボス自体の状態
+		if (ImGui::BeginTabItem("MAIN")) {
+			ImGui::Checkbox("IsInvisible", &isInvisible_);
+			ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
+			ImGui::DragFloat3("Rotate", &worldTransform_.transform_.rotate.x, 0.01f);
+			ImGui::DragFloat3("FrontVector", &frontVector_.x);
+			ImGui::DragFloat3("Scale", &worldTransform_.transform_.scale.x, 0.01f);
+			collider_.radius_ = worldTransform_.transform_.scale.x;
+			Vector2 boss = { worldTransform_.GetWorldPosition().x,worldTransform_.GetWorldPosition().z };
+			Vector2 player = { player_->worldTransform_.GetWorldPosition().x,player_->worldTransform_.GetWorldPosition().z };
+			float distance = Vector2::Distance(boss, player);
+			ImGui::DragFloat("PlayerDistance", &distance);
 			ImGui::EndTabItem();
 		}
 
@@ -286,8 +295,14 @@ void Boss::InitializeGlobalValue()
 	std::string groupName = "Boss";
 	//---ボスの共通---//
 	instance->CreateGroup(groupName);
+	// 座標関係
 	instance->AddValue(groupName, "ResPosition", Vector3(0, 8.5f, 50.0f));
+	instance->AddValue(groupName, "MinYPoint", float(12.0f));	
+	instance->AddValue(groupName, "MaxYPoint", float(18.0f));
+	instance->AddValue(groupName, "ScaleRate", float(1.0f));
+	
 	instance->AddValue(groupName, "NormalScale", worldTransform_.transform_.scale);
+	// バリア
 	instance->AddValue(groupName, "BarrierScale", worldTransform_.transform_.scale * 2.0f);
 	instance->AddValue(groupName, "BarrierHP", 4.0f);
 	instance->AddValue(groupName, "BarrierVanishFrame", 45.0f);
@@ -304,6 +319,9 @@ void Boss::InitializeGlobalValue()
 	instance->AddValue(groupName, "WaveAttackInitSpeed", float(100.0f));	//
 	// コンテナ
 	instance->AddValue(groupName, "ContainerInitSpeed", float(10.0f));
+
+	groupName = "BossWaveAttack";
+	instance->AddValue(groupName, "StFrame", float(120.0f));
 
 	//---敵の弾のトレイル---//
 	groupName = "BossBulletTrail";
@@ -353,6 +371,11 @@ void Boss::InitializeGlobalValue()
 	instance->CreateGroup(groupName);
 	instance->AddValue(groupName, "MinOffset", float(15.0f));	// ずらしの最小
 	instance->AddValue(groupName, "MaxOffset", float(25.0f));	// ずらしの最大
+
+	groupName = "TrackingData";
+	instance->CreateGroup(groupName);
+	instance->AddValue(groupName, "TrackingAccuracy", float(1.0f));
+
 }
 
 Vector3 Boss::HitEffectPosition()

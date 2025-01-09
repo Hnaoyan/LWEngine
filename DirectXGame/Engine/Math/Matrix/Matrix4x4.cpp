@@ -534,3 +534,43 @@ Matrix4x4 Matrix4x4::MakeBillBoardMatrix(const Vector3& target, const Vector3& e
 
 	return result;
 }
+
+Matrix4x4 Matrix4x4::MakeBillBoardMatrix(const Vector3& target, const Vector3& eye, const Vector3& scale, const Vector3& up)
+{
+	// 回転行列
+		// Z軸
+	Vector3 zAxis = Vector3::Normalize(target - eye);
+
+	// 修正されたY軸（アップベクトルがZ軸と平行でないようにする）
+	Vector3 correctedUp = Vector3::Normalize(up);
+	if (Vector3::Dot(correctedUp, zAxis) > 0.99f) {
+		correctedUp = { 0.0f, 1.0f, 0.0f }; // デフォルトの上方向
+	}
+
+	// X軸
+	Vector3 xAxis = Vector3::Normalize(Vector3::Cross(correctedUp, zAxis));
+	// Y軸
+	Vector3 yAxis = Vector3::Cross(zAxis, xAxis);
+
+	// 行列の設定
+	Matrix4x4 result{};
+
+	// 各軸にスケールを適用
+	result.m[0][0] = xAxis.x * scale.x;
+	result.m[0][1] = xAxis.y * scale.x;
+	result.m[0][2] = xAxis.z * scale.x;
+	result.m[1][0] = yAxis.x * scale.y;
+	result.m[1][1] = yAxis.y * scale.y;
+	result.m[1][2] = yAxis.z * scale.y;
+	result.m[2][0] = zAxis.x * scale.z;
+	result.m[2][1] = zAxis.y * scale.z;
+	result.m[2][2] = zAxis.z * scale.z;
+
+	// 平行移動を追加
+	result.m[3][0] = target.x;
+	result.m[3][1] = target.y;
+	result.m[3][2] = target.z;
+	result.m[3][3] = 1.0f;
+
+	return result;
+}

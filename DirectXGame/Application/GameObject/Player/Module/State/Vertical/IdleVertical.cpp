@@ -6,13 +6,13 @@ void IdleVertical::Initialize()
 {
 	nowState_ = this;
 	// 着地の際に二段ジャンプをリセット
-	player_->isDoubleJump_ = false;
+	player_->SetIsDoubleJump(false);
 }
 
 void IdleVertical::Update()
 {
 	// ステート変更
-	if (!player_->isGround_) {
+	if (!player_->IsGround()) {
 		stateMachine_->ChangeRequest(PlayerStateLists::kFall);
 		return;
 	}

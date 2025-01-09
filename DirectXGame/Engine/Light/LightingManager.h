@@ -1,35 +1,39 @@
 #pragma once
 #include "../Utility/Singleton.h"
-
-#include<d3d12.h>
-#include<dxgi1_6.h>
-
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
+#include "LightLists.h"
+#include <unordered_map>
+#include <string>
+#include <memory>
 
 class DirectionalLight;
 
 /// <summary>
 /// ライト管理クラス
 /// </summary>
-class LightingManager : public Singleton<LightingManager>
+class LightingManager
 {
 public:
-	struct LightDesc
-	{
-		ID3D12GraphicsCommandList* commandList = nullptr; // コマンドリスト
-		DirectionalLight* directionalLight = nullptr; // 平行光源
-
-	};
-
+	~LightingManager() = default;
+	LightingManager();
 public:
-	//void StaticInitialize(ID3D12Device* device);
-
+	void Initialize();
+	void Update();
+	void ImGuiDraw();
+public:	// アクセッサ
+	DirectionalLight* GetDirectional() { return drLight_.get(); }
+	SpotLight* GetSpot() { return spLight_.get(); }
+	PointLight* GetPoint() { return ptLight_.get(); }
 private:
+	// ライト
+	//std::unordered_map<std::string, std::unique_ptr<ILight>> lights_;
 
-	//// デバイス
-	//static ID3D12Device* sDevice;
-	//// コマンドリスト
-	//static ID3D12GraphicsCommandList* sCommandList;
+	std::unique_ptr<DirectionalLight> drLight_;
+	std::unique_ptr<SpotLight> spLight_;
+	std::unique_ptr<PointLight> ptLight_;
+
+	CBufferDataDirectionalLight drData_{};
+	CBufferDataSpotLight spData_{};
+	CBufferDataPointLight ptData_{};
+
 
 };

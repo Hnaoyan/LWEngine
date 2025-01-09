@@ -26,7 +26,5 @@ private:
 	// リプレイモードか
 	bool isReplay_ = false;
 
-	uint32_t playFrame_ = 0;	// 再生中のフレーム
-
 	Input* input_ = nullptr;
 };

@@ -26,6 +26,7 @@ public: // アクセッサ
 	Matrix4x4 GetWorldMatrix() const { return worldMatrix_; }
 	// ワールド座標
 	Vector3 GetWorldPosition() const { return Vector3(worldMatrix_.m[3][0], worldMatrix_.m[3][1], worldMatrix_.m[3][2]); }
+	Vector4 GetColor() const { return color_; }
 	// 親の設定
 	void SetParent(Matrix4x4* parent) { parent_ = parent; }
 public:

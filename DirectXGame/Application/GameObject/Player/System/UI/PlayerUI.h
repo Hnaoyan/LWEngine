@@ -1,6 +1,7 @@
 #pragma once
 #include "Application/GameSystem/UI/UIStructs.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
+#include "../IPlayerSystem.h"
 
 class Player;
 class Sprite;
@@ -10,14 +11,16 @@ class Sprite;
 /// </summary>
 namespace PlayerContext
 {
-	class PlayerUIManager
+	class PlayerUIManager : public ISystem
 	{
 	public:
 		/// <summary>
 		/// 初期化
 		/// </summary>
 		/// <param name="player"></param>
-		void Initialize(Player* player);
+		void Initialize(Player* player) override;
+
+		void Update() override;
 		/// <summary>
 		/// 描画
 		/// </summary>
@@ -42,8 +45,6 @@ namespace PlayerContext
 	public:
 		GameUI::BillBoardRenderInfo* GetJustDodgeUI() { return &justDodgeUI_; }
 	private:
-		// 親
-		Player* player_ = nullptr;
 		// レティクル用スプライト
 		Sprite* reticle_ = nullptr;
 		// HPのUI
@@ -52,12 +53,7 @@ namespace PlayerContext
 		GameUI::BarRenderInfo energyUI_{};
 
 		// ジャスト回避コンボのUI
-		//GameUI::BarRenderInfo justDodgeUI_{};
-		// 
 		GameUI::BillBoardRenderInfo justDodgeUI_{};
-
-	private:
-		GlobalVariables* globalVariables_ = nullptr;
 
 	};
 }

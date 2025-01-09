@@ -25,7 +25,7 @@ VSOutput main(VSInput input, uint32_t instanceId : SV_InstanceID)
     output.position = mul(input.position, worldViewProjection);
     output.normal = worldNormal;
     output.texcoord = input.texcoord;
-    output.color = input.color;
+    output.color = gWorldTransform[instanceId].color;
     output.worldPosition = worldPos.xyz;
     
     return output;

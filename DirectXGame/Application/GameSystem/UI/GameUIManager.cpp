@@ -30,11 +30,27 @@ GameUIManager::GameUIManager(GameSystem* gameSystem)
 	cameraChange_.sprite = SpriteManager::GetSprite("CameraChangeUI");
 	cameraChange_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "CameraChangeUIPos");
 
+	gameStart_.text.sprite = SpriteManager::GetSprite("GameStartText");
+	gameStart_.backSprite = SpriteManager::GetSprite("UIBack");
+	gameStart_.text.position = Vector2(1280.0f / 2.0f, 720.0f * (1.0f / 4.0f));
+	gameStart_.defaultSize = Vector2(240.0f, 120.0f);
+	gameStart_.text.size = gameStart_.defaultSize * 1.5f;
+	gameStart_.text.color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	gameStart_.isAlpha = false;
+	gameStart_.returnFrame = 60.0f;
+	gameStart_.Initialize();
+
 	gameSystem_ = gameSystem;
 }
 
 void GameUIManager::Initialize()
 {
+
+}
+
+void GameUIManager::Update(GameSceneState state)
+{
+	sceneState_ = state;
 
 }
 
@@ -66,7 +82,7 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		gameClear_.sprite->SetPosition(gameClear_.position);
 		gameClear_.sprite->Draw();
 	}
-	if (gameObjectManager->IsUIGameOver()) {
+	else if (gameObjectManager->IsUIGameOver()) {
 		gameOver_.sprite->SetPosition(gameOver_.position);
 		gameOver_.sprite->Draw();
 	}
@@ -77,6 +93,18 @@ void GameUIManager::Draw(GameObjectManager* gameObjectManager)
 		replay_.sprite->SetPosition(replay_.position);
 		replay_.sprite->Draw();
 	}
+	
+	if (sceneState_ == GameSceneState::kGameTutorial) {
+		// テキストの処理
+		gameStart_.Update();
+		gameStart_.text.sprite->Draw();
+		Vector2 size = gameStart_.defaultSize;
+		size.x *= 1.5f;
+		size.y *= 0.8f;
+		gameStart_.backSprite->SetSize(size);
+		gameStart_.backSprite->Draw();
+	}
+
 #ifdef _DEBUG
 	titleBack_.position = GlobalVariables::GetInstance()->GetValue<Vector2>("HUD", "NowReplayTitleExceptUIPos");
 	titleBack_.sprite->SetPosition(titleBack_.position);

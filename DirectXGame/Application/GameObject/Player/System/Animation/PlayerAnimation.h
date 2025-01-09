@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/3D/WorldTransform.h"
 #include "Engine/LwLib/Utillity/FrameTimer.h"
+#include "../IPlayerSystem.h"
 
 class Player;
 
@@ -9,7 +10,7 @@ namespace PlayerContext
 	/// <summary>
 	/// プレイヤーの簡易アニメーション関係
 	/// </summary>
-	class AnimationManager
+	class AnimationManager : public ISystem
 	{
 	private:
 		struct FloatingData
@@ -50,11 +51,11 @@ namespace PlayerContext
 		/// 初期化
 		/// </summary>
 		/// <param name="player"></param>
-		void Initialize(Player* player);
+		void Initialize(Player* player) override;
 		/// <summary>
 		/// 更新
 		/// </summary>
-		void Update();
+		void Update() override;
 		/// <summary>
 		/// リセット
 		/// </summary>
@@ -63,7 +64,6 @@ namespace PlayerContext
 		WorldTransform bodyTransform_;
 
 	private:
-		Player* player_ = nullptr;
 		// 移動時のアニメーションの値
 		FloatingData animParms_;
 	};

@@ -112,6 +112,7 @@ PixelShaderOutput main(VSOutput input)
     // サンプラーとTexCoord
     float4 transformedUV = mul(float32_t4(input.texcoord, 0.0f, 1.0f), gMaterial.uvTransform);
     float32_t4 textureColor = gTexture.Sample(gSampler, transformedUV.xy);
+    textureColor = gMaterial.color * textureColor * input.color;
     // カメラへの方向
     float32_t3 toEye = normalize(gCamera.position - input.worldPosition);
 
@@ -127,10 +128,11 @@ PixelShaderOutput main(VSOutput input)
     resultColor.rgb += environmentColor.rgb * gMaterial.coefficient;
     
     output.color = resultColor;
-    output.color.a = gMaterial.color.a;
+    //output.color.a = gMaterial.color.a;
+    output.color.a = textureColor.a;
     //output.color = input.color;
     
-    if (output.color.a == 0.0f)
+    if (output.color.a <= gMaterial.discardThreshold)
     {
         discard;
     }

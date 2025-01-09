@@ -7,6 +7,7 @@
 #include "Engine/Camera/CameraList.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Particle/GPUParticleSystem.h"
+#include "Engine/Light/LightingManager.h"
 
 #include "Application/GameObject/GameObjectLists.h"
 #include "Application/GameSystem/GameSystem.h"
@@ -68,17 +69,15 @@ private:
 	/// </summary>
 	void CameraUpdate();
 	/// <summary>
-	/// ライト初期化
-	/// </summary>
-	void LightingInitialize();
-	/// <summary>
-	/// ライトの更新
-	/// </summary>
-	void LightingUpdate();
-	/// <summary>
 	/// 衝突処理
 	/// </summary>
 	void CollisionUpdate();
+
+	/// <summary>
+	/// ゲームの開始
+	/// </summary>
+	void BeginGame();
+	void BeginTutorial();
 
 	void SceneStateRequest(GameSceneState state) { stateRequest_ = state; }
 	void ChangeState();
@@ -96,10 +95,9 @@ private: // アプリ
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
 private: // システム関係
-	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_ = {};
-	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_ = {};
-	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_ = {};
+	std::unique_ptr<LightingManager> lightManager_;
+
+	Vector2 size_{256.0f,258.0f};
+	Vector2 position_{160.0f,150.0f};
+	Vector4 color_{ 0.0f,0.0f,0.0f,0.65f };
 };

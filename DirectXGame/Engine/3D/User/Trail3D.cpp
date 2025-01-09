@@ -33,6 +33,15 @@ Trail3D::Trail3D()
 	VertexDataReset();
 }
 
+Trail3D::~Trail3D()
+{
+	vertex_.Release();
+	index_.Release();
+	vertexData_.clear();
+	indices_.clear();
+	camera_ = std::nullopt;
+}
+
 void Trail3D::Update()
 {
 	// 頂点送信
@@ -85,6 +94,9 @@ void Trail3D::BuildVertexFromPoints(const std::vector<Vector3>& points)
 	int32_t vertexId = 0;
 	// インデックス用のIndex
 	int32_t indexId = 0;
+
+	vertexData_.clear();
+	indices_.clear();
 
 	for (size_t i = 0; i < numPoints - 1; ++i) {
 		// 始点と終点

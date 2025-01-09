@@ -61,8 +61,9 @@ void ContainerBullet::OnCollision(ColliderObject object)
 
 void ContainerBullet::GenerateBullet()
 {
-	Boss* boss = dynamic_cast<Boss*>(object_);
-	Player* player = dynamic_cast<Player*>(object_);
+	Boss* boss = dynamic_cast<Boss*>(targetObject_);
+	Player* player = dynamic_cast<Player*>(targetObject_);
+	BulletBuilder builder;
 
 	// 親がプレイヤーなら
 	if (player) {
@@ -71,10 +72,8 @@ void ContainerBullet::GenerateBullet()
 		//float offsetValue = 2.0f;
 		//transform.translate += Vector3::Normalize(Vector3(0.0f, 0.0f, -1.0f)) * offsetValue;
 		// 生成部分
-		BulletBuilder builder;
 		builder.SetTargetObject(player->GetBoss()).SetDirect(Vector3::Backward()).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
 		builder.SetParentAttribute(1);
-		cluster_->AddBullet(builder, BulletType::kTracking);
 	}
 	// 親がボスなら
 	else if (boss) {
@@ -83,10 +82,19 @@ void ContainerBullet::GenerateBullet()
 		//float offsetValue = 2.0f;
 		//transform.translate += Vector3::Normalize(Vector3(0.0f,0.0f,-1.0f)) * offsetValue;
 		// 生成部分
-		BulletBuilder builder;
 		builder.SetTargetObject(boss->GetPlayer()).SetDirect(Vector3::Backward()).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "InitSpeed")).SetTransform(transform).SetAttribute(TrackingAttribute::kSuperior).SetIsRandStraight(true);
 		builder.SetParentAttribute(0);
-		cluster_->AddBullet(builder, BulletType::kTracking);
 	}
+	Vector3 newDirect = Vector3::RotateVector(Vector3::Up(), velocity_.Normalize());
+	//newDirect = moveDirect_.Normalize();
+	//newDirect.y = 1.0f;
+	//newDirect.Normalize();
+
+	builder.SetDirect(newDirect);
+	cluster_->AddBullet(builder, BulletType::kTracking);
+	
+	//newDirect = velocity_.Normalize();
+	//builder.SetDirect(newDirect);
+	//cluster_->AddBullet(builder, BulletType::kTracking);
 
 }

@@ -6,52 +6,40 @@
 
 CameraManager::CameraManager()
 {
-	followCamera_ = std::make_unique<FollowCamera>();
-	focusCamera_ = std::make_unique<FocusCamera>();
-	debugCamera_ = std::make_unique<DebugCamera>();
-	orbitCamera_ = std::make_unique<OrbitCamera>();
-	sideCamera_ = std::make_unique<SideCamera>();
-	transitionCamera_ = std::make_unique<TransitionCamera>();
+	cameras_.emplace("Follow", std::make_unique<FollowCamera>());
+	cameras_.emplace("Focus", std::make_unique<FocusCamera>());
+	cameras_.emplace("Debug", std::make_unique<DebugCamera>());
+	cameras_.emplace("Orbit", std::make_unique<OrbitCamera>());
+	cameras_.emplace("Side", std::make_unique<SideCamera>());
+	cameras_.emplace("Transition", std::make_unique<TransitionCamera>());
 }
 
 void CameraManager::Initialize(GameObjectManager* gameManager)
 {
 	gameObjManager_ = gameManager;
 	// 初期化
-	// デバッグカメラ
-	debugCamera_->Initialize();
+	for (auto it = cameras_.begin(); it != cameras_.end(); ++it) {
+		(*it).second->Initialize();
+	}
 
-	// 追従カメラ
-	followCamera_->Initialize();
-	followCamera_->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
-	followCamera_->SetLockOn(gameObjManager_->GetPlayer()->GetOperation()->GetLockOn());
-	// 注視点カメラ
-	focusCamera_->Initialize();
 	Vector3 focusCameraPosition = { 50.0f,0.0f,0.0f };	// カメラの座標
-	focusCamera_->transform_.translate = focusCameraPosition;
-	focusCamera_->SetFocusPoint(&gameManager->GetPlayer()->worldTransform_.transform_.translate);
-	// 半円カメラ
-	orbitCamera_->Initialize();
-	orbitCamera_->SetObject(&gameManager->GetPlayer()->worldTransform_.transform_.translate, &gameManager->GetBoss()->worldTransform_.transform_.translate);
-	
+	FindCamera("Focus")->transform_.translate = focusCameraPosition;
+
 	// 選択
 	activeCamera_ = ActiveCameraMode::kFollow;
+#ifdef IMGUI_ENABLED
+	activeCamera_ = ActiveCameraMode::kDebug;
+#endif // IMGUI_ENABLED
 
-	sideCamera_->Initialize();
-	sideCamera_->SetParent(&gameManager->GetPlayer()->worldTransform_);
 
-	transitionCamera_->Initialize();
 }
 
 void CameraManager::Update(GameSystem* gameSystem)
 {
 	// 更新
-	followCamera_->Update();
-	focusCamera_->Update();
-	debugCamera_->Update();
-	orbitCamera_->Update();
-	sideCamera_->Update();
-	transitionCamera_->Update();
+	for (auto it = cameras_.begin(); it != cameras_.end(); ++it) {
+		(*it).second->Update();
+	}
 
 	// キー入力の間隔
 	durationTimer_.Update();
@@ -118,23 +106,23 @@ void CameraManager::ImGuiDraw()
 	if (ImGui::BeginTabBar("System"))
 	{
 		if (ImGui::BeginTabItem("Follow")) {
-			followCamera_->ImGuiDraw();
+			GetTypeCamera<FollowCamera>("Follow")->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Focus")) {
-			focusCamera_->ImGuiDraw();
+			GetTypeCamera<FocusCamera>("Focus")->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Orbit")) {
-			orbitCamera_->ImGuiDraw();
+			GetTypeCamera<OrbitCamera>("Orbit")->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Side")) {
-			sideCamera_->ImGuiDraw();
+			GetTypeCamera<SideCamera>("Side")->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		if (ImGui::BeginTabItem("Debug")) {
-			debugCamera_->ImGuiDraw();
+			GetTypeCamera<DebugCamera>("Debug")->ImGuiDraw();
 			ImGui::EndTabItem();
 		}
 		ImGui::EndTabBar();
@@ -163,7 +151,37 @@ void CameraManager::ChangeCamera(ActiveCameraMode mode)
 	default:
 		break;
 	}
+}
 
+void CameraManager::GameSetUp()
+{
+	// 追従カメラ
+	GetTypeCamera<FollowCamera>("Follow")->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
+	GetTypeCamera<FollowCamera>("Follow")->SetLockOn(gameObjManager_->GetPlayer()->GetWeaponManager()->GetLockOn());
+	GetTypeCamera<FollowCamera>("Follow")->Initialize();
+	// 注視
+	GetTypeCamera<FocusCamera>("Focus")->SetFocusPoint(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate);
+	// 半円
+	GetTypeCamera<OrbitCamera>("Orbit")->SetObject(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate, &gameObjManager_->GetBoss()->worldTransform_.transform_.translate);
+	// サイド
+	GetTypeCamera<SideCamera>("Side")->SetParent(&gameObjManager_->GetPlayer()->worldTransform_);
+
+	// 追従カメラに変更
+	this->activeCamera_ = ActiveCameraMode::kFollow;
+}
+
+void CameraManager::TutorialSetUp()
+{	
+	// 追従カメラ
+	GetTypeCamera<FollowCamera>("Follow")->SetParent(gameObjManager_->GetPlayer()->GetWorldTransform());
+	GetTypeCamera<FollowCamera>("Follow")->SetLockOn(gameObjManager_->GetPlayer()->GetWeaponManager()->GetLockOn());
+	// 注視
+	GetTypeCamera<FocusCamera>("Focus")->SetFocusPoint(&gameObjManager_->GetPlayer()->worldTransform_.transform_.translate);
+	// サイド
+	GetTypeCamera<SideCamera>("Side")->SetParent(&gameObjManager_->GetPlayer()->worldTransform_);
+
+	// 追従カメラに変更
+	this->activeCamera_ = ActiveCameraMode::kFollow;
 }
 
 void CameraManager::InGameCameraSwitcher()
@@ -257,19 +275,24 @@ ICamera* CameraManager::GetCamera()
 	case ActiveCameraMode::kNormal:
 		break;
 	case ActiveCameraMode::kFollow:
-		return followCamera_.get();
+		return GetTypeCamera<FollowCamera>("Follow");
+		//return followCamera_.get();
 		break;
 	case ActiveCameraMode::kFocus:
-		return focusCamera_.get();
+		return GetTypeCamera<FocusCamera>("Focus");
+		//return focusCamera_.get();
 		break;
 	case ActiveCameraMode::kOrbit:
-		return orbitCamera_.get();
+		return GetTypeCamera<OrbitCamera>("Orbit");
+		//return orbitCamera_.get();
 		break;
 	case ActiveCameraMode::kSide:
-		return sideCamera_.get();
+		return GetTypeCamera<SideCamera>("Side");
+		//return sideCamera_.get();
 		break;
 	case ActiveCameraMode::kDebug:
-		return debugCamera_.get();
+		return GetTypeCamera<DebugCamera>("Debug");
+		//return debugCamera_.get();
 		break;
 	case ActiveCameraMode::kMaxSize:
 		break;
@@ -277,4 +300,14 @@ ICamera* CameraManager::GetCamera()
 		break;
 	}
 	return nullptr;
+}
+
+ICamera* CameraManager::FindCamera(std::string tag)
+{
+	// イテレータ取得
+	std::unordered_map<std::string, std::unique_ptr<ICamera>>::iterator it = cameras_.find(tag);
+	// なければエラー
+	assert(it != cameras_.end());
+	// 見つけたイテレータからポインタを取得
+	return static_cast<ICamera*>((*it).second.get());
 }

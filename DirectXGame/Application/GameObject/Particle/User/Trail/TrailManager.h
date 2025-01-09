@@ -30,7 +30,11 @@ public:
 	/// </summary>
 	/// <param name="trail"></param>
 	void AddTrail(std::unique_ptr<BulletTrail> trail);
-	
+	/// <summary>
+	/// インスタンス削除
+	/// </summary>
+	void ClearTrail() { trails_.clear(); }
+
 	BulletTrail* FindTrail(const std::string& name);
 
 public:

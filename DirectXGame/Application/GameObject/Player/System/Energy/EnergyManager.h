@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/LwLib/Utillity/FrameTimer.h"
+#include "../IPlayerSystem.h"
 
 class Player;
 
@@ -8,7 +9,7 @@ namespace PlayerContext
 	/// <summary>
 	/// エネルギーの管理クラス
 	/// </summary>
-	class EnergyManager
+	class EnergyManager : public ISystem
 	{
 	private:
 		// エネルギー関係の値
@@ -31,9 +32,9 @@ namespace PlayerContext
 
 	public:
 		// 初期化
-		void Initialize(Player* player);
+		void Initialize(Player* player) override;
 		// 更新
-		void Update();
+		void Update() override;
 		// エネルギーを瞬時に回復するやつ
 		void RecoverGage(float recoverEnergy);
 		// エネルギーの割合

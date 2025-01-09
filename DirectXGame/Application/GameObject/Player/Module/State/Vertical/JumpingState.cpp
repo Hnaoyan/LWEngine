@@ -31,17 +31,13 @@ void JumpingState::Exit()
 
 void JumpingState::InputHandle()
 {
-	//float energyRatio = player_->GetSystemFacede()->GetEnergy()->GetEnergyRatio();
-	//if (GameSystem::sKeyConfigManager.GetPlayerKey().pressJump && energyRatio >= 0.5f)
-	//{
-	//	player_->VerticalState()->ChangeRequest(PlayerStateLists::kAssending);
-	//}
-
+	// ジャンプのクールタイムか
 	if (jumpCooltime_.IsActive()) {
 		return;
 	}
-	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->isDoubleJump_) {
-		player_->isDoubleJump_ = true;
+	// 入力で切り替える受付
+	if (GameSystem::sKeyConfigManager.GetPlayerKey().jump && !player_->IsDoubleJump()) {
+		player_->SetIsDoubleJump(true);
 		JumpActionExecute();
 	}
 
@@ -50,7 +46,7 @@ void JumpingState::InputHandle()
 void JumpingState::JumpActionExecute()
 {
 	float jumpPower = 0.0f;
-	if (!player_->isDoubleJump_) {
+	if (!player_->IsDoubleJump()) {
 		jumpPower = (GlobalVariables::GetInstance()->GetValue<float>("Player", "FirstJumpPower"));
 	}
 	else {

@@ -10,7 +10,8 @@ void GameScene::Initialize()
 	// 基底クラス初期化
 	IScene::Initialize();
 	// ライト初期化
-	LightingInitialize();
+	lightManager_ = std::make_unique<LightingManager>();
+	lightManager_->Initialize();
 
 #pragma region インスタンス化
 	cameraManager_ = std::make_unique<CameraManager>();
@@ -34,15 +35,18 @@ void GameScene::Initialize()
 	// 準備完了
 	isSceneReady_ = true;
 	
-
+	// オブジェクトマネージャ
 	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
 	cameraManager_->Initialize(gameObjectManager_.get());
 
+	stateRequest_ = GameSceneState::kGameTutorial;
+
 #ifdef RELEASE
-	stateRequest_ = GameSceneState::kRecord;
+	//stateRequest_ = GameSceneState::kRecord;
 	//nowState_ = GameSceneState::kGamePlay;
 #endif // RELEASE
 
+	this->ChangeState();
 
 }
 
@@ -53,29 +57,51 @@ void GameScene::Update()
 		sceneManager_->ChangeScene("TITLE");
 	}
 #endif // _DEBUG
+	// ステートの切り替わり処理
+	ChangeState();
+	// チュートリアルの状態から変更する処理
+	if (this->nowState_ == GameSceneState::kGameTutorial) {
+		if (input_->TriggerKey(DIK_SPACE) || input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
+
+#ifdef IMGUI_ENABLED
+			stateRequest_ = GameSceneState::kGamePlay;
+#endif // IMGUI_ENABLED
+#ifdef RELEASE
+			stateRequest_ = GameSceneState::kRecord;
+#endif // RELEASE
+		}
+	}
+
+#ifdef RELEASE
+	if (gameSystem_->GetReplayManager()->IsReplayEnd()) {
+		sceneManager_->ChangeScene("TITLE");
+	}
+#endif // RELEASE
+
+
 	// シーンの切り替え処理
 	if (gameObjectManager_->IsSceneChange()) {
 		sceneManager_->ChangeScene("TITLE");
 	}
-
-	if (gameObjectManager_->IsSceneReplay()) {
+	if (gameObjectManager_->IsGameEnd()) {
 		// プレイの保存
 		gameSystem_->GetReplayManager()->ExportReplay();
+		gameObjectManager_->SetGameEnd(false);
+	}
+	if (gameObjectManager_->IsSceneReplay()) {
 		// リプレイモードに移行
 		stateRequest_ = GameSceneState::kReplay;
 	}
-	// ステートの切り替わり処理
-	ChangeState();
 
 	//---ゲームのシステム更新---//
 	gameSystem_->Update();
-	gameObjectManager_->Update();
+	gameObjectManager_->Update(nowState_);
 	// 衝突処理
 	CollisionUpdate();
 	// カメラの更新
 	CameraUpdate();
 	// ライトの更新
-	LightingUpdate();
+	lightManager_->Update();
 
 	gpuParticleManager_->Update();
 
@@ -101,9 +127,9 @@ void GameScene::Draw()
 
 	// ライトの情報
 	DrawDesc::LightDesc lightDesc{};
-	lightDesc.directionalLight = directionalLight_.get();
-	lightDesc.pointLight = pointLight_.get();
-	lightDesc.spotLight = spotLight_.get();
+	lightDesc.directionalLight = lightManager_->GetDirectional();
+	lightDesc.pointLight = lightManager_->GetPoint();
+	lightDesc.spotLight = lightManager_->GetSpot();
 
 	// オブジェクト
 	gameObjectManager_->Draw(&camera_, lightDesc);
@@ -129,9 +155,15 @@ void GameScene::UIDraw()
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 
 	Sprite::PreDraw(commandList);
-
 	// UI全般
+	uiManager_->Update(this->nowState_);
 	uiManager_->Draw(gameObjectManager_.get());
+	if (!gameSystem_->IsReplayMode()) {
+		SpriteManager::GetSprite("UIBGTexture")->SetPosition(position_);
+		SpriteManager::GetSprite("UIBGTexture")->SetSize(size_);
+		SpriteManager::GetSprite("UIBGTexture")->SetColor(color_);
+		SpriteManager::GetSprite("UIBGTexture")->Draw();
+	}
 
 	Sprite::PostDraw();
 
@@ -147,6 +179,7 @@ void GameScene::ImGuiDraw()
 	camera_.ImGuiDraw();
 
 	ImGui::Begin("GameScene");
+
 	if (ImGui::TreeNode("Replayer")) {
 		if (ImGui::Button("Restart")) {
 			stateRequest_ = GameSceneState::kGameRestart;
@@ -160,6 +193,14 @@ void GameScene::ImGuiDraw()
 		if (ImGui::Button("RecordingEnd")) {
 			gameSystem_->GetReplayManager()->ExportReplay();
 		}
+
+		if (ImGui::Button("GameSetUp")) {
+			BeginGame();
+		}
+		if (ImGui::Button("TutorialSetUp")) {
+			BeginTutorial();
+		}
+
 		ImGui::TreePop();
 	}
 	ImGui::Separator();
@@ -170,42 +211,8 @@ void GameScene::ImGuiDraw()
 	ImGui::DragFloat2("right", &rightStick.x);
 
 	ImGui::Text("");
-	// ライティング
-	if (ImGui::BeginTabBar("Lighting"))
-	{
-		float defaultSpeed = 0.01f;
-		if (ImGui::BeginTabItem("DirectionalLight"))
-		{
-			ImGui::ColorEdit4("Color", &lightData_.color.x);
-			ImGui::DragFloat3("Direction", &lightData_.direction.x, defaultSpeed);
-			lightData_.direction = Vector3::Normalize(lightData_.direction);
-			ImGui::DragFloat("Intensity", &lightData_.intensity, defaultSpeed);
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("PointLight"))
-		{
-			ImGui::ColorEdit4("ptColor", &ptLightData_.color.x);
-			ImGui::DragFloat("ptDecay", &ptLightData_.decay, defaultSpeed);
-			ImGui::DragFloat("ptIntensity", &ptLightData_.intensity, defaultSpeed);
-			ImGui::DragFloat("ptRadius", &ptLightData_.radius, defaultSpeed);
-			ImGui::DragFloat3("ptPosition", &ptLightData_.position.x, defaultSpeed);
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("SpotLight"))
-		{
-			ImGui::ColorEdit4("spColor", &spLightData_.color.x);
-			ImGui::DragFloat("spDecay", &spLightData_.decay, defaultSpeed);
-			ImGui::DragFloat("spIntensity", &spLightData_.intensity, defaultSpeed);
-			ImGui::DragFloat("spCosAngle", &spLightData_.cosAngle, defaultSpeed);
-			ImGui::DragFloat("spCosFalloffStart", &spLightData_.cosFalloffStart, defaultSpeed);
-			ImGui::DragFloat("spDistance", &spLightData_.distance, defaultSpeed);
-			ImGui::DragFloat3("spPosition", &spLightData_.position.x, defaultSpeed);
-			ImGui::DragFloat3("spDirection", &spLightData_.direction.x, defaultSpeed);
-			spLightData_.direction = Vector3::Normalize(spLightData_.direction);
-			ImGui::EndTabItem();
-		}
-		ImGui::EndTabBar();
-	}
+	// ライト
+	lightManager_->ImGuiDraw();
 
 	ImGui::End();
 
@@ -228,37 +235,39 @@ void GameScene::LoadModel()
 	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
 	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
 	ModelManager::LoadNormalModel("Plane", "plane");
+	ModelManager::LoadNormalModel("BulletCube", "ICO");
+	ModelManager::LoadNormalModel("TestPlane", "plane");
+	ModelManager::LoadNormalModel("RoundShadow", "plane");
 }
 
 void GameScene::LoadTexture()
 {
 	// テクスチャのロード
-	TextureManager::Load("Resources/UI/ClearText.png");
-	TextureManager::Load("Resources/UI/DashUI.png");
-	TextureManager::Load("Resources/UI/JumpUI.png");
-	TextureManager::Load("Resources/UI/LockonUI.png");
-	TextureManager::Load("Resources/UI/ShotUIt.png");
-	TextureManager::Load("Resources/crossHair.png");
+	TextureManager::Load("Resources/default/crossHair.png");
 	TextureManager::Load("Resources/default/testGage.png");
-	TextureManager::Load("Resources/UI/GameOver.png");
 	TextureManager::Load("Resources/default/BackGround.png");
 
 	// スプライトのロード
-	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/crossHair.png"));
-	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));
-	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("CrossHair", TextureManager::Load("Resources/default/crossHair.png"));	// クロスへア
+	SpriteManager::LoadSprite("Gage", TextureManager::Load("Resources/default/white2x2.png"));	// ゲージ
+	SpriteManager::LoadSprite("PlayerGage", TextureManager::Load("Resources/default/white2x2.png"));	// 
 	SpriteManager::LoadSprite("PlayerDodgeGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyGage", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("HPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerHPBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("PlayerEnergyBackUI", TextureManager::Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("GageBack", TextureManager::Load("Resources/default/testGage.png"));
+	SpriteManager::LoadSprite("UIBack", TextureManager::Load("Resources/default/white2x2.png"));
+	// テキスト関係
 	SpriteManager::LoadSprite("GameClearText", TextureManager::Load("Resources/UI/GameClearText.png"));
 	SpriteManager::LoadSprite("GameOverText", TextureManager::Load("Resources/UI/GameOverText.png"));
 	SpriteManager::LoadSprite("ResultTitleUI", TextureManager::Load("Resources/UI/TitleBackUI.png"));
 	SpriteManager::LoadSprite("ResultReplayUI", TextureManager::Load("Resources/UI/ReplayUI.png"));
 	SpriteManager::LoadSprite("CameraChangeUI", TextureManager::Load("Resources/UI/CameraChangeUI.png"));
+	// 
+	SpriteManager::LoadSprite("GameStartText", TextureManager::Load("Resources/UI/GameStart.png"));
 
+	SpriteManager::LoadSprite("UIBGTexture", TextureManager::Load("Resources/default/white2x2.png"));
 }
 
 void GameScene::CameraUpdate()
@@ -273,45 +282,6 @@ void GameScene::CameraUpdate()
 	camera_.TransferMatrix();
 }
 
-void GameScene::LightingInitialize()
-{
-	// ライト作成
-	directionalLight_.reset(DirectionalLight::CreateLight());
-	pointLight_.reset(PointLight::CreateLight());
-	spotLight_.reset(SpotLight::CreateLight());
-
-	// 平行光源データ
-	lightData_.color = { 1.0f,1.0f,1.0f,1.0f };
-	lightData_.direction = { 0.0f,1.0f,0.0f };
-	lightData_.intensity = 1.2f;
-
-	// 点光源データ
-	ptLightData_.intensity = 0.5f;
-	ptLightData_.position = { 0,50.0f,0 };
-	ptLightData_.color = { 1,1,1,1 };
-	ptLightData_.decay = 10.0f;
-	ptLightData_.radius = 300.0f;
-
-	// 照光源データ
-	spLightData_.color = { 1,1,1,1 };
-	spLightData_.position = { 2.0f,200.0f,0.0f };
-	spLightData_.distance = 300.0f;
-	spLightData_.direction = Vector3(-0.707f, -0.707f, 0.0f);
-	spLightData_.intensity = 12.5f;
-	spLightData_.decay = 3.0f;
-	//spLightData_.cosAngle = std::cosf(std::numbers::pi_v<float> / 3.0f);
-	spLightData_.cosAngle = 0.3f;
-	spLightData_.cosFalloffStart = 0.5f;
-}
-
-void GameScene::LightingUpdate()
-{
-	// ライトの更新
-	directionalLight_->Update(lightData_);
-	spotLight_->Update(spLightData_);
-	pointLight_->Update(ptLightData_);
-}
-
 void GameScene::CollisionUpdate()
 {
 	// クリア
@@ -324,6 +294,23 @@ void GameScene::CollisionUpdate()
 	collisionManager_->CheckAllCollisions();
 }
 
+void GameScene::BeginGame()
+{
+	// オブジェクト類の初期化
+	gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+	gameObjectManager_->GameSetUp();	// ゲームの準備
+	cameraManager_->GameSetUp();
+	cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+}
+
+void GameScene::BeginTutorial()
+{
+	gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
+	gameObjectManager_->TutorialSetUp();	// チュートリアルの準備
+	cameraManager_->TutorialSetUp();
+	cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+}
+
 void GameScene::ChangeState()
 {
 	if (stateRequest_) {
@@ -334,39 +321,23 @@ void GameScene::ChangeState()
 
 			break;
 		case GameSceneState::kGameRestart:
-			// オブジェクト類の初期化
-			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-			gameObjectManager_->GameSetUp();	// ゲームの準備
-			cameraManager_->Initialize(gameObjectManager_.get());
-			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			BeginGame();
 			break;
 		case GameSceneState::kGamePlay:
-
+			BeginGame();
+			break;
+		case GameSceneState::kGameTutorial:
+			BeginTutorial();
 			break;
 		case GameSceneState::kReplay:
 			gameSystem_->GetReplayManager()->ImportReplay();
 			// UIを隠すフラグ
 			uiManager_->SetIsHudHide(true);
-			// ゲームオブジェクト生成
-			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
-			// オブジェクト類の初期化
-			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-			gameObjectManager_->GameSetUp();	// ゲームの準備
-			cameraManager_->Initialize(gameObjectManager_.get());
-			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			BeginGame();
 			gameSystem_->LaunchReplay();
 			break;
 		case GameSceneState::kRecord:
-			// ゲームオブジェクト生成
-			gameObjectManager_ = std::make_unique<GameObjectManager>(gameSystem_.get());
-			// オブジェクト類の初期化
-			gpuParticleManager_->DataReset();	// パーティクルのリセット（これのせいでたぶんDebug動いてない
-			gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
-			gameObjectManager_->GameSetUp();	// ゲームの準備
-			cameraManager_->Initialize(gameObjectManager_.get());
-			cameraManager_->ChangeCamera(ActiveCameraMode::kFollow);
+			BeginGame();
 			gameSystem_->GetReplayManager()->RecordSetUp();	// 記録のスタート処理
 			break;
 		}

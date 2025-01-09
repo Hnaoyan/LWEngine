@@ -49,6 +49,7 @@ void Material::Update()
 	buffer_.cMap_->coefficient = 0;
 	buffer_.cMap_->dissolveColor = dissolveColor_;
 	buffer_.cMap_->dissolveThreshold = threshold_;
+	buffer_.cMap_->discardThreshold = discardThreshold_;
 }
 
 void Material::ImGuiDraw(const std::string& objName)

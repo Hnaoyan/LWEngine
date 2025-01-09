@@ -30,6 +30,12 @@ void BossState::IState::PreInitialize(Boss* boss)
 
 }
 
+void BossState::IState::Initialize()
+{
+	// 初期化
+	bulletComponent_.Initialize(boss_);
+}
+
 void BossState::IState::RotateUpdate()
 {
 	Vector3 normalize = boss_->GetPlayer()->worldTransform_.GetWorldPosition() - boss_->worldTransform_.GetWorldPosition();
@@ -55,4 +61,55 @@ void BossState::IState::GenerateBullet(const Vector3& direct, const float& speed
 	BulletBuilder builder;
 	builder.SetDirect(direct).SetSpeed(speed).SetTransform(boss_->worldTransform_.transform_);
 	boss_->GetTrackingCluster()->AddBullet(builder, BulletType::kNormal);
+}
+
+void BossState::BulletComponent::Initialize(Boss* boss)
+{
+	assert(boss);
+	boss_ = boss;
+}
+
+void BossState::BulletComponent::GenerateTracking(const Vector3& direct, TrackingAttribute type)
+{
+	// デフォルトの情報
+	EulerTransform transform = boss_->worldTransform_.transform_;
+
+	BulletBuilder builder;
+	builder.SetTargetObject(boss_->GetPlayer()).SetDirect(direct).SetSpeed(GlobalVariables::GetInstance()->GetValue<float>("BossAction", "WaveAttackInitSpeed")).SetTransform(transform).SetAttribute(type);
+	builder.SetStraightFrame(GlobalVariables::GetInstance()->GetValue<float>("BossTrackingBullet", "StraightFrame"));
+
+	switch (type)
+	{
+	case TrackingAttribute::kSuperior:
+		boss_->GetSuperiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kInferior:
+		boss_->GetInferiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kGenius:
+		boss_->GetGeneusCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	}
+}
+
+void BossState::BulletComponent::Fire(BulletBuilder builder, TrackingAttribute type)
+{
+	switch (type)
+	{
+	case TrackingAttribute::kSuperior:
+		boss_->GetSuperiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kInferior:
+		boss_->GetInferiorCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kGenius:
+		boss_->GetGeneusCluster()->AddBullet(builder, BulletType::kTracking);
+		break;
+	case TrackingAttribute::kNone:
+		break;
+	case TrackingAttribute::kMaxSize:
+		break;
+	default:
+		break;
+	}
 }

@@ -12,11 +12,10 @@ namespace BossState
 		void Exit() override;
 	private:
 		void Attack();
-		void GenerateMissile(const Vector3& direct, TrackingAttribute type);
 	private:
 		// 発射間隔
 		FrameTimer attackTimer_;
-
+		int32_t fireCount_ = 0;
 	};
 
 }

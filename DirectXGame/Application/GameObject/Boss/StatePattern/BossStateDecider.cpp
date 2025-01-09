@@ -1,7 +1,6 @@
 #include "BossStateDecider.h"
 #include "Application/GameObject/GameObjectLists.h"
-#include "Attack/BossMisslieWave.h"
-#include "Attack/BossMissileContainer.h"
+#include "BossStateLists.h"
 
 void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 {
@@ -45,11 +44,11 @@ void BossState::StateDecider::Initialize(Boss* boss, Player* player)
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "UpDownMove";
+	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissileWave);
-	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
 	tables_[tableTag_].patterns.push_back(StatePattern::kMissileBarrage);
-	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].patterns.push_back(StatePattern::kUpdown);
+	tables_[tableTag_].patterns.push_back(StatePattern::kWait);
 	tables_[tableTag_].maxStep = (uint32_t)tables_[tableTag_].patterns.size() - 1;
 
 	tableTag_ = "NewBe";
@@ -185,6 +184,9 @@ void BossState::StateDecider::StateSelect(StatePattern number)
 		break;
 	case BossState::StateDecider::StatePattern::kMissileContainer:
 		newState = std::make_unique<MissileContainerState>();
+		break;
+	case BossState::StateDecider::StatePattern::kMissileTurn:
+		newState = std::make_unique<TurnMissileState>();
 		break;
 	case BossState::StateDecider::StatePattern::kMax:
 		break;

@@ -70,6 +70,10 @@ public: // アクセッサ
 	void SetTexture(uint32_t texture) { texture_ = texture; }
 	// タグ
 	void SetTag(const std::string& tag) { tag_ = tag; }
+
+	void SetIsDelete(bool isDelete) { isDelete_ = isDelete; }
+	bool IsDelete() const { return isDelete_; }
+
 private:
 	/// <summary>
 	/// インスタンシングのSRV確保など
@@ -83,6 +87,8 @@ protected: // USER
 	Model* model_ = nullptr;
 	// マテリアル
 	std::unique_ptr<Material> material_;
+	// 削除フラグ
+	bool isDelete_;
 	// 隠す用のフラグ
 	bool isInvisible_ = false;
 	// タグ

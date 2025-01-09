@@ -11,7 +11,7 @@ void QuickBoostState::Initialize()
 	InputHandle();
 	// 方向設定
 	Vector3 direct{};
-	float playerYaw = player_->camera_->transform_.rotate.y;
+	float playerYaw = player_->GetCamera()->transform_.rotate.y;
 	Matrix4x4 rotateY = Matrix4x4::MakeRotateYMatrix(playerYaw);
 	Vector3 rotateVector = Matrix4x4::TransformVector3({ leftStick_.x,0,leftStick_.y }, rotateY);
 	direct = rotateVector;
@@ -19,7 +19,11 @@ void QuickBoostState::Initialize()
 	const float dashPower = GlobalVariables::GetInstance()->GetValue<float>("Player", "DashPower");
 	dashVelocity_.x = direct.x * dashPower;
 	dashVelocity_.z = direct.z * dashPower;
+
 	changeTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "QuickBoostEndTime"));
+
+	// 初速度計算
+	player_->velocity_ += dashVelocity_ * GameSystem::GameSpeedFactor();
 	// ゲージ減少
 	player_->GetSystemFacede()->GetEnergy()->QuickBoostDecre();
 	// ジャスト回避受付開始
@@ -35,9 +39,9 @@ void QuickBoostState::Update()
 	// 減速処理
 	dashVelocity_.x = LwLib::Lerp(dashVelocity_.x, 0, changeTimer_.GetElapsedFrame());
 	dashVelocity_.z = LwLib::Lerp(dashVelocity_.z, 0, changeTimer_.GetElapsedFrame());
-
-	player_->velocity_.x += dashVelocity_.x * GameSystem::GameSpeedFactor();
-	player_->velocity_.z += dashVelocity_.z * GameSystem::GameSpeedFactor();
+	// フレーム内の速度計算
+	player_->acceleration_.x = dashVelocity_.x * GameSystem::GameSpeedFactor();
+	player_->acceleration_.z = dashVelocity_.z * GameSystem::GameSpeedFactor();
 
 	// 変更処理
 	if (dashVelocity_.x == 0.0f && dashVelocity_.z == 0.0f) {
@@ -54,6 +58,9 @@ void QuickBoostState::Update()
 void QuickBoostState::Exit()
 {
 	PostEffectManager::sDashEffect.Finalize();
+
+	player_->acceleration_ = {};
+	player_->velocity_ = {};
 
 	player_->GetSystemFacede()->GetAnimation()->Reset();
 	player_->GetOperation()->SetCooltime(GlobalVariables::GetInstance()->GetValue<float>("Player", "DashCooltime"));

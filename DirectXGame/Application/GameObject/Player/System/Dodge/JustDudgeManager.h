@@ -3,6 +3,7 @@
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include "Engine/3D/Drawer/Model.h"
 #include <memory>
+#include "../IPlayerSystem.h"
 
 class Player;
 
@@ -11,7 +12,7 @@ namespace PlayerContext
 	/// <summary>
 	/// ジャスト回避管理
 	/// </summary>
-	class JustDodgeManager
+	class JustDodgeManager : public ISystem
 	{
 	private:
 		// コンボの情報
@@ -58,14 +59,12 @@ namespace PlayerContext
 			float delayFrame = 0.0f;
 		};
 
-		// プレイヤー
-		Player* player_ = nullptr;
-
 	public:
 		JustDodgeManager() {};
-		JustDodgeManager(Player* player);
+		// 初期化
+		void Initialize(Player* player) override;
 		// 更新
-		void Update();
+		void Update() override;
 		// 描画
 		void Draw(ModelDrawDesc desc);
 		// ImGui
