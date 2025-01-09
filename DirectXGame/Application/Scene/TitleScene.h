@@ -75,14 +75,6 @@ private: // システム関係
 
 	};
 
-	// ライト
-	std::unique_ptr<DirectionalLight> directionalLight_;
-	CBufferDataDirectionalLight lightData_ = {};
-	std::unique_ptr<SpotLight> spotLight_;
-	CBufferDataSpotLight spLightData_ = {};
-	std::unique_ptr<PointLight> pointLight_;
-	CBufferDataPointLight ptLightData_ = {};
-
 	// テクスチャの表示用スプライト
 	//std::vector<Sprite*> textures_;
 	std::vector<std::pair<Vector2, Sprite*>> textures_;
