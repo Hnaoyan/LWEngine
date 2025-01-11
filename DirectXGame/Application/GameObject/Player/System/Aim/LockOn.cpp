@@ -25,6 +25,8 @@ void PlayerContext::LockOn::Update()
 			target_ = nullptr;
 		}
 	}
+
+	transitionTimer_.Update();
 }
 
 void PlayerContext::LockOn::ToggleLockOn(ICamera* camera)
@@ -60,36 +62,6 @@ void PlayerContext::LockOn::TargetRelease()
 
 void PlayerContext::LockOn::SearchTarget(ICamera* camera)
 {
-	//std::list<std::pair<float, SampleEnemy*>> targets;
-	//// 敵のリストがあれば
-	//if (enemys_) {
-	//	// リストからロックオンの条件に当てはまるのをリストに登録
-	//	for (std::vector<std::unique_ptr<SampleEnemy>>::iterator it = enemys_->begin();
-	//		it != enemys_->end(); ++it) {
-
-	//		Vector3 cameraToEnemy = (*it)->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
-	//		Vector3 cameraToPlayer = player_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
-
-	//		Vector3 enemyViewVector = Matrix4x4::TransformVector3((*it)->worldTransform_.GetWorldPosition(), camera->viewMatrix_);
-
-	//		float dot = Vector3::Dot(Vector3::Normalize(cameraToEnemy), Vector3::Normalize(cameraToPlayer));
-
-	//		Vector2 screenPosition = LwLib::WorldToScreen((*it)->worldTransform_.GetWorldPosition(), camera);
-
-	//		if (dot > data.threshold && enemyViewVector.z >= data.minDistanceZ && enemyViewVector.z <= data.maxDistanceZ) {
-	//			targets.emplace_back(std::make_pair(Vector3::Length(cameraToEnemy), (*it).get()));
-	//		}
-
-	//	}
-
-	//	// 近い順にソートする
-	//	target_ = nullptr;
-	//	if (!targets.empty()) {
-	//		targets.sort([](auto& pair1, auto& pair2) {return pair1.first < pair2.first; });
-	//		// 一番近いのをソート
-	//		target_ = targets.front().second;
-	//	}
-	//}
 	// ボスがいれば
 	if (boss_) {
 		Vector3 cameraToEnemy = boss_->worldTransform_.GetWorldPosition() - player_->GetCamera()->transform_.translate;
@@ -109,8 +81,11 @@ void PlayerContext::LockOn::SearchTarget(ICamera* camera)
 			//	}
 			//}
 			//else {
-				target_ = boss_;
+			//	target_ = boss_;
 			//}
+
+			target_ = boss_;
+			transitionTimer_.Start(GlobalVariables::GetInstance()->GetValue<float>("Player", "LockDuration") / 2.0f);
 		}
 	}
 

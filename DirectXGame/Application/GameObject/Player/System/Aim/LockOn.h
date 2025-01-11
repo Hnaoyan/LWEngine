@@ -4,6 +4,8 @@
 #include <list>
 #include <variant>
 
+#include "Engine/LwLib/LwEnginePaths.h"
+
 // 敵
 class IGameObject;
 class SampleEnemy;
@@ -76,6 +78,8 @@ namespace PlayerContext {
 		Player* GetPlayer() const { return player_; }
 		// 対象があるかどうか
 		bool ExistTarget() const { return target_ ? true : false; }
+
+		FrameTimer GetTransition() const { return transitionTimer_; }
 	private:
 		// プレイヤー
 		Player* player_ = nullptr;
@@ -86,6 +90,8 @@ namespace PlayerContext {
 		IGameObject* target_ = nullptr;
 		// 内積の閾値
 		LockOnData data{};
+		// カメラを滑らかに動かすタイマー
+		FrameTimer transitionTimer_;
 
 	};
 }
