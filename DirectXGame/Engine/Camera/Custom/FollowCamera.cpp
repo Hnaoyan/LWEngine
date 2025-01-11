@@ -53,8 +53,18 @@ void FollowCamera::Update()
 			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
 			sub = Vector3::Normalize(sub);
 			// 角度設定
-			destinationAngle_.y = LwLib::CalculateYawFromVector({ sub.x,0,sub.z });
-			destinationAngle_.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
+			Vector2 targetToRotate = {};
+			targetToRotate.y = LwLib::CalculateYawFromVector({ sub.x,0.0f,sub.z });
+			targetToRotate.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
+			if (lockOn_->GetTransition().IsActive()) {
+				destinationAngle_.x = Ease::Easing(destinationAngle_.x, targetToRotate.x, lockOn_->GetTransition().GetElapsedFrame());
+				destinationAngle_.y = Ease::Easing(destinationAngle_.y, targetToRotate.y, lockOn_->GetTransition().GetElapsedFrame());
+			}
+			else {
+				destinationAngle_.y = targetToRotate.y;
+				destinationAngle_.x = targetToRotate.x;
+			}
+
 			transform_.rotate.y = destinationAngle_.y;
 			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
 		}

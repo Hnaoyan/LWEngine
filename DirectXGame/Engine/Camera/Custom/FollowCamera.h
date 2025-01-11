@@ -86,4 +86,7 @@ private: // UserMethod
 	// ダッシュエフェクト用
 	ShiftData dashEffect_;
 
+	// ロックオンに対してスムーズに移行するように
+	FrameTimer lockSmoothTimer_;
+
 };
