@@ -8,6 +8,7 @@
 #include "Aim/AimManager.h"
 #include "Aim/LockOn.h"
 #include "Animation/PlayerAnimation.h"
+#include "AreaLimiter/AreaLimiter.h"
 #include "Shoot/ShootingManager.h"
 #include "Particle/PlayerParticleManager.h"
 #include "Energy/EnergyManager.h"

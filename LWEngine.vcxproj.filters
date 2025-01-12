@@ -632,6 +632,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\TrackingState\Transition\StateTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1240,6 +1241,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\TrackingState\TrackingData.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.h" />
     <ClInclude Include="DirectXGame\Application\Title\TitleObject.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

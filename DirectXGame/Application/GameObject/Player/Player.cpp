@@ -283,6 +283,7 @@ void Player::InitializeGlobalValue()
 	instance->AddValue(groupName, "FootOffset", float(-0.4f));
 	instance->AddValue(groupName, "TrailColor", Vector3(0.0f, 0.0f, 0.0f));
 	instance->AddValue(groupName, "TrailY", float(-0.5f));
+	instance->AddValue(groupName, "LimitPosition", Vector3(300.0f, 0.0f, 300.0f));	// 座標制限
 
 #pragma endregion
 
