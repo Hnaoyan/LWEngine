@@ -10,7 +10,7 @@ enum class BulletType : uint32_t
 	kTracking,	// 追従弾
 	kContainer,	// ミサイルコンテナ弾
 };
-// 追従先の属性（座標の決め方）
+// 追従先の属性（座標の決め方）ここに要素を追加していきたい
 enum class TrackingAttribute : uint32_t
 {
 	kSuperior,	// 優等

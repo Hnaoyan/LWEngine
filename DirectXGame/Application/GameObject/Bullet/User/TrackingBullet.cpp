@@ -4,8 +4,8 @@
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/LwLib/LwLibrary.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
-#include "../TrackingState/TrackingStates.h"
-#include "../TrackingState/Transition/StateTransitionManager.h"
+#include "../State/TrackingStates.h"
+#include "../State/Transition/StateTransitionManager.h"
 #include "Application/GameObject/Particle/User/ParticlePaths.h"
 
 void TrackingBullet::Initialize()
