@@ -38,7 +38,7 @@ void TerrainCluster::Draw(ModelDrawDesc desc)
 {
 	
 	if (isInvisible_) {
-		//return;
+		return;
 	}
 
 	// デスクの設定

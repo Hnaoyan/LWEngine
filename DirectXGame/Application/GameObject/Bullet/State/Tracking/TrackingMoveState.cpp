@@ -23,11 +23,6 @@ void TrackingMoveState::Enter()
 	// オフセット
 	inferiorOffset_ = LwLib::GetRandomValue({ -offsetValue,-offsetValue,-offsetValue }, { offsetValue,offsetValue,offsetValue }, limit);
 
-	//// 減衰率
-	//float damping = 1.0f / 300.0f;
-	//Vector3 newVelocity = bullet_->GetVelocity() + bullet_->GetVelocity() * (damping);
-	//bullet_->SetVelocity(newVelocity);
-
 	// 1.5秒で追従を緩くする（仮
 	float looseFrame = 150.0f;	// 緩くなるまでの時間
 	looseTimer_.Start(looseFrame);
@@ -39,7 +34,7 @@ void TrackingMoveState::Enter()
 		}
 	}
 	
-
+	// タイマー関係
 	elapsedTime_ = 0.0f;
 	currentFrame_ = 0.0f;
 }
@@ -75,9 +70,9 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 		}
 		// true = 緩い
 		else {
-			float supLimit = 0.05f;
-			float infLimit = 0.2f;
-			float genLimit = -0.05f;
+			float supLimit = 0.05f;	// 優等の解除
+			float infLimit = 0.2f;	// 劣等の解除
+			float genLimit = -0.05f; // 秀才の解除
 			switch (type)
 			{
 			case TrackingAttribute::kSuperior:
@@ -171,6 +166,49 @@ void TrackingMoveState::CheckPassing()
 
 }
 
+void TrackingMoveState::UpdateByType(TrackingAttribute type)
+{
+	// ベクトルの正規化
+	Vector3 toDirect = CalculateDirection(type).Normalize();
+	// 処理の種類
+	int number = BulletManager::sTrackingProcessType;
+	// 加速度初期化
+	parentAcceleration_ = {};
+	switch (number)
+	{
+	case 0:
+		// 加速度の計算
+		parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
+		break;
+	case 1:
+		// 一定フレームでのみ更新
+		currentFrame_++;
+		//float refreshFrame = 15.0f;
+		if (currentFrame_ >= BulletManager::sTrackingRefreshFrame) {
+			// 加速度の計算
+			parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
+			// 加速度の設定
+			currentFrame_ = 0.0f;
+		}
+		break;
+	case 2:
+		if (frameCount_ >= 1024) {
+			frameCount_ = 0;
+		}
+		else if ((frameCount_ > 0) && ((frameCount_ & (frameCount_ - 1)) == 0)) {
+			// 加速度の計算
+			parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
+		}
+		frameCount_++;
+		break;
+	default:
+		// 加速度の計算
+		parentAcceleration_ = accelerater_->CalcTrackingAcceleration(toDirect, accelerationTime_);
+		break;
+	}
+
+}
+
 Vector3 TrackingMoveState::CalculateDirection(TrackingAttribute type)
 {
 #pragma region 波の処理（使ってない
@@ -230,51 +268,3 @@ Vector3 TrackingMoveState::CalculateDirection(TrackingAttribute type)
 
 	return Vector3(toDirect.Normalize());
 }
-
-Vector3 TrackingMoveState::CalcSuperiorAcceleration()
-{
-	// キャストポインタ
-	TrackingBullet* bullet = dynamic_cast<TrackingBullet*>(bullet_);
-	//float speed = bullet->GetTrackingData().baseSpeed + (1.0f / 5.0f);
-	float speed = bullet->GetTrackingData().baseSpeed;
-	float maxSpeed = bullet->GetTrackingData().baseSpeed + 250.0f;
-	if (accelerationTime_.IsActive()) {
-		speed = Ease::Easing(speed, maxSpeed, accelerationTime_.GetElapsedFrame());
-	}
-	else {
-		speed = maxSpeed;
-	}
-
-	Vector3 bulletVelocity = bullet_->GetVelocity();
-	
-	// それぞれのベクトル
-	Vector3 toTarget = bullet_->GetTarget()->worldTransform_.GetWorldPosition() - bullet_->GetWorldPosition();
-	Vector3 nowDirect = Vector3::Normalize(bulletVelocity);
-	// 内積
-	float dot = Vector3::Dot(toTarget, nowDirect);
-	// 向心加速力の計算
-	Vector3 centripetalAccel = toTarget - (nowDirect * dot);
-	float centripetalAccelMagnitude = Vector3::Length(centripetalAccel);
-	// 大きさの調整
-	// 最大値
-	float maxCentripetalAccel = 5.0f;
-
-	if (centripetalAccelMagnitude > maxCentripetalAccel) {
-		centripetalAccel /= centripetalAccelMagnitude;
-	}
-	// 最大向心力
-	float maxCentripetalForce = std::powf(speed, 2) / bullet->GetTrackingData().lerpRadius;
-
-	// 力の向き
-	Vector3 force = centripetalAccel * maxCentripetalForce;
-	// 推進力計算
-	float propulsion = speed * bullet->GetTrackingData().damping;
-	// 向心力に現在の方向ベクトルに＋推進力でベクトルを作成
-	force += nowDirect * propulsion;
-	// 速度の減衰処理
-	force -= bulletVelocity * bullet->GetTrackingData().damping;
-
-	// 加速度の計算
-	return Vector3(force);
-}
-

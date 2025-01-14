@@ -14,6 +14,12 @@ public:
 
 	void CheckPassing();
 private:
+	/// <summary>
+	/// 種類別の更新部分
+	/// </summary>
+	/// <param name="type"></param>
+	void UpdateByType(TrackingAttribute type);
+
 	Vector3 CalculateDirection(TrackingAttribute type);
 
 private:
@@ -34,8 +40,4 @@ private:
 	float currentFrame_ = 0.0f;
 
 	int32_t frameCount_ = 0u;
-
-private: // 計算関数
-	// 優等（完全追尾
-	Vector3 CalcSuperiorAcceleration();
 };

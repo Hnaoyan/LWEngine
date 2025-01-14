@@ -101,8 +101,12 @@ void PlayerContext::PlayerUIManager::EnergyUI()
 		Vector4 red = { 1.0f,0.0f,0.0f,1.0f };
 		color = red;
 	}
+
 	energyUI_.currentScale = Vector2::Lerp({ energyUI_.maxScale.x, 0.0f }, energyUI_.maxScale, t);
+	//float defPosX = energyUI_.position.x - (scale.x / 2.0f) + ((scale.x - energyUI_.currentScale.x) / 2.0f);
+	//float defPosY = energyUI_.position.y + ((scale.y - energyUI_.currentScale.y) / 2.0f);
 	energyUI_.currentHP.sprite->SetSize(energyUI_.currentScale);
+	//energyUI_.currentHP.sprite->SetPosition({ defPosX ,defPosY });
 	energyUI_.currentHP.color = (color);
 	energyUI_.currentHP.Draw();
 	// 背景
@@ -116,6 +120,9 @@ void PlayerContext::PlayerUIManager::ImGuiDraw()
 	Vector2 scale = hpUI_.currentHP.sprite->GetSize();
 	ImGui::DragFloat2("Scale", &scale.x, 1.0f);
 	hpUI_.currentHP.sprite->SetSize(scale);
+	Vector2 enPos = energyUI_.currentHP.sprite->GetPosition();
+	ImGui::DragFloat2("EnPos", &enPos.x, 0.1f);
+	energyUI_.currentHP.sprite->SetPosition(enPos);
 	ImGui::DragFloat3("ComboUIOffset", &justDodgeUI_.offset.x, 0.1f);
 	ImGui::DragFloat3("JustComboScale", &justDodgeUI_.worldTransform.transform_.scale.x, 0.1f);
 	ImGui::ColorEdit4("PlaneColor", &justDodgeUI_.material->color_.x);
