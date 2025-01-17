@@ -96,11 +96,6 @@ void TitleScene::Draw()
 	SpriteManager::GetSprite("BackGroundImage")->Draw();
 
 
-	for (std::vector<std::pair<Vector2, Sprite*>>::iterator it = textures_.begin(); it != textures_.end(); ++it) {
-		(*it).second->Draw();
-	}
-
-
 	Sprite::PostDraw();
 #pragma endregion
 	// 深度クリア
@@ -209,11 +204,4 @@ void TitleScene::LoadTexture()
 	SpriteManager::LoadSprite("TitleText", TextureManager::GetInstance()->Load("Resources/UI/TitleText.png"));
 	
 	//clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
-}
-
-void TitleScene::AddSprite(const std::string& texturePath, const std::string& spriteTag)
-{
-	std::string path = "Resources/" + texturePath;
-	uint32_t texture = TextureManager::Load(path);
-	textures_.push_back(std::pair(Vector2(), SpriteManager::LoadSprite(spriteTag, texture)));
 }
