@@ -20,6 +20,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.cpp" />
@@ -217,6 +218,8 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\TrackAttributes.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.h" />

@@ -4,6 +4,9 @@
 
 class IBullet;
 
+/// <summary>
+/// 追従の属性
+/// </summary>
 class ITrackiAttribute
 {
 public:
