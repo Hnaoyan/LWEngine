@@ -634,6 +634,7 @@
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1244,6 +1245,8 @@
     <ClInclude Include="DirectXGame\Application\Title\TitleObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\TrackAttributes.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
