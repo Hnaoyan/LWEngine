@@ -166,6 +166,7 @@ void TitleScene::LoadModel()
 	//ModelManager::LoadObjModel("Plane", "plane");
 	//ModelManager::LoadObjModel("Axis", "BulletTest");
 	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
+	ModelManager::LoadNormalModel("RoundShadow", "plane");	// 丸影
 
 }
 
