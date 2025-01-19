@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include "Application/GameObject/Particle/User/ParticlePaths.h"
-#include "Engine/3D/Drawer/Triangle3D.h"
+#include "Engine/3D/User/Trail3D.h"
 #include "../IPlayerSystem.h"
 
 class Player;
@@ -57,17 +57,15 @@ namespace PlayerContext {
 		// 描画
 		void Draw(ICamera* camera);
 
-		//void TrailUpdate();
-
 	private:
 		// 保存座標と長さ
 		std::pair<std::vector<Vector3>, int32_t> trailPoint_;
 		// ポリゴン
-		std::unique_ptr<Triangle3D> triangle_;
+		std::unique_ptr<Trail3D> triangle_;
 
 	private:
-		WorldTransform worldTransform_;
 		Player* player_ = nullptr;
+		bool isInvisible_ = false;
 	};
 
 }

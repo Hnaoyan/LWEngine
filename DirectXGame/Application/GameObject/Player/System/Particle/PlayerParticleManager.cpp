@@ -61,13 +61,10 @@ void PlayerContext::MoveTrail::Initialize(Player* player)
 	player_ = player;
 
 	// ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
-	worldTransform_.parent_ = &player_->worldTransform_;
-	worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "TrailY");
+	//worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "TrailY");
 
 	// ポリゴンの初期化
-	triangle_ = std::make_unique<Triangle3D>();
-	triangle_->Initialize();
+	triangle_ = std::make_unique<Trail3D>();
 	triangle_->SetCamera(player_->GetCamera());
 	triangle_->SetMaxWidth(0.5f);
 	Vector3 rgb = GlobalVariables::GetInstance()->GetValue<Vector3>("PlayerBasic", "TrailColor");
@@ -83,13 +80,15 @@ void PlayerContext::MoveTrail::Update()
 #ifdef IMGUI_ENABLED
 	Vector3 rgb = GlobalVariables::GetInstance()->GetValue<Vector3>("PlayerBasic", "TrailColor");
 	triangle_->SetColor(Vector4(rgb.x, rgb.y, rgb.z, 1.0f));
-	worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "TrailY");
+	//worldTransform_.transform_.translate.y = GlobalVariables::GetInstance()->GetValue<float>("PlayerBasic", "TrailY");
 #endif // IMGUI_ENABLED
 
 	// トランスフォームの更新
-	worldTransform_.UpdateMatrix();
+	float yOffset = player_->GetRoundShadow()->GetWorldTransform()->GetWorldPosition().y + 0.5f;
+	Vector3 position = Vector3(player_->worldTransform_.GetWorldPosition().x,
+		yOffset, player_->worldTransform_.GetWorldPosition().z);
 	// 要素追加
-	trailPoint_.first.push_back(worldTransform_.GetWorldPosition());
+	trailPoint_.first.push_back(position);
 	// 最大値内に収める
 	if (trailPoint_.first.size() > trailPoint_.second) {
 		trailPoint_.first.erase(trailPoint_.first.begin());
@@ -111,13 +110,19 @@ void PlayerContext::MoveTrail::Draw(ICamera* camera)
 				interpolatedPoints.push_back(LwLib::Curve::CatmullRomSpline(trailPoint_.first[i - 1], trailPoint_.first[i], trailPoint_.first[i + 1], trailPoint_.first[i + 2], t));
 			}
 		}
-		triangle_->Update(interpolatedPoints);
+		//triangle_->Update(interpolatedPoints);
+		triangle_->LerpWidthVertex(trailPoint_.first);
+		triangle_->Update();
+		isInvisible_ = false;
 	}
 	else {
 		// 頂点の更新
-		triangle_->Update(trailPoint_.first);
+		isInvisible_ = true;
+		triangle_->Update();
 	}
 
 	// 描画
-	ModelRenderer::TriangleDraw(camera, triangle_.get());
+	if (!isInvisible_) {
+		ModelRenderer::TrailDraw(camera, triangle_.get());
+	}
 }

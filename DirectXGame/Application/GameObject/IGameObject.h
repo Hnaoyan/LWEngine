@@ -85,7 +85,7 @@ public: // アクセッサ
 	void SetIsDead(bool isDead) { isDead_ = isDead; }
 	Vector3 GetVelocity() const { return velocity_; }
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-
+	RoundShadow* GetRoundShadow() { return roundShadow_.get(); }
 protected:
 	// モデル
 	Model* model_ = nullptr;

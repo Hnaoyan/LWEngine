@@ -19,6 +19,7 @@ public:
 	void SetDefaultScale(const Vector2& scale) { defaultScale_ = scale; }
 	void SetOffset(const float& offset) { offset_ = offset; }
 	void SetPosition(const Vector2& position) { targetPosition_ = position; }
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 private:
 	IGameObject* object_ = nullptr;
 	Vector2 targetPosition_ = {};	//X-Z座標
