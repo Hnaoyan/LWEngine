@@ -23,7 +23,7 @@ void RoundShadow::Initialize(IGameObject* gameObject)
 
 	worldTransform_.Initialize();
 	//worldTransform_.parent_ = &player_->worldTransform_;
-	worldTransform_.transform_.translate.y = -3.0f;
+	worldTransform_.transform_.translate.y = -3.2f;
 	worldTransform_.transform_.rotate.x = 1.57f;
 	worldTransform_.UpdateMatrix();
 

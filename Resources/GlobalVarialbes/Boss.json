@@ -13,8 +13,8 @@
             18.0
         ],
         "BarrierVanishFrame": 45.0,
-        "MaxYPoint": 30.0,
-        "MinYPoint": 20.0,
+        "MaxYPoint": 45.0,
+        "MinYPoint": 25.0,
         "NormalScale": [
             7.0,
             7.0,
