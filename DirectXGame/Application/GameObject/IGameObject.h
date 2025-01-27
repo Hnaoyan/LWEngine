@@ -12,32 +12,6 @@ class CollisionManager;
 class IGameObject
 {
 public:
-	ColliderObject SelectColliderObject(ColliderObject obj) {
-		if (std::holds_alternative<Player*>(obj)) {
-			return std::get<Player*>(obj);
-		}
-		else if (std::holds_alternative<IBullet*>(obj)) {
-			return std::get<IBullet*>(obj);
-		}
-
-		return std::get<IGameObject*>(obj);
-	}
-
-public:
-	// 共通のシリアル
-	static int32_t sSerialNumber;
-	// デストラクタ
-	virtual ~IGameObject() = default;
-
-protected:
-	// 個体のシリアル
-	int32_t commonSerialNumber_ = 0u;
-	// 死亡フラグ
-	bool isDead_ = false;
-	// デバッグ用の非表示フラグ
-	bool isInvisible_ = false;
-
-public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -101,5 +75,30 @@ public:
 	Vector3 velocity_ = {};
 	// 加速度ベクトル
 	Vector3 acceleration_ = {};
+public:
+	ColliderObject SelectColliderObject(ColliderObject obj) {
+		if (std::holds_alternative<Player*>(obj)) {
+			return std::get<Player*>(obj);
+		}
+		else if (std::holds_alternative<IBullet*>(obj)) {
+			return std::get<IBullet*>(obj);
+		}
+
+		return std::get<IGameObject*>(obj);
+	}
+
+public:
+	// 共通のシリアル
+	static int32_t sSerialNumber;
+	// デストラクタ
+	virtual ~IGameObject() = default;
+
+protected:
+	// 個体のシリアル
+	int32_t commonSerialNumber_ = 0u;
+	// 死亡フラグ
+	bool isDead_ = false;
+	// デバッグ用の非表示フラグ
+	bool isInvisible_ = false;
 
 };
