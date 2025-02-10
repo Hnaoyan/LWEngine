@@ -26,7 +26,19 @@ bl_info ={
 
 # モジュールのインポート
 from .stretch_vertex import MYADDON_OT_stretch_vertex
+# スフィア作成
+from .create_ico_sphere import MYADDON_OT_create_ico_sphere
+# キューブ作成
+from .create_cube import MYADDON_OT_create_cube
+# コライダー
+from .add_collider import MYADDON_OT_add_collider
+# ファイルネーム
+from .add_filename import MYADDON_OT_add_filename
+#from .add_filename import OBJECT_PT_file_name
 
+# 表示
+from .add_disabled import MYADDON_OT_add_disabled
+from .add_disabled import OBJECT_PT_disabled
 
 class DrawCollider:
     # 描画ハンドル
@@ -118,35 +130,6 @@ class DrawCollider:
         shader.uniform_float("color",color)
         #描画
         batch.draw(shader)
-
-
-class MYADDON_OT_create_ico_sphere(bpy.types.Operator):
-    bl_idname = "myaddon.myaddon_ot_create_object"
-    bl_label = "ICO球生成"
-    bl_description = "ICO球を生成します"
-    bl_options = {'REGISTER','UNDO'}
-
-    # メニューを実行したときに呼ばれる関数
-    def execute(self,context):
-        bpy.ops.mesh.primitive_ico_sphere_add()
-        print("ICO球を生成しました。")
-
-        return {'FINISHED'}
-
-#オペレータ Cubeの生成
-class MYADDON_OT_create_cube(bpy.types.Operator):
-    bl_idname = "myaddon.myaddon_ot_create_cube"
-    bl_label = "Cube生成"
-    bl_description = "Cubeを生成"
-    bl_options = {'REGISTER','UNDO'}
-
-    # 実行時に呼ばれる関数
-    def execute(self,context):
-        bpy.ops.mesh.primitive_cube_add()
-        print("Cubeを生成しました。")
-
-        return {'FINISHED'}
- #オペレータ 頂点を伸ばす
 
 class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelper):
     bl_idname = "myaddon.myaddon_ot_export_scene"
@@ -337,20 +320,6 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
 
         return {'FINISHED'}
 
-#オペレータ カスタムプロパティ['file name']追加
-class MYADDON_OT_add_filename(bpy.types.Operator):
-    bl_idname = "myaddon.myaddon_ot_add_filename"
-    bl_label = "FileName 追加"
-    bl_descriptor = "['file_name']カスタムプロパティを追加します"
-    bl_options ={"REGISTER","UNDO"}
-
-    def execute(self,context):
-
-        #['file_name']カスタムプロパティを追加
-        context.object["file_name"] = ""
-
-        return {"FINISHED"}
-    
 class MYADDON_OT_add_modeltag(bpy.types.Operator):
     bl_idname ="myaddon.myaddon_ot_add_modeltag"
     bl_label = "Modeltag 追加"
@@ -363,20 +332,6 @@ class MYADDON_OT_add_modeltag(bpy.types.Operator):
 
         return {"FINISHED"}
 
-#オペレータ カスタムプロパティ['collider']追加
-class MYADDON_OT_add_collider(bpy.types.Operator):
-    bl_idname = "myaddon.myaddon_ot_add_collider"
-    bl_label = "コライダー 追加"
-    bl_description = "['collider']カスタムプロパティを追加します"
-    bl_optionas = {"REGISTER","UNDO"}
-
-    def execute(self,context):
-        #['collider']カスタムプロパティ
-        context.object["collider"] = "BOX"
-        context.object["collider_center"] = mathutils.Vector((0,0,0))
-        context.object["collider_size"] = mathutils.Vector((2,2,2))
-
-        return {"FINISHED"}
 
 #トップバーの拡張メニュー
 class TOPBAR_MT_my_menu(bpy.types.Menu):
@@ -427,6 +382,7 @@ class OBJECT_PT_file_name(bpy.types.Panel):
             #プロパティがなければ、プロパティ追加ボタンを表示
             self.layout.operator(MYADDON_OT_add_filename.bl_idname)
 
+#パネル モデル名
 class OBJECT_PT_model_tag(bpy.types.Panel):
     """オブジェクトのファイルネームパネル"""
     bl_idname = "OBJECT_PT_model_tag"
@@ -476,6 +432,8 @@ classes = {
     MYADDON_OT_add_modeltag,
     OBJECT_PT_file_name,
     OBJECT_PT_model_tag,
+    MYADDON_OT_add_disabled,
+    OBJECT_PT_disabled,
     MYADDON_OT_add_collider,
     OBJECT_PT_collider,
 }
