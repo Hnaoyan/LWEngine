@@ -69,6 +69,7 @@ void TrackingMoveState::Update(BulletStateMachine& stateMachine)
 			}
 		}
 		// true = 緩い
+		//---変更処理---//
 		else {
 			float supLimit = 0.05f;	// 優等の解除
 			float infLimit = 0.2f;	// 劣等の解除
