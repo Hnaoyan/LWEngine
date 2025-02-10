@@ -18,11 +18,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "externals\Dir
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "externals\ImGui\ImGui.vcxproj", "{B48432A6-D5BD-4431-B42C-77277EFC54C9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureConverter", "Converter\TextureConverter\TextureConverter.vcxproj", "{19112BA7-4DBB-4160-82DB-360651187440}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Converter", "Converter", "{15D63B5D-94CF-4C05-8760-A937BCF25B6B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "externals", "externals", "{E3C3C278-EC24-4D85-AAD3-A8A1A4AF224A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "projects", "projects", "{5FF27D2B-36FE-4912-8CC4-F7C5A80F3D6D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureConverter", "projects\Converter\TextureConverter\TextureConverter.vcxproj", "{19112BA7-4DBB-4160-82DB-360651187440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,7 +125,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{371B9FA9-4C90-4AC6-A123-ACED756D6C77} = {E3C3C278-EC24-4D85-AAD3-A8A1A4AF224A}
 		{B48432A6-D5BD-4431-B42C-77277EFC54C9} = {E3C3C278-EC24-4D85-AAD3-A8A1A4AF224A}
-		{19112BA7-4DBB-4160-82DB-360651187440} = {15D63B5D-94CF-4C05-8760-A937BCF25B6B}
+		{19112BA7-4DBB-4160-82DB-360651187440} = {5FF27D2B-36FE-4912-8CC4-F7C5A80F3D6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FD6CC76-1448-4E88-BA89-B84DEE7636BF}
