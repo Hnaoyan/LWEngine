@@ -40,6 +40,9 @@ from .add_filename import MYADDON_OT_add_filename
 from .add_disabled import MYADDON_OT_add_disabled
 from .add_disabled import OBJECT_PT_disabled
 
+# SpawnPoint
+from .add_spawnPoint import MYADDON_OT_create_spawn
+
 class DrawCollider:
     # 描画ハンドル
     handle = None
@@ -191,7 +194,11 @@ class MYADDON_OT_export_scene(bpy.types.Operator, bpy_extras.io_utils.ExportHelp
         #シーンのオブジェクト1個分のjsonオブジェクト生成
         json_object = dict()
         #オブジェクト種類
-        json_object["type"] = object.type
+        #json_object["type"] = object.type
+        if "type" in object:
+            json_object["type"] = object["type"]
+        else:
+            json_object["type"] = object.type
         #オブジェクト名
         json_object["name"] = object.name
 
@@ -355,7 +362,10 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
         
         self.layout.operator(MYADDON_OT_export_scene.bl_idname,
             text = MYADDON_OT_export_scene.bl_label)
-        
+
+        self.layout.operator(MYADDON_OT_create_spawn.bl_idname,
+            text = MYADDON_OT_create_spawn.bl_label)
+
         #self.layout.operator(MYADDON_OT_add_collider.bl_idname,
 
     #既存のメニューにサブメニューを追加
@@ -436,6 +446,7 @@ classes = {
     OBJECT_PT_disabled,
     MYADDON_OT_add_collider,
     OBJECT_PT_collider,
+    MYADDON_OT_create_spawn,
 }
 
 #メニュー項目描画
