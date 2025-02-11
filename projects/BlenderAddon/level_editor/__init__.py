@@ -41,7 +41,10 @@ from .add_disabled import MYADDON_OT_add_disabled
 from .add_disabled import OBJECT_PT_disabled
 
 # SpawnPoint
+from .add_spawnPoint import MYADDON_OT_add_spawn_symbol
 from .add_spawnPoint import MYADDON_OT_create_spawn
+from .add_spawnPoint import MYADDON_OT_create_player_symbol
+from .add_spawnPoint import MYADDON_OT_create_enemy_symbol
 
 class DrawCollider:
     # 描画ハンドル
@@ -363,8 +366,11 @@ class TOPBAR_MT_my_menu(bpy.types.Menu):
         self.layout.operator(MYADDON_OT_export_scene.bl_idname,
             text = MYADDON_OT_export_scene.bl_label)
 
-        self.layout.operator(MYADDON_OT_create_spawn.bl_idname,
-            text = MYADDON_OT_create_spawn.bl_label)
+        self.layout.operator(MYADDON_OT_create_player_symbol.bl_idname,
+            text = MYADDON_OT_create_player_symbol.bl_label)
+
+        self.layout.operator(MYADDON_OT_create_enemy_symbol.bl_idname,
+            text = MYADDON_OT_create_enemy_symbol.bl_label)
 
         #self.layout.operator(MYADDON_OT_add_collider.bl_idname,
 
@@ -446,7 +452,10 @@ classes = {
     OBJECT_PT_disabled,
     MYADDON_OT_add_collider,
     OBJECT_PT_collider,
+    MYADDON_OT_add_spawn_symbol,
     MYADDON_OT_create_spawn,
+    MYADDON_OT_create_player_symbol,
+    MYADDON_OT_create_enemy_symbol,
 }
 
 #メニュー項目描画
