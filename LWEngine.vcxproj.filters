@@ -1247,6 +1247,7 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\TrackAttributes.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\SceneState\GameSceneState.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
