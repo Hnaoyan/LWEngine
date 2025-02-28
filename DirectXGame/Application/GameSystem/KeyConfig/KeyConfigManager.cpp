@@ -39,7 +39,7 @@ void KeyConfigManager::Update(ReplayManager* replayManager)
         // ロックオン
         playerKey_.keyConfigs.lockon = input_->XTriggerJoystick(playerKey_.keybinds.lockon);
         // 通常射撃
-        playerKey_.keyConfigs.shot = input_->XTriggerJoystick(playerKey_.keybinds.shot);
+        playerKey_.keyConfigs.shot = input_->XPressJoystick(playerKey_.keybinds.shot);
         // 追従弾
         playerKey_.keyConfigs.homingShot = input_->XTriggerJoystick(playerKey_.keybinds.homingShot);
         // ダッシュ

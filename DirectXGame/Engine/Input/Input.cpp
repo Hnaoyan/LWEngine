@@ -157,7 +157,7 @@ bool Input::XNotPressJoystick(int32_t keyNumber)
 
 bool Input::XTriggerJoystick(int32_t keyNumber)
 {
-	if (xJoyState_.Gamepad.wButtons & keyNumber) {
+	if ((xJoyState_.Gamepad.wButtons & keyNumber) && !(xJoyStatePrev_.Gamepad.wButtons & keyNumber)) {
 		return true;
 	}
 	return false;
