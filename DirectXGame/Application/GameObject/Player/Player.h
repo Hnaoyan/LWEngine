@@ -116,7 +116,9 @@ private: // USER
 	// 現在のステート
 	void NowState();
 	// 回転に合わせた透明処理
-	void RotateCleanness();
+	void RotateUpdate();
+	// コライダー関係の更新
+	void ColliderUpdate();
 private:
 	// ボス
 	Boss* boss_ = nullptr;

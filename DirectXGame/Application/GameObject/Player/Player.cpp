@@ -74,25 +74,10 @@ void Player::Update()
 	roundShadow_->SetPosition(Vector2(facadeSystem_->GetAnimation()->bodyTransform_.GetWorldPosition().x, facadeSystem_->GetAnimation()->bodyTransform_.GetWorldPosition().z));
 	IGameObject::Update();
 	// 角度に合わせて透明化する処理
-	RotateCleanness();
-
-	// 前方方向
-	Vector2 newFront = {};
-	newFront.x = 1.0f * std::sinf(worldTransform_.transform_.rotate.y);
-	newFront.y = 1.0f * std::cosf(worldTransform_.transform_.rotate.y);
-	frontVector_ = newFront;
+	RotateUpdate();
 
 	// コライダー更新
-	// 無敵中の処理
-	if (facadeSystem_->GetDudgeManager()->IsActive()) {
-		collider_.SetRadius(worldTransform_.transform_.scale * GlobalVariables::GetInstance()->GetValue<float>("PlayerAction", "DodgeSize"));
-	}
-	else {
-		collider_.SetRadius(worldTransform_.transform_.scale);
-	}
-	collider_.Update(worldTransform_.GetWorldPosition());
-	// 足場コライダー
-	footCollider_.Update();
+	ColliderUpdate();
 }
 
 void Player::Draw(ModelDrawDesc desc)
@@ -379,7 +364,7 @@ void Player::NowState()
 	ImGui::Text(horizonName.c_str());
 }
 
-void Player::RotateCleanness()
+void Player::RotateUpdate()
 {
 	// 画角に応じて透明化するように
 	if (camera_) {
@@ -391,6 +376,26 @@ void Player::RotateCleanness()
 
 		material_->color_.w = Ease::Easing(1.0f, 0.2f, v);
 	}
+
+	// 前方方向
+	Vector2 newFront = {};
+	newFront.x = 1.0f * std::sinf(worldTransform_.transform_.rotate.y);
+	newFront.y = 1.0f * std::cosf(worldTransform_.transform_.rotate.y);
+	frontVector_ = newFront;
+}
+
+void Player::ColliderUpdate()
+{
+	// 無敵中の処理
+	if (facadeSystem_->GetDudgeManager()->IsActive()) {
+		collider_.SetRadius(worldTransform_.transform_.scale * GlobalVariables::GetInstance()->GetValue<float>("PlayerAction", "DodgeSize"));
+	}
+	else {
+		collider_.SetRadius(worldTransform_.transform_.scale);
+	}
+	collider_.Update(worldTransform_.GetWorldPosition());
+	// 足場コライダー
+	footCollider_.Update();
 }
 
 void Player::CollisionCorrect(ICollider::CollisionType3D type, const Vector3& min, const Vector3& max)
