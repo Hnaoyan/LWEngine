@@ -13,6 +13,34 @@
 /// </summary>
 namespace LwLib
 {
+	/// <summary>
+	/// 最大最小（通常変数型想定）
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	template <typename T>
+	struct MinMax {
+		// 最大最小
+		T min, max;
+
+		/// <summary>
+		/// 範囲内に収める処理
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		T Clamp(const T& value) const{
+			return std::clamp(value, this->min, this->max);
+		}
+
+		/// <summary>
+		/// 含まれているかチェック
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		bool Contains(const T& value) const {
+			return (value >= this->min && value <= this->max);
+		}
+	};
+
 	// ランダムエンジン
 	static std::mt19937 sRandomEngine;
 	/// <summary>

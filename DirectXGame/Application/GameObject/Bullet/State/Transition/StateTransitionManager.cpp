@@ -95,6 +95,8 @@ void StateTransitionManager::DefaultTransition()
 
 	// リクエスト処理
 	if (requestState_) {
+		float waveTime = 90.0f;
+
 		switch (requestState_.value())
 		{
 		case TrackingState::kStraight:
@@ -102,7 +104,7 @@ void StateTransitionManager::DefaultTransition()
 			bullet_->GetStateMachine()->RequestState(TrackingState::kStraight);
 			break;
 		case TrackingState::kWave:
-			transitionTimer_.Start(90.0f);
+			transitionTimer_.Start(waveTime);
 			bullet_->GetStateMachine()->RequestState(TrackingState::kWave);
 			break;
 		case TrackingState::kTracking:

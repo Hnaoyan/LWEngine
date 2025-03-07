@@ -29,9 +29,11 @@ void Player::Initialize(Model* model)
 	// マテリアル
 	material_ = std::make_unique<Material>();
 	material_->CreateMaterial();
-	material_->discardThreshold_ = 0.075f;
+	float playerMaterialThreshold = 0.075f;
+	material_->discardThreshold_ = playerMaterialThreshold;
 	// 影
-	roundShadow_->SetDefaultScale(Vector2(3.0f, 3.0f));
+	Vector2 roundShadowSize = Vector2(3.0f, 3.0f);
+	roundShadow_->SetDefaultScale(roundShadowSize);
 	// トランスフォーム
 	worldTransform_.transform_.rotate = {};
 	worldTransform_.transform_.translate = GlobalVariables::GetInstance()->GetValue<Vector3>("Player", "InitPosition");
@@ -368,13 +370,13 @@ void Player::RotateUpdate()
 {
 	// 画角に応じて透明化するように
 	if (camera_) {
-		float min = -0.1f;
-		float max = -0.3f;
+		LwLib::MinMax<float> rotMinMax = { -0.1f, -0.3f };
 		float rotX = camera_->transform_.rotate.x;
-		float v = (rotX - min) / (max - min);
+		float v = (rotX - rotMinMax.min) / (rotMinMax.max - rotMinMax.min);
 		v = std::clamp(v, 0.0f, 1.0f);
 
-		material_->color_.w = Ease::Easing(1.0f, 0.2f, v);
+		LwLib::MinMax<float> colorMinMax = { 0.2f, 1.0f };
+		material_->color_.w = Ease::Easing(colorMinMax.max, colorMinMax.min, v);
 	}
 
 	// 前方方向

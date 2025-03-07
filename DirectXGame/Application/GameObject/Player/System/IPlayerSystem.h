@@ -5,6 +5,9 @@ class Player;
 
 namespace PlayerContext
 {
+	/// <summary>
+	/// システムの基底クラス
+	/// </summary>
 	class ISystem
 	{
 	public:
