@@ -19,11 +19,18 @@ public:
 	// 色
 	Vector4 sColor;
 
+	/// <summary>
+	/// 開始
+	/// </summary>
+	/// <param name="changeFrame"></param>
 	void ExecuteStart(float changeFrame) {
 		changeFrame_ = changeFrame;
 		setupTimer_.Start(changeFrame_);
 	}
 
+	/// <summary>
+	/// 中間開始
+	/// </summary>
 	void ExecuteReturn() {
 		returnTimer_.Start(changeFrame_);
 	}
