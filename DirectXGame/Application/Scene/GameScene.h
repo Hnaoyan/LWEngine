@@ -14,6 +14,7 @@
 #include "Application/GameSystem/UI/GameUIManager.h"
 #include "Application/GameSystem/GameObjectManager.h"
 #include "Application/GameSystem/Camera/CameraManager.h"
+#include "Application/GameObject/Particle/CPUParticleManager.h"
 
 #include <optional>
 
@@ -90,8 +91,9 @@ private: // アプリ
 	std::unique_ptr<CollisionManager> collisionManager_;
 	// カメラマネ
 	std::unique_ptr<CameraManager> cameraManager_;
-	// GPUParticle
+	// パーティクル
 	std::unique_ptr<GPUParticleManager> gpuParticleManager_;
+	std::unique_ptr<CPUParticleManager> cpuParticleManager_;
 	// UI
 	std::unique_ptr<GameUIManager> uiManager_;
 private: // システム関係

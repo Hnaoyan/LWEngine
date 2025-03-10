@@ -5,7 +5,7 @@ void CPUParticleEmitter::Initialize(Model* model)
 {
 	InstancedGroup::Initialize(model);
 
-
+	blendMode_ = Pipeline::BlendMode::kAlpha;
 }
 
 void CPUParticleEmitter::Update()
@@ -21,8 +21,15 @@ void CPUParticleEmitter::Update()
 
 void CPUParticleEmitter::Draw(ModelDrawDesc desc)
 {
+	// 隠す処理
 	if (isInvisible_) {
 		return;
+	}
+	// ビルボード処理
+	for (auto it = units_.begin(); it != units_.end(); ++it) {
+		if ((*it)->IsBillBoard()) {
+			(*it)->transform_.rotate = desc.camera->transform_.rotate;
+		}
 	}
 
 	// デスク
