@@ -520,9 +520,6 @@
     <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp">
       <Filter>Engine\3D</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.cpp">
       <Filter>Application\GameObject\Bullet</Filter>
     </ClCompile>
@@ -565,9 +562,6 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\Straight\TrackingStraightState.cpp">
       <Filter>Application\GameObject\Bullet\Tracking</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.cpp">
       <Filter>Application\Particle</Filter>
     </ClCompile>
@@ -585,9 +579,6 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp">
       <Filter>Application\GameObject\Bullet\Trail</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BombEffectPlane.cpp">
-      <Filter>Application\Particle</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.cpp">
       <Filter>Application\GameObject\Bullet</Filter>
@@ -635,6 +626,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Instanced\InstancedManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1093,9 +1085,6 @@
     <ClInclude Include="DirectXGame\Engine\3D\TrailMaterial.h">
       <Filter>Engine\3D</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombCluster.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h">
       <Filter>Application\GameObject\Bullet</Filter>
     </ClInclude>
@@ -1159,9 +1148,6 @@
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.h">
       <Filter>Application\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BulletBombEffect.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.h">
       <Filter>Application\Particle</Filter>
     </ClInclude>
@@ -1182,9 +1168,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h">
       <Filter>Application\GameObject\Bullet\Trail</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\CPUEffect\BombEffectPlane.h">
-      <Filter>Application\Particle</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h">
       <Filter>Application\GameObject\Bullet</Filter>
@@ -1250,6 +1233,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\IGameSceneState.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\IParticleEmitter.h" />
+    <ClInclude Include="DirectXGame\Engine\Instanced\InstancedManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

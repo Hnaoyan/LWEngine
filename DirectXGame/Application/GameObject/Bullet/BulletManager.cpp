@@ -1,5 +1,4 @@
 #include "BulletManager.h"
-#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include <cassert>
 #include <imgui.h>
@@ -144,16 +143,16 @@ void BulletManager::AddCluster(const std::string& tag)
 
 	// ここに爆発板ポリクラスター作成
 
-	std::unique_ptr<BulletBombCluster> bombCluster = std::make_unique<BulletBombCluster>();
-	bombCluster->Initialize(ModelManager::GetModel("BombPlane"));
-	IBulletCluster* castPtr = static_cast<IBulletCluster*>(instance.get());
+	//std::unique_ptr<BulletBombCluster> bombCluster = std::make_unique<BulletBombCluster>();
+	//bombCluster->Initialize(ModelManager::GetModel("BombPlane"));
+	//IBulletCluster* castPtr = static_cast<IBulletCluster*>(instance.get());
 
-	// 
-	castPtr->SetBombCluster(bombCluster.get());
+	//// 
+	//castPtr->SetBombCluster(bombCluster.get());
 
 	clusters_.emplace(tag, std::move(instance));
-	std::string bombTag = "Bomb" + tag;
-	clusters_.emplace(bombTag, std::move(bombCluster));
+	//std::string bombTag = "Bomb" + tag;
+	//clusters_.emplace(bombTag, std::move(bombCluster));
 }
 
 void BulletManager::AddCluster(const std::string& tag, Model* model)
