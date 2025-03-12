@@ -5,6 +5,9 @@
 #include <memory>
 #include <unordered_map>
 
+/// <summary>
+/// CPUのパーティクル管理
+/// </summary>
 class CPUParticleManager : public InstancedManager
 {
 public:

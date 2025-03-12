@@ -61,7 +61,7 @@ private: // システム関係
 	Vector2 titleTextPosition_{};
 	// 経過時間
 	float elapsedTime_ = 0.0f;
-
+	// ライティング関係のマネージャ
 	std::unique_ptr<LightingManager> lightManager_;
 
 	// プレイヤーのキャラオブジェクト

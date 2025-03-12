@@ -18,13 +18,12 @@ public: // 仮想関数
 	/// </summary>
 	/// <param name="desc"></param>
 	void Draw(ModelDrawDesc desc) override;
+	/// <summary>
+	/// パーティクル生成関数
+	/// </summary>
+	virtual void EmitParticles() = 0;
 
-public:
-	void AddParticle(const Vector3& direct);
-
-private:
-	// 消えるタイミング
-	bool isDead_ = false;
+protected:
 	Vector3 position_{};
 
 };

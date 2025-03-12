@@ -627,6 +627,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.cpp" />
     <ClCompile Include="DirectXGame\Engine\Instanced\InstancedManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1234,6 +1235,8 @@
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\IParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Instanced\InstancedManager.h" />
+    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.h" />
+    <ClInclude Include="DirectXGame\Application\Transition\TitleTransitionManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
