@@ -9,6 +9,7 @@
 #include "Engine/LevelEditor/LevelLoader.h"
 
 #include "Application/Title/TitleObject.h"
+#include "Application/Transition/TitleTransitionManager.h"
 
 /// <summary>
 /// タイトルシーン
@@ -63,16 +64,9 @@ private: // システム関係
 	float elapsedTime_ = 0.0f;
 	// ライティング関係のマネージャ
 	std::unique_ptr<LightingManager> lightManager_;
-
-	// プレイヤーのキャラオブジェクト
-	std::unique_ptr<TitleObject> playerObject_;
+	// 遷移用の
+	std::unique_ptr<TitleTransitionManager> titleTransition_;
 
 	bool isLoad_ = false;
-
-	struct TransitionData
-	{
-		FrameTimer transitionTimer;
-
-	};
 
 };

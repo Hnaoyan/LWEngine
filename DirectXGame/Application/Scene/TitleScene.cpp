@@ -20,13 +20,13 @@ void TitleScene::Initialize()
 	LoadModel();
 	LoadTexture();
 
+	titleTransition_ = std::make_unique<TitleTransitionManager>();
+	titleTransition_->Initialize(sceneManager_);
+
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
 	debugCamera_->transform_.translate.y = 1.5f;
 	debugCamera_->transform_.translate.z = -10.0f;
-
-	playerObject_ = std::make_unique<TitleObject>();
-	playerObject_->Initialize(ModelManager::GetModel("Player"));
 
 	levelLoader_ = std::make_unique<LevelLoader>();
 	levelLoader_->LoadSceneData("01_10");
@@ -69,12 +69,13 @@ void TitleScene::Update()
 #endif // IMGUI_ENABLED
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
-		sceneManager_->ChangeThreadScene("GAME");
+		//sceneManager_->ChangeThreadScene("GAME");
 		//isLoad_ = true;
+		titleTransition_->Execute(50.0f);
 	}
-	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
+	titleTransition_->Update();
 
-	playerObject_->Update();
+	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kAlpha;
 
 	debugCamera_->Update();
 	// ライトの更新
@@ -103,14 +104,12 @@ void TitleScene::Draw()
 	ModelRenderer::PreDraw(commandList);
 
 	// 描画に使うもの
-	ModelDrawDesc drawDesc{};
-	drawDesc.camera = debugCamera_.get();
-	// ライトの情報
-	drawDesc.directionalLight = lightManager_->GetDirectional();
-	drawDesc.pointLight = lightManager_->GetPoint();
-	drawDesc.spotLight = lightManager_->GetSpot();
+	DrawDesc::LightDesc lightDesc = {};
+	lightDesc.directionalLight = lightManager_->GetDirectional();
+	lightDesc.pointLight = lightManager_->GetPoint();
+	lightDesc.spotLight = lightManager_->GetSpot();
 
-	playerObject_->Draw(drawDesc);
+	this->titleTransition_->Draw(debugCamera_.get(), lightDesc);
 
 	ModelRenderer::PostDraw();
 
@@ -158,7 +157,6 @@ void TitleScene::ImGuiDraw()
 	ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("CameraRot", &debugCamera_->transform_.rotate.x, 0.01f);
 	ImGui::End();
-	playerObject_->ImGuiDraw();
 }
 
 void TitleScene::LoadModel()

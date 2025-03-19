@@ -9,8 +9,8 @@
 #include "Application/GameObject/Bullet/BulletsPaths.h"
 #include "Application/GameObject/Particle/User/Trail/TrailManager.h"
 #include "Application/GameObject/Particle/User/ParticlePaths.h"
-#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
-#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombEffect.h"
+//#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombCluster.h"
+//#include "Application/GameObject/Particle/User/Bullet/CPUEffect/BulletBombEffect.h"
 
 uint32_t IBulletCluster::sSerialNumber = 0u;
 

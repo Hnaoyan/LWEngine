@@ -14,6 +14,8 @@ void SceneManager::Update()
 					delete nowScene_;
 				}
 				nextInitialize_.join();
+				// シーンマネージャー設定
+				nextScene_->SetSceneManager(this);
 				nextScene_->Initialize();
 				isThread_ = false;
 				// シーン切り替え
@@ -23,8 +25,6 @@ void SceneManager::Update()
 
 				transitionManager_->ExecuteReturn();
 
-				// シーンマネージャー設定
-				nowScene_->SetSceneManager(this);
 			}
 		}
 		// 通常の切り替え
@@ -95,6 +95,7 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
+	nextScene_->SetSceneManager(this);
 	// 初期化
 	nextInitialize_ = std::thread(&IScene::Initialize, nextScene_);
 	nextInitialize_.join();

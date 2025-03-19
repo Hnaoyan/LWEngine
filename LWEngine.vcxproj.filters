@@ -628,6 +628,7 @@
     <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.cpp" />
     <ClCompile Include="DirectXGame\Engine\Instanced\InstancedManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.cpp" />
+    <ClCompile Include="DirectXGame\Application\Transition\TitleTransitionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
