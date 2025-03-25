@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/Title/TitleObject.h"
+#include "Engine/Camera/CameraList.h"
 
 class SceneManager;
 
@@ -15,14 +16,23 @@ public:
 		kReturn,
 	};
 	void Execute(const float& frame);
-
+	// 遷移の受付関数
+	void TransitionExecute();
+	// 初期化
 	void Initialize(SceneManager* sceneManager);
+	// 更新
 	void Update();
+	// 描画
 	void Draw(ICamera* camera, DrawDesc::LightDesc lights);
-
+	// ImGui描画
+	void ImGuiDraw();
+	// カメラのゲッター
+	ICamera* GetCamera() const { return camera_.get(); }
 private:
 	// タイトルシーン用のオブジェクト
 	std::unique_ptr<TitleObject> robotObject_;
+	// カメラ
+	std::unique_ptr<TitleCamera> camera_;
 	FrameTimer timer_;
 	SceneManager* sceneManager_ = nullptr;
 };

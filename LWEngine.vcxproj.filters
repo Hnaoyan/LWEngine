@@ -629,6 +629,7 @@
     <ClCompile Include="DirectXGame\Engine\Instanced\InstancedManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Application\Transition\TitleTransitionManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\TitleCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1238,6 +1239,7 @@
     <ClInclude Include="DirectXGame\Engine\Instanced\InstancedManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Application\Transition\TitleTransitionManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\TitleCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

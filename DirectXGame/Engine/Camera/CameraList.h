@@ -7,6 +7,7 @@
 #include "Custom/OrbitCamera.h"
 #include "Custom/SideCamera.h"
 #include "Custom/TransitionCamera.h"
+#include "Custom/TitleCamera.h"
 
 /// <summary>
 /// アクティブ中のカメラ選択

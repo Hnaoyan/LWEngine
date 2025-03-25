@@ -159,6 +159,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\DebugCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\FollowCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Camera\Custom\TitleCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\FollowCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\OrbitCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
+    <ClInclude Include="DirectXGame\Engine\Camera\Custom\TitleCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.h" />

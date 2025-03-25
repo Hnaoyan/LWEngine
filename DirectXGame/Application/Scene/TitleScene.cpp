@@ -81,6 +81,10 @@ void TitleScene::Update()
 	// ライトの更新
 	lightManager_->Update();
 
+	camera_.viewMatrix_ = titleTransition_->GetCamera()->viewMatrix_;
+	camera_.projectionMatrix_ = titleTransition_->GetCamera()->projectionMatrix_;
+	camera_.transform_ = titleTransition_->GetCamera()->transform_;
+	camera_.Update();
 }
 
 void TitleScene::Draw()
@@ -109,7 +113,7 @@ void TitleScene::Draw()
 	lightDesc.pointLight = lightManager_->GetPoint();
 	lightDesc.spotLight = lightManager_->GetSpot();
 
-	this->titleTransition_->Draw(debugCamera_.get(), lightDesc);
+	this->titleTransition_->Draw(&camera_, lightDesc);
 
 	ModelRenderer::PostDraw();
 
@@ -152,6 +156,9 @@ void TitleScene::UIDraw()
 
 void TitleScene::ImGuiDraw()
 {
+	// 遷移関係のまとめてるクラス
+	titleTransition_->ImGuiDraw();
+
 	ImGui::Begin("Title");
 	ImGui::DragFloat2("TitleText", &titleTextPosition_.x, 0.01f);
 	ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);

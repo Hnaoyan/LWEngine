@@ -26,5 +26,6 @@ public:
 
 private:
 	std::unique_ptr<Material> material_;
-
+	// 回転中か
+	bool isRotate_ = true;
 };

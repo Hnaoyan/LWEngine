@@ -17,8 +17,13 @@ void TitleObject::Initialize(Model* model)
 
 void TitleObject::Update()
 {
-	worldTransform_.transform_.rotate.y += (1.0f / 90.0f);
-
+	if (isRotate_) {
+		worldTransform_.transform_.rotate.y += (1.0f / 90.0f);
+	}
+	float turnAngle = 6.28f;
+	if (worldTransform_.transform_.rotate.y >= turnAngle) {
+		worldTransform_.transform_.rotate.y -= turnAngle;
+	}
 	IGameObject::Update();
 }
 
@@ -42,6 +47,10 @@ void TitleObject::Draw(ModelDrawDesc desc)
 void TitleObject::ImGuiDraw()
 {
 	ImGui::Begin("PlObject");
-
+	static float dragValue = 0.01f;
+	ImGui::DragFloat("DragV", &dragValue, 0.1f);
+	ImGui::DragFloat3("Pos", &worldTransform_.transform_.translate.x, dragValue);
+	ImGui::DragFloat3("Rot", &worldTransform_.transform_.rotate.x, dragValue);
+	ImGui::Checkbox("IsRotate", &isRotate_);
 	ImGui::End();
 }
