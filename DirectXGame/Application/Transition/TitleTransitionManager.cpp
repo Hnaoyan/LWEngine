@@ -20,8 +20,14 @@ void TitleTransitionManager::Initialize(SceneManager* sceneManager)
 
 	camera_ = std::make_unique<TitleCamera>();
 	camera_->Initialize();
+
+	// ここら辺のマジックナンバー修正（後日
 	camera_->transform_.translate.y = 1.5f;
 	camera_->transform_.translate.z = -10.0f;
+
+	cameraPoint_.start = { 0.0f,1.5f,-10.0f };
+	cameraPoint_.end = { 0.0f,1.5f,-5.0f };
+
 }
 
 void TitleTransitionManager::Update()
@@ -29,6 +35,9 @@ void TitleTransitionManager::Update()
 	timer_.Update();
 	robotObject_->Update();
 
+	if (timer_.IsActive()) {
+		camera_->transform_.translate = Ease::Easing<Vector3>(cameraPoint_.start, cameraPoint_.end, timer_.GetElapsedFrame());
+	}
 	if (timer_.IsEnd()) {
 		sceneManager_->ChangeThreadScene("GAME");
 	}

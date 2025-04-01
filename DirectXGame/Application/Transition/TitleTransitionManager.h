@@ -6,6 +6,11 @@ class SceneManager;
 
 class TitleTransitionManager
 {
+private:
+	struct MovePoint {
+		Vector3 start, end;
+	};
+
 public:
 	/// <summary>
 	/// 状態の種類（折り返し前か折り返し後か
@@ -33,6 +38,11 @@ private:
 	std::unique_ptr<TitleObject> robotObject_;
 	// カメラ
 	std::unique_ptr<TitleCamera> camera_;
+	// 遷移用のタイマー
 	FrameTimer timer_;
+
 	SceneManager* sceneManager_ = nullptr;
+
+	// 座標
+	MovePoint cameraPoint_;
 };
