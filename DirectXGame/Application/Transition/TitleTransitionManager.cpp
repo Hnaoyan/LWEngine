@@ -28,6 +28,7 @@ void TitleTransitionManager::Initialize(SceneManager* sceneManager)
 	cameraPoint_.start = { 0.0f,1.5f,-10.0f };
 	cameraPoint_.end = { 0.0f,1.5f,-5.0f };
 
+	cameras_pool = std::make_unique<ObjectPool<ICamera, 5>>();
 }
 
 void TitleTransitionManager::Update()

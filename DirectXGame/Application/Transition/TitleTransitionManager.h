@@ -1,5 +1,6 @@
 #pragma once
 #include "Application/Title/TitleObject.h"
+#include "Engine/Object/ObjectPool.h"
 #include "Engine/Camera/CameraList.h"
 
 class SceneManager;
@@ -45,4 +46,7 @@ private:
 
 	// 座標
 	MovePoint cameraPoint_;
+
+	std::unique_ptr<ObjectPool<ICamera, 5>> cameras_pool;
+
 };
