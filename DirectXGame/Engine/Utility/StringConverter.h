@@ -2,13 +2,13 @@
 #include <string>
 
 /// <summary>
-/// 
+/// StringToWString
 /// </summary>
 /// <param name="str"></param>
 /// <returns></returns>
 std::wstring ConvertString(const std::string str);
 /// <summary>
-/// 
+/// WStringToString
 /// </summary>
 /// <param name="str"></param>
 /// <returns></returns>
