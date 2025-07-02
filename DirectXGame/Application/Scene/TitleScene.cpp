@@ -160,6 +160,10 @@ void TitleScene::ImGuiDraw()
 	titleTransition_->ImGuiDraw();
 
 	ImGui::Begin("Title");
+	if (ImGui::Button("NETWORKGAME")) {
+		sceneManager_->ChangeThreadScene("NETWORK");
+	}
+
 	ImGui::DragFloat2("TitleText", &titleTextPosition_.x, 0.01f);
 	ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);
 	ImGui::DragFloat3("CameraRot", &debugCamera_->transform_.rotate.x, 0.01f);

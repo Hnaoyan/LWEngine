@@ -20,5 +20,9 @@ IScene* SceneFactory::CreateScene(const std::string& sceneName)
 	else if (sceneName == "CLEAR") {
 		//newScene = new ClearScene();
 	}
+
+	else if (sceneName == "NETWORK") {
+		newScene = new NetworkScene();
+	}
 	return newScene;
 }

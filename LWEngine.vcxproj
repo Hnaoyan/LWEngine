@@ -62,6 +62,7 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Replay\ReplayManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\UIStructs.cpp" />
+    <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
     <ClCompile Include="DirectXGame\Application\Transition\TitleTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Drawer\Triangle3D.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\GameUIManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\UIStructs.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
+    <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\IGameSceneState.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
