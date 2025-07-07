@@ -3,6 +3,7 @@
 #include <future>
 
 //---ASyncを使った非同期関数---//
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
 
 /// <summary>
 /// 全ての情報をまとめて取得する

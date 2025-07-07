@@ -184,6 +184,7 @@
     <ClCompile Include="DirectXGame\Engine\Math\Quaternion.cpp" />
     <ClCompile Include="DirectXGame\Engine\Math\Vector\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpClient.cpp" />
+    <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\GPUParticleSystem.cpp" />
     <ClCompile Include="DirectXGame\Engine\Particle\Fragment\Particle.cpp" />
@@ -409,6 +410,7 @@
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Math\Vector\Vector4.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpClient.h" />
+    <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.h" />
     <ClInclude Include="DirectXGame\Engine\Object\ObjectPool.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\IParticleEmitter.h" />
