@@ -633,6 +633,7 @@
     <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpClient.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.cpp" />
+    <ClCompile Include="DirectXGame\Engine\NetWork\Login\NetLogin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1247,6 +1248,7 @@
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpClient.h" />
     <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.h" />
+    <ClInclude Include="DirectXGame\Engine\NetWork\Login\NetLogin.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
