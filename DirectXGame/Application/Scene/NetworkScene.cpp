@@ -40,6 +40,7 @@ void NetworkScene::Initialize()
 	// 基底クラス初期化
 	IScene::Initialize();
 
+	loginAPI_ = NetLogin("Naoya05", "password");
 }
 
 void NetworkScene::GPUUpdate()
@@ -139,6 +140,9 @@ void NetworkScene::UIDraw()
 
 void NetworkScene::ImGuiDraw()
 {
+	// ログインAPI
+	loginAPI_.ImGuiDraw();
+
 	ImGui::Begin("NetWork");
 	ImGui::InputInt("Score", &runningScore_);
 

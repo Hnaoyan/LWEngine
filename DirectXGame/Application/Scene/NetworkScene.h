@@ -8,6 +8,8 @@
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/LevelEditor/LevelLoader.h"
 
+#include "Engine/NetWork/Login/NetLogin.h"
+
 #include <optional>
 
 class NetworkScene : public IScene
@@ -32,6 +34,8 @@ private:
 	int ClearScore(const float& time);
 
 	std::string rankingText_ = "";
+
+	NetLogin loginAPI_;
 
 public:
 	/// <summary>

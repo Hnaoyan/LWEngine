@@ -96,8 +96,8 @@ void TitleScene::Draw()
 	Sprite::PreDraw(commandList);
 
 	//uiSprites_[0]->Draw();
-	SpriteManager::GetSprite("BackGroundImage")->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.85f));
-	SpriteManager::GetSprite("BackGroundImage")->Draw();
+	//SpriteManager::GetSprite("BackGroundImage")->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.85f));
+	//SpriteManager::GetSprite("BackGroundImage")->Draw();
 
 
 	Sprite::PostDraw();
@@ -118,24 +118,24 @@ void TitleScene::Draw()
 	ModelRenderer::PostDraw();
 
 	Sprite::PreDraw(commandList);
-	if (!isLoad_) {
-		float defaultY = 720.0f / 3.0f;
-		// 時間
-		float addTime = 1.0f / 30.0f; // 毎フレーム加算する時間
-		elapsedTime_ += addTime;
-		float frequency = 1.0f;	// 間隔
-		float amplitude = 10.0f;	// 振幅
-		float maxTime = 1.0e6f;	// バグ回避用の最大時間
-		if (elapsedTime_ >= maxTime) {
-			elapsedTime_ = 0.0f;
-		}
-		float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
-		titleTextPosition_.y = defaultY + offset;
-	}
+	//if (!isLoad_) {
+	//	float defaultY = 720.0f / 3.0f;
+	//	// 時間
+	//	float addTime = 1.0f / 30.0f; // 毎フレーム加算する時間
+	//	elapsedTime_ += addTime;
+	//	float frequency = 1.0f;	// 間隔
+	//	float amplitude = 10.0f;	// 振幅
+	//	float maxTime = 1.0e6f;	// バグ回避用の最大時間
+	//	if (elapsedTime_ >= maxTime) {
+	//		elapsedTime_ = 0.0f;
+	//	}
+	//	float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
+	//	titleTextPosition_.y = defaultY + offset;
+	//}
 
-	SpriteManager::GetSprite("TitleText")->SetPosition(titleTextPosition_);
-	SpriteManager::GetSprite("TitleButtonText")->Draw();
-	SpriteManager::GetSprite("TitleText")->Draw();
+	//SpriteManager::GetSprite("TitleText")->SetPosition(titleTextPosition_);
+	//SpriteManager::GetSprite("TitleButtonText")->Draw();
+	//SpriteManager::GetSprite("TitleText")->Draw();
 	//SpriteManager::GetSprite("BackGroundTexture")->Draw();
 	Sprite::PostDraw();
 
