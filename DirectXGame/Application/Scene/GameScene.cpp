@@ -178,7 +178,7 @@ void GameScene::ImGuiDraw()
 	cameraManager_->ImGuiDraw();
 	// カメラ
 	camera_.ImGuiDraw();
-
+	// 試し
 	ImGui::Begin("GameScene");
 
 	if (ImGui::TreeNode("Replayer")) {
