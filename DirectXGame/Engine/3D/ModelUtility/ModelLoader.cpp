@@ -172,6 +172,76 @@ ModelData ModelLoader::LoadAssimp(const std::string& directory, const std::strin
 	return ModelData(modelData);
 }
 
+ModelData ModelLoader::LoadAssimp(const std::string& directory, const std::string& fileName, LoadExtension ex)
+{
+	ModelData modelData;
+
+	Assimp::Importer importer;
+	// ファイルまでのパス
+	std::string filePath = directory + "/" + fileName;
+
+	switch (ex)
+	{
+	case LoadExtension::kObj:
+		filePath += ".obj";
+		break;
+	case LoadExtension::kGltf:
+		filePath += ".gltf";
+		break;
+	case LoadExtension::kEndCount:
+		break;
+	default:
+		break;
+	}
+
+	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+	assert(scene->HasMeshes());
+
+
+	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
+		aiMesh* mesh = scene->mMeshes[meshIndex];
+		assert(mesh->HasNormals());	// 法線がないMeshは今回は非対応
+		assert(mesh->HasTextureCoords(0));	// TexCoordが無い場合は今回は非対応
+		// ここからMeshのFaceを解析
+		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
+			aiFace& face = mesh->mFaces[faceIndex];
+			assert(face.mNumIndices == 3);	// 三角のみサポート
+			// 頂点数分にリサイズ
+			modelData.vertices.resize(mesh->mNumVertices);
+			// ここからFaceのVertexの解析
+			for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
+				aiVector3D& position = mesh->mVertices[vertexIndex];
+				aiVector3D& normal = mesh->mNormals[vertexIndex];
+				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
+
+				modelData.vertices[vertexIndex].position = { -position.x,position.y,position.z,1.0f };
+				modelData.vertices[vertexIndex].normal = { -normal.x,normal.y,normal.z };
+				modelData.vertices[vertexIndex].texcoord = { texcoord.x,texcoord.y };
+
+			}
+			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+				// vertexIndex
+				uint32_t vertexIndex = face.mIndices[element];
+				// Indexの登録
+				modelData.indices.push_back(vertexIndex);
+			}
+		}
+	}
+
+	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
+		aiMaterial* material = scene->mMaterials[materialIndex];
+		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
+			aiString textureFilePath;
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
+			modelData.material.textureFilename = directory + "/" + textureFilePath.C_Str();
+			modelData.material.textureHandle = TextureManager::Load(modelData.material.textureFilename);
+		}
+
+	}
+
+	return ModelData(modelData);
+}
+
 ModelData ModelLoader::LoadGlTF(const std::string& directory, const std::string& fileName, LoadExtension ex)
 {
 	ModelData modelData;

@@ -53,6 +53,31 @@ void ModelManager::LoadObjModel(const std::string& tag, const std::string& fileP
 	return;
 }
 
+void ModelManager::LoadModel(const std::string& tag, const std::string& filePath, LoadType loadType)
+{
+	// イテレータ取得
+	std::unordered_map<std::string, std::unique_ptr<Model>>::iterator it = sModels_.find(tag);
+	// あれば早期
+	if (it != sModels_.end()) {
+		return;
+	}
+	std::unique_ptr<Model> model;
+
+	switch (loadType)
+	{
+	case ModelManager::Obj:
+		model.reset(Model::Create(filePath, LoadExtension::kObj));
+		break;
+	case ModelManager::Gltf:
+		model.reset(Model::Create(filePath, LoadExtension::kGltf));
+		break;
+	default:
+		break;
+	}
+
+	sModels_.emplace(tag, std::move(model));
+}
+
 Model* ModelManager::GetModel(const std::string& tag)
 {
 	// イテレータ取得

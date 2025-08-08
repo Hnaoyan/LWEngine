@@ -10,19 +10,21 @@ GeneralPipeline Model::sPipeline_;
 
 void Model::Initialize(const std::string& modelName, LoadExtension ex)
 {
-	// モデル読み込み
-	switch (ex)
-	{
-	case LoadExtension::kObj:
-		modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
-		//modelData_ = ModelLoader::LoadObj(sDirectoryPath + "/" + modelName, modelName, ex);
-		break;
-	case LoadExtension::kGltf:
-		modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
-		break;
-	case LoadExtension::kEndCount:
-		break;
-	}
+	//// モデル読み込み
+	//switch (ex)
+	//{
+	//case LoadExtension::kObj:
+	//	modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
+	//	break;
+	//case LoadExtension::kGltf:
+	//	modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName);
+	//	break;
+	//case LoadExtension::kEndCount:
+	//	break;
+	//}
+	// モデルデータ読み込み
+	modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName, ex);
+
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
 	mesh_->CreateMesh(&modelData_);
@@ -87,7 +89,7 @@ Model* Model::CreateDefault(const std::string& modelName)
 	// メモリ確保
 	Model* instance = new Model;
 	// 初期化
-	LoadExtension ex = LoadExtension::kGltf;
+	LoadExtension ex = LoadExtension::kObj;
 	instance->Initialize(modelName, ex);
 
 	return instance;

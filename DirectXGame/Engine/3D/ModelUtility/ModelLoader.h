@@ -28,6 +28,7 @@ public:
 	/// <param name="fileName"></param>
 	/// <returns></returns>
 	static ModelData LoadAssimp(const std::string& directory, const std::string& fileName);
+	static ModelData LoadAssimp(const std::string& directory, const std::string& fileName, LoadExtension ex);
 
 	static ModelData LoadGlTF(const std::string& directory, const std::string& fileName, LoadExtension ex = LoadExtension::kGltf);
 
