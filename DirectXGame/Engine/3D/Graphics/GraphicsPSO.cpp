@@ -55,11 +55,11 @@ void GraphicsPSO::CreateSpritePSO()
 	ComPtr<IDxcBlob> psBlob;
 
 	// 頂点シェーダの読み込みとコンパイル
-	vsBlob = Shader::GetInstance()->Compile(L"Sprite_VS.hlsl", L"vs_6_0");
+	vsBlob = Shader::GetInstance()->Compile(L"Sprite/Sprite_VS.hlsl", L"vs_6_0");
 	assert(vsBlob != nullptr);
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"Sprite_PS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"Sprite/Sprite_PS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 
 	// InputLayout
@@ -507,11 +507,11 @@ void GraphicsPSO::CreateModelPSO()
 	ComPtr<IDxcBlob> psBlob;
 
 	// 頂点シェーダの読み込みとコンパイル
-	vsBlob = Shader::GetInstance()->Compile(L"3DModelVS.hlsl", L"vs_6_0");
+	vsBlob = Shader::GetInstance()->Compile(L"3DModel/3DModelVS.hlsl", L"vs_6_0");
 	assert(vsBlob != nullptr);
 
 	// ピクセルシェーダの読み込みとコンパイル
-	psBlob = Shader::GetInstance()->Compile(L"3DModelPS.hlsl", L"ps_6_0");
+	psBlob = Shader::GetInstance()->Compile(L"3DModel/3DModelPS.hlsl", L"ps_6_0");
 	assert(psBlob != nullptr);
 
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] = {

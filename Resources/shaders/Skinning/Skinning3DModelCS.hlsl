@@ -1,4 +1,4 @@
-#include "../3DModel.hlsli"
+#include "../3DModel/3DModel.hlsli"
 // Pallete
 StructuredBuffer<Well> gMatrixPalette : register(t0);
 // 入力頂点

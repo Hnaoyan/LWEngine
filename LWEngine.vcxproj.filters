@@ -1263,10 +1263,10 @@
     <FxCompile Include="Resources\shaders\DrawLine\3DLineVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\3DModelPS.hlsl">
+    <FxCompile Include="Resources\shaders\3DModel\3DModelPS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\3DModelVS.hlsl">
+    <FxCompile Include="Resources\shaders\3DModel\3DModelVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\3DTriangle\3DTriangle_PS.hlsl">
@@ -1347,10 +1347,10 @@
     <FxCompile Include="Resources\shaders\SkyBox\SkyboxVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl">
+    <FxCompile Include="Resources\shaders\Sprite\Sprite_PS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
+    <FxCompile Include="Resources\shaders\Sprite\Sprite_VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\Trail\Trail_PS.hlsl">
@@ -1518,7 +1518,7 @@
     <None Include="Resources\shaders\3DLine\3DLine.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="Resources\shaders\3DModel.hlsli">
+    <None Include="Resources\shaders\3DModel\3DModel.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="Resources\shaders\3DTriangle\3DTriangle.hlsli">
@@ -1548,7 +1548,7 @@
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="Resources\shaders\Sprite.hlsli">
+    <None Include="Resources\shaders\Sprite\Sprite.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="Resources\shaders\Trail\Trail.hlsli">

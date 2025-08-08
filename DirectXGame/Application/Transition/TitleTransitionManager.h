@@ -21,9 +21,8 @@ public:
 		kSetup,
 		kReturn,
 	};
-	void Execute(const float& frame);
 	// 遷移の受付関数
-	void TransitionExecute();
+	void TransitionExecute(const float& frame);
 	// 初期化
 	void Initialize(SceneManager* sceneManager);
 	// 更新

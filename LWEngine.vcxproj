@@ -466,7 +466,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\3DModelPS.hlsl">
+    <FxCompile Include="Resources\shaders\3DModel\3DModelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Pixel</ShaderType>
@@ -474,7 +474,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\3DModelVS.hlsl">
+    <FxCompile Include="Resources\shaders\3DModel\3DModelVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Vertex</ShaderType>
@@ -753,7 +753,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl">
+    <FxCompile Include="Resources\shaders\Sprite\Sprite_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Pixel</ShaderType>
@@ -761,7 +761,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">true</ExcludedFromBuild>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
+    <FxCompile Include="Resources\shaders\Sprite\Sprite_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='ReleaseImGui|x64'">Vertex</ShaderType>
@@ -788,7 +788,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\3DLine\3DLine.hlsli" />
-    <None Include="Resources\shaders\3DModel.hlsli" />
+    <None Include="Resources\shaders\3DModel\3DModel.hlsli" />
     <None Include="Resources\shaders\3DTriangle\3DTriangle.hlsli" />
     <None Include="Resources\shaders\DrawLine\3DLine.hlsli" />
     <None Include="Resources\shaders\Instanced\Instanced.hlsli" />
@@ -796,7 +796,7 @@
     <None Include="Resources\shaders\Particle\ParticleCalc.hlsli" />
     <None Include="Resources\shaders\PostEffect\FullScreen.hlsli" />
     <None Include="Resources\shaders\SkyBox\Skybox.hlsli" />
-    <None Include="Resources\shaders\Sprite.hlsli" />
+    <None Include="Resources\shaders\Sprite\Sprite.hlsli" />
     <None Include="Resources\shaders\Trail\Trail.hlsli" />
     <None Include="Resources\shaders\Utility\Gaussian.hlsli" />
     <None Include="Resources\shaders\Utility\MathCalc.hlsli" />

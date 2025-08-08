@@ -70,8 +70,9 @@ void TitleScene::Update()
 
 	if (input_->XTriggerJoystick(XINPUT_GAMEPAD_Y)) {
 		//sceneManager_->ChangeThreadScene("GAME");
-		//isLoad_ = true;
-		titleTransition_->Execute(50.0f);
+		//isLoad_ = true;	
+		const float kTransitionTime = 50.0f;
+		titleTransition_->TransitionExecute(kTransitionTime);
 	}
 	titleTransition_->Update();
 

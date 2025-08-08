@@ -3,13 +3,9 @@
 #include "Engine/Scene/SceneManager.h"
 #include "imgui.h"
 
-void TitleTransitionManager::Execute(const float& frame)
+void TitleTransitionManager::TransitionExecute(const float& frame)
 {
 	timer_.Start(frame);
-}
-
-void TitleTransitionManager::TransitionExecute()
-{
 }
 
 void TitleTransitionManager::Initialize(SceneManager* sceneManager)
