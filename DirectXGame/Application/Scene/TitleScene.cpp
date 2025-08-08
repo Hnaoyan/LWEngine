@@ -133,7 +133,8 @@ void TitleScene::Draw()
 	//	float offset = std::sinf(elapsedTime_ * frequency) * amplitude;
 	//	titleTextPosition_.y = defaultY + offset;
 	//}
-
+	SpriteManager::GetSprite("Tameshi")->SetPosition(Vector2(300.0f, 100.0f));
+	SpriteManager::GetSprite("Tameshi")->Draw();
 	//SpriteManager::GetSprite("TitleText")->SetPosition(titleTextPosition_);
 	//SpriteManager::GetSprite("TitleButtonText")->Draw();
 	//SpriteManager::GetSprite("TitleText")->Draw();
@@ -187,6 +188,7 @@ void TitleScene::LoadTexture()
 	SpriteManager::LoadSprite("BackGroundTexture", TextureManager::GetInstance()->Load("Resources/default/white2x2.png"));
 	SpriteManager::LoadSprite("TitleButtonText", TextureManager::GetInstance()->Load("Resources/UI/GameStart.png"));
 	SpriteManager::LoadSprite("TitleText", TextureManager::GetInstance()->Load("Resources/UI/TitleText.png"));
-	
+	SpriteManager::LoadSprite("Tameshi", TextureManager::Load("Resources/UI/otameshi.png"));
+
 	//clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
 }
