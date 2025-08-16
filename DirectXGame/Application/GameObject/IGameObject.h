@@ -77,13 +77,6 @@ public:
 	Vector3 acceleration_ = {};
 public:
 	ColliderObject SelectColliderObject(ColliderObject obj) {
-		if (std::holds_alternative<Player*>(obj)) {
-			return std::get<Player*>(obj);
-		}
-		else if (std::holds_alternative<IBullet*>(obj)) {
-			return std::get<IBullet*>(obj);
-		}
-
 		return std::get<IGameObject*>(obj);
 	}
 

@@ -11,31 +11,20 @@ GameObjectManager::GameObjectManager(GameSystem* system)
 	// チェック
 	assert(system);
 	gameSystem_ = system;
-	// ゲームオブジェクト
-	bulletManager_ = std::make_unique<BulletManager>();
 	// 地形
 	skyDome_ = std::make_unique<SkyDomeObject>();
-	terrainManager_ = std::make_unique<TerrainManager>();
 
 	particleUnit_ = std::make_unique<TestParticle>();
 }
 
-void GameObjectManager::Initialize(GPUParticleManager* gpuManager, ICamera* camera)
+void GameObjectManager::Initialize(ICamera* camera)
 {
 	// チェック
-	assert(gpuManager);
+	assert(camera);
 	gameObjects_.clear();	// オブジェクトリセット
-	gpuManager_ = gpuManager;
 	camera_ = camera;
 
 	skyDome_->Initialize(ModelManager::GetModel("SkyDome"));
-
-	// 弾
-	bulletManager_->SetGPUParticle(gpuManager_);
-	bulletManager_->Initialize(ModelManager::GetModel("BulletCube"));
-
-	// 地形
-	terrainManager_->Initialize(ModelManager::GetModel("DefaultCube"));
 
 	// パーティクル
 	particleUnit_->Initialie(ModelManager::GetModel("TestPlane"));
@@ -116,9 +105,6 @@ void GameObjectManager::Update(GameSceneState state)
 	// オブジェクトの更新
 	UpdateObject();
 
-	if (this->GetPlayer()) {
-		particleUnit_->SetParent(GetPlayer()->GetWorldTransform());
-	}
 	particleUnit_->Update();
 }
 
@@ -132,12 +118,9 @@ void GameObjectManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	drawDesc.spotLight = lights.spotLight;
 	// 球体
 	skyDome_->Draw(drawDesc);
-	// 地形
-	terrainManager_->Draw(drawDesc);
 	// パーティクル
 	particleUnit_->Draw(drawDesc);
-	// 弾
-	bulletManager_->Draw(drawDesc);
+
 	// 描画
 	for (std::unordered_map<std::string, std::unique_ptr<IGameObject>>::iterator it = gameObjects_.begin(); it != gameObjects_.end(); ++it) {
 		(*it).second->Draw(drawDesc);
@@ -173,14 +156,6 @@ void GameObjectManager::ImGuiDraw()
 	}
 	if (ImGui::BeginTabBar("Object"))
 	{
-		if (ImGui::BeginTabItem("BulletManager")) {
-			bulletManager_->ImGuiDraw();
-			ImGui::EndTabItem();
-		}
-		if (ImGui::BeginTabItem("Terrain")) {
-			terrainManager_->ImGuiDraw();
-			ImGui::EndTabItem();
-		}
 		if (ImGui::BeginTabItem("SkyDome")) {
 			skyDome_->ImGuiDraw();
 			ImGui::EndTabItem();
@@ -204,8 +179,6 @@ void GameObjectManager::RegisterCollider(CollisionManager* collisionManager)
 		(*it).second->SetCollier(collisionManager);
 	}
 
-	bulletManager_->CollisionUpdate(collisionManager);
-	terrainManager_->CollisionUpdate(collisionManager);
 }
 
 void GameObjectManager::GameSetUp()
@@ -216,36 +189,10 @@ void GameObjectManager::GameSetUp()
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 	// 速度の初期化
 	gameSystem_->sSpeedFactor = 1.0f;
-	// 
-	std::unique_ptr<Player> player = std::make_unique<Player>();
-	std::unique_ptr<Boss> boss = std::make_unique<Boss>();
-	bulletManager_->SetPlayer(player.get());
-	bulletManager_->SetBoss(boss.get());
-	// プレイヤー
-	player->PreInitialize(camera_, gpuManager_);
-	player->Initialize(ModelManager::GetModel("Player"));
-	player->PointerInitialize(bulletManager_.get(), boss.get(), nullptr);
-	// ボス
-	boss->SetGPUParticle(gpuManager_);
-	boss->Initialize(ModelManager::GetModel("BossEnemy"));
-	boss->SetPlayer(player.get());
-	boss->SetBulletManager(bulletManager_.get());
-	boss->SetCamera(camera_);
-	// リストに追加
-	gameObjects_.emplace("Boss", std::move(boss));
-	gameObjects_.emplace("Player", std::move(player));
-
-	// クラスターの処理
-	bulletManager_->ClusterClear();
-	bulletManager_->PlayerCluster();
-	bulletManager_->BossCluster();
 
 	// フラグの初期化
 	FlagReset();
 
-	// ボスのセットアップ
-	GetBoss()->SetIsAction(true);
-	GetBoss()->GetSystem()->barrierManager_.Create(GlobalVariables::GetInstance()->GetValue<float>("Boss", "BarrierHP"));
 }
 
 void GameObjectManager::TutorialSetUp()
@@ -256,17 +203,6 @@ void GameObjectManager::TutorialSetUp()
 	PostEffectRender::sPostEffect = Pipeline::PostEffectType::kBloom;
 	// 速度の初期化
 	gameSystem_->sSpeedFactor = 1.0f;
-	// 
-	std::unique_ptr<Player> player = std::make_unique<Player>();
-	bulletManager_->SetPlayer(player.get());
-	// プレイヤー
-	player->PreInitialize(camera_, gpuManager_);
-	player->Initialize(ModelManager::GetModel("Player"));
-	player->PointerInitialize(bulletManager_.get(), nullptr, nullptr);
-	gameObjects_.emplace("Player", std::move(player));
-
-	bulletManager_->ClusterClear();
-	bulletManager_->PlayerCluster();
 
 }
 
@@ -294,9 +230,4 @@ void GameObjectManager::UpdateObject()
 			}
 		}
 	}
-
-	// 地形
-	terrainManager_->Update();
-	// 弾
-	bulletManager_->Update();
 }

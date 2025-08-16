@@ -20,7 +20,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="gpuManager"></param>
-	void Initialize(GPUParticleManager* gpuManager, ICamera* camera);
+	void Initialize(ICamera* camera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -68,9 +68,6 @@ public:
 		}
 		return true;
 	}
-	// プレイヤー
-	Player* GetPlayer() { return dynamic_cast<Player*>(gameObjects_["Player"].get()); }
-	Boss* GetBoss() { return dynamic_cast<Boss*>(gameObjects_["Boss"].get()); }
 
 	// ゲームシーンベタ書き部分用のフラグ
 	bool IsUIGameClear() { return waitingTimer_.IsActive() && isClear_; }
@@ -94,19 +91,12 @@ private: // ゲームクリアなどの部分
 
 	GameSystem* gameSystem_ = nullptr;
 private:
-	//std::vector<IGameObject> gameObjects_;
 	std::unordered_map<std::string, std::unique_ptr<IGameObject>> gameObjects_;
-	// ゲームのユニット
-	std::unique_ptr<BulletManager> bulletManager_;
-	// 試しのパーティクルオブジェクト
+
 	std::unique_ptr<TestParticle> particleUnit_;
 
-	// 地形や背景
-	std::unique_ptr<TerrainManager> terrainManager_;
 	std::unique_ptr<SkyDomeObject> skyDome_;
 
-	// マネージャーポインタ
-	GPUParticleManager* gpuManager_ = nullptr;
 	ICamera* camera_ = nullptr;
 	
 };

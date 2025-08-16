@@ -145,95 +145,8 @@
     <ClCompile Include="DirectXGame\Engine\Audio\AudioManager.cpp">
       <Filter>Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameSystem\GameSystem.cpp">
       <Filter>Application\GameSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\OperationManager.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\Terrain.cpp">
-      <Filter>Application\GameObject\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.cpp">
-      <Filter>Application\GameObject\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.cpp">
-      <Filter>Application\GameObject\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.cpp">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossAttackState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.cpp">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\Boss.cpp">
-      <Filter>Application\GameObject\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossDamageEffect.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Down\BossDownState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.cpp">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossMoveState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.cpp">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Move\BossOrbitMoveState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Teleport\BossTeleportState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\UpDown\BossUpDownState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.cpp">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Wait\BossWaitState.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\BulletManager.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\LevelEditor\CSV\CSVLoader.cpp">
       <Filter>Engine\Loader</Filter>
@@ -241,17 +154,8 @@
     <ClCompile Include="DirectXGame\Engine\Base\Descriptor\DSVHandler.cpp">
       <Filter>Engine\Base\Heap</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.cpp">
-      <Filter>Application\GameObject\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.cpp">
-      <Filter>Application\GameObject\Player</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Particle\GPUParticleSystem.cpp">
       <Filter>Engine\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBullet.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp">
       <Filter>Application\Scene</Filter>
@@ -289,36 +193,6 @@
     <ClCompile Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.cpp">
       <Filter>Engine\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerMoveParticle.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerBulletEffect.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engine\2D\SpriteManager.cpp">
       <Filter>Engine\2D</Filter>
     </ClCompile>
@@ -328,26 +202,11 @@
     <ClCompile Include="DirectXGame\Engine\LwLib\TimeCall\TimeCall.cpp">
       <Filter>Engine\LwLib</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.cpp">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engine\3D\User\MissileTrail.cpp">
       <Filter>Engine\3D\Drawer</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.cpp">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp">
-      <Filter>Application\GameObject\Player</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp">
       <Filter>Application\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\GameUIManager.cpp">
       <Filter>Application\GameSystem</Filter>
@@ -520,12 +379,6 @@
     <ClCompile Include="DirectXGame\Engine\3D\User\Trail3D.cpp">
       <Filter>Engine\3D</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\StateMachine\BulletStateMachine.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameSystem\Camera\CameraManager.cpp">
       <Filter>Engine\Camera</Filter>
     </ClCompile>
@@ -547,87 +400,20 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\GameObjectManager.cpp">
       <Filter>Application\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\Irregular\TrackingWaveringState.cpp">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.cpp">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.cpp">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\Tracking\TrackingMoveState.cpp">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\Straight\TrackingStraightState.cpp">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.cpp">
-      <Filter>Application\GameObject\Bullet\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.cpp">
-      <Filter>Application\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.cpp">
-      <Filter>Application\GameObject\Bullet\Factory</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.cpp">
-      <Filter>Application\GameObject\Bullet\Trail</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.cpp">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.cpp">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.cpp">
       <Filter>Application\GameSystem</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.cpp">
-      <Filter>Application\GameObject\Bullet\Trail</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\main.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\TestParticle.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Unit\CPUParticleUnit.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\Irregular\TurnToTargetState.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Common\RoundShadow.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\State\Transition\StateTransitionManager.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.cpp" />
     <ClCompile Include="DirectXGame\Engine\Instanced\InstancedManager.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.cpp" />
     <ClCompile Include="DirectXGame\Application\Transition\TitleTransitionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TitleCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpClient.cpp" />
@@ -636,95 +422,8 @@
     <ClCompile Include="DirectXGame\Engine\NetWork\Login\NetLogin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\FallingState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">
       <Filter>Application\GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\IPlayerState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Aim\AimManager.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\JumpingState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBullet.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Aim\LockOn.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\MovingState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\OperationManager.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateList.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerSystemLists.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainManager.h">
-      <Filter>Application\GameObject\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\Terrain.h">
-      <Filter>Application\GameObject\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Terrain\TerrainCluster.h">
-      <Filter>Application\GameObject\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\StateManager.h">
-      <Filter>Application\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Foot\PlayerFootCollider.h">
-      <Filter>Application\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystem.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemLists.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossSystemStructs.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\BossFacade.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\Animation\BossAnimationManager.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\Barrier\BossBarrier.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\StateMachine.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\System\UI\BossUI.h">
-      <Filter>Application\GameObject\Boss\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletManager.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossParticle.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Player\PlayerParticle.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletCluster.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\Boss.h">
-      <Filter>Application\GameObject\Boss</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\LwLib\LwEnginePaths.h">
       <Filter>Engine\LwLib</Filter>
@@ -774,9 +473,6 @@
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h">
       <Filter>Engine\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\ParticlePaths.h">
-      <Filter>Engine\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\Descriptor\SRVHandler.h">
       <Filter>Engine\Base\Heap</Filter>
     </ClInclude>
@@ -818,45 +514,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\GameUIManager.h">
       <Filter>Application\GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Health\HealthManager.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Energy\EnergyManager.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Animation\PlayerAnimation.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\PlayerFacade.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStates.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\UI\PlayerUI.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Shoot\ShootingManager.h">
-      <Filter>Application\GameObject\Player\System</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\IdleVertical.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\IdleHorizontal.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\AssendingState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\QuickBoostState.h">
-      <Filter>Application\GameObject\Player\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Player.h">
-      <Filter>Application\GameObject\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Particle\PlayerParticleManager.h">
-      <Filter>Application\GameObject\Player\System</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Math\Matrix\Matrix3x3.h">
       <Filter>Engine\Math\Matrix</Filter>
@@ -1092,18 +749,6 @@
     <ClInclude Include="DirectXGame\Engine\3D\TrailMaterial.h">
       <Filter>Engine\3D</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletEnums.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Cluster\BulletFadeCluster.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\BulletsPaths.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\StateMachine\BulletStateMachine.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\Camera\CameraManager.h">
       <Filter>Engine\Camera</Filter>
     </ClInclude>
@@ -1134,114 +779,28 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\Effect\PostEffectManager.h">
       <Filter>Application\GameSystem</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\NormalSpinBullet.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\TrackingBullet.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\Tracking\TrackingMoveState.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\TrackingStates.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\Straight\TrackingStraightState.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\Irregular\TrackingWaveringState.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Break\BulletBreakEffect.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletMoveEffect.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\AbstractBulletFactory.h">
-      <Filter>Application\GameObject\Bullet\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\Builder\BulletBuilder.h">
-      <Filter>Application\GameObject\Bullet\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletTrailEffect.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\BulletParticleComponent.h">
-      <Filter>Application\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Factory\BulletFactory.h">
-      <Filter>Application\GameObject\Bullet\Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Trail\BulletTrail.h">
-      <Filter>Application\GameObject\Bullet\Trail</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\DivisionBullet.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\IBulletCluster.h">
-      <Filter>Application\GameObject\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\ITrackingState.h">
-      <Filter>Application\GameObject\Bullet\Tracking</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileBarrage.h">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateDecider.h">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\BossStateLists.h">
-      <Filter>Application\GameObject\Boss\State</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.h">
       <Filter>Application\GameSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Trail\TrailManager.h">
-      <Filter>Application\GameObject\Bullet\Trail</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Utility\IndexAllocator.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\PlayerStateMachine.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Vertical\HoverState.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\Dodge\JustDudgeManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMisslieWave.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\User\ContainerBullet.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Attack\BossMissileContainer.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Boss\BossBarrierBreakEffect.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\EmitterTypes.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Scene\Transition\SceneTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\IPlayerSystem.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\TrackingAccelerater.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\Gear\IWeapon.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\Weapon\WeaponPaths.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\PlayerModulePaths.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Calc\BulletSpeedController.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\TestParticle.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPU\Unit\CPUParticleUnit.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\ParticleStructs.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\Irregular\TurnToTargetState.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\Transition\StateTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Common\RoundShadow.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\State\TrackingData.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Boss\StatePattern\Itano\TurnMissileState.h" />
     <ClInclude Include="DirectXGame\Application\Title\TitleObject.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\System\AreaLimiter\AreaLimiter.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\ITrackAttribute.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\InferiorTrack.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Bullet\Attribute\TrackAttributes.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\IGameSceneState.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\IParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Instanced\InstancedManager.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Particle\User\Bullet\Emitter\BreakParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Application\Transition\TitleTransitionManager.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TitleCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Object\ObjectPool.h" />
@@ -1363,12 +922,6 @@
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\VignettePS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\BloomVignetteBlurPS.hlsl" />

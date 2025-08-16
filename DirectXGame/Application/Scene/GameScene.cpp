@@ -37,7 +37,7 @@ void GameScene::Initialize()
 	isSceneReady_ = true;
 	
 	// オブジェクトマネージャ
-	gameObjectManager_->Initialize(gpuParticleManager_.get(), cameraManager_->GetFollowCamera());
+	gameObjectManager_->Initialize(cameraManager_->GetFollowCamera());
 	cameraManager_->Initialize(gameObjectManager_.get());
 
 	stateRequest_ = GameSceneState::kGameTutorial;

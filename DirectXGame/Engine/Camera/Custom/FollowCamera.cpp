@@ -3,7 +3,6 @@
 #include "Engine/Input/Input.h"
 #include "Engine/LwLib/LwLibrary.h"
 #include "Application/GameSystem/GameSystem.h"
-#include "Application/GameObject/Player/System/PlayerSystemLists.h"
 #include "Application/GameObject/GameObjectLists.h"
 #include "Engine/GlobalVariables/GlobalVariables.h"
 
@@ -46,51 +45,51 @@ void FollowCamera::Update()
 			destinationAngle_.x -= rightStick.y * rRotateSpeed_.y;
 		}
 
-		if (lockOn_->ExistTarget()) {
-			// ロックオンしたオブジェクトの座標
-			Vector3 lockOnPosition = lockOn_->GetTarget()->worldTransform_.GetWorldPosition();
-			// 追尾してるオブジェクトの座標
-			Vector3 sub = lockOnPosition - target_->GetWorldPosition();
-			sub = Vector3::Normalize(sub);
-			// 角度設定
-			Vector2 targetToRotate = {};
-			targetToRotate.y = LwLib::CalculateYawFromVector({ sub.x,0.0f,sub.z });
-			targetToRotate.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
-			if (lockOn_->GetTransition().IsActive()) {
-				destinationAngle_.x = Ease::Easing(destinationAngle_.x, targetToRotate.x, lockOn_->GetTransition().GetElapsedFrame());
-				destinationAngle_.y = Ease::Easing(destinationAngle_.y, targetToRotate.y, lockOn_->GetTransition().GetElapsedFrame());
-			}
-			else {
-				destinationAngle_.y = targetToRotate.y;
-				destinationAngle_.x = targetToRotate.x;
-			}
+		//if (lockOn_->ExistTarget()) {
+		//	// ロックオンしたオブジェクトの座標
+		//	Vector3 lockOnPosition = lockOn_->GetTarget()->worldTransform_.GetWorldPosition();
+		//	// 追尾してるオブジェクトの座標
+		//	Vector3 sub = lockOnPosition - target_->GetWorldPosition();
+		//	sub = Vector3::Normalize(sub);
+		//	// 角度設定
+		//	Vector2 targetToRotate = {};
+		//	targetToRotate.y = LwLib::CalculateYawFromVector({ sub.x,0.0f,sub.z });
+		//	targetToRotate.x = -std::atan2f(sub.y, std::sqrtf(std::powf(sub.x, 2) + std::powf(sub.z, 2)));
+		//	if (lockOn_->GetTransition().IsActive()) {
+		//		destinationAngle_.x = Ease::Easing(destinationAngle_.x, targetToRotate.x, lockOn_->GetTransition().GetElapsedFrame());
+		//		destinationAngle_.y = Ease::Easing(destinationAngle_.y, targetToRotate.y, lockOn_->GetTransition().GetElapsedFrame());
+		//	}
+		//	else {
+		//		destinationAngle_.y = targetToRotate.y;
+		//		destinationAngle_.x = targetToRotate.x;
+		//	}
 
-			transform_.rotate.y = destinationAngle_.y;
-			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
-		}
-		else {
-			// 角度設定
-			transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
-			transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
-		}
-		// プレイヤーの方向
-		Vector3 playerMoveDirect = lockOn_->GetPlayer()->GetVelocity().Normalize();
-		// プレイヤーからカメラ
-		Vector3 playerToCamera = transform_.translate - lockOn_->GetPlayer()->worldTransform_.GetWorldPosition();
-		playerToCamera.Normalize();
+		//	transform_.rotate.y = destinationAngle_.y;
+		//	transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
+		//}
+		//else {
+		//	// 角度設定
+		//	transform_.rotate.y = LwLib::Lerp(transform_.rotate.y, destinationAngle_.y, rStickLerpRate_);
+		//	transform_.rotate.x = LwLib::Lerp(transform_.rotate.x, destinationAngle_.x, rStickLerpRate_);
+		//}
+		//// プレイヤーの方向
+		//Vector3 playerMoveDirect = lockOn_->GetPlayer()->GetVelocity().Normalize();
+		//// プレイヤーからカメラ
+		//Vector3 playerToCamera = transform_.translate - lockOn_->GetPlayer()->worldTransform_.GetWorldPosition();
+		//playerToCamera.Normalize();
 
-		float dot = Vector2::Dot(Vector2::Normalize(Vector2(playerMoveDirect.x, playerMoveDirect.z)), Vector2::Normalize(Vector2(playerToCamera.x, playerToCamera.z)));
-		float delayRate = GlobalVariables::GetInstance()->GetValue<float>("Camera", "DelayRate");
-		// 手前に進む際の制限
-		if (dot >= 0.1f) {
-			float dotMax = 0.85f;
-			float dotMin = 0.0f;
-			float limitRate = 0.3f;
-			delayRate_ = Ease::Easing(delayRate, limitRate, LwLib::Normalize(dot, dotMin, dotMax));
-		}
-		else {
-			delayRate_ = delayRate;
-		}
+		//float dot = Vector2::Dot(Vector2::Normalize(Vector2(playerMoveDirect.x, playerMoveDirect.z)), Vector2::Normalize(Vector2(playerToCamera.x, playerToCamera.z)));
+		//float delayRate = GlobalVariables::GetInstance()->GetValue<float>("Camera", "DelayRate");
+		//// 手前に進む際の制限
+		//if (dot >= 0.1f) {
+		//	float dotMax = 0.85f;
+		//	float dotMin = 0.0f;
+		//	float limitRate = 0.3f;
+		//	delayRate_ = Ease::Easing(delayRate, limitRate, LwLib::Normalize(dot, dotMin, dotMax));
+		//}
+		//else {
+		//	delayRate_ = delayRate;
+		//}
 
 		// 回転の速度調節
 		destinationAngle_.x = std::clamp(destinationAngle_.x, -xSpinLimit_, xSpinLimit_);
