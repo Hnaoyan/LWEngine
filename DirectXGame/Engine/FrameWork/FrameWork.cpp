@@ -64,10 +64,8 @@ void Framework::Initialize()
 	TextureManager::Load("Resources/default/white2x2.png");
 
 	// モデルマネージャの初期化
-	modelManager_->LoadNormalModel("DefaultCube", "cube");
-	modelManager_->LoadNormalModel("Sphere", "SphereCollider");
-	modelManager_->LoadNormalModel("Box", "BoxCollider");
-	modelManager_->LoadNormalModel("Plane", "plane");
+	modelManager_->LoadModel("DefaultCube", "cube", ModelManager::Obj);
+	modelManager_->LoadModel("Plane", "plane", ModelManager::Obj);
 
 	// スプライトの初期化
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);

@@ -19,40 +19,6 @@ void ModelManager::LoadAnimModel(const std::string& tag, const std::string& file
 	return;
 }
 
-void ModelManager::LoadNormalModel(const std::string& tag, const std::string& filePath)
-{
-	// イテレータ取得
-	std::unordered_map<std::string, std::unique_ptr<Model>>::iterator it = sModels_.find(tag);
-	// あれば早期
-	if (it != sModels_.end()) {
-		return;
-	}
-	// なければ作成
-	else {
-		std::unique_ptr<Model> model;
-		model.reset(Model::CreateDefault(filePath));
-		sModels_.emplace(tag, std::move(model));
-	}
-	return;
-}
-
-void ModelManager::LoadObjModel(const std::string& tag, const std::string& filePath)
-{
-	// イテレータ取得
-	std::unordered_map<std::string, std::unique_ptr<Model>>::iterator it = sModels_.find(tag);
-	// あれば早期
-	if (it != sModels_.end()) {
-		return;
-	}
-	// なければ作成
-	else {
-		std::unique_ptr<Model> model;
-		model.reset(Model::Create(filePath,LoadExtension::kObj));
-		sModels_.emplace(tag, std::move(model));
-	}
-	return;
-}
-
 void ModelManager::LoadModel(const std::string& tag, const std::string& filePath, LoadType loadType)
 {
 	// イテレータ取得
@@ -62,14 +28,16 @@ void ModelManager::LoadModel(const std::string& tag, const std::string& filePath
 		return;
 	}
 	std::unique_ptr<Model> model;
+	// モデル用フォルダにあるためフルパス作成
+	std::string fullPath = "Models/" + filePath;
 
 	switch (loadType)
 	{
 	case ModelManager::Obj:
-		model.reset(Model::Create(filePath, LoadExtension::kObj));
+		model.reset(Model::Create(fullPath, LoadExtension::kObj));
 		break;
 	case ModelManager::Gltf:
-		model.reset(Model::Create(filePath, LoadExtension::kGltf));
+		model.reset(Model::Create(fullPath, LoadExtension::kGltf));
 		break;
 	default:
 		break;

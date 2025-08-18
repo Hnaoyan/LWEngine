@@ -114,7 +114,7 @@ void Skybox::Initialize(const std::string& fileName)
 
     // マテリアルの情報
     MaterialData data{};
-    data.textureFilename = "Resources/Skybox/" + fileName;
+    data.textureFilename = "Resources/Models/Skybox/" + fileName;
     data.textureHandle = TextureManager::Load(data.textureFilename);
     modelData_.material = data;
 

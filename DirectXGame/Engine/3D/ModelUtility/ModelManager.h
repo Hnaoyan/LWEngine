@@ -27,19 +27,6 @@ public:
 	/// <param name="modelName"></param>
 	/// <param name="filePath"></param>
 	static void LoadAnimModel(const std::string& tag, const std::string& filePath);
-	/// <summary>
-	/// 通常モデルの読み込み
-	/// </summary>
-	/// <param name="modelName"></param>
-	/// <param name="filePath"></param>
-	static void LoadNormalModel(const std::string& tag, const std::string& filePath);
-
-	/// <summary>
-	/// Objの読み込み
-	/// </summary>
-	/// <param name="tag"></param>
-	/// <param name="filePath"></param>
-	static void LoadObjModel(const std::string& tag, const std::string& filePath);
 
 	static void LoadModel(const std::string& tag, const std::string& filePath, LoadType loadType);
 

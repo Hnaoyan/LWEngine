@@ -165,7 +165,7 @@ void TitleScene::ImGuiDraw()
 	if (ImGui::Button("NETWORKGAME")) {
 		sceneManager_->ChangeThreadScene("NETWORK");
 	}
-	if (ImGui::Button("Game")) {
+	if (ImGui::Button("GAMESCENE")) {
 		sceneManager_->ChangeThreadScene("GAME");
 	}
 
@@ -179,8 +179,8 @@ void TitleScene::LoadModel()
 {
 	//ModelManager::LoadObjModel("Plane", "plane");
 	//ModelManager::LoadObjModel("Axis", "BulletTest");
-	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
-	ModelManager::LoadNormalModel("RoundShadow", "plane");	// 丸影
+	ModelManager::LoadModel("Player", "Robotto", ModelManager::Obj);	// プレイヤー
+	ModelManager::LoadModel("RoundShadow", "plane", ModelManager::Obj);	// 丸影
 
 }
 

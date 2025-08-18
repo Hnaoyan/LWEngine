@@ -224,21 +224,21 @@ void GameScene::ImGuiDraw()
 void GameScene::LoadModel()
 {
 	// モデルのロード
-	ModelManager::LoadNormalModel("Terrain", "terrain");	// 地形
-	ModelManager::LoadNormalModel("Enemy", "EnemyBug");	// 雑魚敵
-	ModelManager::LoadNormalModel("BossEnemy", "Prizm");	// ボス
-	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
-	ModelManager::LoadNormalModel("PlayerOutline", "Robotto");	// コンボ用の枠モデル
-	ModelManager::LoadNormalModel("SkyDome", "SkyDome");	// 天球
-	ModelManager::LoadNormalModel("BarrierSphere", "sphere");	// ボスのバリア
-	ModelManager::LoadNormalModel("ColliderSphere", "sphere");	// ボスのバリア
-	ModelManager::LoadNormalModel("ParticleCube", "ParticleCube");	// パーティクル用のキューブ
-	ModelManager::LoadNormalModel("TrailCube", "ParticleCube");	// 軌跡用のキューブ
-	ModelManager::LoadNormalModel("BombPlane", "plane");	// 板ポリ
-	ModelManager::LoadNormalModel("Plane", "plane");
-	ModelManager::LoadNormalModel("BulletCube", "ICO");
-	ModelManager::LoadNormalModel("TestPlane", "plane");
-	ModelManager::LoadNormalModel("RoundShadow", "plane");
+	ModelManager::LoadModel("Terrain", "terrain", ModelManager::Obj);	// 地形
+	ModelManager::LoadModel("Enemy", "EnemyBug", ModelManager::Obj);	// 雑魚敵
+	ModelManager::LoadModel("BossEnemy", "Prizm", ModelManager::Obj);	// ボス
+	ModelManager::LoadModel("Player", "Robotto", ModelManager::Obj);	// プレイヤー
+	ModelManager::LoadModel("PlayerOutline", "Robotto", ModelManager::Obj);	// コンボ用の枠モデル
+	ModelManager::LoadModel("SkyDome", "SkyDome", ModelManager::Obj);	// 天球
+	ModelManager::LoadModel("BarrierSphere", "sphere", ModelManager::Obj);	// ボスのバリア
+	ModelManager::LoadModel("ColliderSphere", "sphere", ModelManager::Obj);	// ボスのバリア
+	ModelManager::LoadModel("ParticleCube", "ParticleCube", ModelManager::Obj);	// パーティクル用のキューブ
+	ModelManager::LoadModel("TrailCube", "ParticleCube", ModelManager::Obj);	// 軌跡用のキューブ
+	ModelManager::LoadModel("BombPlane", "plane", ModelManager::Obj);	// 板ポリ
+	ModelManager::LoadModel("Plane", "plane", ModelManager::Obj);
+	ModelManager::LoadModel("BulletCube", "ICO", ModelManager::Obj);
+	ModelManager::LoadModel("TestPlane", "plane", ModelManager::Obj);
+	ModelManager::LoadModel("RoundShadow", "plane", ModelManager::Obj);
 }
 
 void GameScene::LoadTexture()
