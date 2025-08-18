@@ -1249,6 +1249,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Login\NetLogin.h" />
+    <ClInclude Include="DirectXGame\Engine\Physics\PenetrationResolver.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
@@ -1363,12 +1364,6 @@
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\VignettePS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_PS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\Sprite_VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PostEffect\BloomVignetteBlurPS.hlsl" />
