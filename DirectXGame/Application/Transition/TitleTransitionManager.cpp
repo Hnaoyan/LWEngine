@@ -53,7 +53,7 @@ void TitleTransitionManager::Draw(ICamera* camera, DrawDesc::LightDesc lights)
 	drawDesc.spotLight = lights.spotLight;
 
 	// 描画
-	//robotObject_->Draw(drawDesc);
+	robotObject_->Draw(drawDesc);
 }
 
 void TitleTransitionManager::ImGuiDraw()

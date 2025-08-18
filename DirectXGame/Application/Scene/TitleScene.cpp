@@ -179,8 +179,8 @@ void TitleScene::LoadModel()
 {
 	//ModelManager::LoadObjModel("Plane", "plane");
 	//ModelManager::LoadObjModel("Axis", "BulletTest");
-	ModelManager::LoadNormalModel("Player", "Robotto");	// プレイヤー
-	ModelManager::LoadNormalModel("RoundShadow", "plane");	// 丸影
+	ModelManager::LoadModel("Player", "Robotto", ModelManager::Obj);	// プレイヤー
+	ModelManager::LoadModel("RoundShadow", "plane", ModelManager::Obj);	// 丸影
 
 }
 

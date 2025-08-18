@@ -51,7 +51,7 @@ public:
 	/// <summary>
 	// モデル生成
 	/// </summary>
-	static Model* Create(const std::string& modelName, LoadExtension ex);
+	static Model* Create(const std::string& filePath, LoadExtension ex);
 	static Model* CreateObj(const std::string& modelName, LoadExtension ex);
 	static Model* CreateDefault(const std::string& modelName);
 
@@ -63,7 +63,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::string& modelName, LoadExtension ex);
+	void Initialize(const std::string& filePath, LoadExtension ex);
 	void Initialize(const std::string& modelName);
 	/// <summary>
 	/// 描画

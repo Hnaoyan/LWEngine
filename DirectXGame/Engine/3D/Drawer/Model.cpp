@@ -8,7 +8,7 @@ ID3D12GraphicsCommandList* Model::sCommandList_ = nullptr;
 std::string Model::sDirectoryPath = "Resources";
 GeneralPipeline Model::sPipeline_;
 
-void Model::Initialize(const std::string& modelName, LoadExtension ex)
+void Model::Initialize(const std::string& filePath, LoadExtension ex)
 {
 	//// モデル読み込み
 	//switch (ex)
@@ -23,7 +23,9 @@ void Model::Initialize(const std::string& modelName, LoadExtension ex)
 	//	break;
 	//}
 	// モデルデータ読み込み
-	modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + modelName, modelName, ex);
+	size_t pos = filePath.find_last_of("/");
+	std::string modelNameStr = (pos == std::string::npos) ? filePath : filePath.substr(pos + 1);
+	modelData_ = ModelLoader::LoadAssimp(sDirectoryPath + "/" + filePath, modelNameStr, ex);
 
 	// メッシュ生成
 	mesh_ = std::make_unique<Mesh>();
@@ -63,12 +65,12 @@ void Model::Initialize(const std::string& modelName)
 	blendMode_ = Pipeline::BlendMode::kAlpha;
 }
 
-Model* Model::Create(const std::string& modelName, LoadExtension ex)
+Model* Model::Create(const std::string& filePath, LoadExtension ex)
 {
 	// メモリ確保
 	Model* instance = new Model;
 	// 初期化
-	instance->Initialize(modelName, ex);
+	instance->Initialize(filePath, ex);
 
 	return instance;
 }
