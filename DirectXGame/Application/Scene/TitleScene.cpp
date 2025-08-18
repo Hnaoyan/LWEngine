@@ -165,6 +165,9 @@ void TitleScene::ImGuiDraw()
 	if (ImGui::Button("NETWORKGAME")) {
 		sceneManager_->ChangeThreadScene("NETWORK");
 	}
+	if (ImGui::Button("GAMESCENE")) {
+		sceneManager_->ChangeThreadScene("GAME");
+	}
 
 	ImGui::DragFloat2("テキスト位置", &titleTextPosition_.x, 0.01f);
 	ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);
