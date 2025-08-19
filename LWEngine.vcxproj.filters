@@ -634,6 +634,7 @@
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Login\NetLogin.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Physics\PenetrationResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
