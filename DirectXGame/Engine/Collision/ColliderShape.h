@@ -13,7 +13,7 @@ class Triangle;
 using ColliderShape = std::variant<AABB*, OBB*, Sphere*>;
 
 //---2D用---//
-class Rectangle;
-class Circle;
+class Rectangle2D;
+class Circle2D;
 
-using Collider2DShape = std::variant<Rectangle*, Circle*>;
+using Collider2DShape = std::variant<Rectangle2D*, Circle2D*>;

@@ -162,6 +162,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TitleCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\2D\Collision2D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\2D\ICollider2D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.cpp" />

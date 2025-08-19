@@ -636,6 +636,7 @@
     <ClCompile Include="DirectXGame\Engine\NetWork\Login\NetLogin.cpp" />
     <ClCompile Include="DirectXGame\Engine\Physics\PenetrationResolver.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\2D\ICollider2D.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\2D\Collision2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
@@ -1474,7 +1475,6 @@
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderLists.h" />
-    <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderShape.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ICollider.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h" />
