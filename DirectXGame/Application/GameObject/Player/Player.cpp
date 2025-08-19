@@ -5,6 +5,7 @@
 #include "Module/State/PlayerStateList.h"
 
 #include "Engine/Collision/CollisionManager.h"
+#include "Engine/Physics/PenetrationResolver.h"
 #include "Engine/PostEffect/PostEffectRender.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/3D/ModelUtility/ModelManager.h"
@@ -189,17 +190,20 @@ void Player::OnCollision(ColliderObject target)
 		Terrain** terrain = std::get_if<Terrain*>(&target);
 		Vector3 correctPos = {};
 
-		Vector3 min{}, max{};
+		//Vector3 min{}, max{};
 
-		max = (*terrain)->GetCollider()->max_;
-		min = (*terrain)->GetCollider()->min_;
+		//max = (*terrain)->GetCollider()->max_;
+		//min = (*terrain)->GetCollider()->min_;
 
-		ICollider::BoxVertices box = ICollider::CreateBoxVertices(collider_.min_, collider_.max_);
+		//ICollider::BoxVertices box = ICollider::CreateBoxVertices(collider_.min_, collider_.max_);
 
-		ICollider::CollisionType3D type = ICollider::GetCollisionType3D(box, min, max);
+		//ICollider::CollisionType3D type = ICollider::GetCollisionType3D(box, min, max);
 
-		// 座標修正関数
-		CollisionCorrect(type, min, max);
+		//// 座標修正関数
+		//CollisionCorrect(type, min, max);
+		correctPos = PenetrationResolver::ExtrusionCalculation(collider_, *(*terrain)->GetCollider());
+		worldTransform_.transform_.translate += correctPos;
+
 	}
 	else if (std::holds_alternative<IBullet*>(target)) {
 		// ジャスト回避処理
