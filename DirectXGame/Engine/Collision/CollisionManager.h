@@ -1,7 +1,7 @@
 #pragma once
 #include "../Utility/Singleton.h"
 #include "Collider/ICollider.h"
-#include "Collider/ColliderShape.h"
+#include "ColliderShape.h"
 
 #include <list>
 

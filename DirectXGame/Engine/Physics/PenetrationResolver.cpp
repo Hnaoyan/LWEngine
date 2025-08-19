@@ -1,20 +1,20 @@
 #include "PenetrationResolver.h"
 
-Vector3 PenetrationResolver::ExtrusionCalculation(AABB from, AABB to)
+Vector3 PenetrationResolver::ExtrusionCalculation(AABB mover, AABB obstacle)
 {
-    Vector3 max = from.max_ - to.max_;
-    Vector3 min = from.min_ - to.min_;
+    Vector3 max = mover.max_ - obstacle.max_;
+    Vector3 min = mover.min_ - obstacle.min_;
 
-    float overlapX1 = from.max_.x - to.min_.x;  // 右から
-    float overlapX2 = from.min_.x - to.max_.x;  // 左から
+    float overlapX1 = mover.max_.x - obstacle.min_.x;  // 右から
+    float overlapX2 = mover.min_.x - obstacle.max_.x;  // 左から
     float overlapX = (overlapX1 < overlapX2) ? overlapX1 : -overlapX2;
 
-    float overlapY1 = from.max_.y - to.min_.y;  // 上から
-    float overlapY2 = from.min_.y - to.max_.y;  // 下から
+    float overlapY1 = mover.max_.y - obstacle.min_.y;  // 上から
+    float overlapY2 = mover.min_.y - obstacle.max_.y;  // 下から
     float overlapY = (overlapY1 < overlapY2) ? overlapY1 : -overlapY2;
 
-    float overlapZ1 = from.max_.z - to.min_.z;  // 前から
-    float overlapZ2 = from.min_.z - to.max_.z;  // 後から
+    float overlapZ1 = mover.max_.z - obstacle.min_.z;  // 前から
+    float overlapZ2 = mover.min_.z - obstacle.max_.z;  // 後から
     float overlapZ = (overlapZ1 < overlapZ2) ? overlapZ1 : -overlapZ2;
 
     // 最小の押し出し軸を選択
@@ -31,6 +31,4 @@ Vector3 PenetrationResolver::ExtrusionCalculation(AABB from, AABB to)
     else {
         return Vector3(0.0f, 0.0f, overlapZ);
     }
-
-    return Vector3();
 }

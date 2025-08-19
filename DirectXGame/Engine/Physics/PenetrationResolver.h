@@ -5,6 +5,6 @@
 class PenetrationResolver
 {
 public:
-	static Vector3 ExtrusionCalculation(AABB from, AABB to);
+	static Vector3 ExtrusionCalculation(AABB mover, AABB obstacle);
 	Vector3 ExtrusionPushPower(AABB from, AABB to);
 };

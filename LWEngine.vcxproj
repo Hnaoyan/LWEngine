@@ -162,6 +162,7 @@
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\SideCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TitleCamera.cpp" />
     <ClCompile Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\2D\ICollider2D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.cpp" />
@@ -379,13 +380,18 @@
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\SideCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TitleCamera.h" />
     <ClInclude Include="DirectXGame\Engine\Camera\Custom\TransitionCamera.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Circle\Circle2D.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Collider2DLists.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\ICollider2D.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Rectangle\Rectangle2D.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\OBB\OBB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderLists.h" />
-    <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderShape.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\ColliderShape.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ICollider.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collision.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Collision2D.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engine\GlobalVariables\GlobalVariables.h" />
     <ClInclude Include="DirectXGame\Engine\Instanced\InstancedManager.h" />
