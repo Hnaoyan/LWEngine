@@ -147,6 +147,7 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\GameUIManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\UIStructs.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />

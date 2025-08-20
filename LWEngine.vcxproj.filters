@@ -817,6 +817,7 @@
     <ClInclude Include="DirectXGame\Engine\Collision\2D\Rectangle\Rectangle2D.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\2D\Circle\Circle2D.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\2D\ICollider2D.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
@@ -938,7 +939,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXGame\Application\GameObject\IGameObject.cpp" />
-    <ClCompile Include="DirectXGame\Application\GameObject\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Drawer\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\TextureManager.cpp" />
@@ -998,7 +998,6 @@
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\GameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\IGameObject.h" />
-    <ClInclude Include="DirectXGame\Application\GameObject\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Drawer\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\TextureManager.h" />
