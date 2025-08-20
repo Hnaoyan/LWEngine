@@ -420,6 +420,9 @@
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.cpp" />
     <ClCompile Include="DirectXGame\Engine\NetWork\Login\NetLogin.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Physics\PenetrationResolver.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\2D\ICollider2D.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\2D\Collision2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">
@@ -548,7 +551,7 @@
     <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h">
       <Filter>Engine\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderShape.h">
+    <ClInclude Include="DirectXGame\Engine\Collision\ColliderShape.h">
       <Filter>Engine\Collision\Collider</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h">
@@ -808,6 +811,12 @@
     <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Login\NetLogin.h" />
+    <ClInclude Include="DirectXGame\Engine\Physics\PenetrationResolver.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Collision2D.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Collider2DLists.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Rectangle\Rectangle2D.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\Circle\Circle2D.h" />
+    <ClInclude Include="DirectXGame\Engine\Collision\2D\ICollider2D.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">
@@ -1025,7 +1034,6 @@
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\Sphere\Sphere.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderLists.h" />
-    <ClInclude Include="DirectXGame\Engine\Collision\Collider\ColliderShape.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collider\ICollider.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\Collision.h" />
     <ClInclude Include="DirectXGame\Engine\Collision\CollisionManager.h" />
