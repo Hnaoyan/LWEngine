@@ -13,6 +13,7 @@ class CollisionManager : public Singleton<CollisionManager>
 public:
 	// コライダーのリスト
 	std::list<ColliderShape> colliders_;
+	std::list<Collider2DShape> colliders2D_;
 
 public:
 	/// <summary>
@@ -28,10 +29,12 @@ public:
 	/// </summary>
 	/// <param name="collider"></param>
 	void ListRegist(ColliderShape collider);
+	void ListRegist(Collider2DShape collider);
 	/// <summary>
 	/// 衝突チェック
 	/// </summary>
 	/// <param name="colliderA"></param>
 	/// <param name="colliderB"></param>
 	void CheckCollisionPair(ColliderShape colliderA, ColliderShape colliderB);
+	void CheckCollisionPair(Collider2DShape colliderA, Collider2DShape colliderB);
 };

@@ -16,4 +16,4 @@ using ColliderShape = std::variant<AABB*, OBB*, Sphere*>;
 class Rectangle2D;
 class Circle2D;
 
-using Collider2DShape = std::variant<Rectangle2D*, Circle2D*>;
+using Collider2DShape = std::variant<Rectangle2D*>;

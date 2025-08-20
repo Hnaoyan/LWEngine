@@ -17,6 +17,29 @@ public:
 	/// </summary>
 	virtual void Update(const Vector2& worldPosition);
 
+public:
+	/// <summary>
+	/// 属性取得
+	/// </summary>
+	/// <returns></returns>
+	uint32_t GetAttribute() { return collisionAttribute_; }
+	/// <summary>
+	/// マスク取得
+	/// </summary>
+	/// <returns></returns>
+	uint32_t GetMask() { return collisionMask_; }
+	/// <summary>
+	/// 属性設定
+	/// </summary>
+	/// <param name="attribute"></param>
+	void SetAttribute(uint32_t attribute) { collisionAttribute_ = attribute; }
+	/// <summary>
+	/// マスク設定
+	/// </summary>
+	/// <param name="mask"></param>
+	void SetMask(uint32_t mask) { collisionMask_ = mask; }
+	ColliderObject GetColliderObject() { return objectRegistry_; }
+
 protected:
 	// 衝突属性（自分）
 	uint32_t collisionAttribute_ = 0xffffffff;
