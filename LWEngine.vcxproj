@@ -421,6 +421,7 @@
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpClient.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Http\HttpScoreClient.h" />
     <ClInclude Include="DirectXGame\Engine\NetWork\Login\NetLogin.h" />
+    <ClInclude Include="DirectXGame\Engine\Object\IGameObject2D.h" />
     <ClInclude Include="DirectXGame\Engine\Object\ObjectPool.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\GPUParticleEmitter.h" />
     <ClInclude Include="DirectXGame\Engine\Particle\Emitter\IParticleEmitter.h" />
