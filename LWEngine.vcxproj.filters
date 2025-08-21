@@ -637,6 +637,8 @@
     <ClCompile Include="DirectXGame\Engine\Physics\PenetrationResolver.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\2D\ICollider2D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\2D\Collision2D.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Object\IGameObject2D.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Collision\2D\Rectangle\Rectangle2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameObject\Player\Module\State\Horizontal\BoostState.h">
