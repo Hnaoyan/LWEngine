@@ -4,6 +4,9 @@
 void IGameObject2D::Initialize(Model* model)
 {
 	model_ = model;
+	// マテリアル
+	material_ = std::make_unique<Material>();
+	material_->CreateMaterial();
 
 	worldTransform_.Initialize();
 }
