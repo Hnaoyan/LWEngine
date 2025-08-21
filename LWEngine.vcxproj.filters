@@ -425,6 +425,7 @@
     <ClCompile Include="DirectXGame\Engine\Collision\2D\Collision2D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Object\IGameObject2D.cpp" />
     <ClCompile Include="DirectXGame\Engine\Collision\2D\Rectangle\Rectangle2D.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">

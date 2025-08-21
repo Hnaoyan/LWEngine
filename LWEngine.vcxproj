@@ -26,6 +26,7 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\KeyConfig\KeyConfigManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\Replay\ReplayManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\UIStructs.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
     <ClCompile Include="DirectXGame\Application\Transition\TitleTransitionManager.cpp" />
