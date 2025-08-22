@@ -43,6 +43,7 @@ private:
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Obstacle> obstacle_;
+	std::unique_ptr<Obstacle> obstacleF_;
 private:
 	std::unique_ptr<LightingManager> lightManager_;
 	// コリジョンマネ

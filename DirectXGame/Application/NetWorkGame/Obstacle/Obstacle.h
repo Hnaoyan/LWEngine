@@ -13,7 +13,7 @@ public:
 	Rectangle2D* GetCollider();
 
 	void SetCollision(CollisionManager* manager);
-
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 private:
 
 };

@@ -6,6 +6,8 @@
 
 #include "Application/NetWorkGame/NetworkGameObjectLists.h"
 
+#include <imgui.h>
+
 void Player::Initialize(Model* model)
 {
 	IGameObject2D::Initialize(model);
@@ -35,7 +37,11 @@ void Player::Update()
 
 void Player::ImGuiDraw()
 {
+	ImGui::Begin("Player");
 
+	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
+
+	ImGui::End();
 }
 
 void Player::OnCollision([[maybe_unused]] ColliderObject target)
