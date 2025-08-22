@@ -36,9 +36,17 @@ Vector2 PenetrationResolver::Extrusion2DCalculation(Rectangle2D mover, Rectangle
     float overlapX2 = mover.min_.x - obstacle.max_.x;  // 左から
     float overlapX = (overlapX1 < overlapX2) ? overlapX1 : -overlapX2;
 
+    if (mover.max_.x == obstacle.max_.x && mover.min_.x == obstacle.min_.x) {
+        overlapX = 0.0f;
+    }
+
     float overlapY1 = mover.max_.y - obstacle.min_.y;  // 上から
     float overlapY2 = mover.min_.y - obstacle.max_.y;  // 下から
     float overlapY = (overlapY1 < overlapY2) ? overlapY1 : -overlapY2;
+
+    if (mover.max_.y == obstacle.max_.y && mover.min_.y == obstacle.min_.y) {
+        overlapY = 0.0f;
+    }
 
     // 最小の押し出し軸を選択
     float absX = std::abs(overlapX);
