@@ -1,6 +1,5 @@
 #pragma once
 #include "Engine/3D/WorldTransform.h"
-#include "../ColliderShape.h"
 #include "Engine/3D/WorldTransform.h"
 #include "Application/Collision/ColliderObject.h"
 
@@ -22,12 +21,12 @@ public:
 	/// 属性取得
 	/// </summary>
 	/// <returns></returns>
-	uint32_t GetAttribute() { return collisionAttribute_; }
+	uint32_t GetAttribute() const { return collisionAttribute_; }
 	/// <summary>
 	/// マスク取得
 	/// </summary>
 	/// <returns></returns>
-	uint32_t GetMask() { return collisionMask_; }
+	uint32_t GetMask() const { return collisionMask_; }
 	/// <summary>
 	/// 属性設定
 	/// </summary>
@@ -38,7 +37,7 @@ public:
 	/// </summary>
 	/// <param name="mask"></param>
 	void SetMask(uint32_t mask) { collisionMask_ = mask; }
-	ColliderObject GetColliderObject() { return objectRegistry_; }
+	ColliderObject GetColliderObject() const { return objectRegistry_; }
 
 protected:
 	// 衝突属性（自分）

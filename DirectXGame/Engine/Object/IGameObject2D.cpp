@@ -12,7 +12,7 @@ void IGameObject2D::Initialize(Model* model)
 
 	Rectangle2D* rect = new Rectangle2D();
 	Collider2DShape* shape = new Collider2DShape();
-	*shape = rect;
+	*shape = *rect;
 	collider_.reset(shape);
 
 }
@@ -27,8 +27,8 @@ void IGameObject2D::Update()
 
 void IGameObject2D::ColliderUpdate()
 {
-	Rectangle2D* rect = std::get<Rectangle2D*>(*collider_);
-	rect->Update(Vector2(worldTransform_.GetWorldPosition().x, worldTransform_.GetWorldPosition().y));
+	Rectangle2D rect = std::get<Rectangle2D>(*collider_);
+	rect.Update(Vector2(worldTransform_.GetWorldPosition().x, worldTransform_.GetWorldPosition().y));
 
 	Collider2DShape* shape = new Collider2DShape();
 	*shape = rect;
