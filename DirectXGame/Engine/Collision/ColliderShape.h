@@ -1,5 +1,6 @@
 #pragma once
 #include <variant>
+#include "2D/Collider2DLists.h"
 
 //---3D用---//
 class AABB;
@@ -13,7 +14,5 @@ class Triangle;
 using ColliderShape = std::variant<AABB*, OBB*, Sphere*>;
 
 //---2D用---//
-class Rectangle2D;
-class Circle2D;
 
-using Collider2DShape = std::variant<Rectangle2D*>;
+using Collider2DShape = std::variant<Rectangle2D>;

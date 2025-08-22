@@ -89,16 +89,16 @@ void CollisionManager::CheckCollisionPair(Collider2DShape colliderA, Collider2DS
 	std::visit([](const auto& a, const auto& b) {
 		// マスク処理
 		// 同じマスク同士ならスキップ
-		if (a->GetAttribute() == b->GetAttribute()) {
+		if (a.GetAttribute() == b.GetAttribute()) {
 			return;
 		}
 		// 衝突処理
-		if (Collision2D::IsCollision(*a, *b)) {
+		if (Collision2D::IsCollision(a, b)) {
 
 			std::visit([=](const auto& x, const auto& y) {
 				x->OnCollision(y);
 				y->OnCollision(x);
-				}, a->GetColliderObject(), b->GetColliderObject());
+				}, a.GetColliderObject(), b.GetColliderObject());
 
 		}
 
