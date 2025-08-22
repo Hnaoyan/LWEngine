@@ -188,6 +188,8 @@ void NetworkScene::ImGuiDraw()
 	debugCamera_->ImGuiDraw();
 
 	player_->ImGuiDraw();
+	obstacle_->ImGuiDraw();
+	obstacleF_->ImGuiDraw();
 
 	ImGui::Begin("NetWork");
 	ImGui::InputInt("Score", &runningScore_);

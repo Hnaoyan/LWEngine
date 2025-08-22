@@ -3,8 +3,17 @@
 #include "Application/Collision/ColliderFilter.h"
 #include "Engine/Collision/CollisionManager.h"
 
+#include <imgui.h>
+
+int Obstacle::sSerialNumber = 0;
+
 void Obstacle::Initialize(Model* model)
 {
+	// 名前
+	name_ = "Obstacle" + std::to_string(sSerialNumber);
+	// シリアル番号更新
+	sSerialNumber++;
+
 	IGameObject2D::Initialize(model);
 
 	Rectangle2D* rect = new Rectangle2D();
@@ -17,16 +26,23 @@ void Obstacle::Initialize(Model* model)
 	collider_.reset(shape);
 
 	worldTransform_.transform_.translate = { 5.0f,0.0f,0.0f };
+
+	size_ = Vector3(1.0f, 1.0f, 1.0f);
+
 }
 
 void Obstacle::Update()
 {
+	worldTransform_.transform_.scale = size_;
 	IGameObject2D::Update();
 }
 
 void Obstacle::ImGuiDraw()
 {
-
+	ImGui::Begin(name_.c_str());
+	std::string name = name_ + "Size";
+	ImGui::DragFloat3(name.c_str(), &size_.x, 0.01f);
+	ImGui::End();
 }
 
 void Obstacle::OnCollision([[maybe_unused]] ColliderObject target)
