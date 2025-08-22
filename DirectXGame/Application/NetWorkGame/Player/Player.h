@@ -2,6 +2,8 @@
 #include "Engine/Object/IGameObject2D.h"
 #include "System/PlayerSystemLists.h"
 
+class CollisionManager;
+
 class Player : public IGameObject2D
 {
 public:
@@ -9,6 +11,8 @@ public:
 	void Update() override;
 	void ImGuiDraw() override;
 	void OnCollision([[maybe_unused]] ColliderObject target) override;
+
+	void SetCollision(CollisionManager* manager);
 
 public:
 	WorldTransform* GetWorldTransform() { return &worldTransform_; }

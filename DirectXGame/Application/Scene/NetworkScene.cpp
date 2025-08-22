@@ -45,6 +45,7 @@ void NetworkScene::Initialize()
 	// ライト初期化
 	lightManager_ = std::make_unique<LightingManager>();
 	lightManager_->Initialize();
+	collisionManager_ = std::make_unique<CollisionManager>();
 
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
@@ -108,6 +109,15 @@ void NetworkScene::Update()
 		break;
 	}
 
+	// クリア
+	collisionManager_->ListClear();
+
+	// ゲームの登録
+	player_->SetCollision(collisionManager_.get());
+	obstacle_->SetCollision(collisionManager_.get());
+
+	// 衝突処理
+	collisionManager_->CheckAllCollisions();
 
 }
 

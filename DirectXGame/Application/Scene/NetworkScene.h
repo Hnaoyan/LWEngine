@@ -45,6 +45,8 @@ private:
 	std::unique_ptr<Obstacle> obstacle_;
 private:
 	std::unique_ptr<LightingManager> lightManager_;
+	// コリジョンマネ
+	std::unique_ptr<CollisionManager> collisionManager_;
 
 public:
 	/// <summary>
