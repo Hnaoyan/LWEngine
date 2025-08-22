@@ -8,6 +8,8 @@ void Player::Initialize(Model* model)
 void Player::Update()
 {
 
+	// 基底更新
+	IGameObject2D::Update();
 }
 
 void Player::ImGuiDraw()

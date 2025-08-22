@@ -41,6 +41,17 @@ void NetworkScene::Initialize()
 	IScene::Initialize();
 
 	loginAPI_ = NetLogin("Naoya05", "password");
+
+	// ライト初期化
+	lightManager_ = std::make_unique<LightingManager>();
+	lightManager_->Initialize();
+
+	debugCamera_ = std::make_unique<DebugCamera>();
+	debugCamera_->Initialize();
+
+	player_ = std::make_unique<Player>();
+	player_->Initialize(ModelManager::GetModel("Player"));
+
 }
 
 void NetworkScene::GPUUpdate()
@@ -49,6 +60,9 @@ void NetworkScene::GPUUpdate()
 
 void NetworkScene::Update()
 {
+	lightManager_->Update();
+	debugCamera_->Update();
+	player_->Update();
 	// リクエスト処理
 	RequestProcess();
 
@@ -110,9 +124,18 @@ void NetworkScene::Draw()
 	dxCommon_->ClearDepthBuffer();
 
 	ModelRenderer::PreDraw(commandList);
+	//DrawDesc::LightDesc lightDesc{};
+	//lightDesc.directionalLight = lightManager_->GetDirectional();
+	//lightDesc.pointLight = lightManager_->GetPoint();
+	//lightDesc.spotLight = lightManager_->GetSpot();
+	// 描画に使うもの
+	ModelDrawDesc drawDesc{};
+	drawDesc.camera = debugCamera_.get();
+	drawDesc.directionalLight = lightManager_->GetDirectional();
+	drawDesc.pointLight = lightManager_->GetPoint();
+	drawDesc.spotLight = lightManager_->GetSpot();
 
-
-
+	player_->Draw(drawDesc);
 
 	ModelRenderer::PostDraw();
 

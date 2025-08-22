@@ -10,6 +10,9 @@
 
 #include "Engine/NetWork/Login/NetLogin.h"
 
+// アプリ
+#include "Application/NetWorkGame/NetworkGameObjectLists.h"
+
 #include <optional>
 
 class NetworkScene : public IScene
@@ -36,6 +39,11 @@ private:
 	std::string rankingText_ = "";
 
 	NetLogin loginAPI_;
+
+	std::unique_ptr<DebugCamera> debugCamera_;
+	std::unique_ptr<Player> player_;
+private:
+	std::unique_ptr<LightingManager> lightManager_;
 
 public:
 	/// <summary>
