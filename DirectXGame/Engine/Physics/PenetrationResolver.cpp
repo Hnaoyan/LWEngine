@@ -32,31 +32,33 @@ Vector3 PenetrationResolver::ExtrusionCalculation(AABB mover, AABB obstacle)
 
 Vector2 PenetrationResolver::Extrusion2DCalculation(Rectangle2D mover, Rectangle2D obstacle)
 {
-    float overlapX1 = mover.max_.x - obstacle.min_.x;  // 右から
-    float overlapX2 = mover.min_.x - obstacle.max_.x;  // 左から
-    float overlapX = (overlapX1 < overlapX2) ? overlapX1 : -overlapX2;
+    // X方向の重なり量
+    float overlapX = (std::min)(mover.max_.x - obstacle.min_.x,
+        obstacle.max_.x - mover.min_.x);
+    // Y方向の重なり量
+    float overlapY = (std::min)((float)mover.max_.y - obstacle.min_.y,
+        (float)obstacle.max_.y - mover.min_.y);
 
-    if (mover.max_.x == obstacle.max_.x && mover.min_.x == obstacle.min_.x) {
-        overlapX = 0.0f;
+    // 方向は中心差で決める
+    if (mover.center_.x < obstacle.center_.x) {
+        overlapX = -overlapX; // moverが左側 → 左に押し戻す
+    }
+    if (mover.center_.x < obstacle.center_.x) {
+        overlapY = -overlapY; // moverが下側 → 下に押し戻す
     }
 
-    float overlapY1 = mover.max_.y - obstacle.min_.y;  // 上から
-    float overlapY2 = mover.min_.y - obstacle.max_.y;  // 下から
-    float overlapY = (overlapY1 < overlapY2) ? overlapY1 : -overlapY2;
+    // それぞれの軸の辺が揃っているか判定
+    bool alignedX = (mover.max_.x == obstacle.max_.x) || (mover.min_.x == obstacle.min_.x);
+    bool alignedY = (mover.max_.y == obstacle.max_.y) || (mover.min_.y == obstacle.min_.y);
+    // チェック
+    if (alignedY && !alignedX) return Vector2(overlapX, 0.0f);
+    if (alignedX && !alignedY) return Vector2(0.0f, overlapY);
 
-    if (mover.max_.y == obstacle.max_.y && mover.min_.y == obstacle.min_.y) {
-        overlapY = 0.0f;
-    }
-
-    // 最小の押し出し軸を選択
-    float absX = std::abs(overlapX);
-    float absY = std::abs(overlapY);
-
-    if (absX <= absY) {
+    // 押し出し軸を決定
+    if (std::abs(overlapX) < std::abs(overlapY)) {
         return Vector2(overlapX, 0.0f);
     }
-    else if (absY <= absX) {
+    else {
         return Vector2(0.0f, overlapY);
     }
-    return Vector2(0.0f, 0.0f);
 }
