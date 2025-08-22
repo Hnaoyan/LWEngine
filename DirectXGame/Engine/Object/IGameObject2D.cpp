@@ -9,6 +9,12 @@ void IGameObject2D::Initialize(Model* model)
 	material_->CreateMaterial();
 
 	worldTransform_.Initialize();
+
+	Rectangle2D* rect = new Rectangle2D();
+	Collider2DShape* shape = new Collider2DShape();
+	*shape = rect;
+	collider_.reset(shape);
+
 }
 
 void IGameObject2D::Update()
