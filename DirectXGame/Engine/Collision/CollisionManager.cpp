@@ -4,6 +4,7 @@
 #include "2D/Collider2DLists.h"
 #include "2D/Collision2D.h"
 #include "Application/GameObject/GameObjectLists.h"
+#include "Application/NetWorkGame/NetworkGameObjectLists.h"
 
 void CollisionManager::CheckAllCollisions()
 {

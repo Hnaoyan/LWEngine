@@ -428,6 +428,8 @@
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\System\PlayerController.cpp" />
     <ClCompile Include="CameraManager2D.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Obstacle.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Custom\Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">
@@ -827,6 +829,9 @@
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\System\PlayerController.h" />
     <ClInclude Include="CameraManager2D.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\NetworkGameObjectLists.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\System\PlayerSystemLists.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\Obstacle\Obstacle.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\Obstacle\Custom\Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

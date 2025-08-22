@@ -52,6 +52,9 @@ void NetworkScene::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Player"));
 
+	obstacle_ = std::make_unique<Obstacle>();
+	obstacle_->Initialize(ModelManager::GetModel("Cube"));
+
 }
 
 void NetworkScene::GPUUpdate()
@@ -63,6 +66,7 @@ void NetworkScene::Update()
 	lightManager_->Update();
 	debugCamera_->Update();
 	player_->Update();
+	obstacle_->Update();
 	// リクエスト処理
 	RequestProcess();
 
@@ -136,7 +140,7 @@ void NetworkScene::Draw()
 	drawDesc.spotLight = lightManager_->GetSpot();
 
 	player_->Draw(drawDesc);
-
+	obstacle_->Draw(drawDesc);
 	ModelRenderer::PostDraw();
 
 #pragma region UI
@@ -165,6 +169,8 @@ void NetworkScene::ImGuiDraw()
 {
 	// ログインAPI
 	loginAPI_.ImGuiDraw();
+
+	debugCamera_->ImGuiDraw();
 
 	ImGui::Begin("NetWork");
 	ImGui::InputInt("Score", &runningScore_);

@@ -1,8 +1,7 @@
 #pragma once
 #include "Engine/Object/IGameObject2D.h"
-#include "System/PlayerSystemLists.h"
 
-class Player : public IGameObject2D
+class Obstacle : public IGameObject2D
 {
 public:
 	void Initialize(Model* model) override;
@@ -10,9 +9,7 @@ public:
 	void ImGuiDraw() override;
 	void OnCollision([[maybe_unused]] ColliderObject target) override;
 
-public:
-	WorldTransform* GetWorldTransform() { return &worldTransform_; }
-	// 操作関係
-	std::unique_ptr<PlayerController> controller_;
+private:
 
 };
+
