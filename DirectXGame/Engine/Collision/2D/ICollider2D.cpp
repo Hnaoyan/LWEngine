@@ -4,6 +4,8 @@ void ICollider2D::Initialize(ColliderObject object)
 {
 	// オブジェクトの設定
 	objectRegistry_ = object;
+
+	worldTransform_.Initialize();
 }
 
 void ICollider2D::Update(const Vector2& worldPosition)
