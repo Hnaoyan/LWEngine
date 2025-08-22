@@ -6,7 +6,7 @@
 
 #include "IGameObject.h"
 //// プレイヤー
-//#include "Player/Player.h"
+#include "Application/NetWorkGame/Player/Player.h"
 //#include "Player/Module/Foot/PlayerFootCollider.h"
 //// 弾
 //#include "Bullet/BulletManager.h"
