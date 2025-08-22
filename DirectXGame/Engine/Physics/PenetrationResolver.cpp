@@ -43,7 +43,7 @@ Vector2 PenetrationResolver::Extrusion2DCalculation(Rectangle2D mover, Rectangle
     if (mover.center_.x < obstacle.center_.x) {
         overlapX = -overlapX; // moverが左側 → 左に押し戻す
     }
-    if (mover.center_.x < obstacle.center_.x) {
+    if (mover.center_.y < obstacle.center_.y) {
         overlapY = -overlapY; // moverが下側 → 下に押し戻す
     }
 
