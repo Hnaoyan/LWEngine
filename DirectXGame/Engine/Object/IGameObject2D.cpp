@@ -28,6 +28,7 @@ void IGameObject2D::Update()
 void IGameObject2D::ColliderUpdate()
 {
 	Rectangle2D rect = std::get<Rectangle2D>(*collider_);
+	rect.size_ = Vector2(worldTransform_.transform_.scale.x, worldTransform_.transform_.scale.y);
 	rect.Update(Vector2(worldTransform_.GetWorldPosition().x, worldTransform_.GetWorldPosition().y));
 
 	Collider2DShape* shape = new Collider2DShape();

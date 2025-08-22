@@ -12,4 +12,5 @@ public:
 	Vector2 max_ = {};
 	Vector2 center_ = {};
 	float radius_ = 1.0f;
+	Vector2 size_ = { 1.0f,1.0f };
 };
