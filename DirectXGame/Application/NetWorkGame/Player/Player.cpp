@@ -3,6 +3,7 @@
 #include "Application/Collision/ColliderFilter.h"
 #include "Engine/Collision/CollisionManager.h"
 #include "Engine/Physics/PenetrationResolver.h"
+#include "Engine/LwLib/DeltaTime.h"
 
 #include "Application/NetWorkGame/NetworkGameObjectLists.h"
 
@@ -28,6 +29,8 @@ void Player::Initialize(Model* model)
 
 void Player::Update()
 {
+
+	worldTransform_.transform_.translate.y += (-9.8f) * kDeltaTime;
 
 	controller_->Update();
 

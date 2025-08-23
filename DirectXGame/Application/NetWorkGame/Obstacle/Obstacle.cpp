@@ -40,7 +40,10 @@ void Obstacle::Update()
 void Obstacle::ImGuiDraw()
 {
 	ImGui::Begin(name_.c_str());
-	std::string name = name_ + "Size";
+	std::string name = name_ + "Position";
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, 0.01f);
+
+	name = name_ + "Size";
 	ImGui::DragFloat3(name.c_str(), &size_.x, 0.01f);
 	ImGui::End();
 }
