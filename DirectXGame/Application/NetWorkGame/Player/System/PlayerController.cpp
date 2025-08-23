@@ -13,6 +13,7 @@ void PlayerController::Initialize(Player* player)
 
 void PlayerController::Update()
 {
+	player_->GetWorldTransform()->UpdateMatrix();
 	// 速度リセット
 	velocity_ = {};
 	// 移動関係

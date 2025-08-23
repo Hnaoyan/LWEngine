@@ -25,6 +25,7 @@ void Player::Initialize(Model* model)
 	// 操作クラス
 	controller_ = std::make_unique<PlayerController>();
 	controller_->Initialize(this);
+	worldTransform_.transform_.translate.y = 20.0f;
 }
 
 void Player::Update()
