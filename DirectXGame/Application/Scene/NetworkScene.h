@@ -12,6 +12,7 @@
 
 // アプリ
 #include "Application/NetWorkGame/NetworkGameObjectLists.h"
+#include "Application/NetWorkGame/Obstacle/Manager/ObstacleManager.h"
 
 #include <optional>
 
@@ -44,6 +45,7 @@ private:
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Obstacle> obstacle_;
 	std::unique_ptr<Obstacle> obstacleF_;
+	std::unique_ptr<ObstacleManager> obstacleManager_;
 private:
 	std::unique_ptr<LightingManager> lightManager_;
 	// コリジョンマネ

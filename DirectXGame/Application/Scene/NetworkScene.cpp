@@ -59,6 +59,9 @@ void NetworkScene::Initialize()
 	obstacleF_ = std::make_unique<Obstacle>();
 	obstacleF_->Initialize(ModelManager::GetModel("Cube"));
 	obstacleF_->GetWorldTransform()->transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
+
+	obstacleManager_ = std::make_unique<ObstacleManager>();
+	obstacleManager_->Initialize();
 }
 
 void NetworkScene::GPUUpdate()
@@ -72,6 +75,7 @@ void NetworkScene::Update()
 	player_->Update();
 	obstacle_->Update();
 	obstacleF_->Update();
+	obstacleManager_->Update();
 	// リクエスト処理
 	RequestProcess();
 
@@ -156,6 +160,7 @@ void NetworkScene::Draw()
 	player_->Draw(drawDesc);
 	obstacle_->Draw(drawDesc);
 	obstacleF_->Draw(drawDesc);
+	obstacleManager_->Draw(drawDesc);
 	ModelRenderer::PostDraw();
 
 #pragma region UI
