@@ -61,8 +61,3 @@ void Player::OnCollision([[maybe_unused]] ColliderObject target)
 	worldTransform_.UpdateMatrix();
 	
 }
-
-void Player::SetCollision(CollisionManager* manager)
-{
-	manager->ListRegist(*collider_.get());
-}

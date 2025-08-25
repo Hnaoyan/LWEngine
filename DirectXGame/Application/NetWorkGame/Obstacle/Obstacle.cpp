@@ -56,8 +56,3 @@ Rectangle2D* Obstacle::GetCollider()
 {
 	return std::get_if<Rectangle2D>(collider_.get());
 }
-
-void Obstacle::SetCollision(CollisionManager* manager)
-{
-	manager->ListRegist(*collider_.get());
-}

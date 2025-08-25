@@ -17,8 +17,6 @@ public:
 	void OnCollision([[maybe_unused]] ColliderObject target) override;
 	Rectangle2D* GetCollider();
 
-	void SetCollision(CollisionManager* manager);
-	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 private:
 
 	Vector3 size_ = {};

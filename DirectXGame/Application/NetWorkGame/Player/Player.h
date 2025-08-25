@@ -12,10 +12,6 @@ public:
 	void ImGuiDraw() override;
 	void OnCollision([[maybe_unused]] ColliderObject target) override;
 
-	void SetCollision(CollisionManager* manager);
-
-public:
-	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 	// 操作関係
 	std::unique_ptr<PlayerController> controller_;
 
