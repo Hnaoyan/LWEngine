@@ -58,6 +58,9 @@ void NetworkScene::Initialize()
 
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize();
+
+	timerSystem_ = std::make_unique<GameTimerSystem>();
+	timerSystem_->Initialize();
 }
 
 void NetworkScene::GPUUpdate()
@@ -66,8 +69,13 @@ void NetworkScene::GPUUpdate()
 
 void NetworkScene::Update()
 {
+	// タイマー
+	timerSystem_->Update();
+
 	lightManager_->Update();
 	debugCamera_->Update();
+
+	// オブジェクト
 	player_->Update();
 	goal_->Update();
 	obstacleManager_->Update();
@@ -185,6 +193,7 @@ void NetworkScene::ImGuiDraw()
 	loginAPI_.ImGuiDraw();
 
 	debugCamera_->ImGuiDraw();
+	timerSystem_->ImGuiDraw();
 
 	player_->ImGuiDraw();
 	goal_->ImGuiDraw();

@@ -13,6 +13,7 @@
 // アプリ
 #include "Application/NetWorkGame/NetworkGameObjectLists.h"
 #include "Application/NetWorkGame/Obstacle/Manager/ObstacleManager.h"
+#include "Application/NetWorkGame/System/GameTimerSystem.h"
 
 #include <optional>
 
@@ -46,6 +47,8 @@ private:
 	std::unique_ptr<GoalObject> goal_;
 	std::unique_ptr<ObstacleManager> obstacleManager_;
 private:
+	std::unique_ptr<GameTimerSystem> timerSystem_;
+
 	std::unique_ptr<LightingManager> lightManager_;
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
