@@ -38,17 +38,27 @@ void PlayerController::MovementHandler()
 	else {
 		direct.x = 0.0f;
 	}
-	if (input->PressKey(DIK_W)) {
-		direct.y = 1.0f;
-	}
-	else if (input->PressKey(DIK_S)) {
-		direct.y = -1.0f;
-	}
-	else {
-		direct.y = 0.0f;
-	}
-
+	//if (input->PressKey(DIK_W)) {
+	//	direct.y = 1.0f;
+	//}
+	//else if (input->PressKey(DIK_S)) {
+	//	direct.y = -1.0f;
+	//}
+	//else {
+	//	direct.y = 0.0f;
+	//}
+	direct.y = 0.0f;
 	moveDirection_ = Vector2::Normalize(direct);
 	velocity_ = moveDirection_ * speedRatio_;
+
+	if (input->TriggerKey(DIK_SPACE)) {
+		velocity_.y += 10.0f;
+	}
+
+	// 減速
+	velocity_.y = velocity_.y * 0.75f;
+	if (velocity_.y <= 0.01f) {
+		velocity_.y = 0.0f;
+	}
 
 }

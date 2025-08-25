@@ -53,7 +53,7 @@ void NetworkScene::Update()
 	goal_->Update();
 	obstacleManager_->Update();
 
-	NetworkUpdate();
+	//NetworkUpdate();
 
 	CollisionUpdate();
 
