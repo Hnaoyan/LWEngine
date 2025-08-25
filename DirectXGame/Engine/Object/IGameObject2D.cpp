@@ -1,5 +1,6 @@
 #include "IGameObject2D.h"
 #include "Engine/Collision/2D/Collider2DLists.h"
+#include "Engine/Collision/CollisionManager.h"
 
 void IGameObject2D::Initialize(Model* model)
 {
@@ -52,4 +53,9 @@ void IGameObject2D::Draw(ModelDrawDesc desc)
 
 	// 描画
 	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
+}
+
+void IGameObject2D::SetCollision(CollisionManager* manager)
+{
+	manager->ListRegist(*collider_.get());
 }
