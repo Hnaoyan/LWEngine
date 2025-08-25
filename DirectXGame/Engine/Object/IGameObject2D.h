@@ -5,6 +5,8 @@
 #include "Engine/Collision/Collider/ColliderLists.h"
 #include <memory>
 
+class CollisionManager;
+
 /// <summary>
 /// 判定などを2Dで担う3Dオブジェクト用クラス
 /// </summary>
@@ -19,9 +21,11 @@ public:
 	virtual void Draw(ModelDrawDesc desc);
 	virtual void ImGuiDraw() = 0;
 	virtual void OnCollision([[maybe_unused]] ColliderObject target) {};
+	virtual void SetCollision(CollisionManager* manager);
 
 public: // アクセッサ
 	bool IsDead() const { return isDead_; }
+	WorldTransform* GetWorldTransform() { return &worldTransform_; }
 
 protected:
 	// モデル
