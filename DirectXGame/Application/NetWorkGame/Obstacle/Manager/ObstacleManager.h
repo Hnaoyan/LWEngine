@@ -11,6 +11,7 @@ class ObstacleManager
 public:
 	void Initialize();
 	void Update();
+	void ImGuiDraw();
 	void CollisionUpdate(CollisionManager* manager);
 	void Draw(ModelDrawDesc desc);
 	void AddObstacle(const Vector2& position, const Vector2& size);

@@ -3,6 +3,8 @@
 #include "Engine/3D/ModelUtility/ModelManager.h"
 #include "Engine/Collision/CollisionManager.h"
 
+#include <imgui.h>
+
 void ObstacleManager::Initialize()
 {
 	AddObstacle(Vector2(5.0f, 0.0f),Vector2(1.0f,6.0f));
@@ -15,6 +17,24 @@ void ObstacleManager::Update()
 		it != obstacles_.end(); ++it)
 	{
 		(*it)->Update();
+	}
+}
+
+void ObstacleManager::ImGuiDraw()
+{
+	
+	ImGui::Begin("障害物管理");
+
+	if (ImGui::Button("追加")) {
+		AddObstacle(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f));
+	}
+
+	ImGui::End();
+
+	for (std::list<std::unique_ptr<Obstacle>>::iterator it = obstacles_.begin();
+		it != obstacles_.end(); ++it)
+	{
+		(*it)->ImGuiDraw();
 	}
 }
 

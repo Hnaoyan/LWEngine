@@ -194,7 +194,7 @@ void NetworkScene::ImGuiDraw()
 
 	debugCamera_->ImGuiDraw();
 	timerSystem_->ImGuiDraw();
-
+	obstacleManager_->ImGuiDraw();
 	player_->ImGuiDraw();
 	goal_->ImGuiDraw();
 	ImGui::Begin("NetWork");
