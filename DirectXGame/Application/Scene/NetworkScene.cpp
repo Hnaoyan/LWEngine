@@ -53,6 +53,9 @@ void NetworkScene::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Player"));
 
+	goal_ = std::make_unique<GoalObject>();
+	goal_->Initialize(ModelManager::GetModel("Cube"));
+
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize();
 }
@@ -66,6 +69,7 @@ void NetworkScene::Update()
 	lightManager_->Update();
 	debugCamera_->Update();
 	player_->Update();
+	goal_->Update();
 	obstacleManager_->Update();
 	// リクエスト処理
 	RequestProcess();
@@ -113,6 +117,7 @@ void NetworkScene::Update()
 
 	// ゲームの登録
 	player_->SetCollision(collisionManager_.get());
+	goal_->SetCollision(collisionManager_.get());
 	obstacleManager_->CollisionUpdate(collisionManager_.get());
 	// 衝突処理
 	collisionManager_->CheckAllCollisions();
@@ -148,6 +153,7 @@ void NetworkScene::Draw()
 	drawDesc.spotLight = lightManager_->GetSpot();
 
 	player_->Draw(drawDesc);
+	goal_->Draw(drawDesc);
 	obstacleManager_->Draw(drawDesc);
 	ModelRenderer::PostDraw();
 
@@ -181,7 +187,7 @@ void NetworkScene::ImGuiDraw()
 	debugCamera_->ImGuiDraw();
 
 	player_->ImGuiDraw();
-
+	goal_->ImGuiDraw();
 	ImGui::Begin("NetWork");
 	ImGui::InputInt("Score", &runningScore_);
 

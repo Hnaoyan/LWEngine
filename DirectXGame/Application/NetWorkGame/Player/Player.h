@@ -14,5 +14,5 @@ public:
 
 	// 操作関係
 	std::unique_ptr<PlayerController> controller_;
-
+	bool isGoal_ = false;
 };

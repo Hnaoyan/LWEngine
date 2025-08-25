@@ -42,14 +42,17 @@ void Player::Update()
 void Player::ImGuiDraw()
 {
 	ImGui::Begin("Player");
-
+	ImGui::Checkbox("IsGoal", &isGoal_);
 	ImGui::DragFloat3("Position", &worldTransform_.transform_.translate.x, 0.1f);
 
 	ImGui::End();
+
+	isGoal_ = false;
 }
 
 void Player::OnCollision([[maybe_unused]] ColliderObject target)
 {
+
 	if (std::holds_alternative<Obstacle*>(target)) {
 		Obstacle** obj = std::get_if<Obstacle*>(&target);
 		Rectangle2D* rectP = std::get_if<Rectangle2D>(collider_.get());
@@ -57,6 +60,10 @@ void Player::OnCollision([[maybe_unused]] ColliderObject target)
 		Vector2 res = PenetrationResolver::Extrusion2DCalculation(*rectP, *rectT);
 		worldTransform_.transform_.translate.x += res.x;
 		worldTransform_.transform_.translate.y += res.y;
+	}
+
+	else if (std::holds_alternative<GoalObject*>(target)) {
+		isGoal_ = true;
 	}
 	worldTransform_.UpdateMatrix();
 	
