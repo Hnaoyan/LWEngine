@@ -43,8 +43,6 @@ private:
 
 	std::unique_ptr<DebugCamera> debugCamera_;
 	std::unique_ptr<Player> player_;
-	std::unique_ptr<Obstacle> obstacle_;
-	std::unique_ptr<Obstacle> obstacleF_;
 	std::unique_ptr<ObstacleManager> obstacleManager_;
 private:
 	std::unique_ptr<LightingManager> lightManager_;

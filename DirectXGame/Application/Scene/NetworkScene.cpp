@@ -53,13 +53,6 @@ void NetworkScene::Initialize()
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Player"));
 
-	obstacle_ = std::make_unique<Obstacle>();
-	obstacle_->Initialize(ModelManager::GetModel("Cube"));
-	
-	obstacleF_ = std::make_unique<Obstacle>();
-	obstacleF_->Initialize(ModelManager::GetModel("Cube"));
-	obstacleF_->GetWorldTransform()->transform_.translate = Vector3(0.0f, -2.0f, 0.0f);
-
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize();
 }
@@ -73,8 +66,6 @@ void NetworkScene::Update()
 	lightManager_->Update();
 	debugCamera_->Update();
 	player_->Update();
-	obstacle_->Update();
-	obstacleF_->Update();
 	obstacleManager_->Update();
 	// リクエスト処理
 	RequestProcess();
@@ -122,8 +113,7 @@ void NetworkScene::Update()
 
 	// ゲームの登録
 	player_->SetCollision(collisionManager_.get());
-	obstacle_->SetCollision(collisionManager_.get());
-	obstacleF_->SetCollision(collisionManager_.get());
+	obstacleManager_->CollisionUpdate(collisionManager_.get());
 	// 衝突処理
 	collisionManager_->CheckAllCollisions();
 
@@ -158,8 +148,6 @@ void NetworkScene::Draw()
 	drawDesc.spotLight = lightManager_->GetSpot();
 
 	player_->Draw(drawDesc);
-	obstacle_->Draw(drawDesc);
-	obstacleF_->Draw(drawDesc);
 	obstacleManager_->Draw(drawDesc);
 	ModelRenderer::PostDraw();
 
@@ -193,8 +181,6 @@ void NetworkScene::ImGuiDraw()
 	debugCamera_->ImGuiDraw();
 
 	player_->ImGuiDraw();
-	obstacle_->ImGuiDraw();
-	obstacleF_->ImGuiDraw();
 
 	ImGui::Begin("NetWork");
 	ImGui::InputInt("Score", &runningScore_);

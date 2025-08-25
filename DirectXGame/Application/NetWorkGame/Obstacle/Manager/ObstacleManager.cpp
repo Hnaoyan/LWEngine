@@ -5,8 +5,8 @@
 
 void ObstacleManager::Initialize()
 {
-	AddObstacle(Vector2(5, 0),Vector2(1.0f,6.0f));
-	AddObstacle(Vector2(0, -5), Vector2(1.0f, 6.0f));
+	AddObstacle(Vector2(5.0f, 0.0f),Vector2(1.0f,6.0f));
+	AddObstacle(Vector2(0.0f, -5.0f), Vector2(6.0f, 1.0f));
 }
 
 void ObstacleManager::Update()

@@ -15,7 +15,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CameraManager2D.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\CameraManager2D.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Common\RoundShadow.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPUParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\GameObject\Particle\CPU\Emitter\CPUParticleEmitter.cpp" />
@@ -29,6 +29,7 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\UIStructs.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Custom\Platform.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\Player.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
     <ClCompile Include="DirectXGame\Application\Transition\TitleTransitionManager.cpp" />
@@ -130,9 +131,10 @@
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\System\PlayerController.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Obstacle.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Manager\ObstacleManager.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\Goal\GoalObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraManager2D.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\CameraManager2D.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
     <ClInclude Include="DirectXGame\Application\GameObject\Common\RoundShadow.h" />
@@ -156,11 +158,13 @@
     <ClInclude Include="DirectXGame\Application\GameSystem\Transition\GameTransitionManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\GameUIManager.h" />
     <ClInclude Include="DirectXGame\Application\GameSystem\UI\UIStructs.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\Goal\GoalObject.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\NetworkGameObjectLists.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Obstacle\Custom\Platform.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Obstacle\Manager\ObstacleManager.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\System\PlayerSystemLists.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />

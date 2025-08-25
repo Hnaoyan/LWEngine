@@ -27,13 +27,13 @@ void Obstacle::Initialize(Model* model)
 
 	worldTransform_.transform_.translate = { 5.0f,0.0f,0.0f };
 
-	size_ = Vector3(1.0f, 1.0f, 1.0f);
+	//size_ = Vector3(1.0f, 1.0f, 1.0f);
 
 }
 
 void Obstacle::Update()
 {
-	worldTransform_.transform_.scale = size_;
+	size_ = worldTransform_.transform_.scale;
 	IGameObject2D::Update();
 }
 
