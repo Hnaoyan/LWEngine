@@ -8,33 +8,6 @@
 #include <imgui.h>
 #include <json.hpp>
 
-int NetworkScene::ClearScore(const float& time)
-{
-	// 返り値
-	int result = 1000;
-	// 差分
-	float dis = 10.0f - time;
-	// ドボン（失敗）
-	if (dis < 0) {
-		return 0;
-	}
-	// ジャスト（成功）
-	if (dis == 0.0f) return result;
-
-	// 減算処理
-	while (true) {
-		dis -= 0.1f;
-		if (dis < 0.01f) {
-			break;
-		}
-		else {
-			result -= 10;
-		}
-	}
-
-	return result;
-}
-
 void NetworkScene::Initialize()
 {
 	// 基底クラス初期化
@@ -79,56 +52,10 @@ void NetworkScene::Update()
 	player_->Update();
 	goal_->Update();
 	obstacleManager_->Update();
-	// リクエスト処理
-	RequestProcess();
 
-	switch (currentState_)
-	{
-	case NetworkScene::WAIT_START:
-		// 変更
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			request_ = RUNNING;
-			break;
-		}
+	NetworkUpdate();
 
-		break;
-	case NetworkScene::RUNNING:
-		// 変更
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			request_ = RESULT;
-			break;
-		}
-		runningTime_ += kDeltaTime;
-
-		break;
-	case NetworkScene::RESULT:
-		// 変更
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			request_ = RANKING;
-
-			break;
-		}
-		break;
-	case NetworkScene::RANKING:
-		// 変更
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			request_ = WAIT_START;
-			break;
-		}
-		break;
-	default:
-		break;
-	}
-
-	// クリア
-	collisionManager_->ListClear();
-
-	// ゲームの登録
-	player_->SetCollision(collisionManager_.get());
-	goal_->SetCollision(collisionManager_.get());
-	obstacleManager_->CollisionUpdate(collisionManager_.get());
-	// 衝突処理
-	collisionManager_->CheckAllCollisions();
+	CollisionUpdate();
 
 }
 
@@ -285,4 +212,92 @@ void NetworkScene::RequestProcess()
 		currentState_ = newState;
 		request_ = std::nullopt;
 	}
+}
+
+void NetworkScene::CollisionUpdate()
+{
+	// クリア
+	collisionManager_->ListClear();
+
+	// ゲームの登録
+	player_->SetCollision(collisionManager_.get());
+	goal_->SetCollision(collisionManager_.get());
+	obstacleManager_->CollisionUpdate(collisionManager_.get());
+	// 衝突処理
+	collisionManager_->CheckAllCollisions();
+}
+
+void NetworkScene::NetworkUpdate()
+{
+	// リクエスト処理
+	RequestProcess();
+
+	if (false) {
+		return;
+	}
+
+	switch (currentState_)
+	{
+	case NetworkScene::WAIT_START:
+		// 変更
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			request_ = RUNNING;
+			break;
+		}
+
+		break;
+	case NetworkScene::RUNNING:
+		// 変更
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			request_ = RESULT;
+			break;
+		}
+		runningTime_ += kDeltaTime;
+
+		break;
+	case NetworkScene::RESULT:
+		// 変更
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			request_ = RANKING;
+
+			break;
+		}
+		break;
+	case NetworkScene::RANKING:
+		// 変更
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			request_ = WAIT_START;
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+int NetworkScene::ClearScore(const float& time)
+{
+	// 返り値
+	int result = 1000;
+	// 差分
+	float dis = 10.0f - time;
+	// ドボン（失敗）
+	if (dis < 0) {
+		return 0;
+	}
+	// ジャスト（成功）
+	if (dis == 0.0f) return result;
+
+	// 減算処理
+	while (true) {
+		dis -= 0.1f;
+		if (dis < 0.01f) {
+			break;
+		}
+		else {
+			result -= 10;
+		}
+	}
+
+	return result;
 }

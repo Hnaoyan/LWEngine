@@ -84,4 +84,14 @@ private:
 	/// リクエストの処理
 	/// </summary>
 	void RequestProcess();
+
+	/// <summary>
+	/// コリジョンの更新
+	/// </summary>
+	void CollisionUpdate();
+
+	/// <summary>
+	/// NT関係
+	/// </summary>
+	void NetworkUpdate();
 };
