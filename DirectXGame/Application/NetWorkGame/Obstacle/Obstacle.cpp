@@ -39,13 +39,15 @@ void Obstacle::Update()
 
 void Obstacle::ImGuiDraw()
 {
-	ImGui::Begin(name_.c_str());
+	//ImGui::Begin(name_.c_str());
+	ImGui::SeparatorText(name_.c_str());
+
 	std::string name = name_ + "Position";
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, 0.01f);
 
 	name = name_ + "Size";
 	ImGui::DragFloat3(name.c_str(), &size_.x, 0.01f);
-	ImGui::End();
+	//ImGui::End();
 }
 
 void Obstacle::OnCollision([[maybe_unused]] ColliderObject target)

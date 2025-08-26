@@ -35,6 +35,7 @@ void NetworkScene::Initialize()
 
 	goal_ = std::make_unique<GoalObject>();
 	goal_->Initialize(ModelManager::GetModel("Goal"));
+	goal_->GetWorldTransform()->transform_.translate = Vector3(50.0f, 0.0f, 0.0f);
 
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize();

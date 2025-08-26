@@ -28,14 +28,15 @@ void ObstacleManager::ImGuiDraw()
 	if (ImGui::Button("追加")) {
 		AddObstacle(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f));
 	}
-
-	ImGui::End();
-
+	ImGui::BeginChild("オブジェクト", ImVec2(350, 250), true);
 	for (std::list<std::unique_ptr<Obstacle>>::iterator it = obstacles_.begin();
 		it != obstacles_.end(); ++it)
 	{
 		(*it)->ImGuiDraw();
 	}
+	ImGui::EndChild();
+	ImGui::End();
+
 }
 
 void ObstacleManager::CollisionUpdate(CollisionManager* manager)
