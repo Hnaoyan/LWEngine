@@ -15,7 +15,7 @@ void PlayerController::Update()
 {
 	player_->GetWorldTransform()->UpdateMatrix();
 	// 速度リセット
-	velocity_ = {};
+	velocity_.x = 0;
 	// 移動関係
 	MovementHandler();
 
@@ -49,14 +49,14 @@ void PlayerController::MovementHandler()
 	//}
 	direct.y = 0.0f;
 	moveDirection_ = Vector2::Normalize(direct);
-	velocity_ = moveDirection_ * speedRatio_;
+	velocity_.x = moveDirection_.x * speedRatio_;
 
 	if (input->TriggerKey(DIK_SPACE)) {
-		velocity_.y += 10.0f;
+		velocity_.y += 50.0f;
 	}
 
 	// 減速
-	velocity_.y = velocity_.y * 0.75f;
+	velocity_.y = velocity_.y * 0.85f;
 	if (velocity_.y <= 0.01f) {
 		velocity_.y = 0.0f;
 	}
