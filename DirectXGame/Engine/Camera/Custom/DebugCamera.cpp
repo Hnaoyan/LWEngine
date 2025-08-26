@@ -4,7 +4,7 @@
 void DebugCamera::Initialize()
 {
 	ICamera::Initialize();
-	transform_.translate = { 0,0,-75.0f };
+	transform_.translate = { 0,0,-25.0f };
 
 }
 

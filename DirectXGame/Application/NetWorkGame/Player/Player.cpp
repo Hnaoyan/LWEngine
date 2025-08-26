@@ -6,6 +6,7 @@
 #include "Engine/LwLib/DeltaTime.h"
 
 #include "Application/NetWorkGame/NetworkGameObjectLists.h"
+#include "Application/NetWorkGame/System/GameStateManager.h"
 
 #include <imgui.h>
 
@@ -63,7 +64,7 @@ void Player::OnCollision([[maybe_unused]] ColliderObject target)
 	}
 
 	else if (std::holds_alternative<GoalObject*>(target)) {
-		isGoal_ = true;
+		gameStateManager_->SetIsClear(true);
 	}
 	worldTransform_.UpdateMatrix();
 	

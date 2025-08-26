@@ -29,6 +29,7 @@
     <ClCompile Include="DirectXGame\Application\GameSystem\UI\UIStructs.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Custom\Platform.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\Player.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />
@@ -164,7 +165,9 @@
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Obstacle\Manager\ObstacleManager.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Player\System\PlayerSystemLists.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\SystemLists.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\NetworkScene.h" />
     <ClInclude Include="DirectXGame\Application\Scene\SceneState\GamePlayState.h" />

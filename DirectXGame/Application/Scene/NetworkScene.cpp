@@ -19,21 +19,26 @@ void NetworkScene::Initialize()
 	lightManager_ = std::make_unique<LightingManager>();
 	lightManager_->Initialize();
 	collisionManager_ = std::make_unique<CollisionManager>();
+	// ゲームのタイマー管理
+	timerSystem_ = std::make_unique<GameTimerSystem>();
+	timerSystem_->Initialize();
+	// ゲームの状態管理
+	gameStateManager_ = std::make_unique<GameStateManager>();
+	gameStateManager_->Initialize();
 
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
 
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Player"));
+	player_->SetGameStateManager(gameStateManager_.get());
 
 	goal_ = std::make_unique<GoalObject>();
-	goal_->Initialize(ModelManager::GetModel("Cube"));
+	goal_->Initialize(ModelManager::GetModel("Goal"));
 
 	obstacleManager_ = std::make_unique<ObstacleManager>();
 	obstacleManager_->Initialize();
 
-	timerSystem_ = std::make_unique<GameTimerSystem>();
-	timerSystem_->Initialize();
 }
 
 void NetworkScene::GPUUpdate()
@@ -52,7 +57,7 @@ void NetworkScene::Update()
 	player_->Update();
 	goal_->Update();
 	obstacleManager_->Update();
-
+	gameStateManager_->Update();
 	//NetworkUpdate();
 
 	CollisionUpdate();

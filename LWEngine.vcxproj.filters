@@ -433,6 +433,7 @@
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Manager\ObstacleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Goal\GoalObject.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">
@@ -838,6 +839,8 @@
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Obstacle\Manager\ObstacleManager.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\Goal\GoalObject.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\SystemLists.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

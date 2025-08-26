@@ -182,7 +182,7 @@ void TitleScene::LoadModel()
 	ModelManager::LoadModel("Player", "cube", ModelManager::Obj);	// プレイヤー
 	ModelManager::LoadModel("Cube", "cube", ModelManager::Obj);	// プレイヤー
 	ModelManager::LoadModel("RoundShadow", "plane", ModelManager::Obj);	// 丸影
-
+	ModelManager::LoadModel("Goal", "Goal", ModelManager::Gltf);
 }
 
 void TitleScene::LoadTexture()
