@@ -11,4 +11,9 @@ void GameStateManager::Update()
 	if (isClear_) {
 		timer_->Pause();
 	}
+
+	// リセット処理
+	if (resetRequest_) {
+
+	}
 }

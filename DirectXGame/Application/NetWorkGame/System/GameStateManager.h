@@ -15,5 +15,7 @@ private:
 	// クリアしたか
 	bool isClear_ = false;
 	GameTimerSystem* timer_ = nullptr;
+
+	bool resetRequest_ = false;
 };
 

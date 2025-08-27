@@ -69,3 +69,10 @@ void Player::OnCollision([[maybe_unused]] ColliderObject target)
 	worldTransform_.UpdateMatrix();
 	
 }
+
+void Player::Reset()
+{
+	worldTransform_.transform_.translate.y = 0.0f;
+
+	Update();
+}

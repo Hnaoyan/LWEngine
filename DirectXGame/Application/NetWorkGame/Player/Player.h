@@ -13,6 +13,8 @@ public:
 	void ImGuiDraw() override;
 	void OnCollision([[maybe_unused]] ColliderObject target) override;
 
+	void Reset();
+
 public: // アクセッサ
 	void SetGameStateManager(GameStateManager* manager) { gameStateManager_ = manager; }
 
