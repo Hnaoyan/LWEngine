@@ -14,6 +14,9 @@ public:
 	void ImGuiDraw();
 	void CollisionUpdate(CollisionManager* manager);
 	void Draw(ModelDrawDesc desc);
+
+	void TutorialInitialize();
+
 	void AddObstacle(const Vector2& position, const Vector2& size);
 private:
 	// 障害物リスト

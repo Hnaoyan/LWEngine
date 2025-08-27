@@ -7,8 +7,10 @@
 
 void ObstacleManager::Initialize()
 {
-	AddObstacle(Vector2(5.0f, 0.0f),Vector2(1.0f,6.0f));
-	AddObstacle(Vector2(0.0f, -5.0f), Vector2(6.0f, 1.0f));
+	//AddObstacle(Vector2(5.0f, 0.0f),Vector2(1.0f,6.0f));
+	//AddObstacle(Vector2(0.0f, -5.0f), Vector2(6.0f, 1.0f));
+	TutorialInitialize();
+
 }
 
 void ObstacleManager::Update()
@@ -55,6 +57,17 @@ void ObstacleManager::Draw(ModelDrawDesc desc)
 	{
 		(*it)->Draw(desc);
 	}
+}
+
+void ObstacleManager::TutorialInitialize()
+{
+	// 左右
+	AddObstacle(Vector2(66.0f, 5.0f), Vector2(1.0f, 11.0f));
+	AddObstacle(Vector2(-6.0f, 5.0f), Vector2(1.0f, 11.0f));
+	
+	// 上下
+	AddObstacle(Vector2(29.0f, -5.0f), Vector2(36.0f, 1.0f));
+	AddObstacle(Vector2(29.0f, 15.0f), Vector2(36.0f, 1.0f));
 }
 
 void ObstacleManager::AddObstacle(const Vector2& position, const Vector2& size)
