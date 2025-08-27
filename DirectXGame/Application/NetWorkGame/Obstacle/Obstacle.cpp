@@ -2,7 +2,7 @@
 #include "Engine/Collision/2D/Collider2DLists.h"
 #include "Application/Collision/ColliderFilter.h"
 #include "Engine/Collision/CollisionManager.h"
-
+#include "Engine/2D/TextureManager.h"
 #include <imgui.h>
 
 int Obstacle::sSerialNumber = 0;
@@ -28,13 +28,32 @@ void Obstacle::Initialize(Model* model)
 	worldTransform_.transform_.translate = { 5.0f,0.0f,0.0f };
 
 	//size_ = Vector3(1.0f, 1.0f, 1.0f);
-
+	texture_ = model->GetModelData()->material.textureHandle;
+	texture_ = TextureManager::GetInstance()->Load("Resources/default/white2x2.png");
 }
 
 void Obstacle::Update()
 {
 	size_ = worldTransform_.transform_.scale;
 	IGameObject2D::Update();
+}
+
+void Obstacle::Draw(ModelDrawDesc desc)
+{
+	// マテリアル更新
+	material_->Update();
+	// デスクの設定
+	DrawDesc::LightDesc lightDesc{};
+	DrawDesc::ModelDesc modelDesc{};
+	lightDesc.directionalLight = desc.directionalLight;
+	lightDesc.pointLight = desc.pointLight;
+	lightDesc.spotLight = desc.spotLight;
+	modelDesc.SetDesc(model_);
+	modelDesc.worldTransform = &worldTransform_;
+	modelDesc.material = material_.get();
+	modelDesc.texture = texture_;
+	// 描画
+	ModelRenderer::NormalDraw(desc.camera, modelDesc, lightDesc);
 }
 
 void Obstacle::ImGuiDraw()
@@ -46,7 +65,7 @@ void Obstacle::ImGuiDraw()
 	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.translate.x, 0.01f);
 
 	name = name_ + "Size";
-	ImGui::DragFloat3(name.c_str(), &size_.x, 0.01f);
+	ImGui::DragFloat3(name.c_str(), &worldTransform_.transform_.scale.x, 0.01f);
 	//ImGui::End();
 }
 

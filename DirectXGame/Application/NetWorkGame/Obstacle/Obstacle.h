@@ -15,11 +15,13 @@ public:
 	void Update() override;
 	void ImGuiDraw() override;
 	void OnCollision([[maybe_unused]] ColliderObject target) override;
+	void Draw(ModelDrawDesc desc);
 	Rectangle2D* GetCollider();
 
 private:
-
+	// サイズ
 	Vector3 size_ = {};
-
+	// テクスチャ
+	uint32_t texture_ = 0u;
 };
 
