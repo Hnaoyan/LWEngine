@@ -15,17 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"\u571f\u53f0",
-			"scale":[
-				0.4783037006855011,
-				0.05386904254555702,
-				0.4783037006855011
-			],
-			"translation":[
-				-0.010788729414343834,
-				-0.9361059665679932,
-				0.0007544339168816805
-			]
+			"name":"\u82af"
 		}
 	],
 	"materials":[
@@ -66,37 +56,37 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"GoalTexture",
-			"uri":"GoalTexture.png"
+			"name":"Goal",
+			"uri":"Goal.png"
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":2091,
+			"count":2163,
 			"max":[
-				1,
-				37.55980682373047,
-				1
+				1.0209038257598877,
+				3.5277299880981445,
+				2.1325490474700928
 			],
 			"min":[
-				-1,
-				-1,
-				-2.101470470428467
+				-1.0209038257598877,
+				-3.015005588531494,
+				-1.0209038257598877
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":2091,
+			"count":2163,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":2091,
+			"count":2163,
 			"type":"VEC2"
 		},
 		{
@@ -109,26 +99,26 @@
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":25092,
+			"byteLength":25956,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":25092,
-			"byteOffset":25092,
+			"byteLength":25956,
+			"byteOffset":25956,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":16728,
-			"byteOffset":50184,
+			"byteLength":17304,
+			"byteOffset":51912,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":5910,
-			"byteOffset":66912,
+			"byteOffset":69216,
 			"target":34963
 		}
 	],
@@ -140,7 +130,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":72824,
+			"byteLength":75128,
 			"uri":"Goal.bin"
 		}
 	]

@@ -15,7 +15,7 @@ void GoalObject::Initialize(Model* model)
 	Collider2DShape* shape = new Collider2DShape();
 	*shape = *rect;
 	collider_.reset(shape);
-
+	worldTransform_.transform_.rotate.y = 1.57f;
 }
 
 void GoalObject::Update()
