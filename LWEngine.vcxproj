@@ -133,8 +133,10 @@
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Obstacle.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Obstacle\Manager\ObstacleManager.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Goal\GoalObject.cpp" />
+    <ClCompile Include="DirectXGame\Application\Camera\FollowCamera2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Application\Camera\FollowCamera2D.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\CameraManager2D.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderFilter.h" />
     <ClInclude Include="DirectXGame\Application\Collision\ColliderObject.h" />
