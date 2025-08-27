@@ -25,6 +25,7 @@ void NetworkScene::Initialize()
 	// ゲームの状態管理
 	gameStateManager_ = std::make_unique<GameStateManager>();
 	gameStateManager_->Initialize();
+	gameStateManager_->SetGameTimerSystem(timerSystem_.get());
 
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();

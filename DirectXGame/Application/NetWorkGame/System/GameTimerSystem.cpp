@@ -4,17 +4,18 @@
 
 void GameTimerSystem::Initialize()
 {
-	// 初期化
-	elapsedFrame_ = 0.0f;
-	elapsedSecond_ = 0.0f;
+	// 開始
+	Start();
 }
 
 void GameTimerSystem::Update()
 {
-	// フレーム加算
-	elapsedFrame_ += kDeltaTime;
-	// 整数型としてキャスト
-	elapsedSecond_ = (float)int(elapsedFrame_);
+	if (isActive_) {
+		// フレーム加算
+		elapsedFrame_ += kDeltaTime;
+		// 整数型としてキャスト
+		elapsedSecond_ = (float)int(elapsedFrame_);
+	}
 }
 
 void GameTimerSystem::ImGuiDraw()
@@ -24,5 +25,30 @@ void GameTimerSystem::ImGuiDraw()
 	ImGui::DragFloat("経過フレーム", &elapsedFrame_);
 	ImGui::DragFloat("経過秒数", &elapsedSecond_);
 
+	if (ImGui::Button("一時停止")) {
+		Pause();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("再開")) {
+		Resume();
+	}
+
 	ImGui::End();
+}
+
+void GameTimerSystem::Pause()
+{
+	isActive_ = false;
+}
+
+void GameTimerSystem::Start()
+{
+	isActive_ = true;
+	elapsedFrame_ = 0.0f;
+	elapsedSecond_ = 0.0f;
+}
+
+void GameTimerSystem::Resume()
+{
+	isActive_ = true;
 }

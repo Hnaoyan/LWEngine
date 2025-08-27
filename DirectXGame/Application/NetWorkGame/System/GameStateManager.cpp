@@ -1,4 +1,5 @@
 #include "GameStateManager.h"
+#include "GameTimerSystem.h"
 
 void GameStateManager::Initialize()
 {
@@ -7,5 +8,7 @@ void GameStateManager::Initialize()
 
 void GameStateManager::Update()
 {
-
+	if (isClear_) {
+		timer_->Pause();
+	}
 }

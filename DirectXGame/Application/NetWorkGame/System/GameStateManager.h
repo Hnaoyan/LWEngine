@@ -1,5 +1,7 @@
 #pragma once
 
+class GameTimerSystem;
+
 class GameStateManager
 {
 public:
@@ -8,10 +10,10 @@ public:
 
 public:	// アクセッサ
 	void SetIsClear(bool isClear) { isClear_ = isClear; }
-
+	void SetGameTimerSystem(GameTimerSystem* system) { timer_ = system; }
 private:
 	// クリアしたか
 	bool isClear_ = false;
-
+	GameTimerSystem* timer_ = nullptr;
 };
 
