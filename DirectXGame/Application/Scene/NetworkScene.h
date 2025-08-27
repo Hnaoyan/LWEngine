@@ -14,7 +14,7 @@
 #include "Application/NetWorkGame/NetworkGameObjectLists.h"
 #include "Application/NetWorkGame/Obstacle/Manager/ObstacleManager.h"
 #include "Application/NetWorkGame/System/SystemLists.h"
-
+#include "Application/Camera/FollowCamera2D.h"
 
 #include <optional>
 
@@ -47,6 +47,8 @@ private:
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<GoalObject> goal_;
 	std::unique_ptr<ObstacleManager> obstacleManager_;
+	std::unique_ptr<FollowCamera2D> followCamera_;
+
 private:
 	std::unique_ptr<GameTimerSystem> timerSystem_;
 
@@ -55,7 +57,8 @@ private:
 	std::unique_ptr<LightingManager> lightManager_;
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
-
+	
+	bool isDebug_ = false;
 public:
 	/// <summary>
 	/// 初期化

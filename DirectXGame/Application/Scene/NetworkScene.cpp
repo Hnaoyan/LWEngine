@@ -30,9 +30,13 @@ void NetworkScene::Initialize()
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
 
+	followCamera_ = std::make_unique<FollowCamera2D>();
+	followCamera_->Initialize();
+
 	player_ = std::make_unique<Player>();
 	player_->Initialize(ModelManager::GetModel("Player"));
 	player_->SetGameStateManager(gameStateManager_.get());
+	followCamera_->SetTarget(player_->GetWorldTransform());
 
 	goal_ = std::make_unique<GoalObject>();
 	goal_->Initialize(ModelManager::GetModel("Goal"));
@@ -54,6 +58,7 @@ void NetworkScene::Update()
 
 	lightManager_->Update();
 	debugCamera_->Update();
+	followCamera_->Update();
 
 	// オブジェクト
 	player_->Update();
@@ -89,7 +94,12 @@ void NetworkScene::Draw()
 	//lightDesc.spotLight = lightManager_->GetSpot();
 	// 描画に使うもの
 	ModelDrawDesc drawDesc{};
-	drawDesc.camera = debugCamera_.get();
+	drawDesc.camera = followCamera_.get();
+	
+	if (isDebug_) {
+		drawDesc.camera = debugCamera_.get();
+	}
+	
 	drawDesc.directionalLight = lightManager_->GetDirectional();
 	drawDesc.pointLight = lightManager_->GetPoint();
 	drawDesc.spotLight = lightManager_->GetSpot();
@@ -132,6 +142,8 @@ void NetworkScene::ImGuiDraw()
 	player_->ImGuiDraw();
 	goal_->ImGuiDraw();
 	ImGui::Begin("NetWork");
+	ImGui::Checkbox("デバッグカメラ", &isDebug_);
+
 	ImGui::InputInt("Score", &runningScore_);
 
 	switch (currentState_)
