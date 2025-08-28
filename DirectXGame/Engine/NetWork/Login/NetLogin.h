@@ -19,12 +19,18 @@ private:
 	bool isLogin_ = false;
 
 public:
+	std::string GetName() { return name_; }
+	std::string GetPassword() { return password_; }
+
+public:
 	/// <summary>
 	/// ログイン
 	/// </summary>
 	/// <param name="url"></param>
 	/// <returns></returns>
 	std::future<int> Login(const std::string& url);
+
+	std::future<std::string> LoginToken(const std::string& url);
 
 	/// <summary>
 	/// ImGui

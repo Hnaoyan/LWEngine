@@ -13,7 +13,10 @@ void NetworkScene::Initialize()
 	// 基底クラス初期化
 	IScene::Initialize();
 
-	loginAPI_ = NetLogin("Test", "password");
+	loginAPI_ = NetLogin("Test", "networkGG");
+	loginToken_ = std::make_unique<LoginToken>(&loginAPI_);
+
+
 
 	// ライト初期化
 	lightManager_ = std::make_unique<LightingManager>();
@@ -141,8 +144,16 @@ void NetworkScene::ImGuiDraw()
 	obstacleManager_->ImGuiDraw();
 	player_->ImGuiDraw();
 	goal_->ImGuiDraw();
+
+	loginToken_->ImGuiDraw();
+
 	ImGui::Begin("NetWork");
 	ImGui::Checkbox("デバッグカメラ", &isDebug_);
+
+	if (ImGui::Button("送信テスト")) {
+
+		loginToken_->ClearPost(100);
+	}
 
 	ImGui::InputInt("Score", &runningScore_);
 

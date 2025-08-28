@@ -16,6 +16,7 @@
 #include "Application/NetWorkGame/System/SystemLists.h"
 #include "Application/Camera/FollowCamera2D.h"
 #include "Application/NetWorkGame/System/DatabaseHttpClient.h"
+#include "Application/NetWorkGame/System/Network/LoginToken.h"
 
 #include <optional>
 
@@ -60,7 +61,7 @@ private:
 	std::unique_ptr<CollisionManager> collisionManager_;
 
 	// データベースに接続するクライアント
-	std::unique_ptr<DatabaseHttpClient> httpClient_;
+	std::unique_ptr<LoginToken> loginToken_;
 	
 	bool isDebug_ = false;
 public:
