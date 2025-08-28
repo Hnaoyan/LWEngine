@@ -14,6 +14,7 @@ public:
 	void Pause();
 	void Resume();
 
+	float GetElapsedSecond() { return elapsedSecond_; }
 
 private:
 	// フレーム

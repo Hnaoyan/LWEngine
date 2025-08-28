@@ -14,7 +14,7 @@ void NetworkScene::Initialize()
 	// 基底クラス初期化
 	IScene::Initialize();
 
-	loginAPI_ = NetLogin("Test", "networkGG");
+	loginAPI_ = NetLogin("GameUser", "networkGG");
 	loginToken_ = std::make_unique<LoginToken>(&loginAPI_);
 
 
@@ -30,6 +30,7 @@ void NetworkScene::Initialize()
 	gameStateManager_ = std::make_unique<GameStateManager>();
 	gameStateManager_->Initialize();
 	gameStateManager_->SetGameTimerSystem(timerSystem_.get());
+	gameStateManager_->SetLoginToken(loginToken_.get());
 
 	debugCamera_ = std::make_unique<DebugCamera>();
 	debugCamera_->Initialize();
@@ -138,50 +139,67 @@ void NetworkScene::UIDraw()
 void NetworkScene::ImGuiDraw()
 {
 	// ログインAPI
-	loginAPI_.ImGuiDraw();
+	//loginAPI_.ImGuiDraw();
+	ImGui::Begin("ゲームタイマー");
+	float sec = timerSystem_->GetElapsedSecond();
+	ImGui::DragFloat("経過秒数", &sec);
 
-	debugCamera_->ImGuiDraw();
-	timerSystem_->ImGuiDraw();
+	if (ImGui::Button("一時停止")) {
+		timerSystem_->Pause();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("再開")) {
+		timerSystem_->Resume();
+	}
+
+	if (gameStateManager_->IsClear()) {
+		ImGui::SeparatorText("ゲームクリア");
+	}
+
+	ImGui::End();
+
+	//debugCamera_->ImGuiDraw();
+	//timerSystem_->ImGuiDraw();
 	//obstacleManager_->ImGuiDraw();
 	//player_->ImGuiDraw();
 	//goal_->ImGuiDraw();
 
 	loginToken_->ImGuiDraw();
 
-	ImGui::Begin("NetWork");
-	ImGui::Checkbox("デバッグカメラ", &isDebug_);
+	//ImGui::Begin("NetWork");
+	//ImGui::Checkbox("デバッグカメラ", &isDebug_);
 
-	if (ImGui::Button("送信テスト")) {
+	//if (ImGui::Button("送信テスト")) {
 
-		loginToken_->ClearPost(100);
-	}
+	//	loginToken_->ClearPost(100);
+	//}
 
-	ImGui::InputInt("Score", &runningScore_);
+	//ImGui::InputInt("Score", &runningScore_);
 
-	switch (currentState_)
-	{
-	case NetworkScene::WAIT_START:
-		ImGui::Text("Press SPACE to Start");
-		break;
-	case NetworkScene::RUNNING:
-		ImGui::Text("RUNNING");
-		if (runningTime_ <= 7.0f) {
-			ImGui::Text("%.2f", runningTime_);
-		}
-		break;
-	case NetworkScene::RESULT:
-		ImGui::Text("RESULT");
-		ImGui::Text("%.2f", runningTime_);
-		break;
-	case NetworkScene::RANKING:
-		ImGui::Text("RANKING");
-		break;
-	default:
-		break;
-	}
+	//switch (currentState_)
+	//{
+	//case NetworkScene::WAIT_START:
+	//	ImGui::Text("Press SPACE to Start");
+	//	break;
+	//case NetworkScene::RUNNING:
+	//	ImGui::Text("RUNNING");
+	//	if (runningTime_ <= 7.0f) {
+	//		ImGui::Text("%.2f", runningTime_);
+	//	}
+	//	break;
+	//case NetworkScene::RESULT:
+	//	ImGui::Text("RESULT");
+	//	ImGui::Text("%.2f", runningTime_);
+	//	break;
+	//case NetworkScene::RANKING:
+	//	ImGui::Text("RANKING");
+	//	break;
+	//default:
+	//	break;
+	//}
 
 
-	ImGui::End();
+	//ImGui::End();
 
 	if (currentState_ == RANKING) {
 
