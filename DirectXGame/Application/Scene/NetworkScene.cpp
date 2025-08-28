@@ -13,7 +13,7 @@ void NetworkScene::Initialize()
 	// 基底クラス初期化
 	IScene::Initialize();
 
-	loginAPI_ = NetLogin("Naoya05", "password");
+	loginAPI_ = NetLogin("Test", "password");
 
 	// ライト初期化
 	lightManager_ = std::make_unique<LightingManager>();

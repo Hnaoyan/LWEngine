@@ -435,6 +435,8 @@
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\Camera\FollowCamera2D.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\System\DatabaseHttpClient.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\System\ScoreCalclator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Application\GameSystem\GameSystem.h">
@@ -843,6 +845,9 @@
     <ClInclude Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.h" />
     <ClInclude Include="DirectXGame\Application\NetWorkGame\System\SystemLists.h" />
     <ClInclude Include="DirectXGame\Application\Camera\FollowCamera2D.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\DatabaseHttpClient.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\Network\LoginToken.h" />
+    <ClInclude Include="DirectXGame\Application\NetWorkGame\System\ScoreCalclator.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\3DLine\3DLine_PS.hlsl">

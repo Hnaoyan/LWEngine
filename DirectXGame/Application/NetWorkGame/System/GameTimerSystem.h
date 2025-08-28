@@ -24,4 +24,3 @@ private:
 	bool isActive_ = false;
 
 };
-

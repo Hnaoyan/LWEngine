@@ -15,6 +15,7 @@
 #include "Application/NetWorkGame/Obstacle/Manager/ObstacleManager.h"
 #include "Application/NetWorkGame/System/SystemLists.h"
 #include "Application/Camera/FollowCamera2D.h"
+#include "Application/NetWorkGame/System/DatabaseHttpClient.h"
 
 #include <optional>
 
@@ -57,6 +58,9 @@ private:
 	std::unique_ptr<LightingManager> lightManager_;
 	// コリジョンマネ
 	std::unique_ptr<CollisionManager> collisionManager_;
+
+	// データベースに接続するクライアント
+	std::unique_ptr<DatabaseHttpClient> httpClient_;
 	
 	bool isDebug_ = false;
 public:
