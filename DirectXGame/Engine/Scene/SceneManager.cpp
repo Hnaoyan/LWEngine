@@ -79,10 +79,10 @@ void SceneManager::ImGuiDraw()
 	if (nowScene_) {
 		nowScene_->ImGuiDraw();
 	}
-	// シーンマネージャ
-	ImGui::Begin("SceneManager");
-	ImGui::ColorEdit4("TransitionColor", &transitionManager_->sColor.x);
-	ImGui::End();
+	//// シーンマネージャ
+	//ImGui::Begin("SceneManager");
+	//ImGui::ColorEdit4("TransitionColor", &transitionManager_->sColor.x);
+	//ImGui::End();
 }
 
 void SceneManager::ChangeScene(const std::string& sceneName)

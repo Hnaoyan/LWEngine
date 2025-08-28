@@ -1,6 +1,7 @@
 #include "NetworkScene.h"
 #include "Engine/Scene/SceneManager.h"
 #include "Engine/2D/TextureManager.h"
+#include "Engine/2D/SpriteManager.h"
 #include "Engine/3D/ModelUtility/ModelRenderer.h"
 #include "Engine/NetWork/Http/HttpClient.h"
 #include "Engine/NetWork/Http/HttpScoreClient.h"
@@ -141,9 +142,9 @@ void NetworkScene::ImGuiDraw()
 
 	debugCamera_->ImGuiDraw();
 	timerSystem_->ImGuiDraw();
-	obstacleManager_->ImGuiDraw();
-	player_->ImGuiDraw();
-	goal_->ImGuiDraw();
+	//obstacleManager_->ImGuiDraw();
+	//player_->ImGuiDraw();
+	//goal_->ImGuiDraw();
 
 	loginToken_->ImGuiDraw();
 
@@ -330,4 +331,25 @@ int NetworkScene::ClearScore(const float& time)
 	}
 
 	return result;
+}
+
+void NetworkScene::LoadModel()
+{
+	//ModelManager::LoadObjModel("Plane", "plane");
+	//ModelManager::LoadObjModel("Axis", "BulletTest");
+	ModelManager::LoadModel("Player", "cube", ModelManager::Obj);	// プレイヤー
+	ModelManager::LoadModel("Cube", "cube", ModelManager::Obj);	// プレイヤー
+	ModelManager::LoadModel("RoundShadow", "plane", ModelManager::Obj);	// 丸影
+	ModelManager::LoadModel("Goal", "Goal", ModelManager::Gltf);
+}
+
+void NetworkScene::LoadTexture()
+{
+	SpriteManager::LoadSprite("BackGroundImage", TextureManager::GetInstance()->Load("Resources/UI/BackGround.png"));
+	SpriteManager::LoadSprite("BackGroundTexture", TextureManager::GetInstance()->Load("Resources/default/white2x2.png"));
+	SpriteManager::LoadSprite("TitleButtonText", TextureManager::GetInstance()->Load("Resources/UI/GameStart.png"));
+	SpriteManager::LoadSprite("TitleText", TextureManager::GetInstance()->Load("Resources/UI/TitleText.png"));
+	SpriteManager::LoadSprite("Tameshi", TextureManager::Load("Resources/UI/otameshi.png"));
+
+	//clearTexture = TextureManager::GetInstance()->Load("Resources/UI/ShotUI.png");
 }

@@ -66,6 +66,9 @@ void Framework::Initialize()
 	// モデルマネージャの初期化
 	modelManager_->LoadModel("DefaultCube", "cube", ModelManager::Obj);
 	modelManager_->LoadModel("Plane", "plane", ModelManager::Obj);
+	modelManager_->LoadModel("Player", "cube", ModelManager::Obj);
+	modelManager_->LoadModel("Cube", "cube", ModelManager::Obj);
+	modelManager_->LoadModel("Goal", "Goal", ModelManager::Gltf);
 
 	// スプライトの初期化
 	Sprite::StaticInitialize(dxCommon_->GetDevice(), WindowAPI::kWindowWidth, WindowAPI::kWindowHeight);

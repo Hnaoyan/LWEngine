@@ -48,6 +48,7 @@ void AnimationPlayer::Update()
 
 void AnimationPlayer::ImguiDraw(std::string parentName)
 {
+	parentName;
 #ifdef _DEBUG
 	ImGui::Checkbox(parentName.c_str(), &isForward_);
 

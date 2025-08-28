@@ -72,7 +72,7 @@ void MyGame::ImGuiDraw()
 	// 受付開始
 	imGuiManager_->Begin();
 	// グローバル変数群
-	GlobalVariables::GetInstance()->Update();
+	//GlobalVariables::GetInstance()->Update();
 	// シーンのImGuiまとめた関数呼び出し
 	sceneManager_->ImGuiDraw();
 	// 受付終了

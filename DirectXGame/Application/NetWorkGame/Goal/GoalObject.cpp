@@ -22,6 +22,15 @@ void GoalObject::Update()
 {
 	// 基底更新
 	IGameObject2D::Update();
+
+	Rectangle2D rect = std::get<Rectangle2D>(*collider_);
+	rect.size_ = Vector2(worldTransform_.transform_.scale.x, worldTransform_.transform_.scale.y * 1.5f);
+	rect.Update(Vector2(worldTransform_.GetWorldPosition().x, worldTransform_.GetWorldPosition().y));
+
+	Collider2DShape* shape = new Collider2DShape();
+	*shape = rect;
+	collider_.reset(shape);
+
 }
 
 void GoalObject::ImGuiDraw()

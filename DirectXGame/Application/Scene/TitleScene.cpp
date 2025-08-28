@@ -134,7 +134,7 @@ void TitleScene::Draw()
 	//	titleTextPosition_.y = defaultY + offset;
 	//}
 	SpriteManager::GetSprite("Tameshi")->SetPosition(Vector2(300.0f, 100.0f));
-	SpriteManager::GetSprite("Tameshi")->Draw();
+	//SpriteManager::GetSprite("Tameshi")->Draw();
 	//SpriteManager::GetSprite("TitleText")->SetPosition(titleTextPosition_);
 	//SpriteManager::GetSprite("TitleButtonText")->Draw();
 	//SpriteManager::GetSprite("TitleText")->Draw();
@@ -159,19 +159,19 @@ void TitleScene::UIDraw()
 void TitleScene::ImGuiDraw()
 {
 	// 遷移関係のまとめてるクラス
-	titleTransition_->ImGuiDraw();
+	//titleTransition_->ImGuiDraw();
 
 	ImGui::Begin("Title");
-	if (ImGui::Button("NETWORKGAME")) {
+	if (ImGui::Button("課題用シーン")) {
 		sceneManager_->ChangeThreadScene("NETWORK");
 	}
-	if (ImGui::Button("GAMESCENE")) {
-		sceneManager_->ChangeThreadScene("GAME");
-	}
+	//if (ImGui::Button("GAMESCENE")) {
+	//	sceneManager_->ChangeThreadScene("GAME");
+	//}
 
-	ImGui::DragFloat2("テキスト位置", &titleTextPosition_.x, 0.01f);
-	ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);
-	ImGui::DragFloat3("CameraRot", &debugCamera_->transform_.rotate.x, 0.01f);
+	//ImGui::DragFloat2("テキスト位置", &titleTextPosition_.x, 0.01f);
+	//ImGui::DragFloat3("CameraPos", &debugCamera_->transform_.translate.x, 0.01f);
+	//ImGui::DragFloat3("CameraRot", &debugCamera_->transform_.rotate.x, 0.01f);
 	ImGui::End();
 }
 

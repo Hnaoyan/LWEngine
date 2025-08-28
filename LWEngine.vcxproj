@@ -32,6 +32,7 @@
     <ClCompile Include="DirectXGame\Application\NetWorkGame\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameStateManager.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\GameTimerSystem.cpp" />
+    <ClCompile Include="DirectXGame\Application\NetWorkGame\System\Network\LoginToken.cpp" />
     <ClCompile Include="DirectXGame\Application\NetWorkGame\System\ScoreCalclator.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\NetworkScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Title\TitleObject.cpp" />

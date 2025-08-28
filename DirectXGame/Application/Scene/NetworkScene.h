@@ -90,6 +90,16 @@ public:
 	/// </summary>
 	void ImGuiDraw() override;
 
+	/// <summary>
+	/// モデル読み込み
+	/// </summary>
+	void LoadModel() override;
+	/// <summary>
+	/// テクスチャ読み込み
+	/// </summary>
+	void LoadTexture() override;
+
+
 private:
 	/// <summary>
 	/// リクエストの処理
