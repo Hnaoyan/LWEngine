@@ -116,6 +116,12 @@ void SceneManager::ChangeThreadScene(const std::string& sceneName)
 
 	// 次のシーン生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
+
+	// 作成シーンがなければ
+	if (!nextScene_) {
+		return;
+	}
+
 	// 初期化
 	nextInitialize_ = std::thread(&IScene::LoadResource, nextScene_);
 	isThread_ = true;
