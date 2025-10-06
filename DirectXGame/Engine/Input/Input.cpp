@@ -187,6 +187,17 @@ bool Input::XRTrigger()
 	return false;
 }
 
+void Input::PadVibration(const float& left, const float& right)
+{
+	XINPUT_VIBRATION vibration;
+	ZeroMemory(&vibration, sizeof(vibration));
+
+	vibration.wLeftMotorSpeed = left;
+	vibration.wRightMotorSpeed = right;
+
+	XInputSetState(0, &vibration);
+}
+
 void Input::XJoystickUpdate()
 {
 

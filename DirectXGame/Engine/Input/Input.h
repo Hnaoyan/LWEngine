@@ -87,6 +87,7 @@ public:	// コントローラー系
 	bool XLTrigger();
 	bool XRTrigger();
 
+	void PadVibration(const float& left, const float& right);
 
 private:
 	/// <summary>
