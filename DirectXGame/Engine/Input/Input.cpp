@@ -192,8 +192,8 @@ void Input::PadVibration(const float& left, const float& right)
 	XINPUT_VIBRATION vibration;
 	ZeroMemory(&vibration, sizeof(vibration));
 
-	vibration.wLeftMotorSpeed = left;
-	vibration.wRightMotorSpeed = right;
+	vibration.wLeftMotorSpeed = (WORD)left;
+	vibration.wRightMotorSpeed = (WORD)right;
 
 	XInputSetState(0, &vibration);
 }

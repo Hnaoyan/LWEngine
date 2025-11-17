@@ -12,6 +12,16 @@ class CollisionManager;
 class IGameObject
 {
 public:
+	IGameObject() = default;
+	IGameObject(const IGameObject&) = default;
+	IGameObject(IGameObject&&) noexcept = default;
+	virtual ~IGameObject() = default;
+
+	IGameObject& operator=(const IGameObject&) = default;
+	IGameObject& operator=(IGameObject&&) noexcept = default;
+
+
+public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -83,8 +93,6 @@ public:
 public:
 	// 共通のシリアル
 	static int32_t sSerialNumber;
-	// デストラクタ
-	virtual ~IGameObject() = default;
 
 protected:
 	// 個体のシリアル
