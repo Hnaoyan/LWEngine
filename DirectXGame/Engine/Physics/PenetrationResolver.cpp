@@ -32,5 +32,5 @@ Vector3 PenetrationResolver::ExtrusionCalculation(AABB from, AABB to)
         return Vector3(0.0f, 0.0f, overlapZ);
     }
 
-    return Vector3();
+    //return Vector3();
 }
