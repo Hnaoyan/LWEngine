@@ -6,6 +6,10 @@ TextureCube<float32_t4> gEnvironmentTexture : register(t1);
 Texture2D<float32_t> gMaskTexture : register(t2);
 SamplerState gSampler : register(s0);
 
+//// ライト
+//StructuredBuffer<PointLight> gPointLights : register(t4);
+//StructuredBuffer<SpotLight> gSpotLights : register(t5);
+
 // カメラ
 ConstantBuffer<Camera> gCamera : register(b0);
 // マテリアル

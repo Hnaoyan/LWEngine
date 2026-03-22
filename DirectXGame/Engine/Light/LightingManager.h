@@ -26,6 +26,10 @@ public:	// アクセッサ
 private:
 	// ライト
 	//std::unordered_map<std::string, std::unique_ptr<ILight>> lights_;
+	std::vector<std::unique_ptr<DirectionalLight>> drLights_;
+	std::vector<std::unique_ptr<SpotLight>> spLights_;
+	std::vector<std::unique_ptr<PointLight>> ptLights_;
+
 
 	std::unique_ptr<DirectionalLight> drLight_;
 	std::unique_ptr<SpotLight> spLight_;
@@ -34,6 +38,8 @@ private:
 	CBufferDataDirectionalLight drData_{};
 	CBufferDataSpotLight spData_{};
 	CBufferDataPointLight ptData_{};
+
+	//std::vector<>
 
 
 };

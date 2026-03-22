@@ -34,8 +34,12 @@ public:
 	/// <param name="rootParamIndex"></param>
 	virtual void Draw(ID3D12GraphicsCommandList* cmdList, uint32_t rootParamIndex);
 
+	virtual void DrawMultiLight(ID3D12GraphicsCommandList* cmdList, uint32_t rootParamIndex);
+
 public:
 	ConstantBufferMapContext<T> data_;
+	// リソース
+	StructuredBufferContext<CBufferInstancedUnit> buffer_;
 };
 
 template<typename T>
@@ -56,6 +60,19 @@ inline void ILight<T>::Draw(ID3D12GraphicsCommandList* cmdList, uint32_t rootPar
 	sCommandList = cmdList;
 	// CBufferの設定
 	sCommandList->SetGraphicsRootConstantBufferView(static_cast<UINT>(rootParamIndex), data_.cBuffer->GetGPUVirtualAddress());
+	// コマンドリストの解除
+	sCommandList = nullptr;
+}
+
+template<typename T>
+inline void ILight<T>::DrawMultiLight(ID3D12GraphicsCommandList* cmdList, uint32_t rootParamIndex)
+{
+	// チェック
+	assert(sCommandList == nullptr);
+	// コマンドリストの登録
+	sCommandList = cmdList;
+	// CBufferの設定
+	sCommandList->SetGraphicsRootDescriptorTable(static_cast<UINT>(rootParamIndex), buffer_.GetSRVGPU());
 	// コマンドリストの解除
 	sCommandList = nullptr;
 }

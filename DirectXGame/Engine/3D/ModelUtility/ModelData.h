@@ -7,6 +7,7 @@
 #include "Engine/Animation/ModelNode.h"
 #include "Engine/Animation/SkinCluster.h"
 #include "Engine/Light/LightLists.h"
+#include "Engine/Light/LightingManager.h"
 
 class Model;
 class Mesh;
@@ -99,6 +100,9 @@ namespace DrawDesc
 	/// ライティングのデスク
 	/// </summary>
 	struct LightDesc {
+		// ライト管理クラス
+		LightingManager* manager_ = nullptr;
+
 		// 平行光源
 		DirectionalLight* directionalLight = nullptr;
 		// 方向光源
