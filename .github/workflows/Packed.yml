@@ -2,44 +2,39 @@ name: Build and Package
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build
+  build:
     runs-on: windows-latest
 
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-        - name: Find exe
-          shell: powershell
-          run: |
-            $exe = Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 1
+      - name: Find exe and package
+        shell: powershell
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 1
 
-            if( -not $exe)
-            {
-              Write-Error "exe not found"
-              exit 1
-            }
+          if (-not $exe) {
+            Write-Error "exe not found"
+            exit 1
+          }
 
-            Write-Host "Found exe: $($exe.FullName)"
+          $dir = $exe.Directory.FullName
 
-            $dir = $exe.Directory.FullName
+          New-Item -ItemType Directory -Force -Path package
+          Copy-Item "$dir\*" package -Recurse
 
-            New-Item -ItemType Directory -Force -Path package
-            
-            Copy-Item "$dir\*" package -Recurse
+      - name: Create zip
+        shell: powershell
+        run: |
+          Compress-Archive -Path package\* -DestinationPath MyGame.zip
 
-        - name: Create zip
-          shell: powershell
-          run: |
-            Compress-Archive -Path package\* -DestinationPath MyGame.zip
-
-        - name: Upload zip
-          uses: actions/upload-artifact@v4
-          with:
-            name: MyGame
-            path: MyGame.zip
-
-
+      - name: Upload zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyGame
+          path: MyGame.zip
