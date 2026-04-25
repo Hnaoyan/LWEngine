@@ -55,7 +55,7 @@ jobs:
 
       - name: Echo
         run: echo Hello
-        
+
       - name: Test PowerShell
         shell: powershell
         run: |
@@ -66,4 +66,17 @@ jobs:
         run: |
           Get-ChildItem -Recurse -Filter *.exe
 
+      - name: Find exe and package
+        shell: powershell
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 1
 
+          if (-not $exe) {
+            Write-Error "exe not found"
+            exit 1
+          }
+
+          $dir = $exe.Directory.FullName
+
+          New-Item -ItemType Directory -Force -Path package
+          Copy-Item "$dir\*" package -Recurse
