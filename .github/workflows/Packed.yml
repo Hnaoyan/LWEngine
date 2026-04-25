@@ -55,4 +55,9 @@ jobs:
 
       - name: Echo
         run: echo Hello
+      - name: Test PowerShell
+        shell: powershell
+        run: |
+          Write-Host "test"
+          
 
