@@ -22,17 +22,17 @@ jobs:
       - name: Package
         shell: powershell
         run: |
-          # 出力フォルダ（←ここはプロジェクトに合わせて変更）
-          $buildPath = "x64\Release"
+          $exe = Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 1
 
-          if (-not (Test-Path $buildPath)) {
-            Write-Error "Build output not found"
+          if (-not $exe) {
+            Write-Error "exe not found"
             exit 1
           }
 
-          New-Item -ItemType Directory -Force -Path package
-          Copy-Item "$buildPath\*" package -Recurse
+          $dir = $exe.Directory.FullName
 
+          New-Item -ItemType Directory -Force -Path package
+          Copy-Item "$dir\*" package -Recurse
       # zip化
       - name: Zip
         shell: powershell
