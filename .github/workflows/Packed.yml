@@ -14,10 +14,9 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: build
+      - name: Build
         run: |
-          msbuild LWEngine.sln /p:Configuration=Release /p:Platform=x64
-
+          msbuild LWEngine.vcxproj /p:Configuration=Release /p:Platform=x64
       # パッケージ化
       - name: Package
         shell: powershell
