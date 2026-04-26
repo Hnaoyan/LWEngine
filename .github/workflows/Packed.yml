@@ -53,30 +53,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Echo
-        run: echo Hello
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-      - name: Test PowerShell
+      - name: build
+        run: |
+          msbuild YourProject.sln /p:Configuration=Release /p:Platform=x64
+
+      # パッケージ化
+      - name: Package
         shell: powershell
         run: |
-          Write-Host "test"
+          # 出力フォルダ（←ここはプロジェクトに合わせて変更）
+          $buildPath = "x64\Release"
 
-      - name: Find exe
-        shell: powershell
-        run: |
-          Get-ChildItem -Recurse -Filter *.exe
-
-      - name: Find exe and package
-        shell: powershell
-        run: |
-          $exe = Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 1
-
-          if (-not $exe) {
-            Write-Error "exe not found"
+          if (-not (Test-Path $buildPath)) {
+            Write-Error "Build output not found"
             exit 1
           }
 
-          $dir = $exe.Directory.FullName
-
           New-Item -ItemType Directory -Force -Path package
-          Copy-Item "$dir\*" package -Recurse
+          Copy-Item "$buildPath\*" package -Recurse
+
+      # zip化
+      - name: Zip
+        shell: powershell
+        run: |
+          Compress-Archive -Path package\* -DestinationPath Game.zip
+
+      # 保存
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: GameBuild
+          path: Game.zip
