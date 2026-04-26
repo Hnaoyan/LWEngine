@@ -22,7 +22,7 @@ jobs:
       - name: Package
         shell: powershell
         run: |
-          $exe = Get-ChildItem -Recurse -Filter *.exe | Select-Object -First 1
+          $exe = Get-ChildItem -Path .. -Recurse -Filter *.exe | Select-Object -First 1
 
           if (-not $exe) {
             Write-Error "exe not found"
@@ -32,8 +32,7 @@ jobs:
           $dir = $exe.Directory.FullName
 
           New-Item -ItemType Directory -Force -Path package
-          Copy-Item "$dir\*" package -Recurse
-      # zip化
+          Copy-Item "$dir\*" package -Recurse      # zip化
       - name: Zip
         shell: powershell
         run: |
