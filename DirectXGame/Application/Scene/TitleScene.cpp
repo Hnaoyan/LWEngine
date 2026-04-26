@@ -167,7 +167,7 @@ void TitleScene::ImGuiDraw()
 	if (ImGui::Button("AddTexture")) {
 		char path[256] = "TL2/";
 		strcat_s(path, sizeof(path), texturePath);
-		AddSprite(path, spriteTag);
+		//AddSprite(path, spriteTag);
 	}
 	if (ImGui::Button("Clear")) {
 		textures_.clear();
