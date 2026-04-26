@@ -79,6 +79,6 @@ private: // システム関係
 	//std::vector<Sprite*> textures_;
 	std::vector<std::pair<Vector2, Sprite*>> textures_;
 
-	void AddSprite(const std::string& texturePath, const std::string& spriteTag);
+	//void AddSprite(const std::string& texturePath, const std::string& spriteTag);
 
 };
